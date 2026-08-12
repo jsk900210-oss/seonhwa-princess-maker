@@ -1,0 +1,194 @@
+{
+  "version": 1,
+  "assets": [
+    {
+      "id": "bg-home-room-morning",
+      "kind": "background",
+      "status": "ready",
+      "path": "assets/backgrounds/home/home-room-morning.webp",
+      "width": 1080,
+      "height": 1920,
+      "alphaRequired": false
+    },
+    {
+      "id": "seonhwa-age09-base",
+      "kind": "character",
+      "status": "ready",
+      "path": "assets/characters/seonhwa/age-09/base/seonhwa-age09-base.png",
+      "width": 1024,
+      "height": 1536,
+      "alphaRequired": true
+    },
+    {
+      "id": "seonhwa-age09-expression-neutral",
+      "kind": "expression",
+      "status": "ready",
+      "path": "assets/characters/seonhwa/age-09/expressions/seonhwa-age09-expression-neutral.png",
+      "width": 512,
+      "height": 512,
+      "alphaRequired": true
+    },
+    {
+      "id": "seonhwa-age09-expression-happy",
+      "kind": "expression",
+      "status": "ready",
+      "path": "assets/characters/seonhwa/age-09/expressions/seonhwa-age09-expression-happy.png",
+      "width": 512,
+      "height": 512,
+      "alphaRequired": true
+    },
+    {
+      "id": "seonhwa-age09-expression-sad",
+      "kind": "expression",
+      "status": "ready",
+      "path": "assets/characters/seonhwa/age-09/expressions/seonhwa-age09-expression-sad.png",
+      "width": 512,
+      "height": 512,
+      "alphaRequired": true
+    },
+    {
+      "id": "seonhwa-age09-expression-surprised",
+      "kind": "expression",
+      "status": "ready",
+      "path": "assets/characters/seonhwa/age-09/expressions/seonhwa-age09-expression-surprised.png",
+      "width": 512,
+      "height": 512,
+      "alphaRequired": true
+    },
+    {
+      "id": "bg-seodang-day",
+      "kind": "background",
+      "status": "ready",
+      "path": "assets/backgrounds/seodang/seodang-day.webp",
+      "width": 1080,
+      "height": 1920,
+      "alphaRequired": false
+    },
+    {
+      "id": "seonhwa-age09-fullbody-happy",
+      "kind": "character",
+      "status": "ready",
+      "path": "assets/characters/seonhwa/age-09/fullbody-expressions/seonhwa-age09-fullbody-happy.png",
+      "width": 1024,
+      "height": 1536,
+      "alphaRequired": true
+    },
+    {
+      "id": "seonhwa-age09-fullbody-sad",
+      "kind": "character",
+      "status": "ready",
+      "path": "assets/characters/seonhwa/age-09/fullbody-expressions/seonhwa-age09-fullbody-sad.png",
+      "width": 1024,
+      "height": 1536,
+      "alphaRequired": true
+    },
+    {
+      "id": "seonhwa-age09-fullbody-surprised",
+      "kind": "character",
+      "status": "ready",
+      "path": "assets/characters/seonhwa/age-09/fullbody-expressions/seonhwa-age09-fullbody-surprised.png",
+      "width": 1024,
+      "height": 1536,
+      "alphaRequired": true
+    },
+    {
+      "id": "seonhwa-age09-fullbody-angry",
+      "kind": "character",
+      "status": "ready",
+      "path": "assets/characters/seonhwa/age-09/fullbody-expressions/seonhwa-age09-fullbody-angry.png",
+      "width": 1024,
+      "height": 1536,
+      "alphaRequired": true
+    },
+    {
+      "id": "seonhwa-age09-fullbody-tired",
+      "kind": "character",
+      "status": "ready",
+      "path": "assets/characters/seonhwa/age-09/fullbody-expressions/seonhwa-age09-fullbody-tired.png",
+      "width": 1024,
+      "height": 1536,
+      "alphaRequired": true
+    },
+    {
+      "id": "bg-market-day",
+      "kind": "background",
+      "status": "ready",
+      "path": "assets/backgrounds/market/market-day.webp",
+      "width": 1080,
+      "height": 1920,
+      "alphaRequired": false
+    },
+    {
+      "id": "bg-pharmacy-day",
+      "kind": "background",
+      "status": "ready",
+      "path": "assets/backgrounds/pharmacy/pharmacy-day.webp",
+      "width": 1080,
+      "height": 1920,
+      "alphaRequired": false
+    },
+    {
+      "id": "activity-icon-reading",
+      "kind": "ui-icon",
+      "status": "ready",
+      "path": "assets/ui/activity-icons/activity-reading.png",
+      "width": 256,
+      "height": 256,
+      "alphaRequired": true
+    },
+    {
+      "id": "activity-icon-arithmetic",
+      "kind": "ui-icon",
+      "status": "ready",
+      "path": "assets/ui/activity-icons/activity-arithmetic.png",
+      "width": 256,
+      "height": 256,
+      "alphaRequired": true
+    },
+    {
+      "id": "activity-icon-manners",
+      "kind": "ui-icon",
+      "status": "ready",
+      "path": "assets/ui/activity-icons/activity-manners.png",
+      "width": 256,
+      "height": 256,
+      "alphaRequired": true
+    },
+    {
+      "id": "activity-icon-errand",
+      "kind": "ui-icon",
+      "status": "ready",
+      "path": "assets/ui/activity-icons/activity-errand.png",
+      "width": 256,
+      "height": 256,
+      "alphaRequired": true
+    },
+    {
+      "id": "activity-icon-sweeping",
+      "kind": "ui-icon",
+      "status": "ready",
+      "path": "assets/ui/activity-icons/activity-sweeping.png",
+      "width": 256,
+      "height": 256,
+      "alphaRequired": true
+    },
+    {
+      "id": "activity-icon-herbs",
+      "kind": "ui-icon",
+      "status": "ready",
+      "path": "assets/ui/activity-icons/activity-herbs.png",
+      "width": 256,
+      "height": 256,
+      "alphaRequired": true
+    },
+    {
+      "id": "activity-icon-rest",
+      "kind": "ui-icon",
+      "status": "ready",
+      "path": "assets/ui/activity-icons/activity-rest.png",
+      "width": 256,
+      "height": 256,
+      "alphaRequired": true
+    }
+  ]
+}

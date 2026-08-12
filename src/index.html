@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <title>선화공주 만들기 — 자산 로딩 테스트</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="schedule.css">
+  <link rel="stylesheet" href="birthday.css">
+  <link rel="stylesheet" href="prologue.css">
+  <link rel="stylesheet" href="rain-v2.css">
+  <style>.prologue:not(.outdoor-rain) .rain{display:none}</style>
+</head>
+<body>
+  <main class="phone" aria-label="모바일 게임 테스트 화면">
+    <section class="prologue" id="prologue" aria-label="이야기 시작 영상">
+      <img id="prologueImage" src="../assets/cinematics/prologue/01-rainy-road.webp" alt="비 오는 밤길">
+      <div class="rain" aria-hidden="true"></div>
+      <div class="prologue-copy"><small id="prologueChapter">서장 · 비 오는 밤</small><p id="prologueText"></p><div class="prologue-progress" id="prologueProgress"></div></div>
+      <button class="prologue-skip" id="prologueSkip">건너뛰기</button>
+      <button class="prologue-next" id="prologueNext">다음</button>
+    </section>
+    <section class="birthday-setup" id="birthdaySetup" aria-labelledby="birthdayTitle">
+      <div class="birthday-card">
+        <span class="setup-emblem">善花</span>
+        <h1 id="birthdayTitle">선화의 생일</h1>
+        <p>선화가 태어난 날을 정해주세요.<br>이 생일부터 성장 이야기가 시작됩니다.</p>
+        <label for="birthdayInput">생년월일</label>
+        <input id="birthdayInput" type="date" min="1990-01-01" max="1990-12-31" value="1990-01-01">
+        <small>선택 가능 기간 · 1990년 1월 1일~12월 31일</small>
+        <button id="startGame">이 생일로 시작</button><button class="story-replay" id="storyReplay">프롤로그 다시 보기</button>
+      </div>
+    </section>
+    <img class="background" src="../assets/backgrounds/home/home-room-morning.webp" alt="한옥 안채">
+    <header><span id="dateLabel">9세 · 3월</span><strong id="moneyLabel">1,200냥</strong><button class="menu-button" id="saveMenu" aria-label="저장 메뉴">☰</button></header>
+    <section class="stats" aria-label="상태"><span id="healthLabel">체력 42</span><span id="studyLabel">학문 35</span><span id="fatigueLabel">피로 18</span></section>
+    <section class="character-slot" id="characterSlot">
+      <img id="character" src="../assets/characters/seonhwa/age-09/base/seonhwa-age09-base.png" alt="9세 선화">
+      <div class="missing" id="missing">기준 캐릭터 원본 재첨부 대기</div>
+    </section>
+    <section class="dialogue"><b>유모</b><p id="dialogueText">선화야, 오늘은 무엇을 해볼까?</p></section>
+    <aside class="expression-preview" id="expressionPreview" hidden><img id="expressionImage" alt="선화 표정"><span id="expressionLabel"></span></aside>
+    <section class="activity-playback" id="activityPlayback" hidden aria-live="polite"><b id="playbackDay"></b><span id="playbackAction"></span><div><i id="playbackProgress"></i></div></section>
+    <section class="activity-stage" id="activityStage" hidden aria-label="일정 수행 장면">
+      <div class="stage-roof" aria-hidden="true"></div>
+      <div class="stage-inner">
+        <div class="stage-character" id="stageCharacter"><img id="stageCharacterImage" src="../assets/characters/seonhwa/age-09/base/seonhwa-age09-base.png" alt="일정을 수행하는 선화"></div>
+      </div>
+      <div class="stage-caption" id="stageCaption"></div>
+      <div class="day-result" id="dayResult" hidden></div>
+    </section>
+    <nav><button data-panel="schedule">일정</button><button data-panel="status">상태</button><button data-panel="inventory">소지품</button></nav>
+    <output id="loadStatus">배경 확인 중…</output>
+    <section class="panel" id="panel" hidden aria-live="polite">
+      <div class="panel-head"><h2 id="panelTitle"></h2><button id="closePanel" aria-label="닫기">×</button></div>
+      <div id="panelBody"></div>
+    </section>
+  </main>
+  <script src="app.js"></script>
+</body>
+</html>
