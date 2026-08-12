@@ -13,7 +13,7 @@ const originalPrologueScenes = [
 const prologueScenes=window.SEONHWA_STORY?.prologue||originalPrologueScenes;
 let prologueIndex=0, prologueTimer=null;
 
-const game = { age: 9, month: 1, week: 1, money: 1200, health: 42, study: 35, fatigue: 18, items: [], dailySchedule: [null,null,null,null,null,null,null], birthday:null, currentDate:null, endingDate:null, ended:false };
+const game = { age: 9, month: 1, week: 1, season:'봄', money: 1200, health: 42, study: 35, fatigue: 18, items: [], dailySchedule: [null,null,null,null,null,null,null], birthday:null, currentDate:null, endingDate:null, ended:false, birthdayCount:0, element:null, birthSeason:null, memory:0, truth:0, exposure:0, guardianTrust:50 };
 Object.assign(game, { healthiness: 76, arithmetic: 22, manners: 28, arts: 18, martial: 12, archery: 5, riding: 3, craft: 24, cooking: 20, embroidery: 15, virtue: 36, charm: 30, sensitivity: 40, medicine: 8, commerce: 10, reputation: 14, stress: 12 });
 const statGroups = [
   { title: '기초 능력', stats: [['health','체력'],['healthiness','건강'],['study','학문'],['arithmetic','산술'],['manners','예절']] },
@@ -67,7 +67,7 @@ function updateImageState() {
 
 function renderHud() {
   const date = game.currentDate ? new Date(`${game.currentDate}T00:00:00`) : null;
-  document.querySelector('#dateLabel').textContent = date ? `${game.age}세 · ${date.getFullYear()}년 ${date.getMonth()+1}월 ${date.getDate()}일` : '생일 설정 전';
+  document.querySelector('#dateLabel').textContent = date ? `${game.age}세 · ${game.season} ${game.week}주` : '생일 설정 전';
   document.querySelector('#moneyLabel').textContent = `${game.money.toLocaleString()}냥`;
   document.querySelector('#healthLabel').textContent = `체력 ${game.health}`;
   document.querySelector('#studyLabel').textContent = `학문 ${game.study}`;
@@ -80,7 +80,7 @@ function openPanel(type) {
     renderSchedulePanel();
   } else if (type === 'status') {
     panelTitle.textContent = '선화의 상태';
-    panelBody.innerHTML = `<div class="status-summary"><span>${game.age}세 · ${game.month}월 ${game.week}주</span><b>${game.money.toLocaleString()}냥</b></div>${statGroups.map(group => `<section class="stat-group"><h3>${group.title}</h3>${group.stats.map(([key,label]) => statBar(key,label)).join('')}</section>`).join('')}`;
+    panelBody.innerHTML = `<div class="status-summary"><span>${game.age}세 · ${game.season} ${game.week}주</span><b>${game.money.toLocaleString()}냥</b></div>${statGroups.map(group => `<section class="stat-group"><h3>${group.title}</h3>${group.stats.map(([key,label]) => statBar(key,label)).join('')}</section>`).join('')}`;
   } else if (type === 'inventory') {
     panelTitle.textContent = '소지품';
     panelBody.innerHTML = game.items.length ? game.items.map(item => `<p>${item}</p>`).join('') : '<p class="empty-note">아직 가진 물건이 없습니다.<br>생일이나 명절 이벤트에서 얻을 수 있어요.</p>';
@@ -133,13 +133,14 @@ function resetGame() {
 }
 
 function statBar(key, label) {
-  const value = Math.max(0, Math.min(100, game[key]));
+  const max = ['fatigue','stress','health','healthiness'].includes(key) ? 100 : 999;
+  const value = Math.max(0, Math.min(100, (game[key] / max) * 100));
   const isCondition = key === 'fatigue' || key === 'stress';
   return `<div class="stat-row"><span>${label}</span><div class="stat-track"><i class="${isCondition ? 'condition' : ''}" style="width:${value}%"></i></div><b>${game[key]}</b></div>`;
 }
 
 function renderSchedulePanel() {
-  panelTitle.textContent = `${game.month}월 ${game.week}주 일정`;
+  panelTitle.textContent = `${game.season} ${game.week}주 일정`;
   if (!Array.isArray(game.dailySchedule) || game.dailySchedule.length !== 7) game.dailySchedule = [null,null,null,null,null,null,null];
   const dayNames = ['월','화','수','목','금','토','일'];
   const daySlots = game.dailySchedule.map((id,index) => {
@@ -206,9 +207,10 @@ function startWithBirthday(){
   const birth=new Date(`${value}T00:00:00`);
   const start=addYears(birth,9);
   const ending=addYears(birth,18); ending.setDate(ending.getDate()+1);
-  Object.assign(game,{birthday:value,currentDate:isoDate(start),endingDate:isoDate(ending),age:9,month:start.getMonth()+1,week:1,ended:false});
+  const month=birth.getMonth()+1; const birthSeason=seasonForMonth(month); const element=['금','수','목','화','토'][(birth.getMonth()+birth.getDate())%5];
+  Object.assign(game,{birthday:value,currentDate:isoDate(start),endingDate:isoDate(ending),age:9,month,season:birthSeason,birthSeason,element,week:1,ended:false,birthdayCount:1});
   document.querySelector('#birthdaySetup').hidden=true;
-  document.querySelector('#dialogueText').textContent=`${start.getFullYear()}년 ${start.getMonth()+1}월 ${start.getDate()}일, 선화의 아홉 번째 생일부터 이야기를 시작해요.`;
+  document.querySelector('#dialogueText').textContent=`${birthSeason}에 태어난 ${element} 기운의 아이. 선화의 아홉 번째 생일부터 이야기를 시작해요.`;
   renderHud();
 }
 function advanceGameDate(days){
@@ -216,12 +218,13 @@ function advanceGameDate(days){
   const date=new Date(`${game.currentDate}T00:00:00`); date.setDate(date.getDate()+days);
   const ending=new Date(`${game.endingDate}T00:00:00`);
   if(date>=ending){ date.setTime(ending.getTime()); game.ended=true; }
-  game.currentDate=isoDate(date); game.month=date.getMonth()+1; game.week=Math.floor((date.getDate()-1)/7)+1;
+  game.currentDate=isoDate(date); game.month=date.getMonth()+1; game.season=seasonForMonth(game.month); game.week=Math.floor((date.getDate()-1)/7)+1;
   const birth=new Date(`${game.birthday}T00:00:00`); game.age=date.getFullYear()-birth.getFullYear()-((date.getMonth()<birth.getMonth()||(date.getMonth()===birth.getMonth()&&date.getDate()<birth.getDate()))?1:0);
 }
+function seasonForMonth(month){ return month>=3&&month<=5?'봄':month>=6&&month<=8?'여름':month>=9&&month<=11?'가을':'겨울'; }
 function showEnding(){
   panel.hidden=false; panelTitle.textContent='선화의 성장 기록';
-  panelBody.innerHTML=`<div class="ending-card"><h2>마지막 생일 다음 날</h2><p>${game.currentDate}</p><p>아홉 살 생일부터 이어진 선화의 성장 이야기가 완성되었습니다.</p><button id="endingRestart">새로운 생일로 시작</button></div>`;
+  panelBody.innerHTML=`<div class="ending-card"><h2>마지막 생일 다음 날</h2><p>${game.age}세 · ${game.season}</p><p>아홉 살 생일부터 이어진 선화의 성장 이야기가 완성되었습니다.</p><button id="endingRestart">새로운 생일로 시작</button></div>`;
   document.querySelector('#endingRestart').addEventListener('click',resetGame);
 }
 function renderPrologue(){
