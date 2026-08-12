@@ -70,10 +70,14 @@ function renderHud() {
   const date = game.currentDate ? new Date(`${game.currentDate}T00:00:00`) : null;
   document.querySelector('#dateLabel').textContent = date ? `${game.age}세 · ${game.season} ${game.week}주` : '생일 설정 전';
   document.querySelector('#moneyLabel').textContent = `${game.money.toLocaleString()}냥`;
-  document.querySelector('#healthLabel').textContent = `체력 ${game.health}`;
-  document.querySelector('#studyLabel').textContent = `학문 ${game.study}`;
-  document.querySelector('#fatigueLabel').textContent = `피로 ${game.fatigue}`;
   document.querySelector('#speakerName').textContent = game.nannyName || '유모';
+}
+
+const statLabels={health:'체력',healthiness:'건강',study:'학문',arithmetic:'산술',manners:'예절',arts:'예능',martial:'무예',craft:'솜씨',cooking:'요리',embroidery:'자수',virtue:'덕망',charm:'매력',sensitivity:'감수성',medicine:'의술',commerce:'상업',reputation:'평판',stress:'스트레스',fatigue:'피로'};
+function showLiveChanges(action){
+  const items=Object.entries(action.change).map(([key,value])=>{const inverse=key==='fatigue'||key==='stress';const positive=inverse?value<0:value>=0;return `<span class="${positive?'up':'down'}">${statLabels[key]||key} ${value>0?'+':''}${value}</span>`;});
+  if(action.cost!==0)items.push(`<span class="money">은전 ${action.cost>0?'-':'+'}${Math.abs(action.cost)}냥</span>`);
+  document.querySelector('#liveChanges').innerHTML=items.join('')||'<span class="change-idle">변화 없음</span>';
 }
 
 function openPanel(type) {
@@ -279,6 +283,7 @@ async function playWeeklySchedule(selected) {
     stageCharacter.className = `stage-character ${presentation.motion}`;
     await new Promise(resolve => setTimeout(resolve, 850));
     stageCharacter.className = 'stage-character';
+    showLiveChanges(action);
     const moneyText = action.cost > 0 ? `은전 -${action.cost}냥` : action.cost < 0 ? `은전 +${-action.cost}냥` : '비용 없음';
     dayResult.innerHTML = `<b>${action.name} 완료</b><span>${action.summary}<br>${moneyText}</span>`;
     dayResult.hidden = false;
