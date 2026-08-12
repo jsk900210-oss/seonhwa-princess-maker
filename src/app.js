@@ -188,13 +188,13 @@ async function runWeek() {
   game.money -= totalCost;
   selected.forEach(action => Object.entries(action.change).forEach(([key, value]) => game[key] = Math.max(0, game[key] + value)));
   if (game.fatigue >= 40) character.src = '../assets/characters/seonhwa/age-09/fullbody-expressions/seonhwa-age09-fullbody-tired.png';
-  const lastAction = selected[selected.length - 1];
-  bg.src = backgrounds[actionPresentation[lastAction.id].location];
   advanceGameDate(7);
   const counts = selected.reduce((map, action) => (map[action.name]=(map[action.name]||0)+1,map),{});
   const summary = Object.entries(counts).map(([name,count]) => count > 1 ? `${name} ${count}일` : name).join(' · ');
   document.querySelector('#dialogueText').textContent = `${completedWeek}주 일정(${summary})을 마쳤어요.`;
   game.dailySchedule = [null,null,null,null,null,null,null];
+  bg.src = backgrounds.home;
+  character.src = game.fatigue >= 40 ? '../assets/characters/seonhwa/age-09/fullbody-expressions/seonhwa-age09-fullbody-tired.png' : expressions[0][0];
   renderHud();
   panel.hidden = true;
   if (game.ended) showEnding();
