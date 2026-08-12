@@ -9,6 +9,7 @@
   <link rel="stylesheet" href="birthday.css">
   <link rel="stylesheet" href="prologue.css">
   <link rel="stylesheet" href="rain-v2.css">
+  <link rel="stylesheet" href="naming.css">
   <style>.prologue:not(.outdoor-rain) .rain{display:none}</style>
 </head>
 <body>
@@ -22,9 +23,11 @@
     </section>
     <section class="birthday-setup" id="birthdaySetup" aria-labelledby="birthdayTitle">
       <div class="birthday-card">
-        <span class="setup-emblem">善花</span>
-        <h1 id="birthdayTitle">선화의 생일</h1>
-        <p>선화가 태어난 날을 정해주세요.<br>이 생일부터 성장 이야기가 시작됩니다.</p>
+        <span class="setup-emblem">名</span>
+        <h1 id="birthdayTitle">아이와 유모의 이름</h1>
+        <p>앞으로 불릴 이름을 직접 지어주세요.<br>이름과 생일을 정하면 성장 이야기가 시작됩니다.</p>
+        <label for="characterNameInput">아이 이름</label><input id="characterNameInput" type="text" maxlength="10" placeholder="아이의 이름" autocomplete="off">
+        <label for="nannyNameInput">유모 이름</label><input id="nannyNameInput" type="text" maxlength="10" placeholder="유모의 이름" autocomplete="off">
         <label for="birthdayInput">생년월일</label>
         <input id="birthdayInput" type="date" min="1990-01-01" max="1990-12-31" value="1990-01-01">
         <small>선택 가능 기간 · 1990년 1월 1일~12월 31일</small>
@@ -38,7 +41,7 @@
       <img id="character" src="../assets/characters/seonhwa/age-09/base/seonhwa-age09-base.png" alt="9세 선화">
       <div class="missing" id="missing">기준 캐릭터 원본 재첨부 대기</div>
     </section>
-    <section class="dialogue"><b>유모</b><p id="dialogueText">선화야, 오늘은 무엇을 해볼까?</p></section>
+    <section class="dialogue"><b id="speakerName">유모</b><p id="dialogueText">아이야, 오늘은 무엇을 해볼까?</p></section>
     <aside class="expression-preview" id="expressionPreview" hidden><img id="expressionImage" alt="선화 표정"><span id="expressionLabel"></span></aside>
     <section class="activity-playback" id="activityPlayback" hidden aria-live="polite"><b id="playbackDay"></b><span id="playbackAction"></span><div><i id="playbackProgress"></i></div></section>
     <section class="activity-stage" id="activityStage" hidden aria-label="일정 수행 장면">
