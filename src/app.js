@@ -234,10 +234,11 @@ function showEnding(){
 function renderPrologue(){
   const scene=prologueScenes[prologueIndex], wrap=document.querySelector('#prologue'), image=document.querySelector('#prologueImage');
   wrap.hidden=false; wrap.classList.toggle('outdoor-rain',Boolean(scene.rain)); wrap.classList.add('scene-change'); clearTimeout(prologueTimer);
-  setTimeout(()=>{image.src=scene.image;image.alt=scene.alt;document.querySelector('#prologueChapter').textContent=scene.id?`서장 ${scene.id} · ${scene.chapter}`:scene.chapter;document.querySelector('#prologueText').innerHTML=`${scene.text}${scene.dialogue?`<br><em>${scene.dialogue}</em>`:''}`;document.querySelector('#prologueProgress').innerHTML=prologueScenes.map((_,i)=>`<i class="${i===prologueIndex?'on':''}"></i>`).join('');document.querySelector('#prologueNext').textContent=prologueIndex===prologueScenes.length-1?'생일 정하기':'다음';wrap.classList.remove('scene-change');},220);
+  setTimeout(()=>{image.src=scene.image;image.alt=scene.alt;document.querySelector('#prologueChapter').textContent=scene.id?`서장 ${scene.id} · ${scene.chapter}`:scene.chapter;document.querySelector('#prologueText').innerHTML=`${scene.text}${scene.dialogue?`<br><em>${scene.dialogue}</em>`:''}`;document.querySelector('#prologueProgress').innerHTML=prologueScenes.map((_,i)=>`<i class="${i===prologueIndex?'on':''}"></i>`).join('');document.querySelector('#prologueBack').disabled=prologueIndex===0;document.querySelector('#prologueNext').textContent=prologueIndex===prologueScenes.length-1?'이름 정하기':'다음';wrap.classList.remove('scene-change');},220);
   prologueTimer=setTimeout(nextPrologue,5200);
 }
 function nextPrologue(){ if(prologueIndex<prologueScenes.length-1){prologueIndex++;renderPrologue();}else closePrologue(); }
+function previousPrologue(){ if(prologueIndex>0){prologueIndex--;renderPrologue();} }
 function closePrologue(){clearTimeout(prologueTimer);document.querySelector('#prologue').hidden=true;document.querySelector('#birthdaySetup').hidden=false;}
 function replayPrologue(){prologueIndex=0;document.querySelector('#birthdaySetup').hidden=true;renderPrologue();}
 
@@ -284,6 +285,7 @@ document.querySelector('#closePanel').addEventListener('click', () => panel.hidd
 document.querySelector('#saveMenu').addEventListener('click', () => openPanel('save'));
 document.querySelector('#startGame').addEventListener('click', startWithBirthday);
 document.querySelector('#prologueNext').addEventListener('click',nextPrologue);
+document.querySelector('#prologueBack').addEventListener('click',previousPrologue);
 document.querySelector('#prologueSkip').addEventListener('click',closePrologue);
 document.querySelector('#storyReplay').addEventListener('click',replayPrologue);
 document.querySelector('#characterSlot').addEventListener('click', () => {
