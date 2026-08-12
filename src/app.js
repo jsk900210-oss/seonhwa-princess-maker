@@ -5,11 +5,12 @@ const loadStatus = document.querySelector('#loadStatus');
 const panel = document.querySelector('#panel');
 const panelTitle = document.querySelector('#panelTitle');
 const panelBody = document.querySelector('#panelBody');
-const prologueScenes = [
+const originalPrologueScenes = [
   { image:'../assets/cinematics/prologue/01-rainy-road.webp', chapter:'서장 · 비 오는 밤', alt:'비 오는 밤길', text:'비가 억수같이 쏟아지던 어느 날, 사내는 길가에 쓰러진 아이를 발견했다.' },
   { image:'../assets/cinematics/prologue/02-rescue-room.webp', chapter:'서장 · 낯선 아이', alt:'아이를 돌보는 한옥 방', text:'사내는 차마 아이를 외면하지 못하고 집으로 데려와 밤새 곁을 지켰다.' },
   { image:'../assets/cinematics/prologue/03-memory-loss.webp', chapter:'서장 · 잃어버린 기억', alt:'기억을 잃은 아이와 사내', text:'다음 날 눈을 뜬 아이는 아무것도 기억나지 않는다고 말했다. 사내는 아이가 기억을 되찾을 때까지 돌봐주기로 마음먹었다.' }
 ];
+const prologueScenes=window.SEONHWA_STORY?.prologue||originalPrologueScenes;
 let prologueIndex=0, prologueTimer=null;
 
 const game = { age: 9, month: 1, week: 1, money: 1200, health: 42, study: 35, fatigue: 18, items: [], dailySchedule: [null,null,null,null,null,null,null], birthday:null, currentDate:null, endingDate:null, ended:false };
@@ -225,8 +226,8 @@ function showEnding(){
 }
 function renderPrologue(){
   const scene=prologueScenes[prologueIndex], wrap=document.querySelector('#prologue'), image=document.querySelector('#prologueImage');
-  wrap.hidden=false; wrap.classList.toggle('outdoor-rain',prologueIndex===0); wrap.classList.add('scene-change'); clearTimeout(prologueTimer);
-  setTimeout(()=>{image.src=scene.image;image.alt=scene.alt;document.querySelector('#prologueChapter').textContent=scene.chapter;document.querySelector('#prologueText').textContent=scene.text;document.querySelector('#prologueProgress').innerHTML=prologueScenes.map((_,i)=>`<i class="${i===prologueIndex?'on':''}"></i>`).join('');document.querySelector('#prologueNext').textContent=prologueIndex===prologueScenes.length-1?'생일 정하기':'다음';wrap.classList.remove('scene-change');},220);
+  wrap.hidden=false; wrap.classList.toggle('outdoor-rain',Boolean(scene.rain)); wrap.classList.add('scene-change'); clearTimeout(prologueTimer);
+  setTimeout(()=>{image.src=scene.image;image.alt=scene.alt;document.querySelector('#prologueChapter').textContent=scene.id?`서장 ${scene.id} · ${scene.chapter}`:scene.chapter;document.querySelector('#prologueText').innerHTML=`${scene.text}${scene.dialogue?`<br><em>${scene.dialogue}</em>`:''}`;document.querySelector('#prologueProgress').innerHTML=prologueScenes.map((_,i)=>`<i class="${i===prologueIndex?'on':''}"></i>`).join('');document.querySelector('#prologueNext').textContent=prologueIndex===prologueScenes.length-1?'생일 정하기':'다음';wrap.classList.remove('scene-change');},220);
   prologueTimer=setTimeout(nextPrologue,5200);
 }
 function nextPrologue(){ if(prologueIndex<prologueScenes.length-1){prologueIndex++;renderPrologue();}else closePrologue(); }
