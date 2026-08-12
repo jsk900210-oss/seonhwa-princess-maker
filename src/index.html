@@ -15,10 +15,12 @@
 <body>
   <main class="phone" aria-label="모바일 게임 테스트 화면">
     <section class="prologue" id="prologue" aria-label="이야기 시작 영상">
+      <audio id="prologueMusic" src="../assets/audio/music/prologue-lantern-and-dawn.mp3" preload="auto" loop></audio>
       <img id="prologueImage" src="../assets/cinematics/prologue/01-rainy-road.webp" alt="비 오는 밤길">
       <div class="rain" aria-hidden="true"></div>
       <div class="prologue-copy"><small id="prologueChapter">서장 · 비 오는 밤</small><p id="prologueText"></p><div class="prologue-progress" id="prologueProgress"></div></div>
       <button class="prologue-skip" id="prologueSkip">건너뛰기</button>
+      <button class="prologue-sound" id="prologueSound" aria-pressed="false">소리 켜기</button>
       <button class="prologue-back" id="prologueBack" disabled>뒤로</button>
       <button class="prologue-next" id="prologueNext">다음</button>
     </section>

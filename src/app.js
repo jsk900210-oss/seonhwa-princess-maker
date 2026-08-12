@@ -12,6 +12,7 @@ const originalPrologueScenes = [
 ];
 const prologueScenes=window.SEONHWA_STORY?.prologue||originalPrologueScenes;
 let prologueIndex=0, prologueTimer=null;
+let prologueSoundOn=false, rainAudio=null;
 
 const game = { characterName:'', nannyName:'', age: 9, month: 1, week: 1, season:'봄', money: 1200, health: 42, study: 35, fatigue: 18, items: [], dailySchedule: [null,null,null,null,null,null,null], birthday:null, currentDate:null, endingDate:null, ended:false, birthdayCount:0, element:null, birthSeason:null, memory:0, truth:0, exposure:0, guardianTrust:50 };
 Object.assign(game, { healthiness: 76, arithmetic: 22, manners: 28, arts: 18, martial: 12, archery: 5, riding: 3, craft: 24, cooking: 20, embroidery: 15, virtue: 36, charm: 30, sensitivity: 40, medicine: 8, commerce: 10, reputation: 14, stress: 12 });
@@ -234,13 +235,26 @@ function showEnding(){
 function renderPrologue(){
   const scene=prologueScenes[prologueIndex], wrap=document.querySelector('#prologue'), image=document.querySelector('#prologueImage');
   wrap.hidden=false; wrap.classList.toggle('outdoor-rain',Boolean(scene.rain)); wrap.classList.add('scene-change'); clearTimeout(prologueTimer);
+  updatePrologueAudio(Boolean(scene.rain));
   setTimeout(()=>{image.src=scene.image;image.alt=scene.alt;document.querySelector('#prologueChapter').textContent=scene.id?`서장 ${scene.id} · ${scene.chapter}`:scene.chapter;document.querySelector('#prologueText').innerHTML=`${scene.text}${scene.dialogue?`<br><em>${scene.dialogue}</em>`:''}`;document.querySelector('#prologueProgress').innerHTML=prologueScenes.map((_,i)=>`<i class="${i===prologueIndex?'on':''}"></i>`).join('');document.querySelector('#prologueBack').disabled=prologueIndex===0;document.querySelector('#prologueNext').textContent=prologueIndex===prologueScenes.length-1?'이름 정하기':'다음';wrap.classList.remove('scene-change');},220);
   prologueTimer=setTimeout(nextPrologue,5200);
 }
 function nextPrologue(){ if(prologueIndex<prologueScenes.length-1){prologueIndex++;renderPrologue();}else closePrologue(); }
 function previousPrologue(){ if(prologueIndex>0){prologueIndex--;renderPrologue();} }
-function closePrologue(){clearTimeout(prologueTimer);document.querySelector('#prologue').hidden=true;document.querySelector('#birthdaySetup').hidden=false;}
+function closePrologue(){clearTimeout(prologueTimer);fadeAudio(document.querySelector('#prologueMusic'),0,500);stopRain();document.querySelector('#prologue').hidden=true;document.querySelector('#birthdaySetup').hidden=false;}
 function replayPrologue(){prologueIndex=0;document.querySelector('#birthdaySetup').hidden=true;renderPrologue();}
+function ensureRainAudio(){
+  if(rainAudio)return rainAudio;
+  const Ctx=window.AudioContext||window.webkitAudioContext,ctx=new Ctx(),seconds=2,buffer=ctx.createBuffer(1,ctx.sampleRate*seconds,ctx.sampleRate),data=buffer.getChannelData(0);
+  let last=0;for(let i=0;i<data.length;i++){const white=Math.random()*2-1;last=last*.985+white*.15;data[i]=last*(.35+Math.random()*.3);}
+  const source=ctx.createBufferSource(),filter=ctx.createBiquadFilter(),gain=ctx.createGain();source.buffer=buffer;source.loop=true;filter.type='highpass';filter.frequency.value=650;gain.gain.value=0;source.connect(filter).connect(gain).connect(ctx.destination);source.start();rainAudio={ctx,source,gain};return rainAudio;
+}
+function fadeAudio(audio,target,ms){if(!audio)return;const start=audio.volume,steps=12;let n=0;clearInterval(audio._fade);audio._fade=setInterval(()=>{n++;audio.volume=start+(target-start)*(n/steps);if(n>=steps){clearInterval(audio._fade);if(target===0)audio.pause();}},ms/steps);}
+function stopRain(){if(!rainAudio)return;rainAudio.gain.gain.cancelScheduledValues(rainAudio.ctx.currentTime);rainAudio.gain.gain.linearRampToValueAtTime(0,rainAudio.ctx.currentTime+.5);}
+function updatePrologueAudio(isRain){
+  if(!prologueSoundOn)return;const music=document.querySelector('#prologueMusic');if(music.paused){music.volume=0;music.play().catch(()=>{});fadeAudio(music,.42,700);}const rain=ensureRainAudio();rain.ctx.resume();rain.gain.gain.cancelScheduledValues(rain.ctx.currentTime);rain.gain.gain.linearRampToValueAtTime(isRain?.34:0,rain.ctx.currentTime+.65);
+}
+function togglePrologueSound(){prologueSoundOn=!prologueSoundOn;const button=document.querySelector('#prologueSound');button.textContent=prologueSoundOn?'소리 끄기':'소리 켜기';button.setAttribute('aria-pressed',String(prologueSoundOn));if(prologueSoundOn)updatePrologueAudio(Boolean(prologueScenes[prologueIndex].rain));else{fadeAudio(document.querySelector('#prologueMusic'),0,400);stopRain();}}
 
 async function playWeeklySchedule(selected) {
   const phone = document.querySelector('.phone');
@@ -286,6 +300,7 @@ document.querySelector('#saveMenu').addEventListener('click', () => openPanel('s
 document.querySelector('#startGame').addEventListener('click', startWithBirthday);
 document.querySelector('#prologueNext').addEventListener('click',nextPrologue);
 document.querySelector('#prologueBack').addEventListener('click',previousPrologue);
+document.querySelector('#prologueSound').addEventListener('click',togglePrologueSound);
 document.querySelector('#prologueSkip').addEventListener('click',closePrologue);
 document.querySelector('#storyReplay').addEventListener('click',replayPrologue);
 document.querySelector('#characterSlot').addEventListener('click', () => {
