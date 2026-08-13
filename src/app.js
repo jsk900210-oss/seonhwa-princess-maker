@@ -53,8 +53,10 @@ const backgrounds = {
   houseWorkroom: '../assets/backgrounds/pixel-activities/close/kitchen-workroom.webp'
 };
 const SAVE_KEY = 'seonhwa-princess-mvp-save-v1';
-const statMaximum=key=>key==='stress'?100:999;
+const statMaximum=key=>key==='fatigue'?100:999;
 const clampStat=(key,value)=>Math.max(0,Math.min(statMaximum(key),Number(value)||0));
+const boundedStats=[...new Set(statGroups.flatMap(group=>group.stats.map(([key])=>key)).concat(['nannyAffinity','guardianTrust','memory','truth','exposure']))];
+function normalizeStats(){boundedStats.forEach(key=>{if(Object.hasOwn(game,key))game[key]=clampStat(key,game[key]);});}
 const actionPresentation = {
   reading: { motion:'motion-calligraphy', location:'studyRoom', prop:'none', activity:'calligraphy', npc:'teacher' }, arithmetic: { motion:'motion-arithmetic', location:'arithmeticRoom', prop:'none', activity:'arithmetic', npc:'teacher' },
   manners: { motion:'motion-manners', location:'etiquetteRoom', prop:'none', activity:'manners', npc:'teacher' }, errand: { motion:'motion-errand', location:'marketErrand', prop:'none', activity:'errand', npc:null },
@@ -263,6 +265,7 @@ function updateImageState() {
 }
 
 function renderHud() {
+  normalizeStats();
   const date = game.currentDate ? new Date(`${game.currentDate}T00:00:00`) : null;
   document.querySelector('#dateLabel').textContent = date ? `${game.age}세 · ${game.season} ${game.week}주` : '생일 설정 전';
   document.querySelector('#moneyLabel').textContent = `${game.money.toLocaleString()}냥`;
@@ -401,6 +404,7 @@ function loadGame() {
   const saved = readSave();
   if (!saved) return;
   Object.assign(game, saved.game);
+  normalizeStats();
   if(typeof game.autoOutfit!=='boolean')game.autoOutfit=true;
   normalizeInventory();
   document.querySelector('#birthdaySetup').hidden = Boolean(game.birthday);
@@ -687,8 +691,8 @@ async function playWeeklySchedule(selected) {
       await new Promise(resolve => setTimeout(resolve, 900));
       dayResult.hidden = true;
     }
-    simulated.fatigue=Math.max(0,simulated.fatigue+(action.change.fatigue||0)+(condition==='mistake'?2:0));
-    simulated.stress=Math.max(0,simulated.stress+(action.change.stress||0)+(condition==='mistake'?3:0));
+    simulated.fatigue=clampStat('fatigue',simulated.fatigue+(action.change.fatigue||0)+(condition==='mistake'?2:0));
+    simulated.stress=clampStat('stress',simulated.stress+(action.change.stress||0)+(condition==='mistake'?3:0));
   }
   playback.hidden = true;
   stage.hidden = true;
