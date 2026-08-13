@@ -52,7 +52,9 @@ const backgrounds = {
   restRoom: '../assets/backgrounds/pixel-activities/close/rest-room.webp',
   houseWorkroom: '../assets/backgrounds/pixel-activities/close/kitchen-workroom.webp'
 };
-const SAVE_KEY = 'seonhwa-princess-mvp-save-v1';
+const SAVE_KEY = 'seonhwa-princess-mvp-save-v2';
+const SAVE_SLOTS = [1,2,3];
+const LEGACY_SAVE_KEYS = ['seonhwa-princess-mvp-save-v1'];
 const statMaximum=key=>key==='fatigue'?100:999;
 const clampStat=(key,value)=>Math.max(0,Math.min(statMaximum(key),Number(value)||0));
 const boundedStats=[...new Set(statGroups.flatMap(group=>group.stats.map(([key])=>key)).concat(['nannyAffinity','guardianTrust','memory','truth','exposure']))];
@@ -456,27 +458,60 @@ function renderWardrobe(){
 
 function renderSavePanel() {
   panelTitle.textContent = '게임 기록';
-  const saved = readSave();
-  panelBody.innerHTML = `<div class="save-info">${saved ? `저장 기록: ${saved.game.age}세 ${saved.game.month}월 ${saved.game.week}주 · ${new Date(saved.savedAt).toLocaleString('ko-KR')}` : '저장된 기록이 없습니다.'}</div><div class="save-actions"><button id="saveGame">현재 진행 저장</button><button id="loadGame" ${saved ? '' : 'disabled'}>저장 기록 불러오기</button><button class="danger" id="resetGame">처음부터 시작</button></div>`;
-  document.querySelector('#saveGame').addEventListener('click', saveGame);
-  document.querySelector('#loadGame').addEventListener('click', loadGame);
+  const slots = SAVE_SLOTS.map(slot => readSave(slot));
+  const autosave = readAutoSave();
+  const slotCards = slots.map((saved, index) => {
+    const slot = index + 1;
+    const label = saved ? `${saved.game.age}세 ${saved.game.month}월 ${saved.game.week}주` : '비어 있음';
+    const savedAt = saved ? new Date(saved.savedAt).toLocaleString('ko-KR') : '';
+    return `<div class="save-slot ${saved ? 'filled' : 'empty'}"><div><b>슬롯 ${slot}</b><small>${label}${savedAt ? ` · ${savedAt}` : ''}</small></div><div class="save-slot-actions"><button data-save-slot="${slot}">저장</button><button data-load-slot="${slot}" ${saved ? '' : 'disabled'}>불러오기</button></div></div>`;
+  }).join('');
+  panelBody.innerHTML = `
+    <div class="save-info">
+      <b>자동저장</b>
+      <small>${autosave ? `${autosave.game.age}세 ${autosave.game.month}월 ${autosave.game.week}주 · ${new Date(autosave.savedAt).toLocaleString('ko-KR')}` : '아직 자동저장이 없습니다.'}</small>
+    </div>
+    <div class="save-grid">${slotCards}</div>
+    <div class="save-actions">
+      <button id="saveCurrent">현재 상태를 자동저장/백업</button>
+      <button id="exportSave">세이브 내보내기</button>
+      <button id="importSave">세이브 가져오기</button>
+      <button class="danger" id="resetGame">처음부터 시작</button>
+      <input id="importSaveFile" type="file" accept="application/json" hidden>
+    </div>`;
+  document.querySelector('#saveCurrent').addEventListener('click', () => saveGame());
+  document.querySelector('#exportSave').addEventListener('click', exportSave);
+  document.querySelector('#importSave').addEventListener('click', () => document.querySelector('#importSaveFile').click());
+  document.querySelector('#importSaveFile').addEventListener('change', importSave);
   document.querySelector('#resetGame').addEventListener('click', resetGame);
+  panelBody.querySelectorAll('[data-save-slot]').forEach(button => button.addEventListener('click', () => saveGame(Number(button.dataset.saveSlot))));
+  panelBody.querySelectorAll('[data-load-slot]').forEach(button => button.addEventListener('click', () => loadGame(Number(button.dataset.loadSlot))));
 }
 
-function readSave() {
-  try { return JSON.parse(localStorage.getItem(SAVE_KEY)); } catch { return null; }
+function readSave(slot = 1) {
+  try { return JSON.parse(localStorage.getItem(`${SAVE_KEY}-slot-${slot}`)); } catch { return null; }
 }
 
-function saveGame() {
-  const payload = { savedAt: new Date().toISOString(), game: { ...game }, background: bg.getAttribute('src'), character: character.getAttribute('src') };
-  localStorage.setItem(SAVE_KEY, JSON.stringify(payload));
-  document.querySelector('#dialogueText').textContent = '현재 진행 상황을 저장했어요.';
-  renderSavePanel();
+function readAutoSave() {
+  try { return JSON.parse(localStorage.getItem(`${SAVE_KEY}-autosave`)); } catch { return null; }
 }
 
-function loadGame() {
-  const saved = readSave();
-  if (!saved) return;
+function writeSave(slot, payload) {
+  localStorage.setItem(`${SAVE_KEY}-slot-${slot}`, JSON.stringify(payload));
+}
+
+function serializeSave() {
+  return {
+    version: SAVE_KEY,
+    savedAt: new Date().toISOString(),
+    game: { ...game },
+    background: bg.getAttribute('src'),
+    character: character.getAttribute('src')
+  };
+}
+
+function applySavePayload(saved) {
+  if (!saved?.game) return false;
   Object.assign(game, saved.game);
   normalizeStats();
   if(typeof game.autoOutfit!=='boolean')game.autoOutfit=true;
@@ -490,6 +525,67 @@ function loadGame() {
   setTimeout(()=>showHomeGreeting(),350);
   panel.hidden = true;
   document.querySelector('#dialogueText').textContent = '저장한 시점으로 돌아왔어요.';
+  return true;
+}
+
+function migrateLegacySave() {
+  for (const key of LEGACY_SAVE_KEYS) {
+    try {
+      const legacy = JSON.parse(localStorage.getItem(key));
+      if (legacy?.game && !localStorage.getItem(`${SAVE_KEY}-autosave`)) {
+        localStorage.setItem(`${SAVE_KEY}-autosave`, JSON.stringify({ ...legacy, version: SAVE_KEY }));
+      }
+    } catch {}
+  }
+}
+
+function saveGame(slot = 1, auto = false) {
+  const payload = serializeSave();
+  const key = auto ? `${SAVE_KEY}-autosave` : `${SAVE_KEY}-slot-${slot}`;
+  localStorage.setItem(key, JSON.stringify(payload));
+  if (!auto) {
+    document.querySelector('#dialogueText').textContent = `${slot}번 슬롯에 현재 진행 상황을 저장했어요.`;
+  }
+  renderSavePanel();
+}
+
+let autoSaveTimer = null;
+function queueAutoSave() {
+  clearTimeout(autoSaveTimer);
+  autoSaveTimer = setTimeout(() => saveGame(1, true), 700);
+}
+
+function loadGame(slot = 1) {
+  const saved = readSave(slot) || (slot === 1 ? readAutoSave() : null);
+  if (!saved) return;
+  applySavePayload(saved);
+}
+
+function exportSave() {
+  const payload = readAutoSave() || readSave(1) || serializeSave();
+  const blob = new Blob([JSON.stringify(payload, null, 2)], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement('a');
+  link.href = url;
+  link.download = `seonhwa-princess-save-${new Date().toISOString().slice(0,19).replace(/[:T]/g,'-')}.json`;
+  link.click();
+  setTimeout(() => URL.revokeObjectURL(url), 1000);
+}
+
+async function importSave(event) {
+  const file = event.currentTarget.files?.[0];
+  event.currentTarget.value = '';
+  if (!file) return;
+  const text = await file.text();
+  try {
+    const payload = JSON.parse(text);
+    if (!payload?.game) throw new Error('invalid');
+    localStorage.setItem(`${SAVE_KEY}-autosave`, JSON.stringify(payload));
+    applySavePayload(payload);
+    renderSavePanel();
+  } catch {
+    document.querySelector('#dialogueText').textContent = '가져온 세이브 파일을 읽지 못했어요.';
+  }
 }
 
 function resetGame() {
@@ -501,6 +597,7 @@ function resetGame() {
   panel.hidden = true;
   document.querySelector('#birthdaySetup').hidden = false;
   document.querySelector('#dialogueText').textContent = '새로운 10년을 시작해 볼까요?';
+  queueAutoSave();
 }
 
 function statBar(key, label) {
@@ -527,7 +624,7 @@ function renderSchedulePanel() {
   document.querySelector('#runWeek').addEventListener('click', runWeek);
 }
 
-function applyShopChanges(change){Object.entries(change).forEach(([key,value])=>{game[key]=clampStat(key,(game[key]||0)+value);});renderHud();}
+function applyShopChanges(change){Object.entries(change).forEach(([key,value])=>{game[key]=clampStat(key,(game[key]||0)+value);});renderHud();queueAutoSave();}
 let marketShoppingActive=false;
 let marketMealConsumed=false;
 function returnToMarketSelection(){
@@ -555,8 +652,8 @@ function renderShopPanel(tab='food',marketMode=marketShoppingActive){
   document.querySelector('#shopBack').addEventListener('click',()=>{if(marketMode)returnToMarketSelection();else renderSchedulePanel();});
 }
 function formatChanges(change){return Object.entries(change).map(([key,value])=>`${statLabels[key]||key} ${value>0?'+':''}${value}`).join(' · ');}
-async function buyFood(id){const food=foods.find(item=>item.id===id);if(!food||game.money<food.price||marketMealConsumed)return;marketMealConsumed=true;panel.hidden=true;const stage=document.querySelector('#activityStage'),image=document.querySelector('#stageCharacterImage'),character=document.querySelector('#stageCharacter');document.querySelector('#marketExplore').hidden=true;stage.hidden=false;stage.className='activity-stage map-restRoom eating-stage';document.querySelector('#stageMap').src=backgrounds.restRoom;document.querySelector('#stageNpc').hidden=true;document.querySelector('#stageProps').hidden=true;document.querySelector('#stageCaption').textContent=`주막 · ${food.name}`;character.hidden=false;character.className='stage-character pixel-sprite motion-eating';for(const n of [1,2,3,2,1,2,3]){image.src=await outfitActivityFrame(`../assets/characters/seonhwa/age-09/sprites/activities/eating-${n}.png`,game.equippedOutfit);await new Promise(r=>setTimeout(r,320));}stage.hidden=true;game.money-=food.price;applyShopChanges(food.change);document.querySelector('#dialogueText').textContent=`주막에서 ${food.name}을(를) 맛있게 먹었어요. 이번 저잣거리 방문의 식사는 끝났어요.`;showLiveChanges({change:food.change,cost:food.price});panel.hidden=false;renderShopPanel('food',true);}
-function buyOutfit(id){normalizeInventory();const outfit=outfits.find(item=>item.id===id);if(!outfit||!outfitAvailable(outfit)||game.money<outfit.price)return;if(game.items.some(item=>item.type==='outfit'&&item.id===id)){document.querySelector('#dialogueText').textContent=`${outfit.name}은(는) 이미 보유하고 있어요.`;renderShopPanel('outfit');return;}game.money-=outfit.price;game.items.push({id:outfit.id,type:'outfit',name:outfit.name,age:outfit.age,ageEnd:outfit.ageEnd,tone:outfit.tone,seasons:outfit.seasons,qty:1});game.equippedOutfit=id;applyEquippedOutfit();applyShopChanges(outfit.change);document.querySelector('#dialogueText').textContent=`${outfit.name}을(를) 구입하고 갈아입었어요.`;showLiveChanges({change:outfit.change,cost:outfit.price});renderShopPanel('outfit');}
+async function buyFood(id){const food=foods.find(item=>item.id===id);if(!food||game.money<food.price||marketMealConsumed)return;marketMealConsumed=true;panel.hidden=true;const stage=document.querySelector('#activityStage'),image=document.querySelector('#stageCharacterImage'),character=document.querySelector('#stageCharacter');document.querySelector('#marketExplore').hidden=true;stage.hidden=false;stage.className='activity-stage map-restRoom eating-stage';document.querySelector('#stageMap').src=backgrounds.restRoom;document.querySelector('#stageNpc').hidden=true;document.querySelector('#stageProps').hidden=true;document.querySelector('#stageCaption').textContent=`주막 · ${food.name}`;character.hidden=false;character.className='stage-character pixel-sprite motion-eating';for(const n of [1,2,3,2,1,2,3]){image.src=await outfitActivityFrame(`../assets/characters/seonhwa/age-09/sprites/activities/eating-${n}.png`,game.equippedOutfit);await new Promise(r=>setTimeout(r,320));}stage.hidden=true;game.money-=food.price;applyShopChanges(food.change);document.querySelector('#dialogueText').textContent=`주막에서 ${food.name}을(를) 맛있게 먹었어요. 이번 저잣거리 방문의 식사는 끝났어요.`;showLiveChanges({change:food.change,cost:food.price});panel.hidden=false;renderShopPanel('food',true);queueAutoSave();}
+function buyOutfit(id){normalizeInventory();const outfit=outfits.find(item=>item.id===id);if(!outfit||!outfitAvailable(outfit)||game.money<outfit.price)return;if(game.items.some(item=>item.type==='outfit'&&item.id===id)){document.querySelector('#dialogueText').textContent=`${outfit.name}은(는) 이미 보유하고 있어요.`;renderShopPanel('outfit');return;}game.money-=outfit.price;game.items.push({id:outfit.id,type:'outfit',name:outfit.name,age:outfit.age,ageEnd:outfit.ageEnd,tone:outfit.tone,seasons:outfit.seasons,qty:1});game.equippedOutfit=id;applyEquippedOutfit();applyShopChanges(outfit.change);document.querySelector('#dialogueText').textContent=`${outfit.name}을(를) 구입하고 갈아입었어요.`;showLiveChanges({change:outfit.change,cost:outfit.price});renderShopPanel('outfit');queueAutoSave();}
 
 const marketPlaces=[
   {id:'food',side:-1,label:'주막'},
@@ -603,12 +700,14 @@ function addDailyAction(id) {
   game.dailySchedule[empty] = id;
   document.querySelector('#dialogueText').textContent = `${['월','화','수','목','금','토','일'][empty]}요일에 ${actions.find(action => action.id === id).name}을 넣었어요.`;
   renderSchedulePanel();
+  queueAutoSave();
 }
 
 function clearDailyAction(index) {
   if (!game.dailySchedule[index]) return;
   game.dailySchedule[index] = null;
   renderSchedulePanel();
+  queueAutoSave();
 }
 
 function createMonthlyLedger(year,month){return {year,month,income:0,expense:0,activities:{},change:{}};}
@@ -661,6 +760,7 @@ async function runWeek() {
   panel.hidden = true;
   if (game.ended) showEnding();
   else if(completedLedger)showMonthlyReport(completedLedger);
+  queueAutoSave();
 }
 
 function isoDate(date){ const y=date.getFullYear(); const m=String(date.getMonth()+1).padStart(2,'0'); const d=String(date.getDate()).padStart(2,'0'); return `${y}-${m}-${d}`; }
@@ -841,3 +941,4 @@ renderHud();
 updateHomeCharacter();
 updateImageState();
 renderPrologue();
+migrateLegacySave();
