@@ -13,7 +13,7 @@ const prologueScenes=window.SEONHWA_STORY?.prologue||originalPrologueScenes;
 let prologueIndex=0, prologueTimer=null;
 let prologueSoundOn=false, rainAudio=null;
 
-const game = { characterName:'', nannyName:'', age: 9, month: 1, week: 1, season:'봄', money: 1200, health: 42, study: 35, fatigue: 18, items: [], equippedOutfit:null, autoOutfit:true, dailySchedule: [null,null,null,null,null,null,null], birthday:null, currentDate:null, endingDate:null, ended:false, birthdayCount:0, element:null, birthSeason:null, memory:0, truth:0, exposure:0, guardianTrust:50, nannyAffinity:50, lastGreetingDate:null };
+const game = { characterName:'', nannyName:'', age: 9, month: 1, week: 1, season:'봄', money: 1200, health: 42, study: 35, fatigue: 18, items: [], equippedOutfit:null, autoOutfit:true, dailySchedule: [null,null,null,null,null,null,null], birthday:null, currentDate:null, endingDate:null, ended:false, birthdayCount:0, element:null, birthSeason:null, memory:0, truth:0, exposure:0, guardianTrust:50, nannyAffinity:50, lastGreetingDate:null, monthlyLedger:null };
 Object.assign(game, { healthiness: 76, arithmetic: 22, manners: 28, arts: 18, martial: 12, archery: 5, riding: 3, craft: 24, cooking: 20, embroidery: 15, virtue: 36, charm: 30, sensitivity: 40, medicine: 8, commerce: 10, reputation: 14, stress: 12 });
 const statGroups = [
   { title: '기초 능력', stats: [['health','체력'],['healthiness','건강'],['study','학문'],['arithmetic','산술'],['manners','예절']] },
@@ -189,6 +189,7 @@ const activitySkill={reading:'study',arithmetic:'arithmetic',manners:'manners',e
 const outcomeLabels={perfect:'완벽',success:'성공',struggle:'힘겨움',mistake:'실수'};
 function judgeActivityOutcome(action,fatigue,stress){
   if(['shopping','vacation'].includes(action.id))return 'success';
+  if(action.id==='rest')return Math.max(fatigue,stress)<35&&Math.random()<.35?'perfect':'success';
   const skill=game[activitySkill[action.id]]||0;
   const condition=(game.healthiness||50)*.08-fatigue*.42-stress*.34;
   const chance=Math.max(18,Math.min(92,48+skill*.09+condition));
@@ -478,6 +479,7 @@ function loadGame() {
   normalizeInventory();
   document.querySelector('#birthdaySetup').hidden = Boolean(game.birthday);
   if (!Array.isArray(game.dailySchedule) || game.dailySchedule.length !== 7) game.dailySchedule = [null,null,null,null,null,null,null];
+  if(!game.monthlyLedger&&game.currentDate){const date=new Date(`${game.currentDate}T00:00:00`);game.monthlyLedger=createMonthlyLedger(date.getFullYear(),date.getMonth()+1);}
   bg.src = saved.background || backgrounds.home;
   applyEquippedOutfit();
   renderHud();
@@ -487,7 +489,7 @@ function loadGame() {
 }
 
 function resetGame() {
-  Object.assign(game, { age:9, month:1, week:1, money:1200, health:42, study:35, fatigue:18, items:[], equippedOutfit:null, autoOutfit:true, dailySchedule:[null,null,null,null,null,null,null], birthday:null,currentDate:null,endingDate:null,ended:false, nannyAffinity:50,lastGreetingDate:null, healthiness:76, arithmetic:22, manners:28, arts:18, martial:12, archery:5, riding:3, craft:24, cooking:20, embroidery:15, virtue:36, charm:30, sensitivity:40, medicine:8, commerce:10, reputation:14, stress:12 });
+  Object.assign(game, { age:9, month:1, week:1, money:1200, health:42, study:35, fatigue:18, items:[], equippedOutfit:null, autoOutfit:true, dailySchedule:[null,null,null,null,null,null,null], birthday:null,currentDate:null,endingDate:null,ended:false, nannyAffinity:50,lastGreetingDate:null, monthlyLedger:null, healthiness:76, arithmetic:22, manners:28, arts:18, martial:12, archery:5, riding:3, craft:24, cooking:20, embroidery:15, virtue:36, charm:30, sensitivity:40, medicine:8, commerce:10, reputation:14, stress:12 });
   document.querySelector('#liveChanges').innerHTML='';document.querySelector('#homeGreeting').hidden=true;
   bg.src = backgrounds.home;
   character.src = expressions[0][0];
@@ -605,6 +607,26 @@ function clearDailyAction(index) {
   renderSchedulePanel();
 }
 
+function createMonthlyLedger(year,month){return {year,month,income:0,expense:0,activities:{},change:{}};}
+function recordMonthlySchedule(selected,weeklyChange){
+  if(!game.monthlyLedger){const date=new Date(`${game.currentDate}T00:00:00`);game.monthlyLedger=createMonthlyLedger(date.getFullYear(),date.getMonth()+1);}
+  selected.forEach(action=>{
+    game.monthlyLedger.activities[action.name]=(game.monthlyLedger.activities[action.name]||0)+1;
+    if(action.cost>0)game.monthlyLedger.expense+=action.cost;
+    if(action.cost<0)game.monthlyLedger.income+=-action.cost;
+  });
+  Object.entries(weeklyChange).forEach(([key,value])=>game.monthlyLedger.change[key]=(game.monthlyLedger.change[key]||0)+value);
+}
+function showMonthlyReport(ledger){
+  panel.hidden=false;panelTitle.textContent=`${ledger.year}년 ${ledger.month}월 결산`;
+  const activityRows=Object.entries(ledger.activities).sort((a,b)=>b[1]-a[1]).map(([name,count])=>`<li><span>${name}</span><b>${count}일</b></li>`).join('');
+  const statRows=Object.entries(ledger.change).filter(([,value])=>value!==0).sort((a,b)=>Math.abs(b[1])-Math.abs(a[1])).map(([key,value])=>`<li><span>${statLabels[key]||key}</span><b class="${(key==='fatigue'||key==='stress')?value<0?'good':'bad':value>0?'good':'bad'}">${value>0?'+':''}${value}</b></li>`).join('');
+  const net=ledger.income-ledger.expense;
+  const condition=game.fatigue>=75||game.stress>=75?'많이 지쳤어요. 다음 달에는 휴식이 필요해요.':game.fatigue>=50||game.stress>=50?'조금 피곤하지만 잘 버텼어요.':'좋은 컨디션으로 한 달을 마쳤어요.';
+  panelBody.innerHTML=`<section class="monthly-balance"><div><span>수입</span><b>+${ledger.income.toLocaleString()}냥</b></div><div><span>지출</span><b>-${ledger.expense.toLocaleString()}냥</b></div><div class="net"><span>합계</span><b class="${net>=0?'good':'bad'}">${net>=0?'+':''}${net.toLocaleString()}냥</b></div></section><section class="monthly-report-section"><h3>이번 달 활동</h3><ul>${activityRows||'<li>기록 없음</li>'}</ul></section><section class="monthly-report-section"><h3>능력치 변화</h3><ul>${statRows||'<li>변화 없음</li>'}</ul></section><p class="monthly-condition">${condition}</p><button id="closeMonthlyReport" class="monthly-continue">다음 달 시작</button>`;
+  document.querySelector('#closeMonthlyReport').addEventListener('click',()=>{panel.hidden=true;document.querySelector('#dialogueText').textContent=`${game.month}월도 함께 힘내 보아요.`;});
+}
+
 async function runWeek() {
   if (!game.dailySchedule.every(Boolean)) return;
   const selected = game.dailySchedule.map(id => actions.find(item => item.id === id));
@@ -615,12 +637,16 @@ async function runWeek() {
     return;
   }
   const completedWeek = game.week;
+  const completedMonth = game.month;
   panel.hidden = true;
   const weeklyChange = await playWeeklySchedule(selected);
   game.money -= totalCost;
   Object.entries(weeklyChange).forEach(([key,value])=>game[key]=clampStat(key,(game[key]||0)+value));
+  recordMonthlySchedule(selected,weeklyChange);
   game.homeReaction=null;
   advanceGameDate(7);
+  const completedLedger=game.month!==completedMonth?game.monthlyLedger:null;
+  if(completedLedger){const date=new Date(`${game.currentDate}T00:00:00`);game.monthlyLedger=createMonthlyLedger(date.getFullYear(),date.getMonth()+1);}
   const counts = selected.reduce((map, action) => (map[action.name]=(map[action.name]||0)+1,map),{});
   const summary = Object.entries(counts).map(([name,count]) => count > 1 ? `${name} ${count}일` : name).join(' · ');
   document.querySelector('#dialogueText').textContent = `${completedWeek}주 일정(${summary})을 마쳤어요.`;
@@ -630,6 +656,7 @@ async function runWeek() {
   renderHud();
   panel.hidden = true;
   if (game.ended) showEnding();
+  else if(completedLedger)showMonthlyReport(completedLedger);
 }
 
 function isoDate(date){ const y=date.getFullYear(); const m=String(date.getMonth()+1).padStart(2,'0'); const d=String(date.getDate()).padStart(2,'0'); return `${y}-${m}-${d}`; }
@@ -645,6 +672,7 @@ function startWithBirthday(){
   const ending=addYears(birth,18); ending.setDate(ending.getDate()+1);
   const month=birth.getMonth()+1; const birthSeason=seasonForMonth(month); const element=['금','수','목','화','토'][(birth.getMonth()+birth.getDate())%5];
   Object.assign(game,{characterName,nannyName,birthday:value,currentDate:isoDate(start),endingDate:isoDate(ending),age:9,month,season:birthSeason,birthSeason,element,week:1,ended:false,birthdayCount:1});
+  game.monthlyLedger=createMonthlyLedger(start.getFullYear(),month);
   document.querySelector('#birthdaySetup').hidden=true;
   document.querySelector('#dialogueText').textContent=`${birthSeason}에 태어난 ${element} 기운의 아이. ${characterName}의 아홉 번째 생일부터 이야기를 시작해요.`;
   renderHud();
