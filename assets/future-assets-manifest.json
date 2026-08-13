@@ -1,0 +1,84 @@
+{
+  "companions": [
+    "nanny",
+    "teacher",
+    "dolsoe",
+    "herbalist",
+    "merchant",
+    "etiquette-tutor",
+    "sewing-friend",
+    "martial-instructor"
+  ],
+  "weeklyEvents": [
+    "spring-flower-market",
+    "summer-flood",
+    "autumn-festival",
+    "first-snow",
+    "traveling-scholar",
+    "lost-pouch",
+    "sick-neighbor",
+    "rare-silk",
+    "writing-contest",
+    "kitchen-fire",
+    "royal-procession",
+    "sealed-letter"
+  ],
+  "endings": [
+    "scholar",
+    "court-artist",
+    "healer",
+    "merchant-master",
+    "village-teacher",
+    "royal-reunion",
+    "peaceful-life",
+    "lost-memory",
+    "overwork",
+    "true-princess"
+  ],
+  "mastery": {
+    "study": [
+      "study-level-1",
+      "study-level-2",
+      "study-level-3",
+      "study-level-4",
+      "study-level-5"
+    ],
+    "manners": [
+      "manners-level-1",
+      "manners-level-2",
+      "manners-level-3",
+      "manners-level-4",
+      "manners-level-5"
+    ],
+    "work": [
+      "work-level-1",
+      "work-level-2",
+      "work-level-3",
+      "work-level-4",
+      "work-level-5"
+    ],
+    "medicine": [
+      "medicine-level-1",
+      "medicine-level-2",
+      "medicine-level-3",
+      "medicine-level-4",
+      "medicine-level-5"
+    ],
+    "commerce": [
+      "commerce-level-1",
+      "commerce-level-2",
+      "commerce-level-3",
+      "commerce-level-4",
+      "commerce-level-5"
+    ],
+    "arts": [
+      "arts-level-1",
+      "arts-level-2",
+      "arts-level-3",
+      "arts-level-4",
+      "arts-level-5"
+    ]
+  },
+  "weeklyEventsVersion": "v2",
+  "weeklyEventsPath": "assets/events/weekly-v2"
+}
