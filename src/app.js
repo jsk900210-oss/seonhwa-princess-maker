@@ -65,9 +65,10 @@ const actionPresentation = {
   shopping: { motion:'motion-walk', location:'marketErrand', prop:'none', activity:null, npc:null }
 };
 const vacationIllustrations=[
-  {id:'vacation-spring-stream',name:'봄 계곡의 꽃잎',image:'../assets/events/vacation/spring-stream-v2.webp',description:'맑은 계곡에서 꽃잎을 바라보던 봄날의 초현실적 4K 추억.'},
-  {id:'vacation-summer-seaside',name:'여름 바닷가의 조개',image:'../assets/events/vacation/summer-seaside-v2.webp',description:'바닷가 마을에서 조개를 주웠던 여름날의 초현실적 4K 추억.'},
-  {id:'vacation-autumn-maple',name:'가을 정자의 단풍',image:'../assets/events/vacation/autumn-maple-v2.webp',description:'붉은 단풍 아래 정자를 거닐었던 가을날의 초현실적 4K 추억.'}
+  {id:'vacation-spring-stream',season:'봄',name:'봄 계곡의 꽃잎',image:'../assets/events/vacation/spring-stream-v2.webp',description:'맑은 계곡에서 꽃잎을 바라보던 봄날의 초현실적 4K 추억.'},
+  {id:'vacation-summer-seaside',season:'여름',name:'여름 바닷가의 조개',image:'../assets/events/vacation/summer-seaside-v2.webp',description:'바닷가 마을에서 조개를 주웠던 여름날의 초현실적 4K 추억.'},
+  {id:'vacation-autumn-maple',season:'가을',name:'가을 정자의 단풍',image:'../assets/events/vacation/autumn-maple-v2.webp',description:'붉은 단풍 아래 정자를 거닐었던 가을날의 초현실적 4K 추억.'},
+  {id:'vacation-winter-snow',season:'겨울',name:'겨울 한옥의 첫눈',image:'../assets/events/vacation/winter-snow-v2.webp',description:'눈 내린 한옥 뜰에서 첫눈을 바라보던 겨울날의 초현실적 4K 추억.'}
 ];
 const spriteFrames = {
   down: [1,2,3].map(n=>`../assets/characters/seonhwa/age-09/sprites/walk/seonhwa-walk-down-${n}.png`),
@@ -218,10 +219,9 @@ const actions = [
 function awardVacationIllustration(){
   normalizeInventory();
   const owned=new Set(game.items.filter(item=>item.type==='event').map(item=>item.id));
-  const pool=vacationIllustrations.filter(item=>!owned.has(item.id));
-  const prize=(pool.length?pool:vacationIllustrations)[Math.floor(Math.random()*(pool.length||vacationIllustrations.length))];
+  // 바캉스 일러스트는 계절마다 대표컷 한 장만 사용한다.
+  const prize=vacationIllustrations.find(item=>item.season===game.season)||vacationIllustrations[0];
   if(!owned.has(prize.id))game.items.push({...prize,type:'event',qty:1});
-  else game.items.find(item=>item.id===prize.id).qty+=1;
   return prize;
 }
 const endingRelationCandidates=[
