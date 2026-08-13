@@ -1,9 +1,15 @@
+# v0.61.19-debug · 2026-08-13
+
+- GitHub 루트에 `DIRECTORY_STRUCTURE.md`를 추가해 실행 코드·자산·문서·도구의 역할을 명시
+- `docs/story`, `docs/qa`, `docs/assets`로 기획 문서를 분류하고 루트 임시 QA 이미지를 제거
+- `tools/check_project_structure.py`로 필수 디렉터리·핵심 파일·정적 자산 참조를 자동 검사
+
 # v0.61.18-debug · 2026-08-13
 
 - 구매한 한복이 홈과 모든 교육·아르바이트·휴식·식사 장면에 유지되는지 실제 재생 검수
 - 활동 캐릭터·조연의 표시 영역과 겹침 여부 확인
 - 390×844 모바일 화면의 가로 오버플로 0px 확인
-- 검수 상세 기록: `docs/08_OUTFIT_ACTIVITY_QA.md`
+- 검수 상세 기록: `docs/qa/08_OUTFIT_ACTIVITY_QA.md`
 
 # v0.61.17-debug · 2026-08-13
 

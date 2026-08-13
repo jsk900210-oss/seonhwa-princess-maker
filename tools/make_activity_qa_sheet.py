@@ -14,4 +14,6 @@ for row,(label,pattern) in enumerate(groups.items()):
         image=Image.open(path).convert('RGBA'); image.thumbnail((190,215),Image.Resampling.LANCZOS)
         tile=Image.new('RGBA',(cell_w,cell_h),(244,239,225,255));tile.alpha_composite(image,((cell_w-image.width)//2,20))
         x,y=col*cell_w,row*cell_h;sheet.paste(tile.convert('RGB'),(x,y));draw.text((x+5,y+4),f'{label} {col+1}',fill=(38,28,20))
-sheet.save(ROOT/'tmp-activity-qa-sheet.jpg',quality=94)
+output = ROOT / 'docs' / 'qa' / 'activity-qa-sheet.jpg'
+output.parent.mkdir(parents=True, exist_ok=True)
+sheet.save(output, quality=94)
