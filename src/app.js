@@ -185,6 +185,33 @@ function conditionEvent(fatigue, stress, dayIndex){
   if(peak>=55)return 'drowsy';
   return null;
 }
+const activitySkill={reading:'study',arithmetic:'arithmetic',manners:'manners',errand:'commerce',sweeping:'health',herbs:'medicine',houseclean:'craft',rest:'healthiness'};
+const outcomeLabels={perfect:'완벽',success:'성공',struggle:'힘겨움',mistake:'실수'};
+function judgeActivityOutcome(action,fatigue,stress){
+  if(['shopping','vacation'].includes(action.id))return 'success';
+  const skill=game[activitySkill[action.id]]||0;
+  const condition=(game.healthiness||50)*.08-fatigue*.42-stress*.34;
+  const chance=Math.max(18,Math.min(92,48+skill*.09+condition));
+  const roll=Math.random()*100;
+  if(roll<=Math.max(6,chance-32))return 'perfect';
+  if(roll<=chance)return 'success';
+  if(roll<=Math.min(96,chance+20))return 'struggle';
+  return 'mistake';
+}
+function resolvedActivityChange(action,outcome){
+  const change={};
+  Object.entries(action.change).forEach(([key,value])=>{
+    const beneficial=(key==='fatigue'||key==='stress')?value<0:value>0;
+    const multiplier=beneficial?(outcome==='perfect'?1.5:outcome==='struggle'?.5:outcome==='mistake'?.25:1):1;
+    change[key]=Math.round(value*multiplier);
+  });
+  if(outcome==='mistake'){
+    change.fatigue=(change.fatigue||0)+2;
+    change.stress=(change.stress||0)+3;
+    change.health=(change.health||0)-1;
+  }
+  return change;
+}
 const scheduleDialogue={
   reading:{perfect:['오늘 글자는 한 획도 흐트러지지 않았어요.','완벽하게 글공부를 마쳤어요.'],normal:['글의 뜻을 하나씩 알아가는 게 즐거워요.','오늘 배운 글자를 다시 써 볼래요.']},
   arithmetic:{perfect:['주판알 소리가 아주 반듯하구나.','셈을 한 번도 틀리지 않았어요.'],normal:['주판알을 튕기니 답이 보여요.','조금 천천히 세면 틀리지 않을 거예요.']},
@@ -210,9 +237,10 @@ function setScheduleDialogue(action,state,index){
   }else if(state==='mistake'){
     speaker=education?'훈장님':(game.nannyName||'유모');
     line=education?'졸다가 실수하다니, 오늘 배운 대목을 다시 익히거라.':'괜찮단다. 서두르지 말고 다시 해 보자.';
+  }else if(state==='struggle'){
+    line=Math.max(game.fatigue,game.stress)>=55?'몸이 무거워 평소만큼 해내지는 못했어요.':'조금 어려웠지만 끝까지 포기하지 않았어요.';
   }else{
-    const perfect=Math.max(game.fatigue,game.stress)<35&&index%3===0;
-    line=pickLine(scheduleDialogue[action.id]?.[perfect?'perfect':'normal']||['오늘 일정을 무사히 마쳤어요.'],index);
+    line=pickLine(scheduleDialogue[action.id]?.[state==='perfect'?'perfect':'normal']||['오늘 일정을 무사히 마쳤어요.'],index);
   }
   document.querySelector('#speakerName').textContent=speaker;
   document.querySelector('#dialogueText').textContent=line;
@@ -588,10 +616,9 @@ async function runWeek() {
   }
   const completedWeek = game.week;
   panel.hidden = true;
-  const conditionPenalty = await playWeeklySchedule(selected);
+  const weeklyChange = await playWeeklySchedule(selected);
   game.money -= totalCost;
-  selected.forEach(action => Object.entries(action.change).forEach(([key, value]) => game[key] = clampStat(key,game[key] + value)));
-  Object.entries(conditionPenalty).forEach(([key,value])=>game[key]=clampStat(key,game[key]+value));
+  Object.entries(weeklyChange).forEach(([key,value])=>game[key]=clampStat(key,(game[key]||0)+value));
   game.homeReaction=null;
   advanceGameDate(7);
   const counts = selected.reduce((map, action) => (map[action.name]=(map[action.name]||0)+1,map),{});
@@ -675,7 +702,7 @@ async function playWeeklySchedule(selected) {
   const dayResult = document.querySelector('#dayResult');
   const conditionCue = document.querySelector('#conditionCue');
   const simulated={fatigue:game.fatigue,stress:game.stress};
-  const conditionPenalty={fatigue:0,stress:0,health:-0};
+  const weeklyChange={};
   const dayNames = ['월요일','화요일','수요일','목요일','금요일','토요일','일요일'];
   document.querySelector('#homeGreeting').hidden=true;
   phone.classList.remove('greeting-active');
@@ -688,7 +715,6 @@ async function playWeeklySchedule(selected) {
     const presentation = actionPresentation[action.id]||actionPresentation.rest;
     stage.hidden=false;stageCharacter.hidden=false;stageProps.hidden=false;
     setScheduleDialogue(action,'start',index);
-    renderActivityGauges(action);
     const dailyOutfit=game.autoOutfit?updateAutoOutfit(action.id):game.equippedOutfit;
     document.querySelector('#playbackDay').textContent = dayNames[index];
     document.querySelector('#playbackAction').textContent = action.name;
@@ -719,22 +745,30 @@ async function playWeeklySchedule(selected) {
       document.querySelector('#dialogueText').textContent=metSomeone?`바캉스에서 「${prize.name}」 일러스트와 ${metSomeone.name}의 인연 추억을 얻었어요.`:`바캉스에서 「${prize.name}」 일러스트를 획득했어요.`;
     }else await animateActivitySprite(stageCharacterImage,presentation.motion,presentation.activity,stageNpcImage,presentation.npc,dailyOutfit);
     const condition=['shopping','vacation'].includes(action.id)?null:conditionEvent(simulated.fatigue,simulated.stress,index);
+    let outcome=judgeActivityOutcome(action,simulated.fatigue,simulated.stress);
+    if(condition==='mistake')outcome='mistake';
+    else if(condition==='drowsy'&&outcome!=='mistake')outcome='struggle';
+    const resolvedChange=resolvedActivityChange(action,outcome);
+    const resolvedAction={...action,change:resolvedChange};
     if(condition){
       setScheduleDialogue(action,condition,index);
       await animateConditionEvent(stageCharacter,conditionCue,condition);
-      if(condition==='mistake'){conditionPenalty.fatigue+=2;conditionPenalty.stress+=3;conditionPenalty.health-=1;}
-    }else setScheduleDialogue(action,'complete',index);
+    }
+    setScheduleDialogue(action,outcome,index);
     stageCharacter.className = `stage-character pixel-sprite ${presentation.motion}`;
-    showLiveChanges(action);
+    renderActivityGauges(resolvedAction);
+    showLiveChanges(resolvedAction);
     const moneyText = action.cost > 0 ? `은전 -${action.cost}냥` : action.cost < 0 ? `은전 +${-action.cost}냥` : '비용 없음';
-    dayResult.innerHTML = `<b>${action.name} 완료</b><span>${action.summary}<br>${moneyText}</span>`;
+    const resultSummary=Object.entries(resolvedChange).filter(([,value])=>value!==0).map(([key,value])=>`${statLabels[key]||key} ${value>0?'+':''}${value}`).join(' · ');
+    dayResult.innerHTML = `<b>${action.name} · ${outcomeLabels[outcome]}</b><span>${resultSummary||'능력치 변화 없음'}<br>${moneyText}</span>`;
     if(action.id!=='vacation'){
       dayResult.hidden = false;
       await new Promise(resolve => setTimeout(resolve, 900));
       dayResult.hidden = true;
     }
-    simulated.fatigue=clampStat('fatigue',simulated.fatigue+(action.change.fatigue||0)+(condition==='mistake'?2:0));
-    simulated.stress=clampStat('stress',simulated.stress+(action.change.stress||0)+(condition==='mistake'?3:0));
+    Object.entries(resolvedChange).forEach(([key,value])=>weeklyChange[key]=(weeklyChange[key]||0)+value);
+    simulated.fatigue=clampStat('fatigue',simulated.fatigue+(resolvedChange.fatigue||0));
+    simulated.stress=clampStat('stress',simulated.stress+(resolvedChange.stress||0));
   }
   playback.hidden = true;
   stage.hidden = true;
@@ -746,7 +780,7 @@ async function playWeeklySchedule(selected) {
   document.querySelector('.dialogue').classList.remove('schedule-speaking');
   document.querySelector('#speakerName').textContent=game.nannyName||'유모';
   phone.classList.remove('playing');
-  return conditionPenalty;
+  return weeklyChange;
 }
 
 document.querySelector('#marketEnter').addEventListener('click',event=>enterMarketShop(event.currentTarget.dataset.shop));
