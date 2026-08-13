@@ -11,7 +11,7 @@
   <link rel="stylesheet" href="rain-v2.css">
   <link rel="stylesheet" href="naming.css">
   <link rel="stylesheet" href="live-changes.css?v=0.61.14-debug">
-  <link rel="stylesheet" href="collection.css?v=0.61.15-debug">
+  <link rel="stylesheet" href="collection.css?v=0.61.23-debug">
   <style>.prologue:not(.outdoor-rain) .rain{display:none}</style>
 </head>
 <body>
@@ -49,6 +49,10 @@
       <div class="missing" id="missing">기준 캐릭터 원본 재첨부 대기</div>
     </section>
     <section class="dialogue"><b id="speakerName">유모</b><p id="dialogueText">아이야, 오늘은 무엇을 해볼까?</p></section>
+    <aside class="home-side-actions" aria-label="홈 바로가기">
+      <button class="home-object-button" id="collectionBookButton" type="button" aria-label="수집도감 열기"><img src="../assets/ui/home-actions/collection-book.png" alt=""><span>수집도감</span></button>
+      <button class="home-object-button" id="wardrobeButton" type="button" aria-label="오래된 옷장 열기"><img src="../assets/ui/home-actions/wardrobe.png" alt=""><span>옷장</span></button>
+    </aside>
     <section class="home-greeting" id="homeGreeting" hidden aria-live="polite">
       <b id="homeGreetingSpeaker"></b><p id="homeGreetingLine"></p><b id="homeGreetingPrompt"></b><div id="homeGreetingChoices"></div>
     </section>
@@ -88,6 +92,6 @@
       <div id="panelBody"></div>
     </section>
   </main>
-  <script src="story-data.js?v=0.61.22-debug"></script><script src="app.js?v=0.61.22-debug"></script>
+  <script src="story-data.js?v=0.61.23-debug"></script><script src="app.js?v=0.61.23-debug"></script>
 </body>
 </html>

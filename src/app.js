@@ -399,7 +399,8 @@ function openPanel(type) {
     renderSavePanel();
   }
 }
-const inventoryCategories={all:'전체',food:'음식',outfit:'의상',accessory:'장신구',event:'이벤트'};
+const inventoryCategories={all:'전체',accessory:'장신구',event:'이벤트'};
+const inventoryTypeLabels={food:'음식',outfit:'의상',accessory:'장신구',event:'이벤트'};
 function normalizeInventory(){
   if(!Array.isArray(game.items))game.items=[];
   game.items=game.items.map((item,index)=>typeof item==='string'?{id:`legacy-${index}`,type:'event',name:item,qty:1}:({...item,type:item.type||'event',qty:Math.max(1,item.qty||1)}));
@@ -426,7 +427,7 @@ function renderInventory(category='all'){
 function showInventoryItem(id,category){
   const item=game.items.find(entry=>entry.id===id),detail=document.querySelector('#inventoryDetail');if(!item)return;
   const action=item.type==='outfit'?`<button data-inventory-action="wear">${game.equippedOutfit===item.id?'벗기':'갈아입기'}</button>`:item.type==='food'?'<button data-inventory-action="use">먹기</button>':'';
-  detail.innerHTML=`${item.type==='event'&&item.image?`<img class="event-collectible-preview" src="${item.image}" alt="${item.name}">`:''}<b>${item.name}</b><span>${inventoryCategories[item.type]||'기타'} · ${item.qty||1}개</span>${item.description?`<p>${item.description}</p>`:''}${action}`;
+  detail.innerHTML=`${item.type==='event'&&item.image?`<img class="event-collectible-preview" src="${item.image}" alt="${item.name}">`:''}<b>${item.name}</b><span>${inventoryTypeLabels[item.type]||'기타'} · ${item.qty||1}개</span>${item.description?`<p>${item.description}</p>`:''}${action}`;
   detail.querySelector('[data-inventory-action]')?.addEventListener('click',()=>{if(item.type==='outfit'){game.autoOutfit=false;game.equippedOutfit=game.equippedOutfit===item.id?null:item.id;applyEquippedOutfit();renderInventory(category);}else if(item.type==='food'){const food=foods.find(entry=>entry.id===item.id);if(food)applyShopChanges(food.change);item.qty-=1;if(item.qty<=0)game.items.splice(game.items.indexOf(item),1);document.querySelector('#dialogueText').textContent=`${item.name}을(를) 먹었어요.`;renderInventory(category);}});
 }
 function renderVacationCollection(){
@@ -821,6 +822,7 @@ document.querySelector('#marketFinish').addEventListener('pointerup',finishMarke
 window.addEventListener('keydown',event=>{if(document.querySelector('#marketExplore').hidden)return;if(event.key==='ArrowLeft')selectMarketShop('food');if(event.key==='ArrowRight')selectMarketShop('outfit');if(event.key==='Enter'&&marketSelection)enterMarketShop(marketSelection);});
 bg.addEventListener('load', updateImageState);
 document.querySelector('#wardrobeButton')?.addEventListener('click',renderWardrobe);
+document.querySelector('#collectionBookButton')?.addEventListener('click',()=>openPanel('collection'));
 bg.addEventListener('error', updateImageState);
 character.addEventListener('load', updateImageState);
 character.addEventListener('error', updateImageState);
