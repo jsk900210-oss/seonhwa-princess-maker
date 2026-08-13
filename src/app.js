@@ -343,6 +343,8 @@ function openPanel(type) {
     panelBody.innerHTML = `<div class="status-summary"><span>${game.age}세 · ${game.season} ${game.week}주</span><b>${game.money.toLocaleString()}냥</b></div>${statGroups.map(group => `<section class="stat-group"><h3>${group.title}</h3>${group.stats.map(([key,label]) => statBar(key,label)).join('')}</section>`).join('')}`;
   } else if (type === 'inventory') {
     renderInventory();
+  } else if (type === 'collection') {
+    renderVacationCollection();
   } else {
     renderSavePanel();
   }
@@ -351,6 +353,8 @@ const inventoryCategories={all:'전체',food:'음식',outfit:'의상',accessory:
 function normalizeInventory(){
   if(!Array.isArray(game.items))game.items=[];
   game.items=game.items.map((item,index)=>typeof item==='string'?{id:`legacy-${index}`,type:'event',name:item,qty:1}:({...item,type:item.type||'event',qty:Math.max(1,item.qty||1)}));
+  const vacationIds=new Set(vacationIllustrations.map(item=>item.id)),seenVacation=new Set();
+  game.items=game.items.filter(item=>{if(!vacationIds.has(item.id))return true;item.qty=1;if(seenVacation.has(item.id))return false;seenVacation.add(item.id);return true;});
 }
 function inventoryImage(item){
   if(item.image)return item.image;
@@ -371,6 +375,20 @@ function showInventoryItem(id,category){
   const action=item.type==='outfit'?`<button data-inventory-action="wear">${game.equippedOutfit===item.id?'벗기':'갈아입기'}</button>`:item.type==='food'?'<button data-inventory-action="use">먹기</button>':'';
   detail.innerHTML=`${item.type==='event'&&item.image?`<img class="event-collectible-preview" src="${item.image}" alt="${item.name}">`:''}<b>${item.name}</b><span>${inventoryCategories[item.type]||'기타'} · ${item.qty||1}개</span>${item.description?`<p>${item.description}</p>`:''}${action}`;
   detail.querySelector('[data-inventory-action]')?.addEventListener('click',()=>{if(item.type==='outfit'){game.autoOutfit=false;game.equippedOutfit=game.equippedOutfit===item.id?null:item.id;applyEquippedOutfit();renderInventory(category);}else if(item.type==='food'){const food=foods.find(entry=>entry.id===item.id);if(food)applyShopChanges(food.change);item.qty-=1;if(item.qty<=0)game.items.splice(game.items.indexOf(item),1);document.querySelector('#dialogueText').textContent=`${item.name}을(를) 먹었어요.`;renderInventory(category);}});
+}
+function renderVacationCollection(){
+  normalizeInventory();panelTitle.textContent='바캉스 수집도감';
+  const ownedIds=new Set(game.items.filter(item=>item.type==='event').map(item=>item.id));
+  const collected=vacationIllustrations.filter(item=>ownedIds.has(item.id)).length,total=vacationIllustrations.length;
+  const percent=Math.round(collected/total*100);
+  const cards=vacationIllustrations.map(item=>{const unlocked=ownedIds.has(item.id);return `<button class="collection-card ${unlocked?'unlocked':'locked'}" data-collection-id="${item.id}" ${unlocked?'':'disabled'} aria-label="${unlocked?`${item.season} 수집 완료`:`${item.season} 미수집`}"><div class="collection-art"><img src="${item.image}" alt="${unlocked?item.name:''}"><span>${unlocked?'수집 완료':'?'}</span></div><b>${item.season}</b><small>${unlocked?item.name:'아직 발견하지 못한 추억'}</small></button>`;}).join('');
+  panelBody.innerHTML=`<section class="collection-progress" aria-label="바캉스 일러스트 수집률"><div><b>수집도 ${percent}%</b><span>${collected} / ${total}</span></div><div class="collection-track"><i style="width:${percent}%"></i></div></section><div class="collection-grid">${cards}</div><section class="collection-detail" id="collectionDetail">수집한 카드를 누르면 크게 볼 수 있어요.</section>`;
+  panelBody.querySelectorAll('[data-collection-id]:not(:disabled)').forEach(button=>button.addEventListener('click',()=>showVacationCollectionCard(button.dataset.collectionId)));
+}
+function showVacationCollectionCard(id){
+  const item=vacationIllustrations.find(entry=>entry.id===id),detail=document.querySelector('#collectionDetail');if(!item||!detail)return;
+  detail.innerHTML=`<img src="${item.image}" alt="${item.name}"><div><b>${item.season} · ${item.name}</b><p>${item.description}</p></div>`;
+  detail.scrollIntoView({behavior:'smooth',block:'nearest'});
 }
 function renderWardrobe(){
   panel.hidden=false;panelTitle.textContent='옷 갈아입기';

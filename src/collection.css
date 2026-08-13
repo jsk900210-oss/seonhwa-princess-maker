@@ -1,0 +1,14 @@
+.collection-progress{position:sticky;top:33px;z-index:3;margin-bottom:12px;padding:11px;border:1px solid #8b6944;border-radius:11px;background:#fff8e6;box-shadow:0 3px 9px #0002}
+.collection-progress>div:first-child{display:flex;justify-content:space-between;align-items:center;margin-bottom:7px}
+.collection-progress b{font-size:15px}.collection-progress span{font-size:13px;color:#6b5a48}
+.collection-track{height:13px;overflow:hidden;border-radius:999px;background:#d2c4aa;box-shadow:inset 0 1px 3px #0004}
+.collection-track i{display:block;height:100%;border-radius:inherit;background:linear-gradient(90deg,#8a5837,#dfb75d);transition:width .35s ease}
+.collection-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.collection-card{display:grid;gap:4px;min-width:0;padding:7px;background:#f5e5c3;text-align:left}
+.collection-card:disabled{cursor:default;opacity:1}.collection-art{position:relative;overflow:hidden;width:100%;aspect-ratio:3/4;border:2px solid #7c5738;border-radius:8px;background:#090806}
+.collection-art img{width:100%;height:100%;object-fit:cover}.collection-art span{position:absolute;right:5px;bottom:5px;padding:3px 6px;border-radius:999px;background:#27180dcc;color:#fff;font-size:9px}
+.collection-card.locked{border-color:#302820;background:#5b5045;color:#e2d8c8}.collection-card.locked .collection-art{border-color:#1c1814;background:#050505}
+.collection-card.locked img{filter:brightness(0);opacity:.72}.collection-card.locked .collection-art span{inset:50% auto auto 50%;transform:translate(-50%,-50%);padding:0;background:none;font-size:38px;color:#897c6c}
+.collection-card b{font-size:13px;text-align:center}.collection-card small{overflow:hidden;color:inherit;font-size:10px;line-height:1.25;text-align:center}
+.collection-detail{margin-top:12px;padding:10px;border:1px solid #8b6944;border-radius:10px;background:#fff8e6;color:#6b5a48;font-size:11px}
+.collection-detail img{display:block;width:100%;max-height:430px;margin-bottom:8px;border-radius:8px;object-fit:contain;background:#1d1712}.collection-detail b{color:#2b2118;font-size:13px}.collection-detail p{margin:5px 0 0}
