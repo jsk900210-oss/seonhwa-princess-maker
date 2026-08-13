@@ -135,7 +135,7 @@ function updateHomeCharacter(){
   const condition=homeCondition();
   document.querySelector('#characterSlot').dataset.condition=condition;
   character.alt=`${game.characterName||'아이'} · ${condition}`;
-  character.src=condition==='normal'&&game.equippedOutfit?outfitImage(game.equippedOutfit):homeConditionPoses[condition];
+  character.src=game.equippedOutfit?outfitImage(game.equippedOutfit):homeConditionPoses[condition];
 }
 function applyEquippedOutfit(){updateHomeCharacter();}
 const outfitSituation={reading:['scholar','neat'],arithmetic:['scholar','neat'],manners:['court','ceremony','festival','neat'],errand:['travel','work','active'],sweeping:['work','active','simple'],herbs:['travel','work','active'],houseclean:['work','active','simple'],rest:['simple','neat'],sleep:['simple','neat'],shopping:['festival','flower','silk']};
@@ -147,11 +147,32 @@ function recommendOutfit(actionId=null){
   return owned.sort((a,b)=>score(b)-score(a))[0]?.id||null;
 }
 function updateAutoOutfit(actionId=null){if(!game.autoOutfit)return game.equippedOutfit;game.equippedOutfit=recommendOutfit(actionId);applyEquippedOutfit();return game.equippedOutfit;}
-async function animateActivitySprite(image,motion,activity,npcImage,npc){
+const activityOutfitFrameCache=new Map();
+function activityOutfitPalette(outfitId){
+  if(!outfitId)return null;
+  if(/active|work|travel|simple/.test(outfitId))return {skirt:[54,126,125],top:[220,172,74]};
+  if(/flower|festival|art|silk/.test(outfitId))return {skirt:[211,96,120],top:[236,190,195]};
+  if(/court|ceremony/.test(outfitId))return {skirt:[59,79,126],top:[218,187,112]};
+  return {skirt:[143,171,145],top:null};
+}
+function outfitActivityFrame(src,outfitId){
+  const palette=activityOutfitPalette(outfitId);if(!palette)return Promise.resolve(src);
+  const key=`${outfitId}|${src}`;if(activityOutfitFrameCache.has(key))return Promise.resolve(activityOutfitFrameCache.get(key));
+  return new Promise(resolve=>{const source=new Image();source.onload=()=>{try{const canvas=document.createElement('canvas');canvas.width=source.naturalWidth;canvas.height=source.naturalHeight;const context=canvas.getContext('2d',{willReadFrequently:true});context.drawImage(source,0,0);const frame=context.getImageData(0,0,canvas.width,canvas.height),data=frame.data;
+    for(let y=0;y<canvas.height;y++)for(let x=0;x<canvas.width;x++){const i=(y*canvas.width+x)*4;if(data[i+3]<24)continue;const r=data[i],g=data[i+1],b=data[i+2];
+      const pink=r>155&&g>42&&g<155&&b>52&&b<180&&r>g*1.32&&r>b*1.12;
+      const central=x>canvas.width*.16&&x<canvas.width*.84&&y>canvas.height*.2&&y<canvas.height*.76;
+      const ivory=central&&r>188&&g>165&&b>130&&r-b<62&&r-g<45;
+      const target=pink?palette.skirt:(ivory&&palette.top?palette.top:null);if(!target)continue;
+      const light=(r+g+b)/3/170;data[i]=Math.min(255,target[0]*light);data[i+1]=Math.min(255,target[1]*light);data[i+2]=Math.min(255,target[2]*light);
+    }
+    context.putImageData(frame,0,0);const result=canvas.toDataURL('image/png');activityOutfitFrameCache.set(key,result);resolve(result);}catch{resolve(src);}};source.onerror=()=>resolve(src);source.src=src;});
+}
+async function animateActivitySprite(image,motion,activity,npcImage,npc,outfitId){
   if(activity){
     const sequence=activity==='errand'?[0,1,1,2,2,1,0]:activity==='houseclean'?[0,1,2,3,4,5]:activity==='sleep'?[0,1,2,1,0]:[0,1,2,1,0,1,2];
     const delay=activity==='errand'?270:activity==='houseclean'?360:activity==='sleep'?430:190;
-    for(const frame of sequence){image.src=activityFrames[activity][frame];if(npc)npcImage.src=(npc==='teacher'?npcFrames.teacherReading:npcFrames[npc])[frame%3];await new Promise(resolve=>setTimeout(resolve,delay));}
+    for(const frame of sequence){image.src=await outfitActivityFrame(activityFrames[activity][frame],outfitId);if(npc)npcImage.src=(npc==='teacher'?npcFrames.teacherReading:npcFrames[npc])[frame%3];await new Promise(resolve=>setTimeout(resolve,delay));}
     return;
   }
   const direction=motion==='motion-walk'?'right':'down';
@@ -497,7 +518,7 @@ function renderShopPanel(tab='food',marketMode=marketShoppingActive){
   document.querySelector('#shopBack').addEventListener('click',()=>{if(marketMode)returnToMarketSelection();else renderSchedulePanel();});
 }
 function formatChanges(change){return Object.entries(change).map(([key,value])=>`${statLabels[key]||key} ${value>0?'+':''}${value}`).join(' · ');}
-async function buyFood(id){const food=foods.find(item=>item.id===id);if(!food||game.money<food.price||marketMealConsumed)return;marketMealConsumed=true;panel.hidden=true;const stage=document.querySelector('#activityStage'),image=document.querySelector('#stageCharacterImage'),character=document.querySelector('#stageCharacter');document.querySelector('#marketExplore').hidden=true;stage.hidden=false;stage.className='activity-stage map-restRoom eating-stage';document.querySelector('#stageMap').src=backgrounds.restRoom;document.querySelector('#stageNpc').hidden=true;document.querySelector('#stageProps').hidden=true;document.querySelector('#stageCaption').textContent=`주막 · ${food.name}`;character.hidden=false;character.className='stage-character pixel-sprite motion-eating';for(const n of [1,2,3,2,1,2,3]){image.src=`../assets/characters/seonhwa/age-09/sprites/activities/eating-${n}.png`;await new Promise(r=>setTimeout(r,320));}stage.hidden=true;game.money-=food.price;applyShopChanges(food.change);document.querySelector('#dialogueText').textContent=`주막에서 ${food.name}을(를) 맛있게 먹었어요. 이번 저잣거리 방문의 식사는 끝났어요.`;showLiveChanges({change:food.change,cost:food.price});panel.hidden=false;renderShopPanel('food',true);}
+async function buyFood(id){const food=foods.find(item=>item.id===id);if(!food||game.money<food.price||marketMealConsumed)return;marketMealConsumed=true;panel.hidden=true;const stage=document.querySelector('#activityStage'),image=document.querySelector('#stageCharacterImage'),character=document.querySelector('#stageCharacter');document.querySelector('#marketExplore').hidden=true;stage.hidden=false;stage.className='activity-stage map-restRoom eating-stage';document.querySelector('#stageMap').src=backgrounds.restRoom;document.querySelector('#stageNpc').hidden=true;document.querySelector('#stageProps').hidden=true;document.querySelector('#stageCaption').textContent=`주막 · ${food.name}`;character.hidden=false;character.className='stage-character pixel-sprite motion-eating';for(const n of [1,2,3,2,1,2,3]){image.src=await outfitActivityFrame(`../assets/characters/seonhwa/age-09/sprites/activities/eating-${n}.png`,game.equippedOutfit);await new Promise(r=>setTimeout(r,320));}stage.hidden=true;game.money-=food.price;applyShopChanges(food.change);document.querySelector('#dialogueText').textContent=`주막에서 ${food.name}을(를) 맛있게 먹었어요. 이번 저잣거리 방문의 식사는 끝났어요.`;showLiveChanges({change:food.change,cost:food.price});panel.hidden=false;renderShopPanel('food',true);}
 function buyOutfit(id){const outfit=outfits.find(item=>item.id===id);if(!outfit||outfit.age!==game.age||game.money<outfit.price)return;if(game.items.some(item=>typeof item==='object'&&item.id===id))return;game.money-=outfit.price;game.items.push({id:outfit.id,type:'outfit',name:outfit.name,age:outfit.age,tone:outfit.tone,qty:1});game.equippedOutfit=id;applyEquippedOutfit();applyShopChanges(outfit.change);document.querySelector('#dialogueText').textContent=`${outfit.name}을(를) 구입하고 갈아입었어요.`;showLiveChanges({change:outfit.change,cost:outfit.price});renderShopPanel('outfit');}
 
 const marketPlaces=[
@@ -693,7 +714,7 @@ async function playWeeklySchedule(selected) {
       stage.hidden=true;stageNpc.hidden=true;stageProps.hidden=true;stageCharacter.hidden=true;
       const metSomeone=await playVacationScene(prize,index);
       document.querySelector('#dialogueText').textContent=metSomeone?`바캉스에서 「${prize.name}」 일러스트와 ${metSomeone.name}의 인연 추억을 얻었어요.`:`바캉스에서 「${prize.name}」 일러스트를 획득했어요.`;
-    }else await animateActivitySprite(stageCharacterImage,presentation.motion,presentation.activity,stageNpcImage,presentation.npc);
+    }else await animateActivitySprite(stageCharacterImage,presentation.motion,presentation.activity,stageNpcImage,presentation.npc,dailyOutfit);
     const condition=['shopping','vacation'].includes(action.id)?null:conditionEvent(simulated.fatigue,simulated.stress,index);
     if(condition){
       setScheduleDialogue(action,condition,index);
