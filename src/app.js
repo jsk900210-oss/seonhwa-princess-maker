@@ -75,16 +75,15 @@ const spriteFrames = {
   right: [1,2,3].map(n=>`../assets/characters/seonhwa/age-09/sprites/walk/seonhwa-walk-right-${n}.png`)
 };
 const activityFrames = Object.fromEntries(['sweeping','manners','calligraphy','arithmetic','errand','herbs','rest'].map(name=>[name,[1,2,3].map(n=>`../assets/characters/seonhwa/age-09/sprites/activities/${name}-${n}.png`)]));
-// 집에서 쉬기는 잠자기가 아니라 앉아서 숨을 고르는 일정이다. 왼쪽 경계에
-// 붙어 잘려 보이던 수면 프레임(rest-3)은 이 일정의 재생 목록에서 제외한다.
-activityFrames.rest=[activityFrames.rest[0],activityFrames.rest[1],activityFrames.rest[0]];
+// 집에서 휴식은 이불에 누워 잠드는 3프레임 호흡 루프를 사용한다.
+activityFrames.rest=[1,2,3].map(n=>`../assets/characters/seonhwa/age-09/sprites/activities/rest-${n}.png`);
 activityFrames.calligraphy=[1,2,3].map(n=>`../assets/characters/seonhwa/age-09/sprites/activities/calligraphy-v2-${n}.png`);
 // The third source cell belonged to calligraphy; keep arithmetic on the abacus-only frames.
 activityFrames.arithmetic=[1,2,3].map(n=>`../assets/characters/seonhwa/age-09/sprites/activities/arithmetic-v2-${n}.png`);
 activityFrames.manners=[1,2,3].map(n=>`../assets/characters/seonhwa/age-09/sprites/activities/manners-fixed-${n}.png`);
 activityFrames.errand=[1,2,3].map(n=>`../assets/characters/seonhwa/age-09/sprites/activities/errand-character-v4-${n}.png`);
 activityFrames.houseclean=[1,2,3].map(n=>`../assets/characters/seonhwa/age-09/sprites/activities/houseclean-${n}.png`);
-activityFrames.sleep=[activityFrames.rest[2],activityFrames.rest[2],activityFrames.rest[2]];
+activityFrames.sleep=[...activityFrames.rest];
 const npcFrames = Object.fromEntries(['teacher','dolsoe','herbalist','nanny'].map(name=>[name,[1,2,3].map(n=>`../assets/characters/npcs/activity/${name}-${n}.png`)]));
 npcFrames.teacherReading=[1,2,3].map(n=>`../assets/characters/npcs/activity/teacher-reading-${n}.png`);
 const foods = [
@@ -147,9 +146,9 @@ function recommendOutfit(actionId=null){
 function updateAutoOutfit(actionId=null){if(!game.autoOutfit)return game.equippedOutfit;game.equippedOutfit=recommendOutfit(actionId);applyEquippedOutfit();return game.equippedOutfit;}
 async function animateActivitySprite(image,motion,activity,npcImage,npc){
   if(activity){
-    const sequence=activity==='errand'?[0,1,1,2,2,1,0]:[0,1,2,1,0,1,2];
-    const delay=activity==='errand'?270:190;
-    for(const frame of sequence){image.src=activityFrames[activity][frame];if(npc)npcImage.src=(activity==='calligraphy'?npcFrames.teacherReading:npcFrames[npc])[frame%3];await new Promise(resolve=>setTimeout(resolve,delay));}
+    const sequence=activity==='errand'?[0,1,1,2,2,1,0]:activity==='houseclean'?[0,1,2,1,0,1,2]:activity==='sleep'?[0,1,2,1,0]:[0,1,2,1,0,1,2];
+    const delay=activity==='errand'?270:activity==='houseclean'?310:activity==='sleep'?430:190;
+    for(const frame of sequence){image.src=activityFrames[activity][frame];if(npc)npcImage.src=(npc==='teacher'?npcFrames.teacherReading:npcFrames[npc])[frame%3];await new Promise(resolve=>setTimeout(resolve,delay));}
     return;
   }
   const direction=motion==='motion-walk'?'right':'down';
@@ -658,8 +657,8 @@ async function playWeeklySchedule(selected) {
     stageProps.className = `stage-props prop-${presentation.prop}`;
     stageNpc.hidden = !presentation.npc;
     stageNpc.className = presentation.npc ? `stage-npc npc-${presentation.npc}` : 'stage-npc';
-    if(presentation.npc)stageNpcImage.src = npcFrames[presentation.npc][0];
-    stage.className = `activity-stage map-${presentation.location}`;
+    if(presentation.npc)stageNpcImage.src = (presentation.npc==='teacher'?npcFrames.teacherReading:npcFrames[presentation.npc])[0];
+    stage.className = `activity-stage map-${presentation.location} action-${action.id}`;
     stageCharacter.className = `stage-character pixel-sprite ${presentation.motion}`;
     if(action.id==='shopping'){
       stageMap.src=backgrounds.market;

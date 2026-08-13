@@ -295,6 +295,32 @@
 .market-choice-stage .market-shop>img{pointer-events:none!important}
 .market-choice-stage .market-shop.tavern{z-index:3!important;clip-path:inset(0 0 0 0)}
 .market-choice-stage .market-shop.hanbok{z-index:3!important;clip-path:inset(0 0 0 0)}
+
+/* v0.61.10-debug — separated cast and explicit activity motions */
+.activity-stage:not(.market-choice-stage):has(.stage-npc:not([hidden])) .stage-character.pixel-sprite{
+  left:30%;width:142px;height:142px;bottom:2%;
+}
+.activity-stage:not(.market-choice-stage):has(.stage-npc:not([hidden])) .stage-npc{
+  right:0;left:auto;width:142px;height:142px;bottom:2%;
+}
+.activity-stage.action-reading .stage-character.pixel-sprite,
+.activity-stage.action-arithmetic .stage-character.pixel-sprite,
+.activity-stage.action-manners .stage-character.pixel-sprite{left:28%;}
+.activity-stage.action-reading .stage-npc.npc-teacher,
+.activity-stage.action-arithmetic .stage-npc.npc-teacher,
+.activity-stage.action-manners .stage-npc.npc-teacher{right:-1%;width:148px;height:148px;animation:none;}
+.activity-stage.action-houseclean .stage-character.pixel-sprite.motion-houseclean{
+  left:50%;bottom:1%;width:184px;height:170px;padding:0;animation:houseclean-side-step 2.15s ease-in-out 1 both;
+}
+.activity-stage.action-houseclean .stage-character.pixel-sprite.motion-houseclean img{object-position:center bottom;}
+.activity-stage.action-rest .stage-character.pixel-sprite.motion-resting{
+  left:50%;bottom:1%;width:206px;height:132px;padding:0;animation:none!important;
+}
+.activity-stage.action-rest .stage-character.pixel-sprite.motion-resting:after{display:none;}
+@keyframes houseclean-side-step{
+  0%,100%{transform:translateX(-66%)}
+  50%{transform:translateX(-34%)}
+}
 .market-choice-stage .market-explore:has(.market-confirm:not([hidden])) .market-shop{pointer-events:none!important}
 .market-confirm{pointer-events:auto}
 
