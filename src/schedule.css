@@ -310,16 +310,28 @@
 .activity-stage.action-arithmetic .stage-npc.npc-teacher,
 .activity-stage.action-manners .stage-npc.npc-teacher{right:-1%;width:148px;height:148px;animation:none;}
 .activity-stage.action-houseclean .stage-character.pixel-sprite.motion-houseclean{
-  left:50%;bottom:1%;width:184px;height:170px;padding:0;animation:houseclean-side-step 2.15s ease-in-out 1 both;
+  left:24%;bottom:2%;width:126px;height:126px;padding:0;animation:houseclean-floor-patrol 2.16s linear 1 both;
 }
 .activity-stage.action-houseclean .stage-character.pixel-sprite.motion-houseclean img{object-position:center bottom;}
 .activity-stage.action-rest .stage-character.pixel-sprite.motion-resting{
   left:50%;bottom:1%;width:206px;height:132px;padding:0;animation:none!important;
 }
 .activity-stage.action-rest .stage-character.pixel-sprite.motion-resting:after{display:none;}
-@keyframes houseclean-side-step{
-  0%,100%{transform:translateX(-66%)}
-  50%{transform:translateX(-34%)}
+@keyframes houseclean-floor-patrol{
+  0%{left:24%;transform:translateX(-50%)}
+  42%{left:76%;transform:translateX(-50%)}
+  50%{left:76%;transform:translateX(-50%)}
+  92%,100%{left:24%;transform:translateX(-50%)}
+}
+
+/* v0.61.12-debug — clean study-room foreground and smaller side-profile mopping */
+.activity-stage.action-reading .stage-map{
+  object-fit:cover;
+  object-position:center center;
+}
+.activity-stage.action-reading .stage-character.pixel-sprite,
+.activity-stage.action-reading .stage-npc.npc-teacher{
+  bottom:1%;
 }
 .market-choice-stage .market-explore:has(.market-confirm:not([hidden])) .market-shop{pointer-events:none!important}
 .market-confirm{pointer-events:auto}

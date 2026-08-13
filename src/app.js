@@ -45,7 +45,7 @@ const backgrounds = {
   pharmacy: '../assets/backgrounds/pharmacy/pharmacy-day.webp',
   courtyard: '../assets/backgrounds/pixel-activities/close/courtyard.webp',
   etiquetteRoom: '../assets/backgrounds/pixel-activities/close/etiquette-room.webp',
-  studyRoom: '../assets/backgrounds/pixel-activities/close/study-room.webp',
+  studyRoom: '../assets/backgrounds/pixel-activities/close/study-room-clear.webp',
   arithmeticRoom: '../assets/backgrounds/pixel-activities/close/arithmetic-room.webp',
   marketErrand: '../assets/backgrounds/pixel-activities/close/market-errand-v2.webp',
   herbField: '../assets/backgrounds/pixel-activities/close/herb-field-v2.webp',
@@ -82,7 +82,7 @@ activityFrames.calligraphy=[1,2,3].map(n=>`../assets/characters/seonhwa/age-09/s
 activityFrames.arithmetic=[1,2,3].map(n=>`../assets/characters/seonhwa/age-09/sprites/activities/arithmetic-v2-${n}.png`);
 activityFrames.manners=[1,2,3].map(n=>`../assets/characters/seonhwa/age-09/sprites/activities/manners-fixed-${n}.png`);
 activityFrames.errand=[1,2,3].map(n=>`../assets/characters/seonhwa/age-09/sprites/activities/errand-character-v4-${n}.png`);
-activityFrames.houseclean=[1,2,3].map(n=>`../assets/characters/seonhwa/age-09/sprites/activities/houseclean-${n}.png`);
+activityFrames.houseclean=[1,2,3,4,5,6].map(n=>`../assets/characters/seonhwa/age-09/sprites/activities/houseclean-side-${n}.png`);
 activityFrames.sleep=[...activityFrames.rest];
 const npcFrames = Object.fromEntries(['teacher','dolsoe','herbalist','nanny'].map(name=>[name,[1,2,3].map(n=>`../assets/characters/npcs/activity/${name}-${n}.png`)]));
 npcFrames.teacherReading=[1,2,3].map(n=>`../assets/characters/npcs/activity/teacher-reading-${n}.png`);
@@ -146,8 +146,8 @@ function recommendOutfit(actionId=null){
 function updateAutoOutfit(actionId=null){if(!game.autoOutfit)return game.equippedOutfit;game.equippedOutfit=recommendOutfit(actionId);applyEquippedOutfit();return game.equippedOutfit;}
 async function animateActivitySprite(image,motion,activity,npcImage,npc){
   if(activity){
-    const sequence=activity==='errand'?[0,1,1,2,2,1,0]:activity==='houseclean'?[0,1,2,1,0,1,2]:activity==='sleep'?[0,1,2,1,0]:[0,1,2,1,0,1,2];
-    const delay=activity==='errand'?270:activity==='houseclean'?310:activity==='sleep'?430:190;
+    const sequence=activity==='errand'?[0,1,1,2,2,1,0]:activity==='houseclean'?[0,1,2,3,4,5]:activity==='sleep'?[0,1,2,1,0]:[0,1,2,1,0,1,2];
+    const delay=activity==='errand'?270:activity==='houseclean'?360:activity==='sleep'?430:190;
     for(const frame of sequence){image.src=activityFrames[activity][frame];if(npc)npcImage.src=(npc==='teacher'?npcFrames.teacherReading:npcFrames[npc])[frame%3];await new Promise(resolve=>setTimeout(resolve,delay));}
     return;
   }
