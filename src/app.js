@@ -416,7 +416,8 @@ function inventoryImage(item){
 }
 function renderInventory(category='all'){
   normalizeInventory();panelTitle.textContent='소지품';
-  const filtered=game.items.filter(item=>category==='all'||item.type===category).slice(0,180);
+  const collectionCardIds=new Set(vacationIllustrations.map(item=>item.id));
+  const filtered=game.items.filter(item=>!collectionCardIds.has(item.id)&&(category==='all'||item.type===category)).slice(0,180);
   const slots=Array.from({length:180},(_,index)=>{const item=filtered[index];if(!item)return '<div class="inventory-slot empty" aria-hidden="true"></div>';const image=inventoryImage(item);return `<button class="inventory-slot filled ${game.equippedOutfit===item.id?'equipped':''}" data-item="${item.id}" title="${item.name}">${image?`<img src="${image}" alt="">`:`<i class="item-glyph type-${item.type}"></i>`}<span>${item.name}</span>${item.qty>1?`<b>${item.qty}</b>`:''}${game.equippedOutfit===item.id?'<em>착용</em>':''}</button>`;}).join('');
   panelBody.innerHTML=`<div class="inventory-tabs">${Object.entries(inventoryCategories).map(([id,label])=>`<button data-inventory-tab="${id}" class="${category===id?'on':''}">${label}</button>`).join('')}</div><div class="inventory-count"><b>${filtered.length}</b> / 180칸</div><div class="inventory-grid">${slots}</div><div class="inventory-detail" id="inventoryDetail">아이템을 누르면 설명과 사용 버튼이 표시됩니다.</div>`;
   panelBody.querySelectorAll('[data-inventory-tab]').forEach(button=>button.addEventListener('click',()=>renderInventory(button.dataset.inventoryTab)));
