@@ -376,6 +376,8 @@ function normalizeInventory(){
   game.items=game.items.map((item,index)=>typeof item==='string'?{id:`legacy-${index}`,type:'event',name:item,qty:1}:({...item,type:item.type||'event',qty:Math.max(1,item.qty||1)}));
   const vacationIds=new Set(vacationIllustrations.map(item=>item.id)),seenVacation=new Set();
   game.items=game.items.filter(item=>{if(!vacationIds.has(item.id))return true;item.qty=1;if(seenVacation.has(item.id))return false;seenVacation.add(item.id);return true;});
+  const seenOutfits=new Set();
+  game.items=game.items.filter(item=>{if(item.type!=='outfit')return true;item.qty=1;if(seenOutfits.has(item.id))return false;seenOutfits.add(item.id);return true;});
 }
 function inventoryImage(item){
   if(item.image)return item.image;
@@ -506,6 +508,7 @@ function returnToMarketSelection(){
   selectMarketShop(null);
 }
 function renderShopPanel(tab='food',marketMode=marketShoppingActive){
+  normalizeInventory();
   panelTitle.textContent=tab==='food'?'저잣거리 · 주막':'저잣거리 · 한복점';
   const keeper=tab==='food'?{name:'주모',image:'../assets/characters/npcs/shops/tavern-hostess.png',greeting:'어서 오세요. 따뜻한 음식이 준비되어 있답니다.'}:{name:'한복점 주인',image:'../assets/characters/npcs/shops/hanbok-owner.png',greeting:'어서 오세요. 곱게 지은 한복을 천천히 살펴보세요.'};
   const owned=new Set(game.items.filter(item=>typeof item==='object').map(item=>item.id));
@@ -519,7 +522,7 @@ function renderShopPanel(tab='food',marketMode=marketShoppingActive){
 }
 function formatChanges(change){return Object.entries(change).map(([key,value])=>`${statLabels[key]||key} ${value>0?'+':''}${value}`).join(' · ');}
 async function buyFood(id){const food=foods.find(item=>item.id===id);if(!food||game.money<food.price||marketMealConsumed)return;marketMealConsumed=true;panel.hidden=true;const stage=document.querySelector('#activityStage'),image=document.querySelector('#stageCharacterImage'),character=document.querySelector('#stageCharacter');document.querySelector('#marketExplore').hidden=true;stage.hidden=false;stage.className='activity-stage map-restRoom eating-stage';document.querySelector('#stageMap').src=backgrounds.restRoom;document.querySelector('#stageNpc').hidden=true;document.querySelector('#stageProps').hidden=true;document.querySelector('#stageCaption').textContent=`주막 · ${food.name}`;character.hidden=false;character.className='stage-character pixel-sprite motion-eating';for(const n of [1,2,3,2,1,2,3]){image.src=await outfitActivityFrame(`../assets/characters/seonhwa/age-09/sprites/activities/eating-${n}.png`,game.equippedOutfit);await new Promise(r=>setTimeout(r,320));}stage.hidden=true;game.money-=food.price;applyShopChanges(food.change);document.querySelector('#dialogueText').textContent=`주막에서 ${food.name}을(를) 맛있게 먹었어요. 이번 저잣거리 방문의 식사는 끝났어요.`;showLiveChanges({change:food.change,cost:food.price});panel.hidden=false;renderShopPanel('food',true);}
-function buyOutfit(id){const outfit=outfits.find(item=>item.id===id);if(!outfit||outfit.age!==game.age||game.money<outfit.price)return;if(game.items.some(item=>typeof item==='object'&&item.id===id))return;game.money-=outfit.price;game.items.push({id:outfit.id,type:'outfit',name:outfit.name,age:outfit.age,tone:outfit.tone,qty:1});game.equippedOutfit=id;applyEquippedOutfit();applyShopChanges(outfit.change);document.querySelector('#dialogueText').textContent=`${outfit.name}을(를) 구입하고 갈아입었어요.`;showLiveChanges({change:outfit.change,cost:outfit.price});renderShopPanel('outfit');}
+function buyOutfit(id){normalizeInventory();const outfit=outfits.find(item=>item.id===id);if(!outfit||outfit.age!==game.age||game.money<outfit.price)return;if(game.items.some(item=>item.type==='outfit'&&item.id===id)){document.querySelector('#dialogueText').textContent=`${outfit.name}은(는) 이미 보유하고 있어요.`;renderShopPanel('outfit');return;}game.money-=outfit.price;game.items.push({id:outfit.id,type:'outfit',name:outfit.name,age:outfit.age,tone:outfit.tone,qty:1});game.equippedOutfit=id;applyEquippedOutfit();applyShopChanges(outfit.change);document.querySelector('#dialogueText').textContent=`${outfit.name}을(를) 구입하고 갈아입었어요.`;showLiveChanges({change:outfit.change,cost:outfit.price});renderShopPanel('outfit');}
 
 const marketPlaces=[
   {id:'food',side:-1,label:'주막'},
