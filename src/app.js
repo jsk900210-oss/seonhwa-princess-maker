@@ -102,19 +102,21 @@ const foods = [
   {id:'jeongol',name:'전골',detail:'채소와 고기를 끓인 전골',price:95,change:{stress:-7,fatigue:-7,healthiness:5}}
 ];
 const outfits = [
-  {id:'age09-neat',age:9,name:'단정한 배움 한복',price:180,tone:'단정함',change:{manners:4,virtue:3,charm:1}},
-  {id:'age09-flower',age:9,name:'연분홍 꽃 한복',price:230,tone:'화려함',change:{charm:5,reputation:2,fatigue:1}},
-  {id:'age09-active',age:9,name:'마을 활동 한복',price:160,tone:'활동성',change:{health:3,craft:3,charm:-1}},
-  {id:'age13-scholar',age:13,name:'옥색 학문 한복',price:280,tone:'단정함',change:{study:5,manners:3,charm:1}},
-  {id:'age13-festival',age:13,name:'명절 색동 한복',price:340,tone:'화려함',change:{charm:6,reputation:3,fatigue:2}},
-  {id:'age13-work',age:13,name:'생활 작업 한복',price:240,tone:'활동성',change:{craft:5,health:3,charm:-1}},
-  {id:'age16-court',age:16,name:'격식 당의 한복',price:480,tone:'격식',change:{manners:6,virtue:4,charm:3,fatigue:2}},
-  {id:'age16-art',age:16,name:'자수 예술 한복',price:520,tone:'화려함',change:{arts:5,charm:7,reputation:2,fatigue:2}},
-  {id:'age16-travel',age:16,name:'여행 활동 한복',price:390,tone:'활동성',change:{health:4,martial:3,charm:-1}},
-  {id:'age18-ceremony',age:18,name:'성년 예복 한복',price:720,tone:'격식',change:{manners:8,virtue:5,reputation:5,fatigue:3}},
-  {id:'age18-silk',age:18,name:'비단 연회 한복',price:780,tone:'화려함',change:{charm:10,reputation:4,virtue:-1,fatigue:3}},
-  {id:'age18-simple',age:18,name:'담백한 생활 한복',price:560,tone:'활동성',change:{craft:5,health:4,virtue:3,charm:-2}}
+  {id:'age09-neat',age:9,ageEnd:12,name:'단정한 배움 한복',price:180,tone:'단정함',seasons:['가을','겨울'],situations:['reading','arithmetic','manners'],change:{manners:4,virtue:3,charm:1}},
+  {id:'age09-flower',age:9,ageEnd:12,name:'연분홍 꽃 한복',price:230,tone:'화려함',seasons:['봄'],situations:['shopping','vacation'],change:{charm:5,reputation:2,fatigue:1}},
+  {id:'age09-active',age:9,ageEnd:12,name:'마을 활동 한복',price:160,tone:'활동성',seasons:['여름'],situations:['errand','sweeping','herbs','houseclean'],change:{health:3,craft:3,charm:-1}},
+  {id:'age13-scholar',age:13,ageEnd:15,name:'옥색 학문 한복',price:280,tone:'단정함',seasons:['가을','겨울'],situations:['reading','arithmetic'],change:{study:5,manners:3,charm:1}},
+  {id:'age13-festival',age:13,ageEnd:15,name:'명절 색동 한복',price:340,tone:'화려함',seasons:['봄','겨울'],situations:['manners','shopping','vacation'],change:{charm:6,reputation:3,fatigue:2}},
+  {id:'age13-work',age:13,ageEnd:15,name:'생활 작업 한복',price:240,tone:'활동성',seasons:['여름'],situations:['errand','sweeping','herbs','houseclean'],change:{craft:5,health:3,charm:-1}},
+  {id:'age16-court',age:16,ageEnd:17,name:'격식 당의 한복',price:480,tone:'격식',seasons:['가을','겨울'],situations:['manners','shopping'],change:{manners:6,virtue:4,charm:3,fatigue:2}},
+  {id:'age16-art',age:16,ageEnd:17,name:'자수 예술 한복',price:520,tone:'화려함',seasons:['봄'],situations:['reading','vacation','shopping'],change:{arts:5,charm:7,reputation:2,fatigue:2}},
+  {id:'age16-travel',age:16,ageEnd:17,name:'여행 활동 한복',price:390,tone:'활동성',seasons:['여름'],situations:['errand','herbs','sweeping','houseclean'],change:{health:4,martial:3,charm:-1}},
+  {id:'age18-ceremony',age:18,ageEnd:18,name:'성년 예복 한복',price:720,tone:'격식',seasons:['가을','겨울'],situations:['manners','shopping'],change:{manners:8,virtue:5,reputation:5,fatigue:3}},
+  {id:'age18-silk',age:18,ageEnd:18,name:'비단 연회 한복',price:780,tone:'화려함',seasons:['봄','겨울'],situations:['shopping','vacation'],change:{charm:10,reputation:4,virtue:-1,fatigue:3}},
+  {id:'age18-simple',age:18,ageEnd:18,name:'담백한 생활 한복',price:560,tone:'활동성',seasons:['여름','가을'],situations:['errand','sweeping','herbs','houseclean','rest'],change:{craft:5,health:4,virtue:3,charm:-2}}
 ];
+const outfitAgeLabel=outfit=>outfit.age===outfit.ageEnd?`${outfit.age}세`:`${outfit.age}–${outfit.ageEnd}세`;
+const outfitAvailable=outfit=>game.age>=outfit.age&&game.age<=outfit.ageEnd;
 const growthAge=()=>game.age>=18?18:game.age>=16?16:game.age>=13?13:9;
 const correctedAdultOutfits=new Set(['age13-scholar','age13-festival','age13-work','age16-court','age16-art','age16-travel']);
 const outfitImage=id=>{
@@ -143,7 +145,7 @@ const seasonPreference={봄:['flower','festival','art'],여름:['active','work',
 function recommendOutfit(actionId=null){
   normalizeInventory();const owned=game.items.filter(item=>item.type==='outfit'&&outfits.some(outfit=>outfit.id===item.id));if(!owned.length)return null;
   const situation=outfitSituation[actionId]||[],season=seasonPreference[game.season]||[];
-  const score=item=>{const outfit=outfits.find(entry=>entry.id===item.id);let value=0;situation.forEach((tag,index)=>{if(item.id.includes(tag))value+=30-index*3;});season.forEach((tag,index)=>{if(item.id.includes(tag))value+=18-index*2;});value-=Math.max(0,game.age-outfit.age)*2;return value;};
+  const score=item=>{const outfit=outfits.find(entry=>entry.id===item.id);let value=0;if(outfit.situations.includes(actionId))value+=45;if(outfit.seasons.includes(game.season))value+=30;situation.forEach((tag,index)=>{if(item.id.includes(tag))value+=12-index;});season.forEach((tag,index)=>{if(item.id.includes(tag))value+=7-index;});value-=Math.max(0,game.age-outfit.ageEnd)*2;return value;};
   return owned.sort((a,b)=>score(b)-score(a))[0]?.id||null;
 }
 function updateAutoOutfit(actionId=null){if(!game.autoOutfit)return game.equippedOutfit;game.equippedOutfit=recommendOutfit(actionId);applyEquippedOutfit();return game.equippedOutfit;}
@@ -447,7 +449,7 @@ function showVacationCollectionCard(id){
 function renderWardrobe(){
   panel.hidden=false;panelTitle.textContent='옷 갈아입기';
   const owned=game.items.filter(item=>item&&item.type==='outfit');
-  panelBody.innerHTML=`<div class="auto-outfit"><div><b>계절·상황 자동 갈아입기</b><small>${game.autoOutfit?'보유한 한복 중 알맞은 옷을 자동 선택합니다.':'직접 선택한 한복을 계속 입습니다.'}</small></div><button id="autoOutfitToggle" class="${game.autoOutfit?'on':''}">${game.autoOutfit?'켜짐':'꺼짐'}</button></div><div class="wardrobe-grid"><button class="wardrobe-card ${!game.equippedOutfit?'on':''}" data-wear=""><img src="${expressions[0][0]}" alt="기본 한복"><b>기본 한복</b></button>${owned.map(item=>`<button class="wardrobe-card ${game.equippedOutfit===item.id?'on':''}" data-wear="${item.id}"><img src="${outfitImage(item.id)}" alt="${item.name}"><b>${item.name}</b><small>${item.age<game.age?'자라서 조금 꼭 맞음':'현재 몸에 맞음'}</small></button>`).join('')}</div>`;
+  panelBody.innerHTML=`<div class="auto-outfit"><div><b>계절·상황 자동 갈아입기</b><small>${game.autoOutfit?'보유한 한복 중 알맞은 옷을 자동 선택합니다.':'직접 선택한 한복을 계속 입습니다.'}</small></div><button id="autoOutfitToggle" class="${game.autoOutfit?'on':''}">${game.autoOutfit?'켜짐':'꺼짐'}</button></div><div class="wardrobe-grid"><button class="wardrobe-card ${!game.equippedOutfit?'on':''}" data-wear=""><img src="${expressions[0][0]}" alt="기본 한복"><b>기본 한복</b></button>${owned.map(item=>{const meta=outfits.find(outfit=>outfit.id===item.id);return `<button class="wardrobe-card ${game.equippedOutfit===item.id?'on':''}" data-wear="${item.id}"><img src="${outfitImage(item.id)}" alt="${item.name}"><b>${item.name}</b><small>${meta?`${outfitAgeLabel(meta)} · ${meta.seasons.join('·')}<br>`:''}${meta&&game.age>meta.ageEnd?'자라서 조금 꼭 맞음':'현재 몸에 맞음'}</small></button>`;}).join('')}</div>`;
   document.querySelector('#autoOutfitToggle').addEventListener('click',()=>{game.autoOutfit=!game.autoOutfit;if(game.autoOutfit)updateAutoOutfit();renderWardrobe();});
   panelBody.querySelectorAll('[data-wear]').forEach(button=>button.addEventListener('click',()=>{game.autoOutfit=false;game.equippedOutfit=button.dataset.wear||null;applyEquippedOutfit();renderWardrobe();}));
 }
@@ -545,7 +547,7 @@ function renderShopPanel(tab='food',marketMode=marketShoppingActive){
   const keeper=tab==='food'?{name:'주모',image:'../assets/characters/npcs/shops/tavern-hostess.png',greeting:'어서 오세요. 따뜻한 음식이 준비되어 있답니다.'}:{name:'한복점 주인',image:'../assets/characters/npcs/shops/hanbok-owner.png',greeting:'어서 오세요. 곱게 지은 한복을 천천히 살펴보세요.'};
   const owned=new Set(game.items.filter(item=>typeof item==='object').map(item=>item.id));
   const foodCards=foods.map(food=>`<button class="shop-card visual-card" data-food="${food.id}" ${game.money<food.price||marketMealConsumed?'disabled':''}><img src="../assets/items/food/${food.id}.png" alt="${food.name}"><b>${food.name}</b><span>${food.price}냥</span><small>${marketMealConsumed?'이번 방문에는 이미 식사했어요':`${food.detail}<br>${formatChanges(food.change)}`}</small></button>`).join('');
-  const outfitCards=outfits.map(outfit=>`<button class="shop-card outfit-card visual-card ${outfit.age===game.age?'available':''}" data-outfit="${outfit.id}" ${outfit.age!==game.age||owned.has(outfit.id)||game.money<outfit.price?'disabled':''}><img src="../assets/characters/seonhwa/wardrobe/age-${String(outfit.age).padStart(2,'0')}/${outfit.id}.png" alt="${outfit.name}"><b>${outfit.name}</b><span>${outfit.price}냥</span><small>${outfit.age}세 · ${outfit.tone}<br>${formatChanges(outfit.change)}${owned.has(outfit.id)?'<br>구매 완료':''}</small></button>`).join('');
+  const outfitCards=outfits.map(outfit=>`<button class="shop-card outfit-card visual-card ${outfitAvailable(outfit)?'available':''}" data-outfit="${outfit.id}" ${!outfitAvailable(outfit)||owned.has(outfit.id)||game.money<outfit.price?'disabled':''}><img src="../assets/characters/seonhwa/wardrobe/age-${String(outfit.age).padStart(2,'0')}/${outfit.id}.png" alt="${outfit.name}"><b>${outfit.name}</b><span>${outfit.price}냥</span><small>${outfitAgeLabel(outfit)} · ${outfit.tone} · ${outfit.seasons.join('·')}<br>${formatChanges(outfit.change)}${owned.has(outfit.id)?'<br>구매 완료':''}</small></button>`).join('');
   panelBody.innerHTML=`<div class="shop-greeting"><img src="${keeper.image}" alt="${keeper.name}"><div><b>${keeper.name}</b><p>${keeper.greeting}</p></div></div><div class="shop-money">보유 은전 <b>${game.money.toLocaleString()}냥</b></div>${marketMode?'':`<div class="shop-tabs"><button data-shop-tab="food" class="${tab==='food'?'on':''}">주막</button><button data-shop-tab="outfit" class="${tab==='outfit'?'on':''}">한복점</button></div>`}<h3 class="shop-list-title">${tab==='food'?'음식 메뉴':'한복 상품'}</h3><div class="shop-grid">${tab==='food'?foodCards:outfitCards}</div><button id="shopBack">${marketMode?'저잣거리로 나가기':'일정으로 돌아가기'}</button>`;
   if(!marketMode)panelBody.querySelectorAll('[data-shop-tab]').forEach(button=>button.addEventListener('click',()=>renderShopPanel(button.dataset.shopTab,marketMode)));
   panelBody.querySelectorAll('[data-food]').forEach(button=>button.addEventListener('click',()=>buyFood(button.dataset.food)));
@@ -554,7 +556,7 @@ function renderShopPanel(tab='food',marketMode=marketShoppingActive){
 }
 function formatChanges(change){return Object.entries(change).map(([key,value])=>`${statLabels[key]||key} ${value>0?'+':''}${value}`).join(' · ');}
 async function buyFood(id){const food=foods.find(item=>item.id===id);if(!food||game.money<food.price||marketMealConsumed)return;marketMealConsumed=true;panel.hidden=true;const stage=document.querySelector('#activityStage'),image=document.querySelector('#stageCharacterImage'),character=document.querySelector('#stageCharacter');document.querySelector('#marketExplore').hidden=true;stage.hidden=false;stage.className='activity-stage map-restRoom eating-stage';document.querySelector('#stageMap').src=backgrounds.restRoom;document.querySelector('#stageNpc').hidden=true;document.querySelector('#stageProps').hidden=true;document.querySelector('#stageCaption').textContent=`주막 · ${food.name}`;character.hidden=false;character.className='stage-character pixel-sprite motion-eating';for(const n of [1,2,3,2,1,2,3]){image.src=await outfitActivityFrame(`../assets/characters/seonhwa/age-09/sprites/activities/eating-${n}.png`,game.equippedOutfit);await new Promise(r=>setTimeout(r,320));}stage.hidden=true;game.money-=food.price;applyShopChanges(food.change);document.querySelector('#dialogueText').textContent=`주막에서 ${food.name}을(를) 맛있게 먹었어요. 이번 저잣거리 방문의 식사는 끝났어요.`;showLiveChanges({change:food.change,cost:food.price});panel.hidden=false;renderShopPanel('food',true);}
-function buyOutfit(id){normalizeInventory();const outfit=outfits.find(item=>item.id===id);if(!outfit||outfit.age!==game.age||game.money<outfit.price)return;if(game.items.some(item=>item.type==='outfit'&&item.id===id)){document.querySelector('#dialogueText').textContent=`${outfit.name}은(는) 이미 보유하고 있어요.`;renderShopPanel('outfit');return;}game.money-=outfit.price;game.items.push({id:outfit.id,type:'outfit',name:outfit.name,age:outfit.age,tone:outfit.tone,qty:1});game.equippedOutfit=id;applyEquippedOutfit();applyShopChanges(outfit.change);document.querySelector('#dialogueText').textContent=`${outfit.name}을(를) 구입하고 갈아입었어요.`;showLiveChanges({change:outfit.change,cost:outfit.price});renderShopPanel('outfit');}
+function buyOutfit(id){normalizeInventory();const outfit=outfits.find(item=>item.id===id);if(!outfit||!outfitAvailable(outfit)||game.money<outfit.price)return;if(game.items.some(item=>item.type==='outfit'&&item.id===id)){document.querySelector('#dialogueText').textContent=`${outfit.name}은(는) 이미 보유하고 있어요.`;renderShopPanel('outfit');return;}game.money-=outfit.price;game.items.push({id:outfit.id,type:'outfit',name:outfit.name,age:outfit.age,ageEnd:outfit.ageEnd,tone:outfit.tone,seasons:outfit.seasons,qty:1});game.equippedOutfit=id;applyEquippedOutfit();applyShopChanges(outfit.change);document.querySelector('#dialogueText').textContent=`${outfit.name}을(를) 구입하고 갈아입었어요.`;showLiveChanges({change:outfit.change,cost:outfit.price});renderShopPanel('outfit');}
 
 const marketPlaces=[
   {id:'food',side:-1,label:'주막'},
