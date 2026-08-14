@@ -255,7 +255,7 @@ function resolvedActivityChange(action,outcome){
     change[key]=Math.round(value*multiplier);
   });
   if(outcome==='mistake'){
-    change.stress=(change.stress||0)+3;
+    change.stress=(change.stress||0)+2;
     change.health=(change.health||0)-1;
   }
   if(action.id==='rest'){
@@ -306,13 +306,13 @@ async function animateConditionEvent(stageCharacter,cue,type){
   cue.hidden=true;
 }
 const actions = [
-  { id: 'reading', category: '교육', name: '글읽기', cost: 80, summary: '학문 +6 · 스트레스 +4', change: { study: 6, stress: 4 } },
-  { id: 'arithmetic', category: '교육', name: '셈하기', cost: 70, summary: '학문 +4 · 스트레스 +3', change: { study: 4, stress: 3 } },
-  { id: 'manners', category: '교육', name: '예절 배우기', cost: 90, summary: '학문 +2 · 스트레스 +3', change: { study: 2, stress: 3 } },
-  { id: 'errand', category: '아르바이트', name: '장터 심부름', cost: -60, summary: '체력 +3 · 스트레스 +6 · 60냥 획득', change: { health: 3, stress: 6 } },
-  { id: 'sweeping', category: '아르바이트', name: '마당 쓸기', cost: -40, summary: '체력 +2 · 스트레스 +5 · 40냥 획득', change: { health: 2, stress: 5 } },
-  { id: 'herbs', category: '아르바이트', name: '약초 줍기', cost: -50, summary: '체력 +2 · 학문 +1 · 스트레스 +6', change: { health: 2, study: 1, stress: 6 } },
-  { id: 'houseclean', category: '아르바이트', name: '집 청소', cost: -35, summary: '솜씨 +2 · 체력 +2 · 스트레스 +5', change: { craft: 2, health: 2, stress: 5 } },
+  { id: 'reading', category: '교육', name: '글읽기', cost: 80, summary: '학문 +6 · 스트레스 +3', change: { study: 6, stress: 3 } },
+  { id: 'arithmetic', category: '교육', name: '셈하기', cost: 70, summary: '학문 +4 · 스트레스 +2', change: { study: 4, stress: 2 } },
+  { id: 'manners', category: '교육', name: '예절 배우기', cost: 90, summary: '학문 +2 · 스트레스 +2', change: { study: 2, stress: 2 } },
+  { id: 'errand', category: '아르바이트', name: '장터 심부름', cost: -60, summary: '체력 +3 · 스트레스 +4 · 60냥 획득', change: { health: 3, stress: 4 } },
+  { id: 'sweeping', category: '아르바이트', name: '마당 쓸기', cost: -40, summary: '체력 +2 · 스트레스 +3 · 40냥 획득', change: { health: 2, stress: 3 } },
+  { id: 'herbs', category: '아르바이트', name: '약초 줍기', cost: -50, summary: '체력 +2 · 학문 +1 · 스트레스 +4', change: { health: 2, study: 1, stress: 4 } },
+  { id: 'houseclean', category: '아르바이트', name: '집 청소', cost: -35, summary: '솜씨 +2 · 체력 +2 · 스트레스 +3', change: { craft: 2, health: 2, stress: 3 } },
   { id: 'rest', category: '휴식', name: '집에서 휴식', cost: 0, summary: '스트레스 -12 · 체력 +2', change: { health: 2, stress: -12 } },
   { id: 'shopping', category: '휴식', name: '저잣거리', cost: 0, summary: '', change: {}, special:'market' },
   { id: 'vacation', category: '휴식', name: '바캉스', cost: 180, summary: '스트레스 -25 · 추억 일러스트 획득', change: {stress:-25}, special:'vacation' }
