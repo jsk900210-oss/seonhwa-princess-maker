@@ -870,8 +870,10 @@ function finishStudioIntro(){
   if(studioIntroFinished)return;
   studioIntroFinished=true;
   const loading=document.querySelector('#studioLoading');
+  document.querySelector('#birthdaySetup').hidden=true;
+  renderPrologue();
   loading.classList.add('is-leaving');
-  setTimeout(()=>{loading.hidden=true;renderPrologue();},520);
+  setTimeout(()=>{loading.hidden=true;},520);
 }
 
 async function playWeeklySchedule(selected) {
