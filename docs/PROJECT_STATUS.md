@@ -1,14 +1,15 @@
 # 《선화공주 만들기》 프로젝트 현황
 
 최종 갱신: 2026-08-14  
-기준 버전: `v0.61.52-debug`
+기준 버전: `v0.61.53-debug`
 
 ## 저장 위치
 
 - 로컬 프로젝트: `outputs/seonhwa-princess-mvp/`
 - GitHub: `https://github.com/jsk900210-oss/seonhwa-princess-maker`
 - Notion: `공주 키우기 — 프메2 스타일 개발 정리`
-- 실행 주소: `http://127.0.0.1:8000/src/?v=0.61.52-debug`
+- 로컬 실행: `http://127.0.0.1:8000/src/?v=0.61.53-debug`
+- 공개 테스트: `https://jsk900210-oss.github.io/seonhwa-princess-maker/`
 
 ## 현재 구현 완료
 
@@ -29,6 +30,7 @@
 - 활동별 능력치 즉시 반영과 집에서 휴식 피로 감소 보장
 - 집에서 휴식 장면의 문구·캐릭터 이미지 겹침 수정
 - 피로도·스트레스 최대치를 모두 100으로 통일
+- GitHub Pages 기반 외부 테스터 공개 배포 구성
 
 ## 핵심 결정사항
 
