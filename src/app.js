@@ -18,6 +18,7 @@ const originalPrologueScenes = [
 ];
 const prologueScenes=window.SEONHWA_STORY?.prologue||originalPrologueScenes;
 let prologueIndex=0, prologueTimer=null;
+let prologueImageLayer=0, prologueRenderId=0;
 let prologueSoundOn=true, rainAudio=null;
 const gameMusic=new Audio();
 gameMusic.preload='auto';gameMusic.loop=true;gameMusic.volume=.24;
@@ -837,11 +838,25 @@ function showEnding(){
   panelBody.innerHTML=`<div class="ending-card"><h2>마지막 생일 다음 날</h2><p>${game.age}세 · ${game.season}</p><p>아홉 살 생일부터 이어진 ${game.characterName || '아이'}의 성장 이야기가 완성되었습니다.</p><button id="endingRestart">새로운 생일로 시작</button></div>`;
   document.querySelector('#endingRestart').addEventListener('click',resetGame);
 }
+function updatePrologueCopy(scene,index){
+  const copy=document.querySelector('.prologue-copy');
+  document.querySelector('#prologueChapter').textContent=scene.id?`서장 ${scene.id} · ${scene.chapter}`:scene.chapter;
+  document.querySelector('#prologueText').innerHTML=`${scene.text}${scene.dialogue?`<br><em>${scene.dialogue}</em>`:''}`;
+  document.querySelector('#prologueProgress').innerHTML=prologueScenes.map((_,i)=>`<i class="${i===index?'on':''}"></i>`).join('');
+  document.querySelector('#prologueBack').disabled=index===0;
+  document.querySelector('#prologueNext').textContent=index===prologueScenes.length-1?'이름 정하기':'다음';
+  requestAnimationFrame(()=>copy.classList.remove('is-changing'));
+}
 function renderPrologue(){
-  const scene=prologueScenes[prologueIndex], wrap=document.querySelector('#prologue'), image=document.querySelector('#prologueImage');
-  wrap.hidden=false; wrap.classList.toggle('outdoor-rain',Boolean(scene.rain)); wrap.classList.add('scene-change'); clearTimeout(prologueTimer);
-  updatePrologueAudio(Boolean(scene.rain));
-  setTimeout(()=>{image.src=scene.image;image.alt=scene.alt;document.querySelector('#prologueChapter').textContent=scene.id?`서장 ${scene.id} · ${scene.chapter}`:scene.chapter;document.querySelector('#prologueText').innerHTML=`${scene.text}${scene.dialogue?`<br><em>${scene.dialogue}</em>`:''}`;document.querySelector('#prologueProgress').innerHTML=prologueScenes.map((_,i)=>`<i class="${i===prologueIndex?'on':''}"></i>`).join('');document.querySelector('#prologueBack').disabled=prologueIndex===0;document.querySelector('#prologueNext').textContent=prologueIndex===prologueScenes.length-1?'이름 정하기':'다음';wrap.classList.remove('scene-change');},220);
+  const scene=prologueScenes[prologueIndex],index=prologueIndex,wrap=document.querySelector('#prologue'),copy=document.querySelector('.prologue-copy');
+  const images=[document.querySelector('#prologueImage'),document.querySelector('#prologueImageNext')],current=images[prologueImageLayer],incoming=images[1-prologueImageLayer],renderId=++prologueRenderId;
+  wrap.hidden=false;wrap.classList.toggle('outdoor-rain',Boolean(scene.rain));clearTimeout(prologueTimer);updatePrologueAudio(Boolean(scene.rain));
+  if(current.getAttribute('src')===scene.image){current.classList.add('active');updatePrologueCopy(scene,index);}
+  else{
+    copy.classList.add('is-changing');incoming.src=scene.image;incoming.alt=scene.alt;
+    const reveal=()=>{if(renderId!==prologueRenderId)return;incoming.classList.add('active');current.classList.remove('active');prologueImageLayer=1-prologueImageLayer;updatePrologueCopy(scene,index);};
+    if(incoming.complete)Promise.resolve(incoming.decode?.()).catch(()=>{}).finally(reveal);else incoming.addEventListener('load',reveal,{once:true});
+  }
   prologueTimer=setTimeout(nextPrologue,8500);
 }
 function nextPrologue(){ if(prologueIndex<prologueScenes.length-1){prologueIndex++;renderPrologue();}else closePrologue(); }
@@ -996,6 +1011,7 @@ document.querySelector('#prologueSkip').addEventListener('click',closePrologue);
 document.querySelector('#storyReplay').addEventListener('click',replayPrologue);
 document.addEventListener('pointerdown',unlockDefaultPrologueSound,{passive:true});
 document.querySelector('#studioLoading').addEventListener('click',finishStudioIntro);
+prologueScenes.forEach(scene=>{const image=new Image();image.src=scene.image;});
 renderHud();
 updateHomeCharacter();
 updateImageState();
