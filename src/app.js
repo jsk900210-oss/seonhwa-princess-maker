@@ -22,11 +22,11 @@ let prologueImageLayer=0, prologueRenderId=0;
 let prologueSoundOn=true, rainAudio=null;
 const gameMusic=new Audio();
 gameMusic.preload='auto';gameMusic.loop=true;gameMusic.volume=.24;
-const gameMusicTracks={home:'../assets/audio/music/gameplay/bgm-home-daily.mp3',schedule:'../assets/audio/music/gameplay/bgm-schedule.mp3'};
+const gameMusicTracks={home:'../assets/audio/music/gameplay/bgm-home-daily.mp3',market:'../assets/audio/music/gameplay/bgm-schedule.mp3'};
 function vacationMusicPath(){const age=game.age>=18?'18':game.age>=16?'16':game.age>=13?'13':'09';const season={봄:'spring',여름:'summer',가을:'autumn',겨울:'winter'}[game.season]||'spring';return `../assets/audio/music/vacation/age-${age}/vacation-${season}.mp3`;}
 function playGameMusic(source,volume=.24){if(!source)return;if(!gameMusic.src.endsWith(source.replace('../','/'))){gameMusic.pause();gameMusic.src=source;gameMusic.currentTime=0;}gameMusic.volume=volume;gameMusic.play().catch(()=>{});}
 function playHomeMusic(){playGameMusic(gameMusicTracks.home,.22);}
-function playScheduleMusic(){playGameMusic(gameMusicTracks.schedule,.20);}
+function playMarketMusic(){playGameMusic(gameMusicTracks.market,.20);}
 function playVacationMusic(){playGameMusic(vacationMusicPath(),.28);}
 function stopGameMusic(){fadeAudio(gameMusic,0,350);}
 function transitionPrologueToHomeMusic(){
@@ -332,7 +332,7 @@ async function playVacationScene(prize,index){
     game.relations=game.relations||{};game.relations[relation.id]=(game.relations[relation.id]||0)+1;
     await waitForVacationTap('대화를 읽은 뒤 터치');
   }
-  talk.hidden=true;person.hidden=true;scene.classList.remove('has-encounter');scene.hidden=true;phone.classList.remove('vacation-playing');playScheduleMusic();
+  talk.hidden=true;person.hidden=true;scene.classList.remove('has-encounter');scene.hidden=true;phone.classList.remove('vacation-playing');playHomeMusic();
   return relation;
 }
 
@@ -415,7 +415,7 @@ function answerHomeGreeting(scene,index){
 function openPanel(type) {
   panel.hidden = false;
   if (type === 'schedule') {
-    playScheduleMusic();
+    playHomeMusic();
     renderSchedulePanel();
   } else if (type === 'status') {
     playHomeMusic();
@@ -937,11 +937,13 @@ async function playWeeklySchedule(selected) {
     stage.className = `activity-stage map-${presentation.location} action-${action.id}`;
     stageCharacter.className = `stage-character pixel-sprite ${presentation.motion}`;
     if(action.id==='shopping'){
+      playMarketMusic();
       stageMap.src=backgrounds.market;
       document.querySelector('#stageCaption').textContent=`${dayNames[index]} · 저잣거리 · 좌우로 움직여 가게를 선택하세요`;
       marketShoppingActive=true;
       await exploreMarket();
       marketShoppingActive=false;
+      playHomeMusic();
     }else if(action.id==='vacation'){
       const prize=awardVacationIllustration();
       stage.hidden=true;stageNpc.hidden=true;stageProps.hidden=true;stageCharacter.hidden=true;
