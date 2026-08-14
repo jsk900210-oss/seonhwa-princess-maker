@@ -803,9 +803,10 @@ async function runWeek() {
   if (!game.dailySchedule.every(Boolean)) return;
   hideScheduleConfirmation();
   const selected = game.dailySchedule.map(id => actions.find(item => item.id === id));
-  const totalCost = selected.reduce((sum, action) => sum + action.cost, 0);
-  if (totalCost > game.money) {
-    document.querySelector('#dialogueText').textContent = `이번 주에 ${totalCost.toLocaleString()}냥이 필요해요. 일정을 다시 짜보자.`;
+  let projectedMoney=game.money;
+  const unaffordable=selected.find(action=>{projectedMoney-=action.cost;return projectedMoney<0;});
+  if (unaffordable) {
+    document.querySelector('#dialogueText').textContent = `${unaffordable.name}을(를) 진행할 은전이 부족해요. 돈이 0냥 아래로 내려가지 않도록 일정을 다시 짜보자.`;
     panel.hidden = true;
     return;
   }
@@ -813,7 +814,6 @@ async function runWeek() {
   const completedMonth = game.month;
   panel.hidden = true;
   const weeklyChange = await playWeeklySchedule(selected);
-  game.money -= totalCost;
   Object.entries(weeklyChange).forEach(([key,value])=>game[key]=clampStat(key,(game[key]||0)+value));
   recordMonthlySchedule(selected,weeklyChange);
   game.homeReaction=null;
@@ -991,10 +991,14 @@ async function playWeeklySchedule(selected) {
     setScheduleDialogue(action,outcome,index);
     stageCharacter.className = `stage-character pixel-sprite ${presentation.motion}`;
     renderActivityGauges(resolvedAction);
+    game.money=Math.max(0,game.money-action.cost);
+    renderHud();
+    const moneyLabel=document.querySelector('#moneyLabel');
+    moneyLabel.classList.remove('money-changing');void moneyLabel.offsetWidth;moneyLabel.classList.add('money-changing');
     showLiveChanges(resolvedAction);
     const moneyText = action.cost > 0 ? `은전 -${action.cost}냥` : action.cost < 0 ? `은전 +${-action.cost}냥` : '비용 없음';
     const resultSummary=Object.entries(resolvedChange).filter(([,value])=>value!==0).map(([key,value])=>`${statLabels[key]||key} ${value>0?'+':''}${value}`).join(' · ');
-    dayResult.innerHTML = `<b>${action.name} · ${outcomeLabels[outcome]}</b><span>${resultSummary||'능력치 변화 없음'}<br>${moneyText}</span>`;
+    dayResult.innerHTML = `<b>${action.name} · ${outcomeLabels[outcome]}</b><span>${resultSummary||'능력치 변화 없음'}<br>${moneyText} · 현재 ${game.money.toLocaleString()}냥</span>`;
     if(action.id!=='vacation'){
       dayResult.hidden = false;
       await new Promise(resolve => setTimeout(resolve, 900));

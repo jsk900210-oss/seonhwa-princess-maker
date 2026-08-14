@@ -1,15 +1,14 @@
 # 《선화공주 만들기》 프로젝트 현황
 
 최종 갱신: 2026-08-14  
-기준 버전: `v0.61.47-debug`  
-최신 커밋: `7aec236` (`feat: support five concurrent growth records`)
+기준 버전: `v0.61.48-debug`
 
 ## 저장 위치
 
 - 로컬 프로젝트: `outputs/seonhwa-princess-mvp/`
 - GitHub: `https://github.com/jsk900210-oss/seonhwa-princess-maker`
 - Notion: `공주 키우기 — 프메2 스타일 개발 정리`
-- 실행 주소: `http://127.0.0.1:8000/src/?v=0.61.47-debug`
+- 실행 주소: `http://127.0.0.1:8000/src/?v=0.61.48-debug`
 
 ## 현재 구현 완료
 
@@ -25,6 +24,7 @@
 - 홈 게임 기록 UI, 자동저장, 비정상 종료 복구
 - 최대 5명 동시 육성 기록, 캐릭터별 이어하기·기록 삭제
 - `새롭게 시작하기` 선택 시 기존 기록을 보존하고 로고→프롤로그→이름 짓기부터 재시작
+- 스케줄 활동별 은전 증감과 현재 잔액 실시간 표시
 
 ## 핵심 결정사항
 
