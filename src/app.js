@@ -80,7 +80,7 @@ const SESSION_ACTIVE_KEY = 'seonhwa-princess-mvp-session-active';
 const SAVE_SLOTS = [1,2,3,4,5];
 const LEGACY_SAVE_KEYS = ['seonhwa-princess-mvp-save-v1'];
 let pendingRecoverySave=null;
-const statMaximum=key=>key==='fatigue'?100:999;
+const statMaximum=key=>['fatigue','stress'].includes(key)?100:999;
 const clampStat=(key,value)=>Math.max(0,Math.min(statMaximum(key),Number(value)||0));
 const boundedStats=[...new Set(statGroups.flatMap(group=>group.stats.map(([key])=>key)).concat(['nannyAffinity','guardianTrust','memory','truth','exposure']))];
 function normalizeStats(){boundedStats.forEach(key=>{if(Object.hasOwn(game,key))game[key]=clampStat(key,game[key]);});}
