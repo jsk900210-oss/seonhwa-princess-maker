@@ -625,11 +625,18 @@ function renderSchedulePanel() {
     return `<button class="day-slot ${action ? 'filled' : ''}" data-day="${index}" aria-label="${dayNames[index]}요일 ${action ? action.name : '비어 있음'}"><b>${dayNames[index]}</b><span>${action ? action.name : '빈칸'}</span></button>`;
   }).join('');
   const categories = ['교육', '아르바이트', '휴식'].map(category => `<section class="schedule-category"><h3>${category}</h3><div class="action-grid">${actions.filter(action => action.category === category).map(action => `<button class="action" data-action="${action.id}"><img src="../assets/ui/activity-icons/activity-${action.id}.png" alt=""><b>${action.name}</b><span>${action.cost > 0 ? `-${action.cost}냥` : action.cost < 0 ? `+${-action.cost}냥` : '무료'}</span><small>${action.summary}</small></button>`).join('')}</div></section>`).join('');
-  const filled = game.dailySchedule.filter(Boolean).length;
-  panelBody.innerHTML = `<p class="schedule-help">활동을 누르면 월요일부터 다음 빈 날짜에 들어갑니다. 채운 날짜를 누르면 삭제됩니다.</p><div class="day-grid">${daySlots}</div>${categories}<button class="run-month" id="runWeek" ${filled === 7 ? '' : 'disabled'}>${game.week}주 일정 실행 (${filled}/7)</button>`;
+  panelBody.innerHTML = `<p class="schedule-help">활동을 누르면 월요일부터 다음 빈 날짜에 들어갑니다. 채운 날짜를 누르면 삭제됩니다.</p><div class="day-grid">${daySlots}</div>${categories}`;
   panelBody.querySelectorAll('[data-action]').forEach(button => button.addEventListener('click', () => addDailyAction(button.dataset.action)));
   panelBody.querySelectorAll('[data-day]').forEach(button => button.addEventListener('click', () => clearDailyAction(Number(button.dataset.day))));
-  document.querySelector('#runWeek').addEventListener('click', runWeek);
+}
+
+let scheduleConfirmDismissed = false;
+function showScheduleConfirmation() {
+  if (!game.dailySchedule.every(Boolean) || scheduleConfirmDismissed) return;
+  document.querySelector('#scheduleConfirm').hidden = false;
+}
+function hideScheduleConfirmation() {
+  document.querySelector('#scheduleConfirm').hidden = true;
 }
 
 function applyShopChanges(change){Object.entries(change).forEach(([key,value])=>{game[key]=clampStat(key,(game[key]||0)+value);});renderHud();queueAutoSave();}
@@ -707,13 +714,17 @@ function addDailyAction(id) {
   }
   game.dailySchedule[empty] = id;
   document.querySelector('#dialogueText').textContent = `${['월','화','수','목','금','토','일'][empty]}요일에 ${actions.find(action => action.id === id).name}을 넣었어요.`;
+  scheduleConfirmDismissed = false;
   renderSchedulePanel();
+  if (game.dailySchedule.every(Boolean)) showScheduleConfirmation();
   queueAutoSave();
 }
 
 function clearDailyAction(index) {
   if (!game.dailySchedule[index]) return;
   game.dailySchedule[index] = null;
+  scheduleConfirmDismissed = false;
+  hideScheduleConfirmation();
   renderSchedulePanel();
   queueAutoSave();
 }
@@ -740,6 +751,7 @@ function showMonthlyReport(ledger){
 
 async function runWeek() {
   if (!game.dailySchedule.every(Boolean)) return;
+  hideScheduleConfirmation();
   const selected = game.dailySchedule.map(id => actions.find(item => item.id === id));
   const totalCost = selected.reduce((sum, action) => sum + action.cost, 0);
   if (totalCost > game.money) {
@@ -929,6 +941,8 @@ document.querySelector('#marketConfirmNo').addEventListener('click',closeMarketC
 document.querySelector('#marketConfirmYes').addEventListener('click',()=>{const type=marketSelection;document.querySelector('#marketConfirm').hidden=true;enterMarketShop(type);});
 document.querySelector('#marketFinish').addEventListener('click',finishMarket);
 document.querySelector('#marketFinish').addEventListener('pointerup',finishMarket);
+document.querySelector('#scheduleConfirmYes').addEventListener('click',()=>{scheduleConfirmDismissed=false;runWeek();});
+document.querySelector('#scheduleConfirmNo').addEventListener('click',()=>{scheduleConfirmDismissed=true;hideScheduleConfirmation();panel.hidden=false;renderSchedulePanel();});
 window.addEventListener('keydown',event=>{if(document.querySelector('#marketExplore').hidden)return;if(event.key==='ArrowLeft')selectMarketShop('food');if(event.key==='ArrowRight')selectMarketShop('outfit');if(event.key==='Enter'&&marketSelection)enterMarketShop(marketSelection);});
 bg.addEventListener('load', updateImageState);
 document.querySelector('#wardrobeButton')?.addEventListener('click',renderWardrobe);
