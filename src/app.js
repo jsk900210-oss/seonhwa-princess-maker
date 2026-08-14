@@ -28,6 +28,12 @@ function playHomeMusic(){playGameMusic(gameMusicTracks.home,.22);}
 function playScheduleMusic(){playGameMusic(gameMusicTracks.schedule,.20);}
 function playVacationMusic(){playGameMusic(vacationMusicPath(),.28);}
 function stopGameMusic(){fadeAudio(gameMusic,0,350);}
+function transitionPrologueToHomeMusic(){
+  const prologueMusic=document.querySelector('#prologueMusic');
+  playGameMusic(gameMusicTracks.home,.01);
+  fadeAudio(gameMusic,.22,1600);
+  fadeAudio(prologueMusic,0,1600);
+}
 
 const game = { characterName:'', nannyName:'', age: 9, month: 1, week: 1, season:'봄', money: 1200, health: 42, study: 35, fatigue: 18, items: [], equippedOutfit:null, autoOutfit:true, dailySchedule: [null,null,null,null,null,null,null], birthday:null, currentDate:null, endingDate:null, ended:false, birthdayCount:0, element:null, birthSeason:null, memory:0, truth:0, exposure:0, guardianTrust:50, nannyAffinity:50, lastGreetingDate:null, monthlyLedger:null };
 Object.assign(game, { healthiness: 76, arithmetic: 22, manners: 28, arts: 18, martial: 12, archery: 5, riding: 3, craft: 24, cooking: 20, embroidery: 15, virtue: 36, charm: 30, sensitivity: 40, medicine: 8, commerce: 10, reputation: 14, stress: 12 });
@@ -811,7 +817,7 @@ function startWithBirthday(){
   Object.assign(game,{characterName,nannyName,birthday:value,currentDate:isoDate(start),endingDate:isoDate(ending),age:9,month,season:birthSeason,birthSeason,element,week:1,ended:false,birthdayCount:1});
   game.monthlyLedger=createMonthlyLedger(start.getFullYear(),month);
   document.querySelector('#birthdaySetup').hidden=true;
-  playHomeMusic();
+  transitionPrologueToHomeMusic();
   document.querySelector('#dialogueText').textContent=`${birthSeason}에 태어난 ${element} 기운의 아이. ${characterName}의 아홉 번째 생일부터 이야기를 시작해요.`;
   renderHud();
   setTimeout(()=>showHomeGreeting(),250);
@@ -840,7 +846,7 @@ function renderPrologue(){
 }
 function nextPrologue(){ if(prologueIndex<prologueScenes.length-1){prologueIndex++;renderPrologue();}else closePrologue(); }
 function previousPrologue(){ if(prologueIndex>0){prologueIndex--;renderPrologue();} }
-function closePrologue(){clearTimeout(prologueTimer);fadeAudio(document.querySelector('#prologueMusic'),0,500);stopRain();document.querySelector('#prologue').hidden=true;document.querySelector('#birthdaySetup').hidden=false;}
+function closePrologue(){clearTimeout(prologueTimer);stopRain();document.querySelector('#prologue').hidden=true;document.querySelector('#birthdaySetup').hidden=false;}
 function replayPrologue(){stopGameMusic();prologueIndex=0;document.querySelector('#birthdaySetup').hidden=true;renderPrologue();}
 function ensureRainAudio(){
   if(rainAudio)return rainAudio;
