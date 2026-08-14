@@ -6,7 +6,7 @@ const panelTitle = document.querySelector('#panelTitle');
 const panelBody = document.querySelector('#panelBody');
 const originalPrologueScenes = [
   { image:'../assets/cinematics/prologue/p1-rainy-street.webp', chapter:'서장 · 비 오는 길', alt:'비 오는 마을길', rain:true, text:'저물녘부터 내리던 비가 좀처럼 그치지 않았다.' },
-  { image:'../assets/cinematics/prologue/p2-child-collapsed.webp', chapter:'서장 · 발견', alt:'비를 피하던 아이', rain:true, text:'길 한켠에서 지친 작은 아이를 발견한 선비는 걸음을 멈췄다.' },
+  { image:'../assets/cinematics/prologue/p2-child-collapsed.webp', chapter:'서장 · 발견', alt:'길가에 쓰러진 아이', rain:true, text:'길 한켠, 빗물 고인 길가에 작은 아이가 쓰러져 있었다. 선비는 걸음을 멈췄다.' },
   { image:'../assets/cinematics/prologue/p3-carry-home.webp', chapter:'서장 · 데려오다', alt:'아이를 데려오는 선비', rain:true, text:'선비는 아이를 품에 안고 제 집으로 걸음을 서둘렀다.' },
   { image:'../assets/cinematics/prologue/p4-fever-care.webp', chapter:'서장 · 밤새 돌봄', alt:'아이를 돌보는 한옥 방', rain:false, text:'선비는 약을 달이며 밤이 깊도록 곁을 떠나지 않았다.' },
   { image:'../assets/cinematics/prologue/p4b-fever-check.webp', chapter:'서장 · 남은 열기', alt:'아이의 열을 확인하는 선비', rain:false, text:'선비는 조심스럽게 아이의 이마에 손등을 대었다.' },

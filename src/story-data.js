@@ -14,8 +14,8 @@ window.SEONHWA_STORY = {
     {
       id: 'S2', chapter: '서장 · 발견',
       image: '../assets/cinematics/prologue/p2-child-collapsed.webp',
-      alt: '처마 아래 지친 아이를 발견한 젊은 선비', rain: true,
-      text: '길 한켠, 비를 피할 새도 없이 지친 작은 아이가 웅크려 있었다. 선비는 걸음을 멈췄다.',
+      alt: '비 내리는 길가에 쓰러진 아이를 발견한 젊은 선비', rain: true,
+      text: '길 한켠, 빗물 고인 길가에 작은 아이가 쓰러져 있었다. 선비는 걸음을 멈췄다.',
       dialogue: '선비 “...이 빗속에, 아이가?”'
     },
     {
