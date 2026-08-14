@@ -144,7 +144,12 @@ const outfits = [
   {id:'age18-ceremony',age:18,ageEnd:18,name:'성년 예복 한복',price:720,tone:'격식',seasons:['가을','겨울'],situations:['manners','shopping'],change:{manners:8,virtue:5,reputation:5,stress:3}},
   {id:'age18-silk',age:18,ageEnd:18,name:'비단 연회 한복',price:780,tone:'화려함',seasons:['봄','겨울'],situations:['shopping','vacation'],change:{charm:10,reputation:4,virtue:-1,stress:3}},
   {id:'age18-simple',age:18,ageEnd:18,name:'담백한 생활 한복',price:560,tone:'활동성',seasons:['여름','가을'],situations:['errand','sweeping','herbs','houseclean','rest'],change:{craft:5,health:4,virtue:3,charm:-2}},
-  {id:'age18-premium-paradise',age:18,ageEnd:18,name:'소문의 낙원 한복',price:1200,tone:'화려함',seasons:['봄','겨울'],situations:['manners','shopping','vacation'],change:{charm:14,reputation:8,virtue:2,manners:4,stress:4}}
+  {id:'age18-premium-paradise',age:18,ageEnd:18,name:'소문의 낙원 한복',price:1200,tone:'화려함',seasons:['봄','겨울'],situations:['manners','shopping','vacation'],change:{charm:14,reputation:8,virtue:2,manners:4,stress:4}},
+  {id:'premium-midnight-lotus',age:9,ageEnd:18,name:'묵빛 연화 예복',price:1650,tone:'고급',seasons:['가을','겨울'],situations:['manners','shopping','vacation'],change:{charm:15,reputation:10,manners:7,virtue:4}},
+  {id:'premium-moonlight-guard',age:9,ageEnd:18,name:'월백 수호 예복',price:1780,tone:'고급',seasons:['봄','겨울'],situations:['manners','reading','shopping'],change:{manners:12,reputation:9,study:5,charm:8}},
+  {id:'premium-aurora-blossom',age:9,ageEnd:18,name:'새벽꽃 비단 예복',price:1850,tone:'고급',seasons:['봄','여름'],situations:['vacation','shopping','manners'],change:{charm:18,reputation:10,arts:7,virtue:2}},
+  {id:'premium-crimson-festival',age:9,ageEnd:18,name:'자주빛 연회 예복',price:1720,tone:'고급',seasons:['가을','겨울'],situations:['shopping','vacation','manners'],change:{charm:16,reputation:11,manners:6,stress:2}},
+  {id:'premium-ink-scholar',age:9,ageEnd:18,name:'먹빛 서생 예복',price:1600,tone:'고급',seasons:['가을','겨울'],situations:['reading','arithmetic','manners'],change:{study:10,arts:8,reputation:7,charm:6}}
 ];
 const outfitAgeLabel=outfit=>outfit.age===outfit.ageEnd?`${outfit.age}세`:`${outfit.age}–${outfit.ageEnd}세`;
 const outfitAvailable=outfit=>game.age>=outfit.age&&game.age<=outfit.ageEnd;
@@ -182,6 +187,9 @@ function updateAutoOutfit(actionId=null){if(!game.autoOutfit)return game.equippe
 const activityOutfitFrameCache=new Map();
 function activityOutfitPalette(outfitId){
   if(!outfitId)return null;
+  if(/premium-midnight|premium-crimson|premium-ink/.test(outfitId))return {skirt:[35,31,38],top:[111,40,57]};
+  if(/premium-moonlight/.test(outfitId))return {skirt:[239,228,199],top:[205,164,72]};
+  if(/premium-aurora/.test(outfitId))return {skirt:[226,170,194],top:[244,222,227]};
   if(/active|work|travel|simple/.test(outfitId))return {skirt:[54,126,125],top:[220,172,74]};
   if(/flower|festival|art|silk/.test(outfitId))return {skirt:[211,96,120],top:[236,190,195]};
   if(/court|ceremony/.test(outfitId))return {skirt:[59,79,126],top:[218,187,112]};
