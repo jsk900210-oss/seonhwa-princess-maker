@@ -213,7 +213,7 @@ async function animateActivitySprite(image,motion,activity,npcImage,npc,outfitId
 }
 function conditionEvent(stress, dayIndex){
   if(stress>=80||(stress>=70&&dayIndex%2===1))return 'mistake';
-  if(peak>=55)return 'drowsy';
+  if(stress>=55)return 'drowsy';
   return null;
 }
 const activitySkill={reading:'study',arithmetic:'arithmetic',manners:'manners',errand:'commerce',sweeping:'health',herbs:'medicine',houseclean:'craft',rest:'healthiness'};
