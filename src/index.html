@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
   <title>선화공주 만들기 — 자산 로딩 테스트</title>
-  <link rel="stylesheet" href="style.css?v=0.61.35-debug">
+  <link rel="stylesheet" href="style.css?v=0.61.36-debug">
   <link rel="stylesheet" href="schedule.css?v=0.61.14-debug">
   <link rel="stylesheet" href="birthday.css">
   <link rel="stylesheet" href="prologue.css">
@@ -12,11 +12,29 @@
   <link rel="stylesheet" href="naming.css">
   <link rel="stylesheet" href="live-changes.css?v=0.61.14-debug">
   <link rel="stylesheet" href="collection.css?v=0.61.23-debug">
+  <link rel="stylesheet" href="loading.css?v=0.61.36-debug">
   <style>.prologue:not(.outdoor-rain) .rain{display:none}</style>
 </head>
 <body>
   <main class="phone" aria-label="모바일 게임 테스트 화면">
-    <section class="prologue" id="prologue" aria-label="이야기 시작 영상">
+    <section class="studio-loading" id="studioLoading" aria-label="윤슬마루 로딩 화면">
+      <div class="studio-paper" aria-hidden="true"></div>
+      <div class="studio-logo" aria-label="윤슬, 윤슬마루">
+        <div class="brush-logo"><span>윤슬</span><i aria-hidden="true"></i></div>
+        <p>윤슬마루</p>
+        <small>한국의 이야기를 짓다</small>
+        <b aria-hidden="true">윤슬</b>
+      </div>
+      <div class="loading-path" aria-hidden="true">
+        <span class="footprint fp1">❮</span><span class="footprint fp2">❯</span>
+        <span class="footprint fp3">❮</span><span class="footprint fp4">❯</span>
+        <span class="footprint fp5">❮</span><span class="footprint fp6">❯</span>
+        <span class="footprint fp7">❮</span>
+        <img class="loading-seonhwa" src="../assets/characters/seonhwa/age-09/sprites/walk/seonhwa-walk-right-2.png" alt="">
+      </div>
+      <span class="loading-caption">이야기를 여는 중…</span>
+    </section>
+    <section class="prologue" id="prologue" aria-label="이야기 시작 영상" hidden>
       <audio id="prologueMusic" src="../assets/audio/music/prologue-lantern-and-dawn.mp3" preload="auto" loop></audio>
       <img id="prologueImage" src="../assets/cinematics/prologue/p1-rainy-street.webp" alt="비 오는 마을길을 걷는 젊은 선비">
       <div class="rain" aria-hidden="true"></div>
@@ -96,6 +114,6 @@
       <div><button id="scheduleConfirmNo" type="button">아니오</button><button id="scheduleConfirmYes" type="button">네</button></div>
     </section>
   </main>
-  <script src="story-data.js?v=0.61.35-debug"></script><script src="app.js?v=0.61.35-debug"></script>
+  <script src="story-data.js?v=0.61.36-debug"></script><script src="app.js?v=0.61.36-debug"></script>
 </body>
 </html>

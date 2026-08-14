@@ -863,6 +863,15 @@ function togglePrologueSound(){prologueSoundOn=!prologueSoundOn;const button=doc
 function unlockDefaultPrologueSound(event){
   if(event.target.closest?.('#prologueSound')||!prologueSoundOn||document.querySelector('#prologue').hidden)return;
   updatePrologueAudio(Boolean(prologueScenes[prologueIndex].rain));
+  document.removeEventListener('pointerdown',unlockDefaultPrologueSound);
+}
+let studioIntroFinished=false;
+function finishStudioIntro(){
+  if(studioIntroFinished)return;
+  studioIntroFinished=true;
+  const loading=document.querySelector('#studioLoading');
+  loading.classList.add('is-leaving');
+  setTimeout(()=>{loading.hidden=true;renderPrologue();},520);
 }
 
 async function playWeeklySchedule(selected) {
@@ -983,9 +992,10 @@ document.querySelector('#prologueBack').addEventListener('click',previousPrologu
 document.querySelector('#prologueSound').addEventListener('click',togglePrologueSound);
 document.querySelector('#prologueSkip').addEventListener('click',closePrologue);
 document.querySelector('#storyReplay').addEventListener('click',replayPrologue);
-document.addEventListener('pointerdown',unlockDefaultPrologueSound,{once:true,passive:true});
+document.addEventListener('pointerdown',unlockDefaultPrologueSound,{passive:true});
+document.querySelector('#studioLoading').addEventListener('click',finishStudioIntro);
 renderHud();
 updateHomeCharacter();
 updateImageState();
-renderPrologue();
+setTimeout(finishStudioIntro,5400);
 migrateLegacySave();
