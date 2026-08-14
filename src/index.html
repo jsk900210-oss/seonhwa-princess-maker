@@ -4,15 +4,16 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
   <title>선화공주 만들기 — 자산 로딩 테스트</title>
-  <link rel="stylesheet" href="style.css?v=0.61.44-debug">
+  <link rel="stylesheet" href="style.css?v=0.61.45-debug">
   <link rel="stylesheet" href="schedule.css?v=0.61.14-debug">
   <link rel="stylesheet" href="birthday.css">
-  <link rel="stylesheet" href="prologue.css?v=0.61.44-debug">
+  <link rel="stylesheet" href="prologue.css?v=0.61.45-debug">
   <link rel="stylesheet" href="rain-v2.css">
   <link rel="stylesheet" href="naming.css">
   <link rel="stylesheet" href="live-changes.css?v=0.61.14-debug">
   <link rel="stylesheet" href="collection.css?v=0.61.23-debug">
-  <link rel="stylesheet" href="loading.css?v=0.61.44-debug">
+  <link rel="stylesheet" href="loading.css?v=0.61.45-debug">
+  <link rel="stylesheet" href="record.css?v=0.61.45-debug">
   <style>.prologue:not(.outdoor-rain) .rain{display:none}</style>
 </head>
 <body>
@@ -64,7 +65,7 @@
       </div>
     </section>
     <img class="background" src="../assets/backgrounds/home/home-room-morning.webp" alt="한옥 안채">
-    <header><span id="dateLabel">9세 · 3월</span><strong id="moneyLabel">1,200냥</strong><button class="menu-button" id="saveMenu" aria-label="저장 메뉴">☰</button></header>
+    <header class="home-header"><span id="dateLabel">9세 · 3월</span><strong id="moneyLabel">1,200냥</strong></header>
     <section class="live-changes" id="liveChanges" aria-label="실시간 능력치 변화" aria-live="polite"></section>
     <section class="character-slot" id="characterSlot">
       <img id="character" src="../assets/characters/seonhwa/age-09/base/seonhwa-age09-base.png" alt="9세 선화">
@@ -74,6 +75,7 @@
     <aside class="home-side-actions" aria-label="홈 바로가기">
       <button class="home-object-button" id="collectionBookButton" type="button" aria-label="수집도감 열기"><img src="../assets/ui/home-actions/collection-book.png" alt=""><span>수집도감</span></button>
       <button class="home-object-button" id="wardrobeButton" type="button" aria-label="오래된 옷장 열기"><img src="../assets/ui/home-actions/wardrobe.png" alt=""><span>옷장</span></button>
+      <button class="home-object-button" id="gameRecordButton" type="button" aria-label="게임 기록 열기"><img src="../assets/ui/home-actions/game-record.svg" alt=""><span>게임 기록</span></button>
     </aside>
     <section class="home-greeting" id="homeGreeting" hidden aria-live="polite">
       <b id="homeGreetingSpeaker"></b><p id="homeGreetingLine"></p><b id="homeGreetingPrompt"></b><div id="homeGreetingChoices"></div>
@@ -117,7 +119,16 @@
       <p id="scheduleConfirmText">스케줄을 실행하시겠습니까?</p>
       <div><button id="scheduleConfirmNo" type="button">아니오</button><button id="scheduleConfirmYes" type="button">네</button></div>
     </section>
+    <section class="recovery-prompt" id="recoveryPrompt" hidden role="dialog" aria-modal="true" aria-labelledby="recoveryTitle">
+      <div class="recovery-card">
+        <img src="../assets/ui/home-actions/game-record.svg" alt="">
+        <h2 id="recoveryTitle">최근 기록이 남아 있어요</h2>
+        <p>게임이 갑자기 종료된 것 같아요.<br>마지막 자동저장 기록에서 이어서 할까요?</p>
+        <small id="recoverySummary"></small>
+        <div><button id="recoveryFresh" type="button">처음 화면부터</button><button id="recoveryContinue" type="button">최근 기록 이어하기</button></div>
+      </div>
+    </section>
   </main>
-  <script src="story-data.js?v=0.61.44-debug"></script><script src="app.js?v=0.61.44-debug"></script>
+  <script src="story-data.js?v=0.61.45-debug"></script><script src="app.js?v=0.61.45-debug"></script>
 </body>
 </html>

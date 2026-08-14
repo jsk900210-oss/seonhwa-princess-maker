@@ -76,8 +76,10 @@ const backgrounds = {
   houseWorkroom: '../assets/backgrounds/pixel-activities/close/kitchen-workroom.webp'
 };
 const SAVE_KEY = 'seonhwa-princess-mvp-save-v2';
+const SESSION_ACTIVE_KEY = 'seonhwa-princess-mvp-session-active';
 const SAVE_SLOTS = [1,2,3];
 const LEGACY_SAVE_KEYS = ['seonhwa-princess-mvp-save-v1'];
+let pendingRecoverySave=null;
 const statMaximum=key=>key==='fatigue'?100:999;
 const clampStat=(key,value)=>Math.max(0,Math.min(statMaximum(key),Number(value)||0));
 const boundedStats=[...new Set(statGroups.flatMap(group=>group.stats.map(([key])=>key)).concat(['nannyAffinity','guardianTrust','memory','truth','exposure']))];
@@ -548,7 +550,7 @@ function applySavePayload(saved) {
   document.querySelector('#birthdaySetup').hidden = Boolean(game.birthday);
   if (!Array.isArray(game.dailySchedule) || game.dailySchedule.length !== 7) game.dailySchedule = [null,null,null,null,null,null,null];
   if(!game.monthlyLedger&&game.currentDate){const date=new Date(`${game.currentDate}T00:00:00`);game.monthlyLedger=createMonthlyLedger(date.getFullYear(),date.getMonth()+1);}
-  bg.src = saved.background || backgrounds.home;
+  bg.src = backgrounds.home;
   applyEquippedOutfit();
   renderHud();
   setTimeout(()=>showHomeGreeting(),350);
@@ -574,14 +576,44 @@ function saveGame(slot = 1, auto = false) {
   localStorage.setItem(key, JSON.stringify(payload));
   if (!auto) {
     document.querySelector('#dialogueText').textContent = `${slot}번 슬롯에 현재 진행 상황을 저장했어요.`;
+    renderSavePanel();
   }
-  renderSavePanel();
 }
 
 let autoSaveTimer = null;
+function writeLatestAutoSave(){
+  if(!game.birthday)return false;
+  localStorage.setItem(`${SAVE_KEY}-autosave`,JSON.stringify(serializeSave()));
+  return true;
+}
 function queueAutoSave() {
   clearTimeout(autoSaveTimer);
-  autoSaveTimer = setTimeout(() => saveGame(1, true), 700);
+  autoSaveTimer = setTimeout(writeLatestAutoSave,700);
+}
+function showRecoveryPrompt(){
+  if(!pendingRecoverySave)return false;
+  const saved=pendingRecoverySave,summary=document.querySelector('#recoverySummary');
+  summary.textContent=`${saved.game.characterName||'아이'} · ${saved.game.age}세 ${saved.game.month}월 ${saved.game.week}주 · ${new Date(saved.savedAt).toLocaleString('ko-KR')}`;
+  document.querySelector('#recoveryPrompt').hidden=false;
+  return true;
+}
+function continueRecovery(){
+  const saved=pendingRecoverySave;pendingRecoverySave=null;
+  document.querySelector('#recoveryPrompt').hidden=true;
+  document.querySelector('#prologue').hidden=true;
+  panel.hidden=true;
+  if(saved&&applySavePayload(saved)){playHomeMusic();queueAutoSave();}
+}
+function declineRecovery(){
+  pendingRecoverySave=null;
+  document.querySelector('#recoveryPrompt').hidden=true;
+  renderPrologue();
+}
+function initializeRecoverySession(){
+  const interrupted=localStorage.getItem(SESSION_ACTIVE_KEY)==='1';
+  pendingRecoverySave=interrupted?readAutoSave():null;
+  localStorage.setItem(SESSION_ACTIVE_KEY,'1');
+  setInterval(writeLatestAutoSave,5000);
 }
 
 function loadGame(slot = 1) {
@@ -820,9 +852,11 @@ function startWithBirthday(){
   Object.assign(game,{characterName,nannyName,birthday:value,currentDate:isoDate(start),endingDate:isoDate(ending),age:9,month,season:birthSeason,birthSeason,element,week:1,ended:false,birthdayCount:1});
   game.monthlyLedger=createMonthlyLedger(start.getFullYear(),month);
   document.querySelector('#birthdaySetup').hidden=true;
+  panel.hidden=true;
   transitionPrologueToHomeMusic();
   document.querySelector('#dialogueText').textContent=`${birthSeason}에 태어난 ${element} 기운의 아이. ${characterName}의 아홉 번째 생일부터 이야기를 시작해요.`;
   renderHud();
+  queueAutoSave();
   setTimeout(()=>showHomeGreeting(),250);
 }
 function advanceGameDate(days){
@@ -883,7 +917,7 @@ function finishStudioIntro(){
   studioIntroFinished=true;
   const loading=document.querySelector('#studioLoading');
   document.querySelector('#birthdaySetup').hidden=true;
-  renderPrologue();
+  if(!showRecoveryPrompt())renderPrologue();
   loading.classList.add('is-leaving');
   setTimeout(()=>{loading.hidden=true;},520);
 }
@@ -996,12 +1030,14 @@ window.addEventListener('keydown',event=>{if(document.querySelector('#marketExpl
 bg.addEventListener('load', updateImageState);
 document.querySelector('#wardrobeButton')?.addEventListener('click',renderWardrobe);
 document.querySelector('#collectionBookButton')?.addEventListener('click',()=>openPanel('collection'));
+document.querySelector('#gameRecordButton')?.addEventListener('click',()=>openPanel('save'));
 bg.addEventListener('error', updateImageState);
 character.addEventListener('load', updateImageState);
 character.addEventListener('error', updateImageState);
 document.querySelectorAll('[data-panel]').forEach(button => button.addEventListener('click', () => openPanel(button.dataset.panel)));
 document.querySelector('#closePanel').addEventListener('click', () => {if(marketShoppingActive)returnToMarketSelection();else{panel.hidden=true;playHomeMusic();}});
-document.querySelector('#saveMenu').addEventListener('click', () => openPanel('save'));
+document.querySelector('#recoveryFresh').addEventListener('click',declineRecovery);
+document.querySelector('#recoveryContinue').addEventListener('click',continueRecovery);
 document.querySelector('#startGame').addEventListener('click', startWithBirthday);
 document.querySelector('#prologueNext').addEventListener('click',nextPrologue);
 document.querySelector('#prologueBack').addEventListener('click',previousPrologue);
@@ -1014,3 +1050,6 @@ renderHud();
 updateHomeCharacter();
 updateImageState();
 migrateLegacySave();
+initializeRecoverySession();
+document.addEventListener('visibilitychange',()=>{if(document.hidden)writeLatestAutoSave();});
+window.addEventListener('pagehide',()=>{writeLatestAutoSave();localStorage.removeItem(SESSION_ACTIVE_KEY);});
