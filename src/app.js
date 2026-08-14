@@ -315,7 +315,7 @@ const actions = [
   { id: 'houseclean', category: '아르바이트', name: '집 청소', cost: -35, summary: '솜씨 +2 · 체력 +2 · 스트레스 +5', change: { craft: 2, health: 2, stress: 5 } },
   { id: 'rest', category: '휴식', name: '집에서 휴식', cost: 0, summary: '스트레스 -6 · 체력 +2', change: { health: 2, stress: -6 } },
   { id: 'shopping', category: '휴식', name: '저잣거리', cost: 0, summary: '', change: {}, special:'market' },
-  { id: 'vacation', category: '휴식', name: '바캉스', cost: 180, summary: '스트레스 -15 · 추억 일러스트 획득', change: {stress:-15}, special:'vacation' }
+  { id: 'vacation', category: '휴식', name: '바캉스', cost: 180, summary: '스트레스 -25 · 추억 일러스트 획득', change: {stress:-25}, special:'vacation' }
 ];
 function actionForStressLimit(action,stress){
   return stress>=statMaximum('stress')&&action.id!=='rest'?actions.find(item=>item.id==='rest'):action;
