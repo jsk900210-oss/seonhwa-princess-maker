@@ -1,13 +1,20 @@
-const bg = document.querySelector('.background');
+﻿const bg = document.querySelector('.background');
 const character = document.querySelector('#character');
 const missing = document.querySelector('#missing');
 const panel = document.querySelector('#panel');
 const panelTitle = document.querySelector('#panelTitle');
 const panelBody = document.querySelector('#panelBody');
 const originalPrologueScenes = [
-  { image:'../assets/cinematics/prologue/01-rainy-road.webp', chapter:'서장 · 비 오는 밤', alt:'비 오는 밤길', text:'비가 억수같이 쏟아지던 어느 날, 사내는 길가에 쓰러진 아이를 발견했다.' },
-  { image:'../assets/cinematics/prologue/02-rescue-room.webp', chapter:'서장 · 낯선 아이', alt:'아이를 돌보는 한옥 방', text:'사내는 차마 아이를 외면하지 못하고 집으로 데려와 밤새 곁을 지켰다.' },
-  { image:'../assets/cinematics/prologue/03-memory-loss.webp', chapter:'서장 · 잃어버린 기억', alt:'기억을 잃은 아이와 사내', text:'다음 날 눈을 뜬 아이는 아무것도 기억나지 않는다고 말했다. 사내는 아이가 기억을 되찾을 때까지 돌봐주기로 마음먹었다.' }
+  { image:'../assets/cinematics/prologue/p1-rainy-street.webp', chapter:'서장 · 비 오는 길', alt:'비 오는 마을길', rain:true, text:'저물녘부터 내리던 비가 좀처럼 그치지 않았다.' },
+  { image:'../assets/cinematics/prologue/p2-child-collapsed.webp', chapter:'서장 · 발견', alt:'비를 피하던 아이', rain:true, text:'길 한켠에서 지친 작은 아이를 발견한 선비는 걸음을 멈췄다.' },
+  { image:'../assets/cinematics/prologue/p3-carry-home.webp', chapter:'서장 · 데려오다', alt:'아이를 데려오는 선비', rain:true, text:'선비는 아이를 품에 안고 제 집으로 걸음을 서둘렀다.' },
+  { image:'../assets/cinematics/prologue/p4-fever-care.webp', chapter:'서장 · 밤새 돌봄', alt:'아이를 돌보는 한옥 방', rain:false, text:'선비는 약을 달이며 밤이 깊도록 곁을 떠나지 않았다.' },
+  { image:'../assets/cinematics/prologue/p4b-fever-check.webp', chapter:'서장 · 남은 열기', alt:'아이의 열을 확인하는 선비', rain:false, text:'선비는 조심스럽게 아이의 이마에 손등을 대었다.' },
+  { image:'../assets/cinematics/prologue/p5-dawn.webp', chapter:'서장 · 새벽', alt:'고요한 새벽', rain:false, text:'새벽이 되어서야 아이의 숨이 고르게 잦아들었다.' },
+  { image:'../assets/cinematics/prologue/p6-awaken.webp', chapter:'서장 · 눈을 뜨다', alt:'눈을 뜬 아이', rain:false, text:'아침 볕이 문살에 들 무렵 아이가 눈을 떴다.' },
+  { image:'../assets/cinematics/prologue/p7-no-memory.webp', chapter:'서장 · 기억이 없다', alt:'기억을 더듬는 아이', rain:false, text:'이름을 묻자 아이는 한동안 대답하지 못했다.' },
+  { image:'../assets/cinematics/prologue/p7b-head-shake.webp', chapter:'서장 · 기억이 없다', alt:'고개를 젓는 아이', rain:false, text:'아이는 천천히 고개를 저었다. 아무것도 떠올릴 수 없었다.' },
+  { image:'../assets/cinematics/prologue/p8-decision.webp', chapter:'서장 · 결심', alt:'따뜻한 죽을 내어주는 선비', rain:false, text:'선비는 아이가 기억을 되찾을 때까지 머물도록 했다.' }
 ];
 const prologueScenes=window.SEONHWA_STORY?.prologue||originalPrologueScenes;
 let prologueIndex=0, prologueTimer=null;
