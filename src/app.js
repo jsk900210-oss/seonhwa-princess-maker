@@ -18,7 +18,7 @@ const originalPrologueScenes = [
 ];
 const prologueScenes=window.SEONHWA_STORY?.prologue||originalPrologueScenes;
 let prologueIndex=0, prologueTimer=null;
-let prologueSoundOn=false, rainAudio=null;
+let prologueSoundOn=true, rainAudio=null;
 const gameMusic=new Audio();
 gameMusic.preload='auto';gameMusic.loop=true;gameMusic.volume=.24;
 const gameMusicTracks={home:'../assets/audio/music/gameplay/bgm-home-daily.mp3',schedule:'../assets/audio/music/gameplay/bgm-schedule.mp3'};
@@ -860,6 +860,10 @@ function updatePrologueAudio(isRain){
   if(!prologueSoundOn)return;const music=document.querySelector('#prologueMusic');if(music.paused){music.volume=0;music.play().catch(()=>{});fadeAudio(music,.42,700);}const rain=ensureRainAudio();rain.ctx.resume();rain.gain.gain.cancelScheduledValues(rain.ctx.currentTime);rain.gain.gain.linearRampToValueAtTime(isRain?.34:0,rain.ctx.currentTime+.65);
 }
 function togglePrologueSound(){prologueSoundOn=!prologueSoundOn;const button=document.querySelector('#prologueSound');button.textContent=prologueSoundOn?'소리 끄기':'소리 켜기';button.setAttribute('aria-pressed',String(prologueSoundOn));if(prologueSoundOn)updatePrologueAudio(Boolean(prologueScenes[prologueIndex].rain));else{fadeAudio(document.querySelector('#prologueMusic'),0,400);stopRain();}}
+function unlockDefaultPrologueSound(event){
+  if(event.target.closest?.('#prologueSound')||!prologueSoundOn||document.querySelector('#prologue').hidden)return;
+  updatePrologueAudio(Boolean(prologueScenes[prologueIndex].rain));
+}
 
 async function playWeeklySchedule(selected) {
   const phone = document.querySelector('.phone');
@@ -979,6 +983,7 @@ document.querySelector('#prologueBack').addEventListener('click',previousPrologu
 document.querySelector('#prologueSound').addEventListener('click',togglePrologueSound);
 document.querySelector('#prologueSkip').addEventListener('click',closePrologue);
 document.querySelector('#storyReplay').addEventListener('click',replayPrologue);
+document.addEventListener('pointerdown',unlockDefaultPrologueSound,{once:true,passive:true});
 renderHud();
 updateHomeCharacter();
 updateImageState();
