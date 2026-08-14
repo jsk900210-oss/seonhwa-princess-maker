@@ -978,10 +978,11 @@ async function playWeeklySchedule(selected) {
       const metSomeone=await playVacationScene(prize,index);
       document.querySelector('#dialogueText').textContent=metSomeone?`바캉스에서 「${prize.name}」 일러스트와 ${metSomeone.name}의 인연 추억을 얻었어요.`:`바캉스에서 「${prize.name}」 일러스트를 획득했어요.`;
     }else await animateActivitySprite(stageCharacterImage,presentation.motion,presentation.activity,stageNpcImage,presentation.npc,dailyOutfit);
-    const condition=['shopping','vacation'].includes(action.id)?null:conditionEvent(simulated.fatigue,simulated.stress,index);
+    const guaranteedSuccess=['rest','vacation'].includes(action.id);
+    const condition=['shopping','rest','vacation'].includes(action.id)?null:conditionEvent(simulated.fatigue,simulated.stress,index);
     let outcome=judgeActivityOutcome(action,simulated.fatigue,simulated.stress);
-    if(condition==='mistake')outcome='mistake';
-    else if(condition==='drowsy'&&outcome!=='mistake')outcome='struggle';
+    if(!guaranteedSuccess&&condition==='mistake')outcome='mistake';
+    else if(!guaranteedSuccess&&condition==='drowsy'&&outcome!=='mistake')outcome='struggle';
     const resolvedChange=resolvedActivityChange(action,outcome);
     const resolvedAction={...action,change:resolvedChange};
     if(condition){
