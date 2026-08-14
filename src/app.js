@@ -220,16 +220,24 @@ function conditionEvent(fatigue, stress, dayIndex){
 }
 const activitySkill={reading:'study',arithmetic:'arithmetic',manners:'manners',errand:'commerce',sweeping:'health',herbs:'medicine',houseclean:'craft',rest:'healthiness'};
 const outcomeLabels={perfect:'완벽',success:'성공',struggle:'힘겨움',mistake:'실수'};
+function activityOutcomeThresholds(action,fatigue,stress){
+  const skill=game[activitySkill[action.id]]||0;
+  const healthRatio=clampStat('health',game.health)/statMaximum('health');
+  const healthBonus=healthRatio*24;
+  const condition=(game.healthiness||50)*.07-fatigue*.42-stress*.34;
+  const success=Math.max(18,Math.min(94,44+skill*.09+condition+healthBonus));
+  const perfect=Math.max(6,success-(34-healthRatio*8));
+  const struggle=Math.min(98,success+(22-healthRatio*10));
+  return {perfect,success,struggle};
+}
 function judgeActivityOutcome(action,fatigue,stress){
   if(['shopping','vacation'].includes(action.id))return 'success';
   if(action.id==='rest')return Math.max(fatigue,stress)<35&&Math.random()<.35?'perfect':'success';
-  const skill=game[activitySkill[action.id]]||0;
-  const condition=(game.healthiness||50)*.08-fatigue*.42-stress*.34;
-  const chance=Math.max(18,Math.min(92,48+skill*.09+condition));
+  const chance=activityOutcomeThresholds(action,fatigue,stress);
   const roll=Math.random()*100;
-  if(roll<=Math.max(6,chance-32))return 'perfect';
-  if(roll<=chance)return 'success';
-  if(roll<=Math.min(96,chance+20))return 'struggle';
+  if(roll<=chance.perfect)return 'perfect';
+  if(roll<=chance.success)return 'success';
+  if(roll<=chance.struggle)return 'struggle';
   return 'mistake';
 }
 function resolvedActivityChange(action,outcome){
