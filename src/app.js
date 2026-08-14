@@ -230,6 +230,7 @@ function judgeActivityOutcome(action,fatigue,stress){
   return 'mistake';
 }
 function resolvedActivityChange(action,outcome){
+  if(['rest','vacation'].includes(action.id)&&['struggle','mistake'].includes(outcome))outcome='success';
   const change={};
   Object.entries(action.change).forEach(([key,value])=>{
     const beneficial=(key==='fatigue'||key==='stress')?value<0:value>0;
@@ -240,6 +241,10 @@ function resolvedActivityChange(action,outcome){
     change.fatigue=(change.fatigue||0)+2;
     change.stress=(change.stress||0)+3;
     change.health=(change.health||0)-1;
+  }
+  if(action.id==='rest'){
+    change.fatigue=Math.min(-1,change.fatigue??-10);
+    change.stress=Math.min(0,change.stress||0);
   }
   return change;
 }
@@ -814,7 +819,6 @@ async function runWeek() {
   const completedMonth = game.month;
   panel.hidden = true;
   const weeklyChange = await playWeeklySchedule(selected);
-  Object.entries(weeklyChange).forEach(([key,value])=>game[key]=clampStat(key,(game[key]||0)+value));
   recordMonthlySchedule(selected,weeklyChange);
   game.homeReaction=null;
   advanceGameDate(7);
@@ -992,6 +996,7 @@ async function playWeeklySchedule(selected) {
     setScheduleDialogue(action,outcome,index);
     stageCharacter.className = `stage-character pixel-sprite ${presentation.motion}`;
     renderActivityGauges(resolvedAction);
+    Object.entries(resolvedChange).forEach(([key,value])=>game[key]=clampStat(key,(game[key]||0)+value));
     game.money=Math.max(0,game.money-action.cost);
     renderHud();
     const moneyLabel=document.querySelector('#moneyLabel');
