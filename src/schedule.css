@@ -318,6 +318,10 @@
   left:50%;bottom:1%;width:206px;height:132px;padding:0;animation:none!important;
 }
 .activity-stage.action-rest .stage-character.pixel-sprite.motion-resting:after{display:none;}
+.activity-stage.action-rest .stage-caption{
+  top:8px;bottom:auto;left:8%;right:8%;z-index:5;padding:6px 10px;
+  overflow:hidden;white-space:nowrap;text-overflow:ellipsis;font-size:11px;
+}
 @keyframes houseclean-floor-patrol{
   0%{left:24%;transform:translateX(-50%)}
   42%{left:76%;transform:translateX(-50%)}

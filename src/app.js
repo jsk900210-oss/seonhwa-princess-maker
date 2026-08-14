@@ -957,7 +957,8 @@ async function playWeeklySchedule(selected) {
     document.querySelectorAll('#playbackWeek span').forEach((day,dayIndex)=>{day.classList.toggle('done',dayIndex<index);day.classList.toggle('current',dayIndex===index);});
     document.querySelectorAll('#playbackWeek span').forEach((day,dayIndex)=>{day.classList.toggle('done',dayIndex<index);day.classList.toggle('current',dayIndex===index);});
     const outfitName=outfits.find(item=>item.id===dailyOutfit)?.name;
-    document.querySelector('#stageCaption').textContent = `${dayNames[index]} · ${action.name}${outfitName?` · ${outfitName}`:''}`;
+    const showOutfitName=action.id!=='rest'&&Boolean(outfitName);
+    document.querySelector('#stageCaption').textContent = `${dayNames[index]} · ${action.name}${showOutfitName?` · ${outfitName}`:''}`;
     document.querySelector('#playbackProgress').style.width = `${((index + 1) / 7) * 100}%`;
     bg.src = backgrounds[presentation.location];
     stageMap.src = backgrounds[presentation.location];
