@@ -309,6 +309,9 @@ const actions = [
   { id: 'shopping', category: '휴식', name: '저잣거리', cost: 0, summary: '', change: {}, special:'market' },
   { id: 'vacation', category: '휴식', name: '바캉스', cost: 180, summary: '스트레스 -15 · 추억 일러스트 획득', change: {stress:-15}, special:'vacation' }
 ];
+function actionForStressLimit(action,stress){
+  return stress>=statMaximum('stress')&&action.id!=='rest'?actions.find(item=>item.id==='rest'):action;
+}
 
 function awardVacationIllustration(){
   normalizeInventory();
@@ -954,10 +957,17 @@ async function playWeeklySchedule(selected) {
   stage.hidden = false;
   stageCharacterImage.src = spriteFrames.down[1];
   for (let index = 0; index < selected.length; index += 1) {
-    const action = selected[index];
+    const plannedAction = selected[index];
+    const action = actionForStressLimit(plannedAction,simulated.stress);
+    const forcedRest = action.id!==plannedAction.id;
+    if(forcedRest){
+      selected[index]=action;
+      game.dailySchedule[index]=action.id;
+    }
     const presentation = actionPresentation[action.id]||actionPresentation.rest;
     stage.hidden=false;stageCharacter.hidden=false;stageProps.hidden=false;
     setScheduleDialogue(action,'start',index);
+    if(forcedRest)document.querySelector('#dialogueText').textContent='스트레스가 100에 도달해 오늘 일정은 집에서 휴식으로 변경했어요.';
     const dailyOutfit=game.autoOutfit?updateAutoOutfit(action.id):game.equippedOutfit;
     document.querySelector('#playbackDay').textContent = dayNames[index];
     document.querySelector('#playbackAction').textContent = action.name;
