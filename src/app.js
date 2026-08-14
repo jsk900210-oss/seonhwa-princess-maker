@@ -42,8 +42,11 @@ const statGroups = [
   { title: '기초 능력', stats: [['health','체력'],['healthiness','건강'],['study','학문'],['arithmetic','산술'],['manners','예절']] },
   { title: '예술·기술', stats: [['arts','예능'],['craft','솜씨'],['cooking','요리'],['embroidery','자수'],['sensitivity','감수성']] },
   { title: '무예·전문', stats: [['martial','무예'],['archery','궁술'],['riding','승마'],['medicine','의술'],['commerce','상업']] },
-  { title: '인품·상태', stats: [['virtue','덕망'],['charm','매력'],['reputation','평판'],['stress','스트레스'],['fatigue','피로']] }
+  { title: '인품·상태', stats: [['virtue','덕망'],['charm','매력'],['reputation','평판'],['fatigue','피로'],['stress','스트레스']] }
 ];
+const statDisplayOrder=[...statGroups.flatMap(group=>group.stats.map(([key])=>key)),'nannyAffinity','guardianTrust','memory','truth','exposure'];
+const statDisplayRank=new Map(statDisplayOrder.map((key,index)=>[key,index]));
+const orderedChangeEntries=(change={})=>Object.entries(change).sort(([left],[right])=>(statDisplayRank.get(left)??999)-(statDisplayRank.get(right)??999));
 const expressions = [
   ['../assets/characters/seonhwa/age-09/base/seonhwa-age09-base.png','기본'],
   ['../assets/characters/seonhwa/age-09/fullbody-expressions/seonhwa-age09-fullbody-happy.png','웃음'],
@@ -360,7 +363,7 @@ function renderHud() {
 const statLabels={health:'체력',healthiness:'건강',study:'학문',arithmetic:'산술',manners:'예절',arts:'예능',martial:'무예',craft:'솜씨',cooking:'요리',embroidery:'자수',virtue:'덕망',charm:'매력',sensitivity:'감수성',medicine:'의술',commerce:'상업',reputation:'평판',stress:'스트레스',fatigue:'피로'};
 statLabels.nannyAffinity='유모 친밀도';
 function showLiveChanges(action){
-  const items=Object.entries(action.change).map(([key,value])=>{const inverse=key==='fatigue'||key==='stress';const positive=inverse?value<0:value>=0;const current=clampStat(key,game[key]);return `<span class="${positive?'up':'down'}">${statLabels[key]||key} <b>${current}</b> <small>(${value>0?'+':''}${value})</small></span>`;});
+  const items=orderedChangeEntries(action.change).map(([key,value])=>{const inverse=key==='fatigue'||key==='stress';const positive=inverse?value<0:value>=0;const current=clampStat(key,game[key]);return `<span class="${positive?'up':'down'}">${statLabels[key]||key} <b>${current}</b> <small>(${value>0?'+':''}${value})</small></span>`;});
   if(action.cost!==0)items.push(`<span class="money">은전 ${action.cost>0?'-':'+'}${Math.abs(action.cost)}냥</span>`);
   document.querySelector('#liveChanges').innerHTML=items.join('');
   if(Object.values(action.change||{}).some(value=>Math.abs(value)>=8))game.homeReaction='shocked';
@@ -369,7 +372,7 @@ function showLiveChanges(action){
 }
 function renderActivityGauges(action){
   const box=document.querySelector('#activityGauges');
-  const entries=Object.entries(action.change||{}).filter(([,value])=>value!==0);
+  const entries=orderedChangeEntries(action.change).filter(([,value])=>value!==0);
   if(!entries.length||['shopping','vacation'].includes(action.id)){box.hidden=true;box.innerHTML='';return;}
   box.innerHTML=entries.map(([key,value])=>{
     const max=statMaximum(key),current=clampStat(key,game[key]),next=clampStat(key,current+value);
@@ -721,7 +724,7 @@ function renderShopPanel(tab='food',marketMode=marketShoppingActive){
   panelBody.querySelectorAll('[data-outfit]').forEach(button=>button.addEventListener('click',()=>buyOutfit(button.dataset.outfit)));
   document.querySelector('#shopBack').addEventListener('click',()=>{if(marketMode)returnToMarketSelection();else renderSchedulePanel();});
 }
-function formatChanges(change){return Object.entries(change).map(([key,value])=>`${statLabels[key]||key} ${value>0?'+':''}${value}`).join(' · ');}
+function formatChanges(change){return orderedChangeEntries(change).map(([key,value])=>`${statLabels[key]||key} ${value>0?'+':''}${value}`).join(' · ');}
 async function buyFood(id){const food=foods.find(item=>item.id===id);if(!food||game.money<food.price||marketMealConsumed)return;marketMealConsumed=true;panel.hidden=true;const stage=document.querySelector('#activityStage'),image=document.querySelector('#stageCharacterImage'),character=document.querySelector('#stageCharacter');document.querySelector('#marketExplore').hidden=true;stage.hidden=false;stage.className='activity-stage map-restRoom eating-stage';document.querySelector('#stageMap').src=backgrounds.restRoom;document.querySelector('#stageNpc').hidden=true;document.querySelector('#stageProps').hidden=true;document.querySelector('#stageCaption').textContent=`주막 · ${food.name}`;character.hidden=false;character.className='stage-character pixel-sprite motion-eating';for(const n of [1,2,3,2,1,2,3]){image.src=await outfitActivityFrame(`../assets/characters/seonhwa/age-09/sprites/activities/eating-${n}.png`,game.equippedOutfit);await new Promise(r=>setTimeout(r,320));}stage.hidden=true;game.money-=food.price;applyShopChanges(food.change);document.querySelector('#dialogueText').textContent=`주막에서 ${food.name}을(를) 맛있게 먹었어요. 이번 저잣거리 방문의 식사는 끝났어요.`;showLiveChanges({change:food.change,cost:food.price});panel.hidden=false;renderShopPanel('food',true);queueAutoSave();}
 function buyOutfit(id){normalizeInventory();const outfit=outfits.find(item=>item.id===id);if(!outfit||!outfitAvailable(outfit)||game.money<outfit.price)return;if(game.items.some(item=>item.type==='outfit'&&item.id===id)){document.querySelector('#dialogueText').textContent=`${outfit.name}은(는) 이미 보유하고 있어요.`;renderShopPanel('outfit');return;}game.money-=outfit.price;game.items.push({id:outfit.id,type:'outfit',name:outfit.name,age:outfit.age,ageEnd:outfit.ageEnd,tone:outfit.tone,seasons:outfit.seasons,qty:1});game.equippedOutfit=id;applyEquippedOutfit();applyShopChanges(outfit.change);document.querySelector('#dialogueText').textContent=`${outfit.name}을(를) 구입하고 갈아입었어요.`;showLiveChanges({change:outfit.change,cost:outfit.price});renderShopPanel('outfit');queueAutoSave();}
 
@@ -1004,7 +1007,7 @@ async function playWeeklySchedule(selected) {
     moneyLabel.classList.remove('money-changing');void moneyLabel.offsetWidth;moneyLabel.classList.add('money-changing');
     showLiveChanges(resolvedAction);
     const moneyText = action.cost > 0 ? `은전 -${action.cost}냥` : action.cost < 0 ? `은전 +${-action.cost}냥` : '비용 없음';
-    const resultSummary=Object.entries(resolvedChange).filter(([,value])=>value!==0).map(([key,value])=>`${statLabels[key]||key} ${value>0?'+':''}${value}`).join(' · ');
+    const resultSummary=orderedChangeEntries(resolvedChange).filter(([,value])=>value!==0).map(([key,value])=>`${statLabels[key]||key} ${value>0?'+':''}${value}`).join(' · ');
     dayResult.innerHTML = `<b>${action.name} · ${outcomeLabels[outcome]}</b><span>${resultSummary||'능력치 변화 없음'}<br>${moneyText} · 현재 ${game.money.toLocaleString()}냥</span>`;
     if(action.id!=='vacation'){
       dayResult.hidden = false;

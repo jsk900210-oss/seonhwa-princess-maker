@@ -1,17 +1,19 @@
 # 《선화공주 만들기》 프로젝트 현황
 
 최종 갱신: 2026-08-14  
-기준 버전: `v0.61.54-debug`
+기준 버전: `v0.61.55-debug`
 
 ## 저장 위치
 
 - 로컬 프로젝트: `outputs/seonhwa-princess-mvp/`
 - GitHub: `https://github.com/jsk900210-oss/seonhwa-princess-maker`
 - Notion: `공주 키우기 — 프메2 스타일 개발 정리`
-- 로컬 실행: `http://127.0.0.1:8000/src/?v=0.61.54-debug`
+- 로컬 실행: `http://127.0.0.1:8000/src/?v=0.61.55-debug`
 - 공개 테스트: `https://jsk900210-oss.github.io/seonhwa-princess-maker/`
 
 ## 현재 구현 완료
+
+- 피로와 스트레스의 표시 순서를 `피로 → 스트레스`로 고정하고 활동 게이지·실시간 알림·결과 요약에 공통 적용
 
 - 윤슬마루 붓글씨 로고 로딩 화면과 발자국 애니메이션
 - 젊은 선비와 아이의 8장면 프롤로그, 빗소리·배경음·교차 전환
