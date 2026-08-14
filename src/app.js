@@ -414,7 +414,6 @@ function answerHomeGreeting(scene,index){
 
 function openPanel(type) {
   panel.hidden = false;
-  playHomeMusic();
   if (type === 'schedule') {
     playScheduleMusic();
     renderSchedulePanel();
@@ -423,10 +422,13 @@ function openPanel(type) {
     panelTitle.textContent = `${game.characterName || '아이'}의 상태`;
     panelBody.innerHTML = `<div class="status-summary"><span>${game.age}세 · ${game.season} ${game.week}주</span><b>${game.money.toLocaleString()}냥</b></div>${statGroups.map(group => `<section class="stat-group"><h3>${group.title}</h3>${group.stats.map(([key,label]) => statBar(key,label)).join('')}</section>`).join('')}`;
   } else if (type === 'inventory') {
+    playHomeMusic();
     renderInventory();
   } else if (type === 'collection') {
+    playHomeMusic();
     renderVacationCollection();
   } else {
+    playHomeMusic();
     renderSavePanel();
   }
 }
