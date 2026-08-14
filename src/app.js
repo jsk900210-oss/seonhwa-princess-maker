@@ -360,7 +360,7 @@ function renderHud() {
 const statLabels={health:'체력',healthiness:'건강',study:'학문',arithmetic:'산술',manners:'예절',arts:'예능',martial:'무예',craft:'솜씨',cooking:'요리',embroidery:'자수',virtue:'덕망',charm:'매력',sensitivity:'감수성',medicine:'의술',commerce:'상업',reputation:'평판',stress:'스트레스',fatigue:'피로'};
 statLabels.nannyAffinity='유모 친밀도';
 function showLiveChanges(action){
-  const items=Object.entries(action.change).map(([key,value])=>{const inverse=key==='fatigue'||key==='stress';const positive=inverse?value<0:value>=0;return `<span class="${positive?'up':'down'}">${statLabels[key]||key} ${value>0?'+':''}${value}</span>`;});
+  const items=Object.entries(action.change).map(([key,value])=>{const inverse=key==='fatigue'||key==='stress';const positive=inverse?value<0:value>=0;const current=clampStat(key,game[key]);return `<span class="${positive?'up':'down'}">${statLabels[key]||key} <b>${current}</b> <small>(${value>0?'+':''}${value})</small></span>`;});
   if(action.cost!==0)items.push(`<span class="money">은전 ${action.cost>0?'-':'+'}${Math.abs(action.cost)}냥</span>`);
   document.querySelector('#liveChanges').innerHTML=items.join('');
   if(Object.values(action.change||{}).some(value=>Math.abs(value)>=8))game.homeReaction='shocked';
@@ -375,7 +375,7 @@ function renderActivityGauges(action){
     const max=statMaximum(key),current=clampStat(key,game[key]),next=clampStat(key,current+value);
     const beneficial=(key==='fatigue'||key==='stress')?value<0:value>0;
     const low=Math.min(current,next),width=Math.max(2,Math.abs(next-current));
-    return `<div class="activity-gauge"><span class="activity-gauge-label">${statLabels[key]||key}</span><span class="activity-gauge-track"><i class="activity-gauge-before" style="width:${current/max*100}%"></i><i class="activity-gauge-delta ${beneficial?'up':'down'}" style="left:${low/max*100}%;width:${Math.max(2,width/max*100)}%"></i></span><span class="activity-gauge-value ${beneficial?'up':'down'}">${value>0?'▲':'▼'} ${Math.abs(value)}</span></div>`;
+    return `<div class="activity-gauge"><span class="activity-gauge-label">${statLabels[key]||key}</span><span class="activity-gauge-track"><i class="activity-gauge-before" style="width:${current/max*100}%"></i><i class="activity-gauge-delta ${beneficial?'up':'down'}" style="left:${low/max*100}%;width:${Math.max(2,width/max*100)}%"></i></span><span class="activity-gauge-value ${beneficial?'up':'down'}"><b>${current} → ${next}</b><small>${value>0?'▲':'▼'}${Math.abs(value)}</small></span></div>`;
   }).join('');
   box.hidden=false;
 }
