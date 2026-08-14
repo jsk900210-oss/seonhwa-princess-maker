@@ -301,6 +301,9 @@
 .activity-stage:not(.market-choice-stage):has(.stage-npc:not([hidden])) .stage-character.pixel-sprite{
   left:30%;width:142px;height:142px;bottom:2%;
 }
+
+/* 활동명은 상단의 큰 진행 상자에서만 표시한다. */
+.phone.playing .stage-caption{display:none!important}
 .activity-stage:not(.market-choice-stage):has(.stage-npc:not([hidden])) .stage-npc{
   right:0;left:auto;width:142px;height:142px;bottom:2%;
 }
