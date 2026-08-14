@@ -36,7 +36,7 @@ function transitionPrologueToHomeMusic(){
   fadeAudio(prologueMusic,0,1600);
 }
 
-const game = { characterName:'', nannyName:'', age: 9, month: 1, week: 1, season:'봄', money: 1200, health: 42, study: 35, fatigue: 18, items: [], equippedOutfit:null, autoOutfit:true, dailySchedule: [null,null,null,null,null,null,null], birthday:null, currentDate:null, endingDate:null, ended:false, birthdayCount:0, element:null, birthSeason:null, memory:0, truth:0, exposure:0, guardianTrust:50, nannyAffinity:50, lastGreetingDate:null, monthlyLedger:null };
+const game = { characterName:'', nannyName:'', profileSlot:null, age: 9, month: 1, week: 1, season:'봄', money: 1200, health: 42, study: 35, fatigue: 18, items: [], equippedOutfit:null, autoOutfit:true, dailySchedule: [null,null,null,null,null,null,null], birthday:null, currentDate:null, endingDate:null, ended:false, birthdayCount:0, element:null, birthSeason:null, memory:0, truth:0, exposure:0, guardianTrust:50, nannyAffinity:50, lastGreetingDate:null, monthlyLedger:null };
 Object.assign(game, { healthiness: 76, arithmetic: 22, manners: 28, arts: 18, martial: 12, archery: 5, riding: 3, craft: 24, cooking: 20, embroidery: 15, virtue: 36, charm: 30, sensitivity: 40, medicine: 8, commerce: 10, reputation: 14, stress: 12 });
 const statGroups = [
   { title: '기초 능력', stats: [['health','체력'],['healthiness','건강'],['study','학문'],['arithmetic','산술'],['manners','예절']] },
@@ -77,7 +77,7 @@ const backgrounds = {
 };
 const SAVE_KEY = 'seonhwa-princess-mvp-save-v2';
 const SESSION_ACTIVE_KEY = 'seonhwa-princess-mvp-session-active';
-const SAVE_SLOTS = [1,2,3];
+const SAVE_SLOTS = [1,2,3,4,5];
 const LEGACY_SAVE_KEYS = ['seonhwa-princess-mvp-save-v1'];
 let pendingRecoverySave=null;
 const statMaximum=key=>key==='fatigue'?100:999;
@@ -490,33 +490,22 @@ function renderWardrobe(){
 function renderSavePanel() {
   panelTitle.textContent = '게임 기록';
   const slots = SAVE_SLOTS.map(slot => readSave(slot));
-  const autosave = readAutoSave();
   const slotCards = slots.map((saved, index) => {
     const slot = index + 1;
-    const label = saved ? `${saved.game.age}세 ${saved.game.month}월 ${saved.game.week}주` : '비어 있음';
+    const label = saved ? `${saved.game.characterName||'아이'} · ${saved.game.age}세 ${saved.game.month}월 ${saved.game.week}주` : '새로운 인연을 기다리는 빈 기록';
     const savedAt = saved ? new Date(saved.savedAt).toLocaleString('ko-KR') : '';
-    return `<div class="save-slot ${saved ? 'filled' : 'empty'}"><div><b>슬롯 ${slot}</b><small>${label}${savedAt ? ` · ${savedAt}` : ''}</small></div><div class="save-slot-actions"><button data-save-slot="${slot}">저장</button><button data-load-slot="${slot}" ${saved ? '' : 'disabled'}>불러오기</button></div></div>`;
+    const current=saved&&game.profileSlot===slot;
+    return `<div class="save-slot ${saved ? 'filled' : 'empty'}"><div><b>인연 ${slot}${current?' · 현재 키우는 중':''}</b><small>${label}${savedAt ? ` · ${savedAt}` : ''}</small></div>${saved?`<div class="save-slot-actions"><button data-load-slot="${slot}" ${current?'disabled':''}>${current?'현재 기록':'이어하기'}</button><button data-delete-slot="${slot}" ${current?'disabled':''}>기록 삭제</button></div>`:''}</div>`;
   }).join('');
   panelBody.innerHTML = `
-    <div class="save-info">
-      <b>자동저장</b>
-      <small>${autosave ? `${autosave.game.age}세 ${autosave.game.month}월 ${autosave.game.week}주 · ${new Date(autosave.savedAt).toLocaleString('ko-KR')}` : '아직 자동저장이 없습니다.'}</small>
-    </div>
+    <div class="save-info"><b>인연 기록 ${slots.filter(Boolean).length}/5</b><small>최대 다섯 명까지 동시에 키울 수 있으며 각 기록은 자동으로 저장됩니다.</small></div>
     <div class="save-grid">${slotCards}</div>
     <div class="save-actions">
-      <button id="saveCurrent">현재 상태를 자동저장/백업</button>
-      <button id="exportSave">세이브 내보내기</button>
-      <button id="importSave">세이브 가져오기</button>
-      <button class="danger" id="resetGame">처음부터 시작</button>
-      <input id="importSaveFile" type="file" accept="application/json" hidden>
+      <button class="new-growth" id="startNewGrowth">새롭게 시작하기</button>
     </div>`;
-  document.querySelector('#saveCurrent').addEventListener('click', () => saveGame());
-  document.querySelector('#exportSave').addEventListener('click', exportSave);
-  document.querySelector('#importSave').addEventListener('click', () => document.querySelector('#importSaveFile').click());
-  document.querySelector('#importSaveFile').addEventListener('change', importSave);
-  document.querySelector('#resetGame').addEventListener('click', resetGame);
-  panelBody.querySelectorAll('[data-save-slot]').forEach(button => button.addEventListener('click', () => saveGame(Number(button.dataset.saveSlot))));
   panelBody.querySelectorAll('[data-load-slot]').forEach(button => button.addEventListener('click', () => loadGame(Number(button.dataset.loadSlot))));
+  panelBody.querySelectorAll('[data-delete-slot]').forEach(button => button.addEventListener('click', () => deleteCharacterRecord(Number(button.dataset.deleteSlot))));
+  document.querySelector('#startNewGrowth').addEventListener('click',beginNewGrowth);
 }
 
 function readSave(slot = 1) {
@@ -543,6 +532,10 @@ function serializeSave() {
 
 function applySavePayload(saved) {
   if (!saved?.game) return false;
+  if(!saved.game.profileSlot){
+    const matchingSlot=SAVE_SLOTS.find(slot=>{const record=readSave(slot);return record?.game?.characterName===saved.game.characterName&&record?.game?.nannyName===saved.game.nannyName&&record?.game?.birthday===saved.game.birthday;});
+    saved.game.profileSlot=matchingSlot||SAVE_SLOTS.find(slot=>!readSave(slot))||null;
+  }
   Object.assign(game, saved.game);
   normalizeStats();
   if(typeof game.autoOutfit!=='boolean')game.autoOutfit=true;
@@ -583,7 +576,9 @@ function saveGame(slot = 1, auto = false) {
 let autoSaveTimer = null;
 function writeLatestAutoSave(){
   if(!game.birthday)return false;
-  localStorage.setItem(`${SAVE_KEY}-autosave`,JSON.stringify(serializeSave()));
+  const payload=serializeSave();
+  localStorage.setItem(`${SAVE_KEY}-autosave`,JSON.stringify(payload));
+  if(game.profileSlot)writeSave(game.profileSlot,payload);
   return true;
 }
 function queueAutoSave() {
@@ -617,48 +612,50 @@ function initializeRecoverySession(){
 }
 
 function loadGame(slot = 1) {
-  const saved = readSave(slot) || (slot === 1 ? readAutoSave() : null);
+  writeLatestAutoSave();
+  const saved = readSave(slot);
   if (!saved) return;
+  saved.game.profileSlot=slot;
   applySavePayload(saved);
 }
-
-function exportSave() {
-  const payload = readAutoSave() || readSave(1) || serializeSave();
-  const blob = new Blob([JSON.stringify(payload, null, 2)], { type: 'application/json' });
-  const url = URL.createObjectURL(blob);
-  const link = document.createElement('a');
-  link.href = url;
-  link.download = `seonhwa-princess-save-${new Date().toISOString().slice(0,19).replace(/[:T]/g,'-')}.json`;
-  link.click();
-  setTimeout(() => URL.revokeObjectURL(url), 1000);
+function deleteCharacterRecord(slot){
+  if(game.profileSlot===slot)return;
+  const saved=readSave(slot);if(!saved)return;
+  if(!window.confirm(`${saved.game.characterName||'아이'}의 인연 기록을 삭제할까요? 삭제한 기록은 되돌릴 수 없습니다.`))return;
+  localStorage.removeItem(`${SAVE_KEY}-slot-${slot}`);
+  renderSavePanel();
 }
 
-async function importSave(event) {
-  const file = event.currentTarget.files?.[0];
-  event.currentTarget.value = '';
-  if (!file) return;
-  const text = await file.text();
-  try {
-    const payload = JSON.parse(text);
-    if (!payload?.game) throw new Error('invalid');
-    localStorage.setItem(`${SAVE_KEY}-autosave`, JSON.stringify(payload));
-    applySavePayload(payload);
-    renderSavePanel();
-  } catch {
-    document.querySelector('#dialogueText').textContent = '가져온 세이브 파일을 읽지 못했어요.';
-  }
-}
-
-function resetGame() {
-  Object.assign(game, { age:9, month:1, week:1, money:1200, health:42, study:35, fatigue:18, items:[], equippedOutfit:null, autoOutfit:true, dailySchedule:[null,null,null,null,null,null,null], birthday:null,currentDate:null,endingDate:null,ended:false, nannyAffinity:50,lastGreetingDate:null, monthlyLedger:null, healthiness:76, arithmetic:22, manners:28, arts:18, martial:12, archery:5, riding:3, craft:24, cooking:20, embroidery:15, virtue:36, charm:30, sensitivity:40, medicine:8, commerce:10, reputation:14, stress:12 });
-  document.querySelector('#liveChanges').innerHTML='';document.querySelector('#homeGreeting').hidden=true;
+function resetGameState() {
+  Object.assign(game, { characterName:'',nannyName:'',profileSlot:null,age:9, month:1, week:1,season:'봄', money:1200, health:42, study:35, fatigue:18, items:[], equippedOutfit:null, autoOutfit:true, dailySchedule:[null,null,null,null,null,null,null], birthday:null,currentDate:null,endingDate:null,ended:false,birthdayCount:0,element:null,birthSeason:null,memory:0,truth:0,exposure:0,guardianTrust:50,nannyAffinity:50,lastGreetingDate:null,monthlyLedger:null,healthiness:76,arithmetic:22,manners:28,arts:18,martial:12,archery:5,riding:3,craft:24,cooking:20,embroidery:15,virtue:36,charm:30,sensitivity:40,medicine:8,commerce:10,reputation:14,stress:12 });
+  document.querySelector('#liveChanges').innerHTML='';
+  const greeting=document.querySelector('#homeGreeting');greeting.hidden=true;greeting.classList.remove('greeting-active');
+  document.querySelector('#characterNameInput').value='';
+  document.querySelector('#nannyNameInput').value='';
+  document.querySelector('#birthdayInput').value='1990-01-01';
+  document.querySelector('#birthdayTitle').textContent='아이와 유모의 이름';
   bg.src = backgrounds.home;
   character.src = expressions[0][0];
   renderHud();
   panel.hidden = true;
-  document.querySelector('#birthdaySetup').hidden = false;
-  document.querySelector('#dialogueText').textContent = '새로운 10년을 시작해 볼까요?';
-  queueAutoSave();
+  document.querySelector('#birthdaySetup').hidden = true;
+  document.querySelector('#dialogueText').textContent = '새로운 인연을 만날 준비를 해볼까요?';
+}
+function restartStudioIntro(){
+  clearTimeout(prologueTimer);stopRain();stopGameMusic();
+  const music=document.querySelector('#prologueMusic');music.pause();music.currentTime=0;
+  prologueIndex=0;prologueImageLayer=0;prologueRenderId++;studioIntroFinished=false;
+  document.querySelector('#prologue').hidden=true;document.querySelector('#recoveryPrompt').hidden=true;
+  prologueSoundOn=true;
+  const soundButton=document.querySelector('#prologueSound');
+  if(soundButton){soundButton.textContent='소리 끄기';soundButton.setAttribute('aria-pressed','true');}
+  const loading=document.querySelector('#studioLoading');loading.hidden=false;loading.classList.remove('is-leaving');
+  loading.querySelectorAll('.studio-logo,.brush-logo span,.brush-logo i,.studio-logo b,.loading-seonhwa,.footprint,.loading-caption,.studio-start-sound').forEach(element=>{element.style.animation='none';void element.offsetWidth;element.style.animation='';});
+}
+function beginNewGrowth(){
+  writeLatestAutoSave();
+  if(SAVE_SLOTS.every(slot=>Boolean(readSave(slot)))){document.querySelector('#dialogueText').textContent='다섯 명을 모두 키우고 있어요. 새 인연을 시작하려면 기존 기록 하나를 삭제해주세요.';return;}
+  resetGameState();restartStudioIntro();
 }
 
 function statBar(key, label) {
@@ -845,11 +842,13 @@ function startWithBirthday(){
   const nannyName=document.querySelector('#nannyNameInput').value.trim();
   if(!characterName||!nannyName){document.querySelector('#birthdayTitle').textContent='두 이름을 모두 지어주세요';return;}
   if(value<'1990-01-01'||value>'1990-12-31') return;
+  const profileSlot=game.profileSlot||SAVE_SLOTS.find(slot=>!readSave(slot));
+  if(!profileSlot){document.querySelector('#birthdayTitle').textContent='동시에 키울 수 있는 다섯 명의 기록이 모두 찼어요';return;}
   const birth=new Date(`${value}T00:00:00`);
   const start=addYears(birth,9);
   const ending=addYears(birth,18); ending.setDate(ending.getDate()+1);
   const month=birth.getMonth()+1; const birthSeason=seasonForMonth(month); const element=['금','수','목','화','토'][(birth.getMonth()+birth.getDate())%5];
-  Object.assign(game,{characterName,nannyName,birthday:value,currentDate:isoDate(start),endingDate:isoDate(ending),age:9,month,season:birthSeason,birthSeason,element,week:1,ended:false,birthdayCount:1});
+  Object.assign(game,{characterName,nannyName,profileSlot,birthday:value,currentDate:isoDate(start),endingDate:isoDate(ending),age:9,month,season:birthSeason,birthSeason,element,week:1,ended:false,birthdayCount:1});
   game.monthlyLedger=createMonthlyLedger(start.getFullYear(),month);
   document.querySelector('#birthdaySetup').hidden=true;
   panel.hidden=true;
@@ -872,7 +871,7 @@ function seasonForMonth(month){ return month>=3&&month<=5?'봄':month>=6&&month<
 function showEnding(){
   panel.hidden=false; panelTitle.textContent=`${game.characterName || '아이'}의 성장 기록`;
   panelBody.innerHTML=`<div class="ending-card"><h2>마지막 생일 다음 날</h2><p>${game.age}세 · ${game.season}</p><p>아홉 살 생일부터 이어진 ${game.characterName || '아이'}의 성장 이야기가 완성되었습니다.</p><button id="endingRestart">새로운 생일로 시작</button></div>`;
-  document.querySelector('#endingRestart').addEventListener('click',resetGame);
+  document.querySelector('#endingRestart').addEventListener('click',beginNewGrowth);
 }
 function updatePrologueCopy(scene,index){
   const copy=document.querySelector('.prologue-copy');
