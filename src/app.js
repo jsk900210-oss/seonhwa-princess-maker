@@ -301,7 +301,7 @@ const actions = [
   { id: 'sweeping', category: '아르바이트', name: '마당 쓸기', cost: -40, summary: '체력 +2 · 피로 +5 · 40냥 획득', change: { health: 2, fatigue: 5 } },
   { id: 'herbs', category: '아르바이트', name: '약초 줍기', cost: -50, summary: '체력 +2 · 학문 +1 · 피로 +6', change: { health: 2, study: 1, fatigue: 6 } },
   { id: 'houseclean', category: '아르바이트', name: '집 청소', cost: -35, summary: '솜씨 +2 · 체력 +2 · 피로 +5', change: { craft: 2, health: 2, fatigue: 5 } },
-  { id: 'rest', category: '휴식', name: '집에서 휴식', cost: 0, summary: '피로 -10 · 체력 +2', change: { health: 2, fatigue: -10 } },
+  { id: 'rest', category: '휴식', name: '집에서 휴식', cost: 0, summary: '피로 -10 · 스트레스 -6 · 체력 +2', change: { health: 2, fatigue: -10, stress: -6 } },
   { id: 'shopping', category: '휴식', name: '저잣거리', cost: 0, summary: '', change: {}, special:'market' },
   { id: 'vacation', category: '휴식', name: '바캉스', cost: 180, summary: '피로 -20 · 스트레스 -15 · 추억 일러스트 획득', change: {fatigue:-20,stress:-15}, special:'vacation' }
 ];
