@@ -36,13 +36,13 @@ function transitionPrologueToHomeMusic(){
   fadeAudio(prologueMusic,0,1600);
 }
 
-const game = { characterName:'', nannyName:'', profileSlot:null, age: 9, month: 1, week: 1, season:'봄', money: 1200, health: 42, study: 35, fatigue: 18, items: [], equippedOutfit:null, autoOutfit:true, dailySchedule: [null,null,null,null,null,null,null], birthday:null, currentDate:null, endingDate:null, ended:false, birthdayCount:0, element:null, birthSeason:null, memory:0, truth:0, exposure:0, guardianTrust:50, nannyAffinity:50, lastGreetingDate:null, monthlyLedger:null };
+const game = { characterName:'', nannyName:'', profileSlot:null, age: 9, month: 1, week: 1, season:'봄', money: 1200, health: 42, study: 35, items: [], equippedOutfit:null, autoOutfit:true, dailySchedule: [null,null,null,null,null,null,null], birthday:null, currentDate:null, endingDate:null, ended:false, birthdayCount:0, element:null, birthSeason:null, memory:0, truth:0, exposure:0, guardianTrust:50, nannyAffinity:50, lastGreetingDate:null, monthlyLedger:null };
 Object.assign(game, { healthiness: 76, arithmetic: 22, manners: 28, arts: 18, martial: 12, archery: 5, riding: 3, craft: 24, cooking: 20, embroidery: 15, virtue: 36, charm: 30, sensitivity: 40, medicine: 8, commerce: 10, reputation: 14, stress: 12 });
 const statGroups = [
   { title: '기초 능력', stats: [['health','체력'],['healthiness','건강'],['study','학문'],['arithmetic','산술'],['manners','예절']] },
   { title: '예술·기술', stats: [['arts','예능'],['craft','솜씨'],['cooking','요리'],['embroidery','자수'],['sensitivity','감수성']] },
   { title: '무예·전문', stats: [['martial','무예'],['archery','궁술'],['riding','승마'],['medicine','의술'],['commerce','상업']] },
-  { title: '인품·상태', stats: [['virtue','덕망'],['charm','매력'],['reputation','평판'],['fatigue','피로'],['stress','스트레스']] }
+  { title: '인품·상태', stats: [['virtue','덕망'],['charm','매력'],['reputation','평판'],['stress','스트레스']] }
 ];
 const statDisplayOrder=[...statGroups.flatMap(group=>group.stats.map(([key])=>key)),'nannyAffinity','guardianTrust','memory','truth','exposure'];
 const statDisplayRank=new Map(statDisplayOrder.map((key,index)=>[key,index]));
@@ -83,7 +83,7 @@ const SESSION_ACTIVE_KEY = 'seonhwa-princess-mvp-session-active';
 const SAVE_SLOTS = [1,2,3,4,5];
 const LEGACY_SAVE_KEYS = ['seonhwa-princess-mvp-save-v1'];
 let pendingRecoverySave=null;
-const statMaximum=key=>['fatigue','stress'].includes(key)?100:999;
+const statMaximum=key=>key==='stress'?100:999;
 const clampStat=(key,value)=>Math.max(0,Math.min(statMaximum(key),Number(value)||0));
 const boundedStats=[...new Set(statGroups.flatMap(group=>group.stats.map(([key])=>key)).concat(['nannyAffinity','guardianTrust','memory','truth','exposure']))];
 function normalizeStats(){boundedStats.forEach(key=>{if(Object.hasOwn(game,key))game[key]=clampStat(key,game[key]);});}
@@ -120,31 +120,31 @@ activityFrames.sleep=[...activityFrames.rest];
 const npcFrames = Object.fromEntries(['teacher','dolsoe','herbalist','nanny'].map(name=>[name,[1,2,3].map(n=>`../assets/characters/npcs/activity/${name}-${n}.png`)]));
 npcFrames.teacherReading=[1,2,3].map(n=>`../assets/characters/npcs/activity/teacher-reading-${n}.png`);
 const foods = [
-  {id:'bunsik',name:'분식 세트',detail:'떡볶이 · 튀김 · 순대',price:45,change:{stress:-8,fatigue:-3,healthiness:-1}},
-  {id:'gimbap',name:'김밥',detail:'채소와 달걀을 넣은 한 줄',price:30,change:{stress:-4,fatigue:-3,healthiness:1}},
-  {id:'bulgogi',name:'불고기',detail:'달큰하게 양념한 쇠고기',price:85,change:{stress:-7,fatigue:-5,healthiness:3}},
-  {id:'bibimbap',name:'비빔밥',detail:'나물과 고명을 비빈 밥',price:65,change:{stress:-6,fatigue:-4,healthiness:4}},
-  {id:'gukbap',name:'국밥',detail:'뜨끈한 장국과 밥',price:55,change:{stress:-5,fatigue:-6,healthiness:2}},
-  {id:'japchae',name:'잡채',detail:'채소와 당면 볶음',price:70,change:{stress:-6,fatigue:-3,healthiness:2}},
-  {id:'tteokguk',name:'떡국',detail:'맑은 장국의 가래떡',price:60,change:{stress:-5,fatigue:-5,healthiness:2}},
-  {id:'samgyetang',name:'삼계탕',detail:'닭과 약재를 푹 고은 탕',price:110,change:{stress:-5,fatigue:-10,healthiness:6}},
-  {id:'galbijjim',name:'갈비찜',detail:'부드럽게 익힌 갈비',price:120,change:{stress:-9,fatigue:-6,healthiness:3}},
-  {id:'jeongol',name:'전골',detail:'채소와 고기를 끓인 전골',price:95,change:{stress:-7,fatigue:-7,healthiness:5}}
+  {id:'bunsik',name:'분식 세트',detail:'떡볶이 · 튀김 · 순대',price:45,change:{stress:-8,healthiness:-1}},
+  {id:'gimbap',name:'김밥',detail:'채소와 달걀을 넣은 한 줄',price:30,change:{stress:-4,healthiness:1}},
+  {id:'bulgogi',name:'불고기',detail:'달큰하게 양념한 쇠고기',price:85,change:{stress:-7,healthiness:3}},
+  {id:'bibimbap',name:'비빔밥',detail:'나물과 고명을 비빈 밥',price:65,change:{stress:-6,healthiness:4}},
+  {id:'gukbap',name:'국밥',detail:'뜨끈한 장국과 밥',price:55,change:{stress:-5,healthiness:2}},
+  {id:'japchae',name:'잡채',detail:'채소와 당면 볶음',price:70,change:{stress:-6,healthiness:2}},
+  {id:'tteokguk',name:'떡국',detail:'맑은 장국의 가래떡',price:60,change:{stress:-5,healthiness:2}},
+  {id:'samgyetang',name:'삼계탕',detail:'닭과 약재를 푹 고은 탕',price:110,change:{stress:-5,healthiness:6}},
+  {id:'galbijjim',name:'갈비찜',detail:'부드럽게 익힌 갈비',price:120,change:{stress:-9,healthiness:3}},
+  {id:'jeongol',name:'전골',detail:'채소와 고기를 끓인 전골',price:95,change:{stress:-7,healthiness:5}}
 ];
 const outfits = [
   {id:'age09-neat',age:9,ageEnd:12,name:'단정한 배움 한복',price:180,tone:'단정함',seasons:['가을','겨울'],situations:['reading','arithmetic','manners'],change:{manners:4,virtue:3,charm:1}},
-  {id:'age09-flower',age:9,ageEnd:12,name:'연분홍 꽃 한복',price:230,tone:'화려함',seasons:['봄'],situations:['shopping','vacation'],change:{charm:5,reputation:2,fatigue:1}},
+  {id:'age09-flower',age:9,ageEnd:12,name:'연분홍 꽃 한복',price:230,tone:'화려함',seasons:['봄'],situations:['shopping','vacation'],change:{charm:5,reputation:2,stress:1}},
   {id:'age09-active',age:9,ageEnd:12,name:'마을 활동 한복',price:160,tone:'활동성',seasons:['여름'],situations:['errand','sweeping','herbs','houseclean'],change:{health:3,craft:3,charm:-1}},
   {id:'age13-scholar',age:13,ageEnd:15,name:'옥색 학문 한복',price:280,tone:'단정함',seasons:['가을','겨울'],situations:['reading','arithmetic'],change:{study:5,manners:3,charm:1}},
-  {id:'age13-festival',age:13,ageEnd:15,name:'명절 색동 한복',price:340,tone:'화려함',seasons:['봄','겨울'],situations:['manners','shopping','vacation'],change:{charm:6,reputation:3,fatigue:2}},
+  {id:'age13-festival',age:13,ageEnd:15,name:'명절 색동 한복',price:340,tone:'화려함',seasons:['봄','겨울'],situations:['manners','shopping','vacation'],change:{charm:6,reputation:3,stress:2}},
   {id:'age13-work',age:13,ageEnd:15,name:'생활 작업 한복',price:240,tone:'활동성',seasons:['여름'],situations:['errand','sweeping','herbs','houseclean'],change:{craft:5,health:3,charm:-1}},
-  {id:'age16-court',age:16,ageEnd:17,name:'격식 당의 한복',price:480,tone:'격식',seasons:['가을','겨울'],situations:['manners','shopping'],change:{manners:6,virtue:4,charm:3,fatigue:2}},
-  {id:'age16-art',age:16,ageEnd:17,name:'자수 예술 한복',price:520,tone:'화려함',seasons:['봄'],situations:['reading','vacation','shopping'],change:{arts:5,charm:7,reputation:2,fatigue:2}},
+  {id:'age16-court',age:16,ageEnd:17,name:'격식 당의 한복',price:480,tone:'격식',seasons:['가을','겨울'],situations:['manners','shopping'],change:{manners:6,virtue:4,charm:3,stress:2}},
+  {id:'age16-art',age:16,ageEnd:17,name:'자수 예술 한복',price:520,tone:'화려함',seasons:['봄'],situations:['reading','vacation','shopping'],change:{arts:5,charm:7,reputation:2,stress:2}},
   {id:'age16-travel',age:16,ageEnd:17,name:'여행 활동 한복',price:390,tone:'활동성',seasons:['여름'],situations:['errand','herbs','sweeping','houseclean'],change:{health:4,martial:3,charm:-1}},
-  {id:'age18-ceremony',age:18,ageEnd:18,name:'성년 예복 한복',price:720,tone:'격식',seasons:['가을','겨울'],situations:['manners','shopping'],change:{manners:8,virtue:5,reputation:5,fatigue:3}},
-  {id:'age18-silk',age:18,ageEnd:18,name:'비단 연회 한복',price:780,tone:'화려함',seasons:['봄','겨울'],situations:['shopping','vacation'],change:{charm:10,reputation:4,virtue:-1,fatigue:3}},
+  {id:'age18-ceremony',age:18,ageEnd:18,name:'성년 예복 한복',price:720,tone:'격식',seasons:['가을','겨울'],situations:['manners','shopping'],change:{manners:8,virtue:5,reputation:5,stress:3}},
+  {id:'age18-silk',age:18,ageEnd:18,name:'비단 연회 한복',price:780,tone:'화려함',seasons:['봄','겨울'],situations:['shopping','vacation'],change:{charm:10,reputation:4,virtue:-1,stress:3}},
   {id:'age18-simple',age:18,ageEnd:18,name:'담백한 생활 한복',price:560,tone:'활동성',seasons:['여름','가을'],situations:['errand','sweeping','herbs','houseclean','rest'],change:{craft:5,health:4,virtue:3,charm:-2}},
-  {id:'age18-premium-paradise',age:18,ageEnd:18,name:'소문의 낙원 한복',price:1200,tone:'화려함',seasons:['봄','겨울'],situations:['manners','shopping','vacation'],change:{charm:14,reputation:8,virtue:2,manners:4,fatigue:4}}
+  {id:'age18-premium-paradise',age:18,ageEnd:18,name:'소문의 낙원 한복',price:1200,tone:'화려함',seasons:['봄','겨울'],situations:['manners','shopping','vacation'],change:{charm:14,reputation:8,virtue:2,manners:4,stress:4}}
 ];
 const outfitAgeLabel=outfit=>outfit.age===outfit.ageEnd?`${outfit.age}세`:`${outfit.age}–${outfit.ageEnd}세`;
 const outfitAvailable=outfit=>game.age>=outfit.age&&game.age<=outfit.ageEnd;
@@ -158,10 +158,9 @@ const outfitImage=id=>{
 function homeCondition(){
   if(game.homeReaction==='shocked')return 'shocked';
   if(game.virtue<25||game.nannyAffinity<25||game.stress>=75)return 'rebellious';
-  if(game.fatigue>=55)return 'tired';
   if(game.stress>=50)return 'angry';
   if(game.healthiness<35||game.health<25)return 'sad';
-  if(game.fatigue<30&&game.stress<30)return 'happy';
+  if(game.stress<30)return 'happy';
   return 'normal';
 }
 function updateHomeCharacter(){
@@ -212,28 +211,27 @@ async function animateActivitySprite(image,motion,activity,npcImage,npc,outfitId
   const sequence=motion==='motion-walk'?[0,1,2,1,0,1,2,1]:[1,0,1,2,1,0,1];
   for(const frame of sequence){image.src=spriteFrames[direction][frame];await new Promise(resolve=>setTimeout(resolve,motion==='motion-walk'?135:170));}
 }
-function conditionEvent(fatigue, stress, dayIndex){
-  const peak=Math.max(fatigue,stress);
-  if(peak>=80||((fatigue>=70||stress>=70)&&dayIndex%2===1))return 'mistake';
+function conditionEvent(stress, dayIndex){
+  if(stress>=80||(stress>=70&&dayIndex%2===1))return 'mistake';
   if(peak>=55)return 'drowsy';
   return null;
 }
 const activitySkill={reading:'study',arithmetic:'arithmetic',manners:'manners',errand:'commerce',sweeping:'health',herbs:'medicine',houseclean:'craft',rest:'healthiness'};
 const outcomeLabels={perfect:'완벽',success:'성공',struggle:'힘겨움',mistake:'실수'};
-function activityOutcomeThresholds(action,fatigue,stress){
+function activityOutcomeThresholds(action,stress){
   const skill=game[activitySkill[action.id]]||0;
   const healthRatio=clampStat('health',game.health)/statMaximum('health');
   const healthBonus=healthRatio*24;
-  const condition=(game.healthiness||50)*.07-fatigue*.42-stress*.34;
+  const condition=(game.healthiness||50)*.07-stress*.42;
   const success=Math.max(18,Math.min(94,44+skill*.09+condition+healthBonus));
   const perfect=Math.max(6,success-(34-healthRatio*8));
   const struggle=Math.min(98,success+(22-healthRatio*10));
   return {perfect,success,struggle};
 }
-function judgeActivityOutcome(action,fatigue,stress){
+function judgeActivityOutcome(action,stress){
   if(['shopping','vacation'].includes(action.id))return 'success';
-  if(action.id==='rest')return Math.max(fatigue,stress)<35&&Math.random()<.35?'perfect':'success';
-  const chance=activityOutcomeThresholds(action,fatigue,stress);
+  if(action.id==='rest')return stress<35&&Math.random()<.35?'perfect':'success';
+  const chance=activityOutcomeThresholds(action,stress);
   const roll=Math.random()*100;
   if(roll<=chance.perfect)return 'perfect';
   if(roll<=chance.success)return 'success';
@@ -244,17 +242,15 @@ function resolvedActivityChange(action,outcome){
   if(['rest','vacation'].includes(action.id)&&['struggle','mistake'].includes(outcome))outcome='success';
   const change={};
   Object.entries(action.change).forEach(([key,value])=>{
-    const beneficial=(key==='fatigue'||key==='stress')?value<0:value>0;
+    const beneficial=key==='stress'?value<0:value>0;
     const multiplier=beneficial?(outcome==='perfect'?1.5:outcome==='struggle'?.5:outcome==='mistake'?.25:1):1;
     change[key]=Math.round(value*multiplier);
   });
   if(outcome==='mistake'){
-    change.fatigue=(change.fatigue||0)+2;
     change.stress=(change.stress||0)+3;
     change.health=(change.health||0)-1;
   }
   if(action.id==='rest'){
-    change.fatigue=Math.min(-1,change.fatigue??-10);
     change.stress=Math.min(0,change.stress||0);
   }
   return change;
@@ -276,7 +272,7 @@ function setScheduleDialogue(action,state,index){
   const education=['reading','arithmetic','manners'].includes(action.id);
   let speaker=game.characterName||'아이',line='오늘도 차근차근 해볼게요.';
   if(state==='start'){
-    if(Math.max(game.fatigue,game.stress)>=55)line='오늘은 컨디션이 좋지 않아요.';
+    if(game.stress>=55)line='오늘은 컨디션이 좋지 않아요.';
     else line=`오늘은 ${action.name}${objectParticle(action.name)} 열심히 해볼게요.`;
   }else if(state==='drowsy'){
     speaker=education?'훈장님':(game.nannyName||'유모');
@@ -285,7 +281,7 @@ function setScheduleDialogue(action,state,index){
     speaker=education?'훈장님':(game.nannyName||'유모');
     line=education?'졸다가 실수하다니, 오늘 배운 대목을 다시 익히거라.':'괜찮단다. 서두르지 말고 다시 해 보자.';
   }else if(state==='struggle'){
-    line=Math.max(game.fatigue,game.stress)>=55?'몸이 무거워 평소만큼 해내지는 못했어요.':'조금 어려웠지만 끝까지 포기하지 않았어요.';
+    line=game.stress>=55?'마음이 무거워 평소만큼 해내지는 못했어요.':'조금 어려웠지만 끝까지 포기하지 않았어요.';
   }else{
     line=pickLine(scheduleDialogue[action.id]?.[state==='perfect'?'perfect':'normal']||['오늘 일정을 무사히 마쳤어요.'],index);
   }
@@ -302,16 +298,16 @@ async function animateConditionEvent(stageCharacter,cue,type){
   cue.hidden=true;
 }
 const actions = [
-  { id: 'reading', category: '교육', name: '글읽기', cost: 80, summary: '학문 +6 · 피로 +4', change: { study: 6, fatigue: 4 } },
-  { id: 'arithmetic', category: '교육', name: '셈하기', cost: 70, summary: '학문 +4 · 피로 +3', change: { study: 4, fatigue: 3 } },
-  { id: 'manners', category: '교육', name: '예절 배우기', cost: 90, summary: '학문 +2 · 피로 +3', change: { study: 2, fatigue: 3 } },
-  { id: 'errand', category: '아르바이트', name: '장터 심부름', cost: -60, summary: '체력 +3 · 피로 +6 · 60냥 획득', change: { health: 3, fatigue: 6 } },
-  { id: 'sweeping', category: '아르바이트', name: '마당 쓸기', cost: -40, summary: '체력 +2 · 피로 +5 · 40냥 획득', change: { health: 2, fatigue: 5 } },
-  { id: 'herbs', category: '아르바이트', name: '약초 줍기', cost: -50, summary: '체력 +2 · 학문 +1 · 피로 +6', change: { health: 2, study: 1, fatigue: 6 } },
-  { id: 'houseclean', category: '아르바이트', name: '집 청소', cost: -35, summary: '솜씨 +2 · 체력 +2 · 피로 +5', change: { craft: 2, health: 2, fatigue: 5 } },
-  { id: 'rest', category: '휴식', name: '집에서 휴식', cost: 0, summary: '피로 -10 · 스트레스 -6 · 체력 +2', change: { health: 2, fatigue: -10, stress: -6 } },
+  { id: 'reading', category: '교육', name: '글읽기', cost: 80, summary: '학문 +6 · 스트레스 +4', change: { study: 6, stress: 4 } },
+  { id: 'arithmetic', category: '교육', name: '셈하기', cost: 70, summary: '학문 +4 · 스트레스 +3', change: { study: 4, stress: 3 } },
+  { id: 'manners', category: '교육', name: '예절 배우기', cost: 90, summary: '학문 +2 · 스트레스 +3', change: { study: 2, stress: 3 } },
+  { id: 'errand', category: '아르바이트', name: '장터 심부름', cost: -60, summary: '체력 +3 · 스트레스 +6 · 60냥 획득', change: { health: 3, stress: 6 } },
+  { id: 'sweeping', category: '아르바이트', name: '마당 쓸기', cost: -40, summary: '체력 +2 · 스트레스 +5 · 40냥 획득', change: { health: 2, stress: 5 } },
+  { id: 'herbs', category: '아르바이트', name: '약초 줍기', cost: -50, summary: '체력 +2 · 학문 +1 · 스트레스 +6', change: { health: 2, study: 1, stress: 6 } },
+  { id: 'houseclean', category: '아르바이트', name: '집 청소', cost: -35, summary: '솜씨 +2 · 체력 +2 · 스트레스 +5', change: { craft: 2, health: 2, stress: 5 } },
+  { id: 'rest', category: '휴식', name: '집에서 휴식', cost: 0, summary: '스트레스 -6 · 체력 +2', change: { health: 2, stress: -6 } },
   { id: 'shopping', category: '휴식', name: '저잣거리', cost: 0, summary: '', change: {}, special:'market' },
-  { id: 'vacation', category: '휴식', name: '바캉스', cost: 180, summary: '피로 -20 · 스트레스 -15 · 추억 일러스트 획득', change: {fatigue:-20,stress:-15}, special:'vacation' }
+  { id: 'vacation', category: '휴식', name: '바캉스', cost: 180, summary: '스트레스 -15 · 추억 일러스트 획득', change: {stress:-15}, special:'vacation' }
 ];
 
 function awardVacationIllustration(){
@@ -368,10 +364,10 @@ function renderHud() {
   document.querySelector('#speakerName').textContent = game.nannyName || '유모';
 }
 
-const statLabels={health:'체력',healthiness:'건강',study:'학문',arithmetic:'산술',manners:'예절',arts:'예능',martial:'무예',craft:'솜씨',cooking:'요리',embroidery:'자수',virtue:'덕망',charm:'매력',sensitivity:'감수성',medicine:'의술',commerce:'상업',reputation:'평판',stress:'스트레스',fatigue:'피로'};
+const statLabels={health:'체력',healthiness:'건강',study:'학문',arithmetic:'산술',manners:'예절',arts:'예능',martial:'무예',craft:'솜씨',cooking:'요리',embroidery:'자수',virtue:'덕망',charm:'매력',sensitivity:'감수성',medicine:'의술',commerce:'상업',reputation:'평판',stress:'스트레스'};
 statLabels.nannyAffinity='유모 친밀도';
 function showLiveChanges(action){
-  const items=orderedChangeEntries(action.change).map(([key,value])=>{const inverse=key==='fatigue'||key==='stress';const positive=inverse?value<0:value>=0;const current=clampStat(key,game[key]);return `<span class="${positive?'up':'down'}">${statLabels[key]||key} <b>${current}</b> <small>(${value>0?'+':''}${value})</small></span>`;});
+  const items=orderedChangeEntries(action.change).map(([key,value])=>{const positive=key==='stress'?value<0:value>=0;const current=clampStat(key,game[key]);return `<span class="${positive?'up':'down'}">${statLabels[key]||key} <b>${current}</b> <small>(${value>0?'+':''}${value})</small></span>`;});
   if(action.cost!==0)items.push(`<span class="money">은전 ${action.cost>0?'-':'+'}${Math.abs(action.cost)}냥</span>`);
   document.querySelector('#liveChanges').innerHTML=items.join('');
   if(Object.values(action.change||{}).some(value=>Math.abs(value)>=8))game.homeReaction='shocked';
@@ -384,7 +380,7 @@ function renderActivityGauges(action){
   if(!entries.length||['shopping','vacation'].includes(action.id)){box.hidden=true;box.innerHTML='';return;}
   box.innerHTML=entries.map(([key,value])=>{
     const max=statMaximum(key),current=clampStat(key,game[key]),next=clampStat(key,current+value);
-    const beneficial=(key==='fatigue'||key==='stress')?value<0:value>0;
+    const beneficial=key==='stress'?value<0:value>0;
     const low=Math.min(current,next),width=Math.max(2,Math.abs(next-current));
     return `<div class="activity-gauge"><span class="activity-gauge-label">${statLabels[key]||key}</span><span class="activity-gauge-track"><i class="activity-gauge-before" style="width:${current/max*100}%"></i><i class="activity-gauge-delta ${beneficial?'up':'down'}" style="left:${low/max*100}%;width:${Math.max(2,width/max*100)}%"></i></span><span class="activity-gauge-value ${beneficial?'up':'down'}"><b>${current} → ${next}</b><small>${value>0?'▲':'▼'}${Math.abs(value)}</small></span></div>`;
   }).join('');
@@ -393,9 +389,9 @@ function renderActivityGauges(action){
 
 const greetingChoices={
   tired:[
-    {line:'오늘은 몸이 조금 무거워요. 그래도 잘 해낼 수 있을까요?',choices:[['오늘은 천천히 해도 괜찮아.',{fatigue:-4,nannyAffinity:3},'곁에서 지켜봐 준다니 마음이 놓여요.'],['따뜻한 차부터 마시자.',{stress:-3,healthiness:2,nannyAffinity:2},'따뜻한 차를 마시면 기운이 날 것 같아요!'],['계획대로 움직여 보자.',{virtue:2,fatigue:2,nannyAffinity:-1},'네… 조금 힘들어도 해볼게요.']]},
-    {line:'자꾸 눈이 감겨요. 조금 더 누워 있어도 될까요?',choices:[['잠깐 더 쉬렴.',{fatigue:-6,nannyAffinity:3},'고마워요. 금방 기운을 차릴게요.'],['세수하고 바람을 쐬자.',{fatigue:-3,health:2,nannyAffinity:2},'찬물에 세수하면 정신이 들 것 같아요.'],['늦기 전에 일어나자.',{manners:2,fatigue:2,nannyAffinity:-1},'알겠어요. 얼른 준비할게요.']]},
-    {line:'어제 너무 무리했나 봐요. 팔다리가 뻐근해요.',choices:[['오늘 일정은 가볍게 하자.',{fatigue:-5,stress:-2,nannyAffinity:3},'한결 마음이 편해졌어요.'],['따뜻하게 몸을 풀어보자.',{healthiness:3,fatigue:-3,nannyAffinity:2},'조금씩 움직이면 괜찮아질 것 같아요.'],['참는 것도 수련이란다.',{virtue:2,stress:2,nannyAffinity:-2},'네… 견뎌볼게요.']]}
+    {line:'오늘은 마음이 조금 무거워요. 그래도 잘 해낼 수 있을까요?',choices:[['오늘은 천천히 해도 괜찮아.',{stress:-4,nannyAffinity:3},'곁에서 지켜봐 준다니 마음이 놓여요.'],['따뜻한 차부터 마시자.',{stress:-3,healthiness:2,nannyAffinity:2},'따뜻한 차를 마시면 기운이 날 것 같아요!'],['계획대로 움직여 보자.',{virtue:2,stress:2,nannyAffinity:-1},'네… 조금 힘들어도 해볼게요.']]},
+    {line:'오늘은 아무것도 하고 싶지 않아요.',choices:[['잠깐 마음을 쉬게 하자.',{stress:-6,nannyAffinity:3},'고마워요. 마음이 조금 가벼워졌어요.'],['바람을 쐬고 오자.',{stress:-3,health:2,nannyAffinity:2},'바깥 공기를 마시면 기분이 나아질 것 같아요.'],['작은 일부터 시작하자.',{manners:2,stress:2,nannyAffinity:-1},'알겠어요. 하나씩 해볼게요.']]},
+    {line:'어제 너무 무리했나 봐요. 마음이 복잡해요.',choices:[['오늘 일정은 가볍게 하자.',{stress:-5,nannyAffinity:3},'한결 마음이 편해졌어요.'],['따뜻하게 몸을 풀어보자.',{healthiness:3,stress:-3,nannyAffinity:2},'조금씩 움직이면 괜찮아질 것 같아요.'],['참는 것도 수련이란다.',{virtue:2,stress:2,nannyAffinity:-2},'네… 견뎌볼게요.']]}
   ],
   stressed:[
     {line:'마음이 자꾸 산만해져요. 잠깐 이야기해도 될까요?',choices:[['무슨 일이든 천천히 말해 줘.',{stress:-5,nannyAffinity:4},'제 이야기를 들어줘서 고마워요.'],['마당을 함께 걸어볼까?',{stress:-4,health:1,nannyAffinity:2},'함께 걸으면 기분이 좋아질 것 같아요!'],['오늘 할 일부터 정리해 보자.',{study:2,stress:1,nannyAffinity:-1},'해야 할 일부터 생각해 볼게요.']]},
@@ -412,7 +408,7 @@ function showHomeGreeting(force=false){
   if(!game.birthday||document.querySelector('.phone').classList.contains('playing')||game.lastGreetingDate===game.currentDate)return false;
   game.lastGreetingDate=game.currentDate;
   if(!force&&Math.random()>=.18)return false;
-  const mood=game.fatigue>=55?'tired':game.stress>=45?'stressed':'bright',scenes=greetingChoices[mood];
+  const mood=game.stress>=55?'tired':game.stress>=45?'stressed':'bright',scenes=greetingChoices[mood];
   const available=scenes.map((scene,index)=>({scene,index})).filter(item=>`${mood}-${item.index}`!==game.lastGreetingScene);
   const picked=available[Math.floor(Math.random()*available.length)]||{scene:scenes[0],index:0},scene=picked.scene;
   game.lastGreetingScene=`${mood}-${picked.index}`;
@@ -643,7 +639,7 @@ function deleteCharacterRecord(slot){
 }
 
 function resetGameState() {
-  Object.assign(game, { characterName:'',nannyName:'',profileSlot:null,age:9, month:1, week:1,season:'봄', money:1200, health:42, study:35, fatigue:18, items:[], equippedOutfit:null, autoOutfit:true, dailySchedule:[null,null,null,null,null,null,null], birthday:null,currentDate:null,endingDate:null,ended:false,birthdayCount:0,element:null,birthSeason:null,memory:0,truth:0,exposure:0,guardianTrust:50,nannyAffinity:50,lastGreetingDate:null,monthlyLedger:null,healthiness:76,arithmetic:22,manners:28,arts:18,martial:12,archery:5,riding:3,craft:24,cooking:20,embroidery:15,virtue:36,charm:30,sensitivity:40,medicine:8,commerce:10,reputation:14,stress:12 });
+  Object.assign(game, { characterName:'',nannyName:'',profileSlot:null,age:9, month:1, week:1,season:'봄', money:1200, health:42, study:35, items:[], equippedOutfit:null, autoOutfit:true, dailySchedule:[null,null,null,null,null,null,null], birthday:null,currentDate:null,endingDate:null,ended:false,birthdayCount:0,element:null,birthSeason:null,memory:0,truth:0,exposure:0,guardianTrust:50,nannyAffinity:50,lastGreetingDate:null,monthlyLedger:null,healthiness:76,arithmetic:22,manners:28,arts:18,martial:12,archery:5,riding:3,craft:24,cooking:20,embroidery:15,virtue:36,charm:30,sensitivity:40,medicine:8,commerce:10,reputation:14,stress:12 });
   document.querySelector('#liveChanges').innerHTML='';
   const greeting=document.querySelector('#homeGreeting');greeting.hidden=true;greeting.classList.remove('greeting-active');
   document.querySelector('#characterNameInput').value='';
@@ -677,7 +673,7 @@ function beginNewGrowth(){
 function statBar(key, label) {
   const max = statMaximum(key);
   const value = Math.max(0, Math.min(100, (game[key] / max) * 100));
-  const isCondition = key === 'fatigue' || key === 'stress';
+  const isCondition = key === 'stress';
   return `<div class="stat-row"><span>${label}</span><div class="stat-track"><i class="${isCondition ? 'condition' : ''}" style="width:${value}%"></i></div><b>${game[key]}</b></div>`;
 }
 
@@ -808,9 +804,9 @@ function recordMonthlySchedule(selected,weeklyChange){
 function showMonthlyReport(ledger){
   panel.hidden=false;panelTitle.textContent=`${ledger.year}년 ${ledger.month}월 결산`;
   const activityRows=Object.entries(ledger.activities).sort((a,b)=>b[1]-a[1]).map(([name,count])=>`<li><span>${name}</span><b>${count}일</b></li>`).join('');
-  const statRows=Object.entries(ledger.change).filter(([,value])=>value!==0).sort((a,b)=>Math.abs(b[1])-Math.abs(a[1])).map(([key,value])=>`<li><span>${statLabels[key]||key}</span><b class="${(key==='fatigue'||key==='stress')?value<0?'good':'bad':value>0?'good':'bad'}">${value>0?'+':''}${value}</b></li>`).join('');
+  const statRows=Object.entries(ledger.change).filter(([key,value])=>key!=='fatigue'&&value!==0).sort((a,b)=>Math.abs(b[1])-Math.abs(a[1])).map(([key,value])=>`<li><span>${statLabels[key]||key}</span><b class="${key==='stress'?value<0?'good':'bad':value>0?'good':'bad'}">${value>0?'+':''}${value}</b></li>`).join('');
   const net=ledger.income-ledger.expense;
-  const condition=game.fatigue>=75||game.stress>=75?'많이 지쳤어요. 다음 달에는 휴식이 필요해요.':game.fatigue>=50||game.stress>=50?'조금 피곤하지만 잘 버텼어요.':'좋은 컨디션으로 한 달을 마쳤어요.';
+  const condition=game.stress>=75?'스트레스가 높아요. 다음 달에는 휴식이 필요해요.':game.stress>=50?'마음이 조금 무겁지만 잘 버텼어요.':'좋은 컨디션으로 한 달을 마쳤어요.';
   panelBody.innerHTML=`<section class="monthly-balance"><div><span>수입</span><b>+${ledger.income.toLocaleString()}냥</b></div><div><span>지출</span><b>-${ledger.expense.toLocaleString()}냥</b></div><div class="net"><span>합계</span><b class="${net>=0?'good':'bad'}">${net>=0?'+':''}${net.toLocaleString()}냥</b></div></section><section class="monthly-report-section"><h3>이번 달 활동</h3><ul>${activityRows||'<li>기록 없음</li>'}</ul></section><section class="monthly-report-section"><h3>능력치 변화</h3><ul>${statRows||'<li>변화 없음</li>'}</ul></section><p class="monthly-condition">${condition}</p><button id="closeMonthlyReport" class="monthly-continue">다음 달 시작</button>`;
   document.querySelector('#closeMonthlyReport').addEventListener('click',()=>{panel.hidden=true;document.querySelector('#dialogueText').textContent=`${game.month}월도 함께 힘내 보아요.`;});
 }
@@ -948,7 +944,7 @@ async function playWeeklySchedule(selected) {
   const stageNpcImage = document.querySelector('#stageNpcImage');
   const dayResult = document.querySelector('#dayResult');
   const conditionCue = document.querySelector('#conditionCue');
-  const simulated={fatigue:game.fatigue,stress:game.stress};
+  const simulated={stress:game.stress};
   const weeklyChange={};
   const dayNames = ['월요일','화요일','수요일','목요일','금요일','토요일','일요일'];
   document.querySelector('#homeGreeting').hidden=true;
@@ -995,8 +991,8 @@ async function playWeeklySchedule(selected) {
       document.querySelector('#dialogueText').textContent=metSomeone?`바캉스에서 「${prize.name}」 일러스트와 ${metSomeone.name}의 인연 추억을 얻었어요.`:`바캉스에서 「${prize.name}」 일러스트를 획득했어요.`;
     }else await animateActivitySprite(stageCharacterImage,presentation.motion,presentation.activity,stageNpcImage,presentation.npc,dailyOutfit);
     const guaranteedSuccess=['rest','vacation'].includes(action.id);
-    const condition=['shopping','rest','vacation'].includes(action.id)?null:conditionEvent(simulated.fatigue,simulated.stress,index);
-    let outcome=judgeActivityOutcome(action,simulated.fatigue,simulated.stress);
+    const condition=['shopping','rest','vacation'].includes(action.id)?null:conditionEvent(simulated.stress,index);
+    let outcome=judgeActivityOutcome(action,simulated.stress);
     if(!guaranteedSuccess&&condition==='mistake')outcome='mistake';
     else if(!guaranteedSuccess&&condition==='drowsy'&&outcome!=='mistake')outcome='struggle';
     const resolvedChange=resolvedActivityChange(action,outcome);
@@ -1023,7 +1019,6 @@ async function playWeeklySchedule(selected) {
       dayResult.hidden = true;
     }
     Object.entries(resolvedChange).forEach(([key,value])=>weeklyChange[key]=(weeklyChange[key]||0)+value);
-    simulated.fatigue=clampStat('fatigue',simulated.fatigue+(resolvedChange.fatigue||0));
     simulated.stress=clampStat('stress',simulated.stress+(resolvedChange.stress||0));
   }
   playback.hidden = true;
