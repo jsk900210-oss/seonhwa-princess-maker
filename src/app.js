@@ -52,14 +52,14 @@ const guardianDefs={
   hyeonmu:{name:'현무',mark:'玄',theme:'#292d35',gift:{name:'검은 옥패',change:{mentality:5,health:4}},intro:'북쪽의 깊은 물결. 흔들리지 않는 마음과 보호의 힘을 지닌 신수입니다.'}
 };
 const guardianStoryScenes=[
-  {chapter:'첫 장 · 하늘이 내린 벗',image:'../assets/cinematics/guardian/guardian-four-directions-master.png',alt:'밤하늘 네 방향에서 모습을 드러낸 네 신수',group:true,text:'아홉 번째 생일 밤, 고요하던 마당 위로 동서남북 네 갈래의 별빛이 열렸습니다.'},
+  {chapter:'첫 장 · 하늘이 내린 벗',image:'../assets/cinematics/guardian/guardian-descent-age09.png',alt:'아홉 번째 생일 밤 아이 앞에 함께 나타난 네 신수',group:true,text:'아홉 번째 생일 밤, 고요하던 마당 위로 동서남북 네 갈래의 별빛이 열렸습니다.'},
   {chapter:'동쪽 · 청룡',image:'../assets/cinematics/guardian/guardian-cheongryong.png',alt:'푸른 구름 사이의 청룡',text:'동쪽의 구름이 푸르게 갈라지자 청룡이 여의주를 품고 내려왔습니다. 배움과 술법의 길을 밝혀 주는 신수였습니다.'},
   {chapter:'서쪽 · 백호',image:'../assets/cinematics/guardian/guardian-baekho.png',alt:'산등성이를 지키는 백호',text:'서쪽 산등성이에는 백호가 소리 없이 내려앉았습니다. 두려움 앞에서 물러서지 않을 용기와 굳센 몸을 지켜 주는 신수였습니다.'},
   {chapter:'남쪽 · 주작',image:'../assets/cinematics/guardian/guardian-jujak.png',alt:'붉은 노을 속의 주작',text:'남쪽의 따뜻한 바람 속에서는 주작의 붉은 깃이 피어났습니다. 상처를 보듬고 사람과 사람의 인연을 잇는 신수였습니다.'},
   {chapter:'북쪽 · 현무',image:'../assets/cinematics/guardian/guardian-hyeonmu.png',alt:'깊은 물결 위의 현무',text:'북쪽의 깊은 물결 위에는 현무가 단단히 자리를 잡았습니다. 흔들리지 않는 인내와 오래 버티는 보호의 힘을 지닌 신수였습니다.'},
-  {chapter:'선택 · 한 벗과의 인연',image:'../assets/cinematics/guardian/guardian-four-directions-master.png',alt:'아이의 선택을 기다리는 네 신수',group:true,text:'네 신수는 아이의 이름을 조용히 불렀습니다. 하늘은 앞날을 정하지 않았고, 아이가 스스로 고른 한 벗만이 곁에 남기로 했습니다.'}
+  {chapter:'선택 · 한 벗과의 인연',image:'../assets/cinematics/guardian/guardian-descent-age09.png',alt:'아이의 선택을 기다리는 네 신수',group:true,text:'네 신수는 아이의 이름을 조용히 불렀습니다. 하늘은 앞날을 정하지 않았고, 아이가 스스로 고른 한 벗만이 곁에 남기로 했습니다.'}
 ];
-let guardianStoryIndex=0,selectedGuardianType=null,introDialogueQueue=[],introDialogueIndex=0;
+let guardianStoryIndex=0,guardianSceneTimer=null,selectedGuardianType=null,introDialogueQueue=[],introDialogueIndex=0;
 const statGroups = [
   { title: '신체', stats: [['health','체력'],['strength','힘'],['agility','민첩']] },
   { title: '지성·마음', stats: [['intelligence','지능'],['magic','마력'],['mentality','정신력']] },
@@ -137,12 +137,16 @@ const actionPresentation = {
   shopping: { motion:'motion-walk', location:'marketErrand', prop:'none', activity:null, npc:null },
   painting: { motion:'motion-calligraphy', location:'studyRoom', prop:'none', activity:'calligraphy', npc:'teacher' },
   music: { motion:'motion-manners', location:'etiquetteRoom', prop:'none', activity:'manners', npc:'teacher' },
+  dance: { motion:'motion-manners', location:'etiquetteRoom', prop:'none', activity:'manners', npc:'teacher' },
+  cooking: { motion:'motion-arithmetic', location:'restRoom', prop:'none', activity:'arithmetic', npc:null },
   martial: { motion:'motion-sweeping', location:'courtyard', prop:'none', activity:'sweeping', npc:'dolsoe' },
   classics: { motion:'motion-calligraphy', location:'studyRoom', prop:'none', activity:'calligraphy', npc:'teacher' },
   innhelp: { motion:'motion-errand', location:'marketErrand', prop:'none', activity:'errand', npc:null },
   sewing: { motion:'motion-houseclean', location:'restRoom', prop:'none', activity:'houseclean', npc:null },
   copying: { motion:'motion-calligraphy', location:'studyRoom', prop:'none', activity:'calligraphy', npc:'teacher' },
-  accounting: { motion:'motion-arithmetic', location:'arithmeticRoom', prop:'none', activity:'arithmetic', npc:'teacher' }
+  accounting: { motion:'motion-arithmetic', location:'arithmeticRoom', prop:'none', activity:'arithmetic', npc:'teacher' },
+  tutoring: { motion:'motion-calligraphy', location:'studyRoom', prop:'none', activity:'calligraphy', npc:'teacher' },
+  dungeon: { motion:'motion-herbs', location:'herbField', prop:'none', activity:'herbs', npc:null }
 };
 const vacationIllustrations=[
   {id:'vacation-age09-spring-cherry',age:9,season:'봄',name:'봄바람과 벚꽃',image:'../assets/events/vacation/photoreal/age-09/spring-cherry-wind.webp',effect:'petals',description:'봄바람에 머리카락을 넘기며 벚꽃을 맞던 9세의 추억.'},
@@ -335,7 +339,7 @@ function conditionEvent(stress, dayIndex){
   if(stress>=55)return 'drowsy';
   return null;
 }
-const activitySkill={reading:'intelligence',arithmetic:'sense',manners:'manners',errand:'speech',sweeping:'strength',herbs:'sense',houseclean:'sense',rest:'mentality'};
+const activitySkill={reading:'intelligence',arithmetic:'sense',manners:'manners',painting:'sensitivity',music:'sensitivity',dance:'agility',cooking:'sense',martial:'strength',classics:'intelligence',errand:'speech',sweeping:'strength',herbs:'sense',houseclean:'sense',innhelp:'speech',sewing:'sense',copying:'intelligence',accounting:'sense',tutoring:'intelligence',dungeon:'strength',rest:'mentality'};
 const outcomeLabels={perfect:'완벽',success:'성공',struggle:'힘겨움',mistake:'실수'};
 function activityOutcomeThresholds(action,stress){
   const skill=game[activitySkill[action.id]]||0;
@@ -379,17 +383,21 @@ const scheduleDialogue={
   reading:{perfect:['오늘 글자는 한 획도 흐트러지지 않았어요.','완벽하게 글공부를 마쳤어요.'],normal:['글의 뜻을 하나씩 알아가는 게 즐거워요.','오늘 배운 글자를 다시 써 볼래요.']},
   arithmetic:{perfect:['주판알 소리가 아주 반듯하구나.','셈을 한 번도 틀리지 않았어요.'],normal:['주판알을 튕기니 답이 보여요.','조금 천천히 세면 틀리지 않을 거예요.']},
   manners:{perfect:['몸가짐이 한결 단정해졌구나.','오늘 인사는 아주 다소곳했어요.'],normal:['치맛자락을 가지런히 잡아 보았어요.','바른 인사를 잊지 않을게요.']},
+  dance:{perfect:['장단과 춤사위가 물 흐르듯 이어졌어요.'],normal:['발디딤과 손끝을 차분히 맞춰 보았어요.']},
+  cooking:{perfect:['간과 불 조절이 꼭 알맞았어요.'],normal:['제철 재료를 다듬어 한 상을 차려 보았어요.']},
   errand:{perfect:['부탁받은 물건을 빠짐없이 사 왔어요.'],normal:['사람이 많아서 장바구니를 꼭 잡았어요.','진열대를 살펴보며 좋은 물건을 골랐어요.']},
   sweeping:{perfect:['마당에 티끌 하나 남지 않았어요.'],normal:['마당을 쓸고 나니 마음도 개운해요.']},
   herbs:{perfect:['좋은 약초만 골라 바구니를 채웠어요.'],normal:['뿌리가 다치지 않도록 조심히 뽑았어요.']},
   houseclean:{perfect:['방 안이 반짝반짝해졌어요.'],normal:['가구 밑까지 깨끗하게 닦았어요.']},
+  tutoring:{perfect:['어린 학동이 어려운 대목을 모두 이해했어요.'],normal:['학동의 눈높이에 맞춰 글과 셈을 가르쳤어요.']},
+  dungeon:{perfect:['비경 깊은 곳에서 귀한 보물을 찾았어요.'],normal:['낯선 길을 살피며 무사히 탐사를 마쳤어요.']},
   rest:{perfect:['푹 쉬었더니 몸이 가벼워졌어요.'],normal:['조용히 쉬면서 기운을 되찾았어요.']},
   vacation:{perfect:['아름다운 풍경을 오래 기억하고 싶어요.'],normal:['새로운 곳에 오니 마음이 편안해졌어요.']}
 };
 function pickLine(lines,index){return lines[index%lines.length];}
 function objectParticle(word){const last=word.charCodeAt(word.length-1);return last>=0xAC00&&last<=0xD7A3&&(last-0xAC00)%28?'을':'를';}
 function setScheduleDialogue(action,state,index){
-  const education=['reading','arithmetic','manners'].includes(action.id);
+  const education=action.category==='교육';
   let speaker=game.characterName||'아이',line='오늘도 차근차근 해볼게요.';
   if(state==='start'){
     if(game.stress>=55)line='오늘은 컨디션이 좋지 않아요.';
@@ -423,6 +431,8 @@ const actions = [
   { id: 'manners', category: '교육', name: '예절 배우기', cost: 90, unlockAge:9, mentor:'예절 선생', icon:'manners', summary: '예절 +5 · 기품 +2 · 스트레스 +2', change: { manners:5, dignity:2, stress:2 } },
   { id: 'painting', category: '교육', name: '회화 배우기', cost: 130, unlockAge:13, mentor:'화공 스승', icon:'reading', intro:'붓끝으로 보이는 것 너머의 빛까지 담아 보거라.', summary:'감수성 +4 · 센스 +2 · 스트레스 +3', change:{sensitivity:4,sense:2,stress:3} },
   { id: 'music', category: '교육', name: '악기 배우기', cost: 140, unlockAge:13, mentor:'악기 선생', icon:'manners', intro:'소리를 서두르지 말고 먼저 네 호흡을 들어 보렴.', summary:'감수성 +3 · 기품 +2 · 스트레스 +3', change:{sensitivity:3,dignity:2,stress:3} },
+  { id: 'dance', category: '교육', name: '전통 춤사위', cost: 145, unlockAge:13, mentor:'춤 선생', icon:'manners', intro:'장단을 먼저 마음에 담고, 발디딤과 손끝을 이어 보렴.', summary:'민첩 +3 · 기품 +3 · 매력 +2 · 스트레스 +3', change:{agility:3,dignity:3,charm:2,stress:3} },
+  { id: 'cooking', category: '교육', name: '향토 음식 익히기', cost: 120, unlockAge:13, mentor:'찬모', icon:'arithmetic', intro:'제철 재료의 맛을 살리고 불과 간을 세심히 다루어야 한단다.', summary:'센스 +4 · 체력 +1 · 감수성 +2 · 스트레스 +3', change:{sense:4,health:1,sensitivity:2,stress:3} },
   { id: 'martial', category: '교육', name: '무예 수련', cost: 150, unlockAge:13, mentor:'무예 사범', icon:'sweeping', intro:'힘만 앞세우지 말고 발과 마음을 함께 다스려라.', summary:'힘 +4 · 민첩 +3 · 스트레스 +4', change:{strength:4,agility:3,stress:4} },
   { id: 'classics', category: '교육', name: '경전 심화', cost: 190, unlockAge:16, mentor:'경학 스승', icon:'reading', intro:'이제 글자를 읽는 데서 그치지 말고 뜻을 논해 보자꾸나.', summary:'지능 +6 · 기품 +2 · 스트레스 +4', change:{intelligence:6,dignity:2,stress:4} },
   { id: 'errand', category: '아르바이트', name: '장터 심부름', cost: -90, unlockAge:9, mentor:'장터 상인', icon:'errand', summary: '민첩 +3 · 화술 +2 · 스트레스 +4 · 90냥 획득', change: { agility:3, speech:2, stress:4 } },
@@ -433,13 +443,15 @@ const actions = [
   { id: 'sewing', category:'아르바이트', name:'바느질 돕기', cost:-120, unlockAge:13, mentor:'침선장', icon:'houseclean', intro:'작은 바늘땀 하나가 옷의 맵시를 정하는 법이란다.', summary:'센스 +4 · 감수성 +1 · 스트레스 +3 · 120냥 획득', change:{sense:4,sensitivity:1,stress:3} },
   { id: 'copying', category:'아르바이트', name:'서책 필사', cost:-130, unlockAge:13, mentor:'서책방 주인', icon:'reading', intro:'또박또박 옮겨 적되 원문의 한 자도 빠뜨리지 말거라.', summary:'지능 +3 · 센스 +2 · 스트레스 +4 · 130냥 획득', change:{intelligence:3,sense:2,stress:4} },
   { id: 'accounting', category:'아르바이트', name:'상단 장부 정리', cost:-180, unlockAge:16, mentor:'상단 행수', icon:'arithmetic', intro:'숫자 하나가 상단의 신뢰를 좌우하니 꼼꼼히 살펴보거라.', summary:'센스 +4 · 화술 +2 · 스트레스 +4 · 180냥 획득', change:{sense:4,speech:2,stress:4} },
+  { id: 'tutoring', category:'아르바이트', name:'학동 가르치기', cost:-230, unlockAge:16, unlockStats:{intelligence:140,manners:80,speech:60}, mentor:'서당 훈장', icon:'reading', intro:'배운 바가 충분하니 이제 어린 학동에게 글과 셈, 예절을 일러 주거라.', summary:'지능 +2 · 화술 +4 · 기품 +2 · 스트레스 +5 · 230냥 획득', change:{intelligence:2,speech:4,dignity:2,stress:5} },
   { id: 'rest', category: '휴식', name: '집에서 휴식', cost: 0, summary: '스트레스 -12 · 체력 +2 · 정신력 +2', change: { health:2, mentality:2, stress:-12 } },
   { id: 'shopping', category: '휴식', name: '저잣거리', cost: 0, summary: '', change: {}, special:'market' },
-  { id: 'vacation', category: '휴식', name: '바캉스', cost: 180, summary: '감수성 +3 · 매력 +1 · 스트레스 -25 · 추억 일러스트 획득', change: {sensitivity:3,charm:1,stress:-25}, special:'vacation' }
+  { id: 'vacation', category: '휴식', name: '바캉스', cost: 180, summary: '감수성 +3 · 매력 +1 · 스트레스 -25 · 추억 일러스트 획득', change: {sensitivity:3,charm:1,stress:-25}, special:'vacation' },
+  { id: 'dungeon', category: '휴식', name: '비경 탐사', cost: 50, unlockAge:13, mentor:'수호신수', icon:'herbs', intro:'성 밖의 숨은 길에는 보물과 위험이 함께 있단다. 준비를 갖추고 나서자.', summary:'체력 +2 · 힘 +2 · 마력 +2 · 스트레스 +5 · 보물 은전 획득 가능', change:{health:2,strength:2,magic:2,stress:5}, special:'dungeon' }
 ];
-const activityRequirements={reading:['지능',20],arithmetic:['센스',15],manners:['예절',15],painting:['감수성',80],music:['기품',70],martial:['체력',80],classics:['지능',180],errand:['화술',12],sweeping:['힘',15],herbs:['센스',18],houseclean:['체력',20],innhelp:['화술',70],sewing:['센스',75],copying:['지능',85],accounting:['센스',170]};
-const actionUnlocked=action=>game.age>=Number(action.unlockAge||9);
-const newlyUnlockedActions=(previousAge,nextAge)=>actions.filter(action=>Number(action.unlockAge||9)>previousAge&&Number(action.unlockAge||9)<=nextAge);
+const activityRequirements={reading:['지능',20],arithmetic:['센스',15],manners:['예절',15],painting:['감수성',80],music:['기품',70],dance:['민첩',75],cooking:['센스',70],martial:['체력',80],classics:['지능',180],errand:['화술',12],sweeping:['힘',15],herbs:['센스',18],houseclean:['체력',20],innhelp:['화술',70],sewing:['센스',75],copying:['지능',85],accounting:['센스',170],tutoring:['지능',140],dungeon:['힘',80]};
+const actionUnlocked=action=>game.age>=Number(action.unlockAge||9)&&Object.entries(action.unlockStats||{}).every(([stat,value])=>Number(game[stat]||0)>=value);
+const newlyUnlockedActions=(previousAge,nextAge)=>actions.filter(action=>Number(action.unlockAge||9)>previousAge&&Number(action.unlockAge||9)<=nextAge&&Object.entries(action.unlockStats||{}).every(([stat,value])=>Number(game[stat]||0)>=value));
 const activityRankNames=['초급','익숙함','숙련','달인'];
 function normalizeActivityProgress(){
   if(!game.activityProgress||typeof game.activityProgress!=='object')game.activityProgress={};
@@ -1214,7 +1226,8 @@ function startWithBirthday(){
 }
 function showGuardianStory(){
   const story=document.querySelector('#guardianStory'),scene=guardianStoryScenes[guardianStoryIndex];story.hidden=false;story.classList.toggle('group-scene',Boolean(scene.group));
-  const image=document.querySelector('#guardianStoryImage');image.classList.remove('scene-changing');void image.offsetWidth;image.src=scene.image;image.alt=scene.alt;image.classList.add('scene-changing');
+  const image=document.querySelector('#guardianStoryImage');clearTimeout(guardianSceneTimer);image.classList.add('scene-fading');
+  guardianSceneTimer=setTimeout(()=>{image.src=scene.image;image.alt=scene.alt;image.classList.remove('scene-fading','scene-changing');void image.offsetWidth;image.classList.add('scene-changing');},180);
   document.querySelector('#guardianStoryChapter').textContent=scene.chapter;
   document.querySelector('#guardianStoryText').textContent=scene.text;
   document.querySelector('#guardianStoryNext').textContent=guardianStoryIndex===guardianStoryScenes.length-1?'신수 선택하기':'다음';
@@ -1413,7 +1426,11 @@ async function playWeeklySchedule(selected) {
     else if(!guaranteedSuccess&&condition==='drowsy'&&outcome!=='mistake')outcome='struggle';
     const resolvedChange=resolvedActivityChange(action,outcome);
     const isWork=action.category==='아르바이트',basePay=isWork?activityPay(action):0;
-    const moneyChange=isWork?(outcome==='mistake'?0:outcome==='struggle'?Math.round(basePay*.5):basePay):-action.cost;
+    let moneyChange=isWork?(outcome==='mistake'?0:outcome==='struggle'?Math.round(basePay*.5):basePay):-action.cost;
+    if(action.id==='dungeon'){
+      const treasure=outcome==='mistake'?0:outcome==='struggle'?30+Math.floor(Math.random()*41):outcome==='perfect'?150+Math.floor(Math.random()*91):80+Math.floor(Math.random()*81);
+      moneyChange+=treasure;
+    }
     recordActivityProgress(action,outcome);
     if(condition){
       setScheduleDialogue(action,condition,index);
