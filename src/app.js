@@ -20,11 +20,17 @@ const prologueScenes=window.SEONHWA_STORY?.prologue||originalPrologueScenes;
 let prologueIndex=0, prologueTimer=null;
 let prologueImageLayer=0, prologueRenderId=0;
 let prologueSoundOn=true, rainAudio=null;
+const SETTINGS_KEY='seonhwa-princess-settings-v1';
+const defaultSettings={bgmEnabled:true,bgmVolume:100,sfxEnabled:true,sfxVolume:100,referralCode:''};
+function loadSettings(){try{return {...defaultSettings,...JSON.parse(localStorage.getItem(SETTINGS_KEY)||'{}')};}catch{return {...defaultSettings};}}
+const userSettings=loadSettings();
+function saveSettings(){localStorage.setItem(SETTINGS_KEY,JSON.stringify(userSettings));}
+const scaledVolume=(base,kind)=>Math.max(0,Math.min(1,base*((userSettings[kind+'Volume']??100)/100)));
 const gameMusic=new Audio();
 gameMusic.preload='auto';gameMusic.loop=true;gameMusic.volume=.24;
 const gameMusicTracks={home:'../assets/audio/music/gameplay/bgm-home-daily.mp3',market:'../assets/audio/music/gameplay/bgm-schedule.mp3'};
 function vacationMusicPath(){const age=game.age>=18?'18':game.age>=16?'16':game.age>=13?'13':'09';const season={봄:'spring',여름:'summer',가을:'autumn',겨울:'winter'}[game.season]||'spring';return `../assets/audio/music/vacation/age-${age}/vacation-${season}.mp3`;}
-function playGameMusic(source,volume=.24){if(!source)return;if(!gameMusic.src.endsWith(source.replace('../','/'))){gameMusic.pause();gameMusic.src=source;gameMusic.currentTime=0;}gameMusic.volume=volume;gameMusic.play().catch(()=>{});}
+function playGameMusic(source,volume=.24){if(!source)return;if(!gameMusic.src.endsWith(source.replace('../','/'))){gameMusic.pause();gameMusic.src=source;gameMusic.currentTime=0;}gameMusic.dataset.baseVolume=String(volume);gameMusic.volume=scaledVolume(volume,'bgm');if(userSettings.bgmEnabled)gameMusic.play().catch(()=>{});else gameMusic.pause();}
 function playHomeMusic(){playGameMusic(gameMusicTracks.home,.22);}
 function playMarketMusic(){playGameMusic(gameMusicTracks.market,.20);}
 function playVacationMusic(){playGameMusic(vacationMusicPath(),.28);}
@@ -32,7 +38,7 @@ function stopGameMusic(){fadeAudio(gameMusic,0,350);}
 function transitionPrologueToHomeMusic(){
   const prologueMusic=document.querySelector('#prologueMusic');
   playGameMusic(gameMusicTracks.home,.01);
-  fadeAudio(gameMusic,.22,1600);
+  fadeAudio(gameMusic,scaledVolume(.22,'bgm'),1600);
   fadeAudio(prologueMusic,0,1600);
 }
 
@@ -971,9 +977,35 @@ function ensureRainAudio(){
 function fadeAudio(audio,target,ms){if(!audio)return;const start=audio.volume,steps=12;let n=0;clearInterval(audio._fade);audio._fade=setInterval(()=>{n++;audio.volume=start+(target-start)*(n/steps);if(n>=steps){clearInterval(audio._fade);if(target===0)audio.pause();}},ms/steps);}
 function stopRain(){if(!rainAudio)return;rainAudio.gain.gain.cancelScheduledValues(rainAudio.ctx.currentTime);rainAudio.gain.gain.linearRampToValueAtTime(0,rainAudio.ctx.currentTime+.5);}
 function updatePrologueAudio(isRain){
-  if(!prologueSoundOn)return;const music=document.querySelector('#prologueMusic');if(music.paused){music.volume=0;music.play().catch(()=>{});fadeAudio(music,.42,700);}const rain=ensureRainAudio();rain.ctx.resume();rain.gain.gain.cancelScheduledValues(rain.ctx.currentTime);rain.gain.gain.linearRampToValueAtTime(isRain?.34:0,rain.ctx.currentTime+.65);
+  if(!prologueSoundOn)return;
+  const music=document.querySelector('#prologueMusic');music.volume=scaledVolume(.42,'bgm');
+  if(userSettings.bgmEnabled&&music.paused)music.play().catch(()=>{});else if(!userSettings.bgmEnabled)music.pause();
+  if(!userSettings.sfxEnabled){stopRain();return;}
+  const rain=ensureRainAudio();rain.ctx.resume();rain.gain.gain.cancelScheduledValues(rain.ctx.currentTime);rain.gain.gain.linearRampToValueAtTime(isRain?scaledVolume(.34,'sfx'):0,rain.ctx.currentTime+.65);
 }
 function togglePrologueSound(){prologueSoundOn=!prologueSoundOn;const button=document.querySelector('#prologueSound');button.textContent=prologueSoundOn?'소리 끄기':'소리 켜기';button.setAttribute('aria-pressed',String(prologueSoundOn));if(prologueSoundOn)updatePrologueAudio(Boolean(prologueScenes[prologueIndex].rain));else{fadeAudio(document.querySelector('#prologueMusic'),0,400);stopRain();}}
+function applyAudioSettings(){
+  const base=Number(gameMusic.dataset.baseVolume||.22);gameMusic.volume=scaledVolume(base,'bgm');
+  if(!userSettings.bgmEnabled)gameMusic.pause();else if(gameMusic.src)gameMusic.play().catch(()=>{});
+  const music=document.querySelector('#prologueMusic');music.volume=scaledVolume(.42,'bgm');if(!userSettings.bgmEnabled)music.pause();
+  if(!userSettings.sfxEnabled)stopRain();else if(!document.querySelector('#prologue').hidden)updatePrologueAudio(Boolean(prologueScenes[prologueIndex]?.rain));
+}
+function playSettingsTestSound(){
+  if(!userSettings.sfxEnabled)return;const AudioContext=window.AudioContext||window.webkitAudioContext;if(!AudioContext)return;
+  const ctx=new AudioContext(),osc=ctx.createOscillator(),gain=ctx.createGain();osc.frequency.value=620;gain.gain.value=Math.max(.001,scaledVolume(.08,'sfx'));osc.connect(gain).connect(ctx.destination);osc.start();gain.gain.exponentialRampToValueAtTime(.001,ctx.currentTime+.12);osc.stop(ctx.currentTime+.13);
+}
+function syncSettingsUi(){
+  document.querySelector('#bgmEnabled').checked=Boolean(userSettings.bgmEnabled);document.querySelector('#sfxEnabled').checked=Boolean(userSettings.sfxEnabled);
+  document.querySelector('#bgmVolume').value=userSettings.bgmVolume;document.querySelector('#sfxVolume').value=userSettings.sfxVolume;
+  document.querySelector('#bgmValue').textContent=`${userSettings.bgmVolume}%`;document.querySelector('#sfxValue').textContent=`${userSettings.sfxVolume}%`;document.querySelector('#referralCode').value=userSettings.referralCode||'';
+}
+function openSettings(){syncSettingsUi();document.querySelector('#settingsModal').hidden=false;document.querySelector('#settingsClose').focus();}
+function closeSettings(){document.querySelector('#settingsModal').hidden=true;document.querySelector('#settingsButton').focus();}
+function updateSoundSetting(kind,value){userSettings[kind]=value;saveSettings();syncSettingsUi();applyAudioSettings();}
+function saveReferralCode(){
+  const input=document.querySelector('#referralCode'),message=document.querySelector('#referralMessage');const code=input.value.trim().toUpperCase().replace(/[^A-Z0-9가-힣-]/g,'').slice(0,20);
+  if(!code){message.textContent='추천코드를 입력해 주세요.';input.focus();return;}userSettings.referralCode=code;saveSettings();input.value=code;message.textContent='추천코드가 이 기기에 저장되었습니다. 서버 검증은 추후 연결됩니다.';
+}
 let studioIntroFinished=false;
 function finishStudioIntro(){
   if(studioIntroFinished)return;
@@ -1112,6 +1144,16 @@ bg.addEventListener('load', updateImageState);
 document.querySelector('#wardrobeButton')?.addEventListener('click',renderWardrobe);
 document.querySelector('#collectionBookButton')?.addEventListener('click',()=>openPanel('collection'));
 document.querySelector('#gameRecordButton')?.addEventListener('click',()=>openPanel('save'));
+document.querySelector('#settingsButton').addEventListener('click',openSettings);
+document.querySelector('#settingsClose').addEventListener('click',closeSettings);
+document.querySelector('#settingsModal').addEventListener('click',event=>{if(event.target.id==='settingsModal')closeSettings();});
+document.querySelector('#bgmEnabled').addEventListener('change',event=>updateSoundSetting('bgmEnabled',event.target.checked));
+document.querySelector('#sfxEnabled').addEventListener('change',event=>{updateSoundSetting('sfxEnabled',event.target.checked);playSettingsTestSound();});
+document.querySelector('#bgmVolume').addEventListener('input',event=>updateSoundSetting('bgmVolume',Number(event.target.value)));
+document.querySelector('#sfxVolume').addEventListener('input',event=>updateSoundSetting('sfxVolume',Number(event.target.value)));
+document.querySelector('#sfxVolume').addEventListener('change',playSettingsTestSound);
+document.querySelector('#referralSave').addEventListener('click',saveReferralCode);
+document.querySelector('#referralCode').addEventListener('keydown',event=>{if(event.key==='Enter')saveReferralCode();});
 bg.addEventListener('error', updateImageState);
 character.addEventListener('load', updateImageState);
 character.addEventListener('error', updateImageState);
@@ -1127,10 +1169,12 @@ document.querySelector('#prologueSkip').addEventListener('click',closePrologue);
 document.querySelector('#storyReplay').addEventListener('click',replayPrologue);
 document.querySelector('#studioStartSound').addEventListener('click',finishStudioIntro);
 prologueScenes.forEach(scene=>{const image=new Image();image.src=scene.image;});
+syncSettingsUi();
 renderHud();
 updateHomeCharacter();
 updateImageState();
 migrateLegacySave();
 initializeRecoverySession();
 document.addEventListener('visibilitychange',()=>{if(document.hidden)writeLatestAutoSave();});
+window.addEventListener('keydown',event=>{if(event.key==='Escape'&&!document.querySelector('#settingsModal').hidden)closeSettings();});
 window.addEventListener('pagehide',()=>{writeLatestAutoSave();localStorage.removeItem(SESSION_ACTIVE_KEY);});
