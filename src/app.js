@@ -42,14 +42,14 @@ function transitionPrologueToHomeMusic(){
   fadeAudio(prologueMusic,0,1600);
 }
 
-const game = { characterName:'', nannyName:'', profileSlot:null, age: 9, height:130, weight:28.5, month: 1, week: 1, season:'봄', money: 50000, cash:50000, health:42, strength:18, agility:20, intelligence:35, magic:8, mentality:30, dignity:36, manners:28, speech:14, sensitivity:40, sense:24, charm:30, stress:12, items: [], relations:{}, equippedOutfit:null, autoOutfit:true, dailySchedule: [null,null,null,null,null,null,null], birthday:null, currentDate:null, endingDate:null, ended:false, birthdayCount:0, element:null, birthSeason:null, memory:0, truth:0, exposure:0, guardianTrust:50, nannyAffinity:50, lastGreetingDate:null, monthlyLedger:null };
+const game = { characterName:'', nannyName:'', profileSlot:null, age: 9, height:130, weight:28.5, month: 1, week: 1, season:'봄', money: 50000, cash:50000, health:42, strength:18, agility:20, intelligence:35, magic:8, mentality:30, dignity:36, manners:28, speech:14, sensitivity:40, sense:24, charm:30, stress:12, items: [], relations:{}, startingGiftId:null, fatherBirthdayYears:[], equippedOutfit:null, autoOutfit:true, dailySchedule: [null,null,null,null,null,null,null], birthday:null, currentDate:null, endingDate:null, ended:false, birthdayCount:0, element:null, birthSeason:null, memory:0, truth:0, exposure:0, fatherAffinity:0, guardianTrust:50, nannyAffinity:50, lastGreetingDate:null, monthlyLedger:null };
 const statGroups = [
   { title: '신체', stats: [['health','체력'],['strength','힘'],['agility','민첩']] },
   { title: '지성·마음', stats: [['intelligence','지능'],['magic','마력'],['mentality','정신력']] },
   { title: '품격·소통', stats: [['dignity','기품'],['manners','예절'],['speech','화술']] },
   { title: '감각·매력', stats: [['sensitivity','감수성'],['sense','센스'],['charm','매력']] }
 ];
-const statDisplayOrder=[...statGroups.flatMap(group=>group.stats.map(([key])=>key)),'stress','nannyAffinity','guardianTrust','memory','truth','exposure'];
+const statDisplayOrder=[...statGroups.flatMap(group=>group.stats.map(([key])=>key)),'stress','nannyAffinity','fatherAffinity','guardianTrust','memory','truth','exposure'];
 const statDisplayRank=new Map(statDisplayOrder.map((key,index)=>[key,index]));
 const orderedChangeEntries=(change={})=>Object.entries(change).sort(([left],[right])=>(statDisplayRank.get(left)??999)-(statDisplayRank.get(right)??999));
 const expressions = [
@@ -90,7 +90,7 @@ const LEGACY_SAVE_KEYS = ['seonhwa-princess-mvp-save-v1'];
 let pendingRecoverySave=null;
 const statMaximum=key=>key==='stress'?100:999;
 const clampStat=(key,value)=>Math.max(0,Math.min(statMaximum(key),Number(value)||0));
-const boundedStats=[...new Set(statGroups.flatMap(group=>group.stats.map(([key])=>key)).concat(['stress','nannyAffinity','guardianTrust','memory','truth','exposure']))];
+const boundedStats=[...new Set(statGroups.flatMap(group=>group.stats.map(([key])=>key)).concat(['stress','nannyAffinity','fatherAffinity','guardianTrust','memory','truth','exposure']))];
 const legacyStatMap={healthiness:'mentality',study:'intelligence',arithmetic:'sense',arts:'sensitivity',martial:'strength',archery:'agility',riding:'agility',craft:'sense',cooking:'sense',embroidery:'sense',virtue:'dignity',medicine:'magic',commerce:'speech',reputation:'speech'};
 const canonicalStatKey=key=>legacyStatMap[key]||key;
 function canonicalizeChange(change={}){const result={};Object.entries(change).forEach(([key,value])=>{const mapped=canonicalStatKey(key);result[mapped]=(result[mapped]||0)+value;});return result;}
@@ -479,7 +479,7 @@ function updateImageState() {
 function renderHud() {
   normalizeStats();
   const date = game.currentDate ? new Date(`${game.currentDate}T00:00:00`) : null;
-  document.querySelector('#dateLabel').textContent = date ? `${game.age}세 · ${game.season} ${game.week}주` : '생일 설정 전';
+  document.querySelector('#dateLabel').textContent = date ? `${game.age}세 · ${date.getFullYear()}년 ${date.getMonth()+1}월 ${date.getDate()}일 · ${game.season} ${game.week}주` : '생일 설정 전';
   document.querySelector('#moneyLabel').textContent = `${game.money.toLocaleString()}냥`;
   document.querySelector('#cashLabel').textContent = `캐시 ${game.cash.toLocaleString()}원`;
   document.querySelector('#speakerName').textContent = game.nannyName || '유모';
@@ -487,6 +487,7 @@ function renderHud() {
 
 const statLabels={health:'체력',strength:'힘',agility:'민첩',intelligence:'지능',magic:'마력',mentality:'정신력',dignity:'기품',manners:'예절',speech:'화술',sensitivity:'감수성',sense:'센스',charm:'매력',stress:'스트레스'};
 statLabels.nannyAffinity='유모 친밀도';
+statLabels.fatherAffinity='아버지 친밀도';
 function showLiveChanges(action){
   const items=orderedChangeEntries(action.change).map(([key,value])=>{const positive=key==='stress'?value<0:value>=0;const current=clampStat(key,game[key]);return `<span class="${positive?'up':'down'}">${statLabels[key]||key} <b>${current}</b> <small>(${value>0?'+':''}${value})</small></span>`;});
   if(action.cost!==0)items.push(`<span class="money">은전 ${action.cost>0?'-':'+'}${Math.abs(action.cost)}냥</span>`);
@@ -545,7 +546,7 @@ function showHomeGreeting(force=false){
 }
 function answerHomeGreeting(scene,index){
   const [,change,result]=scene.choices[index];Object.entries(canonicalizeChange(change)).forEach(([key,value])=>game[key]=clampStat(key,(game[key]||0)+value));
-  document.querySelector('#homeGreeting').hidden=true;document.querySelector('.phone').classList.remove('greeting-active');document.querySelector('#speakerName').textContent=game.characterName||'아이';document.querySelector('#dialogueText').textContent=result;showLiveChanges({change,cost:0});renderHud();
+  document.querySelector('#homeGreeting').hidden=true;document.querySelector('.phone').classList.remove('greeting-active');document.querySelector('#speakerName').textContent=game.characterName||'아이';document.querySelector('#dialogueText').textContent=result;showLiveChanges({change:canonicalizeChange(change),cost:0});renderHud();queueAutoSave();
 }
 
 function openPanel(type) {
@@ -559,7 +560,7 @@ function openPanel(type) {
     normalizeBodyMetrics();
     normalizeRelations();
     const relationCards=endingRelationCandidates.map(candidate=>{const relation=game.relations[candidate.id];const phase=relation.dateUnlocked?'데이트 가능':relation.meetings>=5?'16세부터 데이트 가능':`${relation.meetings} / 5회 만남`;return `<div class="relation-card ${relation.dateUnlocked?'unlocked':''}"><b>${candidate.name}</b><small>${candidate.role}</small><span>${phase}</span><i style="--relation-progress:${Math.min(100,relation.meetings/5*100)}%"></i></div>`;}).join('');
-    panelBody.innerHTML = `<div class="status-summary"><span>${game.age}세 · ${game.season} ${game.week}주</span><b>${game.money.toLocaleString()}냥</b></div><section class="body-profile" aria-label="성장 정보"><div><small>키</small><b>${game.height.toFixed(1)} cm</b></div><div><small>몸무게</small><b>${game.weight.toFixed(1)} kg</b></div></section>${statGroups.map(group => `<section class="stat-group"><h3>${group.title}</h3>${group.stats.map(([key,label]) => statBar(key,label)).join('')}</section>`).join('')}<section class="stat-group condition-group"><h3>현재 상태</h3>${statBar('stress','스트레스')}</section><section class="relation-group"><h3>인연</h3><p>13세부터 우정으로 만나며, 5회 만남과 16세 이상을 충족하면 데이트가 열립니다.</p><div class="relation-grid">${relationCards}</div></section>`;
+    panelBody.innerHTML = `<div class="status-summary"><span>${game.age}세 · ${game.season} ${game.week}주</span><b>${game.money.toLocaleString()}냥</b></div><section class="body-profile" aria-label="성장 정보"><div><small>키</small><b>${game.height.toFixed(1)} cm</b></div><div><small>몸무게</small><b>${game.weight.toFixed(1)} kg</b></div></section>${statGroups.map(group => `<section class="stat-group"><h3>${group.title}</h3>${group.stats.map(([key,label]) => statBar(key,label)).join('')}</section>`).join('')}<section class="stat-group condition-group"><h3>현재 상태</h3>${statBar('stress','스트레스')}</section><section class="stat-group"><h3>가족 인연</h3>${statBar('nannyAffinity','유모 친밀도')}${statBar('fatherAffinity','아버지 친밀도')}</section><section class="relation-group"><h3>인연</h3><p>13세부터 우정으로 만나며, 5회 만남과 16세 이상을 충족하면 데이트가 열립니다.</p><div class="relation-grid">${relationCards}</div></section>`;
   } else if (type === 'inventory') {
     playHomeMusic();
     renderInventory();
@@ -689,6 +690,8 @@ function applySavePayload(saved) {
   }
   Object.assign(game, saved.game);
   if(!Number.isFinite(game.cash))game.cash=50000;
+  if(!Number.isFinite(Number(game.fatherAffinity)))game.fatherAffinity=0;
+  if(!Array.isArray(game.fatherBirthdayYears))game.fatherBirthdayYears=[];
   normalizeStats();
   normalizeRelations();
   normalizeBodyMetrics();
@@ -795,7 +798,7 @@ function deleteCharacterRecord(slot){
 }
 
 function resetGameState() {
-  Object.assign(game, { characterName:'',nannyName:'',profileSlot:null,age:9,height:130,weight:28.5,month:1,week:1,season:'봄',money:50000,cash:50000,health:42,strength:18,agility:20,intelligence:35,magic:8,mentality:30,dignity:36,manners:28,speech:14,sensitivity:40,sense:24,charm:30,stress:12,items:[],relations:{},equippedOutfit:null,autoOutfit:true,dailySchedule:[null,null,null,null,null,null,null],birthday:null,currentDate:null,endingDate:null,ended:false,birthdayCount:0,element:null,birthSeason:null,memory:0,truth:0,exposure:0,guardianTrust:50,nannyAffinity:50,lastGreetingDate:null,monthlyLedger:null});
+  Object.assign(game, { characterName:'',nannyName:'',profileSlot:null,age:9,height:130,weight:28.5,month:1,week:1,season:'봄',money:50000,cash:50000,health:42,strength:18,agility:20,intelligence:35,magic:8,mentality:30,dignity:36,manners:28,speech:14,sensitivity:40,sense:24,charm:30,stress:12,items:[],relations:{},startingGiftId:null,fatherBirthdayYears:[],equippedOutfit:null,autoOutfit:true,dailySchedule:[null,null,null,null,null,null,null],birthday:null,currentDate:null,endingDate:null,ended:false,birthdayCount:0,element:null,birthSeason:null,memory:0,truth:0,exposure:0,fatherAffinity:0,guardianTrust:50,nannyAffinity:50,lastGreetingDate:null,monthlyLedger:null});
   document.querySelector('#liveChanges').innerHTML='';
   const greeting=document.querySelector('#homeGreeting');greeting.hidden=true;greeting.classList.remove('greeting-active');
   document.querySelector('#characterNameInput').value='';
@@ -1030,11 +1033,12 @@ async function runWeek() {
   const playbackResult = await playWeeklySchedule(selected);
   const completedLedgers=recordMonthlySchedule(playbackResult.dayRecords);
   game.homeReaction=null;
-  advanceGameDate(selected.length);
+  const birthdayEvents=advanceGameDate(selected.length);
   const completedLedger=completedLedgers[0]||null;
   const counts = selected.reduce((map, action) => (map[action.name]=(map[action.name]||0)+1,map),{});
   const summary = Object.entries(counts).map(([name,count]) => count > 1 ? `${name} ${count}일` : name).join(' · ');
-  document.querySelector('#dialogueText').textContent = game.ended?`마지막 ${selected.length}일 일정(${summary})을 마쳤어요.`:`${completedWeek}주 일정(${summary})을 마쳤어요.`;
+  document.querySelector('#dialogueText').textContent = birthdayEvents.length?birthdayEvents.map(event=>event.message).join(' '):(game.ended?`마지막 ${selected.length}일 일정(${summary})을 마쳤어요.`:`${completedWeek}주 일정(${summary})을 마쳤어요.`);
+  if(birthdayEvents.length){const birthdayChange={};birthdayEvents.forEach(event=>Object.entries(event.change).forEach(([key,value])=>birthdayChange[key]=(birthdayChange[key]||0)+value));showLiveChanges({change:birthdayChange,cost:0});}
   game.dailySchedule = [null,null,null,null,null,null,null];
   bg.src = backgrounds.home;
   playHomeMusic();
@@ -1048,7 +1052,32 @@ async function runWeek() {
 
 function isoDate(date){ const y=date.getFullYear(); const m=String(date.getMonth()+1).padStart(2,'0'); const d=String(date.getDate()).padStart(2,'0'); return `${y}-${m}-${d}`; }
 function addYears(date, years){ const next=new Date(date); next.setFullYear(next.getFullYear()+years); return next; }
+const startingBirthdayGifts=[
+  {id:'birthday-calligraphy-set',name:'작은 붓과 벼루',change:{intelligence:6,sensitivity:3}},
+  {id:'birthday-silk-ribbon',name:'비단 댕기',change:{charm:6,dignity:3}},
+  {id:'birthday-training-bow',name:'작은 연습 활',change:{agility:5,strength:4}},
+  {id:'birthday-etiquette-book',name:'예절 이야기책',change:{manners:6,mentality:3}},
+  {id:'birthday-herb-pouch',name:'향긋한 약초 주머니',change:{health:5,sense:4}}
+];
+function applyStatChange(change){const actual={};Object.entries(canonicalizeChange(change)).forEach(([key,value])=>{const before=clampStat(key,game[key]);game[key]=clampStat(key,before+value);actual[key]=game[key]-before;});return actual;}
+function awardStartingBirthdayGift(){
+  if(game.startingGiftId)return startingBirthdayGifts.find(gift=>gift.id===game.startingGiftId)||null;
+  const gift=startingBirthdayGifts[Math.floor(Math.random()*startingBirthdayGifts.length)];
+  gift.actualChange=applyStatChange(gift.change);game.startingGiftId=gift.id;
+  game.items.push({id:gift.id,type:'event',name:gift.name,description:'아홉 번째 생일에 유모에게 받은 첫 선물',qty:1,source:'nanny-birthday'});
+  return gift;
+}
+function awardFatherBirthdayGift(age){
+  if(!Array.isArray(game.fatherBirthdayYears))game.fatherBirthdayYears=[];
+  if(game.fatherBirthdayYears.includes(age))return null;
+  const stressDrop=4+Math.floor(Math.random()*7),affinityGain=2+Math.floor(Math.random()*4),change=applyStatChange({stress:-stressDrop,fatherAffinity:affinityGain});
+  game.fatherBirthdayYears.push(age);game.birthdayCount=game.fatherBirthdayYears.length;
+  game.items.push({id:`father-birthday-letter-${age}`,type:'event',name:`아버지의 ${age}세 생일 선물`,description:'멀리 있는 아버지가 보낸 편지와 작은 선물',qty:1,source:'father-birthday'});
+  return {age,change,message:`${age}세 생일을 맞아 아버지의 편지와 선물이 도착했어요. ${formatChanges(change)}`};
+}
+function enforceBirthday1990(){const input=document.querySelector('#birthdayInput');if(!input.value)return;if(input.value<'1990-01-01')input.value='1990-01-01';if(input.value>'1990-12-31')input.value='1990-12-31';}
 function startWithBirthday(){
+  enforceBirthday1990();
   const value=document.querySelector('#birthdayInput').value;
   const characterName=document.querySelector('#characterNameInput').value.trim();
   const nannyName=document.querySelector('#nannyNameInput').value.trim();
@@ -1060,26 +1089,31 @@ function startWithBirthday(){
   const start=addYears(birth,9);
   const ending=addYears(birth,18); ending.setDate(ending.getDate()+1);
   const month=birth.getMonth()+1; const birthSeason=seasonForMonth(month); const element=['금','수','목','화','토'][(birth.getMonth()+birth.getDate())%5];
-  Object.assign(game,{characterName,nannyName,profileSlot,birthday:value,currentDate:isoDate(start),endingDate:isoDate(ending),age:9,height:130,weight:28.5,month,season:birthSeason,birthSeason,element,week:1,ended:false,birthdayCount:1});
+  Object.assign(game,{characterName,nannyName,profileSlot,birthday:value,currentDate:isoDate(start),endingDate:isoDate(ending),age:9,height:130,weight:28.5,month,season:birthSeason,birthSeason,element,week:Math.floor((start.getDate()-1)/7)+1,ended:false,birthdayCount:0,fatherBirthdayYears:[],fatherAffinity:0});
+  const nannyGift=awardStartingBirthdayGift(),fatherGift=awardFatherBirthdayGift(9);game.lastGreetingDate=game.currentDate;
   game.monthlyLedger=createMonthlyLedger(start.getFullYear(),month);
   document.querySelector('#birthdaySetup').hidden=true;
   panel.hidden=true;
   transitionPrologueToHomeMusic();
-  document.querySelector('#dialogueText').textContent=`${birthSeason}에 태어난 ${element} 기운의 아이. ${characterName}의 아홉 번째 생일부터 이야기를 시작해요.`;
+  const startingChanges={...(nannyGift?.actualChange||{})};Object.entries(fatherGift?.change||{}).forEach(([key,value])=>startingChanges[key]=(startingChanges[key]||0)+value);
+  document.querySelector('#dialogueText').textContent=`${characterName}의 아홉 번째 생일이에요. ${nannyName}가 「${nannyGift.name}」을 건넸어요. ${formatChanges(nannyGift.actualChange)}. ${fatherGift.message}`;
+  showLiveChanges({change:startingChanges,cost:0});
   renderHud();
   queueAutoSave();
-  setTimeout(()=>showHomeGreeting(),250);
 }
 function advanceGameDate(days){
-  if(!game.currentDate)return;
+  if(!game.currentDate)return [];
   const previousAge=game.age;
-  const date=new Date(`${game.currentDate}T00:00:00`); date.setDate(date.getDate()+days);
+  const previousDate=new Date(`${game.currentDate}T00:00:00`),date=new Date(previousDate); date.setDate(date.getDate()+days);
   const ending=new Date(`${game.endingDate}T00:00:00`);
   if(date>=ending){ date.setTime(ending.getTime()); game.ended=true; }
   game.currentDate=isoDate(date); game.month=date.getMonth()+1; game.season=seasonForMonth(game.month); game.week=Math.floor((date.getDate()-1)/7)+1;
   const birth=new Date(`${game.birthday}T00:00:00`); game.age=date.getFullYear()-birth.getFullYear()-((date.getMonth()<birth.getMonth()||(date.getMonth()===birth.getMonth()&&date.getDate()<birth.getDate()))?1:0);
   applyAgeGrowth(previousAge,game.age);
+  const birthdayEvents=[];
+  for(let age=Math.max(9,previousAge);age<=game.age;age+=1){const birthdayDate=addYears(birth,age);if(birthdayDate>previousDate&&birthdayDate<=date){const gift=awardFatherBirthdayGift(age);if(gift)birthdayEvents.push(gift);}}
   if(game.autoOutfit)updateAutoOutfit();
+  return birthdayEvents;
 }
 function seasonForMonth(month){ return month>=3&&month<=5?'봄':month>=6&&month<=8?'여름':month>=9&&month<=11?'가을':'겨울'; }
 function showEnding(){
@@ -1307,6 +1341,7 @@ document.querySelector('#closePanel').addEventListener('click', () => {if(market
 document.querySelector('#recoveryFresh').addEventListener('click',declineRecovery);
 document.querySelector('#recoveryContinue').addEventListener('click',continueRecovery);
 document.querySelector('#startGame').addEventListener('click', startWithBirthday);
+document.querySelector('#birthdayInput').addEventListener('change',enforceBirthday1990);
 document.querySelector('#prologueNext').addEventListener('click',nextPrologue);
 document.querySelector('#prologueBack').addEventListener('click',previousPrologue);
 document.querySelector('#prologueSound').addEventListener('click',togglePrologueSound);
