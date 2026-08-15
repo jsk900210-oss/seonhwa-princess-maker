@@ -159,11 +159,12 @@ const outfits = [
 ];
 const outfitAgeLabel=outfit=>outfit.age===outfit.ageEnd?`${outfit.age}세`:`${outfit.age}–${outfit.ageEnd}세`;
 const outfitAvailable=outfit=>game.age>=outfit.age&&game.age<=outfit.ageEnd;
-const outfitAssetAge=outfit=>outfit.assetAge||outfit.age;
+const outfitAssetAge=outfit=>outfit.category==='cash'?growthAge():outfit.assetAge||outfit.age;
 const growthAge=()=>game.age>=18?18:game.age>=16?16:game.age>=13?13:9;
 const correctedAdultOutfits=new Set(['age13-scholar','age13-festival','age13-work','age16-court','age16-art','age16-travel','age18-premium-paradise']);
 const outfitImage=id=>{
   const outfit=outfits.find(item=>item.id===id);
+  if(outfit?.category==='cash')return `../assets/characters/seonhwa/wardrobe/age-${String(growthAge()).padStart(2,'0')}/${id}.png`;
   if(outfit?.assetAge)return `../assets/characters/seonhwa/wardrobe/age-${String(outfit.assetAge).padStart(2,'0')}/${id}.png`;
   const age=growthAge();
   const suffix=age===18&&correctedAdultOutfits.has(id)?'-v2':'';
