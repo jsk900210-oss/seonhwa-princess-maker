@@ -11,7 +11,7 @@
   <link rel="stylesheet" href="prologue.css?v=0.61.95-debug">
   <link rel="stylesheet" href="rain-v2.css">
   <link rel="stylesheet" href="naming.css">
-  <link rel="stylesheet" href="guardian.css?v=0.62.08-debug">
+  <link rel="stylesheet" href="guardian.css?v=0.62.24-debug">
   <link rel="stylesheet" href="naming-stable.css?v=0.62.15-debug">
   <link rel="stylesheet" href="live-changes.css?v=0.61.14-debug">
   <link rel="stylesheet" href="collection.css?v=0.61.96-debug">
@@ -40,7 +40,7 @@
       </div>
       <span class="loading-caption">이야기를 열 준비가 되었어요</span>
       <button class="studio-start-sound" id="studioStartSound" type="button">인연의 문을 열기</button>
-      <small class="loading-version" aria-label="현재 게임 버전">v0.62.22-debug</small>
+      <small class="loading-version" aria-label="현재 게임 버전">v0.62.24-debug</small>
     </section>
     <section class="prologue" id="prologue" aria-label="이야기 시작 영상" hidden>
       <audio id="prologueMusic" src="../assets/audio/music/prologue-lantern-and-dawn.mp3" preload="auto" loop></audio>
@@ -67,18 +67,18 @@
       </div>
     </section>
     <section class="guardian-story" id="guardianStory" hidden aria-live="polite">
-      <img src="../assets/cinematics/guardian/guardian-descent-age09.png" alt="아홉 번째 생일 밤 하늘에 나타난 네 신수">
-      <div class="guardian-story-copy"><small>첫 장 · 하늘이 내린 벗</small><p id="guardianStoryText"></p><button id="guardianStoryNext" type="button">다음</button></div>
+      <img id="guardianStoryImage" src="../assets/cinematics/guardian/guardian-four-directions-master.png" alt="아홉 번째 생일 밤 하늘에 나타난 네 신수">
+      <div class="guardian-story-copy"><small id="guardianStoryChapter">첫 장 · 하늘이 내린 벗</small><p id="guardianStoryText"></p><button id="guardianStoryNext" type="button">다음</button></div>
     </section>
     <section class="guardian-choice" id="guardianChoice" hidden aria-labelledby="guardianChoiceTitle">
       <div class="guardian-choice-card">
         <small>아홉 번째 생일의 인연</small><h1 id="guardianChoiceTitle">함께할 신수를 선택하세요</h1>
         <p>선택한 신수는 성장 기록을 살피고 일정과 모험을 조언합니다.</p>
         <div class="guardian-grid">
-          <button data-guardian="cheongryong"><i>龍</i><b>청룡</b><span>배움과 술법</span></button>
-          <button data-guardian="baekho"><i>虎</i><b>백호</b><span>용기와 무예</span></button>
-          <button data-guardian="jujak"><i>朱</i><b>주작</b><span>회복과 인연</span></button>
-          <button data-guardian="hyeonmu"><i>玄</i><b>현무</b><span>인내와 보호</span></button>
+          <button data-guardian="cheongryong"><img src="../assets/cinematics/guardian/guardian-cheongryong.png" alt="청룡"><i>龍</i><b>청룡</b><span>배움과 술법</span></button>
+          <button data-guardian="baekho"><img src="../assets/cinematics/guardian/guardian-baekho.png" alt="백호"><i>虎</i><b>백호</b><span>용기와 무예</span></button>
+          <button data-guardian="jujak"><img src="../assets/cinematics/guardian/guardian-jujak.png" alt="주작"><i>朱</i><b>주작</b><span>회복과 인연</span></button>
+          <button data-guardian="hyeonmu"><img src="../assets/cinematics/guardian/guardian-hyeonmu.png" alt="현무"><i>玄</i><b>현무</b><span>인내와 보호</span></button>
         </div>
         <button id="guardianChoiceConfirm" type="button" disabled>이 신수와 인연 맺기</button>
       </div>
@@ -182,6 +182,6 @@
       </div>
     </section>
   </main>
-  <script src="story-data.js?v=0.62.22-debug"></script><script src="app.js?v=0.62.22-debug"></script>
+  <script src="story-data.js?v=0.62.24-debug"></script><script src="app.js?v=0.62.24-debug"></script>
 </body>
 </html>

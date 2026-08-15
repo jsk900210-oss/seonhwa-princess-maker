@@ -51,12 +51,13 @@ const guardianDefs={
   jujak:{name:'주작',mark:'朱',theme:'#a93e32',gift:{name:'붉은 깃의 매듭',change:{charm:5,sensitivity:4}},intro:'남쪽의 따뜻한 불빛. 상처를 보듬고 좋은 인연을 잇는 신수입니다.'},
   hyeonmu:{name:'현무',mark:'玄',theme:'#292d35',gift:{name:'검은 옥패',change:{mentality:5,health:4}},intro:'북쪽의 깊은 물결. 흔들리지 않는 마음과 보호의 힘을 지닌 신수입니다.'}
 };
-const guardianStoryLines=[
-  '아홉 번째 생일 밤, 고요하던 마당 위로 네 갈래의 별빛이 열렸습니다.',
-  '동쪽에서 푸른 용이 구름 사이로 고개를 내밀었습니다.',
-  '서쪽의 흰 범과 남쪽의 붉은 새, 북쪽의 현무도 차례로 모습을 드러냈습니다.',
-  '네 신수는 아이가 새로 얻은 이름을 조용히 불렀습니다.',
-  '하늘은 앞날을 정하지 않았습니다. 스스로 고른 길을 끝까지 지켜 줄 한 벗만을 내려보냈습니다.'
+const guardianStoryScenes=[
+  {chapter:'첫 장 · 하늘이 내린 벗',image:'../assets/cinematics/guardian/guardian-four-directions-master.png',alt:'밤하늘 네 방향에서 모습을 드러낸 네 신수',group:true,text:'아홉 번째 생일 밤, 고요하던 마당 위로 동서남북 네 갈래의 별빛이 열렸습니다.'},
+  {chapter:'동쪽 · 청룡',image:'../assets/cinematics/guardian/guardian-cheongryong.png',alt:'푸른 구름 사이의 청룡',text:'동쪽의 구름이 푸르게 갈라지자 청룡이 여의주를 품고 내려왔습니다. 배움과 술법의 길을 밝혀 주는 신수였습니다.'},
+  {chapter:'서쪽 · 백호',image:'../assets/cinematics/guardian/guardian-baekho.png',alt:'산등성이를 지키는 백호',text:'서쪽 산등성이에는 백호가 소리 없이 내려앉았습니다. 두려움 앞에서 물러서지 않을 용기와 굳센 몸을 지켜 주는 신수였습니다.'},
+  {chapter:'남쪽 · 주작',image:'../assets/cinematics/guardian/guardian-jujak.png',alt:'붉은 노을 속의 주작',text:'남쪽의 따뜻한 바람 속에서는 주작의 붉은 깃이 피어났습니다. 상처를 보듬고 사람과 사람의 인연을 잇는 신수였습니다.'},
+  {chapter:'북쪽 · 현무',image:'../assets/cinematics/guardian/guardian-hyeonmu.png',alt:'깊은 물결 위의 현무',text:'북쪽의 깊은 물결 위에는 현무가 단단히 자리를 잡았습니다. 흔들리지 않는 인내와 오래 버티는 보호의 힘을 지닌 신수였습니다.'},
+  {chapter:'선택 · 한 벗과의 인연',image:'../assets/cinematics/guardian/guardian-four-directions-master.png',alt:'아이의 선택을 기다리는 네 신수',group:true,text:'네 신수는 아이의 이름을 조용히 불렀습니다. 하늘은 앞날을 정하지 않았고, 아이가 스스로 고른 한 벗만이 곁에 남기로 했습니다.'}
 ];
 let guardianStoryIndex=0,selectedGuardianType=null,introDialogueQueue=[],introDialogueIndex=0;
 const statGroups = [
@@ -941,7 +942,7 @@ function renderSchedulePanel() {
     return `<button class="day-slot ${action ? 'filled' : ''} ${scheduleCursor===index?'selected':''}" data-day="${index}" aria-label="${dayNames[index]}요일 ${action ? action.name : '비어 있음'}"><b>${dayNames[index]}</b><small>${dateLabel}</small><span>${action ? action.name : '빈칸'}</span></button>`;
   }).join('');
   const categoryTabs=['교육','아르바이트','휴식'].map(category=>`<button data-schedule-category="${category}" class="${activeScheduleCategory===category?'on':''}">${category}</button>`).join('');
-  const actionCards=actions.filter(action=>action.category===activeScheduleCategory).map(action=>{const unlocked=actionUnlocked(action),progress=activityProgressFor(action.id),rank=activityRankNames[activityRank(action.id)],requirement=activityRequirements[action.id],price=action.category==='아르바이트'?`+${activityPay(action)}냥`:action.cost>0?`-${action.cost}냥`:'무료',detail=unlocked&&['교육','아르바이트'].includes(action.category)?`${rank} · 경험 ${progress.attempts}일 · 성공 ${progress.successes}일${requirement?` · 권장 ${requirement[0]} ${requirement[1]}`:''}`:`${action.unlockAge}세 해금 · ${action.mentor||'새로운 인연'}`;return `<button class="action ${selectedScheduleAction===action.id?'selected':''} ${unlocked?'':'locked'}" data-action="${action.id}" ${unlocked?'':'disabled'}><img src="../assets/ui/activity-icons/activity-${action.icon||action.id}.png" alt=""><b>${action.name}</b><span>${unlocked?price:'잠김'}</span><small>${unlocked?(action.summary||'직접 방문하여 선택'):`${action.unlockAge}세가 되면 ${action.mentor||'담당 인물'}에게 배울 수 있어요.`}</small>${detail?`<em>${detail}</em>`:''}</button>`;}).join('');
+  const actionCards=actions.filter(action=>action.category===activeScheduleCategory&&actionUnlocked(action)).map(action=>{const progress=activityProgressFor(action.id),rank=activityRankNames[activityRank(action.id)],requirement=activityRequirements[action.id],price=action.category==='아르바이트'?`+${activityPay(action)}냥`:action.cost>0?`-${action.cost}냥`:'무료',detail=['교육','아르바이트'].includes(action.category)?`${rank} · 경험 ${progress.attempts}일 · 성공 ${progress.successes}일${requirement?` · 권장 ${requirement[0]} ${requirement[1]}`:''}`:'';return `<button class="action ${selectedScheduleAction===action.id?'selected':''}" data-action="${action.id}"><img src="../assets/ui/activity-icons/activity-${action.icon||action.id}.png" alt=""><b>${action.name}</b><span>${price}</span><small>${action.summary||'직접 방문하여 선택'}</small>${detail?`<em>${detail}</em>`:''}</button>`;}).join('');
   const projection=scheduleProjection(),filled=game.dailySchedule.filter(Boolean).length;
   panelBody.innerHTML = `<div class="schedule-adviser"><b>${game.guardianName||guardianDefs[game.guardianType]?.name||'신수'}의 일정 조언</b><p>${projection.stress>=80?'스트레스가 높아 휴식을 넣는 것이 좋겠어요.':filled===7?'일주일 준비가 끝났어요. 실행 전에 비용과 상태를 확인하세요.':'요일을 고른 뒤 활동을 넣어 주세요.'}</p></div><div class="day-grid">${daySlots}</div><div class="schedule-tabs" role="tablist">${categoryTabs}</div><section class="schedule-category"><div class="action-grid">${actionCards}</div></section><div class="schedule-tools"><button id="scheduleFillRemaining" ${selectedScheduleAction?'':'disabled'}>선택 활동으로 빈칸 채우기</button><button id="scheduleClearAll" ${filled?'':'disabled'}>전체 비우기</button></div>`;
   panelBody.querySelectorAll('[data-action]').forEach(button => button.addEventListener('click', () => addDailyAction(button.dataset.action)));
@@ -1212,11 +1213,13 @@ function startWithBirthday(){
   guardianStoryIndex=0;showGuardianStory();
 }
 function showGuardianStory(){
-  const story=document.querySelector('#guardianStory');story.hidden=false;
-  document.querySelector('#guardianStoryText').textContent=guardianStoryLines[guardianStoryIndex];
-  document.querySelector('#guardianStoryNext').textContent=guardianStoryIndex===guardianStoryLines.length-1?'신수 만나기':'다음';
+  const story=document.querySelector('#guardianStory'),scene=guardianStoryScenes[guardianStoryIndex];story.hidden=false;story.classList.toggle('group-scene',Boolean(scene.group));
+  const image=document.querySelector('#guardianStoryImage');image.classList.remove('scene-changing');void image.offsetWidth;image.src=scene.image;image.alt=scene.alt;image.classList.add('scene-changing');
+  document.querySelector('#guardianStoryChapter').textContent=scene.chapter;
+  document.querySelector('#guardianStoryText').textContent=scene.text;
+  document.querySelector('#guardianStoryNext').textContent=guardianStoryIndex===guardianStoryScenes.length-1?'신수 선택하기':'다음';
 }
-function nextGuardianStory(){if(guardianStoryIndex<guardianStoryLines.length-1){guardianStoryIndex+=1;showGuardianStory();return;}document.querySelector('#guardianStory').hidden=true;document.querySelector('#guardianChoice').hidden=false;}
+function nextGuardianStory(){if(guardianStoryIndex<guardianStoryScenes.length-1){guardianStoryIndex+=1;showGuardianStory();return;}document.querySelector('#guardianStory').hidden=true;document.querySelector('#guardianChoice').hidden=false;}
 function chooseGuardian(type){if(!guardianDefs[type])return;selectedGuardianType=type;document.querySelectorAll('[data-guardian]').forEach(button=>button.classList.toggle('selected',button.dataset.guardian===type));const confirm=document.querySelector('#guardianChoiceConfirm');confirm.disabled=false;confirm.textContent=`${guardianDefs[type].name}과 인연 맺기`;}
 function confirmGuardianChoice(){const guardian=guardianDefs[selectedGuardianType];if(!guardian)return;document.querySelector('#guardianChoice').hidden=true;document.querySelector('#guardianNameSetup').hidden=false;document.querySelector('#guardianNameMark').textContent=guardian.mark;document.querySelector('#guardianNameMark').style.background=guardian.theme;document.querySelector('#guardianNameDescription').textContent=guardian.intro;document.querySelector('#guardianNameInput').focus();}
 function finishGuardianNaming(){
