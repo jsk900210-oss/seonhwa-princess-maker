@@ -1,0 +1,11 @@
+/* Keep the game frame stable while the mobile keyboard is open. */
+body{min-height:var(--stable-app-height,100vh);overflow:hidden}
+.phone{width:min(100vw,calc(var(--stable-app-height,100vh) * 9 / 16),430px);height:min(var(--stable-app-height,100vh),764px);max-height:none;aspect-ratio:auto}
+.birthday-setup,.guardian-name{overflow-y:auto;overscroll-behavior:contain}
+.birthday-card,.guardian-name .birthday-card{flex:none}
+.guardian-story{cursor:pointer}
+.guardian-story-copy{padding-bottom:42px}
+.guardian-story-copy:after{content:"화면을 터치해 계속";position:absolute;right:18px;bottom:14px;color:#e7cd91;font-size:11px;letter-spacing:.04em}
+.dialogue.tap-continue{position:relative;cursor:pointer;padding-bottom:28px}
+.dialogue.tap-continue:after{content:"터치해서 계속 ▾";position:absolute;right:14px;bottom:8px;color:#8b613a;font-size:10px;font-weight:700}
+@media(max-height:620px){.birthday-setup,.guardian-name{place-items:start center;padding-top:16px;padding-bottom:16px}.guardian-story-copy{bottom:12px;padding:16px 18px 38px}.guardian-story-copy p{min-height:0;font-size:15px;line-height:1.5}}

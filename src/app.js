@@ -1,4 +1,6 @@
 ﻿const bg = document.querySelector('.background');
+const stableAppHeight=window.innerHeight;document.documentElement.style.setProperty('--stable-app-height',`${stableAppHeight}px`);
+window.addEventListener('orientationchange',()=>setTimeout(()=>document.documentElement.style.setProperty('--stable-app-height',`${window.innerHeight}px`),250));
 const character = document.querySelector('#character');
 const missing = document.querySelector('#missing');
 const panel = document.querySelector('#panel');
@@ -51,10 +53,12 @@ const guardianDefs={
 };
 const guardianStoryLines=[
   '아홉 번째 생일 밤, 고요하던 마당 위로 네 갈래의 별빛이 열렸습니다.',
-  '동쪽의 청룡, 서쪽의 백호, 남쪽의 주작, 북쪽의 현무가 아이의 이름을 듣고 모습을 드러냈습니다.',
-  '하늘은 앞날을 정해 주지 않았습니다. 다만 스스로 고른 길을 끝까지 지켜 줄 한 벗을 내려보냈습니다.'
+  '동쪽에서 푸른 용이 구름 사이로 고개를 내밀었습니다.',
+  '서쪽의 흰 범과 남쪽의 붉은 새, 북쪽의 현무도 차례로 모습을 드러냈습니다.',
+  '네 신수는 아이가 새로 얻은 이름을 조용히 불렀습니다.',
+  '하늘은 앞날을 정하지 않았습니다. 스스로 고른 길을 끝까지 지켜 줄 한 벗만을 내려보냈습니다.'
 ];
-let guardianStoryIndex=0,selectedGuardianType=null;
+let guardianStoryIndex=0,selectedGuardianType=null,introDialogueQueue=[],introDialogueIndex=0;
 const statGroups = [
   { title: '신체', stats: [['health','체력'],['strength','힘'],['agility','민첩']] },
   { title: '지성·마음', stats: [['intelligence','지능'],['magic','마력'],['mentality','정신력']] },
@@ -1158,10 +1162,20 @@ function finishGuardianNaming(){
   const guardianGift=awardStartingBirthdayGift(),fatherGift=awardFatherBirthdayGift(9);game.lastGreetingDate=game.currentDate;
   document.querySelector('#guardianNameSetup').hidden=true;panel.hidden=true;transitionPrologueToHomeMusic();
   const startingChanges={...(guardianGift?.actualChange||{})};Object.entries(fatherGift?.change||{}).forEach(([key,value])=>startingChanges[key]=(startingChanges[key]||0)+value);
-  document.querySelector('#dialogueText').textContent=`${guardianName}이(가) ${game.characterName}의 첫 성장을 살핍니다. 「${guardianGift.name}」의 축복을 받았어요. ${fatherGift.message}`;
-  showLiveChanges({change:startingChanges,cost:0});renderHud();queueAutoSave();
+  showLiveChanges({change:startingChanges,cost:0});renderHud();
+  startIntroDialogue([
+    {speaker:guardianName,line:`${game.characterName}, 네가 부른 이 이름을 소중히 간직하겠다.`},
+    {speaker:guardianName,line:'오늘부터 네 일정과 마음의 변화를 곁에서 살피마.'},
+    {speaker:guardianName,line:`첫 인연의 증표로 「${guardianGift.name}」의 축복을 건네겠다.`},
+    {speaker:guardianName,line:fatherGift.message},
+    {speaker:guardianName,line:'이제 첫 일주일의 계획을 함께 세워 보자.'}
+  ]);
+  queueAutoSave();
 }
 function reselectGuardian(){document.querySelector('#guardianNameSetup').hidden=true;document.querySelector('#guardianChoice').hidden=false;document.querySelector('#guardianNameInput').value='';}
+function startIntroDialogue(lines){introDialogueQueue=lines;introDialogueIndex=0;document.querySelector('.dialogue').classList.add('tap-continue');renderIntroDialogue();}
+function renderIntroDialogue(){const scene=introDialogueQueue[introDialogueIndex];if(!scene){document.querySelector('.dialogue').classList.remove('tap-continue');return;}document.querySelector('#speakerName').textContent=scene.speaker;document.querySelector('#dialogueText').textContent=scene.line;}
+function advanceIntroDialogue(){if(!introDialogueQueue.length)return;introDialogueIndex+=1;if(introDialogueIndex>=introDialogueQueue.length){introDialogueQueue=[];introDialogueIndex=0;document.querySelector('.dialogue').classList.remove('tap-continue');document.querySelector('#speakerName').textContent=game.guardianName;document.querySelector('#dialogueText').textContent='아래의 일정 버튼을 눌러 첫 주를 계획해 보자.';return;}renderIntroDialogue();}
 function advanceGameDate(days){
   if(!game.currentDate)return [];
   const previousAge=game.age;
@@ -1403,11 +1417,13 @@ document.querySelector('#recoveryFresh').addEventListener('click',declineRecover
 document.querySelector('#recoveryContinue').addEventListener('click',continueRecovery);
 document.querySelector('#startGame').addEventListener('click', startWithBirthday);
 document.querySelector('#guardianStoryNext').addEventListener('click',nextGuardianStory);
+document.querySelector('#guardianStory').addEventListener('click',event=>{if(!event.target.closest('button'))nextGuardianStory();});
 document.querySelectorAll('[data-guardian]').forEach(button=>button.addEventListener('click',()=>chooseGuardian(button.dataset.guardian)));
 document.querySelector('#guardianChoiceConfirm').addEventListener('click',confirmGuardianChoice);
 document.querySelector('#guardianNameConfirm').addEventListener('click',finishGuardianNaming);
 document.querySelector('#guardianNameInput').addEventListener('keydown',event=>{if(event.key==='Enter')finishGuardianNaming();});
 document.querySelector('#guardianReselect').addEventListener('click',reselectGuardian);
+document.querySelector('.dialogue').addEventListener('click',advanceIntroDialogue);
 document.querySelector('#birthdayInput').addEventListener('change',enforceBirthday1990);
 document.querySelector('#prologueNext').addEventListener('click',nextPrologue);
 document.querySelector('#prologueBack').addEventListener('click',previousPrologue);
