@@ -12,7 +12,7 @@
   <link rel="stylesheet" href="rain-v2.css">
   <link rel="stylesheet" href="naming.css?v=0.62.26-debug">
   <link rel="stylesheet" href="guardian.css?v=0.62.28-debug">
-  <link rel="stylesheet" href="guardian-anime.css?v=0.62.34-debug">
+  <link rel="stylesheet" href="guardian-anime.css?v=0.62.35-debug">
   <link rel="stylesheet" href="naming-stable.css?v=0.62.27-debug">
   <link rel="stylesheet" href="live-changes.css?v=0.61.14-debug">
   <link rel="stylesheet" href="collection.css?v=0.61.96-debug">
@@ -41,7 +41,7 @@
       </div>
       <span class="loading-caption">이야기를 열 준비가 되었어요</span>
       <button class="studio-start-sound" id="studioStartSound" type="button">인연의 문을 열기</button>
-      <small class="loading-version" aria-label="현재 게임 버전">v0.62.34-debug</small>
+      <small class="loading-version" aria-label="현재 게임 버전">v0.62.35-debug</small>
     </section>
     <section class="prologue" id="prologue" aria-label="이야기 시작 영상" hidden>
       <audio id="prologueMusic" src="../assets/audio/music/prologue-lantern-and-dawn.mp3" preload="auto" loop></audio>
@@ -73,8 +73,14 @@
       </div>
     </section>
     <section class="guardian-story" id="guardianStory" hidden aria-live="polite">
-      <img class="guardian-story-focus" id="guardianStoryFocus" src="../assets/cinematics/guardian/guardian-descent-age09.png" alt="" aria-hidden="true">
       <img id="guardianStoryImage" src="../assets/cinematics/guardian/guardian-descent-age09.png" alt="아홉 번째 생일 밤 아이 앞에 함께 나타난 네 신수">
+      <div class="guardian-master-cinematic" aria-hidden="true">
+        <i class="guardian-master-layer layer-sky"></i><i class="guardian-master-layer layer-hyeonmu"></i>
+        <i class="guardian-master-layer layer-cheongryong"></i><i class="guardian-master-layer layer-baekho"></i>
+        <i class="guardian-master-layer layer-jujak"></i><i class="guardian-master-layer layer-child"></i>
+        <i class="guardian-master-glow glow-moon"></i><i class="guardian-master-glow glow-lantern"></i>
+        <i class="guardian-master-particles"></i>
+      </div>
       <div class="guardian-story-copy"><small id="guardianStoryChapter">첫 장 · 하늘이 내린 벗</small><p id="guardianStoryText"></p><button id="guardianStoryNext" type="button">다음</button></div>
     </section>
     <section class="guardian-choice" id="guardianChoice" hidden aria-labelledby="guardianChoiceTitle">
@@ -189,6 +195,6 @@
       </div>
     </section>
   </main>
-  <script src="story-data.js?v=0.62.34-debug"></script><script src="app.js?v=0.62.34-debug"></script>
+  <script src="story-data.js?v=0.62.35-debug"></script><script src="app.js?v=0.62.35-debug"></script>
 </body>
 </html>

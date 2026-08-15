@@ -1,20 +1,29 @@
-.guardian-story>#guardianStoryImage{position:absolute;z-index:0;inset:0;width:100%;height:100%;object-fit:cover}
-.guardian-story-focus{position:absolute;z-index:1;inset:0;width:100%;height:100%;object-fit:cover;pointer-events:none;opacity:0;filter:saturate(1.04) contrast(1.03)}
-.guardian-story:before,.guardian-story:after{z-index:2}
-.guardian-story .guardian-story-copy{z-index:4}
-.guardian-story-focus.focus-playing{animation:guardian-focus-cut 7.2s ease-in-out both}
-.guardian-story-focus.ability-frame{filter:saturate(1.12) contrast(1.06) brightness(1.04)}
-.guardian-story[data-phase="arrival"]>#guardianStoryImage{animation:guardian-base-arrival 1.7s cubic-bezier(.18,.72,.28,1) both}
-.guardian-story[data-phase="reaction"] .guardian-story-focus{filter:saturate(1.04) contrast(1.03)}
-.guardian-story[data-phase="ability"]{animation:guardian-stage-pulse .55s ease both}
-.guardian-story[data-phase="ability"] .guardian-story-focus{filter:saturate(1.18) contrast(1.08) brightness(1.08)}
-.guardian-story[data-phase="settle"]>#guardianStoryImage{filter:saturate(1.05) brightness(1.02)}
-.guardian-story[data-effect="constellation"] .guardian-story-focus{object-position:50% 34%}
-.guardian-story[data-effect="cloud"] .guardian-story-focus{object-position:66% 31%}
-.guardian-story[data-effect="mountain"] .guardian-story-focus{object-position:50% 34%}
-.guardian-story[data-effect="embers"] .guardian-story-focus{object-position:56% 32%}
-.guardian-story[data-effect="water"] .guardian-story-focus{object-position:50% 41%}
-@keyframes guardian-focus-cut{0%,18%{opacity:0;transform:scale(1.02)}25%,50%{opacity:1;transform:scale(1.06)}57%,63%{opacity:0;transform:scale(1.08)}70%,91%{opacity:1;transform:scale(1.03)}100%{opacity:0;transform:scale(1.06)}}
-@keyframes guardian-base-arrival{from{opacity:.1;transform:scale(1.12)}to{opacity:1;transform:scale(1.025)}}
-@keyframes guardian-stage-pulse{0%{filter:brightness(1)}45%{filter:brightness(1.2)}100%{filter:brightness(1)}}
-@media(prefers-reduced-motion:reduce){.guardian-story-focus.focus-playing{animation:none}}
+.guardian-story>#guardianStoryImage{position:absolute;z-index:0;inset:0;width:100%;height:100%;object-fit:cover;transform:scale(1.018);filter:saturate(.94) brightness(.82);animation:guardian-master-camera 15s ease-out both}
+.guardian-master-cinematic{position:absolute;z-index:1;inset:0;overflow:hidden;pointer-events:none}
+.guardian-master-layer{position:absolute;inset:0;background:url('../assets/cinematics/guardian/guardian-descent-age09.png') center/cover no-repeat;will-change:transform,filter,opacity;mask-repeat:no-repeat;-webkit-mask-repeat:no-repeat}
+.layer-sky{mask-image:linear-gradient(to bottom,#000 0,#000 38%,transparent 71%);-webkit-mask-image:linear-gradient(to bottom,#000 0,#000 38%,transparent 71%);opacity:.25;animation:guardian-cloud-drift 15s ease-in-out both}
+.layer-hyeonmu{mask-image:radial-gradient(ellipse 37% 25% at 52% 17%,#000 35%,transparent 73%);-webkit-mask-image:radial-gradient(ellipse 37% 25% at 52% 17%,#000 35%,transparent 73%);transform-origin:52% 18%;animation:guardian-hyeonmu 7s ease-in-out 4.8s infinite}
+.layer-cheongryong{mask-image:radial-gradient(ellipse 35% 27% at 18% 38%,#000 35%,transparent 76%);-webkit-mask-image:radial-gradient(ellipse 35% 27% at 18% 38%,#000 35%,transparent 76%);transform-origin:24% 39%;animation:guardian-cheongryong 5.5s ease-in-out 5.2s infinite}
+.layer-baekho{mask-image:radial-gradient(ellipse 31% 28% at 80% 38%,#000 35%,transparent 76%);-webkit-mask-image:radial-gradient(ellipse 31% 28% at 80% 38%,#000 35%,transparent 76%);transform-origin:79% 38%;animation:guardian-baekho 6s ease-in-out 6s infinite}
+.layer-jujak{mask-image:radial-gradient(ellipse 35% 22% at 54% 57%,#000 38%,transparent 78%);-webkit-mask-image:radial-gradient(ellipse 35% 22% at 54% 57%,#000 38%,transparent 78%);transform-origin:54% 57%;animation:guardian-jujak 4.2s ease-in-out 7s infinite}
+.layer-child{mask-image:radial-gradient(ellipse 20% 19% at 49% 84%,#000 42%,transparent 78%);-webkit-mask-image:radial-gradient(ellipse 20% 19% at 49% 84%,#000 42%,transparent 78%);transform-origin:49% 94%;animation:guardian-child 4.8s ease-in-out 2.4s infinite}
+.guardian-master-glow{position:absolute;border-radius:50%;opacity:0;mix-blend-mode:screen;filter:blur(12px)}
+.glow-moon{left:42%;top:28%;width:17%;aspect-ratio:1;background:radial-gradient(circle,#fffbd2 0,#ffe7a066 38%,transparent 72%);animation:guardian-moon 15s ease-in-out both}
+.glow-lantern{left:38%;top:72%;width:25%;aspect-ratio:1;background:radial-gradient(circle,#ffc66f88 0,#ff8b342d 42%,transparent 72%);animation:guardian-lantern 3.2s ease-in-out infinite}
+.guardian-master-particles{position:absolute;inset:0;opacity:0;background-image:radial-gradient(circle,#fff5bd 0 1px,transparent 1.7px),radial-gradient(circle,#75ccff 0 1px,transparent 1.8px),radial-gradient(circle,#ff9b68 0 1.2px,transparent 2px);background-size:53px 61px,71px 83px,89px 97px;background-position:0 0,17px 9px,33px 22px;animation:guardian-stars 10s linear 4.5s infinite}
+.guardian-story:before,.guardian-story:after{z-index:2}.guardian-story .guardian-story-copy{z-index:4}.guardian-story-copy button[hidden]{display:none}
+.guardian-story[data-phase="guardians"] .guardian-master-layer:not(.layer-child):not(.layer-sky){filter:saturate(1.12) brightness(1.08)}
+.guardian-story[data-phase="convergence"] .guardian-master-cinematic{animation:guardian-convergence 2.6s ease-in-out both}
+.guardian-story[data-phase="choice"]>#guardianStoryImage{filter:saturate(1.03) brightness(.93)}
+@keyframes guardian-master-camera{0%{transform:scale(1.11);filter:saturate(.72) brightness(.5)}18%{filter:saturate(.88) brightness(.72)}100%{transform:scale(1.018);filter:saturate(.98) brightness(.88)}}
+@keyframes guardian-cloud-drift{0%{transform:translate3d(-1.3%,0,0) scale(1.04);opacity:0}24%{opacity:.3}100%{transform:translate3d(1.2%,-.4%,0) scale(1.02);opacity:.14}}
+@keyframes guardian-hyeonmu{0%,100%{transform:translateY(0) scale(1)}50%{transform:translateY(-.7%) scale(1.008)}}
+@keyframes guardian-cheongryong{0%,100%{transform:rotate(-.12deg) translate(0,0)}50%{transform:rotate(.35deg) translate(.45%,-.25%)}}
+@keyframes guardian-baekho{0%,100%{transform:scale(1)}50%{transform:scale(1.009) translateY(-.2%)}}
+@keyframes guardian-jujak{0%,100%{transform:scale(1) translateY(0);filter:brightness(1)}50%{transform:scale(1.012) translateY(-.45%);filter:brightness(1.12)}}
+@keyframes guardian-child{0%,100%{transform:rotate(0) scale(1)}50%{transform:rotate(.18deg) scale(1.004)}}
+@keyframes guardian-moon{0%,22%{opacity:0;transform:scale(.7)}42%{opacity:.25}72%{opacity:.55;transform:scale(1.08)}100%{opacity:.28;transform:scale(1)}}
+@keyframes guardian-lantern{0%,100%{opacity:.18;transform:scale(.92)}50%{opacity:.42;transform:scale(1.08)}}
+@keyframes guardian-stars{0%{opacity:0;transform:translateY(2%)}18%{opacity:.55}100%{opacity:.18;transform:translateY(-5%)}}
+@keyframes guardian-convergence{0%{filter:brightness(1)}48%{filter:brightness(1.24) saturate(1.16)}100%{filter:brightness(1.04)}}
+@media(prefers-reduced-motion:reduce){.guardian-story>#guardianStoryImage,.guardian-master-layer,.guardian-master-glow,.guardian-master-particles,.guardian-master-cinematic{animation:none!important}.guardian-master-particles{opacity:.2}}

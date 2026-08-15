@@ -52,12 +52,7 @@ const guardianDefs={
   hyeonmu:{name:'현무',mark:'玄',theme:'#292d35',gift:{name:'검은 옥패',change:{mentality:5,health:4}},intro:'북쪽의 깊은 물결. 흔들리지 않는 마음과 보호의 힘을 지닌 신수입니다.'}
 };
 const guardianStoryScenes=[
-  {chapter:'첫 장 · 하늘이 내린 벗',image:'../assets/cinematics/guardian/guardian-descent-age09.png',alt:'아홉 번째 생일 밤 아이 앞에 함께 나타난 네 신수',group:true,effect:'constellation',text:'아홉 번째 생일 밤, 고요하던 마당 위로 동서남북 네 갈래의 별빛이 열렸습니다.'},
-  {chapter:'동쪽 · 청룡',image:'../assets/cinematics/guardian/guardian-cheongryong.png',frames:['../assets/cinematics/guardian/animation/guardian-cheongryong-frame-1.webp','../assets/cinematics/guardian/animation/guardian-cheongryong-frame-2.webp','../assets/cinematics/guardian/animation/guardian-cheongryong-frame-3.webp'],alt:'푸른 구름 사이의 청룡',effect:'cloud',text:'동쪽의 구름이 푸르게 갈라지자 청룡이 여의주를 품고 내려왔습니다. 배움과 술법의 길을 밝혀 주는 신수였습니다.'},
-  {chapter:'서쪽 · 백호',image:'../assets/cinematics/guardian/guardian-baekho.png',frames:['../assets/cinematics/guardian/animation/guardian-baekho-frame-1.webp','../assets/cinematics/guardian/animation/guardian-baekho-frame-2.webp','../assets/cinematics/guardian/animation/guardian-baekho-frame-3.webp'],alt:'산등성이를 지키는 백호',effect:'mountain',text:'서쪽 산등성이에는 백호가 소리 없이 내려앉았습니다. 두려움 앞에서 물러서지 않을 용기와 굳센 몸을 지켜 주는 신수였습니다.'},
-  {chapter:'남쪽 · 주작',image:'../assets/cinematics/guardian/guardian-jujak.png',frames:['../assets/cinematics/guardian/animation/guardian-jujak-frame-1.webp','../assets/cinematics/guardian/animation/guardian-jujak-frame-2.webp','../assets/cinematics/guardian/animation/guardian-jujak-frame-3.webp'],alt:'붉은 노을 속의 주작',effect:'embers',text:'남쪽의 따뜻한 바람 속에서는 주작의 붉은 깃이 피어났습니다. 상처를 보듬고 사람과 사람의 인연을 잇는 신수였습니다.'},
-  {chapter:'북쪽 · 현무',image:'../assets/cinematics/guardian/guardian-hyeonmu.png',frames:['../assets/cinematics/guardian/animation/guardian-hyeonmu-frame-1.webp','../assets/cinematics/guardian/animation/guardian-hyeonmu-frame-2.webp','../assets/cinematics/guardian/animation/guardian-hyeonmu-frame-3.webp'],alt:'깊은 물결 위의 현무',effect:'water',text:'북쪽의 깊은 물결 위에는 현무가 단단히 자리를 잡았습니다. 흔들리지 않는 인내와 오래 버티는 보호의 힘을 지닌 신수였습니다.'},
-  {chapter:'선택 · 한 벗과의 인연',image:'../assets/cinematics/guardian/guardian-descent-age09.png',alt:'아이의 선택을 기다리는 네 신수',group:true,effect:'constellation',text:'네 신수는 아이의 이름을 조용히 불렀습니다. 하늘은 앞날을 정하지 않았고, 아이가 스스로 고른 한 벗만이 곁에 남기로 했습니다.'}
+  {chapter:'첫 장 · 하늘이 내린 벗',image:'../assets/cinematics/guardian/guardian-descent-age09.png',alt:'아홉 번째 생일 밤 아이 앞에 함께 나타난 네 신수',group:true,effect:'constellation',text:'아홉 번째 생일 밤, 고요하던 마당 위로 네 갈래의 별빛이 열렸습니다.'}
 ];
 let guardianStoryIndex=0,guardianSceneTimer=null,guardianAbilityTimer=null,guardianReactionTimer=null,guardianSettleTimer=null,guardianInputLockedUntil=0,selectedGuardianType=null,introDialogueQueue=[],introDialogueIndex=0;
 const statGroups = [
@@ -1233,9 +1228,12 @@ function startWithBirthday(){
   guardianStoryIndex=0;showGuardianStory();
 }
 function showGuardianStory(){
-  const story=document.querySelector('#guardianStory'),scene=guardianStoryScenes[guardianStoryIndex],copy=story.querySelector('.guardian-story-copy');story.hidden=false;story.classList.toggle('group-scene',Boolean(scene.group));story.dataset.effect=scene.effect||'';
-  const image=document.querySelector('#guardianStoryImage'),focus=document.querySelector('#guardianStoryFocus'),frames=scene.frames||[scene.image];[guardianSceneTimer,guardianAbilityTimer,guardianReactionTimer,guardianSettleTimer].forEach(clearTimeout);story.dataset.phase='transition';image.classList.add('scene-fading');focus.classList.remove('focus-playing','ability-frame');copy.classList.add('is-changing');
-  guardianSceneTimer=setTimeout(()=>{story.dataset.phase='arrival';image.src=frames[0];image.alt=scene.alt;focus.src=frames[1]||frames[0];image.classList.remove('scene-fading','scene-changing');void image.offsetWidth;image.classList.add('scene-changing');void focus.offsetWidth;focus.classList.add('focus-playing');guardianReactionTimer=setTimeout(()=>{story.dataset.phase='reaction';},1600);if(frames[2])guardianAbilityTimer=setTimeout(()=>{story.dataset.phase='ability';focus.classList.add('ability-frame');focus.src=frames[2];playGuardianCinematicCue(scene.effect);},4050);guardianSettleTimer=setTimeout(()=>{story.dataset.phase='settle';},6650);document.querySelector('#guardianStoryChapter').textContent=scene.chapter;document.querySelector('#guardianStoryText').textContent=scene.text;document.querySelector('#guardianStoryNext').textContent=guardianStoryIndex===guardianStoryScenes.length-1?'신수 선택하기':'다음';copy.classList.remove('is-changing');},240);
+  const story=document.querySelector('#guardianStory'),scene=guardianStoryScenes[guardianStoryIndex],copy=story.querySelector('.guardian-story-copy'),image=document.querySelector('#guardianStoryImage'),next=document.querySelector('#guardianStoryNext');
+  [guardianSceneTimer,guardianAbilityTimer,guardianReactionTimer,guardianSettleTimer].forEach(clearTimeout);story.hidden=false;story.classList.add('group-scene');story.dataset.effect=scene.effect;story.dataset.phase='arrival';image.src=scene.image;image.alt=scene.alt;document.querySelector('#guardianStoryChapter').textContent=scene.chapter;document.querySelector('#guardianStoryText').textContent=scene.text;next.hidden=true;next.disabled=true;next.textContent='신수 선택하기';copy.classList.remove('is-changing');guardianInputLockedUntil=Date.now()+14500;
+  guardianSceneTimer=setTimeout(()=>{story.dataset.phase='child';document.querySelector('#guardianStoryText').textContent='아이는 숨을 죽인 채, 하늘에서 내려온 빛을 올려다보았습니다.';},2600);
+  guardianReactionTimer=setTimeout(()=>{story.dataset.phase='guardians';document.querySelector('#guardianStoryText').textContent='청룡과 백호, 현무와 주작이 차례로 눈을 뜨며 아이의 부름을 기다렸습니다.';playGuardianCinematicCue('constellation');},5200);
+  guardianAbilityTimer=setTimeout(()=>{story.dataset.phase='convergence';document.querySelector('#guardianStoryText').textContent='네 신수의 빛이 마당 한가운데로 모여 하나의 인연이 되었습니다.';playGuardianCinematicCue('embers');},10200);
+  guardianSettleTimer=setTimeout(()=>{story.dataset.phase='choice';document.querySelector('#guardianStoryChapter').textContent='선택 · 한 벗과의 인연';document.querySelector('#guardianStoryText').textContent='네 앞날을 함께할 한 벗을 고르거라.';next.hidden=false;next.disabled=false;guardianInputLockedUntil=0;},14500);
 }
 function playGuardianCinematicCue(effect){
   if(!userSettings.sfxEnabled||!prologueSoundOn)return;const AudioContext=window.AudioContext||window.webkitAudioContext;if(!AudioContext)return;
@@ -1551,7 +1549,7 @@ document.querySelector('#prologueSkip').addEventListener('click',closePrologue);
 document.querySelector('#storyReplay').addEventListener('click',replayPrologue);
 document.querySelector('#studioStartSound').addEventListener('click',finishStudioIntro);
 prologueScenes.forEach(scene=>{const image=new Image();image.src=scene.image;});
-guardianStoryScenes.forEach(scene=>[scene.image,...(scene.frames||[])].forEach(source=>{const image=new Image();image.decoding='async';image.src=source;}));
+guardianStoryScenes.forEach(scene=>{const image=new Image();image.decoding='async';image.src=scene.image;});
 syncBirthdaySelectors(true);
 syncSettingsUi();
 renderHud();
