@@ -250,16 +250,15 @@ const outfitAvailable=outfit=>game.age>=outfit.age&&game.age<=outfit.ageEnd;
 const growthAge=()=>game.age>=19?19:game.age>=16?16:game.age>=13?13:9;
 const growthVisualAge=()=>game.age>=18?19:game.age>=16?16:game.age>=13?13:9;
 const growthAssetAge=(age=growthAge())=>age===19?18:age;
-const outfitAssetAge=outfit=>outfit.category==='cash'?growthAssetAge(growthVisualAge()):outfit.assetAge||growthAssetAge(outfit.age);
 const correctedAdultOutfits=new Set(['age13-scholar','age13-festival','age13-work','age16-court','age16-art','age16-travel','age18-premium-paradise']);
-const outfitImage=id=>{
+const correctedOutfitVariants=new Map([['13:age13-scholar','age13-scholar-fixed-v2']]);
+const outfitImageForAge=(id,visualAge=growthVisualAge())=>{
   const outfit=outfits.find(item=>item.id===id);
-  if(outfit?.category==='cash')return `../assets/characters/seonhwa/wardrobe/age-${String(growthAssetAge(growthVisualAge())).padStart(2,'0')}/${id}.png`;
-  if(outfit?.assetAge)return `../assets/characters/seonhwa/wardrobe/age-${String(outfit.assetAge).padStart(2,'0')}/${id}.png`;
-  const age=growthVisualAge(),assetAge=growthAssetAge(age);
-  const suffix=age===19&&correctedAdultOutfits.has(id)?'-v2':'';
-  return `../assets/characters/seonhwa/wardrobe/age-${String(assetAge).padStart(2,'0')}/${id}${suffix}.png`;
+  if(!outfit)return '';
+  const assetAge=outfit.category==='cash'?growthAssetAge(visualAge):outfit.assetAge||growthAssetAge(visualAge),corrected=correctedOutfitVariants.get(`${visualAge}:${id}`),suffix=visualAge===19&&correctedAdultOutfits.has(id)?'-v2':'';
+  return `../assets/characters/seonhwa/wardrobe/age-${String(assetAge).padStart(2,'0')}/${corrected||`${id}${suffix}`}.png`;
 };
+const outfitImage=id=>outfitImageForAge(id,growthVisualAge());
 function homeCondition(){
   if(game.homeReaction==='shocked')return 'shocked';
   if(game.dignity<25||game.nannyAffinity<25||game.stress>=75)return 'rebellious';
@@ -1001,7 +1000,7 @@ function renderShopPanel(tab='food',marketMode=marketShoppingActive,outfitCatego
   const owned=new Set(game.items.filter(item=>typeof item==='object').map(item=>item.id));
   const foodCards=foods.map(food=>`<button class="shop-card visual-card" data-food="${food.id}" ${game.money<food.price||marketMealConsumed?'disabled':''}><img src="../assets/items/food/${food.id}.png" alt="${food.name}"><b>${food.name}</b><span>${food.price}냥</span><small>${marketMealConsumed?'이번 방문에는 이미 식사했어요':`${food.detail}<br>${formatChanges(food.change)}`}</small></button>`).join('');
   const visibleOutfits=outfits.filter(outfit=>outfitShopCategory(outfit)===outfitCategory);
-  const outfitCards=visibleOutfits.map(outfit=>{const premium=isPremiumOutfit(outfit),cash=isCashOutfit(outfit),insufficient=cash?game.cash<outfit.cashPrice:game.money<outfit.price,locked=!outfitAvailable(outfit)||owned.has(outfit.id)||insufficient;return `<button class="shop-card outfit-card visual-card ${outfitAvailable(outfit)?'available':''} ${premium?'premium':''} ${cash?'cash':''} ${locked?'locked':''}" data-outfit-preview="${outfit.id}" aria-label="${outfit.name} 미리보기"><img src="../assets/characters/seonhwa/wardrobe/age-${String(outfitAssetAge(outfit)).padStart(2,'0')}/${outfit.id}.png" alt="${outfit.name}"><b>${outfit.name}</b><span>${cash?`${outfit.cashPrice.toLocaleString()}원`:`${outfit.price}냥`}</span><small>${cash?'캐시 의상 · ':premium?'고급 의상 · ':''}${outfitAgeLabel(outfit)} · ${outfit.seasons.join('·')}<br>${formatChanges(outfit.change)}${owned.has(outfit.id)?'<br>보유 중':''}</small></button>`;}).join('');
+  const outfitCards=visibleOutfits.map(outfit=>{const premium=isPremiumOutfit(outfit),cash=isCashOutfit(outfit),available=outfitAvailable(outfit),insufficient=cash?game.cash<outfit.cashPrice:game.money<outfit.price,locked=!available||owned.has(outfit.id)||insufficient,displayAge=available?growthVisualAge():outfit.age;return `<button class="shop-card outfit-card visual-card ${available?'available':''} ${premium?'premium':''} ${cash?'cash':''} ${locked?'locked':''}" data-outfit-preview="${outfit.id}" aria-label="${outfit.name} 미리보기"><img src="${outfitImageForAge(outfit.id,displayAge)}" alt="${outfit.name}"><b>${outfit.name}</b><span>${cash?`${outfit.cashPrice.toLocaleString()}원`:`${outfit.price}냥`}</span><small>${cash?'캐시 의상 · ':premium?'고급 의상 · ':''}${outfitAgeLabel(outfit)} · ${outfit.seasons.join('·')}<br>${formatChanges(outfit.change)}${owned.has(outfit.id)?'<br>보유 중':''}</small></button>`;}).join('');
   const outfitCategoryTabs=tab==='outfit'?`<div class="outfit-shop-tabs" role="tablist" aria-label="의상 등급"><button data-outfit-category="general" class="${outfitCategory==='general'?'on':''}">일반 의상</button><button data-outfit-category="premium" class="${outfitCategory==='premium'?'on':''}">고급 의상</button><button data-outfit-category="cash" class="${outfitCategory==='cash'?'on':''}">캐시 의상</button></div>`:'';
   const categoryName={general:'일반',premium:'고급',cash:'캐시'}[outfitCategory]||'일반';
   panelBody.innerHTML=`<div class="shop-greeting"><img src="${keeper.image}" alt="${keeper.name}"><div><b>${keeper.name}</b><p>${keeper.greeting}</p></div></div><div class="shop-money"><span>보유 은전 <b>${game.money.toLocaleString()}냥</b></span><span>테스트 캐시 <b>${game.cash.toLocaleString()}원</b></span></div>${marketMode?'':`<div class="shop-tabs"><button data-shop-tab="food" class="${tab==='food'?'on':''}">주막</button><button data-shop-tab="outfit" class="${tab==='outfit'?'on':''}">한복점</button></div>`}${outfitCategoryTabs}<h3 class="shop-list-title">${tab==='food'?`음식 메뉴 · ${foods.length}종`:`${categoryName} 의상 · ${visibleOutfits.length}벌`}</h3><div class="shop-grid">${tab==='food'?foodCards:outfitCards}</div><button id="shopBack">${marketMode?'저잣거리로 나가기':'일정으로 돌아가기'}</button>`;
@@ -1016,15 +1015,15 @@ function showOutfitPreview(id){
   const outfit=outfits.find(item=>item.id===id);if(!outfit)return;
   normalizeInventory();
   const owned=game.items.some(item=>item.type==='outfit'&&item.id===id),cash=isCashOutfit(outfit),ageLocked=!outfitAvailable(outfit),insufficient=cash?game.cash<outfit.cashPrice:game.money<outfit.price;
-  const previewGrowthAge=cash?growthVisualAge():growthAge(),previewAge=cash?growthAssetAge(previewGrowthAge):outfitAssetAge(outfit);
+  const previewGrowthAge=outfitAvailable(outfit)?growthVisualAge():outfit.age;
   const agePreview=cash?`<div class="cash-age-preview" role="group" aria-label="연령별 의상 미리보기"><span>연령별 모습</span><div>${[9,13,16,19].map(age=>`<button type="button" data-cash-preview-age="${age}" class="${age===previewGrowthAge?'on':''}" aria-pressed="${age===previewGrowthAge}">${age}세</button>`).join('')}</div></div>`:'';
   const reason=owned?'이미 구매한 의상입니다.':ageLocked?`${outfitAgeLabel(outfit)}에 구매할 수 있습니다.`:insufficient?`보유 ${cash?'캐시':'은전'}가 부족합니다.`:cash?'테스트 캐시로 구매할 수 있습니다.':'미리 입어본 뒤 구매할 수 있습니다.';
   const grade=cash?'캐시 의상':isPremiumOutfit(outfit)?'고급 의상':'일반 의상';
-  panelBody.insertAdjacentHTML('beforeend',`<div class="outfit-preview-backdrop" id="outfitPreview"><section class="outfit-preview-card ${cash?'cash-preview':''}" role="dialog" aria-modal="true" aria-label="${outfit.name} 미리보기"><button class="outfit-preview-close" id="outfitPreviewClose" aria-label="미리보기 닫기">×</button><div class="outfit-preview-image"><img id="outfitPreviewImage" src="../assets/characters/seonhwa/wardrobe/age-${String(previewAge).padStart(2,'0')}/${outfit.id}.png" alt="${cash?previewGrowthAge:previewAge}세 ${outfit.name} 전신 미리보기"></div><div class="outfit-preview-info"><small>${grade}</small><h3>${outfit.name}</h3><p>${outfitAgeLabel(outfit)} · ${outfit.seasons.join('·')}<br>${formatChanges(outfit.change)}</p>${agePreview}<b>${cash?`${outfit.cashPrice.toLocaleString()}원`:`${outfit.price.toLocaleString()}냥`}</b><em>${reason}</em><button id="outfitPreviewBuy" ${owned||ageLocked||insufficient?'disabled':''}>${owned?'구매 완료':cash?'테스트 캐시로 구매하기':'이 의상 구매하기'}</button></div></section></div>`);
+  panelBody.insertAdjacentHTML('beforeend',`<div class="outfit-preview-backdrop" id="outfitPreview"><section class="outfit-preview-card ${cash?'cash-preview':''}" role="dialog" aria-modal="true" aria-label="${outfit.name} 미리보기"><button class="outfit-preview-close" id="outfitPreviewClose" aria-label="미리보기 닫기">×</button><div class="outfit-preview-image"><img id="outfitPreviewImage" src="${outfitImageForAge(outfit.id,previewGrowthAge)}" alt="${previewGrowthAge}세 ${outfit.name} 전신 미리보기"></div><div class="outfit-preview-info"><small>${grade}</small><h3>${outfit.name}</h3><p>${outfitAgeLabel(outfit)} · ${outfit.seasons.join('·')}<br>${formatChanges(outfit.change)}</p>${agePreview}<b>${cash?`${outfit.cashPrice.toLocaleString()}원`:`${outfit.price.toLocaleString()}냥`}</b><em>${reason}</em><button id="outfitPreviewBuy" ${owned||ageLocked||insufficient?'disabled':''}>${owned?'구매 완료':cash?'테스트 캐시로 구매하기':'이 의상 구매하기'}</button></div></section></div>`);
   document.querySelector('#outfitPreviewClose').addEventListener('click',()=>document.querySelector('#outfitPreview')?.remove());
   document.querySelector('#outfitPreview').addEventListener('click',event=>{if(event.target.id==='outfitPreview')event.currentTarget.remove();});
   document.querySelectorAll('[data-cash-preview-age]').forEach(button=>button.addEventListener('click',()=>{
-    const age=Number(button.dataset.cashPreviewAge),assetAge=growthAssetAge(age),image=document.querySelector('#outfitPreviewImage');image.src=`../assets/characters/seonhwa/wardrobe/age-${String(assetAge).padStart(2,'0')}/${outfit.id}.png`;image.alt=`${age}세 ${outfit.name} 전신 미리보기`;
+    const age=Number(button.dataset.cashPreviewAge),image=document.querySelector('#outfitPreviewImage');image.src=outfitImageForAge(outfit.id,age);image.alt=`${age}세 ${outfit.name} 전신 미리보기`;
     document.querySelectorAll('[data-cash-preview-age]').forEach(item=>{const selected=item===button;item.classList.toggle('on',selected);item.setAttribute('aria-pressed',String(selected));});
   }));
   document.querySelector('#outfitPreviewBuy').addEventListener('click',()=>buyOutfit(id));
