@@ -5,5 +5,5 @@
 .guardian-story[data-effect="mountain"] .guardian-story-focus{object-position:50% 34%}
 .guardian-story[data-effect="embers"] .guardian-story-focus{object-position:56% 32%}
 .guardian-story[data-effect="water"] .guardian-story-focus{object-position:50% 41%}
-@keyframes guardian-focus-cut{0%,18%{opacity:0;transform:scale(1.08)}27%,58%{opacity:1;transform:scale(1.42)}69%,100%{opacity:0;transform:scale(1.48)}}
+@keyframes guardian-focus-cut{0%,18%{opacity:0;transform:scale(1.02)}25%,50%{opacity:1;transform:scale(1.06)}57%,63%{opacity:0;transform:scale(1.08)}70%,91%{opacity:1;transform:scale(1.03)}100%{opacity:0;transform:scale(1.06)}}
 @media(prefers-reduced-motion:reduce){.guardian-story-focus.focus-playing{animation:none}}
