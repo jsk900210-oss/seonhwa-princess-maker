@@ -106,8 +106,8 @@ function migrateLegacyStats(){
   if(!Number.isFinite(Number(game.sense)))game.sense=average('craft','arts','arithmetic');
 }
 function normalizeStats(){migrateLegacyStats();boundedStats.forEach(key=>{if(Object.hasOwn(game,key))game[key]=clampStat(key,game[key]);});}
-const growthProfile={9:[130,28.5],10:[135,31],11:[140,34],12:[145,38],13:[149,42],14:[153,45.5],15:[156,48.5],16:[158.5,51.5],17:[160.5,54],18:[162,56.5]};
-function expectedBodyMetrics(age=game.age){return growthProfile[Math.max(9,Math.min(18,Math.floor(Number(age)||9)))]||growthProfile[9];}
+const growthProfile={9:[130,28.5],10:[135,31],11:[140,34],12:[145,38],13:[149,42],14:[153,45.5],15:[156,48.5],16:[158.5,51.5],17:[160.5,54],18:[162,56.5],19:[163,58]};
+function expectedBodyMetrics(age=game.age){return growthProfile[Math.max(9,Math.min(19,Math.floor(Number(age)||9)))]||growthProfile[9];}
 function normalizeBodyMetrics(){const [height,weight]=expectedBodyMetrics();if(!Number.isFinite(Number(game.height)))game.height=height;if(!Number.isFinite(Number(game.weight)))game.weight=weight;game.height=Math.max(100,Math.min(190,Math.round(Number(game.height)*10)/10));game.weight=Math.max(18,Math.min(100,Math.round(Number(game.weight)*10)/10));}
 function applyAgeGrowth(previousAge,nextAge){if(nextAge<=previousAge)return;const [beforeHeight,beforeWeight]=expectedBodyMetrics(previousAge),[afterHeight,afterWeight]=expectedBodyMetrics(nextAge);normalizeBodyMetrics();game.height=Math.round((game.height+afterHeight-beforeHeight)*10)/10;game.weight=Math.round((game.weight+afterWeight-beforeWeight)*10)/10;}
 const actionPresentation = {
@@ -175,7 +175,7 @@ activityFrames.sleep=[...activityFrames.rest];
 const modularActivities=new Set(['calligraphy','arithmetic','manners','houseclean','errand','rest','sleep']);
 function activityFrameSet(activity){
   if(!modularActivities.has(activity))return activityFrames[activity];
-  const name=activity==='sleep'?'rest':activity,age=String(growthAge()).padStart(2,'0');
+  const name=activity==='sleep'?'rest':activity,age=String(growthAssetAge()).padStart(2,'0');
   return [1,2,3].map(frame=>`../assets/characters/seonhwa/activity-modular/age-${age}/${name}-${frame}.png`);
 }
 const npcFrames = Object.fromEntries(['teacher','dolsoe','herbalist','nanny'].map(name=>[name,[1,2,3].map(n=>`../assets/characters/npcs/activity/${name}-${n}.png`)]));
@@ -202,16 +202,16 @@ const outfits = [
   {id:'age16-court',age:16,ageEnd:17,name:'격식 당의 한복',price:480,tone:'격식',seasons:['가을','겨울'],situations:['manners','shopping'],change:{manners:6,virtue:4,charm:3,stress:2}},
   {id:'age16-art',age:16,ageEnd:17,name:'자수 예술 한복',price:520,tone:'화려함',seasons:['봄'],situations:['reading','vacation','shopping'],change:{arts:5,charm:7,reputation:2,stress:2}},
   {id:'age16-travel',age:16,ageEnd:17,name:'여행 활동 한복',price:390,tone:'활동성',seasons:['여름'],situations:['errand','herbs','sweeping','houseclean'],change:{health:4,martial:3,charm:-1}},
-  {id:'age18-ceremony',age:18,ageEnd:18,name:'성년 예복 한복',price:720,tone:'격식',seasons:['가을','겨울'],situations:['manners','shopping'],change:{manners:8,virtue:5,reputation:5,stress:3}},
-  {id:'age18-silk',age:18,ageEnd:18,name:'비단 연회 한복',price:780,tone:'화려함',seasons:['봄','겨울'],situations:['shopping','vacation'],change:{charm:10,reputation:4,virtue:-1,stress:3}},
-  {id:'age18-simple',age:18,ageEnd:18,name:'담백한 생활 한복',price:560,tone:'활동성',seasons:['여름','가을'],situations:['errand','sweeping','herbs','houseclean','rest'],change:{craft:5,health:4,virtue:3,charm:-2}},
-  {id:'age18-premium-paradise',age:18,ageEnd:18,name:'소문의 낙원 한복',price:1200,tone:'화려함',seasons:['봄','겨울'],situations:['manners','shopping','vacation'],change:{charm:14,reputation:8,virtue:2,manners:4,stress:4}},
-  {id:'age18-ethnic-stage-v3',age:9,ageEnd:18,assetAge:18,name:'월백 무대 의상',price:0,cashPrice:5000,tone:'캐시',category:'cash',forSale:true,seasons:['봄','여름','가을','겨울'],situations:['shopping','vacation'],change:{charm:20,reputation:14,arts:9,virtue:-2,stress:3}},
-  {id:'age18-cash-ember-ethnic',age:9,ageEnd:18,assetAge:18,name:'홍염 자수 무대복',price:0,cashPrice:5500,tone:'캐시',category:'cash',forSale:true,seasons:['봄','여름','가을','겨울'],situations:['shopping','vacation'],change:{charm:21,reputation:13,arts:10,virtue:-2}},
-  {id:'age18-cash-solar-ceremony',age:9,ageEnd:18,assetAge:18,name:'태양 백금 예복',price:0,cashPrice:6000,tone:'캐시',category:'cash',forSale:true,seasons:['봄','여름','가을','겨울'],situations:['shopping','vacation'],change:{charm:18,reputation:18,manners:9,arts:6}},
-  {id:'age18-cash-ink-scholar',age:9,ageEnd:18,assetAge:18,name:'묵학 비상 예복',price:0,cashPrice:6500,tone:'캐시',category:'cash',forSale:true,seasons:['봄','여름','가을','겨울'],situations:['reading','shopping','vacation'],change:{study:12,arts:12,reputation:12,charm:10}},
-  {id:'age18-cash-starlight-pink',age:9,ageEnd:18,assetAge:18,name:'별빛 유리 무대복',price:0,cashPrice:7000,tone:'캐시',category:'cash',forSale:true,seasons:['봄','여름','가을','겨울'],situations:['shopping','vacation'],change:{charm:24,reputation:16,arts:13,stress:-2}},
-  {id:'age18-cash-rose-paisley',age:9,ageEnd:18,assetAge:18,name:'장미 페이즐리 무대복',price:0,cashPrice:7500,tone:'캐시',category:'cash',forSale:true,seasons:['봄','여름','가을','겨울'],situations:['shopping','vacation'],change:{charm:23,reputation:15,arts:12,virtue:-3}},
+  {id:'age18-ceremony',age:19,ageEnd:19,assetAge:18,name:'성년 예복 한복',price:720,tone:'격식',seasons:['가을','겨울'],situations:['manners','shopping'],change:{manners:8,virtue:5,reputation:5,stress:3}},
+  {id:'age18-silk',age:19,ageEnd:19,assetAge:18,name:'비단 연회 한복',price:780,tone:'화려함',seasons:['봄','겨울'],situations:['shopping','vacation'],change:{charm:10,reputation:4,virtue:-1,stress:3}},
+  {id:'age18-simple',age:19,ageEnd:19,assetAge:18,name:'담백한 생활 한복',price:560,tone:'활동성',seasons:['여름','가을'],situations:['errand','sweeping','herbs','houseclean','rest'],change:{craft:5,health:4,virtue:3,charm:-2}},
+  {id:'age18-premium-paradise',age:19,ageEnd:19,assetAge:18,name:'소문의 낙원 한복',price:1200,tone:'화려함',seasons:['봄','겨울'],situations:['manners','shopping','vacation'],change:{charm:14,reputation:8,virtue:2,manners:4,stress:4}},
+  {id:'age18-ethnic-stage-v3',age:9,ageEnd:19,assetAge:18,name:'월백 무대 의상',price:0,cashPrice:5000,tone:'캐시',category:'cash',forSale:true,seasons:['봄','여름','가을','겨울'],situations:['shopping','vacation'],change:{charm:20,reputation:14,arts:9,virtue:-2,stress:3}},
+  {id:'age18-cash-ember-ethnic',age:9,ageEnd:19,assetAge:18,name:'홍염 자수 무대복',price:0,cashPrice:5500,tone:'캐시',category:'cash',forSale:true,seasons:['봄','여름','가을','겨울'],situations:['shopping','vacation'],change:{charm:21,reputation:13,arts:10,virtue:-2}},
+  {id:'age18-cash-solar-ceremony',age:9,ageEnd:19,assetAge:18,name:'태양 백금 예복',price:0,cashPrice:6000,tone:'캐시',category:'cash',forSale:true,seasons:['봄','여름','가을','겨울'],situations:['shopping','vacation'],change:{charm:18,reputation:18,manners:9,arts:6}},
+  {id:'age18-cash-ink-scholar',age:9,ageEnd:19,assetAge:18,name:'묵학 비상 예복',price:0,cashPrice:6500,tone:'캐시',category:'cash',forSale:true,seasons:['봄','여름','가을','겨울'],situations:['reading','shopping','vacation'],change:{study:12,arts:12,reputation:12,charm:10}},
+  {id:'age18-cash-starlight-pink',age:9,ageEnd:19,assetAge:18,name:'별빛 유리 무대복',price:0,cashPrice:7000,tone:'캐시',category:'cash',forSale:true,seasons:['봄','여름','가을','겨울'],situations:['shopping','vacation'],change:{charm:24,reputation:16,arts:13,stress:-2}},
+  {id:'age18-cash-rose-paisley',age:9,ageEnd:19,assetAge:18,name:'장미 페이즐리 무대복',price:0,cashPrice:7500,tone:'캐시',category:'cash',forSale:true,seasons:['봄','여름','가을','겨울'],situations:['shopping','vacation'],change:{charm:23,reputation:15,arts:12,virtue:-3}},
   {id:'premium-midnight-lotus',age:9,ageEnd:18,name:'묵빛 연화 예복',price:1650,tone:'고급',seasons:['가을','겨울'],situations:['manners','shopping','vacation'],change:{charm:15,reputation:10,manners:7,virtue:4}},
   {id:'premium-moonlight-guard',age:9,ageEnd:18,name:'월백 수호 예복',price:1780,tone:'고급',seasons:['봄','겨울'],situations:['manners','reading','shopping'],change:{manners:12,reputation:9,study:5,charm:8}},
   {id:'premium-aurora-blossom',age:9,ageEnd:18,name:'새벽꽃 비단 예복',price:1850,tone:'고급',seasons:['봄','여름'],situations:['vacation','shopping','manners'],change:{charm:18,reputation:10,arts:7,virtue:2}},
@@ -222,16 +222,17 @@ foods.forEach(item=>{item.change=canonicalizeChange(item.change);});
 outfits.forEach(item=>{item.change=canonicalizeChange(item.change);});
 const outfitAgeLabel=outfit=>outfit.age===outfit.ageEnd?`${outfit.age}세`:`${outfit.age}–${outfit.ageEnd}세`;
 const outfitAvailable=outfit=>game.age>=outfit.age&&game.age<=outfit.ageEnd;
-const outfitAssetAge=outfit=>outfit.category==='cash'?growthAge():outfit.assetAge||outfit.age;
-const growthAge=()=>game.age>=18?18:game.age>=16?16:game.age>=13?13:9;
+const growthAge=()=>game.age>=19?19:game.age>=16?16:game.age>=13?13:9;
+const growthAssetAge=(age=growthAge())=>age===19?18:age;
+const outfitAssetAge=outfit=>outfit.category==='cash'?growthAssetAge():outfit.assetAge||growthAssetAge(outfit.age);
 const correctedAdultOutfits=new Set(['age13-scholar','age13-festival','age13-work','age16-court','age16-art','age16-travel','age18-premium-paradise']);
 const outfitImage=id=>{
   const outfit=outfits.find(item=>item.id===id);
-  if(outfit?.category==='cash')return `../assets/characters/seonhwa/wardrobe/age-${String(growthAge()).padStart(2,'0')}/${id}.png`;
+  if(outfit?.category==='cash')return `../assets/characters/seonhwa/wardrobe/age-${String(growthAssetAge()).padStart(2,'0')}/${id}.png`;
   if(outfit?.assetAge)return `../assets/characters/seonhwa/wardrobe/age-${String(outfit.assetAge).padStart(2,'0')}/${id}.png`;
-  const age=growthAge();
-  const suffix=age===18&&correctedAdultOutfits.has(id)?'-v2':'';
-  return `../assets/characters/seonhwa/wardrobe/age-${String(age).padStart(2,'0')}/${id}${suffix}.png`;
+  const age=growthAge(),assetAge=growthAssetAge(age);
+  const suffix=age===19&&correctedAdultOutfits.has(id)?'-v2':'';
+  return `../assets/characters/seonhwa/wardrobe/age-${String(assetAge).padStart(2,'0')}/${id}${suffix}.png`;
 };
 function homeCondition(){
   if(game.homeReaction==='shocked')return 'shocked';
@@ -917,14 +918,14 @@ function showOutfitPreview(id){
   normalizeInventory();
   const owned=game.items.some(item=>item.type==='outfit'&&item.id===id),cash=isCashOutfit(outfit),ageLocked=!outfitAvailable(outfit),insufficient=cash?game.cash<outfit.cashPrice:game.money<outfit.price;
   const previewAge=cash?growthAge():outfitAssetAge(outfit);
-  const agePreview=cash?`<div class="cash-age-preview" role="group" aria-label="연령별 의상 미리보기"><span>연령별 모습</span><div>${[9,13,16,18].map(age=>`<button type="button" data-cash-preview-age="${age}" class="${age===previewAge?'on':''}" aria-pressed="${age===previewAge}">${age}세</button>`).join('')}</div></div>`:'';
+  const agePreview=cash?`<div class="cash-age-preview" role="group" aria-label="연령별 의상 미리보기"><span>연령별 모습</span><div>${[9,13,16,19].map(age=>`<button type="button" data-cash-preview-age="${age}" class="${age===growthAge()?'on':''}" aria-pressed="${age===growthAge()}">${age}세</button>`).join('')}</div></div>`:'';
   const reason=owned?'이미 구매한 의상입니다.':ageLocked?`${outfitAgeLabel(outfit)}에 구매할 수 있습니다.`:insufficient?`보유 ${cash?'캐시':'은전'}가 부족합니다.`:cash?'테스트 캐시로 구매할 수 있습니다.':'미리 입어본 뒤 구매할 수 있습니다.';
   const grade=cash?'캐시 의상':isPremiumOutfit(outfit)?'고급 의상':'일반 의상';
   panelBody.insertAdjacentHTML('beforeend',`<div class="outfit-preview-backdrop" id="outfitPreview"><section class="outfit-preview-card ${cash?'cash-preview':''}" role="dialog" aria-modal="true" aria-label="${outfit.name} 미리보기"><button class="outfit-preview-close" id="outfitPreviewClose" aria-label="미리보기 닫기">×</button><div class="outfit-preview-image"><img id="outfitPreviewImage" src="../assets/characters/seonhwa/wardrobe/age-${String(previewAge).padStart(2,'0')}/${outfit.id}.png" alt="${previewAge}세 ${outfit.name} 전신 미리보기"></div><div class="outfit-preview-info"><small>${grade}</small><h3>${outfit.name}</h3><p>${outfitAgeLabel(outfit)} · ${outfit.seasons.join('·')}<br>${formatChanges(outfit.change)}</p>${agePreview}<b>${cash?`${outfit.cashPrice.toLocaleString()}원`:`${outfit.price.toLocaleString()}냥`}</b><em>${reason}</em><button id="outfitPreviewBuy" ${owned||ageLocked||insufficient?'disabled':''}>${owned?'구매 완료':cash?'테스트 캐시로 구매하기':'이 의상 구매하기'}</button></div></section></div>`);
   document.querySelector('#outfitPreviewClose').addEventListener('click',()=>document.querySelector('#outfitPreview')?.remove());
   document.querySelector('#outfitPreview').addEventListener('click',event=>{if(event.target.id==='outfitPreview')event.currentTarget.remove();});
   document.querySelectorAll('[data-cash-preview-age]').forEach(button=>button.addEventListener('click',()=>{
-    const age=Number(button.dataset.cashPreviewAge),image=document.querySelector('#outfitPreviewImage');image.src=`../assets/characters/seonhwa/wardrobe/age-${String(age).padStart(2,'0')}/${outfit.id}.png`;image.alt=`${age}세 ${outfit.name} 전신 미리보기`;
+    const age=Number(button.dataset.cashPreviewAge),assetAge=growthAssetAge(age),image=document.querySelector('#outfitPreviewImage');image.src=`../assets/characters/seonhwa/wardrobe/age-${String(assetAge).padStart(2,'0')}/${outfit.id}.png`;image.alt=`${age}세 ${outfit.name} 전신 미리보기`;
     document.querySelectorAll('[data-cash-preview-age]').forEach(item=>{const selected=item===button;item.classList.toggle('on',selected);item.setAttribute('aria-pressed',String(selected));});
   }));
   document.querySelector('#outfitPreviewBuy').addEventListener('click',()=>buyOutfit(id));
@@ -1094,7 +1095,7 @@ function startWithBirthday(){
   if(!profileSlot){document.querySelector('#birthdayTitle').textContent='동시에 키울 수 있는 다섯 명의 기록이 모두 찼어요';return;}
   const birth=new Date(`${value}T00:00:00`);
   const start=addYears(birth,9);
-  const ending=addYears(birth,18); ending.setDate(ending.getDate()+1);
+  const ending=addYears(birth,19); ending.setDate(ending.getDate()+1);
   const month=birth.getMonth()+1; const birthSeason=seasonForMonth(month); const element=['금','수','목','화','토'][(birth.getMonth()+birth.getDate())%5];
   Object.assign(game,{characterName,nannyName,profileSlot,birthday:value,currentDate:isoDate(start),endingDate:isoDate(ending),age:9,height:130,weight:28.5,month,season:birthSeason,birthSeason,element,week:Math.floor((start.getDate()-1)/7)+1,ended:false,birthdayCount:0,fatherBirthdayYears:[],fatherAffinity:0});
   const nannyGift=awardStartingBirthdayGift(),fatherGift=awardFatherBirthdayGift(9);game.lastGreetingDate=game.currentDate;
