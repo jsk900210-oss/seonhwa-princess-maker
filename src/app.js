@@ -175,7 +175,7 @@ activityFrames.sleep=[...activityFrames.rest];
 const modularActivities=new Set(['calligraphy','arithmetic','manners','houseclean','errand','rest','sleep']);
 function activityFrameSet(activity){
   if(!modularActivities.has(activity))return activityFrames[activity];
-  const name=activity==='sleep'?'rest':activity,age=String(growthAssetAge()).padStart(2,'0');
+  const name=activity==='sleep'?'rest':activity,age=String(growthAssetAge(growthVisualAge())).padStart(2,'0');
   return [1,2,3].map(frame=>`../assets/characters/seonhwa/activity-modular/age-${age}/${name}-${frame}.png`);
 }
 const npcFrames = Object.fromEntries(['teacher','dolsoe','herbalist','nanny'].map(name=>[name,[1,2,3].map(n=>`../assets/characters/npcs/activity/${name}-${n}.png`)]));
@@ -223,14 +223,15 @@ outfits.forEach(item=>{item.change=canonicalizeChange(item.change);});
 const outfitAgeLabel=outfit=>outfit.age===outfit.ageEnd?`${outfit.age}세`:`${outfit.age}–${outfit.ageEnd}세`;
 const outfitAvailable=outfit=>game.age>=outfit.age&&game.age<=outfit.ageEnd;
 const growthAge=()=>game.age>=19?19:game.age>=16?16:game.age>=13?13:9;
+const growthVisualAge=()=>game.age>=18?19:game.age>=16?16:game.age>=13?13:9;
 const growthAssetAge=(age=growthAge())=>age===19?18:age;
-const outfitAssetAge=outfit=>outfit.category==='cash'?growthAssetAge():outfit.assetAge||growthAssetAge(outfit.age);
+const outfitAssetAge=outfit=>outfit.category==='cash'?growthAssetAge(growthVisualAge()):outfit.assetAge||growthAssetAge(outfit.age);
 const correctedAdultOutfits=new Set(['age13-scholar','age13-festival','age13-work','age16-court','age16-art','age16-travel','age18-premium-paradise']);
 const outfitImage=id=>{
   const outfit=outfits.find(item=>item.id===id);
-  if(outfit?.category==='cash')return `../assets/characters/seonhwa/wardrobe/age-${String(growthAssetAge()).padStart(2,'0')}/${id}.png`;
+  if(outfit?.category==='cash')return `../assets/characters/seonhwa/wardrobe/age-${String(growthAssetAge(growthVisualAge())).padStart(2,'0')}/${id}.png`;
   if(outfit?.assetAge)return `../assets/characters/seonhwa/wardrobe/age-${String(outfit.assetAge).padStart(2,'0')}/${id}.png`;
-  const age=growthAge(),assetAge=growthAssetAge(age);
+  const age=growthVisualAge(),assetAge=growthAssetAge(age);
   const suffix=age===19&&correctedAdultOutfits.has(id)?'-v2':'';
   return `../assets/characters/seonhwa/wardrobe/age-${String(assetAge).padStart(2,'0')}/${id}${suffix}.png`;
 };
@@ -917,11 +918,11 @@ function showOutfitPreview(id){
   const outfit=outfits.find(item=>item.id===id);if(!outfit)return;
   normalizeInventory();
   const owned=game.items.some(item=>item.type==='outfit'&&item.id===id),cash=isCashOutfit(outfit),ageLocked=!outfitAvailable(outfit),insufficient=cash?game.cash<outfit.cashPrice:game.money<outfit.price;
-  const previewAge=cash?growthAge():outfitAssetAge(outfit);
-  const agePreview=cash?`<div class="cash-age-preview" role="group" aria-label="연령별 의상 미리보기"><span>연령별 모습</span><div>${[9,13,16,19].map(age=>`<button type="button" data-cash-preview-age="${age}" class="${age===growthAge()?'on':''}" aria-pressed="${age===growthAge()}">${age}세</button>`).join('')}</div></div>`:'';
+  const previewGrowthAge=cash?growthVisualAge():growthAge(),previewAge=cash?growthAssetAge(previewGrowthAge):outfitAssetAge(outfit);
+  const agePreview=cash?`<div class="cash-age-preview" role="group" aria-label="연령별 의상 미리보기"><span>연령별 모습</span><div>${[9,13,16,19].map(age=>`<button type="button" data-cash-preview-age="${age}" class="${age===previewGrowthAge?'on':''}" aria-pressed="${age===previewGrowthAge}">${age}세</button>`).join('')}</div></div>`:'';
   const reason=owned?'이미 구매한 의상입니다.':ageLocked?`${outfitAgeLabel(outfit)}에 구매할 수 있습니다.`:insufficient?`보유 ${cash?'캐시':'은전'}가 부족합니다.`:cash?'테스트 캐시로 구매할 수 있습니다.':'미리 입어본 뒤 구매할 수 있습니다.';
   const grade=cash?'캐시 의상':isPremiumOutfit(outfit)?'고급 의상':'일반 의상';
-  panelBody.insertAdjacentHTML('beforeend',`<div class="outfit-preview-backdrop" id="outfitPreview"><section class="outfit-preview-card ${cash?'cash-preview':''}" role="dialog" aria-modal="true" aria-label="${outfit.name} 미리보기"><button class="outfit-preview-close" id="outfitPreviewClose" aria-label="미리보기 닫기">×</button><div class="outfit-preview-image"><img id="outfitPreviewImage" src="../assets/characters/seonhwa/wardrobe/age-${String(previewAge).padStart(2,'0')}/${outfit.id}.png" alt="${previewAge}세 ${outfit.name} 전신 미리보기"></div><div class="outfit-preview-info"><small>${grade}</small><h3>${outfit.name}</h3><p>${outfitAgeLabel(outfit)} · ${outfit.seasons.join('·')}<br>${formatChanges(outfit.change)}</p>${agePreview}<b>${cash?`${outfit.cashPrice.toLocaleString()}원`:`${outfit.price.toLocaleString()}냥`}</b><em>${reason}</em><button id="outfitPreviewBuy" ${owned||ageLocked||insufficient?'disabled':''}>${owned?'구매 완료':cash?'테스트 캐시로 구매하기':'이 의상 구매하기'}</button></div></section></div>`);
+  panelBody.insertAdjacentHTML('beforeend',`<div class="outfit-preview-backdrop" id="outfitPreview"><section class="outfit-preview-card ${cash?'cash-preview':''}" role="dialog" aria-modal="true" aria-label="${outfit.name} 미리보기"><button class="outfit-preview-close" id="outfitPreviewClose" aria-label="미리보기 닫기">×</button><div class="outfit-preview-image"><img id="outfitPreviewImage" src="../assets/characters/seonhwa/wardrobe/age-${String(previewAge).padStart(2,'0')}/${outfit.id}.png" alt="${cash?previewGrowthAge:previewAge}세 ${outfit.name} 전신 미리보기"></div><div class="outfit-preview-info"><small>${grade}</small><h3>${outfit.name}</h3><p>${outfitAgeLabel(outfit)} · ${outfit.seasons.join('·')}<br>${formatChanges(outfit.change)}</p>${agePreview}<b>${cash?`${outfit.cashPrice.toLocaleString()}원`:`${outfit.price.toLocaleString()}냥`}</b><em>${reason}</em><button id="outfitPreviewBuy" ${owned||ageLocked||insufficient?'disabled':''}>${owned?'구매 완료':cash?'테스트 캐시로 구매하기':'이 의상 구매하기'}</button></div></section></div>`);
   document.querySelector('#outfitPreviewClose').addEventListener('click',()=>document.querySelector('#outfitPreview')?.remove());
   document.querySelector('#outfitPreview').addEventListener('click',event=>{if(event.target.id==='outfitPreview')event.currentTarget.remove();});
   document.querySelectorAll('[data-cash-preview-age]').forEach(button=>button.addEventListener('click',()=>{
