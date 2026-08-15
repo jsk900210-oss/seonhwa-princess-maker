@@ -307,13 +307,14 @@ function outfitActivityFrame(src,outfitId){
 async function animateActivitySprite(image,motion,activity,npcImage,npc,outfitId){
   if(activity){
     const frames=activityFrameSet(activity);
-    const sequence=activity==='errand'?[0,1,1,2,2,1,0]:activity==='houseclean'?[0,1,0,2,2,2]:activity==='sleep'?[0,1,2,1,0]:[0,1,2,1,0,1,2];
+    const sequence=activity==='errand'?[0,1,1,2,2,1,0]:activity==='houseclean'?[0,1,0,2,2,2]:activity==='sweeping'?[0,1,2,1,0,1,2,2,1,0,1,2,1,0]:activity==='sleep'?[0,1,2,1,0]:[0,1,2,1,0,1,2];
     const delay=activity==='errand'?270:activity==='houseclean'?360:activity==='sleep'?430:190;
     for(const [step,frame] of sequence.entries()){
       if(activity==='houseclean')image.parentElement.style.left=`${[74,58,32,32,55,74][step]}%`;
+      if(activity==='sweeping')image.parentElement.style.left=`${[14,22,30,38,46,53,58,58,53,46,38,30,22,14][step]}%`;
       image.src=await outfitActivityFrame(frames[frame],outfitId);if(npc)npcImage.src=(npc==='teacher'?npcFrames.teacherReading:npcFrames[npc])[frame%3];await new Promise(resolve=>setTimeout(resolve,delay));
     }
-    if(activity==='houseclean')image.parentElement.style.left='';
+    if(activity==='houseclean'||activity==='sweeping')image.parentElement.style.left='';
     return;
   }
   const direction=motion==='motion-walk'?'right':'down';
