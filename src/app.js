@@ -121,7 +121,7 @@ const actionPresentation = {
 };
 const vacationIllustrations=[
   {id:'vacation-age09-spring-cherry',age:9,season:'봄',name:'봄바람과 벚꽃',image:'../assets/events/vacation/photoreal/age-09/spring-cherry-wind.webp',effect:'petals',description:'봄바람에 머리카락을 넘기며 벚꽃을 맞던 9세의 추억.'},
-  {id:'vacation-age09-spring-azalea',season:'봄',name:'진달래 계곡의 디딤돌',image:'../assets/events/vacation/photoreal/age-09/spring-azalea-stepping-stones.webp',effect:'petals',description:'진달래 핀 계곡의 디딤돌을 조심스레 건너던 9세의 추억.'},
+  {id:'vacation-age09-spring-azalea',season:'봄',name:'진달래 계곡의 디딤돌',image:'../assets/events/vacation/photoreal/age-09/spring-azalea-stepping-stones.webp',effect:'calm',description:'진달래 핀 계곡의 디딤돌을 조심스레 건너던 9세의 추억.'},
   {id:'vacation-age09-spring-kite',season:'봄',name:'강바람과 연날리기',image:'../assets/events/vacation/photoreal/age-09/spring-kite-running.webp',effect:'wind',description:'강바람을 따라 전통 연을 날리며 달리던 9세의 추억.'},
   {id:'vacation-age09-summer-stream',season:'여름',name:'계곡의 물보라',image:'../assets/events/vacation/photoreal/age-09/summer-stream-splash.webp',effect:'splash',description:'시원한 계곡물을 두 손으로 튀기며 웃던 9세의 추억.'},
   {id:'vacation-age09-summer-shell',season:'여름',name:'바닷가의 작은 조개',image:'../assets/events/vacation/photoreal/age-09/summer-seaside-shell.webp',effect:'wave',description:'잔물결 곁에서 작은 조개를 들여다보던 9세의 추억.'},
@@ -133,7 +133,7 @@ const vacationIllustrations=[
   ,{id:'vacation-age09-winter-seollal',season:'겨울',name:'설날 아침의 떡국',image:'../assets/events/vacation/photoreal/age-09/winter-seollal-tteokguk.webp',effect:'steam',description:'따뜻한 떡국 한 숟갈을 기다리던 설날 아침의 추억.'}
   ,{id:'vacation-age09-winter-snowball',season:'겨울',name:'눈사람을 위한 눈덩이',image:'../assets/events/vacation/photoreal/age-09/winter-snowball.webp',effect:'snow',description:'눈사람을 만들기 위해 커다란 눈덩이를 굴리던 9세의 추억.'}
   ,{id:'vacation-age13-spring-cherry',age:13,season:'봄',name:'꽃잎을 받는 오후',image:'../assets/events/vacation/photoreal/age-13/spring-cherry-wind.webp',effect:'petals',description:'흩날리는 벚꽃잎을 손바닥에 받아 보던 13세의 추억.'}
-  ,{id:'vacation-age13-spring-azalea',age:13,season:'봄',name:'진달래 계곡의 봄비',image:'../assets/events/vacation/photoreal/age-13/spring-azalea-stepping-stones.webp',effect:'petals',description:'봄비가 갠 계곡에서 진달래를 살며시 만지던 13세의 추억.'}
+  ,{id:'vacation-age13-spring-azalea',age:13,season:'봄',name:'진달래 계곡의 봄비',image:'../assets/events/vacation/photoreal/age-13/spring-azalea-stepping-stones.webp',effect:'calm',description:'봄비가 갠 계곡에서 진달래를 살며시 만지던 13세의 추억.'}
   ,{id:'vacation-age13-spring-kite',age:13,season:'봄',name:'언덕 위의 연',image:'../assets/events/vacation/photoreal/age-13/spring-kite-running.webp',effect:'wind',description:'높은 봄바람을 따라 언덕에서 연을 날리던 13세의 추억.'}
   ,{id:'vacation-age13-summer-stream',age:13,season:'여름',name:'계곡을 건너는 발걸음',image:'../assets/events/vacation/photoreal/age-13/summer-stream-splash.webp',effect:'splash',description:'맑은 계곡의 바위를 디디며 물보라를 일으킨 13세의 추억.'}
   ,{id:'vacation-age13-summer-shell',age:13,season:'여름',name:'바닷물 속 조개',image:'../assets/events/vacation/photoreal/age-13/summer-seaside-shell.webp',effect:'wave',description:'얕은 바닷물을 걸으며 예쁜 조개를 모은 13세의 추억.'}
@@ -145,7 +145,7 @@ const vacationIllustrations=[
   ,{id:'vacation-age13-winter-seollal',age:13,season:'겨울',name:'설날 떡국 차림',image:'../assets/events/vacation/photoreal/age-13/winter-seollal-tteokguk.webp',effect:'steam',description:'설날 아침 따뜻한 떡국을 정성껏 담아낸 13세의 추억.'}
   ,{id:'vacation-age13-winter-snowball',age:13,season:'겨울',name:'눈사람의 마지막 눈덩이',image:'../assets/events/vacation/photoreal/age-13/winter-snowball.webp',effect:'snow',description:'웃으며 눈사람의 머리를 올려놓던 13세의 추억.'}
   ,{id:'vacation-age16-spring-cherry',age:16,season:'봄',name:'벚꽃빛 갈래치마',image:'../assets/events/vacation/photoreal/age-16/spring-cherry-wind.webp',effect:'petals',description:'벚꽃바람에 느슨한 땋은 머리와 그라데이션 치마가 함께 흩날린 16세의 추억.'}
-  ,{id:'vacation-age16-spring-azalea',age:16,season:'봄',name:'진달래 곁의 봄비',image:'../assets/events/vacation/photoreal/age-16/spring-azalea-stepping-stones.webp',effect:'petals',description:'봄비가 그친 진달래 계곡에서 꽃을 살펴본 16세의 추억.'}
+  ,{id:'vacation-age16-spring-azalea',age:16,season:'봄',name:'진달래 곁의 봄비',image:'../assets/events/vacation/photoreal/age-16/spring-azalea-stepping-stones.webp',effect:'calm',description:'봄비가 그친 진달래 계곡에서 꽃을 살펴본 16세의 추억.'}
   ,{id:'vacation-age16-spring-kite',age:16,season:'봄',name:'바람을 따라 달리는 연',image:'../assets/events/vacation/photoreal/age-16/spring-kite-running.webp',effect:'wind',description:'강한 봄바람 속에서 연과 땋은 머리를 날리며 달린 16세의 추억.'}
   ,{id:'vacation-age16-summer-stream',age:16,season:'여름',name:'푸른 치마의 물장난',image:'../assets/events/vacation/photoreal/age-16/summer-stream-splash.webp',effect:'splash',description:'맑은 계곡에서 푸른 갈래치마 자락과 함께 물보라를 일으킨 16세의 추억.'}
   ,{id:'vacation-age16-summer-shell',age:16,season:'여름',name:'해질녘 조개바구니',image:'../assets/events/vacation/photoreal/age-16/summer-seaside-shell.webp',effect:'wave',description:'저녁 바닷바람을 맞으며 조개를 바구니에 모은 16세의 추억.'}
