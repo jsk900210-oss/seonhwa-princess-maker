@@ -371,3 +371,15 @@
 .shop-card.cash,.shop-card.cash.available{opacity:1;border-color:#8959a8;background:linear-gradient(145deg,#f5e8ff,#c9a5e4);box-shadow:inset 0 0 0 1px #fff,0 2px 8px #57306c55}.shop-card.cash span{color:#71348e;font-weight:900}.outfit-preview-card.cash-preview{border-color:#9360b4;background:linear-gradient(#2c1b39,#f5e8ff 48%);box-shadow:0 18px 55px #000c,inset 0 0 0 2px #f4dfff}.cash-preview .outfit-preview-info{background:#faf0ff}.cash-preview .outfit-preview-info small,.cash-preview .outfit-preview-info>b{color:#71348e}
 .cash-age-preview{display:grid;gap:5px;padding:7px;border:1px solid #c7a4da;border-radius:10px;background:#f2e2fb}.cash-age-preview>span{color:#644070;font-size:10px;font-weight:900}.cash-age-preview>div{display:grid;grid-template-columns:repeat(4,1fr);gap:5px}.cash-age-preview button{min-height:36px;margin:0;padding:5px 2px;border-color:#9b77ae;background:#fff8ff;color:#654475;font-size:11px}.cash-age-preview button.on{background:#75448d;color:#fff;box-shadow:inset 0 0 0 2px #e7c8f6}
 .shop-money{display:flex;justify-content:space-between;gap:8px}.shop-money span:last-child{color:#71348e}
+/* v0.61.87: subtle cinemagraph motion for photoreal vacation cards */
+.vacation-scene>img{animation:vacation-cinema 9s ease-in-out both}
+.vacation-scene::before,.vacation-scene::after{content:"";position:absolute;z-index:1;inset:-18%;pointer-events:none;opacity:0}
+.vacation-scene[data-effect="petals"]::before{opacity:.8;background-image:radial-gradient(ellipse at center,#ffdce9 0 38%,transparent 42%);background-size:29px 16px;animation:vacation-drift 6s linear infinite}
+.vacation-scene[data-effect="leaves"]::before{opacity:.66;background-image:radial-gradient(ellipse at center,#d66d27 0 38%,transparent 42%);background-size:34px 21px;animation:vacation-drift 7s linear infinite}
+.vacation-scene[data-effect="snow"]::before{opacity:.72;background-image:radial-gradient(circle,#fff 0 28%,transparent 32%);background-size:25px 25px;animation:vacation-snow 7s linear infinite}
+.vacation-scene[data-effect="splash"]::after{inset:auto -18% -7%;height:29%;opacity:.6;background:radial-gradient(ellipse at 50% 100%,#eaffffcc 0 4%,transparent 5%) 0 0/36px 28px;animation:vacation-splash 1.8s ease-in-out infinite}
+.vacation-title,.vacation-vignette,.encounter-character,.encounter-dialogue,.vacation-next{z-index:3}
+@keyframes vacation-cinema{0%{opacity:0;transform:scale(1.07) translate3d(-.6%,.4%,0)}12%{opacity:1}100%{opacity:1;transform:scale(1.015) translate3d(.6%,-.4%,0)}}
+@keyframes vacation-drift{from{transform:translate3d(-8%,-13%,0) rotate(0)}to{transform:translate3d(12%,18%,0) rotate(16deg)}}
+@keyframes vacation-snow{from{transform:translate3d(-3%,-15%,0)}to{transform:translate3d(5%,20%,0)}}
+@keyframes vacation-splash{0%,100%{transform:translateY(12%) scale(.94);opacity:.28}50%{transform:translateY(-5%) scale(1.04);opacity:.64}}

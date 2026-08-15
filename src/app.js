@@ -116,10 +116,10 @@ const actionPresentation = {
   shopping: { motion:'motion-walk', location:'marketErrand', prop:'none', activity:null, npc:null }
 };
 const vacationIllustrations=[
-  {id:'vacation-spring-stream',season:'봄',name:'봄 계곡의 꽃잎',image:'../assets/events/vacation/spring-stream-v2.webp',description:'맑은 계곡에서 꽃잎을 바라보던 봄날의 초현실적 4K 추억.'},
-  {id:'vacation-summer-seaside',season:'여름',name:'여름 바닷가의 조개',image:'../assets/events/vacation/summer-seaside-v2.webp',description:'바닷가 마을에서 조개를 주웠던 여름날의 초현실적 4K 추억.'},
-  {id:'vacation-autumn-maple',season:'가을',name:'가을 정자의 단풍',image:'../assets/events/vacation/autumn-maple-v2.webp',description:'붉은 단풍 아래 정자를 거닐었던 가을날의 초현실적 4K 추억.'},
-  {id:'vacation-winter-snow',season:'겨울',name:'겨울 한옥의 첫눈',image:'../assets/events/vacation/winter-snow-v2.webp',description:'눈 내린 한옥 뜰에서 첫눈을 바라보던 겨울날의 초현실적 4K 추억.'}
+  {id:'vacation-age09-spring-cherry',season:'봄',name:'봄바람과 벚꽃',image:'../assets/events/vacation/photoreal/age-09/spring-cherry-wind.webp',effect:'petals',description:'봄바람에 머리카락을 넘기며 벚꽃을 맞던 9세의 추억.'},
+  {id:'vacation-age09-summer-stream',season:'여름',name:'계곡의 물보라',image:'../assets/events/vacation/photoreal/age-09/summer-stream-splash.webp',effect:'splash',description:'시원한 계곡물을 두 손으로 튀기며 웃던 9세의 추억.'},
+  {id:'vacation-age09-autumn-chestnut',season:'가을',name:'가을 밤 줍기',image:'../assets/events/vacation/photoreal/age-09/autumn-chestnut-gathering.webp',effect:'leaves',description:'단풍 아래 잘 익은 밤을 발견한 9세의 추억.'},
+  {id:'vacation-age09-winter-sled',season:'겨울',name:'눈 언덕의 썰매',image:'../assets/events/vacation/photoreal/age-09/winter-sledding.webp',effect:'snow',description:'눈보라를 가르며 전통 썰매를 타던 9세의 추억.'}
 ];
 const spriteFrames = {
   down: [1,2,3].map(n=>`../assets/characters/seonhwa/age-09/sprites/walk/seonhwa-walk-down-${n}.png`),
@@ -385,7 +385,7 @@ function waitForVacationTap(label='화면을 터치해 계속'){
 async function playVacationScene(prize,index){
   const phone=document.querySelector('.phone'),scene=document.querySelector('#vacationScene'),image=document.querySelector('#vacationImage');
   const person=document.querySelector('#encounterCharacter'),talk=document.querySelector('#encounterDialogue');
-  playVacationMusic();image.src=prize.image;document.querySelector('#vacationTitle').textContent=prize.name;
+  playVacationMusic();image.src=prize.image;document.querySelector('#vacationTitle').textContent=prize.name;scene.dataset.effect=prize.effect||'';
   scene.classList.remove('has-encounter');person.hidden=true;talk.hidden=true;phone.classList.add('vacation-playing');scene.hidden=false;
   await waitForVacationTap('일러스트를 감상한 뒤 터치');
   const candidates=endingRelationCandidates.filter(candidate=>game.age>=candidate.minAge&&candidate.assetReady);
@@ -399,7 +399,7 @@ async function playVacationScene(prize,index){
     game.relations=game.relations||{};game.relations[relation.id]=(game.relations[relation.id]||0)+1;
     await waitForVacationTap('대화를 읽은 뒤 터치');
   }
-  talk.hidden=true;person.hidden=true;scene.classList.remove('has-encounter');scene.hidden=true;phone.classList.remove('vacation-playing');playHomeMusic();
+  talk.hidden=true;person.hidden=true;scene.classList.remove('has-encounter');scene.hidden=true;scene.dataset.effect='';phone.classList.remove('vacation-playing');playHomeMusic();
   return relation;
 }
 
