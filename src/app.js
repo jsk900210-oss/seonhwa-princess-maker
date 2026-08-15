@@ -145,6 +145,7 @@ const outfits = [
   {id:'age18-silk',age:18,ageEnd:18,name:'비단 연회 한복',price:780,tone:'화려함',seasons:['봄','겨울'],situations:['shopping','vacation'],change:{charm:10,reputation:4,virtue:-1,stress:3}},
   {id:'age18-simple',age:18,ageEnd:18,name:'담백한 생활 한복',price:560,tone:'활동성',seasons:['여름','가을'],situations:['errand','sweeping','herbs','houseclean','rest'],change:{craft:5,health:4,virtue:3,charm:-2}},
   {id:'age18-premium-paradise',age:18,ageEnd:18,name:'소문의 낙원 한복',price:1200,tone:'화려함',seasons:['봄','겨울'],situations:['manners','shopping','vacation'],change:{charm:14,reputation:8,virtue:2,manners:4,stress:4}},
+  {id:'age18-ethnic-stage-v3',age:18,ageEnd:18,name:'월백 무대 의상',price:2200,tone:'고급',seasons:['봄','여름','가을','겨울'],situations:['shopping','vacation'],change:{charm:20,reputation:14,arts:9,virtue:-2,stress:3}},
   {id:'premium-midnight-lotus',age:9,ageEnd:18,name:'묵빛 연화 예복',price:1650,tone:'고급',seasons:['가을','겨울'],situations:['manners','shopping','vacation'],change:{charm:15,reputation:10,manners:7,virtue:4}},
   {id:'premium-moonlight-guard',age:9,ageEnd:18,name:'월백 수호 예복',price:1780,tone:'고급',seasons:['봄','겨울'],situations:['manners','reading','shopping'],change:{manners:12,reputation:9,study:5,charm:8}},
   {id:'premium-aurora-blossom',age:9,ageEnd:18,name:'새벽꽃 비단 예복',price:1850,tone:'고급',seasons:['봄','여름'],situations:['vacation','shopping','manners'],change:{charm:18,reputation:10,arts:7,virtue:2}},
