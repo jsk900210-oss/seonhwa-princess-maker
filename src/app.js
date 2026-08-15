@@ -919,8 +919,7 @@ function restartStudioIntro(){
   prologueIndex=0;prologueImageLayer=0;prologueRenderId++;studioIntroFinished=false;
   document.querySelector('#prologue').hidden=true;document.querySelector('#recoveryPrompt').hidden=true;
   prologueSoundOn=true;
-  const soundButton=document.querySelector('#prologueSound');
-  if(soundButton){soundButton.textContent='소리 끄기';soundButton.setAttribute('aria-pressed','true');}
+  syncPrologueSoundButton();
   const loading=document.querySelector('#studioLoading');loading.hidden=false;loading.classList.remove('is-leaving');
   loading.querySelectorAll('.studio-logo,.brush-logo span,.brush-logo i,.studio-logo b,.loading-seonhwa,.footprint,.loading-caption,.studio-start-sound').forEach(element=>{element.style.animation='none';void element.offsetWidth;element.style.animation='';});
 }
@@ -1312,8 +1311,14 @@ function replayPrologue(){stopGameMusic();prologueIndex=0;document.querySelector
 function ensureRainAudio(){
   if(rainAudio)return rainAudio;
   const Ctx=window.AudioContext||window.webkitAudioContext,ctx=new Ctx(),seconds=2,buffer=ctx.createBuffer(1,ctx.sampleRate*seconds,ctx.sampleRate),data=buffer.getChannelData(0);
-  let last=0;for(let i=0;i<data.length;i++){const white=Math.random()*2-1;last=last*.985+white*.15;data[i]=last*(.35+Math.random()*.3);}
-  const source=ctx.createBufferSource(),filter=ctx.createBiquadFilter(),gain=ctx.createGain();source.buffer=buffer;source.loop=true;filter.type='highpass';filter.frequency.value=650;gain.gain.value=0;source.connect(filter).connect(gain).connect(ctx.destination);source.start();rainAudio={ctx,source,gain};return rainAudio;
+  let body=0,detail=0;
+  for(let i=0;i<data.length;i++){
+    const white=Math.random()*2-1;
+    body=body*.94+white*.06;
+    detail=detail*.55+white*.45;
+    data[i]=(body*.34+detail*.66)*(.72+Math.random()*.28);
+  }
+  const source=ctx.createBufferSource(),filter=ctx.createBiquadFilter(),gain=ctx.createGain();source.buffer=buffer;source.loop=true;filter.type='highpass';filter.frequency.value=320;filter.Q.value=.35;gain.gain.value=0;source.connect(filter).connect(gain).connect(ctx.destination);source.start();rainAudio={ctx,source,gain};return rainAudio;
 }
 function fadeAudio(audio,target,ms){if(!audio)return;const start=audio.volume,steps=12;let n=0;clearInterval(audio._fade);audio._fade=setInterval(()=>{n++;audio.volume=start+(target-start)*(n/steps);if(n>=steps){clearInterval(audio._fade);if(target===0)audio.pause();}},ms/steps);}
 function stopRain(){if(!rainAudio)return;rainAudio.gain.gain.cancelScheduledValues(rainAudio.ctx.currentTime);rainAudio.gain.gain.linearRampToValueAtTime(0,rainAudio.ctx.currentTime+.5);}
@@ -1322,14 +1327,27 @@ function updatePrologueAudio(isRain){
   const music=document.querySelector('#prologueMusic');music.volume=scaledVolume(.42,'bgm');
   if(userSettings.bgmEnabled&&music.paused)music.play().catch(()=>{});else if(!userSettings.bgmEnabled)music.pause();
   if(!userSettings.sfxEnabled){stopRain();return;}
-  const rain=ensureRainAudio();rain.ctx.resume();rain.gain.gain.cancelScheduledValues(rain.ctx.currentTime);rain.gain.gain.linearRampToValueAtTime(isRain?scaledVolume(.34,'sfx'):0,rain.ctx.currentTime+.65);
+  const rain=ensureRainAudio();
+  rain.ctx.resume().then(()=>{const now=rain.ctx.currentTime;rain.gain.gain.cancelScheduledValues(now);rain.gain.gain.setValueAtTime(rain.gain.gain.value,now);rain.gain.gain.linearRampToValueAtTime(isRain?scaledVolume(.42,'sfx'):0,now+.55);}).catch(()=>{});
 }
-function togglePrologueSound(){prologueSoundOn=!prologueSoundOn;const button=document.querySelector('#prologueSound');button.textContent=prologueSoundOn?'소리 끄기':'소리 켜기';button.setAttribute('aria-pressed',String(prologueSoundOn));if(prologueSoundOn)updatePrologueAudio(Boolean(prologueScenes[prologueIndex].rain));else{fadeAudio(document.querySelector('#prologueMusic'),0,400);stopRain();}}
+function syncPrologueSoundButton(){
+  const button=document.querySelector('#prologueSound');if(!button)return;
+  const allOn=prologueSoundOn&&userSettings.bgmEnabled&&userSettings.sfxEnabled;
+  button.textContent=!prologueSoundOn?'소리 켜기':!userSettings.sfxEnabled?'빗소리 켜기':!userSettings.bgmEnabled?'음악 켜기':'소리 끄기';
+  button.setAttribute('aria-pressed',String(allOn));
+}
+function togglePrologueSound(){
+  const allOn=prologueSoundOn&&userSettings.bgmEnabled&&userSettings.sfxEnabled;
+  if(!allOn){prologueSoundOn=true;userSettings.bgmEnabled=true;userSettings.sfxEnabled=true;saveSettings();syncSettingsUi();updatePrologueAudio(Boolean(prologueScenes[prologueIndex].rain));}
+  else{prologueSoundOn=false;fadeAudio(document.querySelector('#prologueMusic'),0,400);stopRain();}
+  syncPrologueSoundButton();
+}
 function applyAudioSettings(){
   const base=Number(gameMusic.dataset.baseVolume||.22);gameMusic.volume=scaledVolume(base,'bgm');
   if(!userSettings.bgmEnabled)gameMusic.pause();else if(gameMusic.src)gameMusic.play().catch(()=>{});
   const music=document.querySelector('#prologueMusic');music.volume=scaledVolume(.42,'bgm');if(!userSettings.bgmEnabled)music.pause();
   if(!userSettings.sfxEnabled)stopRain();else if(!document.querySelector('#prologue').hidden)updatePrologueAudio(Boolean(prologueScenes[prologueIndex]?.rain));
+  syncPrologueSoundButton();
 }
 function playSettingsTestSound(){
   if(!userSettings.sfxEnabled)return;const AudioContext=window.AudioContext||window.webkitAudioContext;if(!AudioContext)return;
