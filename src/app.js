@@ -44,7 +44,7 @@ function transitionPrologueToHomeMusic(){
   fadeAudio(prologueMusic,0,1600);
 }
 
-const game = { characterName:'', nannyName:'', guardianType:null, guardianName:'', profileSlot:null, age: 9, height:130, weight:28.5, month: 1, week: 1, season:'봄', money: 50000, cash:50000, health:42, strength:18, agility:20, intelligence:35, magic:8, mentality:30, dignity:36, manners:28, speech:14, sensitivity:40, sense:24, charm:30, stress:12, items: [], relations:{}, activityProgress:{}, startingGiftId:null, fatherBirthdayYears:[], equippedOutfit:null, autoOutfit:true, dailySchedule: [null,null,null,null,null,null,null], birthday:null, currentDate:null, endingDate:null, ended:false, birthdayCount:0, element:null, birthSeason:null, memory:0, truth:0, exposure:0, fatherAffinity:0, guardianTrust:50, nannyAffinity:50, lastGreetingDate:null, monthlyLedger:null };
+const game = { characterName:'', nannyName:'', guardianType:null, guardianName:'', profileSlot:null, age: 9, height:130, weight:28.5, month: 1, week: 1, season:'봄', money: 50000, cash:50000, health:42, strength:18, agility:20, intelligence:35, magic:8, mentality:30, dignity:36, manners:28, speech:14, sensitivity:40, sense:24, charm:30, stress:12, items: [], relations:{}, activityProgress:{}, activityUnlocksSeen:[], startingGiftId:null, fatherBirthdayYears:[], equippedOutfit:null, autoOutfit:true, dailySchedule: [null,null,null,null,null,null,null], birthday:null, currentDate:null, endingDate:null, ended:false, birthdayCount:0, element:null, birthSeason:null, memory:0, truth:0, exposure:0, fatherAffinity:0, guardianTrust:50, nannyAffinity:50, lastGreetingDate:null, monthlyLedger:null };
 const guardianDefs={
   cheongryong:{name:'청룡',mark:'龍',theme:'#294e67',gift:{name:'푸른 여의주 조각',change:{intelligence:5,magic:4}},intro:'동쪽의 푸른 숨결. 배움과 술법의 길을 살피는 신수입니다.'},
   baekho:{name:'백호',mark:'虎',theme:'#ddd8ce',gift:{name:'흰 범의 방울',change:{strength:5,agility:4}},intro:'서쪽의 굳센 발걸음. 위험 앞에서 용기와 무예를 북돋는 신수입니다.'},
@@ -133,7 +133,15 @@ const actionPresentation = {
   houseclean: { motion:'motion-houseclean', location:'restRoom', prop:'none', activity:'houseclean', npc:null },
   rest: { motion:'motion-resting', location:'restRoom', prop:'none', activity:'sleep', npc:null },
   sleep: { motion:'motion-sleep', location:'restRoom', prop:'none', activity:'sleep', npc:null },
-  shopping: { motion:'motion-walk', location:'marketErrand', prop:'none', activity:null, npc:null }
+  shopping: { motion:'motion-walk', location:'marketErrand', prop:'none', activity:null, npc:null },
+  painting: { motion:'motion-calligraphy', location:'studyRoom', prop:'none', activity:'calligraphy', npc:'teacher' },
+  music: { motion:'motion-manners', location:'etiquetteRoom', prop:'none', activity:'manners', npc:'teacher' },
+  martial: { motion:'motion-sweeping', location:'courtyard', prop:'none', activity:'sweeping', npc:'dolsoe' },
+  classics: { motion:'motion-calligraphy', location:'studyRoom', prop:'none', activity:'calligraphy', npc:'teacher' },
+  innhelp: { motion:'motion-errand', location:'marketErrand', prop:'none', activity:'errand', npc:null },
+  sewing: { motion:'motion-houseclean', location:'restRoom', prop:'none', activity:'houseclean', npc:null },
+  copying: { motion:'motion-calligraphy', location:'studyRoom', prop:'none', activity:'calligraphy', npc:'teacher' },
+  accounting: { motion:'motion-arithmetic', location:'arithmeticRoom', prop:'none', activity:'arithmetic', npc:'teacher' }
 };
 const vacationIllustrations=[
   {id:'vacation-age09-spring-cherry',age:9,season:'봄',name:'봄바람과 벚꽃',image:'../assets/events/vacation/photoreal/age-09/spring-cherry-wind.webp',effect:'petals',description:'봄바람에 머리카락을 넘기며 벚꽃을 맞던 9세의 추억.'},
@@ -409,18 +417,28 @@ async function animateConditionEvent(stageCharacter,cue,type){
   cue.hidden=true;
 }
 const actions = [
-  { id: 'reading', category: '교육', name: '글읽기', cost: 80, summary: '지능 +5 · 정신력 +1 · 스트레스 +3', change: { intelligence:5, mentality:1, stress:3 } },
-  { id: 'arithmetic', category: '교육', name: '셈하기', cost: 70, summary: '지능 +4 · 센스 +2 · 스트레스 +2', change: { intelligence:4, sense:2, stress:2 } },
-  { id: 'manners', category: '교육', name: '예절 배우기', cost: 90, summary: '예절 +5 · 기품 +2 · 스트레스 +2', change: { manners:5, dignity:2, stress:2 } },
-  { id: 'errand', category: '아르바이트', name: '장터 심부름', cost: -90, summary: '민첩 +3 · 화술 +2 · 스트레스 +4 · 90냥 획득', change: { agility:3, speech:2, stress:4 } },
-  { id: 'sweeping', category: '아르바이트', name: '마당 쓸기', cost: -70, summary: '힘 +3 · 체력 +2 · 스트레스 +3 · 70냥 획득', change: { strength:3, health:2, stress:3 } },
-  { id: 'herbs', category: '아르바이트', name: '약초 줍기', cost: -80, summary: '센스 +2 · 지능 +1 · 체력 +1 · 스트레스 +4 · 80냥 획득', change: { sense:2, intelligence:1, health:1, stress:4 } },
-  { id: 'houseclean', category: '아르바이트', name: '집 청소', cost: -60, summary: '힘 +2 · 센스 +2 · 체력 +1 · 스트레스 +3 · 60냥 획득', change: { strength:2, sense:2, health:1, stress:3 } },
+  { id: 'reading', category: '교육', name: '글읽기', cost: 80, unlockAge:9, mentor:'훈장님', icon:'reading', summary: '지능 +5 · 정신력 +1 · 스트레스 +3', change: { intelligence:5, mentality:1, stress:3 } },
+  { id: 'arithmetic', category: '교육', name: '셈하기', cost: 70, unlockAge:9, mentor:'훈장님', icon:'arithmetic', summary: '지능 +4 · 센스 +2 · 스트레스 +2', change: { intelligence:4, sense:2, stress:2 } },
+  { id: 'manners', category: '교육', name: '예절 배우기', cost: 90, unlockAge:9, mentor:'예절 선생', icon:'manners', summary: '예절 +5 · 기품 +2 · 스트레스 +2', change: { manners:5, dignity:2, stress:2 } },
+  { id: 'painting', category: '교육', name: '회화 배우기', cost: 130, unlockAge:13, mentor:'화공 스승', icon:'reading', intro:'붓끝으로 보이는 것 너머의 빛까지 담아 보거라.', summary:'감수성 +4 · 센스 +2 · 스트레스 +3', change:{sensitivity:4,sense:2,stress:3} },
+  { id: 'music', category: '교육', name: '악기 배우기', cost: 140, unlockAge:13, mentor:'악기 선생', icon:'manners', intro:'소리를 서두르지 말고 먼저 네 호흡을 들어 보렴.', summary:'감수성 +3 · 기품 +2 · 스트레스 +3', change:{sensitivity:3,dignity:2,stress:3} },
+  { id: 'martial', category: '교육', name: '무예 수련', cost: 150, unlockAge:13, mentor:'무예 사범', icon:'sweeping', intro:'힘만 앞세우지 말고 발과 마음을 함께 다스려라.', summary:'힘 +4 · 민첩 +3 · 스트레스 +4', change:{strength:4,agility:3,stress:4} },
+  { id: 'classics', category: '교육', name: '경전 심화', cost: 190, unlockAge:16, mentor:'경학 스승', icon:'reading', intro:'이제 글자를 읽는 데서 그치지 말고 뜻을 논해 보자꾸나.', summary:'지능 +6 · 기품 +2 · 스트레스 +4', change:{intelligence:6,dignity:2,stress:4} },
+  { id: 'errand', category: '아르바이트', name: '장터 심부름', cost: -90, unlockAge:9, mentor:'장터 상인', icon:'errand', summary: '민첩 +3 · 화술 +2 · 스트레스 +4 · 90냥 획득', change: { agility:3, speech:2, stress:4 } },
+  { id: 'sweeping', category: '아르바이트', name: '마당 쓸기', cost: -70, unlockAge:9, mentor:'돌쇠', icon:'sweeping', summary: '힘 +3 · 체력 +2 · 스트레스 +3 · 70냥 획득', change: { strength:3, health:2, stress:3 } },
+  { id: 'herbs', category: '아르바이트', name: '약초 줍기', cost: -80, unlockAge:9, mentor:'약초꾼', icon:'herbs', summary: '센스 +2 · 지능 +1 · 체력 +1 · 스트레스 +4 · 80냥 획득', change: { sense:2, intelligence:1, health:1, stress:4 } },
+  { id: 'houseclean', category: '아르바이트', name: '집 청소', cost: -60, unlockAge:9, mentor:'신수', icon:'houseclean', summary: '힘 +2 · 센스 +2 · 체력 +1 · 스트레스 +3 · 60냥 획득', change: { strength:2, sense:2, health:1, stress:3 } },
+  { id: 'innhelp', category:'아르바이트', name:'주막 돕기', cost:-110, unlockAge:13, mentor:'주모', icon:'errand', intro:'손님상은 빠르게, 말씨는 상냥하게 부탁하마.', summary:'화술 +3 · 체력 +2 · 스트레스 +4 · 110냥 획득', change:{speech:3,health:2,stress:4} },
+  { id: 'sewing', category:'아르바이트', name:'바느질 돕기', cost:-120, unlockAge:13, mentor:'침선장', icon:'houseclean', intro:'작은 바늘땀 하나가 옷의 맵시를 정하는 법이란다.', summary:'센스 +4 · 감수성 +1 · 스트레스 +3 · 120냥 획득', change:{sense:4,sensitivity:1,stress:3} },
+  { id: 'copying', category:'아르바이트', name:'서책 필사', cost:-130, unlockAge:13, mentor:'서책방 주인', icon:'reading', intro:'또박또박 옮겨 적되 원문의 한 자도 빠뜨리지 말거라.', summary:'지능 +3 · 센스 +2 · 스트레스 +4 · 130냥 획득', change:{intelligence:3,sense:2,stress:4} },
+  { id: 'accounting', category:'아르바이트', name:'상단 장부 정리', cost:-180, unlockAge:16, mentor:'상단 행수', icon:'arithmetic', intro:'숫자 하나가 상단의 신뢰를 좌우하니 꼼꼼히 살펴보거라.', summary:'센스 +4 · 화술 +2 · 스트레스 +4 · 180냥 획득', change:{sense:4,speech:2,stress:4} },
   { id: 'rest', category: '휴식', name: '집에서 휴식', cost: 0, summary: '스트레스 -12 · 체력 +2 · 정신력 +2', change: { health:2, mentality:2, stress:-12 } },
   { id: 'shopping', category: '휴식', name: '저잣거리', cost: 0, summary: '', change: {}, special:'market' },
   { id: 'vacation', category: '휴식', name: '바캉스', cost: 180, summary: '감수성 +3 · 매력 +1 · 스트레스 -25 · 추억 일러스트 획득', change: {sensitivity:3,charm:1,stress:-25}, special:'vacation' }
 ];
-const activityRequirements={reading:['지능',20],arithmetic:['센스',15],manners:['예절',15],errand:['화술',12],sweeping:['힘',15],herbs:['센스',18],houseclean:['체력',20]};
+const activityRequirements={reading:['지능',20],arithmetic:['센스',15],manners:['예절',15],painting:['감수성',80],music:['기품',70],martial:['체력',80],classics:['지능',180],errand:['화술',12],sweeping:['힘',15],herbs:['센스',18],houseclean:['체력',20],innhelp:['화술',70],sewing:['센스',75],copying:['지능',85],accounting:['센스',170]};
+const actionUnlocked=action=>game.age>=Number(action.unlockAge||9);
+const newlyUnlockedActions=(previousAge,nextAge)=>actions.filter(action=>Number(action.unlockAge||9)>previousAge&&Number(action.unlockAge||9)<=nextAge);
 const activityRankNames=['초급','익숙함','숙련','달인'];
 function normalizeActivityProgress(){
   if(!game.activityProgress||typeof game.activityProgress!=='object')game.activityProgress={};
@@ -763,6 +781,7 @@ function applySavePayload(saved) {
   normalizeStats();
   normalizeRelations();
   normalizeActivityProgress();
+  if(!Array.isArray(game.activityUnlocksSeen))game.activityUnlocksSeen=[];
   normalizeBodyMetrics();
   if(typeof game.autoOutfit!=='boolean')game.autoOutfit=true;
   normalizeInventory();
@@ -867,7 +886,7 @@ function deleteCharacterRecord(slot){
 }
 
 function resetGameState() {
-  Object.assign(game, { characterName:'',nannyName:'',guardianType:null,guardianName:'',profileSlot:null,age:9,height:130,weight:28.5,month:1,week:1,season:'봄',money:50000,cash:50000,health:42,strength:18,agility:20,intelligence:35,magic:8,mentality:30,dignity:36,manners:28,speech:14,sensitivity:40,sense:24,charm:30,stress:12,items:[],relations:{},activityProgress:{},startingGiftId:null,fatherBirthdayYears:[],equippedOutfit:null,autoOutfit:true,dailySchedule:[null,null,null,null,null,null,null],birthday:null,currentDate:null,endingDate:null,ended:false,birthdayCount:0,element:null,birthSeason:null,memory:0,truth:0,exposure:0,fatherAffinity:0,guardianTrust:50,nannyAffinity:50,lastGreetingDate:null,monthlyLedger:null});
+  Object.assign(game, { characterName:'',nannyName:'',guardianType:null,guardianName:'',profileSlot:null,age:9,height:130,weight:28.5,month:1,week:1,season:'봄',money:50000,cash:50000,health:42,strength:18,agility:20,intelligence:35,magic:8,mentality:30,dignity:36,manners:28,speech:14,sensitivity:40,sense:24,charm:30,stress:12,items:[],relations:{},activityProgress:{},activityUnlocksSeen:[],startingGiftId:null,fatherBirthdayYears:[],equippedOutfit:null,autoOutfit:true,dailySchedule:[null,null,null,null,null,null,null],birthday:null,currentDate:null,endingDate:null,ended:false,birthdayCount:0,element:null,birthSeason:null,memory:0,truth:0,exposure:0,fatherAffinity:0,guardianTrust:50,nannyAffinity:50,lastGreetingDate:null,monthlyLedger:null});
   document.querySelector('#liveChanges').innerHTML='';
   const greeting=document.querySelector('#homeGreeting');greeting.hidden=true;greeting.classList.remove('greeting-active');
   document.querySelector('#characterNameInput').value='';
@@ -914,7 +933,7 @@ function scheduleProjection(){
 function renderSchedulePanel() {
   panelTitle.textContent = `${game.season} ${game.week}주 일정`;
   if (!Array.isArray(game.dailySchedule) || game.dailySchedule.length !== 7) game.dailySchedule = [null,null,null,null,null,null,null];
-  game.dailySchedule=game.dailySchedule.map(id=>actions.some(action=>action.id===id)?id:null);
+  game.dailySchedule=game.dailySchedule.map(id=>{const action=actions.find(item=>item.id===id);return action&&actionUnlocked(action)?id:null;});
   const dayNames = ['월','화','수','목','금','토','일'],start=game.currentDate?new Date(`${game.currentDate}T00:00:00`):null;
   const daySlots = game.dailySchedule.map((id,index) => {
     const action = actions.find(item => item.id === id);
@@ -922,7 +941,7 @@ function renderSchedulePanel() {
     return `<button class="day-slot ${action ? 'filled' : ''} ${scheduleCursor===index?'selected':''}" data-day="${index}" aria-label="${dayNames[index]}요일 ${action ? action.name : '비어 있음'}"><b>${dayNames[index]}</b><small>${dateLabel}</small><span>${action ? action.name : '빈칸'}</span></button>`;
   }).join('');
   const categoryTabs=['교육','아르바이트','휴식'].map(category=>`<button data-schedule-category="${category}" class="${activeScheduleCategory===category?'on':''}">${category}</button>`).join('');
-  const actionCards=actions.filter(action=>action.category===activeScheduleCategory).map(action=>{const progress=activityProgressFor(action.id),rank=activityRankNames[activityRank(action.id)],requirement=activityRequirements[action.id],price=action.category==='아르바이트'?`+${activityPay(action)}냥`:action.cost>0?`-${action.cost}냥`:'무료',detail=['교육','아르바이트'].includes(action.category)?`${rank} · 경험 ${progress.attempts}일 · 성공 ${progress.successes}일${requirement?` · 권장 ${requirement[0]} ${requirement[1]}`:''}`:'';return `<button class="action ${selectedScheduleAction===action.id?'selected':''}" data-action="${action.id}"><img src="../assets/ui/activity-icons/activity-${action.id}.png" alt=""><b>${action.name}</b><span>${price}</span><small>${action.summary||'직접 방문하여 선택'}</small>${detail?`<em>${detail}</em>`:''}</button>`;}).join('');
+  const actionCards=actions.filter(action=>action.category===activeScheduleCategory).map(action=>{const unlocked=actionUnlocked(action),progress=activityProgressFor(action.id),rank=activityRankNames[activityRank(action.id)],requirement=activityRequirements[action.id],price=action.category==='아르바이트'?`+${activityPay(action)}냥`:action.cost>0?`-${action.cost}냥`:'무료',detail=unlocked&&['교육','아르바이트'].includes(action.category)?`${rank} · 경험 ${progress.attempts}일 · 성공 ${progress.successes}일${requirement?` · 권장 ${requirement[0]} ${requirement[1]}`:''}`:`${action.unlockAge}세 해금 · ${action.mentor||'새로운 인연'}`;return `<button class="action ${selectedScheduleAction===action.id?'selected':''} ${unlocked?'':'locked'}" data-action="${action.id}" ${unlocked?'':'disabled'}><img src="../assets/ui/activity-icons/activity-${action.icon||action.id}.png" alt=""><b>${action.name}</b><span>${unlocked?price:'잠김'}</span><small>${unlocked?(action.summary||'직접 방문하여 선택'):`${action.unlockAge}세가 되면 ${action.mentor||'담당 인물'}에게 배울 수 있어요.`}</small>${detail?`<em>${detail}</em>`:''}</button>`;}).join('');
   const projection=scheduleProjection(),filled=game.dailySchedule.filter(Boolean).length;
   panelBody.innerHTML = `<div class="schedule-adviser"><b>${game.guardianName||guardianDefs[game.guardianType]?.name||'신수'}의 일정 조언</b><p>${projection.stress>=80?'스트레스가 높아 휴식을 넣는 것이 좋겠어요.':filled===7?'일주일 준비가 끝났어요. 실행 전에 비용과 상태를 확인하세요.':'요일을 고른 뒤 활동을 넣어 주세요.'}</p></div><div class="day-grid">${daySlots}</div><div class="schedule-tabs" role="tablist">${categoryTabs}</div><section class="schedule-category"><div class="action-grid">${actionCards}</div></section><div class="schedule-tools"><button id="scheduleFillRemaining" ${selectedScheduleAction?'':'disabled'}>선택 활동으로 빈칸 채우기</button><button id="scheduleClearAll" ${filled?'':'disabled'}>전체 비우기</button></div>`;
   panelBody.querySelectorAll('[data-action]').forEach(button => button.addEventListener('click', () => addDailyAction(button.dataset.action)));
@@ -1044,13 +1063,17 @@ function exploreMarket(){
 function enterMarketShop(type){if(!type)return;const place=marketPlaces.find(item=>item.id===type);document.querySelector('#dialogueText').textContent=`${place?.label||'가게'} 주인이 “어서 오세요.” 하고 반겨요.`;document.querySelector('#marketExplore').hidden=true;document.querySelector('#activityStage').hidden=true;panel.hidden=false;renderShopPanel(type,true);}
 
 function addDailyAction(id) {
+  const chosenAction=actions.find(action=>action.id===id);
+  if(!chosenAction||!actionUnlocked(chosenAction))return;
   const empty=game.dailySchedule.indexOf(null),target=game.dailySchedule[scheduleCursor]?scheduleCursor:(scheduleCursor>=0?scheduleCursor:empty);
   if (empty === -1&&target<0) {
     document.querySelector('#dialogueText').textContent = '7일 일정이 모두 찼어요. 요일 칸을 눌러 수정하세요.';
     return;
   }
   const index=target>=0?target:empty;game.dailySchedule[index]=id;selectedScheduleAction=id;
-  document.querySelector('#dialogueText').textContent = `${['월','화','수','목','금','토','일'][index]}요일에 ${actions.find(action => action.id === id).name}을 넣었어요.`;
+  if(chosenAction.intro&&!game.activityUnlocksSeen.includes(id)){
+    game.activityUnlocksSeen.push(id);document.querySelector('#speakerName').textContent=chosenAction.mentor;document.querySelector('#dialogueText').textContent=chosenAction.intro;
+  }else document.querySelector('#dialogueText').textContent = `${['월','화','수','목','금','토','일'][index]}요일에 ${chosenAction.name}을 넣었어요.`;
   const nextEmpty=game.dailySchedule.findIndex((item,nextIndex)=>!item&&nextIndex>index);scheduleCursor=nextEmpty>=0?nextEmpty:game.dailySchedule.indexOf(null);
   scheduleConfirmDismissed = false;
   renderSchedulePanel();
@@ -1064,7 +1087,7 @@ function selectScheduleDay(index){
   renderSchedulePanel();queueAutoSave();
 }
 function fillRemainingSchedule(){
-  if(!selectedScheduleAction)return;
+  const action=actions.find(item=>item.id===selectedScheduleAction);if(!action||!actionUnlocked(action))return;
   game.dailySchedule=game.dailySchedule.map(id=>id||selectedScheduleAction);scheduleCursor=-1;scheduleConfirmDismissed=false;renderSchedulePanel();showScheduleConfirmation();queueAutoSave();
 }
 function clearAllSchedule(){game.dailySchedule=[null,null,null,null,null,null,null];scheduleCursor=0;selectedScheduleAction=null;scheduleConfirmDismissed=false;hideScheduleConfirmation();renderSchedulePanel();queueAutoSave();}
@@ -1228,6 +1251,8 @@ function advanceGameDate(days){
   applyAgeGrowth(previousAge,game.age);
   const birthdayEvents=[];
   for(let age=Math.max(9,previousAge);age<=game.age;age+=1){const birthdayDate=addYears(birth,age);if(birthdayDate>previousDate&&birthdayDate<=date){const gift=awardFatherBirthdayGift(age);if(gift)birthdayEvents.push(gift);}}
+  const unlocked=newlyUnlockedActions(previousAge,game.age);
+  if(unlocked.length)birthdayEvents.push({message:`${game.age}세가 되어 새로운 활동이 열렸어요: ${unlocked.map(action=>action.name).join(' · ')}`,change:{}});
   if(game.autoOutfit)updateAutoOutfit();
   return birthdayEvents;
 }
