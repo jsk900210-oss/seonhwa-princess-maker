@@ -123,6 +123,12 @@ activityFrames.manners=[1,2,3].map(n=>`../assets/characters/seonhwa/age-09/sprit
 activityFrames.errand=[1,2,3].map(n=>`../assets/characters/seonhwa/age-09/sprites/activities/errand-character-v4-${n}.png`);
 activityFrames.houseclean=[1,2,3,4,5,6].map(n=>`../assets/characters/seonhwa/age-09/sprites/activities/houseclean-side-${n}.png`);
 activityFrames.sleep=[...activityFrames.rest];
+const modularActivities=new Set(['calligraphy','arithmetic','manners','houseclean','errand','rest','sleep']);
+function activityFrameSet(activity){
+  if(!modularActivities.has(activity))return activityFrames[activity];
+  const name=activity==='sleep'?'rest':activity,age=String(growthAge()).padStart(2,'0');
+  return [1,2,3].map(frame=>`../assets/characters/seonhwa/activity-modular/age-${age}/${name}-${frame}.png`);
+}
 const npcFrames = Object.fromEntries(['teacher','dolsoe','herbalist','nanny'].map(name=>[name,[1,2,3].map(n=>`../assets/characters/npcs/activity/${name}-${n}.png`)]));
 npcFrames.teacherReading=[1,2,3].map(n=>`../assets/characters/npcs/activity/teacher-reading-${n}.png`);
 const foods = [
@@ -214,21 +220,26 @@ function activityOutfitPalette(outfitId){
 function outfitActivityFrame(src,outfitId){
   const palette=activityOutfitPalette(outfitId);if(!palette)return Promise.resolve(src);
   const key=`${outfitId}|${src}`;if(activityOutfitFrameCache.has(key))return Promise.resolve(activityOutfitFrameCache.get(key));
-  return new Promise(resolve=>{const source=new Image();source.onload=()=>{try{const canvas=document.createElement('canvas');canvas.width=source.naturalWidth;canvas.height=source.naturalHeight;const context=canvas.getContext('2d',{willReadFrequently:true});context.drawImage(source,0,0);const frame=context.getImageData(0,0,canvas.width,canvas.height),data=frame.data;
+  return new Promise(resolve=>{const source=new Image(),garment=new Image();let sourceReady=false,garmentReady=false,garmentFailed=false;const render=()=>{if(!sourceReady||(!garmentReady&&!garmentFailed))return;try{const canvas=document.createElement('canvas');canvas.width=source.naturalWidth;canvas.height=source.naturalHeight;const context=canvas.getContext('2d',{willReadFrequently:true});context.drawImage(source,0,0);const frame=context.getImageData(0,0,canvas.width,canvas.height),data=frame.data;
+    const texture=document.createElement('canvas');texture.width=canvas.width;texture.height=canvas.height;const textureContext=texture.getContext('2d',{willReadFrequently:true});
+    if(garmentReady){const gw=garment.naturalWidth,gh=garment.naturalHeight;textureContext.drawImage(garment,gw*.22,gh*.30,gw*.56,gh*.48,0,0,canvas.width,canvas.height);}
+    const textureData=garmentReady?textureContext.getImageData(0,0,canvas.width,canvas.height).data:null,isRest=/\/(rest|sleep)-/.test(src);
     for(let y=0;y<canvas.height;y++)for(let x=0;x<canvas.width;x++){const i=(y*canvas.width+x)*4;if(data[i+3]<24)continue;const r=data[i],g=data[i+1],b=data[i+2];
-      const pink=r>155&&g>42&&g<155&&b>52&&b<180&&r>g*1.32&&r>b*1.12;
+      const pink=!isRest&&r>155&&g>42&&g<155&&b>52&&b<180&&r>g*1.32&&r>b*1.12;
       const central=x>canvas.width*.16&&x<canvas.width*.84&&y>canvas.height*.2&&y<canvas.height*.76;
       const ivory=central&&r>188&&g>165&&b>130&&r-b<62&&r-g<45;
-      const target=pink?palette.skirt:(ivory&&palette.top?palette.top:null);if(!target)continue;
-      const light=(r+g+b)/3/170;data[i]=Math.min(255,target[0]*light);data[i+1]=Math.min(255,target[1]*light);data[i+2]=Math.min(255,target[2]*light);
+      const fallback=pink?palette.skirt:(ivory&&palette.top?palette.top:null);if(!fallback)continue;
+      const textured=textureData&&textureData[i+3]>80?[textureData[i],textureData[i+1],textureData[i+2]]:fallback;
+      const light=Math.max(.58,Math.min(1.35,(r+g+b)/3/170));data[i]=Math.min(255,textured[0]*light);data[i+1]=Math.min(255,textured[1]*light);data[i+2]=Math.min(255,textured[2]*light);
     }
-    context.putImageData(frame,0,0);const result=canvas.toDataURL('image/png');activityOutfitFrameCache.set(key,result);resolve(result);}catch{resolve(src);}};source.onerror=()=>resolve(src);source.src=src;});
+    context.putImageData(frame,0,0);const result=canvas.toDataURL('image/png');activityOutfitFrameCache.set(key,result);resolve(result);}catch{resolve(src);}};source.onload=()=>{sourceReady=true;render();};source.onerror=()=>resolve(src);garment.onload=()=>{garmentReady=true;render();};garment.onerror=()=>{garmentFailed=true;render();};source.src=src;garment.src=outfitImage(outfitId);});
 }
 async function animateActivitySprite(image,motion,activity,npcImage,npc,outfitId){
   if(activity){
-    const sequence=activity==='errand'?[0,1,1,2,2,1,0]:activity==='houseclean'?[0,1,2,3,4,5]:activity==='sleep'?[0,1,2,1,0]:[0,1,2,1,0,1,2];
+    const frames=activityFrameSet(activity);
+    const sequence=activity==='errand'?[0,1,1,2,2,1,0]:activity==='houseclean'?[0,1,2,1,0,1]:activity==='sleep'?[0,1,2,1,0]:[0,1,2,1,0,1,2];
     const delay=activity==='errand'?270:activity==='houseclean'?360:activity==='sleep'?430:190;
-    for(const frame of sequence){image.src=await outfitActivityFrame(activityFrames[activity][frame],outfitId);if(npc)npcImage.src=(npc==='teacher'?npcFrames.teacherReading:npcFrames[npc])[frame%3];await new Promise(resolve=>setTimeout(resolve,delay));}
+    for(const frame of sequence){image.src=await outfitActivityFrame(frames[frame],outfitId);if(npc)npcImage.src=(npc==='teacher'?npcFrames.teacherReading:npcFrames[npc])[frame%3];await new Promise(resolve=>setTimeout(resolve,delay));}
     return;
   }
   const direction=motion==='motion-walk'?'right':'down';
