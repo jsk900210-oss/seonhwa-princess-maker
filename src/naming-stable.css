@@ -11,4 +11,5 @@ body{min-height:var(--stable-app-height,100vh);overflow:hidden}
 .guardian-companion{cursor:pointer;transition:transform .16s ease,filter .16s ease}
 .guardian-companion:hover,.guardian-companion:focus-visible{transform:translateY(-3px) scale(1.04);filter:brightness(1.08);outline:2px solid #f1d08a;outline-offset:2px}
 .guardian-companion em{font-style:normal;font-size:9px;color:#765334}
+.phone.playing>.guardian-companion,.phone.market-playing>.guardian-companion,.phone.vacation-playing>.guardian-companion{display:none!important}
 @media(max-height:620px){.birthday-setup,.guardian-name{place-items:start center;padding-top:16px;padding-bottom:16px}.guardian-story-copy{bottom:12px;padding:16px 18px 38px}.guardian-story-copy p{min-height:0;font-size:15px;line-height:1.5}}
