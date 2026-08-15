@@ -425,3 +425,4 @@
   .phone.playing:has(.activity-stage.action-rest:not([hidden]))>.dialogue p{margin-top:2px;font-size:11px;line-height:1.35}
   .activity-stage.action-rest .activity-gauges{top:calc(100% + 17px);padding-block:5px;gap:3px}
 }
+.action em{grid-column:1/-1;padding-top:4px;border-top:1px dashed #bca47c;color:#72512f;font-size:9px;font-style:normal;font-weight:800}

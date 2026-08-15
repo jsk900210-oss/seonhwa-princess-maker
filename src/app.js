@@ -44,7 +44,7 @@ function transitionPrologueToHomeMusic(){
   fadeAudio(prologueMusic,0,1600);
 }
 
-const game = { characterName:'', nannyName:'', guardianType:null, guardianName:'', profileSlot:null, age: 9, height:130, weight:28.5, month: 1, week: 1, season:'봄', money: 50000, cash:50000, health:42, strength:18, agility:20, intelligence:35, magic:8, mentality:30, dignity:36, manners:28, speech:14, sensitivity:40, sense:24, charm:30, stress:12, items: [], relations:{}, startingGiftId:null, fatherBirthdayYears:[], equippedOutfit:null, autoOutfit:true, dailySchedule: [null,null,null,null,null,null,null], birthday:null, currentDate:null, endingDate:null, ended:false, birthdayCount:0, element:null, birthSeason:null, memory:0, truth:0, exposure:0, fatherAffinity:0, guardianTrust:50, nannyAffinity:50, lastGreetingDate:null, monthlyLedger:null };
+const game = { characterName:'', nannyName:'', guardianType:null, guardianName:'', profileSlot:null, age: 9, height:130, weight:28.5, month: 1, week: 1, season:'봄', money: 50000, cash:50000, health:42, strength:18, agility:20, intelligence:35, magic:8, mentality:30, dignity:36, manners:28, speech:14, sensitivity:40, sense:24, charm:30, stress:12, items: [], relations:{}, activityProgress:{}, startingGiftId:null, fatherBirthdayYears:[], equippedOutfit:null, autoOutfit:true, dailySchedule: [null,null,null,null,null,null,null], birthday:null, currentDate:null, endingDate:null, ended:false, birthdayCount:0, element:null, birthSeason:null, memory:0, truth:0, exposure:0, fatherAffinity:0, guardianTrust:50, nannyAffinity:50, lastGreetingDate:null, monthlyLedger:null };
 const guardianDefs={
   cheongryong:{name:'청룡',mark:'龍',theme:'#294e67',gift:{name:'푸른 여의주 조각',change:{intelligence:5,magic:4}},intro:'동쪽의 푸른 숨결. 배움과 술법의 길을 살피는 신수입니다.'},
   baekho:{name:'백호',mark:'虎',theme:'#ddd8ce',gift:{name:'흰 범의 방울',change:{strength:5,agility:4}},intro:'서쪽의 굳센 발걸음. 위험 앞에서 용기와 무예를 북돋는 신수입니다.'},
@@ -329,10 +329,11 @@ const activitySkill={reading:'intelligence',arithmetic:'sense',manners:'manners'
 const outcomeLabels={perfect:'완벽',success:'성공',struggle:'힘겨움',mistake:'실수'};
 function activityOutcomeThresholds(action,stress){
   const skill=game[activitySkill[action.id]]||0;
+  const mastery=activityProgressFor(action.id).attempts;
   const healthRatio=clampStat('health',game.health)/statMaximum('health');
   const healthBonus=healthRatio*24;
   const condition=(game.mentality||50)*.07-stress*.42;
-  const success=Math.max(18,Math.min(94,44+skill*.09+condition+healthBonus));
+  const success=Math.max(18,Math.min(94,44+skill*.09+Math.min(12,mastery*.28)+condition+healthBonus));
   const perfect=Math.max(6,success-(34-healthRatio*8));
   const struggle=Math.min(98,success+(22-healthRatio*10));
   return {perfect,success,struggle};
@@ -418,6 +419,20 @@ const actions = [
   { id: 'shopping', category: '휴식', name: '저잣거리', cost: 0, summary: '', change: {}, special:'market' },
   { id: 'vacation', category: '휴식', name: '바캉스', cost: 180, summary: '감수성 +3 · 매력 +1 · 스트레스 -25 · 추억 일러스트 획득', change: {sensitivity:3,charm:1,stress:-25}, special:'vacation' }
 ];
+const activityRequirements={reading:['지능',20],arithmetic:['센스',15],manners:['예절',15],errand:['화술',12],sweeping:['힘',15],herbs:['센스',18],houseclean:['체력',20]};
+const activityRankNames=['초급','익숙함','숙련','달인'];
+function normalizeActivityProgress(){
+  if(!game.activityProgress||typeof game.activityProgress!=='object')game.activityProgress={};
+  actions.forEach(action=>{const current=game.activityProgress[action.id]||{};game.activityProgress[action.id]={attempts:Math.max(0,Number(current.attempts)||0),successes:Math.max(0,Number(current.successes)||0),streak:Math.max(0,Number(current.streak)||0),bestStreak:Math.max(0,Number(current.bestStreak)||0)};});
+}
+function activityProgressFor(id){normalizeActivityProgress();return game.activityProgress[id];}
+function activityRank(id){const attempts=activityProgressFor(id).attempts;return attempts>=49?3:attempts>=21?2:attempts>=7?1:0;}
+function activityPay(action){if(action.category!=='아르바이트')return -action.cost;return Math.round((-action.cost)*[1,1.15,1.35,1.6][activityRank(action.id)]);}
+function recordActivityProgress(action,outcome){
+  if(!['교육','아르바이트'].includes(action.category))return;
+  const progress=activityProgressFor(action.id),succeeded=outcome!=='mistake';progress.attempts+=1;
+  if(succeeded){progress.successes+=1;progress.streak+=1;progress.bestStreak=Math.max(progress.bestStreak,progress.streak);}else progress.streak=0;
+}
 function actionForStressLimit(action,stress){
   return stress>=statMaximum('stress')&&action.id!=='rest'?actions.find(item=>item.id==='rest'):action;
 }
@@ -746,6 +761,7 @@ function applySavePayload(saved) {
   if(!Array.isArray(game.fatherBirthdayYears))game.fatherBirthdayYears=[];
   normalizeStats();
   normalizeRelations();
+  normalizeActivityProgress();
   normalizeBodyMetrics();
   if(typeof game.autoOutfit!=='boolean')game.autoOutfit=true;
   normalizeInventory();
@@ -850,7 +866,7 @@ function deleteCharacterRecord(slot){
 }
 
 function resetGameState() {
-  Object.assign(game, { characterName:'',nannyName:'',guardianType:null,guardianName:'',profileSlot:null,age:9,height:130,weight:28.5,month:1,week:1,season:'봄',money:50000,cash:50000,health:42,strength:18,agility:20,intelligence:35,magic:8,mentality:30,dignity:36,manners:28,speech:14,sensitivity:40,sense:24,charm:30,stress:12,items:[],relations:{},startingGiftId:null,fatherBirthdayYears:[],equippedOutfit:null,autoOutfit:true,dailySchedule:[null,null,null,null,null,null,null],birthday:null,currentDate:null,endingDate:null,ended:false,birthdayCount:0,element:null,birthSeason:null,memory:0,truth:0,exposure:0,fatherAffinity:0,guardianTrust:50,nannyAffinity:50,lastGreetingDate:null,monthlyLedger:null});
+  Object.assign(game, { characterName:'',nannyName:'',guardianType:null,guardianName:'',profileSlot:null,age:9,height:130,weight:28.5,month:1,week:1,season:'봄',money:50000,cash:50000,health:42,strength:18,agility:20,intelligence:35,magic:8,mentality:30,dignity:36,manners:28,speech:14,sensitivity:40,sense:24,charm:30,stress:12,items:[],relations:{},activityProgress:{},startingGiftId:null,fatherBirthdayYears:[],equippedOutfit:null,autoOutfit:true,dailySchedule:[null,null,null,null,null,null,null],birthday:null,currentDate:null,endingDate:null,ended:false,birthdayCount:0,element:null,birthSeason:null,memory:0,truth:0,exposure:0,fatherAffinity:0,guardianTrust:50,nannyAffinity:50,lastGreetingDate:null,monthlyLedger:null});
   document.querySelector('#liveChanges').innerHTML='';
   const greeting=document.querySelector('#homeGreeting');greeting.hidden=true;greeting.classList.remove('greeting-active');
   document.querySelector('#characterNameInput').value='';
@@ -905,7 +921,7 @@ function renderSchedulePanel() {
     return `<button class="day-slot ${action ? 'filled' : ''} ${scheduleCursor===index?'selected':''}" data-day="${index}" aria-label="${dayNames[index]}요일 ${action ? action.name : '비어 있음'}"><b>${dayNames[index]}</b><small>${dateLabel}</small><span>${action ? action.name : '빈칸'}</span></button>`;
   }).join('');
   const categoryTabs=['교육','아르바이트','휴식'].map(category=>`<button data-schedule-category="${category}" class="${activeScheduleCategory===category?'on':''}">${category}</button>`).join('');
-  const actionCards=actions.filter(action=>action.category===activeScheduleCategory).map(action=>`<button class="action ${selectedScheduleAction===action.id?'selected':''}" data-action="${action.id}"><img src="../assets/ui/activity-icons/activity-${action.id}.png" alt=""><b>${action.name}</b><span>${action.cost > 0 ? `-${action.cost}냥` : action.cost < 0 ? `+${-action.cost}냥` : '무료'}</span><small>${action.summary||'직접 방문하여 선택'}</small></button>`).join('');
+  const actionCards=actions.filter(action=>action.category===activeScheduleCategory).map(action=>{const progress=activityProgressFor(action.id),rank=activityRankNames[activityRank(action.id)],requirement=activityRequirements[action.id],price=action.category==='아르바이트'?`+${activityPay(action)}냥`:action.cost>0?`-${action.cost}냥`:'무료',detail=['교육','아르바이트'].includes(action.category)?`${rank} · 경험 ${progress.attempts}일 · 성공 ${progress.successes}일${requirement?` · 권장 ${requirement[0]} ${requirement[1]}`:''}`:'';return `<button class="action ${selectedScheduleAction===action.id?'selected':''}" data-action="${action.id}"><img src="../assets/ui/activity-icons/activity-${action.id}.png" alt=""><b>${action.name}</b><span>${price}</span><small>${action.summary||'직접 방문하여 선택'}</small>${detail?`<em>${detail}</em>`:''}</button>`;}).join('');
   const projection=scheduleProjection(),filled=game.dailySchedule.filter(Boolean).length;
   panelBody.innerHTML = `<div class="schedule-adviser"><b>${game.guardianName||guardianDefs[game.guardianType]?.name||'신수'}의 일정 조언</b><p>${projection.stress>=80?'스트레스가 높아 휴식을 넣는 것이 좋겠어요.':filled===7?'일주일 준비가 끝났어요. 실행 전에 비용과 상태를 확인하세요.':'요일을 고른 뒤 활동을 넣어 주세요.'}</p></div><div class="day-grid">${daySlots}</div><div class="schedule-tabs" role="tablist">${categoryTabs}</div><section class="schedule-category"><div class="action-grid">${actionCards}</div></section><div class="schedule-tools"><button id="scheduleFillRemaining" ${selectedScheduleAction?'':'disabled'}>선택 활동으로 빈칸 채우기</button><button id="scheduleClearAll" ${filled?'':'disabled'}>전체 비우기</button></div>`;
   panelBody.querySelectorAll('[data-action]').forEach(button => button.addEventListener('click', () => addDailyAction(button.dataset.action)));
@@ -1367,7 +1383,10 @@ async function playWeeklySchedule(selected) {
     if(!guaranteedSuccess&&condition==='mistake')outcome='mistake';
     else if(!guaranteedSuccess&&condition==='drowsy'&&outcome!=='mistake')outcome='struggle';
     const resolvedChange=resolvedActivityChange(action,outcome);
-    const resolvedAction={...action,change:resolvedChange};
+    recordActivityProgress(action,outcome);
+    const isWork=action.category==='아르바이트',basePay=isWork?activityPay(action):0;
+    const moneyChange=isWork?(outcome==='mistake'?0:outcome==='struggle'?Math.round(basePay*.5):basePay):-action.cost;
+    const resolvedAction={...action,cost:-moneyChange,change:resolvedChange};
     if(condition){
       setScheduleDialogue(action,condition,index);
       await animateConditionEvent(stageCharacter,conditionCue,condition);
@@ -1377,12 +1396,12 @@ async function playWeeklySchedule(selected) {
     renderActivityGauges(resolvedAction);
     const actualChange={};
     Object.entries(resolvedChange).forEach(([key,value])=>{const before=clampStat(key,game[key]||0),after=clampStat(key,before+value);game[key]=after;actualChange[key]=after-before;});
-    game.money=Math.max(0,game.money-action.cost);
+    game.money=Math.max(0,game.money+moneyChange);
     renderHud();
     const moneyLabel=document.querySelector('#moneyLabel');
     moneyLabel.classList.remove('money-changing');void moneyLabel.offsetWidth;moneyLabel.classList.add('money-changing');
     showLiveChanges(resolvedAction);
-    const moneyText = action.cost > 0 ? `은전 -${action.cost}냥` : action.cost < 0 ? `은전 +${-action.cost}냥` : '비용 없음';
+    const moneyText = moneyChange > 0 ? `은전 +${moneyChange}냥` : moneyChange < 0 ? `은전 ${moneyChange}냥` : isWork&&outcome==='mistake'?'실수하여 일당 없음':'비용 없음';
     const resultSummary=orderedChangeEntries(resolvedChange).filter(([,value])=>value!==0).map(([key,value])=>`${statLabels[key]||key} ${value>0?'+':''}${value}`).join(' · ');
     dayResult.innerHTML = `<b>${action.name} · ${outcomeLabels[outcome]}</b><span>${resultSummary||'능력치 변화 없음'}<br>${moneyText} · 현재 ${game.money.toLocaleString()}냥</span>`;
     if(action.id!=='vacation'){
@@ -1392,7 +1411,7 @@ async function playWeeklySchedule(selected) {
     }
     Object.entries(resolvedChange).forEach(([key,value])=>weeklyChange[key]=(weeklyChange[key]||0)+value);
     const activityDate=new Date(scheduleStart);activityDate.setDate(scheduleStart.getDate()+index);
-    dayRecords.push({date:isoDate(activityDate),action,actualChange});
+    dayRecords.push({date:isoDate(activityDate),action:{...action,cost:-moneyChange},actualChange,outcome,moneyChange});
     simulated.stress=clampStat('stress',simulated.stress+(resolvedChange.stress||0));
   }
   playback.hidden = true;
