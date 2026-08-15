@@ -54,7 +54,7 @@ const guardianDefs={
 const guardianStoryScenes=[
   {chapter:'첫 장 · 하늘이 내린 벗',image:'../assets/cinematics/guardian/guardian-descent-age09.png',alt:'아홉 번째 생일 밤 아이 앞에 함께 나타난 네 신수',group:true,effect:'constellation',text:'아홉 번째 생일 밤, 고요하던 마당 위로 네 갈래의 별빛이 열렸습니다.'}
 ];
-let guardianStoryIndex=0,guardianCinematicTimers=[],guardianInputLockedUntil=0,selectedGuardianType=null,introDialogueQueue=[],introDialogueIndex=0;
+let guardianStoryIndex=0,guardianCinematicTimeline=[],guardianCinematicBeat=0,guardianInputLockedUntil=0,selectedGuardianType=null,introDialogueQueue=[],introDialogueIndex=0;
 const statGroups = [
   { title: '신체', stats: [['health','체력'],['strength','힘'],['agility','민첩']] },
   { title: '지성·마음', stats: [['intelligence','지능'],['magic','마력'],['mentality','정신력']] },
@@ -1228,25 +1228,25 @@ function startWithBirthday(){
 }
 function showGuardianStory(){
   const story=document.querySelector('#guardianStory'),scene=guardianStoryScenes[guardianStoryIndex],copy=story.querySelector('.guardian-story-copy'),image=document.querySelector('#guardianStoryImage'),next=document.querySelector('#guardianStoryNext');
-  guardianCinematicTimers.forEach(clearTimeout);guardianCinematicTimers=[];story.hidden=false;story.classList.add('group-scene');story.dataset.effect=scene.effect;image.src=scene.image;image.alt=scene.alt;next.hidden=true;next.disabled=true;next.textContent='신수 선택하기';copy.classList.remove('is-changing');
-  const timeline=[
-    {at:0,phase:'arrival',chapter:'첫 장 · 하늘이 내린 벗',text:'아홉 번째 생일 밤, 고요하던 마당 위로 네 갈래의 별빛이 열렸습니다.'},
-    {at:2800,phase:'child',chapter:'아이 · 올려다보다',text:'아이는 놀란 숨을 삼키고, 밤하늘을 가득 메운 존재들을 올려다보았습니다.'},
-    {at:5400,phase:'hyeonmu',chapter:'북쪽 · 현무',text:'가장 높은 구름 위에서 현무가 천천히 고개를 들었습니다. “흔들리지 않는 마음을 지켜 주마.”',cue:'water'},
-    {at:8000,phase:'cheongryong',chapter:'동쪽 · 청룡',text:'푸른 구름이 갈라지며 청룡이 몸을 일으켰습니다. “배움과 술법의 길을 밝혀 주마.”',cue:'cloud'},
-    {at:10600,phase:'baekho',chapter:'서쪽 · 백호',text:'백호는 아이와 눈을 맞추고 조용히 앞발을 내디뎠습니다. “두려움에 맞설 용기를 주마.”',cue:'mountain'},
-    {at:13200,phase:'jujak',chapter:'남쪽 · 주작',text:'주작이 붉은 날개를 펼치자 따뜻한 불빛이 마당에 번졌습니다. “상처를 보듬고 인연을 이어 주마.”',cue:'embers'},
-    {at:15800,phase:'convergence',chapter:'네 갈래의 빛',text:'네 신수의 빛이 아이 앞에 모였습니다. 하늘은 아이가 고를 단 하나의 인연을 기다렸습니다.',cue:'constellation'},
-    {at:18800,phase:'choice',chapter:'선택 · 한 벗과의 인연',text:'네 앞날을 함께할 한 벗을 고르거라.',ready:true}
+  story.hidden=false;story.classList.add('group-scene');story.dataset.effect=scene.effect;image.src=scene.image;image.alt=scene.alt;next.hidden=true;next.disabled=true;next.textContent='신수 선택하기';copy.classList.remove('is-changing');
+  guardianCinematicTimeline=[
+    {phase:'arrival',chapter:'첫 장 · 하늘이 내린 벗',text:'아홉 번째 생일 밤, 고요하던 마당 위로 네 갈래의 별빛이 열렸습니다.'},
+    {phase:'child',chapter:'아이 · 올려다보다',text:'아이는 놀란 숨을 삼키고, 밤하늘을 가득 메운 존재들을 올려다보았습니다.'},
+    {phase:'hyeonmu',chapter:'북쪽 · 현무',text:'가장 높은 구름 위에서 현무가 천천히 고개를 들었습니다. “흔들리지 않는 마음을 지켜 주마.”',cue:'water'},
+    {phase:'cheongryong',chapter:'동쪽 · 청룡',text:'푸른 구름이 갈라지며 청룡이 몸을 일으켰습니다. “배움과 술법의 길을 밝혀 주마.”',cue:'cloud'},
+    {phase:'baekho',chapter:'서쪽 · 백호',text:'백호는 아이와 눈을 맞추고 조용히 앞발을 내디뎠습니다. “두려움에 맞설 용기를 주마.”',cue:'mountain'},
+    {phase:'jujak',chapter:'남쪽 · 주작',text:'주작이 붉은 날개를 펼치자 따뜻한 불빛이 마당에 번졌습니다. “상처를 보듬고 인연을 이어 주마.”',cue:'embers'},
+    {phase:'convergence',chapter:'네 갈래의 빛',text:'네 신수의 빛이 아이 앞에 모였습니다. 하늘은 아이가 고를 단 하나의 인연을 기다렸습니다.',cue:'constellation'},
+    {phase:'choice',chapter:'선택 · 한 벗과의 인연',text:'네 앞날을 함께할 한 벗을 고르거라.',ready:true}
   ];
-  const renderBeat=beat=>{story.dataset.phase=beat.phase;document.querySelector('#guardianStoryChapter').textContent=beat.chapter;document.querySelector('#guardianStoryText').textContent=beat.text;if(beat.cue)playGuardianCinematicCue(beat.cue);if(beat.ready){next.hidden=false;next.disabled=false;guardianInputLockedUntil=0;}};
-  renderBeat(timeline[0]);guardianInputLockedUntil=Date.now()+18800;timeline.slice(1).forEach(beat=>guardianCinematicTimers.push(setTimeout(()=>renderBeat(beat),beat.at)));
+  guardianCinematicBeat=0;renderGuardianCinematicBeat();
 }
+function renderGuardianCinematicBeat(){const story=document.querySelector('#guardianStory'),beat=guardianCinematicTimeline[guardianCinematicBeat],next=document.querySelector('#guardianStoryNext'),hint=document.querySelector('#guardianStoryHint');if(!beat)return;story.dataset.phase=beat.phase;document.querySelector('#guardianStoryChapter').textContent=beat.chapter;document.querySelector('#guardianStoryText').textContent=beat.text;if(beat.cue)playGuardianCinematicCue(beat.cue);next.hidden=!beat.ready;next.disabled=!beat.ready;hint.hidden=Boolean(beat.ready);guardianInputLockedUntil=Date.now()+450;}
 function playGuardianCinematicCue(effect){
   if(!userSettings.sfxEnabled||!prologueSoundOn)return;const AudioContext=window.AudioContext||window.webkitAudioContext;if(!AudioContext)return;
   const ctx=new AudioContext(),osc=ctx.createOscillator(),gain=ctx.createGain(),filter=ctx.createBiquadFilter(),frequency={cloud:380,mountain:170,embers:520,water:230,constellation:440}[effect]||320;osc.type=effect==='embers'?'triangle':'sine';osc.frequency.setValueAtTime(frequency,ctx.currentTime);osc.frequency.exponentialRampToValueAtTime(frequency*1.35,ctx.currentTime+.55);filter.type='lowpass';filter.frequency.value=1400;gain.gain.setValueAtTime(.001,ctx.currentTime);gain.gain.exponentialRampToValueAtTime(Math.max(.001,scaledVolume(.11,'sfx')),ctx.currentTime+.08);gain.gain.exponentialRampToValueAtTime(.001,ctx.currentTime+.72);osc.connect(filter).connect(gain).connect(ctx.destination);osc.onended=()=>ctx.close().catch(()=>{});osc.start();osc.stop(ctx.currentTime+.75);
 }
-function nextGuardianStory(){const now=Date.now();if(now<guardianInputLockedUntil)return;guardianInputLockedUntil=now+550;if(guardianStoryIndex<guardianStoryScenes.length-1){guardianStoryIndex+=1;showGuardianStory();return;}document.querySelector('#guardianStory').hidden=true;document.querySelector('#guardianChoice').hidden=false;}
+function nextGuardianStory(){const now=Date.now();if(now<guardianInputLockedUntil)return;if(guardianCinematicBeat<guardianCinematicTimeline.length-1){guardianCinematicBeat+=1;renderGuardianCinematicBeat();return;}guardianInputLockedUntil=now+550;document.querySelector('#guardianStory').hidden=true;document.querySelector('#guardianChoice').hidden=false;}
 function chooseGuardian(type){if(!guardianDefs[type])return;selectedGuardianType=type;document.querySelectorAll('[data-guardian]').forEach(button=>button.classList.toggle('selected',button.dataset.guardian===type));const confirm=document.querySelector('#guardianChoiceConfirm');confirm.disabled=false;confirm.textContent=`${guardianDefs[type].name}과 인연 맺기`;}
 function confirmGuardianChoice(){const guardian=guardianDefs[selectedGuardianType];if(!guardian)return;document.querySelector('#guardianChoice').hidden=true;document.querySelector('#guardianNameSetup').hidden=false;document.querySelector('#guardianNameMark').textContent=guardian.mark;document.querySelector('#guardianNameMark').style.background=guardian.theme;document.querySelector('#guardianNameDescription').textContent=guardian.intro;document.querySelector('#guardianNameInput').focus();}
 function finishGuardianNaming(){
