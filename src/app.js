@@ -42,7 +42,7 @@ function transitionPrologueToHomeMusic(){
   fadeAudio(prologueMusic,0,1600);
 }
 
-const game = { characterName:'', nannyName:'', profileSlot:null, age: 9, month: 1, week: 1, season:'봄', money: 50000, health: 42, study: 35, items: [], equippedOutfit:null, autoOutfit:true, dailySchedule: [null,null,null,null,null,null,null], birthday:null, currentDate:null, endingDate:null, ended:false, birthdayCount:0, element:null, birthSeason:null, memory:0, truth:0, exposure:0, guardianTrust:50, nannyAffinity:50, lastGreetingDate:null, monthlyLedger:null };
+const game = { characterName:'', nannyName:'', profileSlot:null, age: 9, month: 1, week: 1, season:'봄', money: 50000, cash:50000, health: 42, study: 35, items: [], equippedOutfit:null, autoOutfit:true, dailySchedule: [null,null,null,null,null,null,null], birthday:null, currentDate:null, endingDate:null, ended:false, birthdayCount:0, element:null, birthSeason:null, memory:0, truth:0, exposure:0, guardianTrust:50, nannyAffinity:50, lastGreetingDate:null, monthlyLedger:null };
 Object.assign(game, { healthiness: 76, arithmetic: 22, manners: 28, arts: 18, martial: 12, archery: 5, riding: 3, craft: 24, cooking: 20, embroidery: 15, virtue: 36, charm: 30, sensitivity: 40, medicine: 8, commerce: 10, reputation: 14, stress: 12 });
 const statGroups = [
   { title: '기초 능력', stats: [['health','체력'],['healthiness','건강'],['study','학문'],['arithmetic','산술'],['manners','예절']] },
@@ -388,6 +388,7 @@ function renderHud() {
   const date = game.currentDate ? new Date(`${game.currentDate}T00:00:00`) : null;
   document.querySelector('#dateLabel').textContent = date ? `${game.age}세 · ${game.season} ${game.week}주` : '생일 설정 전';
   document.querySelector('#moneyLabel').textContent = `${game.money.toLocaleString()}냥`;
+  document.querySelector('#cashLabel').textContent = `캐시 ${game.cash.toLocaleString()}원`;
   document.querySelector('#speakerName').textContent = game.nannyName || '유모';
 }
 
@@ -576,6 +577,7 @@ function applySavePayload(saved) {
     saved.game.profileSlot=matchingSlot||SAVE_SLOTS.find(slot=>!readSave(slot))||null;
   }
   Object.assign(game, saved.game);
+  if(!Number.isFinite(game.cash))game.cash=50000;
   normalizeStats();
   if(typeof game.autoOutfit!=='boolean')game.autoOutfit=true;
   normalizeInventory();
@@ -666,7 +668,7 @@ function deleteCharacterRecord(slot){
 }
 
 function resetGameState() {
-  Object.assign(game, { characterName:'',nannyName:'',profileSlot:null,age:9, month:1, week:1,season:'봄', money:50000, health:42, study:35, items:[], equippedOutfit:null, autoOutfit:true, dailySchedule:[null,null,null,null,null,null,null], birthday:null,currentDate:null,endingDate:null,ended:false,birthdayCount:0,element:null,birthSeason:null,memory:0,truth:0,exposure:0,guardianTrust:50,nannyAffinity:50,lastGreetingDate:null,monthlyLedger:null,healthiness:76,arithmetic:22,manners:28,arts:18,martial:12,archery:5,riding:3,craft:24,cooking:20,embroidery:15,virtue:36,charm:30,sensitivity:40,medicine:8,commerce:10,reputation:14,stress:12 });
+  Object.assign(game, { characterName:'',nannyName:'',profileSlot:null,age:9, month:1, week:1,season:'봄', money:50000, cash:50000, health:42, study:35, items:[], equippedOutfit:null, autoOutfit:true, dailySchedule:[null,null,null,null,null,null,null], birthday:null,currentDate:null,endingDate:null,ended:false,birthdayCount:0,element:null,birthSeason:null,memory:0,truth:0,exposure:0,guardianTrust:50,nannyAffinity:50,lastGreetingDate:null,monthlyLedger:null,healthiness:76,arithmetic:22,manners:28,arts:18,martial:12,archery:5,riding:3,craft:24,cooking:20,embroidery:15,virtue:36,charm:30,sensitivity:40,medicine:8,commerce:10,reputation:14,stress:12 });
   document.querySelector('#liveChanges').innerHTML='';
   const greeting=document.querySelector('#homeGreeting');greeting.hidden=true;greeting.classList.remove('greeting-active');
   document.querySelector('#characterNameInput').value='';
