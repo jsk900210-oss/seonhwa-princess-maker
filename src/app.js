@@ -555,9 +555,18 @@ function readSave(slot = 1) {
 function readAutoSave() {
   try { return JSON.parse(localStorage.getItem(`${SAVE_KEY}-autosave`)); } catch { return null; }
 }
+function isPlayableSave(saved){
+  const data=saved?.game;
+  if(!data||typeof data!=='object'||data.ended)return false;
+  if(typeof data.characterName!=='string'||!data.characterName.trim())return false;
+  if(typeof data.birthday!=='string'||typeof data.currentDate!=='string')return false;
+  const birthday=new Date(`${data.birthday}T00:00:00`);
+  const currentDate=new Date(`${data.currentDate}T00:00:00`);
+  return !Number.isNaN(birthday.getTime())&&!Number.isNaN(currentDate.getTime())&&currentDate>=birthday;
+}
 function mostRecentExistingSave(){
   return [readAutoSave(),...SAVE_SLOTS.map(slot=>readSave(slot))]
-    .filter(saved=>saved?.game?.birthday)
+    .filter(isPlayableSave)
     .sort((a,b)=>new Date(b.savedAt||0)-new Date(a.savedAt||0))[0]||null;
 }
 
@@ -576,7 +585,7 @@ function serializeSave() {
 }
 
 function applySavePayload(saved) {
-  if (!saved?.game) return false;
+  if (!isPlayableSave(saved)) return false;
   if(!saved.game.profileSlot){
     const matchingSlot=SAVE_SLOTS.find(slot=>{const record=readSave(slot);return record?.game?.characterName===saved.game.characterName&&record?.game?.nannyName===saved.game.nannyName&&record?.game?.birthday===saved.game.birthday;});
     saved.game.profileSlot=matchingSlot||SAVE_SLOTS.find(slot=>!readSave(slot))||null;
@@ -632,18 +641,33 @@ function queueAutoSave() {
   autoSaveTimer = setTimeout(writeLatestAutoSave,700);
 }
 function showRecoveryPrompt(){
-  if(!pendingRecoverySave)return false;
+  if(!isPlayableSave(pendingRecoverySave))return false;
   const saved=pendingRecoverySave,summary=document.querySelector('#recoverySummary');
   summary.textContent=`${saved.game.characterName||'아이'} · ${saved.game.age}세 ${saved.game.month}월 ${saved.game.week}주 · ${new Date(saved.savedAt).toLocaleString('ko-KR')}`;
+  document.querySelector('#recoveryContinue').disabled=false;
   document.querySelector('#recoveryPrompt').hidden=false;
   return true;
 }
+function showUnavailableRecovery(){
+  const prompt=document.querySelector('#recoveryPrompt');
+  document.querySelector('#recoverySummary').textContent='이어갈 수 있는 기록이 없습니다. 새롭게 시작하기를 선택해 주세요.';
+  document.querySelector('#recoveryContinue').disabled=true;
+  prompt.hidden=false;
+  document.querySelector('#recoveryFresh').focus();
+}
 function continueRecovery(){
-  const saved=pendingRecoverySave;pendingRecoverySave=null;
-  document.querySelector('#recoveryPrompt').hidden=true;
+  const saved=pendingRecoverySave;
   document.querySelector('#prologue').hidden=true;
   panel.hidden=true;
-  if(saved&&applySavePayload(saved)){playHomeMusic();queueAutoSave();}
+  if(!isPlayableSave(saved)||!applySavePayload(saved)){
+    pendingRecoverySave=null;
+    showUnavailableRecovery();
+    return;
+  }
+  pendingRecoverySave=null;
+  document.querySelector('#recoveryPrompt').hidden=true;
+  playHomeMusic();
+  queueAutoSave();
 }
 function declineRecovery(){
   pendingRecoverySave=null;
