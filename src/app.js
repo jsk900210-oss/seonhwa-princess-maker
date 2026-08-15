@@ -189,6 +189,18 @@ const vacationIllustrations=[
   ,{id:'vacation-age16-winter-sled',age:16,season:'겨울',name:'얼음 위를 가르는 썰매',image:'../assets/events/vacation/photoreal/age-16/winter-sledding.webp',effect:'snow',description:'두툼한 겨울옷과 긴 땋은 머리로 얼음 썰매를 즐긴 16세의 추억.'}
   ,{id:'vacation-age16-winter-seollal',age:16,season:'겨울',name:'새해 첫 떡국',image:'../assets/events/vacation/photoreal/age-16/winter-seollal-tteokguk.webp',effect:'steam',description:'따뜻한 방에서 새해 첫 떡국을 먹은 16세의 추억.'}
   ,{id:'vacation-age16-winter-snowball',age:16,season:'겨울',name:'눈사람을 만드는 오후',image:'../assets/events/vacation/photoreal/age-16/winter-snowball.webp',effect:'snow',description:'양손으로 커다란 눈덩이를 굴려 눈사람을 만든 16세의 추억.'}
+  ,{id:'vacation-age19-spring-cherry',age:19,season:'봄',name:'벚꽃 아래의 약속',image:'../assets/events/vacation/photoreal/age-19/spring-cherry-wind.webp',effect:'petals',description:'벚꽃잎을 손바닥에 받으며 새로운 계절을 맞은 19세의 추억.'}
+  ,{id:'vacation-age19-spring-azalea',age:19,season:'봄',name:'진달래 물길의 발걸음',image:'../assets/events/vacation/photoreal/age-19/spring-azalea-stepping-stones.webp',effect:'calm',description:'봄비 뒤 맑아진 계곡의 디딤돌을 차분히 건넌 19세의 추억.'}
+  ,{id:'vacation-age19-spring-kite',age:19,season:'봄',name:'강바람에 오른 연',image:'../assets/events/vacation/photoreal/age-19/spring-kite-running.webp',effect:'wind',description:'강바람을 따라 힘차게 연을 띄운 19세의 추억.'}
+  ,{id:'vacation-age19-summer-stream',age:19,season:'여름',name:'한여름 계곡의 물보라',image:'../assets/events/vacation/photoreal/age-19/summer-stream-splash.webp',effect:'splash',description:'맑은 계곡물을 두 손으로 튀기며 웃은 19세의 추억.'}
+  ,{id:'vacation-age19-summer-shell',age:19,season:'여름',name:'노을 바다의 조개바구니',image:'../assets/events/vacation/photoreal/age-19/summer-seaside-shell.webp',effect:'wave',description:'노을 진 물가에서 고운 조개를 바구니에 모은 19세의 추억.'}
+  ,{id:'vacation-age19-summer-lotus',age:19,season:'여름',name:'연꽃 정자의 부채바람',image:'../assets/events/vacation/photoreal/age-19/summer-lotus-pavilion.webp',effect:'wind',description:'연꽃 향이 머무는 정자에서 부채로 더위를 식힌 19세의 추억.'}
+  ,{id:'vacation-age19-autumn-chestnut',age:19,season:'가을',name:'황금 숲의 밤바구니',image:'../assets/events/vacation/photoreal/age-19/autumn-chestnut-gathering.webp',effect:'leaves',description:'황금빛 숲에서 잘 익은 밤을 정성껏 주운 19세의 추억.'}
+  ,{id:'vacation-age19-autumn-maple',age:19,season:'가을',name:'단풍 사이의 춤',image:'../assets/events/vacation/photoreal/age-19/autumn-maple-path.webp',effect:'leaves',description:'붉은 단풍 아래에서 치마폭을 펼쳐 돌아본 19세의 추억.'}
+  ,{id:'vacation-age19-autumn-chuseok',age:19,season:'가을',name:'송편과 한가위 달',image:'../assets/events/vacation/photoreal/age-19/autumn-chuseok-moon.webp',effect:'moon',description:'송편을 곁에 두고 밝은 한가위 달을 바라본 19세의 추억.'}
+  ,{id:'vacation-age19-winter-sled',age:19,season:'겨울',name:'얼음판을 가르는 썰매',image:'../assets/events/vacation/photoreal/age-19/winter-sledding.webp',effect:'snow',description:'차가운 바람을 가르며 전통 썰매를 달린 19세의 추억.'}
+  ,{id:'vacation-age19-winter-seollal',age:19,season:'겨울',name:'성년의 설날 떡국',image:'../assets/events/vacation/photoreal/age-19/winter-seollal-tteokguk.webp',effect:'steam',description:'따뜻한 떡국을 들며 새해를 맞은 19세의 추억.'}
+  ,{id:'vacation-age19-winter-snowball',age:19,season:'겨울',name:'눈사람을 위한 마지막 눈덩이',image:'../assets/events/vacation/photoreal/age-19/winter-snowball.webp',effect:'snow',description:'커다란 눈덩이를 굴려 눈사람을 완성한 19세의 추억.'}
 ];
 const spriteFrames = {
   down: [1,2,3].map(n=>`../assets/characters/seonhwa/age-09/sprites/walk/seonhwa-walk-down-${n}.png`),
