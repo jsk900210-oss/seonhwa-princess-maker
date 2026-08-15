@@ -555,6 +555,11 @@ function readSave(slot = 1) {
 function readAutoSave() {
   try { return JSON.parse(localStorage.getItem(`${SAVE_KEY}-autosave`)); } catch { return null; }
 }
+function mostRecentExistingSave(){
+  return [readAutoSave(),...SAVE_SLOTS.map(slot=>readSave(slot))]
+    .filter(saved=>saved?.game?.birthday)
+    .sort((a,b)=>new Date(b.savedAt||0)-new Date(a.savedAt||0))[0]||null;
+}
 
 function writeSave(slot, payload) {
   localStorage.setItem(`${SAVE_KEY}-slot-${slot}`, JSON.stringify(payload));
@@ -646,8 +651,7 @@ function declineRecovery(){
   renderPrologue();
 }
 function initializeRecoverySession(){
-  const interrupted=localStorage.getItem(SESSION_ACTIVE_KEY)==='1';
-  pendingRecoverySave=interrupted?readAutoSave():null;
+  pendingRecoverySave=mostRecentExistingSave();
   localStorage.setItem(SESSION_ACTIVE_KEY,'1');
   setInterval(writeLatestAutoSave,5000);
 }
