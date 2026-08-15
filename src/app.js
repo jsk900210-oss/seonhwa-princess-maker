@@ -1140,7 +1140,8 @@ async function runWeek() {
   panel.hidden = true;
   if (game.ended) showEnding();
   else if(completedLedger)showMonthlyReport(completedLedger);
-  queueAutoSave();
+  clearTimeout(autoSaveTimer);
+  writeLatestAutoSave();
 }
 
 function isoDate(date){ const y=date.getFullYear(); const m=String(date.getMonth()+1).padStart(2,'0'); const d=String(date.getDate()).padStart(2,'0'); return `${y}-${m}-${d}`; }
@@ -1349,7 +1350,6 @@ async function playWeeklySchedule(selected) {
     document.querySelector('#playbackDay').textContent = dayNames[index];
     document.querySelector('#playbackAction').textContent = action.name;
     document.querySelectorAll('#playbackWeek span').forEach((day,dayIndex)=>{day.classList.toggle('done',dayIndex<index);day.classList.toggle('current',dayIndex===index);});
-    document.querySelectorAll('#playbackWeek span').forEach((day,dayIndex)=>{day.classList.toggle('done',dayIndex<index);day.classList.toggle('current',dayIndex===index);});
     const outfitName=outfits.find(item=>item.id===dailyOutfit)?.name;
     const showOutfitName=action.id!=='rest'&&Boolean(outfitName);
     document.querySelector('#stageCaption').textContent = `${dayNames[index]} · ${action.name}${showOutfitName?` · ${outfitName}`:''}`;
@@ -1384,19 +1384,19 @@ async function playWeeklySchedule(selected) {
     if(!guaranteedSuccess&&condition==='mistake')outcome='mistake';
     else if(!guaranteedSuccess&&condition==='drowsy'&&outcome!=='mistake')outcome='struggle';
     const resolvedChange=resolvedActivityChange(action,outcome);
-    recordActivityProgress(action,outcome);
     const isWork=action.category==='아르바이트',basePay=isWork?activityPay(action):0;
     const moneyChange=isWork?(outcome==='mistake'?0:outcome==='struggle'?Math.round(basePay*.5):basePay):-action.cost;
-    const resolvedAction={...action,cost:-moneyChange,change:resolvedChange};
+    recordActivityProgress(action,outcome);
     if(condition){
       setScheduleDialogue(action,condition,index);
       await animateConditionEvent(stageCharacter,conditionCue,condition);
     }
     setScheduleDialogue(action,outcome,index);
     stageCharacter.className = `stage-character pixel-sprite ${presentation.motion}`;
-    renderActivityGauges(resolvedAction);
     const actualChange={};
     Object.entries(resolvedChange).forEach(([key,value])=>{const before=clampStat(key,game[key]||0),after=clampStat(key,before+value);game[key]=after;actualChange[key]=after-before;});
+    const resolvedAction={...action,cost:-moneyChange,change:actualChange};
+    renderActivityGauges(resolvedAction);
     game.money=Math.max(0,game.money+moneyChange);
     renderHud();
     const moneyLabel=document.querySelector('#moneyLabel');
@@ -1410,7 +1410,7 @@ async function playWeeklySchedule(selected) {
       await new Promise(resolve => setTimeout(resolve, 900));
       dayResult.hidden = true;
     }
-    Object.entries(resolvedChange).forEach(([key,value])=>weeklyChange[key]=(weeklyChange[key]||0)+value);
+    Object.entries(actualChange).forEach(([key,value])=>weeklyChange[key]=(weeklyChange[key]||0)+value);
     const activityDate=new Date(scheduleStart);activityDate.setDate(scheduleStart.getDate()+index);
     dayRecords.push({date:isoDate(activityDate),action:{...action,cost:-moneyChange},actualChange,outcome,moneyChange});
     simulated.stress=clampStat('stress',simulated.stress+(resolvedChange.stress||0));
