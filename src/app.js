@@ -42,7 +42,19 @@ function transitionPrologueToHomeMusic(){
   fadeAudio(prologueMusic,0,1600);
 }
 
-const game = { characterName:'', nannyName:'', profileSlot:null, age: 9, height:130, weight:28.5, month: 1, week: 1, season:'봄', money: 50000, cash:50000, health:42, strength:18, agility:20, intelligence:35, magic:8, mentality:30, dignity:36, manners:28, speech:14, sensitivity:40, sense:24, charm:30, stress:12, items: [], relations:{}, startingGiftId:null, fatherBirthdayYears:[], equippedOutfit:null, autoOutfit:true, dailySchedule: [null,null,null,null,null,null,null], birthday:null, currentDate:null, endingDate:null, ended:false, birthdayCount:0, element:null, birthSeason:null, memory:0, truth:0, exposure:0, fatherAffinity:0, guardianTrust:50, nannyAffinity:50, lastGreetingDate:null, monthlyLedger:null };
+const game = { characterName:'', nannyName:'', guardianType:null, guardianName:'', profileSlot:null, age: 9, height:130, weight:28.5, month: 1, week: 1, season:'봄', money: 50000, cash:50000, health:42, strength:18, agility:20, intelligence:35, magic:8, mentality:30, dignity:36, manners:28, speech:14, sensitivity:40, sense:24, charm:30, stress:12, items: [], relations:{}, startingGiftId:null, fatherBirthdayYears:[], equippedOutfit:null, autoOutfit:true, dailySchedule: [null,null,null,null,null,null,null], birthday:null, currentDate:null, endingDate:null, ended:false, birthdayCount:0, element:null, birthSeason:null, memory:0, truth:0, exposure:0, fatherAffinity:0, guardianTrust:50, nannyAffinity:50, lastGreetingDate:null, monthlyLedger:null };
+const guardianDefs={
+  cheongryong:{name:'청룡',mark:'龍',theme:'#294e67',gift:{name:'푸른 여의주 조각',change:{intelligence:5,magic:4}},intro:'동쪽의 푸른 숨결. 배움과 술법의 길을 살피는 신수입니다.'},
+  baekho:{name:'백호',mark:'虎',theme:'#ddd8ce',gift:{name:'흰 범의 방울',change:{strength:5,agility:4}},intro:'서쪽의 굳센 발걸음. 위험 앞에서 용기와 무예를 북돋는 신수입니다.'},
+  jujak:{name:'주작',mark:'朱',theme:'#a93e32',gift:{name:'붉은 깃의 매듭',change:{charm:5,sensitivity:4}},intro:'남쪽의 따뜻한 불빛. 상처를 보듬고 좋은 인연을 잇는 신수입니다.'},
+  hyeonmu:{name:'현무',mark:'玄',theme:'#292d35',gift:{name:'검은 옥패',change:{mentality:5,health:4}},intro:'북쪽의 깊은 물결. 흔들리지 않는 마음과 보호의 힘을 지닌 신수입니다.'}
+};
+const guardianStoryLines=[
+  '아홉 번째 생일 밤, 고요하던 마당 위로 네 갈래의 별빛이 열렸습니다.',
+  '동쪽의 청룡, 서쪽의 백호, 남쪽의 주작, 북쪽의 현무가 아이의 이름을 듣고 모습을 드러냈습니다.',
+  '하늘은 앞날을 정해 주지 않았습니다. 다만 스스로 고른 길을 끝까지 지켜 줄 한 벗을 내려보냈습니다.'
+];
+let guardianStoryIndex=0,selectedGuardianType=null;
 const statGroups = [
   { title: '신체', stats: [['health','체력'],['strength','힘'],['agility','민첩']] },
   { title: '지성·마음', stats: [['intelligence','지능'],['magic','마력'],['mentality','정신력']] },
@@ -367,10 +379,10 @@ function setScheduleDialogue(action,state,index){
     if(game.stress>=55)line='오늘은 컨디션이 좋지 않아요.';
     else line=`오늘은 ${action.name}${objectParticle(action.name)} 열심히 해볼게요.`;
   }else if(state==='drowsy'){
-    speaker=education?'훈장님':(game.nannyName||'유모');
+    speaker=education?'훈장님':(game.guardianName||guardianDefs[game.guardianType]?.name||'수호신수');
     line=education?'수업 중에 졸면 배운 것을 놓치게 된다. 정신을 차리거라.':'많이 피곤해 보이는구나. 잠시 숨을 고르렴.';
   }else if(state==='mistake'){
-    speaker=education?'훈장님':(game.nannyName||'유모');
+    speaker=education?'훈장님':(game.guardianName||guardianDefs[game.guardianType]?.name||'수호신수');
     line=education?'졸다가 실수하다니, 오늘 배운 대목을 다시 익히거라.':'괜찮단다. 서두르지 말고 다시 해 보자.';
   }else if(state==='struggle'){
     line=game.stress>=55?'마음이 무거워 평소만큼 해내지는 못했어요.':'조금 어려웠지만 끝까지 포기하지 않았어요.';
@@ -479,16 +491,20 @@ function updateImageState() {
 }
 
 function renderHud() {
+  if(game.nannyName&&!game.guardianName){game.guardianName=game.nannyName;game.guardianType=game.guardianType||'hyeonmu';}
   normalizeStats();
   const date = game.currentDate ? new Date(`${game.currentDate}T00:00:00`) : null;
   document.querySelector('#dateLabel').textContent = date ? `${game.age}세 · ${date.getFullYear()}년 ${date.getMonth()+1}월 ${date.getDate()}일 · ${game.season} ${game.week}주` : '생일 설정 전';
   document.querySelector('#moneyLabel').textContent = `${game.money.toLocaleString()}냥`;
   document.querySelector('#cashLabel').textContent = `캐시 ${game.cash.toLocaleString()}원`;
-  document.querySelector('#speakerName').textContent = game.nannyName || '유모';
+  const guardian=guardianDefs[game.guardianType];
+  document.querySelector('#speakerName').textContent = game.guardianName || guardian?.name || '수호신수';
+  const companion=document.querySelector('#guardianCompanion');
+  if(companion){companion.hidden=!guardian;document.querySelector('#guardianCompanionMark').textContent=guardian?.mark||'守';document.querySelector('#guardianCompanionName').textContent=game.guardianName||guardian?.name||'';if(guardian)document.querySelector('#guardianCompanionMark').style.background=guardian.theme;}
 }
 
 const statLabels={health:'체력',strength:'힘',agility:'민첩',intelligence:'지능',magic:'마력',mentality:'정신력',dignity:'기품',manners:'예절',speech:'화술',sensitivity:'감수성',sense:'센스',charm:'매력',stress:'스트레스'};
-statLabels.nannyAffinity='유모 친밀도';
+statLabels.nannyAffinity='신수 유대감';
 statLabels.fatherAffinity='아버지 친밀도';
 function showLiveChanges(action){
   const items=orderedChangeEntries(action.change).map(([key,value])=>{const positive=key==='stress'?value<0:value>=0;const current=clampStat(key,game[key]);return `<span class="${positive?'up':'down'}">${statLabels[key]||key} <b>${current}</b> <small>(${value>0?'+':''}${value})</small></span>`;});
@@ -540,7 +556,7 @@ function showHomeGreeting(force=false){
   document.querySelector('#speakerName').textContent=game.characterName||'아이';document.querySelector('#dialogueText').textContent=scene.line;
   document.querySelector('#homeGreetingSpeaker').textContent=game.characterName||'아이';
   document.querySelector('#homeGreetingLine').textContent=scene.line;
-  document.querySelector('#homeGreetingPrompt').textContent=`${game.nannyName||'유모'}에게 어떻게 답할까요?`;
+  document.querySelector('#homeGreetingPrompt').textContent=`${game.guardianName||guardianDefs[game.guardianType]?.name||'신수'}에게 어떻게 답할까요?`;
   const choices=document.querySelector('#homeGreetingChoices');choices.innerHTML=scene.choices.map((choice,i)=>`<button data-greeting-choice="${i}">${choice[0]}</button>`).join('');
   document.querySelector('#homeGreeting').hidden=false;document.querySelector('.phone').classList.add('greeting-active');
   choices.querySelectorAll('button').forEach(button=>button.addEventListener('click',()=>answerHomeGreeting(scene,Number(button.dataset.greetingChoice))));
@@ -562,7 +578,7 @@ function openPanel(type) {
     normalizeBodyMetrics();
     normalizeRelations();
     const relationCards=endingRelationCandidates.map(candidate=>{const relation=game.relations[candidate.id];const phase=relation.dateUnlocked?'데이트 가능':relation.meetings>=5?'16세부터 데이트 가능':`${relation.meetings} / 5회 만남`;return `<div class="relation-card ${relation.dateUnlocked?'unlocked':''}"><b>${candidate.name}</b><small>${candidate.role}</small><span>${phase}</span><i style="--relation-progress:${Math.min(100,relation.meetings/5*100)}%"></i></div>`;}).join('');
-    panelBody.innerHTML = `<div class="status-summary"><span>${game.age}세 · ${game.season} ${game.week}주</span><b>${game.money.toLocaleString()}냥</b></div><section class="body-profile" aria-label="성장 정보"><div><small>키</small><b>${game.height.toFixed(1)} cm</b></div><div><small>몸무게</small><b>${game.weight.toFixed(1)} kg</b></div></section>${statGroups.map(group => `<section class="stat-group"><h3>${group.title}</h3>${group.stats.map(([key,label]) => statBar(key,label)).join('')}</section>`).join('')}<section class="stat-group condition-group"><h3>현재 상태</h3>${statBar('stress','스트레스')}</section><section class="stat-group"><h3>가족 인연</h3>${statBar('nannyAffinity','유모 친밀도')}${statBar('fatherAffinity','아버지 친밀도')}</section><section class="relation-group"><h3>인연</h3><p>13세부터 우정으로 만나며, 5회 만남과 16세 이상을 충족하면 데이트가 열립니다.</p><div class="relation-grid">${relationCards}</div></section>`;
+    panelBody.innerHTML = `<div class="status-summary"><span>${game.age}세 · ${game.season} ${game.week}주</span><b>${game.money.toLocaleString()}냥</b></div><section class="body-profile" aria-label="성장 정보"><div><small>키</small><b>${game.height.toFixed(1)} cm</b></div><div><small>몸무게</small><b>${game.weight.toFixed(1)} kg</b></div></section>${statGroups.map(group => `<section class="stat-group"><h3>${group.title}</h3>${group.stats.map(([key,label]) => statBar(key,label)).join('')}</section>`).join('')}<section class="stat-group condition-group"><h3>현재 상태</h3>${statBar('stress','스트레스')}</section><section class="stat-group"><h3>수호 인연</h3>${statBar('nannyAffinity','신수 유대감')}${statBar('fatherAffinity','아버지 친밀도')}</section><section class="relation-group"><h3>인연</h3><p>13세부터 우정으로 만나며, 5회 만남과 16세 이상을 충족하면 데이트가 열립니다.</p><div class="relation-grid">${relationCards}</div></section>`;
   } else if (type === 'inventory') {
     playHomeMusic();
     renderInventory();
@@ -807,13 +823,13 @@ function deleteCharacterRecord(slot){
 }
 
 function resetGameState() {
-  Object.assign(game, { characterName:'',nannyName:'',profileSlot:null,age:9,height:130,weight:28.5,month:1,week:1,season:'봄',money:50000,cash:50000,health:42,strength:18,agility:20,intelligence:35,magic:8,mentality:30,dignity:36,manners:28,speech:14,sensitivity:40,sense:24,charm:30,stress:12,items:[],relations:{},startingGiftId:null,fatherBirthdayYears:[],equippedOutfit:null,autoOutfit:true,dailySchedule:[null,null,null,null,null,null,null],birthday:null,currentDate:null,endingDate:null,ended:false,birthdayCount:0,element:null,birthSeason:null,memory:0,truth:0,exposure:0,fatherAffinity:0,guardianTrust:50,nannyAffinity:50,lastGreetingDate:null,monthlyLedger:null});
+  Object.assign(game, { characterName:'',nannyName:'',guardianType:null,guardianName:'',profileSlot:null,age:9,height:130,weight:28.5,month:1,week:1,season:'봄',money:50000,cash:50000,health:42,strength:18,agility:20,intelligence:35,magic:8,mentality:30,dignity:36,manners:28,speech:14,sensitivity:40,sense:24,charm:30,stress:12,items:[],relations:{},startingGiftId:null,fatherBirthdayYears:[],equippedOutfit:null,autoOutfit:true,dailySchedule:[null,null,null,null,null,null,null],birthday:null,currentDate:null,endingDate:null,ended:false,birthdayCount:0,element:null,birthSeason:null,memory:0,truth:0,exposure:0,fatherAffinity:0,guardianTrust:50,nannyAffinity:50,lastGreetingDate:null,monthlyLedger:null});
   document.querySelector('#liveChanges').innerHTML='';
   const greeting=document.querySelector('#homeGreeting');greeting.hidden=true;greeting.classList.remove('greeting-active');
   document.querySelector('#characterNameInput').value='';
-  document.querySelector('#nannyNameInput').value='';
+  document.querySelector('#guardianNameInput').value='';
   document.querySelector('#birthdayInput').value='1990-01-01';
-  document.querySelector('#birthdayTitle').textContent='아이와 유모의 이름';
+  document.querySelector('#birthdayTitle').textContent='아이의 이름과 생일';
   bg.src = backgrounds.home;
   character.src = expressions[0][0];
   renderHud();
@@ -1071,9 +1087,10 @@ const startingBirthdayGifts=[
 function applyStatChange(change){const actual={};Object.entries(canonicalizeChange(change)).forEach(([key,value])=>{const before=clampStat(key,game[key]);game[key]=clampStat(key,before+value);actual[key]=game[key]-before;});return actual;}
 function awardStartingBirthdayGift(){
   if(game.startingGiftId)return startingBirthdayGifts.find(gift=>gift.id===game.startingGiftId)||null;
-  const gift=startingBirthdayGifts[Math.floor(Math.random()*startingBirthdayGifts.length)];
+  const guardian=guardianDefs[game.guardianType],base=guardian?.gift||startingBirthdayGifts[Math.floor(Math.random()*startingBirthdayGifts.length)];
+  const gift={id:`guardian-${game.guardianType||'gift'}-age09`,name:base.name,change:{...base.change}};
   gift.actualChange=applyStatChange(gift.change);game.startingGiftId=gift.id;
-  game.items.push({id:gift.id,type:'event',name:gift.name,description:'아홉 번째 생일에 유모에게 받은 첫 선물',qty:1,source:'nanny-birthday'});
+  game.items.push({id:gift.id,type:'event',name:gift.name,description:'아홉 번째 생일에 수호신수와 인연을 맺으며 받은 첫 축복',qty:1,source:'guardian-birthday'});
   return gift;
 }
 function awardFatherBirthdayGift(age){
@@ -1089,8 +1106,7 @@ function startWithBirthday(){
   enforceBirthday1990();
   const value=document.querySelector('#birthdayInput').value;
   const characterName=document.querySelector('#characterNameInput').value.trim();
-  const nannyName=document.querySelector('#nannyNameInput').value.trim();
-  if(!characterName||!nannyName){document.querySelector('#birthdayTitle').textContent='두 이름을 모두 지어주세요';return;}
+  if(!characterName){document.querySelector('#birthdayTitle').textContent='아이의 이름을 지어주세요';return;}
   if(value<'1990-01-01'||value>'1990-12-31') return;
   const profileSlot=game.profileSlot||SAVE_SLOTS.find(slot=>!readSave(slot));
   if(!profileSlot){document.querySelector('#birthdayTitle').textContent='동시에 키울 수 있는 다섯 명의 기록이 모두 찼어요';return;}
@@ -1098,18 +1114,30 @@ function startWithBirthday(){
   const start=addYears(birth,9);
   const ending=addYears(birth,19); ending.setDate(ending.getDate()+1);
   const month=birth.getMonth()+1; const birthSeason=seasonForMonth(month); const element=['금','수','목','화','토'][(birth.getMonth()+birth.getDate())%5];
-  Object.assign(game,{characterName,nannyName,profileSlot,birthday:value,currentDate:isoDate(start),endingDate:isoDate(ending),age:9,height:130,weight:28.5,month,season:birthSeason,birthSeason,element,week:Math.floor((start.getDate()-1)/7)+1,ended:false,birthdayCount:0,fatherBirthdayYears:[],fatherAffinity:0});
-  const nannyGift=awardStartingBirthdayGift(),fatherGift=awardFatherBirthdayGift(9);game.lastGreetingDate=game.currentDate;
+  Object.assign(game,{characterName,guardianType:null,guardianName:'',nannyName:'',profileSlot,birthday:value,currentDate:isoDate(start),endingDate:isoDate(ending),age:9,height:130,weight:28.5,month,season:birthSeason,birthSeason,element,week:Math.floor((start.getDate()-1)/7)+1,ended:false,birthdayCount:0,fatherBirthdayYears:[],fatherAffinity:0,startingGiftId:null});
   game.monthlyLedger=createMonthlyLedger(start.getFullYear(),month);
   document.querySelector('#birthdaySetup').hidden=true;
-  panel.hidden=true;
-  transitionPrologueToHomeMusic();
-  const startingChanges={...(nannyGift?.actualChange||{})};Object.entries(fatherGift?.change||{}).forEach(([key,value])=>startingChanges[key]=(startingChanges[key]||0)+value);
-  document.querySelector('#dialogueText').textContent=`${characterName}의 아홉 번째 생일이에요. ${nannyName}가 「${nannyGift.name}」을 건넸어요. ${formatChanges(nannyGift.actualChange)}. ${fatherGift.message}`;
-  showLiveChanges({change:startingChanges,cost:0});
-  renderHud();
-  queueAutoSave();
+  guardianStoryIndex=0;showGuardianStory();
 }
+function showGuardianStory(){
+  const story=document.querySelector('#guardianStory');story.hidden=false;
+  document.querySelector('#guardianStoryText').textContent=guardianStoryLines[guardianStoryIndex];
+  document.querySelector('#guardianStoryNext').textContent=guardianStoryIndex===guardianStoryLines.length-1?'신수 만나기':'다음';
+}
+function nextGuardianStory(){if(guardianStoryIndex<guardianStoryLines.length-1){guardianStoryIndex+=1;showGuardianStory();return;}document.querySelector('#guardianStory').hidden=true;document.querySelector('#guardianChoice').hidden=false;}
+function chooseGuardian(type){if(!guardianDefs[type])return;selectedGuardianType=type;document.querySelectorAll('[data-guardian]').forEach(button=>button.classList.toggle('selected',button.dataset.guardian===type));const confirm=document.querySelector('#guardianChoiceConfirm');confirm.disabled=false;confirm.textContent=`${guardianDefs[type].name}과 인연 맺기`;}
+function confirmGuardianChoice(){const guardian=guardianDefs[selectedGuardianType];if(!guardian)return;document.querySelector('#guardianChoice').hidden=true;document.querySelector('#guardianNameSetup').hidden=false;document.querySelector('#guardianNameMark').textContent=guardian.mark;document.querySelector('#guardianNameMark').style.background=guardian.theme;document.querySelector('#guardianNameDescription').textContent=guardian.intro;document.querySelector('#guardianNameInput').focus();}
+function finishGuardianNaming(){
+  const guardian=guardianDefs[selectedGuardianType],guardianName=document.querySelector('#guardianNameInput').value.trim();
+  if(!guardian||!guardianName){document.querySelector('#guardianNameTitle').textContent='신수의 이름을 지어주세요';return;}
+  Object.assign(game,{guardianType:selectedGuardianType,guardianName,nannyName:guardianName,nannyAffinity:50,guardianTrust:50});
+  const guardianGift=awardStartingBirthdayGift(),fatherGift=awardFatherBirthdayGift(9);game.lastGreetingDate=game.currentDate;
+  document.querySelector('#guardianNameSetup').hidden=true;panel.hidden=true;transitionPrologueToHomeMusic();
+  const startingChanges={...(guardianGift?.actualChange||{})};Object.entries(fatherGift?.change||{}).forEach(([key,value])=>startingChanges[key]=(startingChanges[key]||0)+value);
+  document.querySelector('#dialogueText').textContent=`${guardianName}이(가) ${game.characterName}의 첫 성장을 살핍니다. 「${guardianGift.name}」의 축복을 받았어요. ${fatherGift.message}`;
+  showLiveChanges({change:startingChanges,cost:0});renderHud();queueAutoSave();
+}
+function reselectGuardian(){document.querySelector('#guardianNameSetup').hidden=true;document.querySelector('#guardianChoice').hidden=false;document.querySelector('#guardianNameInput').value='';}
 function advanceGameDate(days){
   if(!game.currentDate)return [];
   const previousAge=game.age;
@@ -1314,7 +1342,7 @@ async function playWeeklySchedule(selected) {
   document.querySelector('#activityGauges').hidden = true;
   conditionCue.hidden = true;
   document.querySelector('.dialogue').classList.remove('schedule-speaking');
-  document.querySelector('#speakerName').textContent=game.nannyName||'유모';
+  document.querySelector('#speakerName').textContent=game.guardianName||guardianDefs[game.guardianType]?.name||'수호신수';
   phone.classList.remove('playing');
   return {weeklyChange,dayRecords};
 }
@@ -1350,6 +1378,12 @@ document.querySelector('#closePanel').addEventListener('click', () => {if(market
 document.querySelector('#recoveryFresh').addEventListener('click',declineRecovery);
 document.querySelector('#recoveryContinue').addEventListener('click',continueRecovery);
 document.querySelector('#startGame').addEventListener('click', startWithBirthday);
+document.querySelector('#guardianStoryNext').addEventListener('click',nextGuardianStory);
+document.querySelectorAll('[data-guardian]').forEach(button=>button.addEventListener('click',()=>chooseGuardian(button.dataset.guardian)));
+document.querySelector('#guardianChoiceConfirm').addEventListener('click',confirmGuardianChoice);
+document.querySelector('#guardianNameConfirm').addEventListener('click',finishGuardianNaming);
+document.querySelector('#guardianNameInput').addEventListener('keydown',event=>{if(event.key==='Enter')finishGuardianNaming();});
+document.querySelector('#guardianReselect').addEventListener('click',reselectGuardian);
 document.querySelector('#birthdayInput').addEventListener('change',enforceBirthday1990);
 document.querySelector('#prologueNext').addEventListener('click',nextPrologue);
 document.querySelector('#prologueBack').addEventListener('click',previousPrologue);

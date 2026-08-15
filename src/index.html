@@ -10,6 +10,7 @@
   <link rel="stylesheet" href="prologue.css?v=0.61.95-debug">
   <link rel="stylesheet" href="rain-v2.css">
   <link rel="stylesheet" href="naming.css">
+  <link rel="stylesheet" href="guardian.css?v=0.62.08-debug">
   <link rel="stylesheet" href="live-changes.css?v=0.61.14-debug">
   <link rel="stylesheet" href="collection.css?v=0.61.96-debug">
   <link rel="stylesheet" href="loading.css?v=0.62.07-debug">
@@ -37,7 +38,7 @@
       </div>
       <span class="loading-caption">이야기를 열 준비가 되었어요</span>
       <button class="studio-start-sound" id="studioStartSound" type="button">인연의 문을 열기</button>
-      <small class="loading-version" aria-label="현재 게임 버전">v0.62.07-debug</small>
+      <small class="loading-version" aria-label="현재 게임 버전">v0.62.08-debug</small>
     </section>
     <section class="prologue" id="prologue" aria-label="이야기 시작 영상" hidden>
       <audio id="prologueMusic" src="../assets/audio/music/prologue-lantern-and-dawn.mp3" preload="auto" loop></audio>
@@ -53,16 +54,42 @@
     <section class="birthday-setup" id="birthdaySetup" aria-labelledby="birthdayTitle" hidden>
       <div class="birthday-card">
         <span class="setup-emblem">名</span>
-        <h1 id="birthdayTitle">아이와 유모의 이름</h1>
-        <p>앞으로 불릴 이름을 직접 지어주세요.<br>이름과 생일을 정하면 성장 이야기가 시작됩니다.</p>
+        <h1 id="birthdayTitle">아이의 이름과 생일</h1>
+        <p>아이에게 새로운 이름을 지어 주세요.<br>아홉 번째 생일 밤, 하늘이 보낸 인연이 찾아옵니다.</p>
         <label for="characterNameInput">아이 이름</label>
         <input id="characterNameInput" type="text" maxlength="10" placeholder="아이의 이름" autocomplete="off">
-        <label for="nannyNameInput">유모 이름</label>
-        <input id="nannyNameInput" type="text" maxlength="10" placeholder="유모의 이름" autocomplete="off">
         <label for="birthdayInput">생년월일</label>
         <input id="birthdayInput" type="date" min="1990-01-01" max="1990-12-31" value="1990-01-01">
         <small>선택 가능 기간 · 1990년 1월 1일~12월 31일</small>
-        <button id="startGame">이 생일로 시작</button><button class="story-replay" id="storyReplay">프롤로그 다시 보기</button>
+        <button id="startGame">아홉 번째 생일로</button><button class="story-replay" id="storyReplay">프롤로그 다시 보기</button>
+      </div>
+    </section>
+    <section class="guardian-story" id="guardianStory" hidden aria-live="polite">
+      <img src="../assets/cinematics/guardian/guardian-descent-age09.png" alt="아홉 번째 생일 밤 하늘에 나타난 네 신수">
+      <div class="guardian-story-copy"><small>첫 장 · 하늘이 내린 벗</small><p id="guardianStoryText"></p><button id="guardianStoryNext" type="button">다음</button></div>
+    </section>
+    <section class="guardian-choice" id="guardianChoice" hidden aria-labelledby="guardianChoiceTitle">
+      <div class="guardian-choice-card">
+        <small>아홉 번째 생일의 인연</small><h1 id="guardianChoiceTitle">함께할 신수를 선택하세요</h1>
+        <p>선택한 신수는 성장 기록을 살피고 일정과 모험을 조언합니다.</p>
+        <div class="guardian-grid">
+          <button data-guardian="cheongryong"><i>龍</i><b>청룡</b><span>배움과 술법</span></button>
+          <button data-guardian="baekho"><i>虎</i><b>백호</b><span>용기와 무예</span></button>
+          <button data-guardian="jujak"><i>朱</i><b>주작</b><span>회복과 인연</span></button>
+          <button data-guardian="hyeonmu"><i>玄</i><b>현무</b><span>인내와 보호</span></button>
+        </div>
+        <button id="guardianChoiceConfirm" type="button" disabled>이 신수와 인연 맺기</button>
+      </div>
+    </section>
+    <section class="guardian-name" id="guardianNameSetup" hidden aria-labelledby="guardianNameTitle">
+      <div class="birthday-card">
+        <span class="guardian-name-mark" id="guardianNameMark">龍</span>
+        <h1 id="guardianNameTitle">신수에게 이름을 지어 주세요</h1>
+        <p id="guardianNameDescription"></p>
+        <label for="guardianNameInput">신수 이름</label>
+        <input id="guardianNameInput" type="text" maxlength="10" placeholder="함께 부를 이름" autocomplete="off">
+        <button id="guardianNameConfirm" type="button">이야기 시작</button>
+        <button class="story-replay" id="guardianReselect" type="button">신수 다시 선택</button>
       </div>
     </section>
     <img class="background" src="../assets/backgrounds/home/home-room-morning.webp" alt="한옥 안채">
@@ -72,7 +99,8 @@
       <img id="character" src="../assets/characters/seonhwa/age-09/base/seonhwa-age09-base.png" alt="9세 선화">
       <div class="missing" id="missing">기준 캐릭터 원본 재첨부 대기</div>
     </section>
-    <section class="dialogue"><b id="speakerName">유모</b><p id="dialogueText">아이야, 오늘은 무엇을 해볼까?</p></section>
+    <aside class="guardian-companion" id="guardianCompanion" hidden aria-label="동행 신수"><span id="guardianCompanionMark">龍</span><small id="guardianCompanionName"></small></aside>
+    <section class="dialogue"><b id="speakerName">수호신수</b><p id="dialogueText">오늘의 길을 함께 살펴볼까?</p></section>
     <aside class="home-side-actions" aria-label="홈 바로가기">
       <button class="home-object-button" id="collectionBookButton" type="button" aria-label="수집도감 열기"><img src="../assets/ui/home-actions/collection-book.png" alt=""><span>수집도감</span></button>
       <button class="home-object-button" id="wardrobeButton" type="button" aria-label="오래된 옷장 열기"><img src="../assets/ui/home-actions/wardrobe.png" alt=""><span>옷장</span></button>
@@ -152,6 +180,6 @@
       </div>
     </section>
   </main>
-  <script src="story-data.js?v=0.62.07-debug"></script><script src="app.js?v=0.62.07-debug"></script>
+  <script src="story-data.js?v=0.62.08-debug"></script><script src="app.js?v=0.62.08-debug"></script>
 </body>
 </html>
