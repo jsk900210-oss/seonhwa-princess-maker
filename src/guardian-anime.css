@@ -1,5 +1,6 @@
 .guardian-story-focus{position:absolute;z-index:.5;inset:0;width:100%;height:100%;object-fit:cover;pointer-events:none;opacity:0;filter:saturate(1.04) contrast(1.03)}
 .guardian-story-focus.focus-playing{animation:guardian-focus-cut 7.2s ease-in-out both}
+.guardian-story-focus.ability-frame{filter:saturate(1.12) contrast(1.06) brightness(1.04)}
 .guardian-story[data-effect="constellation"] .guardian-story-focus{object-position:50% 34%}
 .guardian-story[data-effect="cloud"] .guardian-story-focus{object-position:66% 31%}
 .guardian-story[data-effect="mountain"] .guardian-story-focus{object-position:50% 34%}

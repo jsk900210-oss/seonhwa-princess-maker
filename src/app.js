@@ -1547,6 +1547,7 @@ document.querySelector('#prologueSkip').addEventListener('click',closePrologue);
 document.querySelector('#storyReplay').addEventListener('click',replayPrologue);
 document.querySelector('#studioStartSound').addEventListener('click',finishStudioIntro);
 prologueScenes.forEach(scene=>{const image=new Image();image.src=scene.image;});
+guardianStoryScenes.forEach(scene=>[scene.image,...(scene.frames||[])].forEach(source=>{const image=new Image();image.decoding='async';image.src=source;}));
 syncBirthdaySelectors(true);
 syncSettingsUi();
 renderHud();
