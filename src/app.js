@@ -260,6 +260,10 @@ function updateAutoOutfit(actionId=null){if(!game.autoOutfit)return game.equippe
 const activityOutfitFrameCache=new Map();
 function activityOutfitPalette(outfitId){
   if(!outfitId)return null;
+  if(/cash-ember|rose-paisley/.test(outfitId))return {skirt:[96,25,47],top:[185,68,93]};
+  if(/cash-solar/.test(outfitId))return {skirt:[238,224,194],top:[203,163,62]};
+  if(/cash-ink|ethnic-stage/.test(outfitId))return {skirt:[38,35,48],top:[91,70,109]};
+  if(/cash-starlight/.test(outfitId))return {skirt:[213,155,195],top:[239,202,217]};
   if(/premium-midnight|premium-crimson|premium-ink/.test(outfitId))return {skirt:[35,31,38],top:[111,40,57]};
   if(/premium-moonlight/.test(outfitId))return {skirt:[239,228,199],top:[205,164,72]};
   if(/premium-aurora/.test(outfitId))return {skirt:[226,170,194],top:[244,222,227]};
@@ -271,19 +275,15 @@ function activityOutfitPalette(outfitId){
 function outfitActivityFrame(src,outfitId){
   const palette=activityOutfitPalette(outfitId);if(!palette)return Promise.resolve(src);
   const key=`${outfitId}|${src}`;if(activityOutfitFrameCache.has(key))return Promise.resolve(activityOutfitFrameCache.get(key));
-  return new Promise(resolve=>{const source=new Image(),garment=new Image();let sourceReady=false,garmentReady=false,garmentFailed=false;const render=()=>{if(!sourceReady||(!garmentReady&&!garmentFailed))return;try{const canvas=document.createElement('canvas');canvas.width=source.naturalWidth;canvas.height=source.naturalHeight;const context=canvas.getContext('2d',{willReadFrequently:true});context.drawImage(source,0,0);const frame=context.getImageData(0,0,canvas.width,canvas.height),data=frame.data;
-    const texture=document.createElement('canvas');texture.width=canvas.width;texture.height=canvas.height;const textureContext=texture.getContext('2d',{willReadFrequently:true});
-    if(garmentReady){const gw=garment.naturalWidth,gh=garment.naturalHeight;textureContext.drawImage(garment,gw*.22,gh*.30,gw*.56,gh*.48,0,0,canvas.width,canvas.height);}
-    const textureData=garmentReady?textureContext.getImageData(0,0,canvas.width,canvas.height).data:null,isRest=/\/(rest|sleep)-/.test(src);
+  return new Promise(resolve=>{const source=new Image();source.onload=()=>{try{const canvas=document.createElement('canvas');canvas.width=source.naturalWidth;canvas.height=source.naturalHeight;const context=canvas.getContext('2d',{willReadFrequently:true});context.drawImage(source,0,0);const frame=context.getImageData(0,0,canvas.width,canvas.height),data=frame.data,isRest=/\/(rest|sleep)-/.test(src);
     for(let y=0;y<canvas.height;y++)for(let x=0;x<canvas.width;x++){const i=(y*canvas.width+x)*4;if(data[i+3]<24)continue;const r=data[i],g=data[i+1],b=data[i+2];
       const pink=!isRest&&r>155&&g>42&&g<155&&b>52&&b<180&&r>g*1.32&&r>b*1.12;
       const central=x>canvas.width*.16&&x<canvas.width*.84&&y>canvas.height*.2&&y<canvas.height*.76;
       const ivory=central&&r>188&&g>165&&b>130&&r-b<62&&r-g<45;
       const fallback=pink?palette.skirt:(ivory&&palette.top?palette.top:null);if(!fallback)continue;
-      const textured=textureData&&textureData[i+3]>80?[textureData[i],textureData[i+1],textureData[i+2]]:fallback;
-      const light=Math.max(.58,Math.min(1.35,(r+g+b)/3/170));data[i]=Math.min(255,textured[0]*light);data[i+1]=Math.min(255,textured[1]*light);data[i+2]=Math.min(255,textured[2]*light);
+      const light=Math.max(.62,Math.min(1.28,(r+g+b)/3/170));data[i]=Math.min(255,fallback[0]*light);data[i+1]=Math.min(255,fallback[1]*light);data[i+2]=Math.min(255,fallback[2]*light);
     }
-    context.putImageData(frame,0,0);const result=canvas.toDataURL('image/png');activityOutfitFrameCache.set(key,result);resolve(result);}catch{resolve(src);}};source.onload=()=>{sourceReady=true;render();};source.onerror=()=>resolve(src);garment.onload=()=>{garmentReady=true;render();};garment.onerror=()=>{garmentFailed=true;render();};source.src=src;garment.src=outfitImage(outfitId);});
+    context.putImageData(frame,0,0);const result=canvas.toDataURL('image/png');activityOutfitFrameCache.set(key,result);resolve(result);}catch{resolve(src);}};source.onerror=()=>resolve(src);source.src=src;});
 }
 async function animateActivitySprite(image,motion,activity,npcImage,npc,outfitId){
   if(activity){
