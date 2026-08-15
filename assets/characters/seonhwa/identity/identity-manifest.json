@@ -1,0 +1,24 @@
+{
+  "character": "seonhwa",
+  "version": "0.61.86-debug",
+  "policy": "identity-locked",
+  "ageAnchors": {
+    "9": "seonhwa-face-age-09-neutral.png",
+    "13": "seonhwa-face-age-13-neutral.png",
+    "16": "seonhwa-face-age-16-neutral.png",
+    "18": "seonhwa-face-age-18-neutral.png"
+  },
+  "invariants": [
+    "almond-shaped dark-brown eyes and fixed eye spacing",
+    "softly rounded nose",
+    "small cupid-bow lips",
+    "consistent brow shape and ear placement",
+    "natural age progression without changing identity"
+  ],
+  "allowedChanges": [
+    "expression",
+    "hair style",
+    "outfit",
+    "age-appropriate facial maturity"
+  ]
+}
