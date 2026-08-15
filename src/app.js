@@ -861,19 +861,31 @@ function statBar(key, label) {
   return `<div class="stat-row"><span>${label}</span><div class="stat-track"><i class="${isCondition ? 'condition' : ''}" style="width:${value}%"></i></div><b>${game[key]}</b></div>`;
 }
 
+let activeScheduleCategory='교육',scheduleCursor=0,selectedScheduleAction=null;
+function scheduleProjection(){
+  let money=game.money,stress=game.stress;
+  game.dailySchedule.forEach(id=>{const action=actions.find(item=>item.id===id);if(!action)return;money=Math.max(0,money-action.cost);stress=clampStat('stress',stress+(action.change.stress||0));});
+  return {money,stress};
+}
 function renderSchedulePanel() {
   panelTitle.textContent = `${game.season} ${game.week}주 일정`;
   if (!Array.isArray(game.dailySchedule) || game.dailySchedule.length !== 7) game.dailySchedule = [null,null,null,null,null,null,null];
   game.dailySchedule=game.dailySchedule.map(id=>actions.some(action=>action.id===id)?id:null);
-  const dayNames = ['월','화','수','목','금','토','일'];
+  const dayNames = ['월','화','수','목','금','토','일'],start=game.currentDate?new Date(`${game.currentDate}T00:00:00`):null;
   const daySlots = game.dailySchedule.map((id,index) => {
     const action = actions.find(item => item.id === id);
-    return `<button class="day-slot ${action ? 'filled' : ''}" data-day="${index}" aria-label="${dayNames[index]}요일 ${action ? action.name : '비어 있음'}"><b>${dayNames[index]}</b><span>${action ? action.name : '빈칸'}</span></button>`;
+    const date=start?new Date(start.getFullYear(),start.getMonth(),start.getDate()+index):null,dateLabel=date?`${date.getMonth()+1}/${date.getDate()}`:'';
+    return `<button class="day-slot ${action ? 'filled' : ''} ${scheduleCursor===index?'selected':''}" data-day="${index}" aria-label="${dayNames[index]}요일 ${action ? action.name : '비어 있음'}"><b>${dayNames[index]}</b><small>${dateLabel}</small><span>${action ? action.name : '빈칸'}</span></button>`;
   }).join('');
-  const categories = ['교육', '아르바이트', '휴식'].map(category => `<section class="schedule-category"><h3>${category}</h3><div class="action-grid">${actions.filter(action => action.category === category).map(action => `<button class="action" data-action="${action.id}"><img src="../assets/ui/activity-icons/activity-${action.id}.png" alt=""><b>${action.name}</b><span>${action.cost > 0 ? `-${action.cost}냥` : action.cost < 0 ? `+${-action.cost}냥` : '무료'}</span><small>${action.summary}</small></button>`).join('')}</div></section>`).join('');
-  panelBody.innerHTML = `<p class="schedule-help">활동을 누르면 월요일부터 다음 빈 날짜에 들어갑니다. 채운 날짜를 누르면 삭제됩니다.</p><div class="day-grid">${daySlots}</div>${categories}`;
+  const categoryTabs=['교육','아르바이트','휴식'].map(category=>`<button data-schedule-category="${category}" class="${activeScheduleCategory===category?'on':''}">${category}</button>`).join('');
+  const actionCards=actions.filter(action=>action.category===activeScheduleCategory).map(action=>`<button class="action ${selectedScheduleAction===action.id?'selected':''}" data-action="${action.id}"><img src="../assets/ui/activity-icons/activity-${action.id}.png" alt=""><b>${action.name}</b><span>${action.cost > 0 ? `-${action.cost}냥` : action.cost < 0 ? `+${-action.cost}냥` : '무료'}</span><small>${action.summary||'직접 방문하여 선택'}</small></button>`).join('');
+  const projection=scheduleProjection(),filled=game.dailySchedule.filter(Boolean).length;
+  panelBody.innerHTML = `<div class="schedule-adviser"><b>${game.guardianName||guardianDefs[game.guardianType]?.name||'신수'}의 일정 조언</b><p>${projection.stress>=80?'스트레스가 높아 휴식을 넣는 것이 좋겠어요.':filled===7?'일주일 준비가 끝났어요. 실행 전에 비용과 상태를 확인하세요.':'요일을 고른 뒤 활동을 넣어 주세요.'}</p></div><div class="day-grid">${daySlots}</div><div class="schedule-forecast"><span>편성 ${filled}/7</span><span>예상 은전 <b>${projection.money.toLocaleString()}냥</b></span><span>예상 스트레스 <b>${projection.stress}/100</b></span></div><div class="schedule-tabs" role="tablist">${categoryTabs}</div><section class="schedule-category"><div class="action-grid">${actionCards}</div></section><div class="schedule-tools"><button id="scheduleFillRemaining" ${selectedScheduleAction?'':'disabled'}>선택 활동으로 빈칸 채우기</button><button id="scheduleClearAll" ${filled?'':'disabled'}>전체 비우기</button></div>`;
   panelBody.querySelectorAll('[data-action]').forEach(button => button.addEventListener('click', () => addDailyAction(button.dataset.action)));
-  panelBody.querySelectorAll('[data-day]').forEach(button => button.addEventListener('click', () => clearDailyAction(Number(button.dataset.day))));
+  panelBody.querySelectorAll('[data-day]').forEach(button => button.addEventListener('click', () => selectScheduleDay(Number(button.dataset.day))));
+  panelBody.querySelectorAll('[data-schedule-category]').forEach(button=>button.addEventListener('click',()=>{activeScheduleCategory=button.dataset.scheduleCategory;renderSchedulePanel();}));
+  document.querySelector('#scheduleFillRemaining').addEventListener('click',fillRemainingSchedule);
+  document.querySelector('#scheduleClearAll').addEventListener('click',clearAllSchedule);
 }
 
 let scheduleConfirmDismissed = false;
@@ -988,18 +1000,30 @@ function exploreMarket(){
 function enterMarketShop(type){if(!type)return;const place=marketPlaces.find(item=>item.id===type);document.querySelector('#dialogueText').textContent=`${place?.label||'가게'} 주인이 “어서 오세요.” 하고 반겨요.`;document.querySelector('#marketExplore').hidden=true;document.querySelector('#activityStage').hidden=true;panel.hidden=false;renderShopPanel(type,true);}
 
 function addDailyAction(id) {
-  const empty = game.dailySchedule.indexOf(null);
-  if (empty === -1) {
+  const empty=game.dailySchedule.indexOf(null),target=game.dailySchedule[scheduleCursor]?scheduleCursor:(scheduleCursor>=0?scheduleCursor:empty);
+  if (empty === -1&&target<0) {
     document.querySelector('#dialogueText').textContent = '7일 일정이 모두 찼어요. 요일 칸을 눌러 수정하세요.';
     return;
   }
-  game.dailySchedule[empty] = id;
-  document.querySelector('#dialogueText').textContent = `${['월','화','수','목','금','토','일'][empty]}요일에 ${actions.find(action => action.id === id).name}을 넣었어요.`;
+  const index=target>=0?target:empty;game.dailySchedule[index]=id;selectedScheduleAction=id;
+  document.querySelector('#dialogueText').textContent = `${['월','화','수','목','금','토','일'][index]}요일에 ${actions.find(action => action.id === id).name}을 넣었어요.`;
+  const nextEmpty=game.dailySchedule.findIndex((item,nextIndex)=>!item&&nextIndex>index);scheduleCursor=nextEmpty>=0?nextEmpty:game.dailySchedule.indexOf(null);
   scheduleConfirmDismissed = false;
   renderSchedulePanel();
   if (game.dailySchedule.every(Boolean)) showScheduleConfirmation();
   queueAutoSave();
 }
+
+function selectScheduleDay(index){
+  scheduleCursor=index;
+  if(game.dailySchedule[index]){game.dailySchedule[index]=null;scheduleConfirmDismissed=false;hideScheduleConfirmation();document.querySelector('#dialogueText').textContent=`${['월','화','수','목','금','토','일'][index]}요일 일정을 비웠어요.`;}
+  renderSchedulePanel();queueAutoSave();
+}
+function fillRemainingSchedule(){
+  if(!selectedScheduleAction)return;
+  game.dailySchedule=game.dailySchedule.map(id=>id||selectedScheduleAction);scheduleCursor=-1;scheduleConfirmDismissed=false;renderSchedulePanel();showScheduleConfirmation();queueAutoSave();
+}
+function clearAllSchedule(){game.dailySchedule=[null,null,null,null,null,null,null];scheduleCursor=0;selectedScheduleAction=null;scheduleConfirmDismissed=false;hideScheduleConfirmation();renderSchedulePanel();queueAutoSave();}
 
 function clearDailyAction(index) {
   if (!game.dailySchedule[index]) return;

@@ -1,0 +1,14 @@
+.day-slot.selected{outline:3px solid #b7772f;outline-offset:1px;transform:translateY(-2px)}
+.day-slot small{color:#8b7458;font-size:8px;line-height:1}
+.schedule-adviser{margin:4px 0 8px;padding:9px 11px;border-left:4px solid #96713f;border-radius:7px;background:#efe1c7;color:#4b3827}
+.schedule-adviser b{font-family:serif;font-size:12px}.schedule-adviser p{margin:3px 0 0;font-size:10px;line-height:1.4}
+.schedule-forecast{display:grid;grid-template-columns:repeat(3,1fr);gap:4px;margin:7px 0}
+.schedule-forecast span{padding:5px 2px;border:1px solid #c0a77e;border-radius:6px;background:#fff8e9;text-align:center;font-size:8px}
+.schedule-forecast b{display:block;margin-top:2px;color:#62462c;font-size:10px}
+.schedule-tabs{display:grid;grid-template-columns:repeat(3,1fr);gap:5px;position:sticky;top:112px;z-index:1;padding:5px 0;background:#f6eddc}
+.schedule-tabs button{padding:8px 3px;border-color:#9c7b51;background:#efe1c4;color:#5b422c;font-size:11px;font-weight:800}
+.schedule-tabs button.on{background:#65462d;color:#fff7e3;box-shadow:inset 0 -3px #c69b57}
+.schedule-tools{display:grid;grid-template-columns:2fr 1fr;gap:6px;margin:10px 0 4px}
+.schedule-tools button{padding:9px 4px;border-color:#8d673e;background:#745033;color:#fff7e6;font-size:10px}
+.schedule-tools button:last-child{background:#eee0c7;color:#664b35}.schedule-tools button:disabled{opacity:.45}
+.schedule-category .action.selected{outline:3px solid #c28b3d;background:#fff0c9}
