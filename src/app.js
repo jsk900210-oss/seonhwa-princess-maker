@@ -42,7 +42,7 @@ function transitionPrologueToHomeMusic(){
   fadeAudio(prologueMusic,0,1600);
 }
 
-const game = { characterName:'', nannyName:'', profileSlot:null, age: 9, height:130, weight:28.5, month: 1, week: 1, season:'봄', money: 50000, cash:50000, health:42, strength:18, agility:20, intelligence:35, magic:8, mentality:30, dignity:36, manners:28, speech:14, sensitivity:40, sense:24, charm:30, stress:12, items: [], equippedOutfit:null, autoOutfit:true, dailySchedule: [null,null,null,null,null,null,null], birthday:null, currentDate:null, endingDate:null, ended:false, birthdayCount:0, element:null, birthSeason:null, memory:0, truth:0, exposure:0, guardianTrust:50, nannyAffinity:50, lastGreetingDate:null, monthlyLedger:null };
+const game = { characterName:'', nannyName:'', profileSlot:null, age: 9, height:130, weight:28.5, month: 1, week: 1, season:'봄', money: 50000, cash:50000, health:42, strength:18, agility:20, intelligence:35, magic:8, mentality:30, dignity:36, manners:28, speech:14, sensitivity:40, sense:24, charm:30, stress:12, items: [], relations:{}, equippedOutfit:null, autoOutfit:true, dailySchedule: [null,null,null,null,null,null,null], birthday:null, currentDate:null, endingDate:null, ended:false, birthdayCount:0, element:null, birthSeason:null, memory:0, truth:0, exposure:0, guardianTrust:50, nannyAffinity:50, lastGreetingDate:null, monthlyLedger:null };
 const statGroups = [
   { title: '신체', stats: [['health','체력'],['strength','힘'],['agility','민첩']] },
   { title: '지성·마음', stats: [['intelligence','지능'],['magic','마력'],['mentality','정신력']] },
@@ -413,12 +413,34 @@ function awardVacationIllustration(){
   return prize;
 }
 const endingRelationCandidates=[
-  {id:'doyun',name:'도윤',role:'젊은 무관',image:'../assets/characters/romance/doyun/vacation.png',assetReady:true,minAge:14,ending:'무관의 아내',dialogues:['“활쏘기보다 고요한 풍경을 바라보는 일이 더 어렵군.”','“혼자 걷는 길인 줄 알았는데, 동행이 생겼군.”']},
-  {id:'seojin',name:'서진',role:'선비',image:'../assets/characters/romance/seojin/vacation.png',assetReady:true,minAge:14,ending:'선비와의 삶',dialogues:['“책에서 읽던 풍경보다 직접 보는 모습이 더 아름답군요.”','“이 경치를 시로 남긴다면 어떤 첫 구절이 좋을까요?”']},
-  {id:'yeonwoo',name:'연우',role:'화공',image:'../assets/characters/romance/yeonwoo/vacation.png',assetReady:true,minAge:14,ending:'화가의 동반자',dialogues:['“잠시 그대로 있어 봐. 이 순간을 그림에 담고 싶어.”','“같은 풍경도 함께 보는 사람에 따라 색이 달라 보여.”']},
-  {id:'taegyeom',name:'태겸',role:'상단 후계자',image:'../assets/characters/romance/taegyeom/vacation.png',assetReady:true,minAge:14,ending:'대상인의 동반자',dialogues:['“좋은 물건보다 좋은 인연을 만나는 일이 더 귀하다고 하더군.”','“이 길 끝에 재미있는 장이 선다는데, 함께 가겠어?”']},
-  {id:'hyeon',name:'현',role:'정체를 숨긴 왕자',image:'../assets/characters/romance/hyeon/vacation.png',assetReady:true,minAge:15,ending:'왕자의 연인',dialogues:['“내가 누구인지는 잠시 잊고, 오늘만 평범하게 걸어도 될까?”','“또 만났네. 이쯤 되면 우연이라고만 하기는 어렵겠어.”']}
+  {id:'doyun',name:'도윤',role:'젊은 무관',image:'../assets/characters/romance/doyun/vacation.png',assetReady:true,minAge:13,ending:'무관의 아내',dialogues:['“활쏘기보다 고요한 풍경을 바라보는 일이 더 어렵군.”','“혼자 걷는 길인 줄 알았는데, 동행이 생겼군.”']},
+  {id:'seojin',name:'서진',role:'선비',image:'../assets/characters/romance/seojin/vacation.png',assetReady:true,minAge:13,ending:'선비와의 삶',dialogues:['“책에서 읽던 풍경보다 직접 보는 모습이 더 아름답군요.”','“이 경치를 시로 남긴다면 어떤 첫 구절이 좋을까요?”']},
+  {id:'yeonwoo',name:'연우',role:'화공',image:'../assets/characters/romance/yeonwoo/vacation.png',assetReady:true,minAge:13,ending:'화가의 동반자',dialogues:['“잠시 그대로 있어 봐. 이 순간을 그림에 담고 싶어.”','“같은 풍경도 함께 보는 사람에 따라 색이 달라 보여.”']},
+  {id:'taegyeom',name:'태겸',role:'상단 후계자',image:'../assets/characters/romance/taegyeom/vacation.png',assetReady:true,minAge:13,ending:'대상인의 동반자',dialogues:['“좋은 물건보다 좋은 인연을 만나는 일이 더 귀하다고 하더군.”','“이 길 끝에 재미있는 장이 선다는데, 함께 가겠어?”']},
+  {id:'hyeon',name:'현',role:'정체를 숨긴 왕자',image:'../assets/characters/romance/hyeon/vacation.png',assetReady:true,minAge:13,ending:'왕자의 연인',dialogues:['“내가 누구인지는 잠시 잊고, 오늘만 평범하게 걸어도 될까?”','“또 만났네. 이쯤 되면 우연이라고만 하기는 어렵겠어.”']}
 ];
+function normalizeRelations(){
+  if(!game.relations||typeof game.relations!=='object')game.relations={};
+  endingRelationCandidates.forEach(candidate=>{
+    const saved=game.relations[candidate.id];
+    const legacyMeetings=Number.isFinite(Number(saved))?Number(saved):0;
+    const record=saved&&typeof saved==='object'?saved:{};
+    const meetings=Math.max(0,Number(record.meetings??legacyMeetings)||0);
+    game.relations[candidate.id]={meetings,affinity:Math.max(0,Math.min(100,Number(record.affinity)||meetings*5)),lastMetAt:record.lastMetAt||null,dateUnlocked:Boolean(record.dateUnlocked||(meetings>=5&&game.age>=16))};
+  });
+}
+function relationRecord(id){normalizeRelations();return game.relations[id];}
+function recordRelationEncounter(candidate){
+  const record=relationRecord(candidate.id);record.meetings+=1;record.affinity=Math.min(100,record.affinity+5);record.lastMetAt=game.currentDate||null;
+  if(record.meetings>=5&&game.age>=16)record.dateUnlocked=true;
+  return record;
+}
+function balancedRelationCandidate(candidates){
+  if(!candidates.length)return null;
+  const minimum=Math.min(...candidates.map(candidate=>relationRecord(candidate.id).meetings));
+  const pool=candidates.filter(candidate=>relationRecord(candidate.id).meetings<=minimum+1);
+  return pool[Math.floor(Math.random()*pool.length)];
+}
 function waitForVacationTap(label='화면을 터치해 계속'){
   const scene=document.querySelector('#vacationScene'),button=document.querySelector('#vacationNext');button.textContent=label;
   return new Promise(resolve=>{const advance=event=>{event.preventDefault();scene.removeEventListener('click',advance);resolve();};scene.addEventListener('click',advance,{once:true});});
@@ -433,11 +455,11 @@ async function playVacationScene(prize,index){
   const encounter=candidates.length>0&&Math.random()<.35;
   let relation=null;
   if(encounter){
-    relation=candidates[Math.floor(Math.random()*candidates.length)];const fromLeft=Math.random()<.5;
+    relation=balancedRelationCandidate(candidates);const fromLeft=Math.random()<.5;
     person.querySelector('img').src=relation.image;person.querySelector('img').alt=`엔딩 인연 후보 ${relation.name}`;
     person.className=`encounter-character ${fromLeft?'from-left':'from-right'}`;person.hidden=false;scene.classList.add('has-encounter');
     document.querySelector('#encounterName').textContent=relation.name;document.querySelector('#encounterText').textContent=relation.dialogues[Math.floor(Math.random()*relation.dialogues.length)];talk.hidden=false;
-    game.relations=game.relations||{};game.relations[relation.id]=(game.relations[relation.id]||0)+1;
+    recordRelationEncounter(relation);
     await waitForVacationTap('대화를 읽은 뒤 터치');
   }
   talk.hidden=true;person.hidden=true;scene.classList.remove('has-encounter');scene.hidden=true;scene.dataset.effect='';phone.classList.remove('vacation-playing');playHomeMusic();
@@ -531,7 +553,9 @@ function openPanel(type) {
     playHomeMusic();
     panelTitle.textContent = `${game.characterName || '아이'}의 상태`;
     normalizeBodyMetrics();
-    panelBody.innerHTML = `<div class="status-summary"><span>${game.age}세 · ${game.season} ${game.week}주</span><b>${game.money.toLocaleString()}냥</b></div><section class="body-profile" aria-label="성장 정보"><div><small>키</small><b>${game.height.toFixed(1)} cm</b></div><div><small>몸무게</small><b>${game.weight.toFixed(1)} kg</b></div></section>${statGroups.map(group => `<section class="stat-group"><h3>${group.title}</h3>${group.stats.map(([key,label]) => statBar(key,label)).join('')}</section>`).join('')}<section class="stat-group condition-group"><h3>현재 상태</h3>${statBar('stress','스트레스')}</section>`;
+    normalizeRelations();
+    const relationCards=endingRelationCandidates.map(candidate=>{const relation=game.relations[candidate.id];const phase=relation.dateUnlocked?'데이트 가능':relation.meetings>=5?'16세부터 데이트 가능':`${relation.meetings} / 5회 만남`;return `<div class="relation-card ${relation.dateUnlocked?'unlocked':''}"><b>${candidate.name}</b><small>${candidate.role}</small><span>${phase}</span><i style="--relation-progress:${Math.min(100,relation.meetings/5*100)}%"></i></div>`;}).join('');
+    panelBody.innerHTML = `<div class="status-summary"><span>${game.age}세 · ${game.season} ${game.week}주</span><b>${game.money.toLocaleString()}냥</b></div><section class="body-profile" aria-label="성장 정보"><div><small>키</small><b>${game.height.toFixed(1)} cm</b></div><div><small>몸무게</small><b>${game.weight.toFixed(1)} kg</b></div></section>${statGroups.map(group => `<section class="stat-group"><h3>${group.title}</h3>${group.stats.map(([key,label]) => statBar(key,label)).join('')}</section>`).join('')}<section class="stat-group condition-group"><h3>현재 상태</h3>${statBar('stress','스트레스')}</section><section class="relation-group"><h3>인연</h3><p>13세부터 우정으로 만나며, 5회 만남과 16세 이상을 충족하면 데이트가 열립니다.</p><div class="relation-grid">${relationCards}</div></section>`;
   } else if (type === 'inventory') {
     playHomeMusic();
     renderInventory();
@@ -662,6 +686,7 @@ function applySavePayload(saved) {
   Object.assign(game, saved.game);
   if(!Number.isFinite(game.cash))game.cash=50000;
   normalizeStats();
+  normalizeRelations();
   normalizeBodyMetrics();
   if(typeof game.autoOutfit!=='boolean')game.autoOutfit=true;
   normalizeInventory();
@@ -766,7 +791,7 @@ function deleteCharacterRecord(slot){
 }
 
 function resetGameState() {
-  Object.assign(game, { characterName:'',nannyName:'',profileSlot:null,age:9,height:130,weight:28.5,month:1,week:1,season:'봄',money:50000,cash:50000,health:42,strength:18,agility:20,intelligence:35,magic:8,mentality:30,dignity:36,manners:28,speech:14,sensitivity:40,sense:24,charm:30,stress:12,items:[],equippedOutfit:null,autoOutfit:true,dailySchedule:[null,null,null,null,null,null,null],birthday:null,currentDate:null,endingDate:null,ended:false,birthdayCount:0,element:null,birthSeason:null,memory:0,truth:0,exposure:0,guardianTrust:50,nannyAffinity:50,lastGreetingDate:null,monthlyLedger:null});
+  Object.assign(game, { characterName:'',nannyName:'',profileSlot:null,age:9,height:130,weight:28.5,month:1,week:1,season:'봄',money:50000,cash:50000,health:42,strength:18,agility:20,intelligence:35,magic:8,mentality:30,dignity:36,manners:28,speech:14,sensitivity:40,sense:24,charm:30,stress:12,items:[],relations:{},equippedOutfit:null,autoOutfit:true,dailySchedule:[null,null,null,null,null,null,null],birthday:null,currentDate:null,endingDate:null,ended:false,birthdayCount:0,element:null,birthSeason:null,memory:0,truth:0,exposure:0,guardianTrust:50,nannyAffinity:50,lastGreetingDate:null,monthlyLedger:null});
   document.querySelector('#liveChanges').innerHTML='';
   const greeting=document.querySelector('#homeGreeting');greeting.hidden=true;greeting.classList.remove('greeting-active');
   document.querySelector('#characterNameInput').value='';
