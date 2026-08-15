@@ -42,15 +42,14 @@ function transitionPrologueToHomeMusic(){
   fadeAudio(prologueMusic,0,1600);
 }
 
-const game = { characterName:'', nannyName:'', profileSlot:null, age: 9, month: 1, week: 1, season:'봄', money: 50000, cash:50000, health: 42, study: 35, items: [], equippedOutfit:null, autoOutfit:true, dailySchedule: [null,null,null,null,null,null,null], birthday:null, currentDate:null, endingDate:null, ended:false, birthdayCount:0, element:null, birthSeason:null, memory:0, truth:0, exposure:0, guardianTrust:50, nannyAffinity:50, lastGreetingDate:null, monthlyLedger:null };
-Object.assign(game, { healthiness: 76, arithmetic: 22, manners: 28, arts: 18, martial: 12, archery: 5, riding: 3, craft: 24, cooking: 20, embroidery: 15, virtue: 36, charm: 30, sensitivity: 40, medicine: 8, commerce: 10, reputation: 14, stress: 12 });
+const game = { characterName:'', nannyName:'', profileSlot:null, age: 9, month: 1, week: 1, season:'봄', money: 50000, cash:50000, health:42, strength:18, agility:20, intelligence:35, magic:8, mentality:30, dignity:36, manners:28, speech:14, sensitivity:40, sense:24, charm:30, stress:12, items: [], equippedOutfit:null, autoOutfit:true, dailySchedule: [null,null,null,null,null,null,null], birthday:null, currentDate:null, endingDate:null, ended:false, birthdayCount:0, element:null, birthSeason:null, memory:0, truth:0, exposure:0, guardianTrust:50, nannyAffinity:50, lastGreetingDate:null, monthlyLedger:null };
 const statGroups = [
-  { title: '기초 능력', stats: [['health','체력'],['healthiness','건강'],['study','학문'],['arithmetic','산술'],['manners','예절']] },
-  { title: '예술·기술', stats: [['arts','예능'],['craft','솜씨'],['cooking','요리'],['embroidery','자수'],['sensitivity','감수성']] },
-  { title: '무예·전문', stats: [['martial','무예'],['archery','궁술'],['riding','승마'],['medicine','의술'],['commerce','상업']] },
-  { title: '인품·상태', stats: [['virtue','덕망'],['charm','매력'],['reputation','평판'],['stress','스트레스']] }
+  { title: '신체', stats: [['health','체력'],['strength','힘'],['agility','민첩']] },
+  { title: '지성·마음', stats: [['intelligence','지능'],['magic','마력'],['mentality','정신력']] },
+  { title: '품격·소통', stats: [['dignity','기품'],['manners','예절'],['speech','화술']] },
+  { title: '감각·매력', stats: [['sensitivity','감수성'],['sense','센스'],['charm','매력']] }
 ];
-const statDisplayOrder=[...statGroups.flatMap(group=>group.stats.map(([key])=>key)),'nannyAffinity','guardianTrust','memory','truth','exposure'];
+const statDisplayOrder=[...statGroups.flatMap(group=>group.stats.map(([key])=>key)),'stress','nannyAffinity','guardianTrust','memory','truth','exposure'];
 const statDisplayRank=new Map(statDisplayOrder.map((key,index)=>[key,index]));
 const orderedChangeEntries=(change={})=>Object.entries(change).sort(([left],[right])=>(statDisplayRank.get(left)??999)-(statDisplayRank.get(right)??999));
 const expressions = [
@@ -91,8 +90,22 @@ const LEGACY_SAVE_KEYS = ['seonhwa-princess-mvp-save-v1'];
 let pendingRecoverySave=null;
 const statMaximum=key=>key==='stress'?100:999;
 const clampStat=(key,value)=>Math.max(0,Math.min(statMaximum(key),Number(value)||0));
-const boundedStats=[...new Set(statGroups.flatMap(group=>group.stats.map(([key])=>key)).concat(['nannyAffinity','guardianTrust','memory','truth','exposure']))];
-function normalizeStats(){boundedStats.forEach(key=>{if(Object.hasOwn(game,key))game[key]=clampStat(key,game[key]);});}
+const boundedStats=[...new Set(statGroups.flatMap(group=>group.stats.map(([key])=>key)).concat(['stress','nannyAffinity','guardianTrust','memory','truth','exposure']))];
+const legacyStatMap={healthiness:'mentality',study:'intelligence',arithmetic:'sense',arts:'sensitivity',martial:'strength',archery:'agility',riding:'agility',craft:'sense',cooking:'sense',embroidery:'sense',virtue:'dignity',medicine:'magic',commerce:'speech',reputation:'speech'};
+const canonicalStatKey=key=>legacyStatMap[key]||key;
+function canonicalizeChange(change={}){const result={};Object.entries(change).forEach(([key,value])=>{const mapped=canonicalStatKey(key);result[mapped]=(result[mapped]||0)+value;});return result;}
+function migrateLegacyStats(){
+  const average=(...keys)=>Math.round(keys.reduce((sum,key)=>sum+(Number(game[key])||0),0)/keys.length);
+  if(!Number.isFinite(Number(game.strength)))game.strength=average('martial','health');
+  if(!Number.isFinite(Number(game.agility)))game.agility=average('archery','riding','health');
+  if(!Number.isFinite(Number(game.intelligence)))game.intelligence=average('study','arithmetic');
+  if(!Number.isFinite(Number(game.magic)))game.magic=average('medicine','sensitivity');
+  if(!Number.isFinite(Number(game.mentality)))game.mentality=average('healthiness','virtue');
+  if(!Number.isFinite(Number(game.dignity)))game.dignity=average('virtue','reputation');
+  if(!Number.isFinite(Number(game.speech)))game.speech=average('commerce','reputation');
+  if(!Number.isFinite(Number(game.sense)))game.sense=average('craft','arts','arithmetic');
+}
+function normalizeStats(){migrateLegacyStats();boundedStats.forEach(key=>{if(Object.hasOwn(game,key))game[key]=clampStat(key,game[key]);});}
 const actionPresentation = {
   reading: { motion:'motion-calligraphy', location:'studyRoom', prop:'none', activity:'calligraphy', npc:'teacher' }, arithmetic: { motion:'motion-arithmetic', location:'arithmeticRoom', prop:'none', activity:'arithmetic', npc:'teacher' },
   manners: { motion:'motion-manners', location:'etiquetteRoom', prop:'none', activity:'manners', npc:'teacher' }, errand: { motion:'motion-errand', location:'marketErrand', prop:'none', activity:'errand', npc:null },
@@ -169,6 +182,8 @@ const outfits = [
   {id:'premium-crimson-festival',age:9,ageEnd:18,name:'자주빛 연회 예복',price:1720,tone:'고급',seasons:['가을','겨울'],situations:['shopping','vacation','manners'],change:{charm:16,reputation:11,manners:6,stress:2}},
   {id:'premium-ink-scholar',age:9,ageEnd:18,name:'먹빛 서생 예복',price:1600,tone:'고급',seasons:['가을','겨울'],situations:['reading','arithmetic','manners'],change:{study:10,arts:8,reputation:7,charm:6}}
 ];
+foods.forEach(item=>{item.change=canonicalizeChange(item.change);});
+outfits.forEach(item=>{item.change=canonicalizeChange(item.change);});
 const outfitAgeLabel=outfit=>outfit.age===outfit.ageEnd?`${outfit.age}세`:`${outfit.age}–${outfit.ageEnd}세`;
 const outfitAvailable=outfit=>game.age>=outfit.age&&game.age<=outfit.ageEnd;
 const outfitAssetAge=outfit=>outfit.category==='cash'?growthAge():outfit.assetAge||outfit.age;
@@ -184,9 +199,9 @@ const outfitImage=id=>{
 };
 function homeCondition(){
   if(game.homeReaction==='shocked')return 'shocked';
-  if(game.virtue<25||game.nannyAffinity<25||game.stress>=75)return 'rebellious';
+  if(game.dignity<25||game.nannyAffinity<25||game.stress>=75)return 'rebellious';
   if(game.stress>=50)return 'angry';
-  if(game.healthiness<35||game.health<25)return 'sad';
+  if(game.mentality<35||game.health<25)return 'sad';
   if(game.stress<30)return 'happy';
   return 'normal';
 }
@@ -251,13 +266,13 @@ function conditionEvent(stress, dayIndex){
   if(stress>=55)return 'drowsy';
   return null;
 }
-const activitySkill={reading:'study',arithmetic:'arithmetic',manners:'manners',errand:'commerce',sweeping:'health',herbs:'medicine',houseclean:'craft',rest:'healthiness'};
+const activitySkill={reading:'intelligence',arithmetic:'sense',manners:'manners',errand:'speech',sweeping:'strength',herbs:'sense',houseclean:'sense',rest:'mentality'};
 const outcomeLabels={perfect:'완벽',success:'성공',struggle:'힘겨움',mistake:'실수'};
 function activityOutcomeThresholds(action,stress){
   const skill=game[activitySkill[action.id]]||0;
   const healthRatio=clampStat('health',game.health)/statMaximum('health');
   const healthBonus=healthRatio*24;
-  const condition=(game.healthiness||50)*.07-stress*.42;
+  const condition=(game.mentality||50)*.07-stress*.42;
   const success=Math.max(18,Math.min(94,44+skill*.09+condition+healthBonus));
   const perfect=Math.max(6,success-(34-healthRatio*8));
   const struggle=Math.min(98,success+(22-healthRatio*10));
@@ -333,16 +348,16 @@ async function animateConditionEvent(stageCharacter,cue,type){
   cue.hidden=true;
 }
 const actions = [
-  { id: 'reading', category: '교육', name: '글읽기', cost: 80, summary: '학문 +6 · 스트레스 +3', change: { study: 6, stress: 3 } },
-  { id: 'arithmetic', category: '교육', name: '셈하기', cost: 70, summary: '학문 +4 · 스트레스 +2', change: { study: 4, stress: 2 } },
-  { id: 'manners', category: '교육', name: '예절 배우기', cost: 90, summary: '학문 +2 · 스트레스 +2', change: { study: 2, stress: 2 } },
-  { id: 'errand', category: '아르바이트', name: '장터 심부름', cost: -90, summary: '체력 +3 · 스트레스 +4 · 90냥 획득', change: { health: 3, stress: 4 } },
-  { id: 'sweeping', category: '아르바이트', name: '마당 쓸기', cost: -70, summary: '체력 +2 · 스트레스 +3 · 70냥 획득', change: { health: 2, stress: 3 } },
-  { id: 'herbs', category: '아르바이트', name: '약초 줍기', cost: -80, summary: '체력 +2 · 학문 +1 · 스트레스 +4 · 80냥 획득', change: { health: 2, study: 1, stress: 4 } },
-  { id: 'houseclean', category: '아르바이트', name: '집 청소', cost: -60, summary: '솜씨 +2 · 체력 +2 · 스트레스 +3 · 60냥 획득', change: { craft: 2, health: 2, stress: 3 } },
-  { id: 'rest', category: '휴식', name: '집에서 휴식', cost: 0, summary: '스트레스 -12 · 체력 +2', change: { health: 2, stress: -12 } },
+  { id: 'reading', category: '교육', name: '글읽기', cost: 80, summary: '지능 +5 · 정신력 +1 · 스트레스 +3', change: { intelligence:5, mentality:1, stress:3 } },
+  { id: 'arithmetic', category: '교육', name: '셈하기', cost: 70, summary: '지능 +4 · 센스 +2 · 스트레스 +2', change: { intelligence:4, sense:2, stress:2 } },
+  { id: 'manners', category: '교육', name: '예절 배우기', cost: 90, summary: '예절 +5 · 기품 +2 · 스트레스 +2', change: { manners:5, dignity:2, stress:2 } },
+  { id: 'errand', category: '아르바이트', name: '장터 심부름', cost: -90, summary: '민첩 +3 · 화술 +2 · 스트레스 +4 · 90냥 획득', change: { agility:3, speech:2, stress:4 } },
+  { id: 'sweeping', category: '아르바이트', name: '마당 쓸기', cost: -70, summary: '힘 +3 · 체력 +2 · 스트레스 +3 · 70냥 획득', change: { strength:3, health:2, stress:3 } },
+  { id: 'herbs', category: '아르바이트', name: '약초 줍기', cost: -80, summary: '센스 +2 · 지능 +1 · 체력 +1 · 스트레스 +4 · 80냥 획득', change: { sense:2, intelligence:1, health:1, stress:4 } },
+  { id: 'houseclean', category: '아르바이트', name: '집 청소', cost: -60, summary: '힘 +2 · 센스 +2 · 체력 +1 · 스트레스 +3 · 60냥 획득', change: { strength:2, sense:2, health:1, stress:3 } },
+  { id: 'rest', category: '휴식', name: '집에서 휴식', cost: 0, summary: '스트레스 -12 · 체력 +2 · 정신력 +2', change: { health:2, mentality:2, stress:-12 } },
   { id: 'shopping', category: '휴식', name: '저잣거리', cost: 0, summary: '', change: {}, special:'market' },
-  { id: 'vacation', category: '휴식', name: '바캉스', cost: 180, summary: '스트레스 -25 · 추억 일러스트 획득', change: {stress:-25}, special:'vacation' }
+  { id: 'vacation', category: '휴식', name: '바캉스', cost: 180, summary: '감수성 +3 · 매력 +1 · 스트레스 -25 · 추억 일러스트 획득', change: {sensitivity:3,charm:1,stress:-25}, special:'vacation' }
 ];
 function actionForStressLimit(action,stress){
   return stress>=statMaximum('stress')&&action.id!=='rest'?actions.find(item=>item.id==='rest'):action;
@@ -403,7 +418,7 @@ function renderHud() {
   document.querySelector('#speakerName').textContent = game.nannyName || '유모';
 }
 
-const statLabels={health:'체력',healthiness:'건강',study:'학문',arithmetic:'산술',manners:'예절',arts:'예능',martial:'무예',craft:'솜씨',cooking:'요리',embroidery:'자수',virtue:'덕망',charm:'매력',sensitivity:'감수성',medicine:'의술',commerce:'상업',reputation:'평판',stress:'스트레스'};
+const statLabels={health:'체력',strength:'힘',agility:'민첩',intelligence:'지능',magic:'마력',mentality:'정신력',dignity:'기품',manners:'예절',speech:'화술',sensitivity:'감수성',sense:'센스',charm:'매력',stress:'스트레스'};
 statLabels.nannyAffinity='유모 친밀도';
 function showLiveChanges(action){
   const items=orderedChangeEntries(action.change).map(([key,value])=>{const positive=key==='stress'?value<0:value>=0;const current=clampStat(key,game[key]);return `<span class="${positive?'up':'down'}">${statLabels[key]||key} <b>${current}</b> <small>(${value>0?'+':''}${value})</small></span>`;});
@@ -443,6 +458,7 @@ const greetingChoices={
     {line:'어젯밤 재미있는 꿈을 꿨어요. 큰 궁궐을 걷고 있었어요.',choices:[['꿈 이야기를 더 들려주렴.',{sensitivity:3,nannyAffinity:4},'기억나는 장면을 모두 말해드릴게요.'],['언젠가 직접 볼 수도 있겠구나.',{charm:2,reputation:1,nannyAffinity:2},'정말 그런 날이 올까요?'],['꿈보다 오늘을 충실히 보내자.',{virtue:3,nannyAffinity:1},'네, 오늘 할 일부터 잘할게요.']]}
   ]
 };
+Object.values(greetingChoices).flat().forEach(scene=>scene.choices.forEach(choice=>{choice[1]=canonicalizeChange(choice[1]);}));
 function showHomeGreeting(force=false){
   if(!game.birthday||document.querySelector('.phone').classList.contains('playing')||game.lastGreetingDate===game.currentDate)return false;
   game.lastGreetingDate=game.currentDate;
@@ -461,7 +477,7 @@ function showHomeGreeting(force=false){
   return true;
 }
 function answerHomeGreeting(scene,index){
-  const [,change,result]=scene.choices[index];Object.entries(change).forEach(([key,value])=>game[key]=clampStat(key,(game[key]||0)+value));
+  const [,change,result]=scene.choices[index];Object.entries(canonicalizeChange(change)).forEach(([key,value])=>game[key]=clampStat(key,(game[key]||0)+value));
   document.querySelector('#homeGreeting').hidden=true;document.querySelector('.phone').classList.remove('greeting-active');document.querySelector('#speakerName').textContent=game.characterName||'아이';document.querySelector('#dialogueText').textContent=result;showLiveChanges({change,cost:0});renderHud();
 }
 
@@ -473,7 +489,7 @@ function openPanel(type) {
   } else if (type === 'status') {
     playHomeMusic();
     panelTitle.textContent = `${game.characterName || '아이'}의 상태`;
-    panelBody.innerHTML = `<div class="status-summary"><span>${game.age}세 · ${game.season} ${game.week}주</span><b>${game.money.toLocaleString()}냥</b></div>${statGroups.map(group => `<section class="stat-group"><h3>${group.title}</h3>${group.stats.map(([key,label]) => statBar(key,label)).join('')}</section>`).join('')}`;
+    panelBody.innerHTML = `<div class="status-summary"><span>${game.age}세 · ${game.season} ${game.week}주</span><b>${game.money.toLocaleString()}냥</b></div>${statGroups.map(group => `<section class="stat-group"><h3>${group.title}</h3>${group.stats.map(([key,label]) => statBar(key,label)).join('')}</section>`).join('')}<section class="stat-group condition-group"><h3>현재 상태</h3>${statBar('stress','스트레스')}</section>`;
   } else if (type === 'inventory') {
     playHomeMusic();
     renderInventory();
@@ -707,7 +723,7 @@ function deleteCharacterRecord(slot){
 }
 
 function resetGameState() {
-  Object.assign(game, { characterName:'',nannyName:'',profileSlot:null,age:9, month:1, week:1,season:'봄', money:50000, cash:50000, health:42, study:35, items:[], equippedOutfit:null, autoOutfit:true, dailySchedule:[null,null,null,null,null,null,null], birthday:null,currentDate:null,endingDate:null,ended:false,birthdayCount:0,element:null,birthSeason:null,memory:0,truth:0,exposure:0,guardianTrust:50,nannyAffinity:50,lastGreetingDate:null,monthlyLedger:null,healthiness:76,arithmetic:22,manners:28,arts:18,martial:12,archery:5,riding:3,craft:24,cooking:20,embroidery:15,virtue:36,charm:30,sensitivity:40,medicine:8,commerce:10,reputation:14,stress:12 });
+  Object.assign(game, { characterName:'',nannyName:'',profileSlot:null,age:9,month:1,week:1,season:'봄',money:50000,cash:50000,health:42,strength:18,agility:20,intelligence:35,magic:8,mentality:30,dignity:36,manners:28,speech:14,sensitivity:40,sense:24,charm:30,stress:12,items:[],equippedOutfit:null,autoOutfit:true,dailySchedule:[null,null,null,null,null,null,null],birthday:null,currentDate:null,endingDate:null,ended:false,birthdayCount:0,element:null,birthSeason:null,memory:0,truth:0,exposure:0,guardianTrust:50,nannyAffinity:50,lastGreetingDate:null,monthlyLedger:null});
   document.querySelector('#liveChanges').innerHTML='';
   const greeting=document.querySelector('#homeGreeting');greeting.hidden=true;greeting.classList.remove('greeting-active');
   document.querySelector('#characterNameInput').value='';
@@ -769,7 +785,7 @@ function hideScheduleConfirmation() {
   document.querySelector('#scheduleConfirm').hidden = true;
 }
 
-function applyShopChanges(change){Object.entries(change).forEach(([key,value])=>{game[key]=clampStat(key,(game[key]||0)+value);});renderHud();queueAutoSave();}
+function applyShopChanges(change){Object.entries(canonicalizeChange(change)).forEach(([key,value])=>{game[key]=clampStat(key,(game[key]||0)+value);});renderHud();queueAutoSave();}
 let marketShoppingActive=false;
 let marketMealConsumed=false;
 let activeShopMarketMode=false;
