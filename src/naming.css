@@ -1,3 +1,4 @@
 .birthday-card input[type="text"]{margin-bottom:10px}.birthday-card label{margin-top:4px}
+.birthday-selects{display:grid;grid-template-columns:1.15fr .85fr .85fr;gap:7px;margin-bottom:8px}.birthday-selects select{min-width:0;width:100%;padding:11px 7px;border:1px solid #a78052;border-radius:10px;background:#fffaf0;color:#3f2b1d;font:700 14px serif;text-align:center}.birthday-selects select:focus{outline:2px solid #c89b52;outline-offset:1px}
 .prologue-back{position:absolute!important;z-index:3!important;left:20px!important;right:auto!important;bottom:21px!important;width:auto!important}.prologue-back:disabled{opacity:.35;cursor:default}
 .prologue-sound{position:absolute!important;z-index:3!important;left:14px!important;right:auto!important;top:14px!important;width:auto!important}

@@ -904,7 +904,7 @@ function resetGameState() {
   const greeting=document.querySelector('#homeGreeting');greeting.hidden=true;greeting.classList.remove('greeting-active');
   document.querySelector('#characterNameInput').value='';
   document.querySelector('#guardianNameInput').value='';
-  document.querySelector('#birthdayInput').value='1990-01-01';
+  syncBirthdaySelectors(true);
   document.querySelector('#birthdayTitle').textContent='아이의 이름과 생일';
   bg.src = backgrounds.home;
   character.src = expressions[0][0];
@@ -1206,7 +1206,16 @@ function awardFatherBirthdayGift(age){
   game.items.push({id:`father-birthday-letter-${age}`,type:'event',name:`아버지의 ${age}세 생일 선물`,description:'멀리 있는 아버지가 보낸 편지와 작은 선물',qty:1,source:'father-birthday'});
   return {age,change,message:`${age}세 생일을 맞아 아버지의 편지와 선물이 도착했어요. ${formatChanges(change)}`};
 }
-function enforceBirthday1990(){const input=document.querySelector('#birthdayInput');if(!input.value)return;if(input.value<'1990-01-01')input.value='1990-01-01';if(input.value>'1990-12-31')input.value='1990-12-31';}
+function syncBirthdaySelectors(reset=false){
+  const year=document.querySelector('#birthdayYear'),month=document.querySelector('#birthdayMonth'),day=document.querySelector('#birthdayDay'),input=document.querySelector('#birthdayInput');
+  if(!year||!month||!day||!input)return;
+  if(!month.options.length)for(let value=1;value<=12;value+=1)month.add(new Option(`${value}월`,String(value)));
+  if(reset){year.value='1990';month.value='1';day.innerHTML='';}
+  const selectedMonth=Math.max(1,Math.min(12,Number(month.value)||1)),lastDay=new Date(1990,selectedMonth,0).getDate(),selectedDay=Math.max(1,Math.min(lastDay,Number(day.value)||1));
+  day.innerHTML='';for(let value=1;value<=lastDay;value+=1)day.add(new Option(`${value}일`,String(value)));
+  day.value=String(selectedDay);year.value='1990';input.value=`1990-${String(selectedMonth).padStart(2,'0')}-${String(selectedDay).padStart(2,'0')}`;
+}
+function enforceBirthday1990(){syncBirthdaySelectors();}
 function startWithBirthday(){
   enforceBirthday1990();
   const value=document.querySelector('#birthdayInput').value;
@@ -1514,7 +1523,8 @@ document.querySelector('#guardianReselect').addEventListener('click',reselectGua
 document.querySelector('#guardianCompanion').addEventListener('click',()=>speakGuardian('home'));
 document.querySelector('#guardianCompanion').addEventListener('keydown',event=>{if(event.key==='Enter'||event.key===' '){event.preventDefault();speakGuardian('home');}});
 document.querySelector('.dialogue').addEventListener('click',advanceIntroDialogue);
-document.querySelector('#birthdayInput').addEventListener('change',enforceBirthday1990);
+document.querySelector('#birthdayMonth').addEventListener('change',()=>syncBirthdaySelectors());
+document.querySelector('#birthdayDay').addEventListener('change',()=>syncBirthdaySelectors());
 document.querySelector('#prologueNext').addEventListener('click',nextPrologue);
 document.querySelector('#prologueBack').addEventListener('click',previousPrologue);
 document.querySelector('#prologueSound').addEventListener('click',togglePrologueSound);
@@ -1522,6 +1532,7 @@ document.querySelector('#prologueSkip').addEventListener('click',closePrologue);
 document.querySelector('#storyReplay').addEventListener('click',replayPrologue);
 document.querySelector('#studioStartSound').addEventListener('click',finishStudioIntro);
 prologueScenes.forEach(scene=>{const image=new Image();image.src=scene.image;});
+syncBirthdaySelectors(true);
 syncSettingsUi();
 renderHud();
 updateHomeCharacter();

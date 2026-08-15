@@ -10,7 +10,7 @@
   <link rel="stylesheet" href="birthday.css">
   <link rel="stylesheet" href="prologue.css?v=0.61.95-debug">
   <link rel="stylesheet" href="rain-v2.css">
-  <link rel="stylesheet" href="naming.css">
+  <link rel="stylesheet" href="naming.css?v=0.62.26-debug">
   <link rel="stylesheet" href="guardian.css?v=0.62.25-debug">
   <link rel="stylesheet" href="naming-stable.css?v=0.62.15-debug">
   <link rel="stylesheet" href="live-changes.css?v=0.61.14-debug">
@@ -40,7 +40,7 @@
       </div>
       <span class="loading-caption">이야기를 열 준비가 되었어요</span>
       <button class="studio-start-sound" id="studioStartSound" type="button">인연의 문을 열기</button>
-      <small class="loading-version" aria-label="현재 게임 버전">v0.62.25-debug</small>
+      <small class="loading-version" aria-label="현재 게임 버전">v0.62.26-debug</small>
     </section>
     <section class="prologue" id="prologue" aria-label="이야기 시작 영상" hidden>
       <audio id="prologueMusic" src="../assets/audio/music/prologue-lantern-and-dawn.mp3" preload="auto" loop></audio>
@@ -60,8 +60,13 @@
         <p>아이에게 새로운 이름을 지어 주세요.<br>아홉 번째 생일 밤, 하늘이 보낸 인연이 찾아옵니다.</p>
         <label for="characterNameInput">아이 이름</label>
         <input id="characterNameInput" type="text" maxlength="10" placeholder="아이의 이름" autocomplete="off">
-        <label for="birthdayInput">생년월일</label>
-        <input id="birthdayInput" type="date" min="1990-01-01" max="1990-12-31" value="1990-01-01">
+        <label for="birthdayMonth">생년월일</label>
+        <div class="birthday-selects">
+          <select id="birthdayYear" aria-label="출생 연도"><option value="1990">1990년</option></select>
+          <select id="birthdayMonth" aria-label="출생 월"></select>
+          <select id="birthdayDay" aria-label="출생 일"></select>
+        </div>
+        <input id="birthdayInput" type="hidden" value="1990-01-01">
         <small>선택 가능 기간 · 1990년 1월 1일~12월 31일</small>
         <button id="startGame">아홉 번째 생일로</button><button class="story-replay" id="storyReplay">프롤로그 다시 보기</button>
       </div>
@@ -182,6 +187,6 @@
       </div>
     </section>
   </main>
-  <script src="story-data.js?v=0.62.25-debug"></script><script src="app.js?v=0.62.25-debug"></script>
+  <script src="story-data.js?v=0.62.26-debug"></script><script src="app.js?v=0.62.26-debug"></script>
 </body>
 </html>
