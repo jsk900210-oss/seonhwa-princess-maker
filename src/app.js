@@ -150,6 +150,7 @@ const outfits = [
   {id:'age18-cash-solar-ceremony',age:18,ageEnd:18,name:'태양 백금 예복',price:0,tone:'캐시',category:'cash',forSale:false,seasons:['봄','여름','가을','겨울'],situations:['shopping','vacation'],change:{charm:18,reputation:18,manners:9,arts:6}},
   {id:'age18-cash-ink-scholar',age:18,ageEnd:18,name:'묵학 비상 예복',price:0,tone:'캐시',category:'cash',forSale:false,seasons:['봄','여름','가을','겨울'],situations:['reading','shopping','vacation'],change:{study:12,arts:12,reputation:12,charm:10}},
   {id:'age18-cash-starlight-pink',age:18,ageEnd:18,name:'별빛 유리 무대복',price:0,tone:'캐시',category:'cash',forSale:false,seasons:['봄','여름','가을','겨울'],situations:['shopping','vacation'],change:{charm:24,reputation:16,arts:13,stress:-2}},
+  {id:'age18-cash-rose-paisley',age:18,ageEnd:18,name:'장미 페이즐리 무대복',price:0,tone:'캐시',category:'cash',forSale:false,seasons:['봄','여름','가을','겨울'],situations:['shopping','vacation'],change:{charm:23,reputation:15,arts:12,virtue:-3}},
   {id:'premium-midnight-lotus',age:9,ageEnd:18,name:'묵빛 연화 예복',price:1650,tone:'고급',seasons:['가을','겨울'],situations:['manners','shopping','vacation'],change:{charm:15,reputation:10,manners:7,virtue:4}},
   {id:'premium-moonlight-guard',age:9,ageEnd:18,name:'월백 수호 예복',price:1780,tone:'고급',seasons:['봄','겨울'],situations:['manners','reading','shopping'],change:{manners:12,reputation:9,study:5,charm:8}},
   {id:'premium-aurora-blossom',age:9,ageEnd:18,name:'새벽꽃 비단 예복',price:1850,tone:'고급',seasons:['봄','여름'],situations:['vacation','shopping','manners'],change:{charm:18,reputation:10,arts:7,virtue:2}},
