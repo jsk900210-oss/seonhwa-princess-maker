@@ -41,7 +41,7 @@
       </div>
       <span class="loading-caption">이야기를 열 준비가 되었어요</span>
       <button class="studio-start-sound" id="studioStartSound" type="button">인연의 문을 열기</button>
-      <small class="loading-version" aria-label="현재 게임 버전">v0.62.40-debug</small>
+      <small class="loading-version" aria-label="현재 게임 버전">v0.62.41-debug</small>
     </section>
     <section class="prologue" id="prologue" aria-label="이야기 시작 영상" hidden>
       <audio id="prologueMusic" src="../assets/audio/music/prologue-lantern-and-dawn.mp3" preload="auto" loop></audio>
@@ -129,6 +129,7 @@
     <section class="activity-playback" id="activityPlayback" hidden aria-live="polite"><b id="playbackDay"></b><span id="playbackAction"></span><div><i id="playbackProgress"></i></div></section>
     <section class="vacation-scene" id="vacationScene" hidden aria-live="polite">
       <img id="vacationImage" alt="바캉스 추억 일러스트">
+      <div class="vacation-motion" id="vacationMotion" aria-hidden="true"></div>
       <div class="vacation-vignette" aria-hidden="true"></div>
       <div class="encounter-character" id="encounterCharacter" hidden><img src="../assets/characters/npcs/activity/dolsoe-1.png" alt="여행길에서 만난 또래"></div>
       <div class="encounter-dialogue" id="encounterDialogue" hidden><b id="encounterName">낯선 또래</b><p id="encounterText"></p></div>
@@ -195,6 +196,6 @@
       </div>
     </section>
   </main>
-  <script src="story-data.js?v=0.62.37-debug"></script><script src="app.js?v=0.62.37-debug"></script>
+  <script src="story-data.js?v=0.62.41-debug"></script><script src="app.js?v=0.62.41-debug"></script>
 </body>
 </html>

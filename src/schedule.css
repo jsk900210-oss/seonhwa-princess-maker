@@ -376,7 +376,7 @@
 .cash-age-preview{display:grid;gap:5px;padding:7px;border:1px solid #c7a4da;border-radius:10px;background:#f2e2fb}.cash-age-preview>span{color:#644070;font-size:10px;font-weight:900}.cash-age-preview>div{display:grid;grid-template-columns:repeat(4,1fr);gap:5px}.cash-age-preview button{min-height:36px;margin:0;padding:5px 2px;border-color:#9b77ae;background:#fff8ff;color:#654475;font-size:11px}.cash-age-preview button.on{background:#75448d;color:#fff;box-shadow:inset 0 0 0 2px #e7c8f6}
 .shop-money{display:flex;justify-content:space-between;gap:8px}.shop-money span:last-child{color:#71348e}
 /* v0.61.87: subtle cinemagraph motion for photoreal vacation cards */
-.vacation-scene>img{animation:vacation-cinema 9s ease-in-out both}
+.vacation-scene>img{animation:vacation-breathe 12s ease-in-out infinite alternate}
 .vacation-scene::before,.vacation-scene::after{content:"";position:absolute;z-index:1;inset:-18%;pointer-events:none;opacity:0}
 .vacation-scene[data-effect="petals"]::before{opacity:.5;background-image:radial-gradient(ellipse at 14% 10%,#ffd5e4 0 2px,transparent 3px),radial-gradient(ellipse at 43% 21%,#fff0f5 0 1.7px,transparent 2.7px),radial-gradient(ellipse at 72% 8%,#f4b9ce 0 2.2px,transparent 3.2px),radial-gradient(ellipse at 86% 48%,#ffe4ed 0 1.8px,transparent 2.8px),radial-gradient(ellipse at 31% 69%,#ffe8ef 0 2px,transparent 3px);background-repeat:no-repeat;animation:vacation-petals-near 11s ease-in-out infinite}
 .vacation-scene[data-effect="petals"]::after{opacity:.25;background-image:radial-gradient(ellipse at 21% 28%,#fff 0 1px,transparent 2px),radial-gradient(ellipse at 61% 53%,#f7c4d5 0 1.2px,transparent 2.2px),radial-gradient(ellipse at 90% 17%,#ffe4ed 0 1px,transparent 2px);background-repeat:no-repeat;filter:blur(.3px);animation:vacation-petals-far 15s ease-in-out infinite}
@@ -392,6 +392,7 @@
 .vacation-scene[data-effect="steam"]::after{inset:auto 39% 38%;height:16%;opacity:.2;background:radial-gradient(ellipse at center,#fff7 0 10%,transparent 55%);filter:blur(7px);animation:vacation-steam 3.6s ease-in-out infinite}
 .vacation-title,.vacation-vignette,.encounter-character,.encounter-dialogue,.vacation-next{z-index:3}
 @keyframes vacation-cinema{0%{opacity:0;transform:scale(1.07) translate3d(-.6%,.4%,0)}12%{opacity:1}100%{opacity:1;transform:scale(1.015) translate3d(.6%,-.4%,0)}}
+@keyframes vacation-breathe{from{transform:scale(1.025) translate3d(-.25%,.12%,0)}to{transform:scale(1.045) translate3d(.3%,-.18%,0)}}
 @keyframes vacation-drift{from{transform:translate3d(-8%,-13%,0) rotate(0)}to{transform:translate3d(12%,18%,0) rotate(16deg)}}
 @keyframes vacation-snow{from{transform:translate3d(-3%,-15%,0)}to{transform:translate3d(5%,20%,0)}}
 @keyframes vacation-splash{0%,100%{transform:translateY(12%) scale(.94);opacity:.28}50%{transform:translateY(-5%) scale(1.04);opacity:.64}}
@@ -403,6 +404,21 @@
 @keyframes vacation-coast-cinema{from{transform:scale(1.025) translate3d(-.18%,0,0)}to{transform:scale(1.018) translate3d(.22%,-.12%,0)}}
 @keyframes vacation-petals-near{0%{transform:translate3d(-5%,-10%,0) rotate(-7deg)}45%{transform:translate3d(3%,4%,0) rotate(8deg)}100%{transform:translate3d(8%,17%,0) rotate(24deg)}}
 @keyframes vacation-petals-far{0%{transform:translate3d(4%,-8%,0) rotate(4deg)}50%{transform:translate3d(-2%,5%,0) rotate(-8deg)}100%{transform:translate3d(5%,15%,0) rotate(12deg)}}
+
+/* v0.62.41: layered, season-specific vacation cinemagraph particles */
+.vacation-motion{position:absolute;z-index:2;inset:0;overflow:hidden;pointer-events:none;contain:strict}
+.vacation-motion i{position:absolute;left:var(--x);top:-7%;display:block;opacity:0;animation-duration:var(--duration);animation-delay:var(--delay);animation-timing-function:linear;animation-iteration-count:infinite;transform:scale(var(--scale));will-change:transform,opacity}
+.vacation-motion.season-spring i{width:7px;height:4px;border-radius:70% 20% 70% 20%;background:linear-gradient(135deg,#fff7fa,#efb8c9);box-shadow:0 0 2px #fff8;animation-name:vacation-spring-fall}
+.vacation-motion.season-summer{background:linear-gradient(110deg,transparent 20%,#c9f5ff10 48%,transparent 70%);animation:vacation-summer-light 5.5s ease-in-out infinite alternate}
+.vacation-motion.season-summer i{top:auto;bottom:7%;width:5px;height:5px;border:1px solid #d9fbff99;border-radius:50%;animation-name:vacation-water-glint}
+.vacation-motion.season-autumn i{width:8px;height:5px;border-radius:80% 15% 80% 15%;background:linear-gradient(135deg,#e9a33f,#923d25);animation-name:vacation-autumn-fall}
+.vacation-motion.season-winter i{width:5px;height:5px;border-radius:50%;background:#fff;box-shadow:0 0 3px #eaf7ff;animation-name:vacation-winter-fall}
+@keyframes vacation-spring-fall{0%{opacity:0;transform:translate3d(-12px,-5%,0) rotate(0) scale(var(--scale))}12%{opacity:.7}55%{transform:translate3d(24px,55vh,0) rotate(170deg) scale(var(--scale));opacity:.55}100%{transform:translate3d(-10px,112vh,0) rotate(340deg) scale(var(--scale));opacity:0}}
+@keyframes vacation-water-glint{0%,100%{opacity:0;transform:translate3d(-8px,4px,0) scale(.4)}45%{opacity:.5}70%{opacity:.15;transform:translate3d(10px,-22px,0) scale(calc(var(--scale) * 1.7))}}
+@keyframes vacation-summer-light{from{opacity:.55;transform:translateX(-2%)}to{opacity:.9;transform:translateX(2%)}}
+@keyframes vacation-autumn-fall{0%{opacity:0;transform:translate3d(8px,-4%,0) rotate(-15deg) scale(var(--scale))}15%{opacity:.58}50%{transform:translate3d(-28px,54vh,0) rotate(160deg) scale(var(--scale))}100%{opacity:0;transform:translate3d(18px,112vh,0) rotate(330deg) scale(var(--scale))}}
+@keyframes vacation-winter-fall{0%{opacity:0;transform:translate3d(-5px,-5%,0) scale(var(--scale))}14%{opacity:.72}55%{transform:translate3d(14px,55vh,0) scale(var(--scale));opacity:.62}100%{opacity:0;transform:translate3d(-9px,112vh,0) scale(var(--scale))}}
+@media(prefers-reduced-motion:reduce){.vacation-motion{display:none}.vacation-scene>img{animation:none!important}}
 
 /* v0.61.92: mobile-safe activity framing and directional cleaning passes */
 .activity-stage.map-marketErrand:not(.market-choice-stage) .stage-character.pixel-sprite.motion-errand{left:56%;bottom:2%;width:146px;height:146px;padding:4px;overflow:visible}

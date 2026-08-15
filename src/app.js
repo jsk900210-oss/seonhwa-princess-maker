@@ -35,7 +35,16 @@ function vacationMusicPath(){const age=game.age>=18?'18':game.age>=16?'16':game.
 function playGameMusic(source,volume=.24){if(!source)return;if(!gameMusic.src.endsWith(source.replace('../','/'))){gameMusic.pause();gameMusic.src=source;gameMusic.currentTime=0;}gameMusic.dataset.baseVolume=String(volume);gameMusic.volume=scaledVolume(volume,'bgm');if(userSettings.bgmEnabled)gameMusic.play().catch(()=>{});else gameMusic.pause();}
 function playHomeMusic(){playGameMusic(gameMusicTracks.home,.22);}
 function playMarketMusic(){playGameMusic(gameMusicTracks.market,.20);}
-function playVacationMusic(){playGameMusic(vacationMusicPath(),.28);}
+function playVacationMusic(){
+  const source=vacationMusicPath();
+  if(gameMusic.src.endsWith(source.replace('../','/'))){
+    gameMusic.dataset.baseVolume='.28';gameMusic.volume=scaledVolume(.28,'bgm');
+    if(userSettings.bgmEnabled)gameMusic.play().catch(()=>{});
+    return;
+  }
+  fadeAudio(gameMusic,0,450);
+  window.setTimeout(()=>playGameMusic(source,.28),460);
+}
 function stopGameMusic(){fadeAudio(gameMusic,0,350);}
 function transitionPrologueToHomeMusic(){
   const prologueMusic=document.querySelector('#prologueMusic');
@@ -509,10 +518,24 @@ function waitForVacationTap(label='화면을 터치해 계속'){
   const scene=document.querySelector('#vacationScene'),button=document.querySelector('#vacationNext');button.textContent=label;
   return new Promise(resolve=>{const advance=event=>{event.preventDefault();scene.removeEventListener('click',advance);resolve();};scene.addEventListener('click',advance,{once:true});});
 }
+function renderVacationMotion(season){
+  const layer=document.querySelector('#vacationMotion');
+  layer.className=`vacation-motion season-${({봄:'spring',여름:'summer',가을:'autumn',겨울:'winter'}[season]||'spring')}`;
+  const counts={봄:18,여름:9,가을:14,겨울:28};
+  const count=counts[season]||12;
+  layer.replaceChildren(...Array.from({length:count},(_,index)=>{
+    const particle=document.createElement('i');
+    particle.style.setProperty('--x',`${(index*37+11)%101}%`);
+    particle.style.setProperty('--delay',`${-((index*.73)%8).toFixed(2)}s`);
+    particle.style.setProperty('--duration',`${(5.8+(index%7)*.72).toFixed(2)}s`);
+    particle.style.setProperty('--scale',`${(.55+(index%5)*.16).toFixed(2)}`);
+    return particle;
+  }));
+}
 async function playVacationScene(prize,index){
   const phone=document.querySelector('.phone'),scene=document.querySelector('#vacationScene'),image=document.querySelector('#vacationImage');
   const person=document.querySelector('#encounterCharacter'),talk=document.querySelector('#encounterDialogue');
-  playVacationMusic();image.src=prize.image;document.querySelector('#vacationTitle').textContent=prize.name;scene.dataset.effect=prize.effect||'';
+  playVacationMusic();renderVacationMotion(prize.season||game.season);image.src=prize.image;document.querySelector('#vacationTitle').textContent=prize.name;scene.dataset.effect=prize.effect||'';scene.dataset.season=prize.season||game.season;
   scene.classList.remove('has-encounter');person.hidden=true;talk.hidden=true;phone.classList.add('vacation-playing');scene.hidden=false;
   await waitForVacationTap('일러스트를 감상한 뒤 터치');
   const candidates=endingRelationCandidates.filter(candidate=>game.age>=candidate.minAge&&candidate.assetReady);
@@ -526,7 +549,7 @@ async function playVacationScene(prize,index){
     recordRelationEncounter(relation);
     await waitForVacationTap('대화를 읽은 뒤 터치');
   }
-  talk.hidden=true;person.hidden=true;scene.classList.remove('has-encounter');scene.hidden=true;scene.dataset.effect='';phone.classList.remove('vacation-playing');playHomeMusic();
+  talk.hidden=true;person.hidden=true;scene.classList.remove('has-encounter');scene.hidden=true;scene.dataset.effect='';scene.dataset.season='';document.querySelector('#vacationMotion').replaceChildren();phone.classList.remove('vacation-playing');playHomeMusic();
   return relation;
 }
 
