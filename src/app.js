@@ -54,7 +54,7 @@ const guardianDefs={
 const guardianStoryScenes=[
   {chapter:'첫 장 · 하늘이 내린 벗',image:'../assets/cinematics/guardian/guardian-descent-age09.png',alt:'아홉 번째 생일 밤 아이 앞에 함께 나타난 네 신수',group:true,effect:'constellation',text:'아홉 번째 생일 밤, 고요하던 마당 위로 네 갈래의 별빛이 열렸습니다.'}
 ];
-let guardianStoryIndex=0,guardianSceneTimer=null,guardianAbilityTimer=null,guardianReactionTimer=null,guardianSettleTimer=null,guardianInputLockedUntil=0,selectedGuardianType=null,introDialogueQueue=[],introDialogueIndex=0;
+let guardianStoryIndex=0,guardianCinematicTimers=[],guardianInputLockedUntil=0,selectedGuardianType=null,introDialogueQueue=[],introDialogueIndex=0;
 const statGroups = [
   { title: '신체', stats: [['health','체력'],['strength','힘'],['agility','민첩']] },
   { title: '지성·마음', stats: [['intelligence','지능'],['magic','마력'],['mentality','정신력']] },
@@ -1229,11 +1229,19 @@ function startWithBirthday(){
 }
 function showGuardianStory(){
   const story=document.querySelector('#guardianStory'),scene=guardianStoryScenes[guardianStoryIndex],copy=story.querySelector('.guardian-story-copy'),image=document.querySelector('#guardianStoryImage'),next=document.querySelector('#guardianStoryNext');
-  [guardianSceneTimer,guardianAbilityTimer,guardianReactionTimer,guardianSettleTimer].forEach(clearTimeout);story.hidden=false;story.classList.add('group-scene');story.dataset.effect=scene.effect;story.dataset.phase='arrival';image.src=scene.image;image.alt=scene.alt;document.querySelector('#guardianStoryChapter').textContent=scene.chapter;document.querySelector('#guardianStoryText').textContent=scene.text;next.hidden=true;next.disabled=true;next.textContent='신수 선택하기';copy.classList.remove('is-changing');guardianInputLockedUntil=Date.now()+14500;
-  guardianSceneTimer=setTimeout(()=>{story.dataset.phase='child';document.querySelector('#guardianStoryText').textContent='아이는 숨을 죽인 채, 하늘에서 내려온 빛을 올려다보았습니다.';},2600);
-  guardianReactionTimer=setTimeout(()=>{story.dataset.phase='guardians';document.querySelector('#guardianStoryText').textContent='청룡과 백호, 현무와 주작이 차례로 눈을 뜨며 아이의 부름을 기다렸습니다.';playGuardianCinematicCue('constellation');},5200);
-  guardianAbilityTimer=setTimeout(()=>{story.dataset.phase='convergence';document.querySelector('#guardianStoryText').textContent='네 신수의 빛이 마당 한가운데로 모여 하나의 인연이 되었습니다.';playGuardianCinematicCue('embers');},10200);
-  guardianSettleTimer=setTimeout(()=>{story.dataset.phase='choice';document.querySelector('#guardianStoryChapter').textContent='선택 · 한 벗과의 인연';document.querySelector('#guardianStoryText').textContent='네 앞날을 함께할 한 벗을 고르거라.';next.hidden=false;next.disabled=false;guardianInputLockedUntil=0;},14500);
+  guardianCinematicTimers.forEach(clearTimeout);guardianCinematicTimers=[];story.hidden=false;story.classList.add('group-scene');story.dataset.effect=scene.effect;image.src=scene.image;image.alt=scene.alt;next.hidden=true;next.disabled=true;next.textContent='신수 선택하기';copy.classList.remove('is-changing');
+  const timeline=[
+    {at:0,phase:'arrival',chapter:'첫 장 · 하늘이 내린 벗',text:'아홉 번째 생일 밤, 고요하던 마당 위로 네 갈래의 별빛이 열렸습니다.'},
+    {at:2800,phase:'child',chapter:'아이 · 올려다보다',text:'아이는 놀란 숨을 삼키고, 밤하늘을 가득 메운 존재들을 올려다보았습니다.'},
+    {at:5400,phase:'hyeonmu',chapter:'북쪽 · 현무',text:'가장 높은 구름 위에서 현무가 천천히 고개를 들었습니다. “흔들리지 않는 마음을 지켜 주마.”',cue:'water'},
+    {at:8000,phase:'cheongryong',chapter:'동쪽 · 청룡',text:'푸른 구름이 갈라지며 청룡이 몸을 일으켰습니다. “배움과 술법의 길을 밝혀 주마.”',cue:'cloud'},
+    {at:10600,phase:'baekho',chapter:'서쪽 · 백호',text:'백호는 아이와 눈을 맞추고 조용히 앞발을 내디뎠습니다. “두려움에 맞설 용기를 주마.”',cue:'mountain'},
+    {at:13200,phase:'jujak',chapter:'남쪽 · 주작',text:'주작이 붉은 날개를 펼치자 따뜻한 불빛이 마당에 번졌습니다. “상처를 보듬고 인연을 이어 주마.”',cue:'embers'},
+    {at:15800,phase:'convergence',chapter:'네 갈래의 빛',text:'네 신수의 빛이 아이 앞에 모였습니다. 하늘은 아이가 고를 단 하나의 인연을 기다렸습니다.',cue:'constellation'},
+    {at:18800,phase:'choice',chapter:'선택 · 한 벗과의 인연',text:'네 앞날을 함께할 한 벗을 고르거라.',ready:true}
+  ];
+  const renderBeat=beat=>{story.dataset.phase=beat.phase;document.querySelector('#guardianStoryChapter').textContent=beat.chapter;document.querySelector('#guardianStoryText').textContent=beat.text;if(beat.cue)playGuardianCinematicCue(beat.cue);if(beat.ready){next.hidden=false;next.disabled=false;guardianInputLockedUntil=0;}};
+  renderBeat(timeline[0]);guardianInputLockedUntil=Date.now()+18800;timeline.slice(1).forEach(beat=>guardianCinematicTimers.push(setTimeout(()=>renderBeat(beat),beat.at)));
 }
 function playGuardianCinematicCue(effect){
   if(!userSettings.sfxEnabled||!prologueSoundOn)return;const AudioContext=window.AudioContext||window.webkitAudioContext;if(!AudioContext)return;
