@@ -425,4 +425,6 @@
   .phone.playing:has(.activity-stage.action-rest:not([hidden]))>.dialogue p{margin-top:2px;font-size:11px;line-height:1.35}
   .activity-stage.action-rest .activity-gauges{top:calc(100% + 17px);padding-block:5px;gap:3px}
 }
+.activity-stage.action-sweeping:not(.market-choice-stage):has(.stage-npc.npc-dolsoe:not([hidden])) .stage-character.pixel-sprite.motion-sweeping{left:14%;bottom:3%;width:108px;height:108px;padding:2px;animation:none!important;transition:left .18s linear}
+.activity-stage.action-sweeping:not(.market-choice-stage):has(.stage-npc.npc-dolsoe:not([hidden])) .stage-npc.npc-dolsoe{right:1%;bottom:3%;left:auto;width:88px;height:108px;padding:2px;animation:none}
 .action em{grid-column:1/-1;padding-top:4px;border-top:1px dashed #bca47c;color:#72512f;font-size:9px;font-style:normal;font-weight:800}

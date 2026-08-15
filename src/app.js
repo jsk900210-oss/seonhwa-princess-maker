@@ -311,7 +311,7 @@ async function animateActivitySprite(image,motion,activity,npcImage,npc,outfitId
     const delay=activity==='errand'?270:activity==='houseclean'?360:activity==='sleep'?430:190;
     for(const [step,frame] of sequence.entries()){
       if(activity==='houseclean')image.parentElement.style.left=`${[74,58,32,32,55,74][step]}%`;
-      if(activity==='sweeping')image.parentElement.style.left=`${[14,22,30,38,46,53,58,58,53,46,38,30,22,14][step]}%`;
+      if(activity==='sweeping')image.parentElement.style.left=`${[14,20,27,34,41,47,50,50,47,41,34,27,20,14][step]}%`;
       image.src=await outfitActivityFrame(frames[frame],outfitId);if(npc)npcImage.src=(npc==='teacher'?npcFrames.teacherReading:npcFrames[npc])[frame%3];await new Promise(resolve=>setTimeout(resolve,delay));
     }
     if(activity==='houseclean'||activity==='sweeping')image.parentElement.style.left='';
@@ -561,7 +561,7 @@ function renderActivityGauges(action){
   const entries=orderedChangeEntries(action.change).filter(([,value])=>value!==0);
   if(!entries.length||['shopping','vacation'].includes(action.id)){box.hidden=true;box.innerHTML='';return;}
   box.innerHTML=entries.map(([key,value])=>{
-    const max=statMaximum(key),current=clampStat(key,game[key]),next=clampStat(key,current+value);
+    const max=statMaximum(key),next=clampStat(key,game[key]),current=clampStat(key,next-value);
     const beneficial=key==='stress'?value<0:value>0;
     const low=Math.min(current,next),width=Math.max(2,Math.abs(next-current));
     return `<div class="activity-gauge"><span class="activity-gauge-label">${statLabels[key]||key}</span><span class="activity-gauge-track"><i class="activity-gauge-before" style="width:${current/max*100}%"></i><i class="activity-gauge-delta ${beneficial?'up':'down'}" style="left:${low/max*100}%;width:${Math.max(2,width/max*100)}%"></i></span><span class="activity-gauge-value ${beneficial?'up':'down'}"><b>${current} → ${next}</b><small>${value>0?'▲':'▼'}${Math.abs(value)}</small></span></div>`;
