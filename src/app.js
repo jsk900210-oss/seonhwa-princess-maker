@@ -288,9 +288,13 @@ function outfitActivityFrame(src,outfitId){
 async function animateActivitySprite(image,motion,activity,npcImage,npc,outfitId){
   if(activity){
     const frames=activityFrameSet(activity);
-    const sequence=activity==='errand'?[0,1,1,2,2,1,0]:activity==='houseclean'?[0,1,2,1,0,1]:activity==='sleep'?[0,1,2,1,0]:[0,1,2,1,0,1,2];
+    const sequence=activity==='errand'?[0,1,1,2,2,1,0]:activity==='houseclean'?[0,1,0,2,2,2]:activity==='sleep'?[0,1,2,1,0]:[0,1,2,1,0,1,2];
     const delay=activity==='errand'?270:activity==='houseclean'?360:activity==='sleep'?430:190;
-    for(const frame of sequence){image.src=await outfitActivityFrame(frames[frame],outfitId);if(npc)npcImage.src=(npc==='teacher'?npcFrames.teacherReading:npcFrames[npc])[frame%3];await new Promise(resolve=>setTimeout(resolve,delay));}
+    for(const [step,frame] of sequence.entries()){
+      if(activity==='houseclean')image.parentElement.style.left=`${[74,58,32,32,55,74][step]}%`;
+      image.src=await outfitActivityFrame(frames[frame],outfitId);if(npc)npcImage.src=(npc==='teacher'?npcFrames.teacherReading:npcFrames[npc])[frame%3];await new Promise(resolve=>setTimeout(resolve,delay));
+    }
+    if(activity==='houseclean')image.parentElement.style.left='';
     return;
   }
   const direction=motion==='motion-walk'?'right':'down';
@@ -858,6 +862,12 @@ let marketShoppingActive=false;
 let marketMealConsumed=false;
 let activeShopMarketMode=false;
 let activeOutfitShopCategory='general';
+function closeMarketUiForTransition(){
+  document.querySelector('#outfitPreview')?.remove();
+  document.querySelector('#marketConfirm').hidden=true;
+  document.querySelector('#marketExplore').hidden=true;
+  panel.hidden=true;marketSelection=null;
+}
 function returnToMarketSelection(){
   panel.hidden=true;
   const stage=document.querySelector('#activityStage');
@@ -922,6 +932,7 @@ function finishMarket(){
   if(typeof marketResolve!=='function')return;
   const resolve=marketResolve;
   marketResolve=null;
+  closeMarketUiForTransition();
   resolve();
 }
 function selectMarketShop(type){
@@ -1212,6 +1223,7 @@ async function playWeeklySchedule(selected) {
       marketShoppingActive=false;
       playHomeMusic();
     }else if(action.id==='vacation'){
+      closeMarketUiForTransition();
       const prize=awardVacationIllustration();
       stage.hidden=true;stageNpc.hidden=true;stageProps.hidden=true;stageCharacter.hidden=true;
       const metSomeone=await playVacationScene(prize,index);
