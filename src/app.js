@@ -42,7 +42,7 @@ function transitionPrologueToHomeMusic(){
   fadeAudio(prologueMusic,0,1600);
 }
 
-const game = { characterName:'', nannyName:'', profileSlot:null, age: 9, month: 1, week: 1, season:'봄', money: 50000, cash:50000, health:42, strength:18, agility:20, intelligence:35, magic:8, mentality:30, dignity:36, manners:28, speech:14, sensitivity:40, sense:24, charm:30, stress:12, items: [], equippedOutfit:null, autoOutfit:true, dailySchedule: [null,null,null,null,null,null,null], birthday:null, currentDate:null, endingDate:null, ended:false, birthdayCount:0, element:null, birthSeason:null, memory:0, truth:0, exposure:0, guardianTrust:50, nannyAffinity:50, lastGreetingDate:null, monthlyLedger:null };
+const game = { characterName:'', nannyName:'', profileSlot:null, age: 9, height:130, weight:28.5, month: 1, week: 1, season:'봄', money: 50000, cash:50000, health:42, strength:18, agility:20, intelligence:35, magic:8, mentality:30, dignity:36, manners:28, speech:14, sensitivity:40, sense:24, charm:30, stress:12, items: [], equippedOutfit:null, autoOutfit:true, dailySchedule: [null,null,null,null,null,null,null], birthday:null, currentDate:null, endingDate:null, ended:false, birthdayCount:0, element:null, birthSeason:null, memory:0, truth:0, exposure:0, guardianTrust:50, nannyAffinity:50, lastGreetingDate:null, monthlyLedger:null };
 const statGroups = [
   { title: '신체', stats: [['health','체력'],['strength','힘'],['agility','민첩']] },
   { title: '지성·마음', stats: [['intelligence','지능'],['magic','마력'],['mentality','정신력']] },
@@ -106,6 +106,10 @@ function migrateLegacyStats(){
   if(!Number.isFinite(Number(game.sense)))game.sense=average('craft','arts','arithmetic');
 }
 function normalizeStats(){migrateLegacyStats();boundedStats.forEach(key=>{if(Object.hasOwn(game,key))game[key]=clampStat(key,game[key]);});}
+const growthProfile={9:[130,28.5],10:[135,31],11:[140,34],12:[145,38],13:[149,42],14:[153,45.5],15:[156,48.5],16:[158.5,51.5],17:[160.5,54],18:[162,56.5]};
+function expectedBodyMetrics(age=game.age){return growthProfile[Math.max(9,Math.min(18,Math.floor(Number(age)||9)))]||growthProfile[9];}
+function normalizeBodyMetrics(){const [height,weight]=expectedBodyMetrics();if(!Number.isFinite(Number(game.height)))game.height=height;if(!Number.isFinite(Number(game.weight)))game.weight=weight;game.height=Math.max(100,Math.min(190,Math.round(Number(game.height)*10)/10));game.weight=Math.max(18,Math.min(100,Math.round(Number(game.weight)*10)/10));}
+function applyAgeGrowth(previousAge,nextAge){if(nextAge<=previousAge)return;const [beforeHeight,beforeWeight]=expectedBodyMetrics(previousAge),[afterHeight,afterWeight]=expectedBodyMetrics(nextAge);normalizeBodyMetrics();game.height=Math.round((game.height+afterHeight-beforeHeight)*10)/10;game.weight=Math.round((game.weight+afterWeight-beforeWeight)*10)/10;}
 const actionPresentation = {
   reading: { motion:'motion-calligraphy', location:'studyRoom', prop:'none', activity:'calligraphy', npc:'teacher' }, arithmetic: { motion:'motion-arithmetic', location:'arithmeticRoom', prop:'none', activity:'arithmetic', npc:'teacher' },
   manners: { motion:'motion-manners', location:'etiquetteRoom', prop:'none', activity:'manners', npc:'teacher' }, errand: { motion:'motion-errand', location:'marketErrand', prop:'none', activity:'errand', npc:null },
@@ -140,6 +144,18 @@ const vacationIllustrations=[
   ,{id:'vacation-age13-winter-sled',age:13,season:'겨울',name:'얼음 위의 썰매',image:'../assets/events/vacation/photoreal/age-13/winter-sledding.webp',effect:'snow',description:'얼어붙은 마을 연못 위를 씩씩하게 달린 13세의 추억.'}
   ,{id:'vacation-age13-winter-seollal',age:13,season:'겨울',name:'설날 떡국 차림',image:'../assets/events/vacation/photoreal/age-13/winter-seollal-tteokguk.webp',effect:'steam',description:'설날 아침 따뜻한 떡국을 정성껏 담아낸 13세의 추억.'}
   ,{id:'vacation-age13-winter-snowball',age:13,season:'겨울',name:'눈사람의 마지막 눈덩이',image:'../assets/events/vacation/photoreal/age-13/winter-snowball.webp',effect:'snow',description:'웃으며 눈사람의 머리를 올려놓던 13세의 추억.'}
+  ,{id:'vacation-age16-spring-cherry',age:16,season:'봄',name:'벚꽃빛 갈래치마',image:'../assets/events/vacation/photoreal/age-16/spring-cherry-wind.webp',effect:'petals',description:'벚꽃바람에 느슨한 땋은 머리와 그라데이션 치마가 함께 흩날린 16세의 추억.'}
+  ,{id:'vacation-age16-spring-azalea',age:16,season:'봄',name:'진달래 곁의 봄비',image:'../assets/events/vacation/photoreal/age-16/spring-azalea-stepping-stones.webp',effect:'petals',description:'봄비가 그친 진달래 계곡에서 꽃을 살펴본 16세의 추억.'}
+  ,{id:'vacation-age16-spring-kite',age:16,season:'봄',name:'바람을 따라 달리는 연',image:'../assets/events/vacation/photoreal/age-16/spring-kite-running.webp',effect:'wind',description:'강한 봄바람 속에서 연과 땋은 머리를 날리며 달린 16세의 추억.'}
+  ,{id:'vacation-age16-summer-stream',age:16,season:'여름',name:'푸른 치마의 물장난',image:'../assets/events/vacation/photoreal/age-16/summer-stream-splash.webp',effect:'splash',description:'맑은 계곡에서 푸른 갈래치마 자락과 함께 물보라를 일으킨 16세의 추억.'}
+  ,{id:'vacation-age16-summer-shell',age:16,season:'여름',name:'해질녘 조개바구니',image:'../assets/events/vacation/photoreal/age-16/summer-seaside-shell.webp',effect:'wave',description:'저녁 바닷바람을 맞으며 조개를 바구니에 모은 16세의 추억.'}
+  ,{id:'vacation-age16-summer-lotus',age:16,season:'여름',name:'연잎을 든 정자',image:'../assets/events/vacation/photoreal/age-16/summer-lotus-pavilion.webp',effect:'wind',description:'연꽃 향이 번지는 정자에서 연잎을 들어 본 16세의 추억.'}
+  ,{id:'vacation-age16-autumn-chestnut',age:16,season:'가을',name:'밤바구니와 황금빛 숲',image:'../assets/events/vacation/photoreal/age-16/autumn-chestnut-gathering.webp',effect:'leaves',description:'황금빛 숲에서 잘 익은 밤을 주워 바구니에 담은 16세의 추억.'}
+  ,{id:'vacation-age16-autumn-maple',age:16,season:'가을',name:'단풍 아래의 회전',image:'../assets/events/vacation/photoreal/age-16/autumn-maple-path.webp',effect:'leaves',description:'붉은 단풍 아래에서 풍성한 치마폭을 펼치며 돌아본 16세의 추억.'}
+  ,{id:'vacation-age16-autumn-chuseok',age:16,season:'가을',name:'송편과 보름달',image:'../assets/events/vacation/photoreal/age-16/autumn-chuseok-moon.webp',effect:'moon',description:'송편을 들고 추석 보름달을 오래 바라본 16세의 추억.'}
+  ,{id:'vacation-age16-winter-sled',age:16,season:'겨울',name:'얼음 위를 가르는 썰매',image:'../assets/events/vacation/photoreal/age-16/winter-sledding.webp',effect:'snow',description:'두툼한 겨울옷과 긴 땋은 머리로 얼음 썰매를 즐긴 16세의 추억.'}
+  ,{id:'vacation-age16-winter-seollal',age:16,season:'겨울',name:'새해 첫 떡국',image:'../assets/events/vacation/photoreal/age-16/winter-seollal-tteokguk.webp',effect:'steam',description:'따뜻한 방에서 새해 첫 떡국을 먹은 16세의 추억.'}
+  ,{id:'vacation-age16-winter-snowball',age:16,season:'겨울',name:'눈사람을 만드는 오후',image:'../assets/events/vacation/photoreal/age-16/winter-snowball.webp',effect:'snow',description:'양손으로 커다란 눈덩이를 굴려 눈사람을 만든 16세의 추억.'}
 ];
 const spriteFrames = {
   down: [1,2,3].map(n=>`../assets/characters/seonhwa/age-09/sprites/walk/seonhwa-walk-down-${n}.png`),
@@ -514,7 +530,8 @@ function openPanel(type) {
   } else if (type === 'status') {
     playHomeMusic();
     panelTitle.textContent = `${game.characterName || '아이'}의 상태`;
-    panelBody.innerHTML = `<div class="status-summary"><span>${game.age}세 · ${game.season} ${game.week}주</span><b>${game.money.toLocaleString()}냥</b></div>${statGroups.map(group => `<section class="stat-group"><h3>${group.title}</h3>${group.stats.map(([key,label]) => statBar(key,label)).join('')}</section>`).join('')}<section class="stat-group condition-group"><h3>현재 상태</h3>${statBar('stress','스트레스')}</section>`;
+    normalizeBodyMetrics();
+    panelBody.innerHTML = `<div class="status-summary"><span>${game.age}세 · ${game.season} ${game.week}주</span><b>${game.money.toLocaleString()}냥</b></div><section class="body-profile" aria-label="성장 정보"><div><small>키</small><b>${game.height.toFixed(1)} cm</b></div><div><small>몸무게</small><b>${game.weight.toFixed(1)} kg</b></div></section>${statGroups.map(group => `<section class="stat-group"><h3>${group.title}</h3>${group.stats.map(([key,label]) => statBar(key,label)).join('')}</section>`).join('')}<section class="stat-group condition-group"><h3>현재 상태</h3>${statBar('stress','스트레스')}</section>`;
   } else if (type === 'inventory') {
     playHomeMusic();
     renderInventory();
@@ -645,6 +662,7 @@ function applySavePayload(saved) {
   Object.assign(game, saved.game);
   if(!Number.isFinite(game.cash))game.cash=50000;
   normalizeStats();
+  normalizeBodyMetrics();
   if(typeof game.autoOutfit!=='boolean')game.autoOutfit=true;
   normalizeInventory();
   document.querySelector('#birthdaySetup').hidden = Boolean(game.birthday);
@@ -748,7 +766,7 @@ function deleteCharacterRecord(slot){
 }
 
 function resetGameState() {
-  Object.assign(game, { characterName:'',nannyName:'',profileSlot:null,age:9,month:1,week:1,season:'봄',money:50000,cash:50000,health:42,strength:18,agility:20,intelligence:35,magic:8,mentality:30,dignity:36,manners:28,speech:14,sensitivity:40,sense:24,charm:30,stress:12,items:[],equippedOutfit:null,autoOutfit:true,dailySchedule:[null,null,null,null,null,null,null],birthday:null,currentDate:null,endingDate:null,ended:false,birthdayCount:0,element:null,birthSeason:null,memory:0,truth:0,exposure:0,guardianTrust:50,nannyAffinity:50,lastGreetingDate:null,monthlyLedger:null});
+  Object.assign(game, { characterName:'',nannyName:'',profileSlot:null,age:9,height:130,weight:28.5,month:1,week:1,season:'봄',money:50000,cash:50000,health:42,strength:18,agility:20,intelligence:35,magic:8,mentality:30,dignity:36,manners:28,speech:14,sensitivity:40,sense:24,charm:30,stress:12,items:[],equippedOutfit:null,autoOutfit:true,dailySchedule:[null,null,null,null,null,null,null],birthday:null,currentDate:null,endingDate:null,ended:false,birthdayCount:0,element:null,birthSeason:null,memory:0,truth:0,exposure:0,guardianTrust:50,nannyAffinity:50,lastGreetingDate:null,monthlyLedger:null});
   document.querySelector('#liveChanges').innerHTML='';
   const greeting=document.querySelector('#homeGreeting');greeting.hidden=true;greeting.classList.remove('greeting-active');
   document.querySelector('#characterNameInput').value='';
@@ -1006,7 +1024,7 @@ function startWithBirthday(){
   const start=addYears(birth,9);
   const ending=addYears(birth,18); ending.setDate(ending.getDate()+1);
   const month=birth.getMonth()+1; const birthSeason=seasonForMonth(month); const element=['금','수','목','화','토'][(birth.getMonth()+birth.getDate())%5];
-  Object.assign(game,{characterName,nannyName,profileSlot,birthday:value,currentDate:isoDate(start),endingDate:isoDate(ending),age:9,month,season:birthSeason,birthSeason,element,week:1,ended:false,birthdayCount:1});
+  Object.assign(game,{characterName,nannyName,profileSlot,birthday:value,currentDate:isoDate(start),endingDate:isoDate(ending),age:9,height:130,weight:28.5,month,season:birthSeason,birthSeason,element,week:1,ended:false,birthdayCount:1});
   game.monthlyLedger=createMonthlyLedger(start.getFullYear(),month);
   document.querySelector('#birthdaySetup').hidden=true;
   panel.hidden=true;
@@ -1018,11 +1036,13 @@ function startWithBirthday(){
 }
 function advanceGameDate(days){
   if(!game.currentDate)return;
+  const previousAge=game.age;
   const date=new Date(`${game.currentDate}T00:00:00`); date.setDate(date.getDate()+days);
   const ending=new Date(`${game.endingDate}T00:00:00`);
   if(date>=ending){ date.setTime(ending.getTime()); game.ended=true; }
   game.currentDate=isoDate(date); game.month=date.getMonth()+1; game.season=seasonForMonth(game.month); game.week=Math.floor((date.getDate()-1)/7)+1;
   const birth=new Date(`${game.birthday}T00:00:00`); game.age=date.getFullYear()-birth.getFullYear()-((date.getMonth()<birth.getMonth()||(date.getMonth()===birth.getMonth()&&date.getDate()<birth.getDate()))?1:0);
+  applyAgeGrowth(previousAge,game.age);
   if(game.autoOutfit)updateAutoOutfit();
 }
 function seasonForMonth(month){ return month>=3&&month<=5?'봄':month>=6&&month<=8?'여름':month>=9&&month<=11?'가을':'겨울'; }
