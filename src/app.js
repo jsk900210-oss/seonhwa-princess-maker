@@ -117,9 +117,17 @@ const actionPresentation = {
 };
 const vacationIllustrations=[
   {id:'vacation-age09-spring-cherry',season:'봄',name:'봄바람과 벚꽃',image:'../assets/events/vacation/photoreal/age-09/spring-cherry-wind.webp',effect:'petals',description:'봄바람에 머리카락을 넘기며 벚꽃을 맞던 9세의 추억.'},
+  {id:'vacation-age09-spring-azalea',season:'봄',name:'진달래 계곡의 디딤돌',image:'../assets/events/vacation/photoreal/age-09/spring-azalea-stepping-stones.webp',effect:'petals',description:'진달래 핀 계곡의 디딤돌을 조심스레 건너던 9세의 추억.'},
+  {id:'vacation-age09-spring-kite',season:'봄',name:'강바람과 연날리기',image:'../assets/events/vacation/photoreal/age-09/spring-kite-running.webp',effect:'wind',description:'강바람을 따라 전통 연을 날리며 달리던 9세의 추억.'},
   {id:'vacation-age09-summer-stream',season:'여름',name:'계곡의 물보라',image:'../assets/events/vacation/photoreal/age-09/summer-stream-splash.webp',effect:'splash',description:'시원한 계곡물을 두 손으로 튀기며 웃던 9세의 추억.'},
+  {id:'vacation-age09-summer-shell',season:'여름',name:'바닷가의 작은 조개',image:'../assets/events/vacation/photoreal/age-09/summer-seaside-shell.webp',effect:'wave',description:'잔물결 곁에서 작은 조개를 들여다보던 9세의 추억.'},
+  {id:'vacation-age09-summer-lotus',season:'여름',name:'연꽃 정자의 한낮',image:'../assets/events/vacation/photoreal/age-09/summer-lotus-pavilion.webp',effect:'wind',description:'연꽃 정자에서 부채를 부치며 수박을 먹던 9세의 추억.'},
   {id:'vacation-age09-autumn-chestnut',season:'가을',name:'가을 밤 줍기',image:'../assets/events/vacation/photoreal/age-09/autumn-chestnut-gathering.webp',effect:'leaves',description:'단풍 아래 잘 익은 밤을 발견한 9세의 추억.'},
+  {id:'vacation-age09-autumn-maple',season:'가을',name:'단풍잎을 받던 길',image:'../assets/events/vacation/photoreal/age-09/autumn-maple-path.webp',effect:'leaves',description:'돌담길에서 손바닥에 내려앉은 단풍을 바라보던 9세의 추억.'},
+  {id:'vacation-age09-autumn-chuseok',season:'가을',name:'추석의 보름달',image:'../assets/events/vacation/photoreal/age-09/autumn-chuseok-moon.webp',effect:'moon',description:'송편을 곁에 두고 환한 보름달을 올려다보던 9세의 추억.'},
   {id:'vacation-age09-winter-sled',season:'겨울',name:'눈 언덕의 썰매',image:'../assets/events/vacation/photoreal/age-09/winter-sledding.webp',effect:'snow',description:'눈보라를 가르며 전통 썰매를 타던 9세의 추억.'}
+  ,{id:'vacation-age09-winter-seollal',season:'겨울',name:'설날 아침의 떡국',image:'../assets/events/vacation/photoreal/age-09/winter-seollal-tteokguk.webp',effect:'steam',description:'따뜻한 떡국 한 숟갈을 기다리던 설날 아침의 추억.'}
+  ,{id:'vacation-age09-winter-snowball',season:'겨울',name:'눈사람을 위한 눈덩이',image:'../assets/events/vacation/photoreal/age-09/winter-snowball.webp',effect:'snow',description:'눈사람을 만들기 위해 커다란 눈덩이를 굴리던 9세의 추억.'}
 ];
 const spriteFrames = {
   down: [1,2,3].map(n=>`../assets/characters/seonhwa/age-09/sprites/walk/seonhwa-walk-down-${n}.png`),
@@ -366,8 +374,10 @@ function actionForStressLimit(action,stress){
 function awardVacationIllustration(){
   normalizeInventory();
   const owned=new Set(game.items.filter(item=>item.type==='event').map(item=>item.id));
-  // 바캉스 일러스트는 계절마다 대표컷 한 장만 사용한다.
-  const prize=vacationIllustrations.find(item=>item.season===game.season)||vacationIllustrations[0];
+  const seasonal=vacationIllustrations.filter(item=>item.season===game.season);
+  const undiscovered=seasonal.filter(item=>!owned.has(item.id));
+  const pool=undiscovered.length?undiscovered:seasonal;
+  const prize=pool[Math.floor(Math.random()*pool.length)]||vacationIllustrations[0];
   if(!owned.has(prize.id))game.items.push({...prize,type:'event',qty:1});
   return prize;
 }

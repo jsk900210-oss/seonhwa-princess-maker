@@ -378,8 +378,13 @@
 .vacation-scene[data-effect="leaves"]::before{opacity:.66;background-image:radial-gradient(ellipse at center,#d66d27 0 38%,transparent 42%);background-size:34px 21px;animation:vacation-drift 7s linear infinite}
 .vacation-scene[data-effect="snow"]::before{opacity:.72;background-image:radial-gradient(circle,#fff 0 28%,transparent 32%);background-size:25px 25px;animation:vacation-snow 7s linear infinite}
 .vacation-scene[data-effect="splash"]::after{inset:auto -18% -7%;height:29%;opacity:.6;background:radial-gradient(ellipse at 50% 100%,#eaffffcc 0 4%,transparent 5%) 0 0/36px 28px;animation:vacation-splash 1.8s ease-in-out infinite}
+.vacation-scene[data-effect="wind"]::before{opacity:.3;background:repeating-linear-gradient(165deg,transparent 0 46px,#fff8 48px,transparent 50px);animation:vacation-wind 3.8s linear infinite}
+.vacation-scene[data-effect="wave"]::after{inset:auto -12% -3%;height:17%;opacity:.4;background:repeating-radial-gradient(ellipse at 50% 120%,transparent 0 16px,#eaffffbb 18px,transparent 21px);animation:vacation-wave 2.8s ease-in-out infinite}
+.vacation-scene[data-effect="moon"]::before{inset:0;opacity:.24;background:radial-gradient(circle at 76% 14%,#fff9c8 0 4%,transparent 18%);animation:vacation-moon 4s ease-in-out infinite}
+.vacation-scene[data-effect="steam"]::after{inset:auto 35% 36%;height:22%;opacity:.35;background:radial-gradient(ellipse at center,#fff8 0 15%,transparent 58%);filter:blur(5px);animation:vacation-steam 2.5s ease-in-out infinite}
 .vacation-title,.vacation-vignette,.encounter-character,.encounter-dialogue,.vacation-next{z-index:3}
 @keyframes vacation-cinema{0%{opacity:0;transform:scale(1.07) translate3d(-.6%,.4%,0)}12%{opacity:1}100%{opacity:1;transform:scale(1.015) translate3d(.6%,-.4%,0)}}
 @keyframes vacation-drift{from{transform:translate3d(-8%,-13%,0) rotate(0)}to{transform:translate3d(12%,18%,0) rotate(16deg)}}
 @keyframes vacation-snow{from{transform:translate3d(-3%,-15%,0)}to{transform:translate3d(5%,20%,0)}}
 @keyframes vacation-splash{0%,100%{transform:translateY(12%) scale(.94);opacity:.28}50%{transform:translateY(-5%) scale(1.04);opacity:.64}}
+@keyframes vacation-wind{from{transform:translateX(-10%)}to{transform:translateX(10%)}}@keyframes vacation-wave{50%{transform:translateY(-9px) scaleX(1.03)}}@keyframes vacation-moon{50%{opacity:.38}}@keyframes vacation-steam{0%,100%{transform:translateY(8px) scale(.9);opacity:.2}50%{transform:translateY(-18px) scale(1.08);opacity:.42}}
