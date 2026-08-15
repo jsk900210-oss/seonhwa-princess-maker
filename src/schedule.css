@@ -289,9 +289,9 @@
 .activity-stage:not(.market-choice-stage) .stage-npc.npc-herbalist,
 .activity-stage:not(.market-choice-stage) .stage-npc.npc-nanny{right:1%;bottom:2%;width:160px;height:160px}
 .activity-stage.map-marketErrand:not(.market-choice-stage) .stage-map{
-  object-fit:contain;
+  object-fit:cover;
   object-position:center top;
-  background:#35271d;
+  background:#5b4531;
 }
 .activity-stage.map-marketErrand:not(.market-choice-stage) .stage-character.pixel-sprite.motion-errand{
   top:auto;
