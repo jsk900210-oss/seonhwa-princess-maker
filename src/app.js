@@ -52,12 +52,12 @@ const guardianDefs={
   hyeonmu:{name:'현무',mark:'玄',theme:'#292d35',gift:{name:'검은 옥패',change:{mentality:5,health:4}},intro:'북쪽의 깊은 물결. 흔들리지 않는 마음과 보호의 힘을 지닌 신수입니다.'}
 };
 const guardianStoryScenes=[
-  {chapter:'첫 장 · 하늘이 내린 벗',image:'../assets/cinematics/guardian/guardian-descent-age09.png',alt:'아홉 번째 생일 밤 아이 앞에 함께 나타난 네 신수',group:true,text:'아홉 번째 생일 밤, 고요하던 마당 위로 동서남북 네 갈래의 별빛이 열렸습니다.'},
-  {chapter:'동쪽 · 청룡',image:'../assets/cinematics/guardian/guardian-cheongryong.png',alt:'푸른 구름 사이의 청룡',text:'동쪽의 구름이 푸르게 갈라지자 청룡이 여의주를 품고 내려왔습니다. 배움과 술법의 길을 밝혀 주는 신수였습니다.'},
-  {chapter:'서쪽 · 백호',image:'../assets/cinematics/guardian/guardian-baekho.png',alt:'산등성이를 지키는 백호',text:'서쪽 산등성이에는 백호가 소리 없이 내려앉았습니다. 두려움 앞에서 물러서지 않을 용기와 굳센 몸을 지켜 주는 신수였습니다.'},
-  {chapter:'남쪽 · 주작',image:'../assets/cinematics/guardian/guardian-jujak.png',alt:'붉은 노을 속의 주작',text:'남쪽의 따뜻한 바람 속에서는 주작의 붉은 깃이 피어났습니다. 상처를 보듬고 사람과 사람의 인연을 잇는 신수였습니다.'},
-  {chapter:'북쪽 · 현무',image:'../assets/cinematics/guardian/guardian-hyeonmu.png',alt:'깊은 물결 위의 현무',text:'북쪽의 깊은 물결 위에는 현무가 단단히 자리를 잡았습니다. 흔들리지 않는 인내와 오래 버티는 보호의 힘을 지닌 신수였습니다.'},
-  {chapter:'선택 · 한 벗과의 인연',image:'../assets/cinematics/guardian/guardian-descent-age09.png',alt:'아이의 선택을 기다리는 네 신수',group:true,text:'네 신수는 아이의 이름을 조용히 불렀습니다. 하늘은 앞날을 정하지 않았고, 아이가 스스로 고른 한 벗만이 곁에 남기로 했습니다.'}
+  {chapter:'첫 장 · 하늘이 내린 벗',image:'../assets/cinematics/guardian/guardian-descent-age09.png',alt:'아홉 번째 생일 밤 아이 앞에 함께 나타난 네 신수',group:true,effect:'constellation',text:'아홉 번째 생일 밤, 고요하던 마당 위로 동서남북 네 갈래의 별빛이 열렸습니다.'},
+  {chapter:'동쪽 · 청룡',image:'../assets/cinematics/guardian/guardian-cheongryong.png',alt:'푸른 구름 사이의 청룡',effect:'cloud',text:'동쪽의 구름이 푸르게 갈라지자 청룡이 여의주를 품고 내려왔습니다. 배움과 술법의 길을 밝혀 주는 신수였습니다.'},
+  {chapter:'서쪽 · 백호',image:'../assets/cinematics/guardian/guardian-baekho.png',alt:'산등성이를 지키는 백호',effect:'mountain',text:'서쪽 산등성이에는 백호가 소리 없이 내려앉았습니다. 두려움 앞에서 물러서지 않을 용기와 굳센 몸을 지켜 주는 신수였습니다.'},
+  {chapter:'남쪽 · 주작',image:'../assets/cinematics/guardian/guardian-jujak.png',alt:'붉은 노을 속의 주작',effect:'embers',text:'남쪽의 따뜻한 바람 속에서는 주작의 붉은 깃이 피어났습니다. 상처를 보듬고 사람과 사람의 인연을 잇는 신수였습니다.'},
+  {chapter:'북쪽 · 현무',image:'../assets/cinematics/guardian/guardian-hyeonmu.png',alt:'깊은 물결 위의 현무',effect:'water',text:'북쪽의 깊은 물결 위에는 현무가 단단히 자리를 잡았습니다. 흔들리지 않는 인내와 오래 버티는 보호의 힘을 지닌 신수였습니다.'},
+  {chapter:'선택 · 한 벗과의 인연',image:'../assets/cinematics/guardian/guardian-descent-age09.png',alt:'아이의 선택을 기다리는 네 신수',group:true,effect:'constellation',text:'네 신수는 아이의 이름을 조용히 불렀습니다. 하늘은 앞날을 정하지 않았고, 아이가 스스로 고른 한 벗만이 곁에 남기로 했습니다.'}
 ];
 let guardianStoryIndex=0,guardianSceneTimer=null,selectedGuardianType=null,introDialogueQueue=[],introDialogueIndex=0;
 const statGroups = [
@@ -1234,12 +1234,9 @@ function startWithBirthday(){
   guardianStoryIndex=0;showGuardianStory();
 }
 function showGuardianStory(){
-  const story=document.querySelector('#guardianStory'),scene=guardianStoryScenes[guardianStoryIndex];story.hidden=false;story.classList.toggle('group-scene',Boolean(scene.group));
-  const image=document.querySelector('#guardianStoryImage');clearTimeout(guardianSceneTimer);image.classList.add('scene-fading');
-  guardianSceneTimer=setTimeout(()=>{image.src=scene.image;image.alt=scene.alt;image.classList.remove('scene-fading','scene-changing');void image.offsetWidth;image.classList.add('scene-changing');},180);
-  document.querySelector('#guardianStoryChapter').textContent=scene.chapter;
-  document.querySelector('#guardianStoryText').textContent=scene.text;
-  document.querySelector('#guardianStoryNext').textContent=guardianStoryIndex===guardianStoryScenes.length-1?'신수 선택하기':'다음';
+  const story=document.querySelector('#guardianStory'),scene=guardianStoryScenes[guardianStoryIndex],copy=story.querySelector('.guardian-story-copy');story.hidden=false;story.classList.toggle('group-scene',Boolean(scene.group));story.dataset.effect=scene.effect||'';
+  const image=document.querySelector('#guardianStoryImage');clearTimeout(guardianSceneTimer);image.classList.add('scene-fading');copy.classList.add('is-changing');
+  guardianSceneTimer=setTimeout(()=>{image.src=scene.image;image.alt=scene.alt;image.classList.remove('scene-fading','scene-changing');void image.offsetWidth;image.classList.add('scene-changing');document.querySelector('#guardianStoryChapter').textContent=scene.chapter;document.querySelector('#guardianStoryText').textContent=scene.text;document.querySelector('#guardianStoryNext').textContent=guardianStoryIndex===guardianStoryScenes.length-1?'신수 선택하기':'다음';copy.classList.remove('is-changing');},240);
 }
 function nextGuardianStory(){if(guardianStoryIndex<guardianStoryScenes.length-1){guardianStoryIndex+=1;showGuardianStory();return;}document.querySelector('#guardianStory').hidden=true;document.querySelector('#guardianChoice').hidden=false;}
 function chooseGuardian(type){if(!guardianDefs[type])return;selectedGuardianType=type;document.querySelectorAll('[data-guardian]').forEach(button=>button.classList.toggle('selected',button.dataset.guardian===type));const confirm=document.querySelector('#guardianChoiceConfirm');confirm.disabled=false;confirm.textContent=`${guardianDefs[type].name}과 인연 맺기`;}
@@ -1299,7 +1296,7 @@ function updatePrologueCopy(scene,index){
 function renderPrologue(){
   const scene=prologueScenes[prologueIndex],index=prologueIndex,wrap=document.querySelector('#prologue'),copy=document.querySelector('.prologue-copy');
   const images=[document.querySelector('#prologueImage'),document.querySelector('#prologueImageNext')],current=images[prologueImageLayer],incoming=images[1-prologueImageLayer],renderId=++prologueRenderId;
-  wrap.hidden=false;wrap.classList.toggle('outdoor-rain',Boolean(scene.rain));clearTimeout(prologueTimer);updatePrologueAudio(Boolean(scene.rain));
+  wrap.hidden=false;wrap.classList.toggle('outdoor-rain',Boolean(scene.rain));wrap.classList.toggle('indoor-scene',!scene.rain);wrap.dataset.scene=scene.id||`S${index+1}`;clearTimeout(prologueTimer);updatePrologueAudio(Boolean(scene.rain));
   if(current.getAttribute('src')===scene.image){current.classList.add('active');updatePrologueCopy(scene,index);}
   else{
     copy.classList.add('is-changing');incoming.src=scene.image;incoming.alt=scene.alt;
