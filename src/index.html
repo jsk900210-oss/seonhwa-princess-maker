@@ -12,7 +12,7 @@
   <link rel="stylesheet" href="rain-v2.css">
   <link rel="stylesheet" href="naming.css">
   <link rel="stylesheet" href="guardian.css?v=0.62.08-debug">
-  <link rel="stylesheet" href="naming-stable.css?v=0.62.10-debug">
+  <link rel="stylesheet" href="naming-stable.css?v=0.62.11-debug">
   <link rel="stylesheet" href="live-changes.css?v=0.61.14-debug">
   <link rel="stylesheet" href="collection.css?v=0.61.96-debug">
   <link rel="stylesheet" href="loading.css?v=0.62.07-debug">
@@ -40,7 +40,7 @@
       </div>
       <span class="loading-caption">이야기를 열 준비가 되었어요</span>
       <button class="studio-start-sound" id="studioStartSound" type="button">인연의 문을 열기</button>
-      <small class="loading-version" aria-label="현재 게임 버전">v0.62.10-debug</small>
+      <small class="loading-version" aria-label="현재 게임 버전">v0.62.11-debug</small>
     </section>
     <section class="prologue" id="prologue" aria-label="이야기 시작 영상" hidden>
       <audio id="prologueMusic" src="../assets/audio/music/prologue-lantern-and-dawn.mp3" preload="auto" loop></audio>
@@ -101,7 +101,7 @@
       <img id="character" src="../assets/characters/seonhwa/age-09/base/seonhwa-age09-base.png" alt="9세 선화">
       <div class="missing" id="missing">기준 캐릭터 원본 재첨부 대기</div>
     </section>
-    <aside class="guardian-companion" id="guardianCompanion" hidden aria-label="동행 신수"><span id="guardianCompanionMark">龍</span><small id="guardianCompanionName"></small></aside>
+    <aside class="guardian-companion" id="guardianCompanion" hidden role="button" tabindex="0" aria-label="동행 신수에게 말 걸기"><span id="guardianCompanionMark">龍</span><small id="guardianCompanionName"></small><em>말 걸기</em></aside>
     <section class="dialogue"><b id="speakerName">수호신수</b><p id="dialogueText">오늘의 길을 함께 살펴볼까?</p></section>
     <aside class="home-side-actions" aria-label="홈 바로가기">
       <button class="home-object-button" id="collectionBookButton" type="button" aria-label="수집도감 열기"><img src="../assets/ui/home-actions/collection-book.png" alt=""><span>수집도감</span></button>
@@ -182,6 +182,6 @@
       </div>
     </section>
   </main>
-  <script src="story-data.js?v=0.62.10-debug"></script><script src="app.js?v=0.62.10-debug"></script>
+  <script src="story-data.js?v=0.62.11-debug"></script><script src="app.js?v=0.62.11-debug"></script>
 </body>
 </html>

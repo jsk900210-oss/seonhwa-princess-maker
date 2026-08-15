@@ -507,6 +507,27 @@ function renderHud() {
   if(companion){companion.hidden=!guardian;document.querySelector('#guardianCompanionMark').textContent=guardian?.mark||'守';document.querySelector('#guardianCompanionName').textContent=game.guardianName||guardian?.name||'';if(guardian)document.querySelector('#guardianCompanionMark').style.background=guardian.theme;}
 }
 
+const guardianVoice={
+  cheongryong:['배움의 기운은 맑은 물처럼 이어지는 법이지. 무리하지 말고 한 주를 골고루 짜 보자.','지혜를 쌓는 날과 마음을 쉬는 날이 함께 있어야 오래 나아갈 수 있단다.'],
+  baekho:['겁내지 마라. 네가 고른 한 주라면 내가 끝까지 곁을 지키겠다.','몸이 지치기 전에 쉬는 것도 훌륭한 수련이다.'],
+  jujak:['좋은 기운이 느껴지는구나! 즐겁게 배울 날과 신나게 쉬는 날을 골라 보자.','마음에 불꽃이 너무 커지면 잠시 쉬어도 괜찮단다.'],
+  hyeonmu:['서두르지 않아도 괜찮다. 하루씩 차분히 채우면 한 주의 길이 보일 게다.','단단한 마음은 알맞은 쉼에서 시작되는 법이란다.']
+};
+function speakGuardian(context='home'){
+  const guardian=guardianDefs[game.guardianType];if(!guardian||introDialogueQueue.length)return false;
+  const name=game.guardianName||guardian.name,filled=game.dailySchedule.filter(Boolean).length;
+  let line='';
+  if(game.stress>=80)line=`${game.characterName}, 마음이 많이 지쳐 있구나. 이번 주에는 반드시 휴식을 넣자.`;
+  else if(game.money<500)line='은전이 넉넉하지 않구나. 비용이 드는 교육보다 아르바이트와 휴식을 먼저 살펴보자.';
+  else if(context==='schedule'&&filled===0)line='아직 비어 있는 일곱 날이 보이는구나. 먼저 요일을 고르고 하고 싶은 활동을 눌러 보렴.';
+  else if(context==='schedule'&&filled<7)line=`지금 ${filled}일을 정했구나. 남은 ${7-filled}일도 무리하지 않게 채워 보자.`;
+  else if(context==='schedule')line='일곱 날의 준비가 모두 끝났구나. 비용과 스트레스를 확인한 뒤 실행하면 된다.';
+  else if(context==='return')line=`다시 만났구나, ${game.characterName}. 지난 기록은 내가 잘 지켜 두었다. 이번 주 일정부터 살펴볼까?`;
+  else {const lines=guardianVoice[game.guardianType]||guardianVoice.hyeonmu;line=lines[Math.floor(Math.random()*lines.length)];}
+  document.querySelector('#speakerName').textContent=name;document.querySelector('#dialogueText').textContent=line;
+  return true;
+}
+
 const statLabels={health:'체력',strength:'힘',agility:'민첩',intelligence:'지능',magic:'마력',mentality:'정신력',dignity:'기품',manners:'예절',speech:'화술',sensitivity:'감수성',sense:'센스',charm:'매력',stress:'스트레스'};
 statLabels.nannyAffinity='신수 유대감';
 statLabels.fatherAffinity='아버지 친밀도';
@@ -576,6 +597,7 @@ function openPanel(type) {
   if (type === 'schedule') {
     playHomeMusic();
     renderSchedulePanel();
+    speakGuardian('schedule');
   } else if (type === 'status') {
     playHomeMusic();
     panelTitle.textContent = `${game.characterName || '아이'}의 상태`;
@@ -732,7 +754,7 @@ function applySavePayload(saved) {
   bg.src = backgrounds.home;
   applyEquippedOutfit();
   renderHud();
-  setTimeout(()=>showHomeGreeting(),350);
+  setTimeout(()=>{if(!showHomeGreeting())speakGuardian('return');},350);
   panel.hidden = true;
   document.querySelector('#dialogueText').textContent = '저장한 시점으로 돌아왔어요.';
   return true;
@@ -1423,6 +1445,8 @@ document.querySelector('#guardianChoiceConfirm').addEventListener('click',confir
 document.querySelector('#guardianNameConfirm').addEventListener('click',finishGuardianNaming);
 document.querySelector('#guardianNameInput').addEventListener('keydown',event=>{if(event.key==='Enter')finishGuardianNaming();});
 document.querySelector('#guardianReselect').addEventListener('click',reselectGuardian);
+document.querySelector('#guardianCompanion').addEventListener('click',()=>speakGuardian('home'));
+document.querySelector('#guardianCompanion').addEventListener('keydown',event=>{if(event.key==='Enter'||event.key===' '){event.preventDefault();speakGuardian('home');}});
 document.querySelector('.dialogue').addEventListener('click',advanceIntroDialogue);
 document.querySelector('#birthdayInput').addEventListener('change',enforceBirthday1990);
 document.querySelector('#prologueNext').addEventListener('click',nextPrologue);
