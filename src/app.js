@@ -305,6 +305,7 @@ function recommendOutfit(actionId=null){
 }
 function updateAutoOutfit(actionId=null){if(!game.autoOutfit)return game.equippedOutfit;game.equippedOutfit=recommendOutfit(actionId);applyEquippedOutfit();return game.equippedOutfit;}
 const activityOutfitFrameCache=new Map();
+const activityOutfitStyleCache=new Map();
 function activityOutfitPalette(outfitId){
   if(!outfitId)return null;
   if(/cash-ember|rose-paisley/.test(outfitId))return {skirt:[96,25,47],top:[185,68,93]};
@@ -319,9 +320,33 @@ function activityOutfitPalette(outfitId){
   if(/court|ceremony/.test(outfitId))return {skirt:[59,79,126],top:[218,187,112]};
   return {skirt:[143,171,145],top:null};
 }
-function outfitActivityFrame(src,outfitId){
-  const palette=activityOutfitPalette(outfitId);if(!palette)return Promise.resolve(src);
-  const key=`${outfitId}|${src}`;if(activityOutfitFrameCache.has(key))return Promise.resolve(activityOutfitFrameCache.get(key));
+function sampleOutfitColor(data,width,height,startY,endY,fallback){
+  const colors=[];
+  for(let y=Math.floor(height*startY);y<Math.floor(height*endY);y+=Math.max(1,Math.floor(height/80)))for(let x=Math.floor(width*.18);x<Math.floor(width*.82);x+=Math.max(1,Math.floor(width/60))){
+    const i=(y*width+x)*4,r=data[i],g=data[i+1],b=data[i+2],a=data[i+3],max=Math.max(r,g,b),min=Math.min(r,g,b);
+    if(a<120||max>244||max<28||max-min<16||(r>145&&g>95&&b>75&&r>g&&g>b))continue;
+    colors.push([r,g,b,max-min]);
+  }
+  if(!colors.length)return fallback;
+  colors.sort((a,b)=>b[3]-a[3]);const chosen=colors.slice(0,Math.max(8,Math.floor(colors.length*.45)));
+  return [0,1,2].map(channel=>Math.round(chosen.reduce((sum,color)=>sum+color[channel],0)/chosen.length));
+}
+function resolveActivityOutfitStyle(outfitId){
+  if(!outfitId)return Promise.resolve(null);
+  const age=growthVisualAge(),key=`${age}|${outfitId}`;
+  if(activityOutfitStyleCache.has(key))return Promise.resolve(activityOutfitStyleCache.get(key));
+  const fallback=activityOutfitPalette(outfitId);
+  return new Promise(resolve=>{const outfitSource=new Image();outfitSource.onload=()=>{try{
+    const canvas=document.createElement('canvas');canvas.width=outfitSource.naturalWidth;canvas.height=outfitSource.naturalHeight;
+    const context=canvas.getContext('2d',{willReadFrequently:true});context.drawImage(outfitSource,0,0);
+    const pixels=context.getImageData(0,0,canvas.width,canvas.height).data;
+    const style={top:sampleOutfitColor(pixels,canvas.width,canvas.height,.16,.48,fallback?.top||[220,205,178]),skirt:sampleOutfitColor(pixels,canvas.width,canvas.height,.48,.92,fallback?.skirt||[143,171,145])};
+    activityOutfitStyleCache.set(key,style);resolve(style);
+  }catch{resolve(fallback);}};outfitSource.onerror=()=>resolve(fallback);outfitSource.src=outfitImageForAge(outfitId,age);});
+}
+async function outfitActivityFrame(src,outfitId){
+  const palette=await resolveActivityOutfitStyle(outfitId);if(!palette)return src;
+  const key=`${growthVisualAge()}|${outfitId}|${src}`;if(activityOutfitFrameCache.has(key))return activityOutfitFrameCache.get(key);
   return new Promise(resolve=>{const source=new Image();source.onload=()=>{try{const canvas=document.createElement('canvas');canvas.width=source.naturalWidth;canvas.height=source.naturalHeight;const context=canvas.getContext('2d',{willReadFrequently:true});context.drawImage(source,0,0);const frame=context.getImageData(0,0,canvas.width,canvas.height),data=frame.data,isRest=/\/(rest|sleep)-/.test(src);
     for(let y=0;y<canvas.height;y++)for(let x=0;x<canvas.width;x++){const i=(y*canvas.width+x)*4;if(data[i+3]<24)continue;const r=data[i],g=data[i+1],b=data[i+2];
       const pink=!isRest&&r>155&&g>42&&g<155&&b>52&&b<180&&r>g*1.32&&r>b*1.12;
