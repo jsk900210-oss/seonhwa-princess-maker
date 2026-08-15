@@ -6,7 +6,7 @@ body{min-height:var(--stable-app-height,100vh);overflow:hidden}
 .guardian-story{cursor:pointer}
 .guardian-story-copy{padding-bottom:42px}
 .guardian-story-copy:after{content:"화면을 터치해 계속";position:absolute;right:18px;bottom:14px;color:#e7cd91;font-size:11px;letter-spacing:.04em}
-.dialogue.tap-continue{position:relative;cursor:pointer;padding-bottom:28px}
+.dialogue.tap-continue{position:absolute;left:4%;right:4%;bottom:9%;cursor:pointer;padding-bottom:28px}
 .dialogue.tap-continue:after{content:"터치해서 계속 ▾";position:absolute;right:14px;bottom:8px;color:#8b613a;font-size:10px;font-weight:700}
 .guardian-companion{cursor:pointer;transition:transform .16s ease,filter .16s ease}
 .guardian-companion:hover,.guardian-companion:focus-visible{transform:translateY(-3px) scale(1.04);filter:brightness(1.08);outline:2px solid #f1d08a;outline-offset:2px}
