@@ -1,10 +1,20 @@
-.guardian-story-focus{position:absolute;z-index:.5;inset:0;width:100%;height:100%;object-fit:cover;pointer-events:none;opacity:0;filter:saturate(1.04) contrast(1.03)}
+.guardian-story>#guardianStoryImage{position:absolute;z-index:0;inset:0;width:100%;height:100%;object-fit:cover}
+.guardian-story-focus{position:absolute;z-index:1;inset:0;width:100%;height:100%;object-fit:cover;pointer-events:none;opacity:0;filter:saturate(1.04) contrast(1.03)}
+.guardian-story:before,.guardian-story:after{z-index:2}
+.guardian-story .guardian-story-copy{z-index:4}
 .guardian-story-focus.focus-playing{animation:guardian-focus-cut 7.2s ease-in-out both}
 .guardian-story-focus.ability-frame{filter:saturate(1.12) contrast(1.06) brightness(1.04)}
+.guardian-story[data-phase="arrival"]>#guardianStoryImage{animation:guardian-base-arrival 1.7s cubic-bezier(.18,.72,.28,1) both}
+.guardian-story[data-phase="reaction"] .guardian-story-focus{filter:saturate(1.04) contrast(1.03)}
+.guardian-story[data-phase="ability"]{animation:guardian-stage-pulse .55s ease both}
+.guardian-story[data-phase="ability"] .guardian-story-focus{filter:saturate(1.18) contrast(1.08) brightness(1.08)}
+.guardian-story[data-phase="settle"]>#guardianStoryImage{filter:saturate(1.05) brightness(1.02)}
 .guardian-story[data-effect="constellation"] .guardian-story-focus{object-position:50% 34%}
 .guardian-story[data-effect="cloud"] .guardian-story-focus{object-position:66% 31%}
 .guardian-story[data-effect="mountain"] .guardian-story-focus{object-position:50% 34%}
 .guardian-story[data-effect="embers"] .guardian-story-focus{object-position:56% 32%}
 .guardian-story[data-effect="water"] .guardian-story-focus{object-position:50% 41%}
 @keyframes guardian-focus-cut{0%,18%{opacity:0;transform:scale(1.02)}25%,50%{opacity:1;transform:scale(1.06)}57%,63%{opacity:0;transform:scale(1.08)}70%,91%{opacity:1;transform:scale(1.03)}100%{opacity:0;transform:scale(1.06)}}
+@keyframes guardian-base-arrival{from{opacity:.1;transform:scale(1.12)}to{opacity:1;transform:scale(1.025)}}
+@keyframes guardian-stage-pulse{0%{filter:brightness(1)}45%{filter:brightness(1.2)}100%{filter:brightness(1)}}
 @media(prefers-reduced-motion:reduce){.guardian-story-focus.focus-playing{animation:none}}
