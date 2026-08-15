@@ -188,7 +188,8 @@ activityFrames.manners=[1,2,3].map(n=>`../assets/characters/seonhwa/age-09/sprit
 activityFrames.errand=[1,2,3].map(n=>`../assets/characters/seonhwa/age-09/sprites/activities/errand-character-v4-${n}.png`);
 activityFrames.houseclean=[1,2,3,4,5,6].map(n=>`../assets/characters/seonhwa/age-09/sprites/activities/houseclean-side-${n}.png`);
 activityFrames.sleep=[...activityFrames.rest];
-const modularActivities=new Set(['calligraphy','arithmetic','manners','houseclean','errand','rest','sleep']);
+// The modular errand frames crop the top of the hair in frame 1. Keep the complete v4 frames.
+const modularActivities=new Set(['calligraphy','arithmetic','manners','houseclean','rest','sleep']);
 function activityFrameSet(activity){
   if(!modularActivities.has(activity))return activityFrames[activity];
   const name=activity==='sleep'?'rest':activity,age=String(growthAssetAge(growthVisualAge())).padStart(2,'0');
@@ -1274,8 +1275,8 @@ function syncSettingsUi(){
   document.querySelector('#bgmVolume').value=userSettings.bgmVolume;document.querySelector('#sfxVolume').value=userSettings.sfxVolume;
   document.querySelector('#bgmValue').textContent=`${userSettings.bgmVolume}%`;document.querySelector('#sfxValue').textContent=`${userSettings.sfxVolume}%`;document.querySelector('#referralCode').value=userSettings.referralCode||'';
 }
-function openSettings(){syncSettingsUi();document.querySelector('#settingsModal').hidden=false;document.querySelector('#settingsClose').focus();}
-function closeSettings(){document.querySelector('#settingsModal').hidden=true;document.querySelector('#settingsButton').focus();}
+function openSettings(){syncSettingsUi();document.querySelector('#settingsModal').hidden=false;document.querySelector('.phone').classList.add('settings-open');document.querySelector('#settingsClose').focus();}
+function closeSettings(){document.querySelector('#settingsModal').hidden=true;document.querySelector('.phone').classList.remove('settings-open');document.querySelector('#settingsButton').focus();}
 function updateSoundSetting(kind,value){userSettings[kind]=value;saveSettings();syncSettingsUi();applyAudioSettings();}
 function saveReferralCode(){
   const input=document.querySelector('#referralCode'),message=document.querySelector('#referralMessage');const code=input.value.trim().toUpperCase().replace(/[^A-Z0-9가-힣-]/g,'').slice(0,20);
