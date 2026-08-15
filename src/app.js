@@ -603,13 +603,20 @@ function showInventoryItem(id,category){
   detail.innerHTML=`${item.type==='event'&&item.image?`<img class="event-collectible-preview" src="${item.image}" alt="${item.name}">`:''}<b>${item.name}</b><span>${inventoryTypeLabels[item.type]||'기타'} · ${item.qty||1}개</span>${item.description?`<p>${item.description}</p>`:''}${action}`;
   detail.querySelector('[data-inventory-action]')?.addEventListener('click',()=>{if(item.type==='outfit'){game.autoOutfit=false;game.equippedOutfit=game.equippedOutfit===item.id?null:item.id;applyEquippedOutfit();renderInventory(category);}else if(item.type==='food'){const food=foods.find(entry=>entry.id===item.id);if(food)applyShopChanges(food.change);item.qty-=1;if(item.qty<=0)game.items.splice(game.items.indexOf(item),1);document.querySelector('#dialogueText').textContent=`${item.name}을(를) 먹었어요.`;renderInventory(category);}});
 }
-function renderVacationCollection(){
+const collectionAgeTabs=[['all','전체'],['9','9세'],['13','13세'],['16','16세'],['19','19세']];
+function closeCollectionToHome(){panel.hidden=true;panelTitle.textContent='';panelBody.innerHTML='';playHomeMusic();}
+function renderVacationCollection(ageFilter='all'){
   normalizeInventory();panelTitle.textContent='바캉스 수집도감';
   const ownedIds=new Set(game.items.filter(item=>item.type==='event').map(item=>item.id));
   const collected=vacationIllustrations.filter(item=>ownedIds.has(item.id)).length,total=vacationIllustrations.length;
   const percent=Math.round(collected/total*100);
-  const cards=vacationIllustrations.map(item=>{const unlocked=ownedIds.has(item.id),age=item.age||9;return `<button class="collection-card ${unlocked?'unlocked':'locked'}" data-collection-id="${item.id}" ${unlocked?'':'disabled'} aria-label="${unlocked?`${age}세 ${item.season} 수집 완료`:`${age}세 ${item.season} 미수집`}"><div class="collection-art"><img src="${item.image}" alt="${unlocked?item.name:''}"><span>${unlocked?'수집 완료':'?'}</span></div><b>${age}세 · ${item.season}</b><small>${unlocked?item.name:'아직 발견하지 못한 추억'}</small></button>`;}).join('');
-  panelBody.innerHTML=`<section class="collection-progress" aria-label="바캉스 일러스트 수집률"><div><b>수집도 ${percent}%</b><span>${collected} / ${total}</span></div><div class="collection-track"><i style="width:${percent}%"></i></div></section><div class="collection-grid">${cards}</div><section class="collection-detail" id="collectionDetail">수집한 카드를 누르면 크게 볼 수 있어요.</section>`;
+  const filtered=ageFilter==='all'?vacationIllustrations:vacationIllustrations.filter(item=>(item.age||9)===Number(ageFilter));
+  const filteredCollected=filtered.filter(item=>ownedIds.has(item.id)).length;
+  const cards=filtered.map(item=>{const unlocked=ownedIds.has(item.id),age=item.age||9;return `<button class="collection-card ${unlocked?'unlocked':'locked'}" data-collection-id="${item.id}" ${unlocked?'':'disabled'} aria-label="${unlocked?`${age}세 ${item.season} 수집 완료`:`${age}세 ${item.season} 미수집`}"><div class="collection-art"><img src="${item.image}" alt="${unlocked?item.name:''}"><span>${unlocked?'수집 완료':'?'}</span></div><b>${age}세 · ${item.season}</b><small>${unlocked?item.name:'아직 발견하지 못한 추억'}</small></button>`;}).join('');
+  const empty=`<div class="collection-empty"><b>${ageFilter}세의 추억은 아직 준비 중이에요.</b><span>새 일러스트가 추가되면 이곳에 표시됩니다.</span></div>`;
+  panelBody.innerHTML=`<button class="collection-back" id="collectionBack" type="button" aria-label="수집도감에서 홈으로 돌아가기">← 뒤로가기</button><nav class="collection-age-tabs" aria-label="연령별 수집도감">${collectionAgeTabs.map(([id,label])=>`<button class="${ageFilter===id?'on':''}" data-collection-age="${id}" type="button">${label}</button>`).join('')}</nav><section class="collection-progress" aria-label="바캉스 일러스트 수집률"><div><b>전체 수집도 ${percent}%</b><span>${collected} / ${total}</span></div><div class="collection-track"><i style="width:${percent}%"></i></div>${ageFilter!=='all'?`<small>${ageFilter}세 수집 ${filteredCollected} / ${filtered.length}</small>`:''}</section>${cards?`<div class="collection-grid">${cards}</div>`:empty}<section class="collection-detail" id="collectionDetail">수집한 카드를 누르면 크게 볼 수 있어요.</section>`;
+  document.querySelector('#collectionBack').addEventListener('click',closeCollectionToHome);
+  panelBody.querySelectorAll('[data-collection-age]').forEach(button=>button.addEventListener('click',()=>renderVacationCollection(button.dataset.collectionAge)));
   panelBody.querySelectorAll('[data-collection-id]:not(:disabled)').forEach(button=>button.addEventListener('click',()=>showVacationCollectionCard(button.dataset.collectionId)));
 }
 function showVacationCollectionCard(id){
