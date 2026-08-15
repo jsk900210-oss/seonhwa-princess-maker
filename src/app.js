@@ -330,11 +330,11 @@ function awardVacationIllustration(){
   return prize;
 }
 const endingRelationCandidates=[
-  {id:'doyun',name:'도윤',role:'젊은 무관',image:'../assets/characters/romance/doyun/vacation.png',minAge:14,ending:'무관의 아내',dialogues:['“활쏘기보다 고요한 풍경을 바라보는 일이 더 어렵군.”','“혼자 걷는 길인 줄 알았는데, 동행이 생겼군.”']},
-  {id:'seojin',name:'서진',role:'선비',image:'../assets/characters/romance/seojin/vacation.png',minAge:14,ending:'선비와의 삶',dialogues:['“책에서 읽던 풍경보다 직접 보는 모습이 더 아름답군요.”','“이 경치를 시로 남긴다면 어떤 첫 구절이 좋을까요?”']},
-  {id:'yeonwoo',name:'연우',role:'화공',image:'../assets/characters/romance/yeonwoo/vacation.png',minAge:14,ending:'화가의 동반자',dialogues:['“잠시 그대로 있어 봐. 이 순간을 그림에 담고 싶어.”','“같은 풍경도 함께 보는 사람에 따라 색이 달라 보여.”']},
-  {id:'taegyeom',name:'태겸',role:'상단 후계자',image:'../assets/characters/romance/taegyeom/vacation.png',minAge:14,ending:'대상인의 동반자',dialogues:['“좋은 물건보다 좋은 인연을 만나는 일이 더 귀하다고 하더군.”','“이 길 끝에 재미있는 장이 선다는데, 함께 가겠어?”']},
-  {id:'hyeon',name:'현',role:'정체를 숨긴 왕자',image:'../assets/characters/romance/hyeon/vacation.png',minAge:15,ending:'왕자의 연인',dialogues:['“내가 누구인지는 잠시 잊고, 오늘만 평범하게 걸어도 될까?”','“또 만났네. 이쯤 되면 우연이라고만 하기는 어렵겠어.”']}
+  {id:'doyun',name:'도윤',role:'젊은 무관',image:'../assets/characters/romance/doyun/vacation.png',assetReady:true,minAge:14,ending:'무관의 아내',dialogues:['“활쏘기보다 고요한 풍경을 바라보는 일이 더 어렵군.”','“혼자 걷는 길인 줄 알았는데, 동행이 생겼군.”']},
+  {id:'seojin',name:'서진',role:'선비',image:'../assets/characters/romance/seojin/vacation.png',assetReady:true,minAge:14,ending:'선비와의 삶',dialogues:['“책에서 읽던 풍경보다 직접 보는 모습이 더 아름답군요.”','“이 경치를 시로 남긴다면 어떤 첫 구절이 좋을까요?”']},
+  {id:'yeonwoo',name:'연우',role:'화공',image:'../assets/characters/romance/yeonwoo/vacation.png',assetReady:true,minAge:14,ending:'화가의 동반자',dialogues:['“잠시 그대로 있어 봐. 이 순간을 그림에 담고 싶어.”','“같은 풍경도 함께 보는 사람에 따라 색이 달라 보여.”']},
+  {id:'taegyeom',name:'태겸',role:'상단 후계자',image:'../assets/characters/romance/taegyeom/vacation.png',assetReady:true,minAge:14,ending:'대상인의 동반자',dialogues:['“좋은 물건보다 좋은 인연을 만나는 일이 더 귀하다고 하더군.”','“이 길 끝에 재미있는 장이 선다는데, 함께 가겠어?”']},
+  {id:'hyeon',name:'현',role:'정체를 숨긴 왕자',image:'../assets/characters/romance/hyeon/vacation.png',assetReady:true,minAge:15,ending:'왕자의 연인',dialogues:['“내가 누구인지는 잠시 잊고, 오늘만 평범하게 걸어도 될까?”','“또 만났네. 이쯤 되면 우연이라고만 하기는 어렵겠어.”']}
 ];
 function waitForVacationTap(label='화면을 터치해 계속'){
   const scene=document.querySelector('#vacationScene'),button=document.querySelector('#vacationNext');button.textContent=label;
@@ -769,7 +769,7 @@ function askMarketShop(type){
   const place=marketPlaces.find(item=>item.id===type);
   if(!place)return;
   selectMarketShop(type);
-  document.querySelector('#marketConfirmText').textContent=`${type==='food'?'주모':'한복점 주인'}를 선택하시겠습니까?`;
+  document.querySelector('#marketConfirmText').textContent=type==='food'?'주모를 선택하시겠습니까?':'한복점 주인을 선택하시겠습니까?';
   document.querySelector('#marketConfirm').hidden=false;
 }
 function closeMarketConfirm(){document.querySelector('#marketConfirm').hidden=true;selectMarketShop(null);}
@@ -803,14 +803,23 @@ function clearDailyAction(index) {
 }
 
 function createMonthlyLedger(year,month){return {year,month,income:0,expense:0,activities:{},change:{}};}
-function recordMonthlySchedule(selected,weeklyChange){
-  if(!game.monthlyLedger){const date=new Date(`${game.currentDate}T00:00:00`);game.monthlyLedger=createMonthlyLedger(date.getFullYear(),date.getMonth()+1);}
-  selected.forEach(action=>{
-    game.monthlyLedger.activities[action.name]=(game.monthlyLedger.activities[action.name]||0)+1;
-    if(action.cost>0)game.monthlyLedger.expense+=action.cost;
-    if(action.cost<0)game.monthlyLedger.income+=-action.cost;
+function recordMonthlySchedule(dayRecords){
+  const completed=[];
+  dayRecords.forEach(record=>{
+    const date=new Date(`${record.date}T00:00:00`),year=date.getFullYear(),month=date.getMonth()+1;
+    if(!game.monthlyLedger)game.monthlyLedger=createMonthlyLedger(year,month);
+    if(game.monthlyLedger.year!==year||game.monthlyLedger.month!==month){completed.push(game.monthlyLedger);game.monthlyLedger=createMonthlyLedger(year,month);}
+    game.monthlyLedger.activities[record.action.name]=(game.monthlyLedger.activities[record.action.name]||0)+1;
+    if(record.action.cost>0)game.monthlyLedger.expense+=record.action.cost;
+    if(record.action.cost<0)game.monthlyLedger.income+=-record.action.cost;
+    Object.entries(record.actualChange).forEach(([key,value])=>game.monthlyLedger.change[key]=(game.monthlyLedger.change[key]||0)+value);
   });
-  Object.entries(weeklyChange).forEach(([key,value])=>game.monthlyLedger.change[key]=(game.monthlyLedger.change[key]||0)+value);
+  return completed;
+}
+function daysUntilEnding(){
+  if(!game.currentDate||!game.endingDate)return 7;
+  const current=new Date(`${game.currentDate}T00:00:00`),ending=new Date(`${game.endingDate}T00:00:00`);
+  return Math.max(0,Math.ceil((ending-current)/86400000));
 }
 function showMonthlyReport(ledger){
   panel.hidden=false;panelTitle.textContent=`${ledger.year}년 ${ledger.month}월 결산`;
@@ -825,7 +834,10 @@ function showMonthlyReport(ledger){
 async function runWeek() {
   if (!game.dailySchedule.every(Boolean)) return;
   hideScheduleConfirmation();
-  const selected = game.dailySchedule.map(id => actions.find(item => item.id === id));
+  const scheduled = game.dailySchedule.map(id => actions.find(item => item.id === id));
+  const playableDays=Math.min(7,daysUntilEnding());
+  const selected = scheduled.slice(0,playableDays);
+  if(selected.length===0){game.ended=true;showEnding();return;}
   let projectedMoney=game.money;
   const unaffordable=selected.find(action=>{projectedMoney-=action.cost;return projectedMoney<0;});
   if (unaffordable) {
@@ -834,17 +846,15 @@ async function runWeek() {
     return;
   }
   const completedWeek = game.week;
-  const completedMonth = game.month;
   panel.hidden = true;
-  const weeklyChange = await playWeeklySchedule(selected);
-  recordMonthlySchedule(selected,weeklyChange);
+  const playbackResult = await playWeeklySchedule(selected);
+  const completedLedgers=recordMonthlySchedule(playbackResult.dayRecords);
   game.homeReaction=null;
-  advanceGameDate(7);
-  const completedLedger=game.month!==completedMonth?game.monthlyLedger:null;
-  if(completedLedger){const date=new Date(`${game.currentDate}T00:00:00`);game.monthlyLedger=createMonthlyLedger(date.getFullYear(),date.getMonth()+1);}
+  advanceGameDate(selected.length);
+  const completedLedger=completedLedgers[0]||null;
   const counts = selected.reduce((map, action) => (map[action.name]=(map[action.name]||0)+1,map),{});
   const summary = Object.entries(counts).map(([name,count]) => count > 1 ? `${name} ${count}일` : name).join(' · ');
-  document.querySelector('#dialogueText').textContent = `${completedWeek}주 일정(${summary})을 마쳤어요.`;
+  document.querySelector('#dialogueText').textContent = game.ended?`마지막 ${selected.length}일 일정(${summary})을 마쳤어요.`:`${completedWeek}주 일정(${summary})을 마쳤어요.`;
   game.dailySchedule = [null,null,null,null,null,null,null];
   bg.src = backgrounds.home;
   playHomeMusic();
@@ -957,6 +967,8 @@ async function playWeeklySchedule(selected) {
   const conditionCue = document.querySelector('#conditionCue');
   const simulated={stress:game.stress};
   const weeklyChange={};
+  const dayRecords=[];
+  const scheduleStart=new Date(`${game.currentDate}T00:00:00`);
   const dayNames = ['월요일','화요일','수요일','목요일','금요일','토요일','일요일'];
   document.querySelector('#homeGreeting').hidden=true;
   phone.classList.remove('greeting-active');
@@ -984,7 +996,7 @@ async function playWeeklySchedule(selected) {
     const outfitName=outfits.find(item=>item.id===dailyOutfit)?.name;
     const showOutfitName=action.id!=='rest'&&Boolean(outfitName);
     document.querySelector('#stageCaption').textContent = `${dayNames[index]} · ${action.name}${showOutfitName?` · ${outfitName}`:''}`;
-    document.querySelector('#playbackProgress').style.width = `${((index + 1) / 7) * 100}%`;
+    document.querySelector('#playbackProgress').style.width = `${((index + 1) / selected.length) * 100}%`;
     bg.src = backgrounds[presentation.location];
     stageMap.src = backgrounds[presentation.location];
     stageMap.alt = `${action.name} 활동 장소`;
@@ -1022,7 +1034,8 @@ async function playWeeklySchedule(selected) {
     setScheduleDialogue(action,outcome,index);
     stageCharacter.className = `stage-character pixel-sprite ${presentation.motion}`;
     renderActivityGauges(resolvedAction);
-    Object.entries(resolvedChange).forEach(([key,value])=>game[key]=clampStat(key,(game[key]||0)+value));
+    const actualChange={};
+    Object.entries(resolvedChange).forEach(([key,value])=>{const before=clampStat(key,game[key]||0),after=clampStat(key,before+value);game[key]=after;actualChange[key]=after-before;});
     game.money=Math.max(0,game.money-action.cost);
     renderHud();
     const moneyLabel=document.querySelector('#moneyLabel');
@@ -1037,6 +1050,8 @@ async function playWeeklySchedule(selected) {
       dayResult.hidden = true;
     }
     Object.entries(resolvedChange).forEach(([key,value])=>weeklyChange[key]=(weeklyChange[key]||0)+value);
+    const activityDate=new Date(scheduleStart);activityDate.setDate(scheduleStart.getDate()+index);
+    dayRecords.push({date:isoDate(activityDate),action,actualChange});
     simulated.stress=clampStat('stress',simulated.stress+(resolvedChange.stress||0));
   }
   playback.hidden = true;
@@ -1049,7 +1064,7 @@ async function playWeeklySchedule(selected) {
   document.querySelector('.dialogue').classList.remove('schedule-speaking');
   document.querySelector('#speakerName').textContent=game.nannyName||'유모';
   phone.classList.remove('playing');
-  return weeklyChange;
+  return {weeklyChange,dayRecords};
 }
 
 document.querySelector('#marketEnter').addEventListener('click',event=>enterMarketShop(event.currentTarget.dataset.shop));
