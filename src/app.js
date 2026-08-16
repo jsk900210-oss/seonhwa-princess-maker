@@ -835,10 +835,11 @@ function isPlayableSave(saved){
   const currentDate=new Date(`${data.currentDate}T00:00:00`);
   return !Number.isNaN(birthday.getTime())&&!Number.isNaN(currentDate.getTime())&&currentDate>=birthday;
 }
+const saveTimestamp=saved=>{const timestamp=Date.parse(saved?.savedAt||'');return Number.isFinite(timestamp)?timestamp:0;};
 function mostRecentExistingSave(){
   return [readAutoSave(),...SAVE_SLOTS.map(slot=>readSave(slot))]
     .filter(isPlayableSave)
-    .sort((a,b)=>new Date(b.savedAt||0)-new Date(a.savedAt||0))[0]||null;
+    .sort((a,b)=>saveTimestamp(b)-saveTimestamp(a))[0]||null;
 }
 
 function writeSave(slot, payload) {
@@ -857,9 +858,11 @@ function serializeSave() {
 
 function applySavePayload(saved) {
   if (!isPlayableSave(saved)) return false;
-  if(!saved.game.profileSlot){
+  if(!SAVE_SLOTS.includes(Number(saved.game.profileSlot))){
     const matchingSlot=SAVE_SLOTS.find(slot=>{const record=readSave(slot);return record?.game?.characterName===saved.game.characterName&&record?.game?.nannyName===saved.game.nannyName&&record?.game?.birthday===saved.game.birthday;});
     saved.game.profileSlot=matchingSlot||SAVE_SLOTS.find(slot=>!readSave(slot))||null;
+  }else{
+    saved.game.profileSlot=Number(saved.game.profileSlot);
   }
   Object.assign(game, saved.game);
   if(!Number.isFinite(game.cash))game.cash=50000;
