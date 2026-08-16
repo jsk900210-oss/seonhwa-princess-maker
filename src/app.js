@@ -722,6 +722,10 @@ const endingRelationCandidates=[
   {id:'taegyeom',name:'태겸',role:'상단 후계자',motif:'최현욱',image:'../assets/characters/romance/taegyeom/vacation.png',baseSheet:'../assets/characters/romance/identity/fullbody/taegyeom-age-13-16-19-fullbody-v1.png',assetReady:true,minAge:13,ending:'대상인의 동반자',dialogues:['“좋은 물건보다 좋은 인연을 만나는 일이 더 귀하다고 하더군.”','“이 길 끝에 재미있는 장이 선다는데, 함께 가겠어?”']},
   {id:'hyeon',name:'현',role:'정체를 숨긴 왕자',motif:'차은우',image:'../assets/characters/romance/hyeon/vacation.png',baseSheet:'../assets/characters/romance/identity/fullbody/hyeon-age-13-16-19-fullbody-v1.png',assetReady:true,minAge:13,ending:'왕자의 연인',dialogues:['“내가 누구인지는 잠시 잊고, 오늘만 평범하게 걸어도 될까?”','“또 만났네. 이쯤 되면 우연이라고만 하기는 어렵겠어.”']}
 ];
+function protagonistPortraitForAge(age=game.age){
+  const actualAge=age>=19?18:age>=16?16:age>=13?13:9;
+  return `../assets/characters/seonhwa/identity/seonhwa-face-age-${String(actualAge).padStart(2,'0')}-neutral.png`;
+}
 function relationAgePosition(){return game.age>=19?'100%':game.age>=16?'50%':'0%';}
 function relationPortraitMarkup(candidate,className=''){return `<span class="relation-sheet-portrait ${className}" role="img" aria-label="${candidate.name} ${game.age}세 모습" style="--relation-sheet:url('${candidate.baseSheet}');--relation-age-position:${relationAgePosition()}"></span>`;}
 function applyRelationPortrait(element,candidate){if(!element||!candidate)return;element.classList.add('relation-sheet-portrait');element.style.setProperty('--relation-sheet',`url('${candidate.baseSheet}')`);element.style.setProperty('--relation-age-position',relationAgePosition());const image=element.matches('img')?element:element.querySelector('img');if(image){image.alt=`${candidate.name} ${game.age}세 모습`;image.hidden=true;}}
@@ -891,26 +895,39 @@ function renderVacationMotion(season){
 }
 async function playVacationScene(prize,index,companion=null){
   const phone=document.querySelector('.phone'),scene=document.querySelector('#vacationScene'),image=document.querySelector('#vacationImage');
-  const person=document.querySelector('#encounterCharacter'),talk=document.querySelector('#encounterDialogue');
+  const overlay=document.querySelector('#vacationDuoOverlay');
+  const playerPortrait=document.querySelector('#vacationPlayerPortrait');
+  const playerText=document.querySelector('#vacationPlayerText');
+  const companionPortrait=document.querySelector('#vacationCompanionPortrait');
+  const companionName=document.querySelector('#encounterName');
+  const companionText=document.querySelector('#encounterText');
   const sceneSeason=prize.season||game.season;
   const seasonalEffects={봄:new Set(['petals','wind','calm']),여름:new Set(['splash','wave','wind','calm']),가을:new Set(['leaves','moon','steam','calm']),겨울:new Set(['snow','steam','calm'])};
   const sceneEffect=seasonalEffects[sceneSeason]?.has(prize.effect)?prize.effect:'calm';
   playVacationMusic(sceneSeason);renderVacationMotion(sceneSeason);image.src=prize.image;document.querySelector('#vacationTitle').textContent=prize.name;scene.dataset.effect=sceneEffect;scene.dataset.season=sceneSeason;
-  scene.classList.remove('has-encounter');scene.classList.add('child-live');person.hidden=true;talk.hidden=true;phone.classList.add('vacation-playing');scene.hidden=false;
+  scene.classList.remove('has-encounter');scene.classList.add('child-live');overlay.hidden=true;phone.classList.add('vacation-playing');scene.hidden=false;
   await waitForVacationTap('일러스트를 감상한 뒤 터치');
   const candidates=endingRelationCandidates.filter(candidate=>game.age>=candidate.minAge&&candidate.assetReady);
   const encounter=Boolean(companion)||(candidates.length>0&&Math.random()<.35);
   let relation=null;
   if(encounter){
-    relation=companion||balancedRelationCandidate(candidates);const fromLeft=Math.random()<.5;
-    person.className=`encounter-character ${fromLeft?'from-left':'from-right'}`;applyRelationPortrait(person,relation);person.hidden=false;scene.classList.add('has-encounter');
+    relation=companion||balancedRelationCandidate(candidates);scene.classList.add('has-encounter');overlay.hidden=false;
     const episode=nextRelationEpisode(relation,'vacation');
-    document.querySelector('#encounterName').textContent=relation.name;document.querySelector('#encounterText').textContent=episode?.line||relation.dialogues[Math.floor(Math.random()*relation.dialogues.length)];talk.hidden=false;
+    playerPortrait.src=protagonistPortraitForAge();
+    companionPortrait.src=relation.baseSheet;
+    companionPortrait.style.setProperty('--relation-sheet',`url('${relation.baseSheet}')`);
+    companionPortrait.style.setProperty('--relation-age-position',relationAgePosition());
+    companionName.textContent=relation.name;
+    playerText.textContent=`${game.guardianName||'신수'}와 함께 이 풍경을 바라보며 천천히 말을 건넸어요.`;
+    companionText.textContent=episode?.line||relation.dialogues[Math.floor(Math.random()*relation.dialogues.length)];
+    const fromLeft=Math.random()<.5;
+    overlay.classList.toggle('companion-left',fromLeft);
+    overlay.classList.toggle('companion-right',!fromLeft);
     const record=recordRelationEncounter(relation,episode);
-    if(companion){record.affinity=Math.min(100,record.affinity+10);record.relationship=record.affinity>=80?'연인':record.affinity>=60?'특별한 인연':'친구';const memory=`${game.age}-${sceneSeason}`;if(!record.vacationMemories.includes(memory))record.vacationMemories.push(memory);document.querySelector('#encounterText').textContent=`${relation.name}과(와) 함께 ${prize.name}의 풍경을 오래 기억하기로 했어요.`;}
+    if(companion){record.affinity=Math.min(100,record.affinity+10);record.relationship=record.affinity>=80?'연인':record.affinity>=60?'특별한 인연':'친구';const memory=`${game.age}-${sceneSeason}`;if(!record.vacationMemories.includes(memory))record.vacationMemories.push(memory);companionText.textContent=`${relation.name}과(와) 함께 ${prize.name}의 풍경을 오래 기억하기로 했어요.`;}
     await waitForVacationTap('대화를 읽은 뒤 터치');
   }
-  talk.hidden=true;person.hidden=true;scene.classList.remove('has-encounter','child-live');scene.hidden=true;scene.dataset.effect='';scene.dataset.season='';document.querySelector('#vacationMotion').replaceChildren();phone.classList.remove('vacation-playing');playHomeMusic();
+  overlay.hidden=true;scene.classList.remove('has-encounter','child-live');scene.hidden=true;scene.dataset.effect='';scene.dataset.season='';document.querySelector('#vacationMotion').replaceChildren();phone.classList.remove('vacation-playing');playHomeMusic();
   return relation;
 }
 
