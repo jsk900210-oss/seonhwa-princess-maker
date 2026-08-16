@@ -59,6 +59,7 @@ const guardianStoryScenes=[
   {chapter:'첫 장 · 하늘이 내린 벗',image:'../assets/cinematics/guardian/guardian-descent-age09.png',alt:'아홉 번째 생일 밤 아이 앞에 함께 나타난 네 신수',group:true,effect:'constellation',text:'아홉 번째 생일 밤, 고요하던 마당 위로 네 갈래의 별빛이 열렸습니다.'}
 ];
 let guardianStoryIndex=0,guardianCinematicTimeline=[],guardianCinematicBeat=0,guardianInputLockedUntil=0,selectedGuardianType=null,introDialogueQueue=[],introDialogueIndex=0;
+let pendingActivityUnlocks=[];
 const statGroups = [
   { title: '신체', stats: [['health','체력'],['strength','힘'],['agility','민첩']] },
   { title: '지성·마음', stats: [['intelligence','지능'],['magic','마력'],['mentality','정신력']] },
@@ -946,6 +947,20 @@ function startGuardianConversation(){
   const choices=document.querySelector('#homeGreetingChoices');choices.innerHTML=scene.choices.map((choice,index)=>`<button data-guardian-answer="${index}">${choice[0]}</button>`).join('');
   document.querySelector('#homeGreeting').hidden=false;document.querySelector('.phone').classList.add('greeting-active');choices.querySelectorAll('[data-guardian-answer]').forEach(button=>button.addEventListener('click',()=>answerGuardianConversation(scene,Number(button.dataset.guardianAnswer))));queueAutoSave();return true;
 }
+function presentActivityUnlocks(){
+  if(!pendingActivityUnlocks.length)return false;
+  const unlocked=[...pendingActivityUnlocks];pendingActivityUnlocks=[];
+  const guardian=guardianDefs[game.guardianType]||guardianDefs.hyeonmu,portrait=document.querySelector('#homeGreetingPortrait');
+  portrait.hidden=false;portrait.classList.remove('is-listening');portrait.src=guardianPortrait();portrait.alt=`${game.guardianName||guardian.name}의 모습`;
+  document.querySelector('#homeGreetingSpeaker').textContent=game.guardianName||guardian.name;
+  document.querySelector('#homeGreetingLine').textContent=`네 성장을 지켜보던 이들이 새 길을 열어 주었구나. 이제 「${unlocked.map(action=>action.name).join(' · ')}」 활동을 선택할 수 있단다.`;
+  document.querySelector('#homeGreetingPrompt').textContent='신수의 새 활동 안내';
+  const result=document.querySelector('#guardianTalkResult');result.hidden=true;result.innerHTML='';
+  const choices=document.querySelector('#homeGreetingChoices');choices.innerHTML='<button id="activityUnlockClose">일정에서 확인하기</button>';
+  document.querySelector('#homeGreeting').hidden=false;document.querySelector('.phone').classList.add('greeting-active');
+  document.querySelector('#activityUnlockClose').addEventListener('click',()=>{document.querySelector('#homeGreeting').hidden=true;document.querySelector('.phone').classList.remove('greeting-active');openVisitingMerchant();});
+  return true;
+}
 function speakGuardian(context='home'){
   const guardian=guardianDefs[game.guardianType];if(!guardian||introDialogueQueue.length)return false;
   const name=game.guardianName||guardian.name,filled=game.dailySchedule.filter(Boolean).length;
@@ -1587,12 +1602,13 @@ function showMonthlyReport(ledger){
   const net=ledger.income-ledger.expense;
   const condition=game.stress>=75?'스트레스가 높아요. 다음 달에는 휴식이 필요해요.':game.stress>=50?'마음이 조금 무겁지만 잘 버텼어요.':'좋은 컨디션으로 한 달을 마쳤어요.';
   panelBody.innerHTML=`<section class="monthly-balance"><div><span>수입</span><b>+${ledger.income.toLocaleString()}냥</b></div><div><span>지출</span><b>-${ledger.expense.toLocaleString()}냥</b></div><div class="net"><span>합계</span><b class="${net>=0?'good':'bad'}">${net>=0?'+':''}${net.toLocaleString()}냥</b></div></section><section class="monthly-report-section"><h3>이번 달 활동</h3><ul>${activityRows||'<li>기록 없음</li>'}</ul></section><section class="monthly-report-section"><h3>능력치 변화</h3><ul>${statRows||'<li>변화 없음</li>'}</ul></section><p class="monthly-condition">${condition}</p><button id="closeMonthlyReport" class="monthly-continue">다음 달 시작</button>`;
-  document.querySelector('#closeMonthlyReport').addEventListener('click',()=>{panel.hidden=true;document.querySelector('#dialogueText').textContent=`${game.month}월도 함께 힘내 보아요.`;openVisitingMerchant();});
+  document.querySelector('#closeMonthlyReport').addEventListener('click',()=>{panel.hidden=true;document.querySelector('#dialogueText').textContent=`${game.month}월도 함께 힘내 보아요.`;if(!presentActivityUnlocks())openVisitingMerchant();});
 }
 
 async function runWeek() {
   if (!game.dailySchedule.every(Boolean)) return;
   hideScheduleConfirmation();
+  const unlockedBefore=new Set(actions.filter(actionUnlocked).map(action=>action.id));
   const scheduled = game.dailySchedule.map(id => actions.find(item => item.id === id));
   const playableDays=Math.min(7,daysUntilEnding());
   const selected = scheduled.slice(0,playableDays);
@@ -1610,6 +1626,7 @@ async function runWeek() {
   const completedLedgers=recordMonthlySchedule(playbackResult.dayRecords);
   game.homeReaction=null;
   const birthdayEvents=advanceGameDate(selected.length);
+  pendingActivityUnlocks=actions.filter(action=>actionUnlocked(action)&&!unlockedBefore.has(action.id));
   const completedLedger=completedLedgers[0]||null;
   const counts = selected.reduce((map, action) => (map[action.name]=(map[action.name]||0)+1,map),{});
   const summary = Object.entries(counts).map(([name,count]) => count > 1 ? `${name} ${count}일` : name).join(' · ');
@@ -1624,7 +1641,7 @@ async function runWeek() {
   rollVisitingMerchant();
   if (game.ended) showEnding();
   else if(completedLedger)showMonthlyReport(completedLedger);
-  else openVisitingMerchant();
+  else if(!presentActivityUnlocks())openVisitingMerchant();
   clearTimeout(autoSaveTimer);
   writeLatestAutoSave();
 }
@@ -1737,8 +1754,6 @@ function advanceGameDate(days){
   applyAgeGrowth(previousAge,game.age);
   const birthdayEvents=[];
   for(let age=Math.max(9,previousAge);age<=game.age;age+=1){const birthdayDate=addYears(birth,age);if(birthdayDate>previousDate&&birthdayDate<=date){const gift=awardFatherBirthdayGift(age);if(gift)birthdayEvents.push(gift);}}
-  const unlocked=newlyUnlockedActions(previousAge,game.age);
-  if(unlocked.length)birthdayEvents.push({message:`${game.age}세가 되어 새로운 활동이 열렸어요: ${unlocked.map(action=>action.name).join(' · ')}`,change:{}});
   if(game.autoOutfit)updateAutoOutfit();
   return birthdayEvents;
 }
