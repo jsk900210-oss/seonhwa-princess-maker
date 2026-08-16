@@ -667,17 +667,18 @@ function activityProgressFor(id){normalizeActivityProgress();return game.activit
 function activityRank(id){const successes=activityProgressFor(id).successes;return successes>=30?2:successes>=10?1:0;}
 function activityPay(action){if(action.category!=='아르바이트')return -action.cost;return Math.round((-action.cost)*[1,1.25,1.6][activityRank(action.id)]);}
 function recordActivityProgress(action,outcome){
-  if(!['교육','아르바이트'].includes(action.category))return {bonusPay:0,reward:null};
-  const progress=activityProgressFor(action.id),succeeded=outcome!=='mistake';progress.attempts+=1;
+  if(!['교육','아르바이트'].includes(action.category))return {bonusPay:0,reward:null,rankUp:null};
+  const previousRank=activityRank(action.id),progress=activityProgressFor(action.id),succeeded=outcome!=='mistake';progress.attempts+=1;
   if(succeeded){progress.successes+=1;progress.streak+=1;progress.bestStreak=Math.max(progress.bestStreak,progress.streak);}else progress.streak=0;
   progress.perfectStreak=outcome==='perfect'?progress.perfectStreak+1:0;
-  if(action.category!=='아르바이트'||progress.perfectStreak===0||progress.perfectStreak%3!==0)return {bonusPay:0,reward:null};
+  const currentRank=activityRank(action.id),rankUp=currentRank>previousRank?activityRankNames[currentRank]:null;
+  if(action.category!=='아르바이트'||progress.perfectStreak===0||progress.perfectStreak%3!==0)return {bonusPay:0,reward:null,rankUp};
   const rewardName=jobRewardNames[action.id];
   if(rewardName&&Math.random()<.4){
     normalizeInventory();const rewardId=`job-reward-${action.id}`;
-    if(!game.items.some(item=>item.id===rewardId)){const reward={id:rewardId,type:'event',name:rewardName,description:`${action.name} 연속 대성공으로 받은 기념품`,qty:1};game.items.push(reward);return {bonusPay:0,reward};}
+    if(!game.items.some(item=>item.id===rewardId)){const reward={id:rewardId,type:'event',name:rewardName,description:`${action.name} 연속 대성공으로 받은 기념품`,qty:1};game.items.push(reward);return {bonusPay:0,reward,rankUp};}
   }
-  return {bonusPay:Math.round(activityPay(action)*.5),reward:null};
+  return {bonusPay:Math.round(activityPay(action)*.5),reward:null,rankUp};
 }
 function actionForStressLimit(action,stress){
   return stress>=statMaximum('stress')&&action.id!=='rest'?actions.find(item=>item.id==='rest'):action;
@@ -1887,7 +1888,8 @@ async function playWeeklySchedule(selected) {
     const moneyLabel=document.querySelector('#moneyLabel');
     moneyLabel.classList.remove('money-changing');void moneyLabel.offsetWidth;moneyLabel.classList.add('money-changing');
     showLiveChanges(resolvedAction);
-    const bonusText=progressReward.reward?` · ${progressReward.reward.name} 획득`:progressReward.bonusPay?` · 연속 대성공 보너스 +${progressReward.bonusPay}냥`:'';
+    const rewardText=progressReward.reward?` · ${progressReward.reward.name} 획득`:progressReward.bonusPay?` · 연속 대성공 보너스 +${progressReward.bonusPay}냥`:'';
+    const bonusText=`${progressReward.rankUp?` · ${progressReward.rankUp} 승급!`:''}${rewardText}`;
     const moneyText = (moneyChange > 0 ? `은전 +${moneyChange}냥` : moneyChange < 0 ? `은전 ${moneyChange}냥` : isWork&&outcome==='mistake'?'실수하여 일당 없음':'비용 없음')+bonusText;
     const resultSummary=orderedChangeEntries(resolvedChange).filter(([,value])=>value!==0).map(([key,value])=>`${statLabels[key]||key} ${value>0?'+':''}${value}`).join(' · ');
     const relationEvent=maybeScheduleRelationEncounter(action);
