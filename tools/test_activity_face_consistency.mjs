@@ -6,7 +6,7 @@ import { dirname, join } from 'node:path';
 const root = dirname(dirname(fileURLToPath(import.meta.url)));
 const app = readFileSync(join(root, 'src', 'app.js'), 'utf8').replace(/\r\n/g, '\n');
 const ages = ['09', '13', '16', '18'];
-const modular = ['calligraphy', 'arithmetic', 'manners', 'houseclean', 'rest'];
+const modular = ['calligraphy', 'arithmetic', 'manners', 'houseclean'];
 
 for (const age of ages) {
   for (const activity of modular) {
@@ -24,6 +24,8 @@ for (const activity of ['sweeping', 'errand', 'herbs']) {
 assert.ok(app.includes('activity-consistent/age-${age}/${name}-${frame}.png'), '연령별 일정은 얼굴 보정 프레임을 사용해야 합니다.');
 assert.ok(app.includes("const skin=r>170&&g>92&&b>64"), '의상 팔레트 적용 중 얼굴 피부를 보호해야 합니다.');
 assert.ok(app.includes("Math.random()<.5?'tea':'sleep'"), '집에서 휴식은 차 마시기와 잠자기 중 하나를 무작위 선택해야 합니다.');
+assert.ok(app.includes("activityFrames.sleep=[...activityFrames.rest]"), '잠자기는 깨끗한 가로형 이불 프레임을 사용해야 합니다.');
+assert.ok(app.includes("const modularActivities=new Set(['calligraphy','arithmetic','manners','houseclean'])"), '기울어진 모듈형 휴식 프레임을 다시 선택하면 안 됩니다.');
 
 console.log('PASS: 4개 성장 연령 × 공통 일정 얼굴 프레임 존재');
 console.log('PASS: 마당 쓸기·장터 심부름·약초 줍기 얼굴 보정 프레임 존재');

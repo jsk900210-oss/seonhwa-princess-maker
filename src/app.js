@@ -245,7 +245,9 @@ activityFrames.herbs=[1,2,3].map(n=>`../assets/characters/seonhwa/activity-consi
 activityFrames.tea=[1,1,1].map(n=>`../assets/characters/seonhwa/activity-consistent/age-09/rest-legacy-${n}.png`);
 ['farmwork','childcare','kitchenhelp','woodwork','loomwork','masonry','clinichelp','ferryhelp','merchanthelp'].forEach(name=>{activityFrames[name]=[1,2,3].map(n=>`../assets/characters/seonhwa/job-actions/${name}-${n}.png`);});
 // The modular errand frames crop the top of the hair in frame 1. Keep the complete v4 frames.
-const modularActivities=new Set(['calligraphy','arithmetic','manners','houseclean','rest','sleep']);
+// Rest keeps the clean horizontal bedding frames. The age-modular rest sheet is
+// diagonally posed and becomes visibly jagged when reduced inside the mobile stage.
+const modularActivities=new Set(['calligraphy','arithmetic','manners','houseclean']);
 function activityFrameSet(activity){
   if(!modularActivities.has(activity))return activityFrames[activity];
   const name=activity==='sleep'?'rest':activity,age=String(growthAssetAge(growthVisualAge())).padStart(2,'0');
@@ -694,6 +696,43 @@ const endingRelationCandidates=[
   {id:'taegyeom',name:'태겸',role:'상단 후계자',image:'../assets/characters/romance/taegyeom/vacation.png',assetReady:true,minAge:13,ending:'대상인의 동반자',dialogues:['“좋은 물건보다 좋은 인연을 만나는 일이 더 귀하다고 하더군.”','“이 길 끝에 재미있는 장이 선다는데, 함께 가겠어?”']},
   {id:'hyeon',name:'현',role:'정체를 숨긴 왕자',image:'../assets/characters/romance/hyeon/vacation.png',assetReady:true,minAge:13,ending:'왕자의 연인',dialogues:['“내가 누구인지는 잠시 잊고, 오늘만 평범하게 걸어도 될까?”','“또 만났네. 이쯤 되면 우연이라고만 하기는 어렵겠어.”']}
 ];
+const relationEpisodeCatalog={
+  doyun:[
+    {id:'doyun-1',title:'흩어진 화살',activities:['swordsmanship','martial'],line:'활터에 흩어진 화살을 함께 주우며 젊은 무관 도윤과 처음 인사를 나눴어요.'},
+    {id:'doyun-2',title:'마당의 충돌',activities:['sweeping','farmwork'],line:'일손을 돕던 도윤과 부딪힐 뻔했지만 서로 웃으며 길을 비켜 주었어요.'},
+    {id:'doyun-3',title:'산길의 발자국',activities:['dungeon','herbs'],line:'산길의 낯선 발자국을 도윤과 함께 살펴 위험을 피했어요.'},
+    {id:'doyun-4',title:'강가의 약속',activities:['vacation'],line:'강바람 속에서 도윤이 지키고 싶은 것에 관한 이야기를 들려주었어요.'},
+    {id:'doyun-5',title:'나란히 선 활터',activities:['swordsmanship','vacation'],line:'도윤은 다음에는 우연이 아니라 약속을 정해 만나자고 말했어요.'}
+  ],
+  seojin:[
+    {id:'seojin-1',title:'바뀐 서책',activities:['reading','classics'],line:'서책이 뒤바뀐 일을 계기로 선비 서진과 처음 이야기를 나눴어요.'},
+    {id:'seojin-2',title:'먹이 번진 글',activities:['copying','reading'],line:'번진 먹 자국을 서진과 함께 수습하며 뜻밖의 웃음을 나눴어요.'},
+    {id:'seojin-3',title:'어려운 물음',activities:['tutoring','arithmetic'],line:'서진과 서로 다른 풀이를 내놓고 밤이 늦도록 답을 찾아보았어요.'},
+    {id:'seojin-4',title:'정자의 시구',activities:['vacation'],line:'정자에서 서진이 풍경을 담은 짧은 시구를 들려주었어요.'},
+    {id:'seojin-5',title:'남겨 둔 책갈피',activities:['classics','vacation'],line:'서진은 다시 만날 날을 표시하듯 서책에 작은 책갈피를 남겼어요.'}
+  ],
+  yeonwoo:[
+    {id:'yeonwoo-1',title:'날아간 화첩',activities:['painting','vacation'],line:'바람에 날아간 화첩을 주워 주며 화공 연우와 처음 만났어요.'},
+    {id:'yeonwoo-2',title:'마르지 않은 색',activities:['painting'],line:'연우와 물감을 나누어 쓰며 같은 풍경을 서로 다른 색으로 그렸어요.'},
+    {id:'yeonwoo-3',title:'장단과 붓끝',activities:['music','dance'],line:'음악과 춤의 움직임을 화폭에 옮기는 연우의 작업을 도왔어요.'},
+    {id:'yeonwoo-4',title:'달빛 초상',activities:['vacation'],line:'연우는 달빛 아래의 모습을 오래 기억하고 싶다며 붓을 들었어요.'},
+    {id:'yeonwoo-5',title:'비워 둔 자리',activities:['painting','vacation'],line:'연우의 새 그림에는 선화가 함께 볼 자리가 비워져 있었어요.'}
+  ],
+  taegyeom:[
+    {id:'taegyeom-1',title:'잘못 묶인 짐표',activities:['errand','ferryhelp'],line:'뒤바뀐 짐표를 바로잡으며 상단 후계자 태겸과 처음 만났어요.'},
+    {id:'taegyeom-2',title:'한 냥의 흥정',activities:['shopping','merchanthelp'],line:'태겸과 물건값을 두고 재치 있는 흥정을 벌였어요.'},
+    {id:'taegyeom-3',title:'비에 젖은 장부',activities:['arithmetic','merchanthelp'],line:'젖은 장부를 함께 복원하며 태겸의 책임감을 알게 되었어요.'},
+    {id:'taegyeom-4',title:'나루의 저녁',activities:['ferryhelp','vacation'],line:'나루의 저녁 장사를 마치고 태겸과 따뜻한 차를 나누었어요.'},
+    {id:'taegyeom-5',title:'함께 갈 장길',activities:['shopping','vacation'],line:'태겸은 다음 큰 장에는 손님이 아니라 동행으로 와 달라고 했어요.'}
+  ],
+  hyeon:[
+    {id:'hyeon-1',title:'평범한 윷놀이',activities:['manners','vacation'],line:'신분을 숨긴 청년 현과 소박한 놀이를 하며 처음 인사를 나눴어요.'},
+    {id:'hyeon-2',title:'낯선 호위',activities:['dungeon','swordsmanship'],line:'위험한 길에서 능숙하게 앞을 막아선 현의 낯선 모습을 보았어요.'},
+    {id:'hyeon-3',title:'궁 밖의 소문',activities:['shopping','errand'],line:'저잣거리의 소문을 듣던 현이 자신의 이야기는 조용히 감추었어요.'},
+    {id:'hyeon-4',title:'등불 아래 진심',activities:['vacation','spellcraft'],line:'등불 아래에서 현은 평범한 이름으로 불리고 싶다는 마음을 털어놓았어요.'},
+    {id:'hyeon-5',title:'다시 만날 문',activities:['manners','vacation'],line:'현은 언젠가 모든 것을 밝히고 다시 만나겠다고 약속했어요.'}
+  ]
+};
 const careerEndingCandidates=[
   {id:'queen',title:'백성을 품은 여왕',description:'기품과 지혜, 굳은 마음으로 백성의 삶을 살피는 군주가 되었습니다.',weights:{dignity:5,intelligence:4,mentality:3,manners:2,speech:2}},
   {id:'royal-scholar',title:'왕실 학사',description:'깊은 학문과 반듯한 품격으로 나라의 기록과 배움을 맡았습니다.',weights:{intelligence:5,dignity:2,manners:2,mentality:1}},
@@ -741,14 +780,26 @@ function normalizeRelations(){
     const legacyMeetings=Number.isFinite(Number(saved))?Number(saved):0;
     const record=saved&&typeof saved==='object'?saved:{};
     const meetings=Math.max(0,Number(record.meetings??legacyMeetings)||0);
-    game.relations[candidate.id]={meetings,affinity:Math.max(0,Math.min(100,Number(record.affinity)||meetings*5)),lastMetAt:record.lastMetAt||null,dateUnlocked:Boolean(record.dateUnlocked||(meetings>=5&&game.age>=16))};
+    const completedEpisodes=Array.isArray(record.completedEpisodes)?[...new Set(record.completedEpisodes.filter(id=>typeof id==='string'))]:[];
+    game.relations[candidate.id]={meetings:Math.max(meetings,completedEpisodes.length),affinity:Math.max(0,Math.min(100,Number(record.affinity)||meetings*5)),lastMetAt:record.lastMetAt||null,dateUnlocked:Boolean(record.dateUnlocked||(Math.max(meetings,completedEpisodes.length)>=5&&game.age>=16)),completedEpisodes,holidayFlags:record.holidayFlags&&typeof record.holidayFlags==='object'?record.holidayFlags:{},vacationMemories:Array.isArray(record.vacationMemories)?record.vacationMemories:[],relationship:record.relationship||'지인'};
   });
 }
 function relationRecord(id){normalizeRelations();return game.relations[id];}
-function recordRelationEncounter(candidate){
-  const record=relationRecord(candidate.id);record.meetings+=1;record.affinity=Math.min(100,record.affinity+5);record.lastMetAt=game.currentDate||null;
+function recordRelationEncounter(candidate,episode=null){
+  const record=relationRecord(candidate.id),isNew=episode&&!record.completedEpisodes.includes(episode.id);
+  if(isNew){record.completedEpisodes.push(episode.id);record.meetings=Math.min(5,record.meetings+1);}
+  record.affinity=Math.min(100,record.affinity+(isNew?7:2));record.lastMetAt=game.currentDate||null;
   if(record.meetings>=5&&game.age>=16)record.dateUnlocked=true;
   return record;
+}
+function nextRelationEpisode(candidate,activityId){return (relationEpisodeCatalog[candidate.id]||[]).find(episode=>episode.activities.includes(activityId)&&!relationRecord(candidate.id).completedEpisodes.includes(episode.id))||null;}
+function maybeScheduleRelationEncounter(action){
+  if(game.age<13||action.id==='vacation'||Math.random()>=.14)return null;
+  const eligible=endingRelationCandidates.map(candidate=>({candidate,episode:nextRelationEpisode(candidate,action.id)})).filter(entry=>entry.episode);
+  if(!eligible.length)return null;
+  const minimum=Math.min(...eligible.map(entry=>relationRecord(entry.candidate.id).meetings));
+  const pool=eligible.filter(entry=>relationRecord(entry.candidate.id).meetings===minimum),picked=pool[Math.floor(Math.random()*pool.length)];
+  recordRelationEncounter(picked.candidate,picked.episode);return picked;
 }
 function balancedRelationCandidate(candidates){
   if(!candidates.length)return null;
@@ -791,8 +842,9 @@ async function playVacationScene(prize,index){
     relation=balancedRelationCandidate(candidates);const fromLeft=Math.random()<.5;
     person.querySelector('img').src=relation.image;person.querySelector('img').alt=`엔딩 인연 후보 ${relation.name}`;
     person.className=`encounter-character ${fromLeft?'from-left':'from-right'}`;person.hidden=false;scene.classList.add('has-encounter');
-    document.querySelector('#encounterName').textContent=relation.name;document.querySelector('#encounterText').textContent=relation.dialogues[Math.floor(Math.random()*relation.dialogues.length)];talk.hidden=false;
-    recordRelationEncounter(relation);
+    const episode=nextRelationEpisode(relation,'vacation');
+    document.querySelector('#encounterName').textContent=relation.name;document.querySelector('#encounterText').textContent=episode?.line||relation.dialogues[Math.floor(Math.random()*relation.dialogues.length)];talk.hidden=false;
+    recordRelationEncounter(relation,episode);
     await waitForVacationTap('대화를 읽은 뒤 터치');
   }
   talk.hidden=true;person.hidden=true;scene.classList.remove('has-encounter','child-live');scene.hidden=true;scene.dataset.effect='';scene.dataset.season='';document.querySelector('#vacationMotion').replaceChildren();phone.classList.remove('vacation-playing');playHomeMusic();
@@ -1825,7 +1877,9 @@ async function playWeeklySchedule(selected) {
     const bonusText=progressReward.reward?` · ${progressReward.reward.name} 획득`:progressReward.bonusPay?` · 연속 대성공 보너스 +${progressReward.bonusPay}냥`:'';
     const moneyText = (moneyChange > 0 ? `은전 +${moneyChange}냥` : moneyChange < 0 ? `은전 ${moneyChange}냥` : isWork&&outcome==='mistake'?'실수하여 일당 없음':'비용 없음')+bonusText;
     const resultSummary=orderedChangeEntries(resolvedChange).filter(([,value])=>value!==0).map(([key,value])=>`${statLabels[key]||key} ${value>0?'+':''}${value}`).join(' · ');
-    dayResult.innerHTML = `<b>${action.name} · ${outcomeLabels[outcome]}</b><span>${resultSummary||'능력치 변화 없음'}<br>${moneyText} · 현재 ${game.money.toLocaleString()}냥</span>`;
+    const relationEvent=maybeScheduleRelationEncounter(action);
+    dayResult.innerHTML = `<b>${action.name} · ${outcomeLabels[outcome]}</b><span>${resultSummary||'능력치 변화 없음'}<br>${moneyText} · 현재 ${game.money.toLocaleString()}냥${relationEvent?`<br>인연 · ${relationEvent.candidate.name} — ${relationEvent.episode.title}`:''}</span>`;
+    if(relationEvent)document.querySelector('#dialogueText').textContent=relationEvent.episode.line;
     if(action.id!=='vacation'){
       dayResult.hidden = false;
       await new Promise(resolve => setTimeout(resolve, 900));
