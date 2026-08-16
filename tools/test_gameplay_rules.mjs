@@ -2,6 +2,8 @@ import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 
 const source = readFileSync(new URL('../src/app.js', import.meta.url), 'utf8');
+assert.ok(source.includes('const skillRatio=Math.min(2.5,skill/recommended)'), '999 기준 권장 능력치 비율 계산 누락');
+assert.ok(source.includes('const masteryBonus=Math.min(10,Math.sqrt(mastery)*1.2)'), '숙련 반복 보정 곡선 누락');
 
 function clampStat(key, value) {
   return Math.max(0, Math.min(key === 'stress' ? 100 : 999, Number(value) || 0));

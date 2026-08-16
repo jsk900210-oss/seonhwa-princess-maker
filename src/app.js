@@ -520,13 +520,16 @@ const activitySkill={reading:'intelligence',arithmetic:'sense',manners:'manners'
 const outcomeLabels={perfect:'완벽',success:'성공',struggle:'힘겨움',mistake:'실수'};
 function activityOutcomeThresholds(action,stress){
   const skill=game[activitySkill[action.id]]||0;
+  const recommended=Math.max(50,Number(activityRequirements[action.id]?.[1])||100);
+  const skillRatio=Math.min(2.5,skill/recommended);
   const mastery=activityProgressFor(action.id).attempts;
   const healthRatio=clampStat('health',game.health)/statMaximum('health');
-  const healthBonus=healthRatio*24;
-  const condition=(game.mentality||50)*.07-stress*.42;
-  const success=Math.max(18,Math.min(94,44+skill*.09+Math.min(12,mastery*.28)+condition+healthBonus));
-  const perfect=Math.max(6,success-(34-healthRatio*8));
-  const struggle=Math.min(98,success+(22-healthRatio*10));
+  const healthBonus=healthRatio*14;
+  const condition=Math.min(8,(game.mentality||0)*.04)-stress*.35;
+  const masteryBonus=Math.min(10,Math.sqrt(mastery)*1.2);
+  const success=Math.max(15,Math.min(92,32+skillRatio*20+masteryBonus+condition+healthBonus));
+  const perfect=Math.max(4,success-(32-healthRatio*7));
+  const struggle=Math.min(98,success+(20-healthRatio*7));
   return {perfect,success,struggle};
 }
 function judgeActivityOutcome(action,stress){
