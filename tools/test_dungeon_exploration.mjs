@@ -13,6 +13,11 @@ assert.match(app,/function exploreDungeon\(\)/,'비경 탐사 흐름이 필요�
 assert.match(app,/ArrowUp:'up'.*ArrowDown:'down'.*ArrowLeft:'left'.*ArrowRight:'right'/s,'PC 방향키 이동이 필요합니다.');
 assert.match(app,/game\.magic\+game\.intelligence.*game\.strength\+game\.health/,'술법과 검술 판정이 필요합니다.');
 assert.match(app,/dungeonReward=await exploreDungeon\(\)/,'주간 일정이 비경 탐사를 기다려야 합니다.');
-assert.match(app,/moneyChange\+=dungeonReward/,'탐사 보상이 은전에 반영되어야 합니다.');
+assert.match(app,/moneyChange\+=dungeonReward\.money/,'탐사 보상이 은전에 반영되어야 합니다.');
+assert.match(app,/const dungeonGearDefs=\[/,'비경 전용 장비 목록이 필요합니다.');
+assert.match(app,/dungeonGear:'비경 장비'/,'소지품에 비경 장비 탭이 필요합니다.');
+assert.match(app,/function awardDungeonGear\(\)/,'상자 장비 보상이 필요합니다.');
+assert.match(app,/function dungeonGearPower\(combat\)/,'장착 장비가 전투 판정에 반영되어야 합니다.');
+assert.match(app,/entry\.slot===item\.slot/,'같은 부위 장비는 하나만 장착되어야 합니다.');
 assert.match(css,/grid-template-rows:minmax\(0,1fr\) auto auto auto/,'모바일 세로 화면에 맞는 배치가 필요합니다.');
 console.log('PASS: 비경 이동·상자·몬스터·전투 판정·일정 복귀 연결');

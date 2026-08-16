@@ -1065,8 +1065,21 @@ function buyGeneralGood(id){
   game.money-=good.price;applyShopChanges(good.change);game.purchasedGoods.push(id);visitShopPurchaseMade=true;
   document.querySelector('#dialogueText').textContent=`잡화상에게서 ${good.name}${objectParticle(good.name)} 구입했어요.`;showLiveChanges({change:good.change,cost:good.price});renderHud();renderVisitShop();queueAutoSave();
 }
-const inventoryCategories={all:'전체',accessory:'장신구',event:'이벤트'};
-const inventoryTypeLabels={food:'음식',outfit:'의상',accessory:'장신구',event:'이벤트'};
+const dungeonGearDefs=[
+  {id:'dungeon-bamboo-sword',name:'대나무 수련검',slot:'weapon',combat:'sword',power:12,description:'비경에서만 사용하는 가벼운 수련검'},
+  {id:'dungeon-iron-sword',name:'무쇠 환도',slot:'weapon',combat:'sword',power:24,description:'산짐승을 상대하기 좋은 단단한 환도'},
+  {id:'dungeon-moon-talisman',name:'달빛 부적',slot:'weapon',combat:'magic',power:14,description:'달빛의 기운을 모아 술법을 돕는 부적'},
+  {id:'dungeon-dragon-orb',name:'청룡 여의주',slot:'weapon',combat:'magic',power:26,description:'깊은 비경에서 발견되는 술법의 보주'},
+  {id:'dungeon-hide-vest',name:'가죽 배자',slot:'armor',combat:'guard',power:10,description:'충격을 줄여 주는 비경 전용 방어구'},
+  {id:'dungeon-scale-armor',name:'비늘 갑옷',slot:'armor',combat:'guard',power:22,description:'신수의 비늘 무늬를 새긴 튼튼한 갑옷'},
+  {id:'dungeon-wind-bell',name:'바람 방울',slot:'charm',combat:'sword',power:8,description:'발걸음을 가볍게 해 주는 작은 방울'},
+  {id:'dungeon-fire-knot',name:'주작 매듭',slot:'charm',combat:'magic',power:9,description:'술법의 불씨를 지켜 주는 붉은 매듭'}
+];
+const inventoryCategories={all:'전체',accessory:'장신구',dungeonGear:'비경 장비',event:'이벤트'};
+const inventoryTypeLabels={food:'음식',outfit:'의상',accessory:'장신구',dungeonGear:'비경 장비',event:'이벤트'};
+function equippedDungeonGear(){normalizeInventory();return game.items.filter(item=>item.type==='dungeonGear'&&item.equipped);}
+function dungeonGearPower(combat){return equippedDungeonGear().reduce((sum,item)=>{const gear=dungeonGearDefs.find(entry=>entry.id===item.id);return sum+(gear&&(gear.combat===combat||gear.combat==='guard')?gear.power:0);},0);}
+function awardDungeonGear(){normalizeInventory();const owned=new Set(game.items.filter(item=>item.type==='dungeonGear').map(item=>item.id));const available=dungeonGearDefs.filter(item=>!owned.has(item.id));if(!available.length)return null;const gear=available[Math.floor(Math.random()*available.length)];const item={...gear,type:'dungeonGear',qty:1,equipped:false};game.items.push(item);return item;}
 function normalizeInventory(){
   if(!Array.isArray(game.items))game.items=[];
   game.items=game.items.map((item,index)=>typeof item==='string'?{id:`legacy-${index}`,type:'event',name:item,qty:1}:({...item,type:item.type||'event',qty:Math.max(1,item.qty||1)}));
@@ -1085,16 +1098,16 @@ function renderInventory(category='all'){
   normalizeInventory();panelTitle.textContent='소지품';
   const collectionCardIds=new Set(vacationIllustrations.map(item=>item.id));
   const filtered=game.items.filter(item=>item.type!=='outfit'&&!collectionCardIds.has(item.id)&&(category==='all'||item.type===category)).slice(0,180);
-  const slots=Array.from({length:180},(_,index)=>{const item=filtered[index];if(!item)return '<div class="inventory-slot empty" aria-hidden="true"></div>';const image=inventoryImage(item);return `<button class="inventory-slot filled ${game.equippedOutfit===item.id?'equipped':''}" data-item="${item.id}" title="${item.name}">${image?`<img src="${image}" alt="">`:`<i class="item-glyph type-${item.type}"></i>`}<span>${item.name}</span>${item.qty>1?`<b>${item.qty}</b>`:''}${game.equippedOutfit===item.id?'<em>착용</em>':''}</button>`;}).join('');
+  const slots=Array.from({length:180},(_,index)=>{const item=filtered[index];if(!item)return '<div class="inventory-slot empty" aria-hidden="true"></div>';const image=inventoryImage(item),equipped=game.equippedOutfit===item.id||Boolean(item.equipped);return `<button class="inventory-slot filled ${equipped?'equipped':''}" data-item="${item.id}" title="${item.name}">${image?`<img src="${image}" alt="">`:`<i class="item-glyph type-${item.type}"></i>`}<span>${item.name}</span>${item.qty>1?`<b>${item.qty}</b>`:''}${equipped?'<em>착용</em>':''}</button>`;}).join('');
   panelBody.innerHTML=`<div class="inventory-tabs">${Object.entries(inventoryCategories).map(([id,label])=>`<button data-inventory-tab="${id}" class="${category===id?'on':''}">${label}</button>`).join('')}</div><div class="inventory-count"><b>${filtered.length}</b> / 180칸</div><div class="inventory-grid">${slots}</div><div class="inventory-detail" id="inventoryDetail">아이템을 누르면 설명과 사용 버튼이 표시됩니다.</div>`;
   panelBody.querySelectorAll('[data-inventory-tab]').forEach(button=>button.addEventListener('click',()=>renderInventory(button.dataset.inventoryTab)));
   panelBody.querySelectorAll('[data-item]').forEach(button=>button.addEventListener('click',()=>showInventoryItem(button.dataset.item,category)));
 }
 function showInventoryItem(id,category){
   const item=game.items.find(entry=>entry.id===id),detail=document.querySelector('#inventoryDetail');if(!item)return;
-  const action=item.type==='outfit'?`<button data-inventory-action="wear">${game.equippedOutfit===item.id?'벗기':'갈아입기'}</button>`:item.type==='food'?'<button data-inventory-action="use">먹기</button>':'';
+  const action=item.type==='outfit'?`<button data-inventory-action="wear">${game.equippedOutfit===item.id?'벗기':'갈아입기'}</button>`:item.type==='food'?'<button data-inventory-action="use">먹기</button>':item.type==='dungeonGear'?`<button data-inventory-action="equip-dungeon">${item.equipped?'장착 해제':'비경 장착'}</button>`:'';
   detail.innerHTML=`${item.type==='event'&&item.image?`<img class="event-collectible-preview" src="${item.image}" alt="${item.name}">`:''}<b>${item.name}</b><span>${inventoryTypeLabels[item.type]||'기타'} · ${item.qty||1}개</span>${item.description?`<p>${item.description}</p>`:''}${action}`;
-  detail.querySelector('[data-inventory-action]')?.addEventListener('click',()=>{if(item.type==='outfit'){game.autoOutfit=false;game.equippedOutfit=game.equippedOutfit===item.id?null:item.id;applyEquippedOutfit();renderInventory(category);}else if(item.type==='food'){const food=foods.find(entry=>entry.id===item.id);if(food)applyShopChanges(food.change);item.qty-=1;if(item.qty<=0)game.items.splice(game.items.indexOf(item),1);document.querySelector('#dialogueText').textContent=`${item.name}을(를) 먹었어요.`;renderInventory(category);}});
+  detail.querySelector('[data-inventory-action]')?.addEventListener('click',()=>{if(item.type==='outfit'){game.autoOutfit=false;game.equippedOutfit=game.equippedOutfit===item.id?null:item.id;applyEquippedOutfit();renderInventory(category);}else if(item.type==='food'){const food=foods.find(entry=>entry.id===item.id);if(food)applyShopChanges(food.change);item.qty-=1;if(item.qty<=0)game.items.splice(game.items.indexOf(item),1);document.querySelector('#dialogueText').textContent=`${item.name}을(를) 먹었어요.`;renderInventory(category);}else if(item.type==='dungeonGear'){if(!item.equipped)game.items.filter(entry=>entry.type==='dungeonGear'&&entry.slot===item.slot).forEach(entry=>entry.equipped=false);item.equipped=!item.equipped;queueAutoSave();renderInventory(category);}});
 }
 const collectionAgeTabs=[['all','전체'],['9','9세'],['13','13세'],['16','16세'],['19','19세']];
 function closeCollectionToHome(){panel.hidden=true;panelTitle.textContent='';panelBody.innerHTML='';playHomeMusic();}
@@ -1489,18 +1502,18 @@ function exploreDungeon(){
   const explore=document.querySelector('#dungeonExplore'),player=document.querySelector('#dungeonPlayer'),message=document.querySelector('#dungeonMessage');
   const chest=document.querySelector('#dungeonChest'),monster=document.querySelector('#dungeonMonster'),finish=document.querySelector('#dungeonFinish');
   const controls=[...document.querySelectorAll('[data-dungeon-move]')];
-  const position={x:0,y:4};let reward=0,chestFound=false,monsterCleared=false,resolved=false;
+  const position={x:0,y:4};let reward=0,gearReward=null,chestFound=false,monsterCleared=false,resolved=false;
   explore.hidden=false;explore.dataset.season=game.season;player.src=spriteFrames.down[1];chest.classList.remove('cleared');monster.classList.remove('cleared');
   const render=()=>{player.style.setProperty('--x',position.x);player.style.setProperty('--y',position.y);};
   const inspect=()=>{
-    if(position.x===4&&position.y===0&&!chestFound){chestFound=true;const found=100+Math.floor(Math.random()*101);reward+=found;chest.classList.add('cleared');message.textContent=`낡은 상자에서 은전 ${found}냥을 발견했어요.`;}
-    if(position.x===3&&position.y===3&&!monsterCleared){monsterCleared=true;monster.classList.add('cleared');const mage=(game.magic+game.intelligence)>(game.strength+game.health);const won=(mage?game.magic+game.intelligence:game.strength+game.health)>=90||Math.random()>.35;if(won){const found=40+Math.floor(Math.random()*61);reward+=found;message.textContent=`${mage?'술법':'검술'}으로 산짐승을 물리치고 은전 ${found}냥을 얻었어요.`;}else message.textContent='산짐승을 피해 물러났어요. 다음에는 장비를 더 갖춰야겠어요.';}
+    if(position.x===4&&position.y===0&&!chestFound){chestFound=true;const found=100+Math.floor(Math.random()*101);reward+=found;if(Math.random()<.45)gearReward=awardDungeonGear();chest.classList.add('cleared');message.textContent=gearReward?`낡은 상자에서 은전 ${found}냥과 「${gearReward.name}」을 발견했어요.`:`낡은 상자에서 은전 ${found}냥을 발견했어요.`;}
+    if(position.x===3&&position.y===3&&!monsterCleared){monsterCleared=true;monster.classList.add('cleared');const mage=(game.magic+game.intelligence+dungeonGearPower('magic'))>(game.strength+game.health+dungeonGearPower('sword'));const combat=mage?'magic':'sword',score=mage?game.magic+game.intelligence+dungeonGearPower(combat):game.strength+game.health+dungeonGearPower(combat);const won=score>=90||Math.random()>.35;if(won){const found=40+Math.floor(Math.random()*61);reward+=found;message.textContent=`장착 장비의 도움을 받아 ${mage?'술법':'검술'}으로 산짐승을 물리치고 은전 ${found}냥을 얻었어요.`;}else message.textContent='산짐승을 피해 물러났어요. 소지품에서 비경 장비를 장착하고 다시 도전해 보세요.';}
     if(position.x===0&&position.y===4&&(chestFound||monsterCleared))message.textContent='돌아가는 문에 도착했어요. 탐사를 마칠 수 있습니다.';
   };
   const move=direction=>{if(resolved)return;const delta={up:[0,-1],down:[0,1],left:[-1,0],right:[1,0]}[direction];if(!delta)return;position.x=Math.max(0,Math.min(4,position.x+delta[0]));position.y=Math.max(0,Math.min(4,position.y+delta[1]));render();inspect();};
   const keydown=event=>{const direction={ArrowUp:'up',ArrowDown:'down',ArrowLeft:'left',ArrowRight:'right'}[event.key];if(direction){event.preventDefault();move(direction);}};
   controls.forEach(button=>button.onclick=()=>move(button.dataset.dungeonMove));document.addEventListener('keydown',keydown);render();
-  return new Promise(resolve=>{finish.onclick=()=>{if(resolved)return;resolved=true;document.removeEventListener('keydown',keydown);controls.forEach(button=>button.onclick=null);finish.onclick=null;explore.hidden=true;resolve(reward);};});
+  return new Promise(resolve=>{finish.onclick=()=>{if(resolved)return;resolved=true;document.removeEventListener('keydown',keydown);controls.forEach(button=>button.onclick=null);finish.onclick=null;explore.hidden=true;resolve({money:reward,gear:gearReward});};});
 }
 
 function addDailyAction(id) {
@@ -1881,7 +1894,7 @@ async function playWeeklySchedule(selected) {
     if(presentation.npc)stageNpcImage.src = (presentation.npc==='teacher'?npcFrames.teacherReading:npcFrames[presentation.npc])[0];
     stage.className = `activity-stage map-${presentation.location} action-${action.id} mastery-${currentMasteryRank}`;
     stageCharacter.className = `stage-character pixel-sprite ${presentation.motion}`;
-    let dungeonReward=0;
+    let dungeonReward={money:0,gear:null};
     if(action.id==='shopping'){
       playMarketMusic();
       stageMap.src=backgrounds.market;
@@ -1902,14 +1915,14 @@ async function playWeeklySchedule(selected) {
     const guaranteedSuccess=['rest','vacation','dungeon'].includes(action.id);
     const condition=['shopping','rest','vacation','dungeon'].includes(action.id)?null:conditionEvent(simulated.stress,index);
     let outcome=judgeActivityOutcome(action,simulated.stress);
-    if(action.id==='dungeon')outcome=dungeonReward>=140?'perfect':dungeonReward>0?'normal':'struggle';
+    if(action.id==='dungeon')outcome=dungeonReward.money>=140?'perfect':dungeonReward.money>0?'normal':'struggle';
     if(!guaranteedSuccess&&condition==='mistake')outcome='mistake';
     else if(!guaranteedSuccess&&condition==='drowsy'&&outcome!=='mistake')outcome='struggle';
     const resolvedChange=resolvedActivityChange(action,outcome);
     const isWork=action.category==='아르바이트',basePay=isWork?activityPay(action):0;
     let moneyChange=isWork?(outcome==='mistake'?0:outcome==='struggle'?Math.round(basePay*.5):basePay):-action.cost;
     if(action.id==='dungeon'){
-      moneyChange+=dungeonReward;
+      moneyChange+=dungeonReward.money;
     }
     const progressReward=recordActivityProgress(action,outcome);
     moneyChange+=progressReward.bonusPay;
@@ -1928,7 +1941,7 @@ async function playWeeklySchedule(selected) {
     const moneyLabel=document.querySelector('#moneyLabel');
     moneyLabel.classList.remove('money-changing');void moneyLabel.offsetWidth;moneyLabel.classList.add('money-changing');
     showLiveChanges(resolvedAction);
-    const rewardText=progressReward.reward?` · ${progressReward.reward.name} 획득`:progressReward.bonusPay?` · 연속 대성공 보너스 +${progressReward.bonusPay}냥`:'';
+    const rewardText=dungeonReward.gear?` · ${dungeonReward.gear.name} 획득`:progressReward.reward?` · ${progressReward.reward.name} 획득`:progressReward.bonusPay?` · 연속 대성공 보너스 +${progressReward.bonusPay}냥`:'';
     const bonusText=`${progressReward.rankUp?` · ${progressReward.rankUp} 승급!`:''}${rewardText}`;
     const moneyText = (moneyChange > 0 ? `은전 +${moneyChange}냥` : moneyChange < 0 ? `은전 ${moneyChange}냥` : isWork&&outcome==='mistake'?'실수하여 일당 없음':'비용 없음')+bonusText;
     const resultSummary=orderedChangeEntries(resolvedChange).filter(([,value])=>value!==0).map(([key,value])=>`${statLabels[key]||key} ${value>0?'+':''}${value}`).join(' · ');
