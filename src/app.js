@@ -48,7 +48,7 @@ function transitionPrologueToHomeMusic(){
   fadeAudio(prologueMusic,0,1600);
 }
 
-const game = { characterName:'', nannyName:'', guardianType:null, guardianName:'', profileSlot:null, age: 9, height:130, weight:28.5, month: 1, week: 1, season:'봄', money: 50000, cash:50000, health:42, strength:18, agility:20, intelligence:35, magic:8, mentality:30, dignity:36, manners:28, speech:14, sensitivity:40, sense:24, charm:30, stress:12, items: [], relations:{}, activityProgress:{}, activityUnlocksSeen:[], startingGiftId:null, fatherBirthdayYears:[], equippedOutfit:null, autoOutfit:true, dailySchedule: [null,null,null,null,null,null,null], birthday:null, currentDate:null, endingDate:null, ended:false, birthdayCount:0, element:null, birthSeason:null, memory:0, truth:0, exposure:0, fatherAffinity:0, guardianTrust:50, nannyAffinity:50, lastGreetingDate:null, monthlyLedger:null };
+const game = { characterName:'', nannyName:'', guardianType:null, guardianName:'', profileSlot:null, age: 9, height:130, weight:28.5, month: 1, week: 1, season:'봄', money: 50000, cash:50000, health:42, strength:18, agility:20, intelligence:35, magic:8, mentality:30, dignity:36, manners:28, speech:14, sensitivity:40, sense:24, charm:30, stress:12, items: [], relations:{}, activityProgress:{}, activityUnlocksSeen:[], startingGiftId:null, fatherBirthdayYears:[], equippedOutfit:null, autoOutfit:true, dailySchedule: [null,null,null,null,null,null,null], birthday:null, currentDate:null, endingDate:null, ended:false, endingResult:null, birthdayCount:0, element:null, birthSeason:null, memory:0, truth:0, exposure:0, fatherAffinity:0, guardianTrust:50, nannyAffinity:50, lastGreetingDate:null, monthlyLedger:null };
 const guardianDefs={
   cheongryong:{name:'청룡',mark:'龍',theme:'#294e67',gift:{name:'푸른 여의주 조각',change:{intelligence:5,magic:4}},intro:'동쪽의 푸른 숨결. 배움과 술법의 길을 살피는 신수입니다.'},
   baekho:{name:'백호',mark:'虎',theme:'#ddd8ce',gift:{name:'흰 범의 방울',change:{strength:5,agility:4}},intro:'서쪽의 굳센 발걸음. 위험 앞에서 용기와 무예를 북돋는 신수입니다.'},
@@ -352,6 +352,8 @@ function resolveActivityOutfitStyle(outfitId){
   }catch{resolve(fallback);}};outfitSource.onerror=()=>resolve(fallback);outfitSource.src=outfitImageForAge(outfitId,age);});
 }
 async function outfitActivityFrame(src,outfitId){
+  // 누운 휴식 프레임은 이불까지 합쳐진 전용 원화이므로 의상 색상 치환을 하지 않는다.
+  if(/\/(rest|sleep)-/.test(src))return src;
   const palette=await resolveActivityOutfitStyle(outfitId);if(!palette)return src;
   const key=`${growthVisualAge()}|${outfitId}|${src}`;if(activityOutfitFrameCache.has(key))return activityOutfitFrameCache.get(key);
   return new Promise(resolve=>{const source=new Image();source.onload=()=>{try{const canvas=document.createElement('canvas');canvas.width=source.naturalWidth;canvas.height=source.naturalHeight;const context=canvas.getContext('2d',{willReadFrequently:true});context.drawImage(source,0,0);const frame=context.getImageData(0,0,canvas.width,canvas.height),data=frame.data,isRest=/\/(rest|sleep)-/.test(src);
@@ -542,6 +544,46 @@ const endingRelationCandidates=[
   {id:'taegyeom',name:'태겸',role:'상단 후계자',image:'../assets/characters/romance/taegyeom/vacation.png',assetReady:true,minAge:13,ending:'대상인의 동반자',dialogues:['“좋은 물건보다 좋은 인연을 만나는 일이 더 귀하다고 하더군.”','“이 길 끝에 재미있는 장이 선다는데, 함께 가겠어?”']},
   {id:'hyeon',name:'현',role:'정체를 숨긴 왕자',image:'../assets/characters/romance/hyeon/vacation.png',assetReady:true,minAge:13,ending:'왕자의 연인',dialogues:['“내가 누구인지는 잠시 잊고, 오늘만 평범하게 걸어도 될까?”','“또 만났네. 이쯤 되면 우연이라고만 하기는 어렵겠어.”']}
 ];
+const careerEndingCandidates=[
+  {id:'queen',title:'백성을 품은 여왕',description:'기품과 지혜, 굳은 마음으로 백성의 삶을 살피는 군주가 되었습니다.',weights:{dignity:5,intelligence:4,mentality:3,manners:2,speech:2}},
+  {id:'royal-scholar',title:'왕실 학사',description:'깊은 학문과 반듯한 품격으로 나라의 기록과 배움을 맡았습니다.',weights:{intelligence:5,dignity:2,manners:2,mentality:1}},
+  {id:'village-teacher',title:'서당 훈장',description:'배운 것을 이웃과 나누며 오래도록 믿음 받는 스승이 되었습니다.',weights:{intelligence:4,manners:3,speech:2,mentality:1}},
+  {id:'court-artist',title:'궁중 화원',description:'섬세한 감수성과 감각으로 시대의 풍경을 화폭에 남겼습니다.',weights:{sensitivity:5,sense:3,charm:1,intelligence:1}},
+  {id:'renowned-painter',title:'이름난 화가',description:'자유로운 시선으로 사람들의 마음을 움직이는 그림을 남겼습니다.',weights:{sensitivity:4,sense:4,speech:1,charm:1}},
+  {id:'court-dancer',title:'궁중 무희',description:'기품과 아름다운 몸짓으로 궁중 연회의 중심에 섰습니다.',weights:{dignity:4,charm:4,sensitivity:2,agility:2}},
+  {id:'master-entertainer',title:'명망 높은 예인',description:'시와 음악, 춤과 화술을 두루 익힌 최고의 예인이 되었습니다.',weights:{charm:4,sensitivity:3,speech:3,sense:2}},
+  {id:'great-general',title:'대장군',description:'강인한 몸과 흔들리지 않는 정신으로 나라를 지키는 장수가 되었습니다.',weights:{strength:5,agility:4,health:3,mentality:2}},
+  {id:'martial-instructor',title:'무예 교관',description:'단단한 체력과 민첩한 몸놀림으로 다음 세대를 가르쳤습니다.',weights:{strength:4,agility:4,health:3,manners:1}},
+  {id:'royal-magician',title:'왕실 술법사',description:'깊은 정신력과 마력으로 신수와 사람 사이의 지혜를 밝혔습니다.',weights:{magic:5,mentality:4,intelligence:2,sensitivity:1}},
+  {id:'secret-explorer',title:'비경 탐험가',description:'두려움 없는 발걸음으로 알려지지 않은 땅과 유물을 발견했습니다.',weights:{agility:4,health:3,magic:2,sense:3}},
+  {id:'great-merchant',title:'대상인',description:'사람을 읽는 화술과 뛰어난 감각으로 큰 상단을 이끌었습니다.',weights:{speech:5,sense:4,intelligence:1,charm:1},moneyWeight:.012},
+  {id:'fashion-master',title:'의복 장인',description:'전통과 새로운 감각을 엮어 누구도 흉내 내지 못할 옷을 지었습니다.',weights:{sense:5,sensitivity:3,charm:2,dignity:1}},
+  {id:'royal-chef',title:'궁중 요리사',description:'세심한 손끝과 넉넉한 마음으로 사람들을 행복하게 하는 음식을 만들었습니다.',weights:{sense:4,health:3,sensitivity:2,manners:1}},
+  {id:'physician',title:'명의',description:'학문과 따뜻한 마음으로 아픈 사람을 살피는 의원이 되었습니다.',weights:{intelligence:4,magic:2,mentality:3,health:2}},
+  {id:'diplomat',title:'외교 사절',description:'품격 있는 화술과 지혜로 먼 나라와 새로운 길을 열었습니다.',weights:{speech:5,dignity:4,intelligence:2,manners:2}},
+  {id:'guardian-keeper',title:'신수의 수호자',description:'신수와 가장 깊은 유대를 맺고 세상의 균형을 지키는 사람이 되었습니다.',weights:{magic:4,mentality:4,dignity:2},guardianWeight:8},
+  {id:'quiet-life',title:'평온한 삶',description:'화려한 명성 대신 소중한 사람들과 따뜻하고 단단한 일상을 선택했습니다.',weights:{health:2,mentality:3,manners:2,sensitivity:2}}
+];
+const downfallEndingCandidates=[
+  {id:'tyrant',title:'폭군',description:'힘과 권력을 좇는 동안 사람들의 마음을 잃고 외로운 지배자가 되었습니다.',test:()=>game.strength>=700&&game.dignity>=650&&game.manners<180&&game.guardianTrust<30},
+  {id:'greedy-merchant',title:'탐욕스러운 거상',description:'수많은 은전을 모았지만 곁에 남은 진실한 인연은 없었습니다.',test:()=>game.money>=180000&&game.speech>=650&&game.manners<180&&game.nannyAffinity<35},
+  {id:'fallen-magician',title:'타락한 술법사',description:'감당할 수 없는 힘을 탐하다 신수와의 약속을 저버렸습니다.',test:()=>game.magic>=700&&game.mentality<180&&game.nannyAffinity<30},
+  {id:'disgraced-warrior',title:'파문당한 무관',description:'절제 없는 힘으로 큰 사고를 일으켜 무관의 이름을 잃었습니다.',test:()=>game.strength>=650&&game.agility>=550&&game.mentality<160&&game.manners<180},
+  {id:'fraud-merchant',title:'사기꾼 행상',description:'재치만 믿고 거짓 거래를 이어가다 모든 장터에서 쫓겨났습니다.',test:()=>game.speech>=650&&game.sense>=600&&game.dignity<160&&game.guardianTrust<35},
+  {id:'debt-runaway',title:'빚더미 도망자',description:'무리한 선택을 되풀이한 끝에 빈손으로 먼 길을 떠나야 했습니다.',test:()=>game.money<=100&&game.stress>=95&&game.mentality<180},
+  {id:'forsaken',title:'신수에게 버림받은 자',description:'거듭된 불신으로 수호의 계약이 끊기고 신수의 빛도 사라졌습니다.',test:()=>game.nannyAffinity<=5&&game.guardianTrust<=5}
+];
+function careerEndingScore(candidate){return Object.entries(candidate.weights).reduce((score,[key,weight])=>score+clampStat(key,game[key])*weight,0)+Math.max(0,game.money||0)*(candidate.moneyWeight||0)+clampStat('guardianTrust',game.guardianTrust)*(candidate.guardianWeight||0);}
+function resolveCareerEnding(){return careerEndingCandidates.map((candidate,index)=>({...candidate,index,score:careerEndingScore(candidate)})).sort((left,right)=>right.score-left.score||left.index-right.index)[0];}
+function resolveRelationEnding(){normalizeRelations();return endingRelationCandidates.map((candidate,index)=>({candidate,record:game.relations[candidate.id],index})).filter(entry=>entry.record.dateUnlocked&&entry.record.meetings>=5).sort((left,right)=>right.record.affinity-left.record.affinity||right.record.meetings-left.record.meetings||left.index-right.index)[0]||null;}
+function resolveEnding(){
+  const career=resolveCareerEnding(),downfall=downfallEndingCandidates.find(candidate=>candidate.test()),relation=downfall?null:resolveRelationEnding();
+  const category=downfall?'downfall':relation?'relation':'career';
+  const outcome=downfall||relation?.candidate||career;
+  const ownedCards=new Set(game.items.filter(item=>item&&item.type==='event'&&vacationIllustrations.some(card=>card.id===item.id)).map(item=>item.id));
+  const strongest=[...statGroups.flatMap(group=>group.stats)].map(([key,label])=>({key,label,value:clampStat(key,game[key])})).sort((left,right)=>right.value-left.value).slice(0,3);
+  return {resolvedAt:new Date().toISOString(),category,endingId:outcome.id,title:category==='relation'?outcome.ending:outcome.title,description:category==='relation'?`${outcome.name}과(와) 함께 서로의 길을 존중하며 새로운 삶을 시작했습니다.`:outcome.description,careerId:career.id,careerTitle:career.title,partnerId:relation?.candidate.id||null,partnerName:relation?.candidate.name||null,partnerRole:relation?.candidate.role||null,relationMeetings:relation?.record.meetings||0,relationAffinity:relation?.record.affinity||0,strongest,collectionCount:ownedCards.size,collectionTotal:vacationIllustrations.length};
+}
 function normalizeRelations(){
   if(!game.relations||typeof game.relations!=='object')game.relations={};
   endingRelationCandidates.forEach(candidate=>{
@@ -570,7 +612,8 @@ function waitForVacationTap(label='화면을 터치해 계속'){
 }
 function renderVacationMotion(season){
   const layer=document.querySelector('#vacationMotion');
-  layer.className=`vacation-motion season-${({봄:'spring',여름:'summer',가을:'autumn',겨울:'winter'}[season]||'spring')}`;
+  const seasonClass={봄:'spring',여름:'summer',가을:'autumn',겨울:'winter'}[season];
+  layer.className=seasonClass?`vacation-motion season-${seasonClass}`:'vacation-motion';
   const counts={봄:18,여름:9,가을:14,겨울:28};
   const count=counts[season]||12;
   layer.replaceChildren(...Array.from({length:count},(_,index)=>{
@@ -585,7 +628,10 @@ function renderVacationMotion(season){
 async function playVacationScene(prize,index){
   const phone=document.querySelector('.phone'),scene=document.querySelector('#vacationScene'),image=document.querySelector('#vacationImage');
   const person=document.querySelector('#encounterCharacter'),talk=document.querySelector('#encounterDialogue');
-  playVacationMusic(prize.season||game.season);renderVacationMotion(prize.season||game.season);image.src=prize.image;document.querySelector('#vacationTitle').textContent=prize.name;scene.dataset.effect=prize.effect||'';scene.dataset.season=prize.season||game.season;
+  const sceneSeason=prize.season||game.season;
+  const seasonalEffects={봄:new Set(['petals','wind','calm']),여름:new Set(['splash','wave','wind','calm']),가을:new Set(['leaves','moon','steam','calm']),겨울:new Set(['snow','steam','calm'])};
+  const sceneEffect=seasonalEffects[sceneSeason]?.has(prize.effect)?prize.effect:'calm';
+  playVacationMusic(sceneSeason);renderVacationMotion(sceneSeason);image.src=prize.image;document.querySelector('#vacationTitle').textContent=prize.name;scene.dataset.effect=sceneEffect;scene.dataset.season=sceneSeason;
   scene.classList.remove('has-encounter');scene.classList.add('child-live');person.hidden=true;talk.hidden=true;phone.classList.add('vacation-playing');scene.hidden=false;
   await waitForVacationTap('일러스트를 감상한 뒤 터치');
   const candidates=endingRelationCandidates.filter(candidate=>game.age>=candidate.minAge&&candidate.assetReady);
@@ -971,7 +1017,7 @@ function deleteCharacterRecord(slot){
 }
 
 function resetGameState() {
-  Object.assign(game, { characterName:'',nannyName:'',guardianType:null,guardianName:'',profileSlot:null,age:9,height:130,weight:28.5,month:1,week:1,season:'봄',money:50000,cash:50000,health:42,strength:18,agility:20,intelligence:35,magic:8,mentality:30,dignity:36,manners:28,speech:14,sensitivity:40,sense:24,charm:30,stress:12,items:[],relations:{},activityProgress:{},activityUnlocksSeen:[],startingGiftId:null,fatherBirthdayYears:[],equippedOutfit:null,autoOutfit:true,dailySchedule:[null,null,null,null,null,null,null],birthday:null,currentDate:null,endingDate:null,ended:false,birthdayCount:0,element:null,birthSeason:null,memory:0,truth:0,exposure:0,fatherAffinity:0,guardianTrust:50,nannyAffinity:50,lastGreetingDate:null,monthlyLedger:null});
+  Object.assign(game, { characterName:'',nannyName:'',guardianType:null,guardianName:'',profileSlot:null,age:9,height:130,weight:28.5,month:1,week:1,season:'봄',money:50000,cash:50000,health:42,strength:18,agility:20,intelligence:35,magic:8,mentality:30,dignity:36,manners:28,speech:14,sensitivity:40,sense:24,charm:30,stress:12,items:[],relations:{},activityProgress:{},activityUnlocksSeen:[],startingGiftId:null,fatherBirthdayYears:[],equippedOutfit:null,autoOutfit:true,dailySchedule:[null,null,null,null,null,null,null],birthday:null,currentDate:null,endingDate:null,ended:false,endingResult:null,birthdayCount:0,element:null,birthSeason:null,memory:0,truth:0,exposure:0,fatherAffinity:0,guardianTrust:50,nannyAffinity:50,lastGreetingDate:null,monthlyLedger:null});
   document.querySelector('#liveChanges').innerHTML='';
   const greeting=document.querySelector('#homeGreeting');greeting.hidden=true;greeting.classList.remove('greeting-active');
   document.querySelector('#characterNameInput').value='';
@@ -1299,7 +1345,7 @@ function startWithBirthday(){
   const start=addYears(birth,9);
   const ending=addYears(birth,19); ending.setDate(ending.getDate()+1);
   const month=birth.getMonth()+1; const birthSeason=seasonForMonth(month); const element=['금','수','목','화','토'][(birth.getMonth()+birth.getDate())%5];
-  Object.assign(game,{characterName,guardianType:null,guardianName:'',nannyName:'',profileSlot,birthday:value,currentDate:isoDate(start),endingDate:isoDate(ending),age:9,height:130,weight:28.5,month,season:birthSeason,birthSeason,element,week:Math.floor((start.getDate()-1)/7)+1,ended:false,birthdayCount:0,fatherBirthdayYears:[],fatherAffinity:0,startingGiftId:null});
+  Object.assign(game,{characterName,guardianType:null,guardianName:'',nannyName:'',profileSlot,birthday:value,currentDate:isoDate(start),endingDate:isoDate(ending),age:9,height:130,weight:28.5,month,season:birthSeason,birthSeason,element,week:Math.floor((start.getDate()-1)/7)+1,ended:false,endingResult:null,birthdayCount:0,fatherBirthdayYears:[],fatherAffinity:0,startingGiftId:null});
   game.monthlyLedger=createMonthlyLedger(start.getFullYear(),month);
   document.querySelector('#birthdaySetup').hidden=true;
   guardianStoryIndex=0;showGuardianStory();
@@ -1366,8 +1412,12 @@ function advanceGameDate(days){
 }
 function seasonForMonth(month){ return month>=3&&month<=5?'봄':month>=6&&month<=8?'여름':month>=9&&month<=11?'가을':'겨울'; }
 function showEnding(){
+  if(!game.endingResult)game.endingResult=resolveEnding();
+  const result=game.endingResult;
+  const categoryLabel={relation:'인연 엔딩',career:'직업 엔딩',downfall:'몰락 엔딩'}[result.category];
+  const partner=result.partnerName?`<div><small>함께한 인연</small><b>${result.partnerName} · ${result.partnerRole}</b></div>`:'';
   panel.hidden=false; panelTitle.textContent=`${game.characterName || '아이'}의 성장 기록`;
-  panelBody.innerHTML=`<div class="ending-card"><h2>마지막 생일 다음 날</h2><p>${game.age}세 · ${game.season}</p><p>아홉 살 생일부터 이어진 ${game.characterName || '아이'}의 성장 이야기가 완성되었습니다.</p><button id="endingRestart">새로운 생일로 시작</button></div>`;
+  panelBody.innerHTML=`<div class="ending-card ${result.category}"><small class="ending-date">마지막 생일 다음 날 · ${game.currentDate}</small><em>${categoryLabel}</em><h2>${result.title}</h2><p class="ending-lead">${result.description}</p><section class="ending-summary">${result.category==='relation'?`<div><small>성장한 직업 성향</small><b>${result.careerTitle}</b></div>`:''}${partner}<div><small>대표 능력</small><b>${result.strongest.map(stat=>`${stat.label} ${stat.value}`).join(' · ')}</b></div><div><small>바캉스 수집</small><b>${result.collectionCount} / ${result.collectionTotal}</b></div><div><small>마지막 은전</small><b>${Math.max(0,game.money).toLocaleString()}냥</b></div></section><button id="endingRestart">새로운 생일로 시작</button></div>`;
   document.querySelector('#endingRestart').addEventListener('click',beginNewGrowth);
 }
 function updatePrologueCopy(scene,index){

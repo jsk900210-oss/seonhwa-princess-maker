@@ -164,6 +164,8 @@
 .stage-character.pixel-sprite.motion-resting img{max-width:calc(100% - 10px);max-height:calc(100% - 10px)}
 .stage-character.pixel-sprite.motion-resting{left:50%;bottom:5%;width:188px;height:150px;padding:14px;box-sizing:border-box;overflow:visible;animation:none!important}
 .stage-character.pixel-sprite.motion-resting img{width:100%;height:100%;max-width:100%;max-height:100%;object-fit:contain;transform:none!important;clip-path:none!important}
+.activity-stage.action-rest .stage-character.pixel-sprite.motion-resting{width:160px;height:132px;padding:8px;transform:translateX(-50%)}
+.activity-stage.action-rest .stage-character.pixel-sprite.motion-resting img{image-rendering:auto;filter:drop-shadow(0 3px 2px #0005)}
 .stage-character.pixel-sprite.motion-resting:after{content:"Zzz";position:absolute;right:9%;top:5%;color:#fff8df;font-size:16px;font-weight:900;letter-spacing:2px;text-shadow:0 2px 2px #382313,0 0 5px #6b4a2f;animation:sleep-zzz 1.8s ease-in-out infinite}
 @keyframes sleep-zzz{0%,100%{opacity:.35;transform:translateY(5px) scale(.9)}50%{opacity:1;transform:translateY(-5px) scale(1.06)}}
 .activity-stage.eating-stage .stage-inner{overflow:hidden}
@@ -417,6 +419,7 @@
 .vacation-motion.season-summer i{top:auto;bottom:7%;width:5px;height:5px;border:1px solid #d9fbff99;border-radius:50%;animation-name:vacation-water-glint}
 .vacation-motion.season-autumn i{width:8px;height:5px;border-radius:80% 15% 80% 15%;background:linear-gradient(135deg,#e9a33f,#923d25);animation-name:vacation-autumn-fall}
 .vacation-motion.season-winter i{width:5px;height:5px;border-radius:50%;background:#fff;box-shadow:0 0 3px #eaf7ff;animation-name:vacation-winter-fall}
+.vacation-scene[data-effect="snow"]:has(.vacation-motion.season-winter)::before,.vacation-scene[data-effect="snow"]:has(.vacation-motion.season-winter)::after{display:none}
 @keyframes vacation-spring-fall{0%{opacity:0;transform:translate3d(-12px,-5%,0) rotate(0) scale(var(--scale))}12%{opacity:.7}55%{transform:translate3d(24px,55vh,0) rotate(170deg) scale(var(--scale));opacity:.55}100%{transform:translate3d(-10px,112vh,0) rotate(340deg) scale(var(--scale));opacity:0}}
 @keyframes vacation-water-glint{0%,100%{opacity:0;transform:translate3d(-8px,4px,0) scale(.4)}45%{opacity:.5}70%{opacity:.15;transform:translate3d(10px,-22px,0) scale(calc(var(--scale) * 1.7))}}
 @keyframes vacation-summer-light{from{opacity:.55;transform:translateX(-2%)}to{opacity:.9;transform:translateX(2%)}}
