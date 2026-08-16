@@ -193,6 +193,7 @@
 .stage-npc{position:absolute;z-index:3;right:5%;bottom:8%;width:104px;height:104px;filter:drop-shadow(0 3px 1px #0007);animation:npc-react .76s ease-in-out 2}.stage-npc img{width:100%;height:100%;object-fit:contain;image-rendering:pixelated}.stage-npc.npc-teacher{width:110px;height:110px}.stage-npc.npc-dolsoe{right:3%}.stage-npc.npc-nanny{bottom:6%}@keyframes npc-react{0%,100%{transform:translateY(0)}50%{transform:translateY(3px)}}
 .stage-npc.npc-romance-date{left:50%;right:auto;bottom:1%;width:172px;height:172px;transform:translateX(-50%);animation:date-portrait-arrival .75s ease-out both}
 .stage-npc.npc-romance-date img{object-fit:contain;object-position:center bottom;image-rendering:auto;filter:drop-shadow(0 6px 5px #0008)}
+.encounter-character.relation-sheet-portrait,.stage-npc.npc-romance-date.relation-sheet-portrait{background-image:var(--relation-sheet);background-repeat:no-repeat;background-position:var(--relation-age-position) bottom;background-size:300% auto}.stage-npc.npc-romance-date.relation-sheet-portrait{filter:drop-shadow(0 6px 5px #0008)}
 @keyframes date-portrait-arrival{from{opacity:0;transform:translate(-50%,12px)}to{opacity:1;transform:translate(-50%,0)}}
 .stage-character.pixel-sprite.motion-sweeping,.stage-character.pixel-sprite.motion-manners,.stage-character.pixel-sprite.motion-calligraphy{width:116px;height:116px;bottom:8%;animation:activity-work .72s ease-in-out 2}
 .stage-character.pixel-sprite.motion-calligraphy{width:142px;height:142px;bottom:3%}

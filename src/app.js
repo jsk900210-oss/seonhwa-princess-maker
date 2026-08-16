@@ -716,12 +716,15 @@ function awardVacationIllustration(){
   return prize;
 }
 const endingRelationCandidates=[
-  {id:'doyun',name:'도윤',role:'젊은 무관',motif:'최산',image:'../assets/characters/romance/doyun/vacation.png',assetReady:true,minAge:13,ending:'무관의 아내',dialogues:['“활쏘기보다 고요한 풍경을 바라보는 일이 더 어렵군.”','“혼자 걷는 길인 줄 알았는데, 동행이 생겼군.”']},
-  {id:'seojin',name:'서진',role:'선비',motif:'박보검',image:'../assets/characters/romance/seojin/vacation.png',assetReady:true,minAge:13,ending:'선비와의 삶',dialogues:['“책에서 읽던 풍경보다 직접 보는 모습이 더 아름답군요.”','“이 경치를 시로 남긴다면 어떤 첫 구절이 좋을까요?”']},
-  {id:'yeonwoo',name:'연우',role:'화공',motif:'박지훈',image:'../assets/characters/romance/yeonwoo/vacation.png',assetReady:true,minAge:13,ending:'화가의 동반자',dialogues:['“잠시 그대로 있어 봐. 이 순간을 그림에 담고 싶어.”','“같은 풍경도 함께 보는 사람에 따라 색이 달라 보여.”']},
-  {id:'taegyeom',name:'태겸',role:'상단 후계자',motif:'최현욱',image:'../assets/characters/romance/taegyeom/vacation.png',assetReady:true,minAge:13,ending:'대상인의 동반자',dialogues:['“좋은 물건보다 좋은 인연을 만나는 일이 더 귀하다고 하더군.”','“이 길 끝에 재미있는 장이 선다는데, 함께 가겠어?”']},
-  {id:'hyeon',name:'현',role:'정체를 숨긴 왕자',motif:'차은우',image:'../assets/characters/romance/hyeon/vacation.png',assetReady:true,minAge:13,ending:'왕자의 연인',dialogues:['“내가 누구인지는 잠시 잊고, 오늘만 평범하게 걸어도 될까?”','“또 만났네. 이쯤 되면 우연이라고만 하기는 어렵겠어.”']}
+  {id:'doyun',name:'도윤',role:'젊은 무관',motif:'최산',image:'../assets/characters/romance/doyun/vacation.png',baseSheet:'../assets/characters/romance/identity/fullbody/doyun-age-13-16-19-fullbody-v1.png',assetReady:true,minAge:13,ending:'무관의 아내',dialogues:['“활쏘기보다 고요한 풍경을 바라보는 일이 더 어렵군.”','“혼자 걷는 길인 줄 알았는데, 동행이 생겼군.”']},
+  {id:'seojin',name:'서진',role:'선비',motif:'박보검',image:'../assets/characters/romance/seojin/vacation.png',baseSheet:'../assets/characters/romance/identity/fullbody/seojin-age-13-16-19-fullbody-v1.png',assetReady:true,minAge:13,ending:'선비와의 삶',dialogues:['“책에서 읽던 풍경보다 직접 보는 모습이 더 아름답군요.”','“이 경치를 시로 남긴다면 어떤 첫 구절이 좋을까요?”']},
+  {id:'yeonwoo',name:'연우',role:'화공',motif:'박지훈',image:'../assets/characters/romance/yeonwoo/vacation.png',baseSheet:'../assets/characters/romance/identity/fullbody/yeonwoo-age-13-16-19-fullbody-v1.png',assetReady:true,minAge:13,ending:'화가의 동반자',dialogues:['“잠시 그대로 있어 봐. 이 순간을 그림에 담고 싶어.”','“같은 풍경도 함께 보는 사람에 따라 색이 달라 보여.”']},
+  {id:'taegyeom',name:'태겸',role:'상단 후계자',motif:'최현욱',image:'../assets/characters/romance/taegyeom/vacation.png',baseSheet:'../assets/characters/romance/identity/fullbody/taegyeom-age-13-16-19-fullbody-v1.png',assetReady:true,minAge:13,ending:'대상인의 동반자',dialogues:['“좋은 물건보다 좋은 인연을 만나는 일이 더 귀하다고 하더군.”','“이 길 끝에 재미있는 장이 선다는데, 함께 가겠어?”']},
+  {id:'hyeon',name:'현',role:'정체를 숨긴 왕자',motif:'차은우',image:'../assets/characters/romance/hyeon/vacation.png',baseSheet:'../assets/characters/romance/identity/fullbody/hyeon-age-13-16-19-fullbody-v1.png',assetReady:true,minAge:13,ending:'왕자의 연인',dialogues:['“내가 누구인지는 잠시 잊고, 오늘만 평범하게 걸어도 될까?”','“또 만났네. 이쯤 되면 우연이라고만 하기는 어렵겠어.”']}
 ];
+function relationAgePosition(){return game.age>=19?'100%':game.age>=16?'50%':'0%';}
+function relationPortraitMarkup(candidate,className=''){return `<span class="relation-sheet-portrait ${className}" role="img" aria-label="${candidate.name} ${game.age}세 모습" style="--relation-sheet:url('${candidate.baseSheet}');--relation-age-position:${relationAgePosition()}"></span>`;}
+function applyRelationPortrait(element,candidate){if(!element||!candidate)return;element.classList.add('relation-sheet-portrait');element.style.setProperty('--relation-sheet',`url('${candidate.baseSheet}')`);element.style.setProperty('--relation-age-position',relationAgePosition());const image=element.matches('img')?element:element.querySelector('img');if(image){image.alt=`${candidate.name} ${game.age}세 모습`;image.hidden=true;}}
 const relationEpisodeCatalog={
   doyun:[
     {id:'doyun-1',title:'흩어진 화살',activities:['swordsmanship','martial'],line:'활터에 흩어진 화살을 함께 주우며 젊은 무관 도윤과 처음 인사를 나눴어요.'},
@@ -839,7 +842,7 @@ function rollHolidayRelationEvent(){
 function presentHolidayRelation(){
   if(!pendingHolidayRelation)return false;
   const event=pendingHolidayRelation;pendingHolidayRelation=null;panel.hidden=false;panelTitle.textContent=`${event.holiday}의 인연`;
-  panelBody.innerHTML=`<section class="holiday-relation-event"><img src="${event.candidate.image}" alt="${event.candidate.name}"><div><small>${event.holiday} 특별 만남</small><h3>${event.candidate.name}</h3><p>${event.line}</p><b>호감도 +8 · 현재 ${event.record.affinity}<br>${event.record.meetings} / 5회 만남 · ${event.record.relationship}</b><button id="holidayRelationContinue" type="button">추억 간직하기</button></div></section>`;
+  panelBody.innerHTML=`<section class="holiday-relation-event">${relationPortraitMarkup(event.candidate,'holiday-relation-portrait')}<div><small>${event.holiday} 특별 만남</small><h3>${event.candidate.name}</h3><p>${event.line}</p><b>호감도 +8 · 현재 ${event.record.affinity}<br>${event.record.meetings} / 5회 만남 · ${event.record.relationship}</b><button id="holidayRelationContinue" type="button">추억 간직하기</button></div></section>`;
   document.querySelector('#holidayRelationContinue').addEventListener('click',()=>{panel.hidden=true;if(!presentActivityUnlocks())openVisitingMerchant();queueAutoSave();});
   return true;
 }
@@ -900,8 +903,7 @@ async function playVacationScene(prize,index,companion=null){
   let relation=null;
   if(encounter){
     relation=companion||balancedRelationCandidate(candidates);const fromLeft=Math.random()<.5;
-    person.querySelector('img').src=relation.image;person.querySelector('img').alt=`엔딩 인연 후보 ${relation.name}`;
-    person.className=`encounter-character ${fromLeft?'from-left':'from-right'}`;person.hidden=false;scene.classList.add('has-encounter');
+    person.className=`encounter-character ${fromLeft?'from-left':'from-right'}`;applyRelationPortrait(person,relation);person.hidden=false;scene.classList.add('has-encounter');
     const episode=nextRelationEpisode(relation,'vacation');
     document.querySelector('#encounterName').textContent=relation.name;document.querySelector('#encounterText').textContent=episode?.line||relation.dialogues[Math.floor(Math.random()*relation.dialogues.length)];talk.hidden=false;
     const record=recordRelationEncounter(relation,episode);
@@ -1094,7 +1096,7 @@ function openPanel(type) {
     panelTitle.textContent = `${game.characterName || '아이'}의 상태`;
     normalizeBodyMetrics();
     normalizeRelations();
-    const relationCards=endingRelationCandidates.map(candidate=>{const relation=game.relations[candidate.id];const phase=relation.dateUnlocked?(relation.affinity>=60?`${relation.relationship} · 호감 ${relation.affinity}`:`데이트 가능 · 호감 ${relation.affinity}/60`):relation.meetings>=5?'16세부터 데이트 가능':`${relation.meetings} / 5회 만남`;return `<div class="relation-card ${relation.affinity>=60?'unlocked':''}"><b>${candidate.name}</b><small>${candidate.role}</small><small>비공식 외형 모티브 · ${candidate.motif}</small><span>${phase}</span><i style="--relation-progress:${Math.min(100,relation.affinity)}%"></i></div>`;}).join('');
+    const relationCards=endingRelationCandidates.map(candidate=>{const relation=game.relations[candidate.id];const phase=relation.dateUnlocked?(relation.affinity>=60?`${relation.relationship} · 호감 ${relation.affinity}`:`데이트 가능 · 호감 ${relation.affinity}/60`):relation.meetings>=5?'16세부터 데이트 가능':`${relation.meetings} / 5회 만남`;return `<div class="relation-card ${relation.affinity>=60?'unlocked':''}">${relationPortraitMarkup(candidate,'relation-mini-portrait')}<b>${candidate.name}</b><small>${candidate.role}</small><small>비공식 외형 모티브 · ${candidate.motif}</small><span>${phase}</span><i style="--relation-progress:${Math.min(100,relation.affinity)}%"></i></div>`;}).join('');
     panelBody.innerHTML = `<div class="status-summary"><span>${game.age}세 · ${game.season} ${game.week}주</span><b>${game.money.toLocaleString()}냥</b></div><section class="body-profile" aria-label="성장 정보"><div><small>키</small><b>${game.height.toFixed(1)} cm</b></div><div><small>몸무게</small><b>${game.weight.toFixed(1)} kg</b></div></section>${statGroups.map(group => `<section class="stat-group"><h3>${group.title}</h3>${group.stats.map(([key,label]) => statBar(key,label)).join('')}</section>`).join('')}<section class="stat-group condition-group"><h3>현재 상태</h3>${statBar('stress','스트레스')}</section><section class="stat-group"><h3>수호 인연</h3>${statBar('nannyAffinity','신수 유대감')}${statBar('fatherAffinity','아버지 친밀도')}</section><section class="relation-group"><h3>인연</h3><p>5회 만남은 데이트 해금 조건이며, 호감도 60 이상과 특별한 관계가 되어야 인연 엔딩 후보가 됩니다.</p><div class="relation-grid">${relationCards}</div></section>`;
   } else if (type === 'inventory') {
     playHomeMusic();
@@ -1955,6 +1957,7 @@ async function playWeeklySchedule(selected) {
     stageProps.className = `stage-props prop-${presentation.prop}`;
     stageNpc.hidden = !presentation.npc;
     stageNpc.className = presentation.npc ? `stage-npc npc-${presentation.npc}` : 'stage-npc';
+    stageNpc.style.removeProperty('--relation-sheet');stageNpc.style.removeProperty('--relation-age-position');stageNpcImage.hidden=false;
     if(presentation.npc)stageNpcImage.src = (presentation.npc==='teacher'?npcFrames.teacherReading:npcFrames[presentation.npc])[0];
     stage.className = `activity-stage map-${presentation.location} action-${action.id} mastery-${currentMasteryRank}`;
     stageCharacter.className = `stage-character pixel-sprite ${presentation.motion}`;
@@ -1979,7 +1982,7 @@ async function playWeeklySchedule(selected) {
     }else if(action.special==='date'){
       const relation=endingRelationCandidates.find(candidate=>candidate.id===action.relationId),record=relationRecord(action.relationId);dateRelation={candidate:relation,record};
       stageMap.src=backgrounds.market;stageMap.alt=`${relation.name}과 만난 저잣거리`;
-      stageCharacter.hidden=true;stageProps.hidden=true;stageNpc.hidden=false;stageNpc.className='stage-npc npc-romance-date';stageNpcImage.src=relation.image;
+      stageCharacter.hidden=true;stageProps.hidden=true;stageNpc.hidden=false;stageNpc.className='stage-npc npc-romance-date';applyRelationPortrait(stageNpc,relation);
       document.querySelector('#dialogueText').textContent=`${relation.name}과(와) 약속한 장소에서 천천히 이야기를 나누었어요.`;
       await new Promise(resolve=>setTimeout(resolve,1250));
       record.affinity=Math.min(100,record.affinity+12);record.lastMetAt=game.currentDate||null;record.relationship=record.affinity>=80?'연인':record.affinity>=60?'특별한 인연':'친구';
