@@ -224,12 +224,17 @@ activityFrames.manners=[1,2,3].map(n=>`../assets/characters/seonhwa/age-09/sprit
 activityFrames.errand=[1,2,3].map(n=>`../assets/characters/seonhwa/age-09/sprites/activities/errand-character-v4-${n}.png`);
 activityFrames.houseclean=[1,2,3,4,5,6].map(n=>`../assets/characters/seonhwa/age-09/sprites/activities/houseclean-side-${n}.png`);
 activityFrames.sleep=[...activityFrames.rest];
+// v0.62.55: face-consistent awake sprites and a simple tea-only rest loop.
+activityFrames.sweeping=[1,2,3].map(n=>`../assets/characters/seonhwa/activity-consistent/age-09/sweeping-legacy-${n}.png`);
+activityFrames.errand=[1,2,3].map(n=>`../assets/characters/seonhwa/activity-consistent/age-09/errand-legacy-${n}.png`);
+activityFrames.herbs=[1,2,3].map(n=>`../assets/characters/seonhwa/activity-consistent/age-09/herbs-legacy-${n}.png`);
+activityFrames.tea=[1,1,1].map(n=>`../assets/characters/seonhwa/activity-consistent/age-09/rest-legacy-${n}.png`);
 // The modular errand frames crop the top of the hair in frame 1. Keep the complete v4 frames.
 const modularActivities=new Set(['calligraphy','arithmetic','manners','houseclean','rest','sleep']);
 function activityFrameSet(activity){
   if(!modularActivities.has(activity))return activityFrames[activity];
   const name=activity==='sleep'?'rest':activity,age=String(growthAssetAge(growthVisualAge())).padStart(2,'0');
-  return [1,2,3].map(frame=>`../assets/characters/seonhwa/activity-modular/age-${age}/${name}-${frame}.png`);
+  return [1,2,3].map(frame=>`../assets/characters/seonhwa/activity-consistent/age-${age}/${name}-${frame}.png`);
 }
 const npcFrames = Object.fromEntries(['teacher','dolsoe','herbalist','nanny'].map(name=>[name,[1,2,3].map(n=>`../assets/characters/npcs/activity/${name}-${n}.png`)]));
 npcFrames.teacherReading=[1,2,3].map(n=>`../assets/characters/npcs/activity/teacher-reading-${n}.png`);
@@ -360,7 +365,8 @@ async function outfitActivityFrame(src,outfitId){
     for(let y=0;y<canvas.height;y++)for(let x=0;x<canvas.width;x++){const i=(y*canvas.width+x)*4;if(data[i+3]<24)continue;const r=data[i],g=data[i+1],b=data[i+2];
       const pink=!isRest&&r>155&&g>42&&g<155&&b>52&&b<180&&r>g*1.32&&r>b*1.12;
       const central=x>canvas.width*.16&&x<canvas.width*.84&&y>canvas.height*.2&&y<canvas.height*.76;
-      const ivory=central&&r>188&&g>165&&b>130&&r-b<62&&r-g<45;
+      const skin=r>170&&g>92&&b>64&&r>g*1.07&&g>b*1.06;
+      const ivory=central&&!skin&&r>188&&g>165&&b>130&&r-b<62&&r-g<45;
       const fallback=pink?palette.skirt:(ivory&&palette.top?palette.top:null);if(!fallback)continue;
       const light=Math.max(.62,Math.min(1.28,(r+g+b)/3/170));data[i]=Math.min(255,fallback[0]*light);data[i+1]=Math.min(255,fallback[1]*light);data[i+2]=Math.min(255,fallback[2]*light);
     }
@@ -370,7 +376,7 @@ async function animateActivitySprite(image,motion,activity,npcImage,npc,outfitId
   if(activity){
     const frames=activityFrameSet(activity);
     const sequence=activity==='errand'?[0,1,1,2,2,1,0]:activity==='houseclean'?[0,1,0,2,2,2]:activity==='sweeping'?[0,1,2,1,0,1,2,2,1,0,1,2,1,0]:activity==='sleep'?[0,1,2,1,0]:[0,1,2,1,0,1,2];
-    const delay=activity==='errand'?270:activity==='houseclean'?360:activity==='sleep'?430:190;
+    const delay=activity==='errand'?270:activity==='houseclean'?360:activity==='sleep'?430:activity==='tea'?460:190;
     for(const [step,frame] of sequence.entries()){
       if(activity==='houseclean')image.parentElement.style.left=`${[74,58,32,32,55,74][step]}%`;
       if(activity==='sweeping')image.parentElement.style.left=`${[14,20,27,34,41,47,50,50,47,41,34,27,20,14][step]}%`;
@@ -1554,7 +1560,8 @@ async function playWeeklySchedule(selected) {
     document.querySelectorAll('#playbackWeek span').forEach((day,dayIndex)=>{day.classList.toggle('done',dayIndex<index);day.classList.toggle('current',dayIndex===index);});
     const outfitName=outfits.find(item=>item.id===dailyOutfit)?.name;
     const showOutfitName=action.id!=='rest'&&Boolean(outfitName);
-    document.querySelector('#stageCaption').textContent = `${dayNames[index]} · ${action.name}${showOutfitName?` · ${outfitName}`:''}`;
+    const restActivity=action.id==='rest'?(Math.random()<.5?'tea':'sleep'):null;
+    document.querySelector('#stageCaption').textContent = `${dayNames[index]} · ${action.name}${restActivity?` · ${restActivity==='tea'?'차 마시기':'잠자기'}`:''}${showOutfitName?` · ${outfitName}`:''}`;
     document.querySelector('#playbackProgress').style.width = `${((index + 1) / selected.length) * 100}%`;
     bg.src = backgrounds[presentation.location];
     stageMap.src = backgrounds[presentation.location];
@@ -1579,7 +1586,7 @@ async function playWeeklySchedule(selected) {
       stage.hidden=true;stageNpc.hidden=true;stageProps.hidden=true;stageCharacter.hidden=true;
       const metSomeone=await playVacationScene(prize,index);
       document.querySelector('#dialogueText').textContent=metSomeone?`바캉스에서 「${prize.name}」 일러스트와 ${metSomeone.name}의 인연 추억을 얻었어요.`:`바캉스에서 「${prize.name}」 일러스트를 획득했어요.`;
-    }else await animateActivitySprite(stageCharacterImage,presentation.motion,presentation.activity,stageNpcImage,presentation.npc,dailyOutfit);
+    }else await animateActivitySprite(stageCharacterImage,presentation.motion,restActivity||presentation.activity,stageNpcImage,presentation.npc,dailyOutfit);
     const guaranteedSuccess=['rest','vacation'].includes(action.id);
     const condition=['shopping','rest','vacation'].includes(action.id)?null:conditionEvent(simulated.stress,index);
     let outcome=judgeActivityOutcome(action,simulated.stress);
