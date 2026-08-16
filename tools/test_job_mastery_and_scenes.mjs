@@ -18,7 +18,7 @@ for(const id of jobs){
   }
 }
 if(!app.includes("const activityRankNames=['견습','숙련','달인']"))throw new Error('3단계 숙련 명칭 누락');
-if(!app.includes('const activityRankThresholds=[0,30,90]'))throw new Error('숙련 30회·달인 90회 기준 누락');
+if(!app.includes('const activityRankThresholds=[0,100,300]'))throw new Error('숙련 100회·달인 300회 기준 누락');
 if(!app.includes('successes>=activityRankThresholds[2]?2:successes>=activityRankThresholds[1]?1:0'))throw new Error('성공 횟수 승급 판정 누락');
 if(!app.includes("[1,1.25,1.6][activityRank(action.id)]"))throw new Error('숙련별 보수 배율 누락');
 if(!app.includes('progress.perfectStreak%3!==0'))throw new Error('연속 대성공 보상 기준 누락');

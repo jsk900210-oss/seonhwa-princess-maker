@@ -661,7 +661,7 @@ const meetsStatSet=set=>Object.entries(set||{}).every(([stat,value])=>Number(gam
 const actionUnlocked=action=>game.age>=Number(action.unlockAge||9)&&meetsStatSet(action.unlockStats)&&(!action.unlockAnyStats||action.unlockAnyStats.some(meetsStatSet));
 const newlyUnlockedActions=(previousAge,nextAge)=>actions.filter(action=>Number(action.unlockAge||9)>previousAge&&Number(action.unlockAge||9)<=nextAge&&meetsStatSet(action.unlockStats)&&(!action.unlockAnyStats||action.unlockAnyStats.some(meetsStatSet)));
 const activityRankNames=['견습','숙련','달인'];
-const activityRankThresholds=[0,30,90];
+const activityRankThresholds=[0,100,300];
 const dedicatedJobIds=new Set(['farmwork','childcare','kitchenhelp','woodwork','loomwork','masonry','clinichelp','ferryhelp','merchanthelp']);
 const jobRewardNames={farmwork:'튼튼한 곡식 자루',childcare:'아이의 종이꽃',kitchenhelp:'찬모의 조리 수첩',woodwork:'목수의 작은 자',loomwork:'명주실 타래',masonry:'와공의 기와패',clinichelp:'약방의 향약 꾸러미',ferryhelp:'나루터 통행패',merchanthelp:'상인의 행운 엽전'};
 function normalizeActivityProgress(){
@@ -781,7 +781,7 @@ const downfallEndingCandidates=[
   {id:'debt-runaway',title:'빚더미 도망자',description:'무리한 선택을 되풀이한 끝에 빈손으로 먼 길을 떠나야 했습니다.',test:()=>game.money<=100&&game.stress>=95&&game.mentality<180},
   {id:'forsaken',title:'신수에게 버림받은 자',description:'거듭된 불신으로 수호의 계약이 끊기고 신수의 빛도 사라졌습니다.',test:()=>game.nannyAffinity<=5&&game.guardianTrust<=5}
 ];
-function careerEndingScore(candidate){const masteryScore=(candidate.masteryJobs||[]).reduce((score,id)=>score+Math.min(300,activityProgressFor(id).successes*8),0);return Object.entries(candidate.weights).reduce((score,[key,weight])=>score+clampStat(key,game[key])*weight,0)+Math.max(0,game.money||0)*(candidate.moneyWeight||0)+clampStat('guardianTrust',game.guardianTrust)*(candidate.guardianWeight||0)+masteryScore;}
+function careerEndingScore(candidate){const masteryScore=(candidate.masteryJobs||[]).reduce((score,id)=>score+Math.min(600,activityProgressFor(id).successes*2),0);return Object.entries(candidate.weights).reduce((score,[key,weight])=>score+clampStat(key,game[key])*weight,0)+Math.max(0,game.money||0)*(candidate.moneyWeight||0)+clampStat('guardianTrust',game.guardianTrust)*(candidate.guardianWeight||0)+masteryScore;}
 function resolveCareerEnding(){return careerEndingCandidates.map((candidate,index)=>({...candidate,index,score:careerEndingScore(candidate)})).sort((left,right)=>right.score-left.score||left.index-right.index)[0];}
 function resolveRelationEnding(){normalizeRelations();return endingRelationCandidates.map((candidate,index)=>({candidate,record:game.relations[candidate.id],index})).filter(entry=>entry.record.dateUnlocked&&entry.record.meetings>=5).sort((left,right)=>right.record.affinity-left.record.affinity||right.record.meetings-left.record.meetings||left.index-right.index)[0]||null;}
 function resolveEnding(){
