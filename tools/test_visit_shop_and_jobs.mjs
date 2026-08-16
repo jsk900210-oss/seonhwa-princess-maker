@@ -20,5 +20,8 @@ if(!app.includes('function prepareVisitShopStock()'))throw new Error('방문별 
 if(!app.includes('eligible.slice(0,10)'))throw new Error('방문상점 10종 제한 누락');
 if(app.includes('repeatable:true'))throw new Error('반복 구매 가능한 상품이 남아 있음');
 if(!app.includes('game.purchasedGoods.includes(id)'))throw new Error('구매 상품 재등장 방지 누락');
+if(!app.includes('let visitShopPurchaseMade=false'))throw new Error('방문당 구매 상태 누락');
+if(!app.includes('good||visitShopPurchaseMade||game.money'))throw new Error('방문당 1개 구매 제한 누락');
+if(!app.includes('visitShopPurchaseMade=true'))throw new Error('방문 구매 완료 처리 누락');
 
-console.log('PASS: 방문상점 50종·무작위 10종·중복 구매 방지, 신규 아르바이트 9종 연결');
+console.log('PASS: 방문상점 50종·무작위 10종·방문당 1개·중복 구매 방지, 신규 아르바이트 9종 연결');

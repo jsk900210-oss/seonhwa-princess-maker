@@ -312,6 +312,7 @@ const generalGoods = [
   {id:'medical-compendium',name:'향약 집성초',price:1320,type:'event',detail:'약초와 치료법을 정리한 의서',change:{intelligence:11,sense:7},wealth:1000}
 ];
 let visitShopStock=[];
+let visitShopPurchaseMade=false;
 function prepareVisitShopStock(){
   if(!Array.isArray(game.purchasedGoods))game.purchasedGoods=[];
   const owned=new Set(game.purchasedGoods);
@@ -321,6 +322,7 @@ function prepareVisitShopStock(){
     [eligible[index],eligible[swapIndex]]=[eligible[swapIndex],eligible[index]];
   }
   visitShopStock=eligible.slice(0,10).map(item=>item.id);
+  visitShopPurchaseMade=false;
 }
 const outfits = [
   {id:'age09-neat',age:9,ageEnd:12,name:'단정한 배움 한복',price:180,tone:'단정함',seasons:['가을','겨울'],situations:['reading','arithmetic','manners'],change:{manners:4,virtue:3,charm:1}},
@@ -876,13 +878,14 @@ function renderVisitShop(){
   normalizeInventory();if(!Array.isArray(game.purchasedGoods))game.purchasedGoods=[];panelTitle.textContent='방문상점 · 잡화전';
   const owned=new Set(game.purchasedGoods);
   const displayed=visitShopStock.map(id=>generalGoods.find(item=>item.id===id)).filter(item=>item&&!owned.has(item.id));
-  const cards=displayed.map(item=>`<button class="shop-card goods-card" data-general-good="${item.id}" ${game.money<item.price?'disabled':''}><i class="item-glyph type-${item.type}"></i><b>${item.name}</b><span>${item.price}냥</span><small>${item.detail}<br>${formatChanges(item.change)}</small></button>`).join('');
-  panelBody.innerHTML=`<div class="shop-greeting"><div class="merchant-seal" aria-hidden="true">商</div><div><b>떠돌이 잡화상</b><p>방문할 때마다 새로운 물건 열 가지를 골라 가져옵니다.</p></div></div><div class="shop-money"><span>보유 은전 <b>${game.money.toLocaleString()}냥</b></span></div><p class="visit-shop-note">구매한 물건은 다시 진열되지 않습니다.</p><div class="shop-grid">${cards||'<p class="empty-shop">지금 살 수 있는 새 물건이 없습니다.</p>'}</div>`;
+  const cards=displayed.map(item=>`<button class="shop-card goods-card" data-general-good="${item.id}" ${(visitShopPurchaseMade||game.money<item.price)?'disabled':''}><i class="item-glyph type-${item.type}"></i><b>${item.name}</b><span>${item.price}냥</span><small>${item.detail}<br>${formatChanges(item.change)}</small></button>`).join('');
+  const note=visitShopPurchaseMade?'이번 방문의 구매를 마쳤습니다. 다음 방문에 새 물건이 들어옵니다.':'이번 방문에는 진열된 물건 중 하나만 구매할 수 있습니다.';
+  panelBody.innerHTML=`<div class="shop-greeting"><div class="merchant-seal" aria-hidden="true">商</div><div><b>떠돌이 잡화상</b><p>방문할 때마다 새로운 물건 열 가지를 골라 가져옵니다.</p></div></div><div class="shop-money"><span>보유 은전 <b>${game.money.toLocaleString()}냥</b></span></div><p class="visit-shop-note">${note}<br>구매한 물건은 다시 진열되지 않습니다.</p><div class="shop-grid">${cards||'<p class="empty-shop">지금 살 수 있는 새 물건이 없습니다.</p>'}</div>`;
   panelBody.querySelectorAll('[data-general-good]').forEach(button=>button.addEventListener('click',()=>buyGeneralGood(button.dataset.generalGood)));
 }
 function buyGeneralGood(id){
-  if(!Array.isArray(game.purchasedGoods))game.purchasedGoods=[];const good=generalGoods.find(item=>item.id===id);if(!good||game.money<good.price||game.purchasedGoods.includes(id))return;
-  game.money-=good.price;applyShopChanges(good.change);game.purchasedGoods.push(id);
+  if(!Array.isArray(game.purchasedGoods))game.purchasedGoods=[];const good=generalGoods.find(item=>item.id===id);if(!good||visitShopPurchaseMade||game.money<good.price||game.purchasedGoods.includes(id))return;
+  game.money-=good.price;applyShopChanges(good.change);game.purchasedGoods.push(id);visitShopPurchaseMade=true;
   document.querySelector('#dialogueText').textContent=`잡화상에게서 ${good.name}${objectParticle(good.name)} 구입했어요.`;showLiveChanges({change:good.change,cost:good.price});renderHud();renderVisitShop();queueAutoSave();
 }
 const inventoryCategories={all:'전체',accessory:'장신구',event:'이벤트'};
