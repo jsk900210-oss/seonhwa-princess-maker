@@ -427,17 +427,17 @@ const activityOutfitFrameCache=new Map();
 const activityOutfitStyleCache=new Map();
 function activityOutfitPalette(outfitId){
   if(!outfitId)return null;
-  if(/cash-ember|rose-paisley/.test(outfitId))return {skirt:[96,25,47],top:[185,68,93]};
-  if(/cash-solar/.test(outfitId))return {skirt:[238,224,194],top:[203,163,62]};
-  if(/cash-ink|ethnic-stage/.test(outfitId))return {skirt:[38,35,48],top:[91,70,109]};
-  if(/cash-starlight/.test(outfitId))return {skirt:[213,155,195],top:[239,202,217]};
-  if(/premium-midnight|premium-crimson|premium-ink/.test(outfitId))return {skirt:[35,31,38],top:[111,40,57]};
-  if(/premium-moonlight/.test(outfitId))return {skirt:[239,228,199],top:[205,164,72]};
-  if(/premium-aurora/.test(outfitId))return {skirt:[226,170,194],top:[244,222,227]};
-  if(/active|work|travel|simple/.test(outfitId))return {skirt:[54,126,125],top:[220,172,74]};
-  if(/flower|festival|art|silk/.test(outfitId))return {skirt:[211,96,120],top:[236,190,195]};
-  if(/court|ceremony/.test(outfitId))return {skirt:[59,79,126],top:[218,187,112]};
-  return {skirt:[143,171,145],top:null};
+  if(/cash-ember|rose-paisley/.test(outfitId))return {skirt:[96,25,47],top:[185,68,93],accent:[224,166,62]};
+  if(/cash-solar/.test(outfitId))return {skirt:[238,224,194],top:[203,163,62],accent:[151,104,35]};
+  if(/cash-ink|ethnic-stage/.test(outfitId))return {skirt:[38,35,48],top:[91,70,109],accent:[198,151,67]};
+  if(/cash-starlight/.test(outfitId))return {skirt:[213,155,195],top:[239,202,217],accent:[123,78,163]};
+  if(/premium-midnight|premium-crimson|premium-ink/.test(outfitId))return {skirt:[35,31,38],top:[111,40,57],accent:[194,145,60]};
+  if(/premium-moonlight/.test(outfitId))return {skirt:[239,228,199],top:[205,164,72],accent:[112,83,42]};
+  if(/premium-aurora/.test(outfitId))return {skirt:[226,170,194],top:[244,222,227],accent:[139,83,123]};
+  if(/active|work|travel|simple/.test(outfitId))return {skirt:[54,126,125],top:[220,172,74],accent:[112,52,42]};
+  if(/flower|festival|art|silk/.test(outfitId))return {skirt:[211,96,120],top:[236,190,195],accent:[124,44,61]};
+  if(/court|ceremony/.test(outfitId))return {skirt:[59,79,126],top:[218,187,112],accent:[135,49,45]};
+  return {skirt:[143,171,145],top:null,accent:[112,52,42]};
 }
 function sampleOutfitColor(data,width,height,startY,endY,fallback){
   const colors=[];
@@ -459,7 +459,7 @@ function resolveActivityOutfitStyle(outfitId){
     const canvas=document.createElement('canvas');canvas.width=outfitSource.naturalWidth;canvas.height=outfitSource.naturalHeight;
     const context=canvas.getContext('2d',{willReadFrequently:true});context.drawImage(outfitSource,0,0);
     const pixels=context.getImageData(0,0,canvas.width,canvas.height).data;
-    const style={top:sampleOutfitColor(pixels,canvas.width,canvas.height,.16,.48,fallback?.top||[220,205,178]),skirt:sampleOutfitColor(pixels,canvas.width,canvas.height,.48,.92,fallback?.skirt||[143,171,145])};
+    const style={top:sampleOutfitColor(pixels,canvas.width,canvas.height,.16,.48,fallback?.top||[220,205,178]),skirt:sampleOutfitColor(pixels,canvas.width,canvas.height,.48,.92,fallback?.skirt||[143,171,145]),accent:fallback?.accent||[112,52,42]};
     activityOutfitStyleCache.set(key,style);resolve(style);
   }catch{resolve(fallback);}};outfitSource.onerror=()=>resolve(fallback);outfitSource.src=outfitImageForAge(outfitId,age);});
 }
@@ -474,7 +474,8 @@ async function outfitActivityFrame(src,outfitId){
       const central=x>canvas.width*.16&&x<canvas.width*.84&&y>canvas.height*.2&&y<canvas.height*.76;
       const skin=r>170&&g>92&&b>64&&r>g*1.07&&g>b*1.06;
       const ivory=central&&!skin&&r>188&&g>165&&b>130&&r-b<62&&r-g<45;
-      const fallback=pink?palette.skirt:(ivory&&palette.top?palette.top:null);if(!fallback)continue;
+      const ribbon=central&&!skin&&r>72&&r>g*1.35&&r>b*1.2&&g<108&&b<108;
+      const fallback=ribbon?palette.accent:pink?palette.skirt:(ivory&&palette.top?palette.top:null);if(!fallback)continue;
       const light=Math.max(.62,Math.min(1.28,(r+g+b)/3/170));data[i]=Math.min(255,fallback[0]*light);data[i+1]=Math.min(255,fallback[1]*light);data[i+2]=Math.min(255,fallback[2]*light);
     }
     context.putImageData(frame,0,0);const result=canvas.toDataURL('image/png');activityOutfitFrameCache.set(key,result);resolve(result);}catch{resolve(src);}};source.onerror=()=>resolve(src);source.src=src;});
