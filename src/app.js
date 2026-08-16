@@ -1765,6 +1765,37 @@ function startWithBirthday(){
   document.querySelector('#birthdaySetup').hidden=true;
   guardianStoryIndex=0;showGuardianStory();
 }
+function startThirteenTestGrowth(){
+  enforceBirthday1990();
+  const value=document.querySelector('#birthdayInput').value;
+  const characterName=document.querySelector('#characterNameInput').value.trim()||'테스트 선화';
+  if(value<'1990-01-01'||value>'1990-12-31') return;
+  const profileSlot=game.profileSlot||SAVE_SLOTS.find(slot=>!readSave(slot));
+  if(!profileSlot){document.querySelector('#birthdayTitle').textContent='동시에 키울 수 있는 다섯 명의 기록이 모두 찼어요';return;}
+  const birth=new Date(`${value}T00:00:00`);
+  const start=addYears(birth,13);
+  const ending=addYears(birth,19); ending.setDate(ending.getDate()+1);
+  const month=birth.getMonth()+1; const birthSeason=seasonForMonth(month); const element=['금','수','목','화','토'][(birth.getMonth()+birth.getDate())%5];
+  Object.assign(game,{characterName,guardianType:null,guardianName:'',nannyName:'',profileSlot,birthday:value,currentDate:isoDate(start),endingDate:isoDate(ending),age:13,height:150,weight:39.5,month:start.getMonth()+1,season:seasonForMonth(start.getMonth()+1),birthSeason,element,week:Math.floor((start.getDate()-1)/7)+1,ended:false,endingResult:null,birthdayCount:0,fatherBirthdayYears:[],fatherAffinity:0,startingGiftId:null});
+  game.monthlyLedger=createMonthlyLedger(start.getFullYear(),start.getMonth()+1);
+  game.relations={};
+  normalizeRelations();
+  const testRelation=relationRecord('doyun');
+  testRelation.meetings=5;
+  testRelation.affinity=70;
+  testRelation.dateUnlocked=true;
+  testRelation.relationship='특별한 인연';
+  testRelation.completedEpisodes=['doyun-1','doyun-2','doyun-3','doyun-4','doyun-5'];
+  testRelation.lastMetAt=game.currentDate;
+  document.querySelector('#birthdaySetup').hidden=true;
+  document.querySelector('#guardianStory').hidden=true;
+  document.querySelector('#guardianChoice').hidden=true;
+  document.querySelector('#guardianNameSetup').hidden=true;
+  renderHud();
+  applyEquippedOutfit();
+  document.querySelector('#dialogueText').textContent='13세 테스트 캐릭터가 준비되었어요. 인연 메뉴에서 바로 확인해 보세요.';
+  queueAutoSave();
+}
 function showGuardianStory(){
   const story=document.querySelector('#guardianStory'),scene=guardianStoryScenes[guardianStoryIndex],copy=story.querySelector('.guardian-story-copy'),image=document.querySelector('#guardianStoryImage'),next=document.querySelector('#guardianStoryNext');
   story.hidden=false;story.classList.add('group-scene');story.dataset.effect=scene.effect;image.src=scene.image;image.alt=scene.alt;next.hidden=true;next.disabled=true;next.textContent='신수 선택하기';copy.classList.remove('is-changing');
@@ -1780,7 +1811,7 @@ function showGuardianStory(){
   ];
   guardianCinematicBeat=0;renderGuardianCinematicBeat();
 }
-function renderGuardianCinematicBeat(){const story=document.querySelector('#guardianStory'),beat=guardianCinematicTimeline[guardianCinematicBeat],next=document.querySelector('#guardianStoryNext'),hint=document.querySelector('#guardianStoryHint');if(!beat)return;story.dataset.phase=beat.phase;document.querySelector('#guardianStoryChapter').textContent=beat.chapter;document.querySelector('#guardianStoryText').textContent=beat.text;if(beat.cue)playGuardianCinematicCue(beat.cue);const ready=Boolean(beat.ready);next.hidden=!ready;next.disabled=!ready;hint.hidden=ready;hint.textContent=ready?'':'화면을 터치해 계속';guardianInputLockedUntil=Date.now()+450;}
+function renderGuardianCinematicBeat(){const story=document.querySelector('#guardianStory'),beat=guardianCinematicTimeline[guardianCinematicBeat],next=document.querySelector('#guardianStoryNext'),hint=document.querySelector('#guardianStoryHint');if(!beat)return;story.dataset.phase=beat.phase;document.querySelector('#guardianStoryChapter').textContent=beat.chapter;document.querySelector('#guardianStoryText').textContent=beat.text;if(beat.cue)playGuardianCinematicCue(beat.cue);const ready=Boolean(beat.ready);next.hidden=!ready;next.disabled=!ready;if(hint){hint.hidden=true;hint.textContent='';}guardianInputLockedUntil=Date.now()+450;}
 function playGuardianCinematicCue(effect){
   if(!userSettings.sfxEnabled||!prologueSoundOn)return;const AudioContext=window.AudioContext||window.webkitAudioContext;if(!AudioContext)return;
   const ctx=new AudioContext(),osc=ctx.createOscillator(),gain=ctx.createGain(),filter=ctx.createBiquadFilter(),frequency={cloud:380,mountain:170,embers:520,water:230,constellation:440}[effect]||320;osc.type=effect==='embers'?'triangle':'sine';osc.frequency.setValueAtTime(frequency,ctx.currentTime);osc.frequency.exponentialRampToValueAtTime(frequency*1.35,ctx.currentTime+.55);filter.type='lowpass';filter.frequency.value=1400;gain.gain.setValueAtTime(.001,ctx.currentTime);gain.gain.exponentialRampToValueAtTime(Math.max(.001,scaledVolume(.11,'sfx')),ctx.currentTime+.08);gain.gain.exponentialRampToValueAtTime(.001,ctx.currentTime+.72);osc.connect(filter).connect(gain).connect(ctx.destination);osc.onended=()=>ctx.close().catch(()=>{});osc.start();osc.stop(ctx.currentTime+.75);
@@ -2099,6 +2130,7 @@ document.querySelector('#closePanel').addEventListener('click', () => {if(market
 document.querySelector('#recoveryFresh').addEventListener('click',declineRecovery);
 document.querySelector('#recoveryContinue').addEventListener('click',continueRecovery);
 document.querySelector('#startGame').addEventListener('click', startWithBirthday);
+document.querySelector('#startTestThirteen').addEventListener('click', startThirteenTestGrowth);
 document.querySelector('#guardianStoryNext').addEventListener('click',nextGuardianStory);
 document.querySelector('#guardianStory').addEventListener('click',event=>{if(!event.target.closest('button'))nextGuardianStory();});
 document.querySelectorAll('[data-guardian]').forEach(button=>button.addEventListener('click',()=>chooseGuardian(button.dataset.guardian)));
