@@ -243,7 +243,10 @@ activityFrames.sweeping=[1,2,3].map(n=>`../assets/characters/seonhwa/activity-co
 activityFrames.errand=[1,2,3].map(n=>`../assets/characters/seonhwa/age-09/sprites/activities/errand-character-v4-${n}.png`);
 activityFrames.herbs=[1,2,3].map(n=>`../assets/characters/seonhwa/activity-consistent/age-09/herbs-legacy-${n}.png`);
 activityFrames.tea=[1,1,1].map(n=>`../assets/characters/seonhwa/activity-consistent/age-09/rest-legacy-${n}.png`);
-['farmwork','childcare','kitchenhelp','woodwork','loomwork','masonry','clinichelp','ferryhelp','merchanthelp'].forEach(name=>{activityFrames[name]=[1,2,3].map(n=>`../assets/characters/seonhwa/job-actions/${name}-${n}.png`);});
+['farmwork','woodwork','loomwork','masonry','clinichelp','ferryhelp','merchanthelp'].forEach(name=>{activityFrames[name]=[1,2,3].map(n=>`../assets/characters/seonhwa/job-actions/${name}-${n}.png`);});
+// 교정본은 새 파일명을 사용해 모바일 브라우저가 이전 깨진 프레임을 캐시에서 재사용하지 않게 한다.
+activityFrames.childcare=[1,2,3].map(n=>`../assets/characters/seonhwa/job-actions/childcare-v2-${n}.png`);
+activityFrames.kitchenhelp=[1,2,3].map(n=>`../assets/characters/seonhwa/job-actions/kitchenhelp-v2-${n}.png`);
 // The modular errand frames crop the top of the hair in frame 1. Keep the complete v4 frames.
 // Rest keeps the clean horizontal bedding frames. The age-modular rest sheet is
 // diagonally posed and becomes visibly jagged when reduced inside the mobile stage.
@@ -335,15 +338,25 @@ function prepareVisitShopStock(){
 }
 function rollVisitingMerchant(){
   if(game.ended||generalGoods.every(item=>game.purchasedGoods?.includes(item.id)))return false;
-  pendingVisitShop=Math.random()<.18;
+  const current=new Date(`${game.currentDate}T00:00:00`);
+  const previous=game.lastMerchantVisitDate?new Date(`${game.lastMerchantVisitDate}T00:00:00`):null;
+  const weeksSince=previous?Math.floor((current-previous)/604800000):Infinity;
+  if(weeksSince<6){pendingVisitShop=false;return false;}
+  pendingVisitShop=Math.random()<.08;
+  if(pendingVisitShop)game.lastMerchantVisitDate=game.currentDate;
   return pendingVisitShop;
 }
 function openVisitingMerchant(){
   if(!pendingVisitShop)return;
   pendingVisitShop=false;
   document.querySelector('#speakerName').textContent='떠돌이 잡화상';
-  document.querySelector('#dialogueText').textContent='“마침 좋은 물건이 들어왔습니다. 오늘은 하나만 골라 보시지요.”';
-  openPanel('shop');
+  document.querySelector('#dialogueText').textContent='집 앞에서 낯선 행상이 짐을 내려놓고 인사를 건넸어요.';
+  document.querySelector('#merchantVisit').hidden=false;
+}
+function closeVisitingMerchant(openShop=false){
+  document.querySelector('#merchantVisit').hidden=true;
+  if(openShop)openPanel('shop');
+  else{document.querySelector('#speakerName').textContent=game.guardianName||guardianDefs[game.guardianType]?.name||'수호신수';document.querySelector('#dialogueText').textContent='떠돌이 잡화상은 다음 장날을 기약하며 길을 떠났어요.';}
 }
 const outfits = [
   {id:'age09-neat',age:9,ageEnd:12,name:'단정한 배움 한복',price:180,tone:'단정함',seasons:['가을','겨울'],situations:['reading','arithmetic','manners'],change:{manners:4,virtue:3,charm:1}},
@@ -1938,6 +1951,8 @@ document.querySelector('#guardianStoryNext').addEventListener('click',nextGuardi
 document.querySelector('#guardianStory').addEventListener('click',event=>{if(!event.target.closest('button'))nextGuardianStory();});
 document.querySelectorAll('[data-guardian]').forEach(button=>button.addEventListener('click',()=>chooseGuardian(button.dataset.guardian)));
 document.querySelector('#guardianChoiceConfirm').addEventListener('click',confirmGuardianChoice);
+document.querySelector('#merchantVisitYes').addEventListener('click',()=>closeVisitingMerchant(true));
+document.querySelector('#merchantVisitNo').addEventListener('click',()=>closeVisitingMerchant(false));
 document.querySelector('#guardianNameConfirm').addEventListener('click',finishGuardianNaming);
 document.querySelector('#guardianNameInput').addEventListener('keydown',event=>{if(event.key==='Enter')finishGuardianNaming();});
 document.querySelector('#guardianReselect').addEventListener('click',reselectGuardian);

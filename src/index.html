@@ -4,8 +4,8 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
   <title>선화공주 만들기 — 자산 로딩 테스트</title>
-  <link rel="stylesheet" href="style.css?v=0.62.62-debug">
-  <link rel="stylesheet" href="schedule.css?v=0.62.62-debug">
+  <link rel="stylesheet" href="style.css?v=0.62.64-debug">
+  <link rel="stylesheet" href="schedule.css?v=0.62.64-debug">
   <link rel="stylesheet" href="schedule-pm2.css?v=0.62.09-debug">
   <link rel="stylesheet" href="birthday.css?v=0.62.55-debug">
   <link rel="stylesheet" href="prologue.css?v=0.62.28-debug">
@@ -41,7 +41,7 @@
       </div>
       <span class="loading-caption">이야기를 열 준비가 되었어요</span>
       <button class="studio-start-sound" id="studioStartSound" type="button">인연의 문을 열기</button>
-      <small class="loading-version" aria-label="현재 게임 버전">v0.62.62-debug</small>
+      <small class="loading-version" aria-label="현재 게임 버전">v0.62.64-debug</small>
     </section>
     <section class="prologue" id="prologue" aria-label="이야기 시작 영상" hidden>
       <audio id="prologueMusic" src="../assets/audio/music/prologue-lantern-and-dawn.mp3" preload="auto" loop></audio>
@@ -165,6 +165,11 @@
       <p id="scheduleConfirmText">스케줄을 실행하시겠습니까?</p>
       <div><button id="scheduleConfirmNo" type="button">아니오</button><button id="scheduleConfirmYes" type="button">네</button></div>
     </section>
+    <section class="merchant-visit" id="merchantVisit" hidden role="dialog" aria-modal="true" aria-labelledby="merchantVisitTitle">
+      <img src="../assets/characters/companions/portraits/merchant.png" alt="집으로 찾아온 떠돌이 잡화상">
+      <div><small>낯선 이가 집 앞에서 짐을 내려놓았습니다.</small><h2 id="merchantVisitTitle">떠돌이 잡화상</h2><p>“먼 길에서 귀한 물건을 가져왔습니다. 오늘은 딱 하나만 골라 보시겠습니까?”</p></div>
+      <footer><button id="merchantVisitNo" type="button">다음에 볼게요</button><button id="merchantVisitYes" type="button">물건 보기</button></footer>
+    </section>
     <section class="recovery-prompt" id="recoveryPrompt" hidden role="dialog" aria-modal="true" aria-labelledby="recoveryTitle">
       <div class="recovery-card">
         <img src="../assets/ui/home-actions/game-record.svg" alt="">
@@ -196,6 +201,6 @@
       </div>
     </section>
   </main>
-  <script src="story-data.js?v=0.62.57-debug"></script><script src="app.js?v=0.62.62-debug"></script>
+  <script src="story-data.js?v=0.62.57-debug"></script><script src="app.js?v=0.62.64-debug"></script>
 </body>
 </html>
