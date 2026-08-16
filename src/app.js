@@ -839,6 +839,15 @@ function waitForVacationTap(label='화면을 터치해 계속'){
   const scene=document.querySelector('#vacationScene'),button=document.querySelector('#vacationNext');button.textContent=label;
   return new Promise(resolve=>{const advance=event=>{event.preventDefault();scene.removeEventListener('click',advance);resolve();};scene.addEventListener('click',advance,{once:true});});
 }
+function chooseVacationCompanion(){
+  normalizeRelations();
+  const eligible=endingRelationCandidates.filter(candidate=>relationRecord(candidate.id).dateUnlocked);
+  if(!eligible.length)return Promise.resolve(null);
+  const phone=document.querySelector('.phone'),scene=document.querySelector('#vacationScene');
+  scene.hidden=false;scene.classList.remove('child-live','has-encounter');phone.classList.add('vacation-playing');
+  scene.insertAdjacentHTML('beforeend',`<div class="vacation-companion-choice" id="vacationCompanionChoice" role="dialog" aria-modal="true" aria-label="바캉스 동행 선택"><section><small>이번 여행</small><h3>누구와 떠날까요?</h3><button data-vacation-companion="">혼자 간다</button>${eligible.map(candidate=>`<button data-vacation-companion="${candidate.id}">${candidate.name}과 함께 간다 <em>호감 ${relationRecord(candidate.id).affinity}</em></button>`).join('')}</section></div>`);
+  return new Promise(resolve=>{document.querySelectorAll('[data-vacation-companion]').forEach(button=>button.addEventListener('click',()=>{const candidate=endingRelationCandidates.find(item=>item.id===button.dataset.vacationCompanion)||null;document.querySelector('#vacationCompanionChoice')?.remove();scene.hidden=true;phone.classList.remove('vacation-playing');resolve(candidate);},{once:true}));});
+}
 function renderVacationMotion(season){
   const layer=document.querySelector('#vacationMotion');
   const seasonClass={봄:'spring',여름:'summer',가을:'autumn',겨울:'winter'}[season];
@@ -854,7 +863,7 @@ function renderVacationMotion(season){
     return particle;
   }));
 }
-async function playVacationScene(prize,index){
+async function playVacationScene(prize,index,companion=null){
   const phone=document.querySelector('.phone'),scene=document.querySelector('#vacationScene'),image=document.querySelector('#vacationImage');
   const person=document.querySelector('#encounterCharacter'),talk=document.querySelector('#encounterDialogue');
   const sceneSeason=prize.season||game.season;
@@ -864,15 +873,16 @@ async function playVacationScene(prize,index){
   scene.classList.remove('has-encounter');scene.classList.add('child-live');person.hidden=true;talk.hidden=true;phone.classList.add('vacation-playing');scene.hidden=false;
   await waitForVacationTap('일러스트를 감상한 뒤 터치');
   const candidates=endingRelationCandidates.filter(candidate=>game.age>=candidate.minAge&&candidate.assetReady);
-  const encounter=candidates.length>0&&Math.random()<.35;
+  const encounter=Boolean(companion)||(candidates.length>0&&Math.random()<.35);
   let relation=null;
   if(encounter){
-    relation=balancedRelationCandidate(candidates);const fromLeft=Math.random()<.5;
+    relation=companion||balancedRelationCandidate(candidates);const fromLeft=Math.random()<.5;
     person.querySelector('img').src=relation.image;person.querySelector('img').alt=`엔딩 인연 후보 ${relation.name}`;
     person.className=`encounter-character ${fromLeft?'from-left':'from-right'}`;person.hidden=false;scene.classList.add('has-encounter');
     const episode=nextRelationEpisode(relation,'vacation');
     document.querySelector('#encounterName').textContent=relation.name;document.querySelector('#encounterText').textContent=episode?.line||relation.dialogues[Math.floor(Math.random()*relation.dialogues.length)];talk.hidden=false;
-    recordRelationEncounter(relation,episode);
+    const record=recordRelationEncounter(relation,episode);
+    if(companion){record.affinity=Math.min(100,record.affinity+10);record.relationship=record.affinity>=80?'연인':record.affinity>=60?'특별한 인연':'친구';const memory=`${game.age}-${sceneSeason}`;if(!record.vacationMemories.includes(memory))record.vacationMemories.push(memory);document.querySelector('#encounterText').textContent=`${relation.name}과(와) 함께 ${prize.name}의 풍경을 오래 기억하기로 했어요.`;}
     await waitForVacationTap('대화를 읽은 뒤 터치');
   }
   talk.hidden=true;person.hidden=true;scene.classList.remove('has-encounter','child-live');scene.hidden=true;scene.dataset.effect='';scene.dataset.season='';document.querySelector('#vacationMotion').replaceChildren();phone.classList.remove('vacation-playing');playHomeMusic();
@@ -1935,9 +1945,10 @@ async function playWeeklySchedule(selected) {
       playHomeMusic();
     }else if(action.id==='vacation'){
       closeMarketUiForTransition();
+      const vacationCompanion=await chooseVacationCompanion();
       const prize=awardVacationIllustration();
       stage.hidden=true;stageNpc.hidden=true;stageProps.hidden=true;stageCharacter.hidden=true;
-      const metSomeone=await playVacationScene(prize,index);
+      const metSomeone=await playVacationScene(prize,index,vacationCompanion);
       document.querySelector('#dialogueText').textContent=metSomeone?`바캉스에서 「${prize.name}」 일러스트와 ${metSomeone.name}의 인연 추억을 얻었어요.`:`바캉스에서 「${prize.name}」 일러스트를 획득했어요.`;
     }else if(action.id==='dungeon'){
       stageCharacter.hidden=true;stageNpc.hidden=true;stageProps.hidden=true;dungeonReward=await exploreDungeon();stageCharacter.hidden=false;stageProps.hidden=false;
