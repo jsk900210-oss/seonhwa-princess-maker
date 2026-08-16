@@ -1485,6 +1485,24 @@ function exploreMarket(){
 }
 function enterMarketShop(type){if(!type)return;const place=marketPlaces.find(item=>item.id===type);document.querySelector('#dialogueText').textContent=`${place?.label||'가게'} 주인이 “어서 오세요.” 하고 반겨요.`;document.querySelector('#marketExplore').hidden=true;document.querySelector('#activityStage').hidden=true;panel.hidden=false;renderShopPanel(type,true);}
 
+function exploreDungeon(){
+  const explore=document.querySelector('#dungeonExplore'),player=document.querySelector('#dungeonPlayer'),message=document.querySelector('#dungeonMessage');
+  const chest=document.querySelector('#dungeonChest'),monster=document.querySelector('#dungeonMonster'),finish=document.querySelector('#dungeonFinish');
+  const controls=[...document.querySelectorAll('[data-dungeon-move]')];
+  const position={x:0,y:4};let reward=0,chestFound=false,monsterCleared=false,resolved=false;
+  explore.hidden=false;explore.dataset.season=game.season;player.src=spriteFrames.down[1];chest.classList.remove('cleared');monster.classList.remove('cleared');
+  const render=()=>{player.style.setProperty('--x',position.x);player.style.setProperty('--y',position.y);};
+  const inspect=()=>{
+    if(position.x===4&&position.y===0&&!chestFound){chestFound=true;const found=100+Math.floor(Math.random()*101);reward+=found;chest.classList.add('cleared');message.textContent=`낡은 상자에서 은전 ${found}냥을 발견했어요.`;}
+    if(position.x===3&&position.y===3&&!monsterCleared){monsterCleared=true;monster.classList.add('cleared');const mage=(game.magic+game.intelligence)>(game.strength+game.health);const won=(mage?game.magic+game.intelligence:game.strength+game.health)>=90||Math.random()>.35;if(won){const found=40+Math.floor(Math.random()*61);reward+=found;message.textContent=`${mage?'술법':'검술'}으로 산짐승을 물리치고 은전 ${found}냥을 얻었어요.`;}else message.textContent='산짐승을 피해 물러났어요. 다음에는 장비를 더 갖춰야겠어요.';}
+    if(position.x===0&&position.y===4&&(chestFound||monsterCleared))message.textContent='돌아가는 문에 도착했어요. 탐사를 마칠 수 있습니다.';
+  };
+  const move=direction=>{if(resolved)return;const delta={up:[0,-1],down:[0,1],left:[-1,0],right:[1,0]}[direction];if(!delta)return;position.x=Math.max(0,Math.min(4,position.x+delta[0]));position.y=Math.max(0,Math.min(4,position.y+delta[1]));render();inspect();};
+  const keydown=event=>{const direction={ArrowUp:'up',ArrowDown:'down',ArrowLeft:'left',ArrowRight:'right'}[event.key];if(direction){event.preventDefault();move(direction);}};
+  controls.forEach(button=>button.onclick=()=>move(button.dataset.dungeonMove));document.addEventListener('keydown',keydown);render();
+  return new Promise(resolve=>{finish.onclick=()=>{if(resolved)return;resolved=true;document.removeEventListener('keydown',keydown);controls.forEach(button=>button.onclick=null);finish.onclick=null;explore.hidden=true;resolve(reward);};});
+}
+
 function addDailyAction(id) {
   const chosenAction=actions.find(action=>action.id===id);
   if(!chosenAction||!actionUnlocked(chosenAction))return;
@@ -1863,6 +1881,7 @@ async function playWeeklySchedule(selected) {
     if(presentation.npc)stageNpcImage.src = (presentation.npc==='teacher'?npcFrames.teacherReading:npcFrames[presentation.npc])[0];
     stage.className = `activity-stage map-${presentation.location} action-${action.id} mastery-${currentMasteryRank}`;
     stageCharacter.className = `stage-character pixel-sprite ${presentation.motion}`;
+    let dungeonReward=0;
     if(action.id==='shopping'){
       playMarketMusic();
       stageMap.src=backgrounds.market;
@@ -1877,18 +1896,20 @@ async function playWeeklySchedule(selected) {
       stage.hidden=true;stageNpc.hidden=true;stageProps.hidden=true;stageCharacter.hidden=true;
       const metSomeone=await playVacationScene(prize,index);
       document.querySelector('#dialogueText').textContent=metSomeone?`바캉스에서 「${prize.name}」 일러스트와 ${metSomeone.name}의 인연 추억을 얻었어요.`:`바캉스에서 「${prize.name}」 일러스트를 획득했어요.`;
+    }else if(action.id==='dungeon'){
+      stageCharacter.hidden=true;stageNpc.hidden=true;stageProps.hidden=true;dungeonReward=await exploreDungeon();stageCharacter.hidden=false;stageProps.hidden=false;
     }else await animateActivitySprite(stageCharacterImage,presentation.motion,restActivity||presentation.activity,stageNpcImage,presentation.npc,dailyOutfit,currentMasteryRank);
-    const guaranteedSuccess=['rest','vacation'].includes(action.id);
-    const condition=['shopping','rest','vacation'].includes(action.id)?null:conditionEvent(simulated.stress,index);
+    const guaranteedSuccess=['rest','vacation','dungeon'].includes(action.id);
+    const condition=['shopping','rest','vacation','dungeon'].includes(action.id)?null:conditionEvent(simulated.stress,index);
     let outcome=judgeActivityOutcome(action,simulated.stress);
+    if(action.id==='dungeon')outcome=dungeonReward>=140?'perfect':dungeonReward>0?'normal':'struggle';
     if(!guaranteedSuccess&&condition==='mistake')outcome='mistake';
     else if(!guaranteedSuccess&&condition==='drowsy'&&outcome!=='mistake')outcome='struggle';
     const resolvedChange=resolvedActivityChange(action,outcome);
     const isWork=action.category==='아르바이트',basePay=isWork?activityPay(action):0;
     let moneyChange=isWork?(outcome==='mistake'?0:outcome==='struggle'?Math.round(basePay*.5):basePay):-action.cost;
     if(action.id==='dungeon'){
-      const treasure=outcome==='mistake'?0:outcome==='struggle'?30+Math.floor(Math.random()*41):outcome==='perfect'?150+Math.floor(Math.random()*91):80+Math.floor(Math.random()*81);
-      moneyChange+=treasure;
+      moneyChange+=dungeonReward;
     }
     const progressReward=recordActivityProgress(action,outcome);
     moneyChange+=progressReward.bonusPay;
