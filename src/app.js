@@ -155,8 +155,8 @@ const actionPresentation = {
 const vacationIllustrations=[
   {id:'vacation-age09-spring-cherry',age:9,season:'봄',name:'봄바람과 벚꽃',image:'../assets/events/vacation/photoreal/age-09/spring-cherry-wind.webp',effect:'petals',description:'봄바람에 머리카락을 넘기며 벚꽃을 맞던 9세의 추억.'},
   {id:'vacation-age09-spring-azalea',season:'봄',name:'진달래 계곡의 디딤돌',image:'../assets/events/vacation/photoreal/age-09/spring-azalea-stepping-stones.webp',effect:'calm',description:'진달래 핀 계곡의 디딤돌을 조심스레 건너던 9세의 추억.'},
-  {id:'vacation-age09-spring-kite',season:'봄',name:'강바람과 연날리기',image:'../assets/events/vacation/photoreal/age-09/spring-kite-running.webp',effect:'wind',description:'강바람을 따라 전통 연을 날리며 달리던 9세의 추억.'},
-  {id:'vacation-age09-summer-stream',season:'여름',name:'계곡의 물보라',image:'../assets/events/vacation/photoreal/age-09/summer-stream-splash.webp',effect:'splash',description:'시원한 계곡물을 두 손으로 튀기며 웃던 9세의 추억.'},
+  {id:'vacation-age09-spring-kite',season:'봄',name:'유채꽃 들판의 봄소풍',image:'../assets/events/vacation/photoreal/age-09/spring-kite-running.webp?v=0.62.46-debug',effect:'petals',description:'유채꽃과 벚꽃 사이에서 봄 도시락을 열어 본 9세의 추억.'},
+  {id:'vacation-age09-summer-stream',season:'여름',name:'계곡의 맑은 조약돌',image:'../assets/events/vacation/photoreal/age-09/summer-stream-splash.webp?v=0.62.46-debug',effect:'calm',description:'맑은 계곡물 속에서 반짝이는 조약돌을 발견한 9세의 추억.'},
   {id:'vacation-age09-summer-shell',season:'여름',name:'바닷가의 작은 조개',image:'../assets/events/vacation/photoreal/age-09/summer-seaside-shell.webp',effect:'wave',description:'잔물결 곁에서 작은 조개를 들여다보던 9세의 추억.'},
   {id:'vacation-age09-summer-lotus',season:'여름',name:'연꽃 정자의 한낮',image:'../assets/events/vacation/photoreal/age-09/summer-lotus-pavilion.webp',effect:'wind',description:'연꽃 정자에서 부채를 부치며 수박을 먹던 9세의 추억.'},
   {id:'vacation-age09-autumn-chestnut',season:'가을',name:'가을 밤 줍기',image:'../assets/events/vacation/photoreal/age-09/autumn-chestnut-gathering.webp',effect:'leaves',description:'단풍 아래 잘 익은 밤을 발견한 9세의 추억.'},
@@ -166,10 +166,10 @@ const vacationIllustrations=[
   ,{id:'vacation-age09-winter-seollal',season:'겨울',name:'설날 아침의 떡국',image:'../assets/events/vacation/photoreal/age-09/winter-seollal-tteokguk.webp',effect:'steam',description:'따뜻한 떡국 한 숟갈을 기다리던 설날 아침의 추억.'}
   ,{id:'vacation-age09-winter-snowball',season:'겨울',name:'눈사람을 위한 눈덩이',image:'../assets/events/vacation/photoreal/age-09/winter-snowball.webp',effect:'snow',description:'눈사람을 만들기 위해 커다란 눈덩이를 굴리던 9세의 추억.'}
   ,{id:'vacation-age13-spring-cherry',age:13,season:'봄',name:'꽃잎을 받는 오후',image:'../assets/events/vacation/photoreal/age-13/spring-cherry-wind.webp',effect:'petals',description:'흩날리는 벚꽃잎을 손바닥에 받아 보던 13세의 추억.'}
-  ,{id:'vacation-age13-spring-azalea',age:13,season:'봄',name:'진달래 계곡의 봄비',image:'../assets/events/vacation/photoreal/age-13/spring-azalea-stepping-stones.webp',effect:'calm',description:'봄비가 갠 계곡에서 진달래를 살며시 만지던 13세의 추억.'}
+  ,{id:'vacation-age13-spring-azalea',age:13,season:'봄',name:'진달래 압화 노트',image:'../assets/events/vacation/photoreal/age-13/spring-azalea-stepping-stones.webp?v=0.62.46-debug',effect:'petals',description:'진달래 언덕에서 떨어진 꽃잎을 추억 노트에 간직한 13세의 봄.'}
   ,{id:'vacation-age13-spring-kite',age:13,season:'봄',name:'언덕 위의 연',image:'../assets/events/vacation/photoreal/age-13/spring-kite-running.webp',effect:'wind',description:'높은 봄바람을 따라 언덕에서 연을 날리던 13세의 추억.'}
   ,{id:'vacation-age13-summer-stream',age:13,season:'여름',name:'계곡을 건너는 발걸음',image:'../assets/events/vacation/photoreal/age-13/summer-stream-splash.webp',effect:'splash',description:'맑은 계곡의 바위를 디디며 물보라를 일으킨 13세의 추억.'}
-  ,{id:'vacation-age13-summer-shell',age:13,season:'여름',name:'바닷물 속 조개',image:'../assets/events/vacation/photoreal/age-13/summer-seaside-shell.webp',effect:'wave',description:'얕은 바닷물을 걸으며 예쁜 조개를 모은 13세의 추억.'}
+  ,{id:'vacation-age13-summer-shell',age:13,season:'여름',name:'갯바위의 작은 게',image:'../assets/events/vacation/photoreal/age-13/summer-seaside-shell.webp?v=0.62.46-debug',effect:'wave',description:'잔잔한 물웅덩이에서 작은 게의 움직임을 관찰한 13세의 추억.'}
   ,{id:'vacation-age13-summer-lotus',age:13,season:'여름',name:'연꽃 정자의 바람',image:'../assets/events/vacation/photoreal/age-13/summer-lotus-pavilion.webp',effect:'wind',description:'연꽃 향이 번지는 정자에서 부채를 펼친 13세의 추억.'}
   ,{id:'vacation-age13-autumn-chestnut',age:13,season:'가을',name:'가을 숲의 밤바구니',image:'../assets/events/vacation/photoreal/age-13/autumn-chestnut-gathering.webp',effect:'leaves',description:'나무 집게로 잘 익은 밤을 바구니에 담은 13세의 추억.'}
   ,{id:'vacation-age13-autumn-maple',age:13,season:'가을',name:'햇빛에 비춘 단풍',image:'../assets/events/vacation/photoreal/age-13/autumn-maple-path.webp',effect:'leaves',description:'붉은 단풍잎을 햇빛에 비추어 바라본 13세의 추억.'}
@@ -179,19 +179,19 @@ const vacationIllustrations=[
   ,{id:'vacation-age13-winter-snowball',age:13,season:'겨울',name:'눈사람의 마지막 눈덩이',image:'../assets/events/vacation/photoreal/age-13/winter-snowball.webp',effect:'snow',description:'웃으며 눈사람의 머리를 올려놓던 13세의 추억.'}
   ,{id:'vacation-age16-spring-cherry',age:16,season:'봄',name:'벚꽃빛 갈래치마',image:'../assets/events/vacation/photoreal/age-16/spring-cherry-wind.webp',effect:'petals',description:'벚꽃바람에 느슨한 땋은 머리와 그라데이션 치마가 함께 흩날린 16세의 추억.'}
   ,{id:'vacation-age16-spring-azalea',age:16,season:'봄',name:'진달래 곁의 봄비',image:'../assets/events/vacation/photoreal/age-16/spring-azalea-stepping-stones.webp',effect:'calm',description:'봄비가 그친 진달래 계곡에서 꽃을 살펴본 16세의 추억.'}
-  ,{id:'vacation-age16-spring-kite',age:16,season:'봄',name:'바람을 따라 달리는 연',image:'../assets/events/vacation/photoreal/age-16/spring-kite-running.webp',effect:'wind',description:'강한 봄바람 속에서 연과 땋은 머리를 날리며 달린 16세의 추억.'}
+  ,{id:'vacation-age16-spring-kite',age:16,season:'봄',name:'진달래 나무그네',image:'../assets/events/vacation/photoreal/age-16/spring-kite-running.webp?v=0.62.46-debug',effect:'petals',description:'진달래가 만개한 나무 아래 그네에 앉아 봄바람을 느낀 16세의 추억.'}
   ,{id:'vacation-age16-summer-stream',age:16,season:'여름',name:'푸른 치마의 물장난',image:'../assets/events/vacation/photoreal/age-16/summer-stream-splash.webp',effect:'splash',description:'맑은 계곡에서 푸른 갈래치마 자락과 함께 물보라를 일으킨 16세의 추억.'}
   ,{id:'vacation-age16-summer-shell',age:16,season:'여름',name:'해질녘 조개바구니',image:'../assets/events/vacation/photoreal/age-16/summer-seaside-shell.webp',effect:'wave',description:'저녁 바닷바람을 맞으며 조개를 바구니에 모은 16세의 추억.'}
-  ,{id:'vacation-age16-summer-lotus',age:16,season:'여름',name:'연잎을 든 정자',image:'../assets/events/vacation/photoreal/age-16/summer-lotus-pavilion.webp',effect:'wind',description:'연꽃 향이 번지는 정자에서 연잎을 들어 본 16세의 추억.'}
+  ,{id:'vacation-age16-summer-lotus',age:16,season:'여름',name:'연꽃 정자의 차향',image:'../assets/events/vacation/photoreal/age-16/summer-lotus-pavilion.webp?v=0.62.46-debug',effect:'calm',description:'연꽃이 가득한 정자에서 맑은 연꽃차를 따라 본 16세의 추억.'}
   ,{id:'vacation-age16-autumn-chestnut',age:16,season:'가을',name:'밤바구니와 황금빛 숲',image:'../assets/events/vacation/photoreal/age-16/autumn-chestnut-gathering.webp',effect:'leaves',description:'황금빛 숲에서 잘 익은 밤을 주워 바구니에 담은 16세의 추억.'}
   ,{id:'vacation-age16-autumn-maple',age:16,season:'가을',name:'단풍 아래의 회전',image:'../assets/events/vacation/photoreal/age-16/autumn-maple-path.webp',effect:'leaves',description:'붉은 단풍 아래에서 풍성한 치마폭을 펼치며 돌아본 16세의 추억.'}
   ,{id:'vacation-age16-autumn-chuseok',age:16,season:'가을',name:'송편과 보름달',image:'../assets/events/vacation/photoreal/age-16/autumn-chuseok-moon.webp',effect:'moon',description:'송편을 들고 추석 보름달을 오래 바라본 16세의 추억.'}
-  ,{id:'vacation-age16-winter-sled',age:16,season:'겨울',name:'얼음 위를 가르는 썰매',image:'../assets/events/vacation/photoreal/age-16/winter-sledding.webp',effect:'snow',description:'두툼한 겨울옷과 긴 땋은 머리로 얼음 썰매를 즐긴 16세의 추억.'}
+  ,{id:'vacation-age16-winter-sled',age:16,season:'겨울',name:'얼음 아래의 반짝임',image:'../assets/events/vacation/photoreal/age-16/winter-sledding.webp?v=0.62.46-debug',effect:'snow',description:'겨울 강의 얼음 구멍에서 작은 물고기를 낚아 올린 16세의 추억.'}
   ,{id:'vacation-age16-winter-seollal',age:16,season:'겨울',name:'새해 첫 떡국',image:'../assets/events/vacation/photoreal/age-16/winter-seollal-tteokguk.webp',effect:'steam',description:'따뜻한 방에서 새해 첫 떡국을 먹은 16세의 추억.'}
   ,{id:'vacation-age16-winter-snowball',age:16,season:'겨울',name:'눈사람을 만드는 오후',image:'../assets/events/vacation/photoreal/age-16/winter-snowball.webp',effect:'snow',description:'양손으로 커다란 눈덩이를 굴려 눈사람을 만든 16세의 추억.'}
   ,{id:'vacation-age19-spring-cherry',age:19,season:'봄',name:'벚꽃 아래의 약속',image:'../assets/events/vacation/photoreal/age-19/spring-cherry-wind.webp',effect:'petals',description:'벚꽃잎을 손바닥에 받으며 새로운 계절을 맞은 19세의 추억.'}
   ,{id:'vacation-age19-spring-azalea',age:19,season:'봄',name:'진달래 물길의 발걸음',image:'../assets/events/vacation/photoreal/age-19/spring-azalea-stepping-stones.webp',effect:'calm',description:'봄비 뒤 맑아진 계곡의 디딤돌을 차분히 건넌 19세의 추억.'}
-  ,{id:'vacation-age19-spring-kite',age:19,season:'봄',name:'강바람에 오른 연',image:'../assets/events/vacation/photoreal/age-19/spring-kite-running.webp',effect:'wind',description:'강바람을 따라 힘차게 연을 띄운 19세의 추억.'}
+  ,{id:'vacation-age19-spring-kite',age:19,season:'봄',name:'봄 녹차밭의 새잎',image:'../assets/events/vacation/photoreal/age-19/spring-kite-running.webp?v=0.62.46-debug',effect:'calm',description:'푸른 차밭을 거닐며 여린 새잎을 살펴본 19세의 봄.'}
   ,{id:'vacation-age19-summer-stream',age:19,season:'여름',name:'한여름 계곡의 물보라',image:'../assets/events/vacation/photoreal/age-19/summer-stream-splash.webp',effect:'splash',description:'맑은 계곡물을 두 손으로 튀기며 웃은 19세의 추억.'}
   ,{id:'vacation-age19-summer-shell',age:19,season:'여름',name:'노을 바다의 조개바구니',image:'../assets/events/vacation/photoreal/age-19/summer-seaside-shell.webp',effect:'wave',description:'노을 진 물가에서 고운 조개를 바구니에 모은 19세의 추억.'}
   ,{id:'vacation-age19-summer-lotus',age:19,season:'여름',name:'연꽃 정자의 부채바람',image:'../assets/events/vacation/photoreal/age-19/summer-lotus-pavilion.webp',effect:'wind',description:'연꽃 향이 머무는 정자에서 부채로 더위를 식힌 19세의 추억.'}
@@ -201,6 +201,18 @@ const vacationIllustrations=[
   ,{id:'vacation-age19-winter-sled',age:19,season:'겨울',name:'얼음판을 가르는 썰매',image:'../assets/events/vacation/photoreal/age-19/winter-sledding.webp',effect:'snow',description:'차가운 바람을 가르며 전통 썰매를 달린 19세의 추억.'}
   ,{id:'vacation-age19-winter-seollal',age:19,season:'겨울',name:'성년의 설날 떡국',image:'../assets/events/vacation/photoreal/age-19/winter-seollal-tteokguk.webp',effect:'steam',description:'따뜻한 떡국을 들며 새해를 맞은 19세의 추억.'}
   ,{id:'vacation-age19-winter-snowball',age:19,season:'겨울',name:'눈사람을 위한 마지막 눈덩이',image:'../assets/events/vacation/photoreal/age-19/winter-snowball.webp',effect:'snow',description:'커다란 눈덩이를 굴려 눈사람을 완성한 19세의 추억.'}
+  ,{id:'vacation-modern-age16-summer-beach',age:16,season:'여름',name:'여름 바다의 책 한 권',image:'../assets/events/vacation/modern/age-16/summer-beach-reading.png',effect:'wave',rarity:'special',description:'강릉 바닷가의 그늘에서 책을 읽으며 쉬었던 현대의 특별한 추억.'}
+  ,{id:'vacation-modern-age16-summer-hanriver',age:16,season:'여름',name:'한강의 여름밤',image:'../assets/events/vacation/modern/age-16/summer-hanriver-picnic.png',effect:'calm',rarity:'special',description:'한강의 불빛을 바라보며 수박을 나누어 먹은 현대의 특별한 추억.'}
+  ,{id:'vacation-modern-age16-autumn-bungeoppang',age:16,season:'가을',name:'야시장의 붕어빵',image:'../assets/events/vacation/modern/age-16/autumn-nightmarket-bungeoppang.png',effect:'steam',rarity:'special',description:'따끈한 붕어빵의 김을 불며 가을 야시장을 거닐었던 현대의 특별한 추억.'}
+  ,{id:'vacation-modern-age16-autumn-photo',age:16,season:'가을',name:'등불 흐르는 가을 산책',image:'../assets/events/vacation/modern/age-16/autumn-lantern-photo.png?v=0.62.46-debug',effect:'leaves',rarity:'special',description:'도심 물길에 비친 등불을 바라보며 천천히 걸은 현대의 특별한 추억.'}
+  ,{id:'vacation-modern-age16-winter-village',age:16,season:'겨울',name:'눈 내리는 온천마을',image:'../assets/events/vacation/modern/age-16/winter-spa-village.png',effect:'snow',rarity:'special',description:'김이 오르는 돌길을 따라 눈 내리는 온천마을을 산책한 현대의 특별한 추억.'}
+  ,{id:'vacation-modern-age16-winter-jjimjilbang',age:16,season:'겨울',name:'황토방의 만화 시간',image:'../assets/events/vacation/modern/age-16/winter-jjimjilbang.png?v=0.62.46-debug',effect:'steam',rarity:'special',description:'따뜻한 황토방에 기대어 만화책과 식혜를 즐긴 현대의 특별한 추억.'}
+  ,{id:'vacation-modern-age19-summer-busan',age:19,season:'여름',name:'부산 바다의 노을',image:'../assets/events/vacation/modern/age-19/summer-busan-swimwear.png',effect:'wave',rarity:'special',description:'도시의 불빛이 켜지는 바다를 걸었던 현대의 특별한 추억.'}
+  ,{id:'vacation-modern-age19-summer-hanriver',age:19,season:'여름',name:'한강의 작은 불꽃',image:'../assets/events/vacation/modern/age-19/summer-hanriver-sparkler.png',effect:'calm',rarity:'special',description:'한강 다리 아래에서 작은 불꽃을 바라본 현대의 특별한 추억.'}
+  ,{id:'vacation-modern-age19-autumn-rain',age:19,season:'가을',name:'비 내린 야시장',image:'../assets/events/vacation/modern/age-19/autumn-rain-market.png',effect:'leaves',rarity:'special',description:'비에 젖은 골목에서 따뜻한 어묵을 고른 현대의 특별한 추억.'}
+  ,{id:'vacation-modern-age19-autumn-drum',age:19,season:'가을',name:'야시장의 따뜻한 군밤',image:'../assets/events/vacation/modern/age-19/autumn-lantern-drum.png?v=0.62.46-debug',effect:'leaves',rarity:'special',description:'가을 야시장에서 갓 깐 따뜻한 군밤을 맛본 현대의 특별한 추억.'}
+  ,{id:'vacation-modern-age19-winter-onsen',age:19,season:'겨울',name:'설경 속 노천온천',image:'../assets/events/vacation/modern/age-19/winter-openair-onsen.png',effect:'snow',rarity:'special',description:'눈 덮인 산과 소나무를 바라보며 온천의 김 속에서 쉬었던 현대의 특별한 추억.'}
+  ,{id:'vacation-modern-age19-winter-garden',age:19,season:'겨울',name:'눈 내린 탕의 아침',image:'../assets/events/vacation/modern/age-19/winter-spa-garden.png?v=0.62.45-debug',effect:'steam',rarity:'special',description:'눈 덮인 한옥 정원을 바라보며 따뜻한 노천탕에서 맞이한 고요한 겨울 아침.'}
 ];
 const spriteFrames = {
   down: [1,2,3].map(n=>`../assets/characters/seonhwa/age-09/sprites/walk/seonhwa-walk-down-${n}.png`),
@@ -513,8 +525,14 @@ function awardVacationIllustration(){
   normalizeInventory();
   const owned=new Set(game.items.filter(item=>item.type==='event').map(item=>item.id));
   const currentAge=growthAge();
-  const seasonal=vacationIllustrations.filter(item=>(item.age||9)===currentAge&&item.season===game.season);
-  const fallback=vacationIllustrations.filter(item=>(item.age||9)===9&&item.season===game.season);
+  const special=vacationIllustrations.filter(item=>item.rarity==='special'&&(item.age||9)===currentAge&&item.season===game.season&&!owned.has(item.id));
+  if(special.length&&Math.random()<.08){
+    const prize=special[Math.floor(Math.random()*special.length)];
+    game.items.push({...prize,type:'event',qty:1});
+    return prize;
+  }
+  const seasonal=vacationIllustrations.filter(item=>item.rarity!=='special'&&(item.age||9)===currentAge&&item.season===game.season);
+  const fallback=vacationIllustrations.filter(item=>item.rarity!=='special'&&(item.age||9)===9&&item.season===game.season);
   const ageSeasonal=seasonal.length?seasonal:fallback;
   const undiscovered=ageSeasonal.filter(item=>!owned.has(item.id));
   const pool=undiscovered.length?undiscovered:ageSeasonal;
@@ -573,7 +591,7 @@ async function playVacationScene(prize,index){
   const phone=document.querySelector('.phone'),scene=document.querySelector('#vacationScene'),image=document.querySelector('#vacationImage');
   const person=document.querySelector('#encounterCharacter'),talk=document.querySelector('#encounterDialogue');
   playVacationMusic();renderVacationMotion(prize.season||game.season);image.src=prize.image;document.querySelector('#vacationTitle').textContent=prize.name;scene.dataset.effect=prize.effect||'';scene.dataset.season=prize.season||game.season;
-  scene.classList.remove('has-encounter');person.hidden=true;talk.hidden=true;phone.classList.add('vacation-playing');scene.hidden=false;
+  scene.classList.remove('has-encounter');scene.classList.add('child-live');person.hidden=true;talk.hidden=true;phone.classList.add('vacation-playing');scene.hidden=false;
   await waitForVacationTap('일러스트를 감상한 뒤 터치');
   const candidates=endingRelationCandidates.filter(candidate=>game.age>=candidate.minAge&&candidate.assetReady);
   const encounter=candidates.length>0&&Math.random()<.35;
@@ -586,7 +604,7 @@ async function playVacationScene(prize,index){
     recordRelationEncounter(relation);
     await waitForVacationTap('대화를 읽은 뒤 터치');
   }
-  talk.hidden=true;person.hidden=true;scene.classList.remove('has-encounter');scene.hidden=true;scene.dataset.effect='';scene.dataset.season='';document.querySelector('#vacationMotion').replaceChildren();phone.classList.remove('vacation-playing');playHomeMusic();
+  talk.hidden=true;person.hidden=true;scene.classList.remove('has-encounter','child-live');scene.hidden=true;scene.dataset.effect='';scene.dataset.season='';document.querySelector('#vacationMotion').replaceChildren();phone.classList.remove('vacation-playing');playHomeMusic();
   return relation;
 }
 
@@ -758,7 +776,7 @@ function renderVacationCollection(ageFilter='all'){
   const percent=Math.round(collected/total*100);
   const filtered=ageFilter==='all'?vacationIllustrations:vacationIllustrations.filter(item=>(item.age||9)===Number(ageFilter));
   const filteredCollected=filtered.filter(item=>ownedIds.has(item.id)).length;
-  const cards=filtered.map(item=>{const unlocked=ownedIds.has(item.id),age=item.age||9;return `<button class="collection-card ${unlocked?'unlocked':'locked'}" data-collection-id="${item.id}" ${unlocked?'':'disabled'} aria-label="${unlocked?`${age}세 ${item.season} 수집 완료`:`${age}세 ${item.season} 미수집`}"><div class="collection-art"><img src="${item.image}" alt="${unlocked?item.name:''}"><span>${unlocked?'수집 완료':'?'}</span></div><b>${age}세 · ${item.season}</b><small>${unlocked?item.name:'아직 발견하지 못한 추억'}</small></button>`;}).join('');
+  const cards=filtered.map(item=>{const unlocked=ownedIds.has(item.id),age=item.age||9,special=item.rarity==='special';return `<button class="collection-card ${unlocked?'unlocked':'locked'} ${special?'special':''}" data-collection-id="${item.id}" ${unlocked?'':'disabled'} aria-label="${unlocked?`${age}세 ${item.season} 수집 완료`:`${age}세 ${item.season} 미수집`}"><div class="collection-art"><img src="${item.image}" alt="${unlocked?item.name:''}"><span>${unlocked?(special?'현대 희귀':'수집 완료'):'?'}</span></div><b>${age}세 · ${item.season}${special?' · 희귀':''}</b><small>${unlocked?item.name:'아직 발견하지 못한 추억'}</small></button>`;}).join('');
   const empty=`<div class="collection-empty"><b>${ageFilter}세의 추억은 아직 준비 중이에요.</b><span>새 일러스트가 추가되면 이곳에 표시됩니다.</span></div>`;
   panelBody.innerHTML=`<button class="collection-back" id="collectionBack" type="button" aria-label="수집도감에서 홈으로 돌아가기">← 뒤로가기</button><nav class="collection-age-tabs" aria-label="연령별 수집도감">${collectionAgeTabs.map(([id,label])=>`<button class="${ageFilter===id?'on':''}" data-collection-age="${id}" type="button">${label}</button>`).join('')}</nav><section class="collection-progress" aria-label="바캉스 일러스트 수집률"><div><b>전체 수집도 ${percent}%</b><span>${collected} / ${total}</span></div><div class="collection-track"><i style="width:${percent}%"></i></div>${ageFilter!=='all'?`<small>${ageFilter}세 수집 ${filteredCollected} / ${filtered.length}</small>`:''}</section>${cards?`<div class="collection-grid">${cards}</div>`:empty}<section class="collection-detail" id="collectionDetail">수집한 카드를 누르면 크게 볼 수 있어요.</section>`;
   document.querySelector('#collectionBack').addEventListener('click',closeCollectionToHome);
