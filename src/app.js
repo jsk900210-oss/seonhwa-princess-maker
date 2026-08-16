@@ -495,7 +495,8 @@ async function animateActivitySprite(image,motion,activity,npcImage,npc,outfitId
     };
     const sequence=coreJobSequences[activity]||
       (activity==='errand'?[0,1,1,2,2,1,0]:activity==='houseclean'?[0,1,0,2,2,2]:activity==='sweeping'?[0,1,2,1,0,1,2,2,1,0,1,2,1,0]:activity==='sleep'?[0,1,2,1,0]:[0,1,2,1,0,1,2]);
-    const delay=Math.max(125,(activity==='errand'?270:activity==='houseclean'?360:activity==='sleep'?430:activity==='tea'?460:190)-masteryRank*35);
+    const dedicatedJob=Object.hasOwn(coreJobSequences,activity);
+    const delay=dedicatedJob?[360,300,240][masteryRank]:Math.max(125,(activity==='errand'?270:activity==='houseclean'?360:activity==='sleep'?430:activity==='tea'?460:190)-masteryRank*35);
     const rankedSequence=masteryRank===2?[...sequence,...sequence.slice(1)]:sequence;
     for(const [step,frame] of rankedSequence.entries()){
       if(activity==='houseclean')image.parentElement.style.left=`${[74,58,32,32,55,74][step%6]}%`;

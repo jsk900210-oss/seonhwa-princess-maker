@@ -9,7 +9,7 @@ for(const id of jobs){
   const asset=path.join(root,'assets/backgrounds/pixel-jobs',`${id}.webp`);
   if(!fs.existsSync(asset)||fs.statSync(asset).size<10000)throw new Error(`전용 직업 배경 누락 또는 손상: ${id}`);
   for(let frame=1;frame<=3;frame++){
-    const sprite=path.join(root,'assets/characters/seonhwa/job-actions',`${id}-${frame}.png`);
+    const sprite=path.join(root,'assets/characters/seonhwa/job-actions',`${id}-v2-${frame}.png`);
     if(!fs.existsSync(sprite)||fs.statSync(sprite).size<5000)throw new Error(`전용 직업 동작 누락 또는 손상: ${id}-${frame}`);
   }
   if(!app.includes(`location:'${id.replace('work','Job').replace('childcare','childcareJob').replace('kitchenhelp','kitchenJob').replace('woodJob','woodworkJob').replace('loomJob','loomJob').replace('masonry','masonryJob').replace('clinichelp','clinicJob').replace('ferryhelp','ferryJob').replace('merchanthelp','merchantJob')}'`)){
@@ -22,5 +22,6 @@ if(!app.includes('successes>=30?2:successes>=10?1:0'))throw new Error('성공 �
 if(!app.includes("[1,1.25,1.6][activityRank(action.id)]"))throw new Error('숙련별 보수 배율 누락');
 if(!app.includes('progress.perfectStreak%3!==0'))throw new Error('연속 대성공 보상 기준 누락');
 if(!app.includes('masteryJobs'))throw new Error('직업 숙련 엔딩 반영 누락');
+if(!app.includes('const delay=dedicatedJob?[360,300,240][masteryRank]'))throw new Error('전용 직업 숙련별 프레임 속도 누락');
 for(const id of ['swordsmanship','spellcraft'])if(!app.includes(`id:'${id}'`))throw new Error(`신규 교육 누락: ${id}`);
 console.log('PASS: 전용 직업 장면 9종, 3단계 숙련·보수·연속 대성공·엔딩 반영, 검술·술법 교육');
