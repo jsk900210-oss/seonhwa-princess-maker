@@ -727,39 +727,39 @@ function relationPortraitMarkup(candidate,className=''){return `<span class="rel
 function applyRelationPortrait(element,candidate){if(!element||!candidate)return;element.classList.add('relation-sheet-portrait');element.style.setProperty('--relation-sheet',`url('${candidate.baseSheet}')`);element.style.setProperty('--relation-age-position',relationAgePosition());const image=element.matches('img')?element:element.querySelector('img');if(image){image.alt=`${candidate.name} ${game.age}세 모습`;image.hidden=true;}}
 const relationEpisodeCatalog={
   doyun:[
-    {id:'doyun-1',title:'흩어진 화살',activities:['swordsmanship','martial'],line:'활터에 흩어진 화살을 함께 주우며 젊은 무관 도윤과 처음 인사를 나눴어요.'},
-    {id:'doyun-2',title:'마당의 충돌',activities:['sweeping','farmwork'],line:'일손을 돕던 도윤과 부딪힐 뻔했지만 서로 웃으며 길을 비켜 주었어요.'},
-    {id:'doyun-3',title:'산길의 발자국',activities:['dungeon','herbs'],line:'산길의 낯선 발자국을 도윤과 함께 살펴 위험을 피했어요.'},
-    {id:'doyun-4',title:'강가의 약속',activities:['vacation'],line:'강바람 속에서 도윤이 지키고 싶은 것에 관한 이야기를 들려주었어요.'},
-    {id:'doyun-5',title:'나란히 선 활터',activities:['swordsmanship','vacation'],line:'도윤은 다음에는 우연이 아니라 약속을 정해 만나자고 말했어요.'}
+    {id:'doyun-1',title:'흩어진 화살',activities:['swordsmanship','martial'],scene:'활터',outfit:'젊은 무관 도포와 팔이 좁은 활동복',pose:'화살을 함께 줍고 몸을 살짝 숙인 자세',expression:'경계하다가 안심한 표정',camera:'반측면 허리샷',line:'활터에 흩어진 화살을 함께 주우며 젊은 무관 도윤과 처음 인사를 나눴어요.'},
+    {id:'doyun-2',title:'마당의 충돌',activities:['sweeping','farmwork'],scene:'집 마당',outfit:'소매를 걷은 일손복과 묶은 띠',pose:'빗자루를 들고 서로 비켜 서는 동작',expression:'머쓱하게 웃는 표정',camera:'정면 약간 아래에서 본 전신',line:'일손을 돕던 도윤과 부딪힐 뻔했지만 서로 웃으며 길을 비켜 주었어요.'},
+    {id:'doyun-3',title:'산길의 발자국',activities:['dungeon','herbs'],scene:'산길 입구',outfit:'짧게 묶은 여행 복장과 장갑',pose:'발자국을 짚으며 손바닥으로 흙을 살피는 동작',expression:'집중한 표정',camera:'대각선 원경 전신',line:'산길의 낯선 발자국을 도윤과 함께 살펴 위험을 피했어요.'},
+    {id:'doyun-4',title:'강가의 약속',activities:['vacation'],scene:'강가 산책로',outfit:'바람에 잘 흩날리지 않는 담백한 나들이 옷',pose:'강을 향해 천천히 걷는 옆모습',expression:'차분히 말하는 표정',camera:'옆구도 허리 위 샷',line:'강바람 속에서 도윤이 지키고 싶은 것에 관한 이야기를 들려주었어요.'},
+    {id:'doyun-5',title:'나란히 선 활터',activities:['swordsmanship','vacation'],scene:'활터',outfit:'정돈된 무관 차림과 장식 없는 허리띠',pose:'활을 내려놓고 나란히 서서 쉬는 동작',expression:'약속을 건네는 미소',camera:'가까운 2인 반신샷',line:'도윤은 다음에는 우연이 아니라 약속을 정해 만나자고 말했어요.'}
   ],
   seojin:[
-    {id:'seojin-1',title:'바뀐 서책',activities:['reading','classics'],line:'서책이 뒤바뀐 일을 계기로 선비 서진과 처음 이야기를 나눴어요.'},
-    {id:'seojin-2',title:'먹이 번진 글',activities:['copying','reading'],line:'번진 먹 자국을 서진과 함께 수습하며 뜻밖의 웃음을 나눴어요.'},
-    {id:'seojin-3',title:'어려운 물음',activities:['tutoring','arithmetic'],line:'서진과 서로 다른 풀이를 내놓고 밤이 늦도록 답을 찾아보았어요.'},
-    {id:'seojin-4',title:'정자의 시구',activities:['vacation'],line:'정자에서 서진이 풍경을 담은 짧은 시구를 들려주었어요.'},
-    {id:'seojin-5',title:'남겨 둔 책갈피',activities:['classics','vacation'],line:'서진은 다시 만날 날을 표시하듯 서책에 작은 책갈피를 남겼어요.'}
+    {id:'seojin-1',title:'바뀐 서책',activities:['reading','classics'],scene:'서당 서가',outfit:'깨끗한 서생 옷과 얇은 겹깃',pose:'책장을 두 손으로 바로잡는 동작',expression:'예의 바른 첫인사',camera:'책장 옆 중경샷',line:'서책이 뒤바뀐 일을 계기로 선비 서진과 처음 이야기를 나눴어요.'},
+    {id:'seojin-2',title:'먹이 번진 글',activities:['copying','reading'],scene:'서책상',outfit:'소매가 넓지 않은 필사복',pose:'번진 종이를 가볍게 들어 올리는 동작',expression:'난처하지만 다정한 미소',camera:'상단 사선 구도',line:'번진 먹 자국을 서진과 함께 수습하며 뜻밖의 웃음을 나눴어요.'},
+    {id:'seojin-3',title:'어려운 물음',activities:['tutoring','arithmetic'],scene:'서당 마루',outfit:'차분한 서생 차림과 매듭 장식',pose:'주판과 책을 번갈아 가리키는 동작',expression:'설명에 집중한 표정',camera:'탁자 너머 반신샷',line:'서진과 서로 다른 풀이를 내놓고 밤이 늦도록 답을 찾아보았어요.'},
+    {id:'seojin-4',title:'정자의 시구',activities:['vacation'],scene:'정자',outfit:'가벼운 나들이 도포와 고운 허리끈',pose:'난간에 기대어 풍경을 바라보는 동작',expression:'조용히 읊조리는 표정',camera:'옆모습 원경',line:'정자에서 서진이 풍경을 담은 짧은 시구를 들려주었어요.'},
+    {id:'seojin-5',title:'남겨 둔 책갈피',activities:['classics','vacation'],scene:'서책방',outfit:'책갈피가 잘 보이는 단정한 학자복',pose:'책갈피를 끼워 두고 돌아서는 동작',expression:'미소를 숨긴 눈빛',camera:'책상 위 클로즈업',line:'서진은 다시 만날 날을 표시하듯 서책에 작은 책갈피를 남겼어요.'}
   ],
   yeonwoo:[
-    {id:'yeonwoo-1',title:'날아간 화첩',activities:['painting','vacation'],line:'바람에 날아간 화첩을 주워 주며 화공 연우와 처음 만났어요.'},
-    {id:'yeonwoo-2',title:'마르지 않은 색',activities:['painting'],line:'연우와 물감을 나누어 쓰며 같은 풍경을 서로 다른 색으로 그렸어요.'},
-    {id:'yeonwoo-3',title:'장단과 붓끝',activities:['music','dance'],line:'음악과 춤의 움직임을 화폭에 옮기는 연우의 작업을 도왔어요.'},
-    {id:'yeonwoo-4',title:'달빛 초상',activities:['vacation'],line:'연우는 달빛 아래의 모습을 오래 기억하고 싶다며 붓을 들었어요.'},
-    {id:'yeonwoo-5',title:'비워 둔 자리',activities:['painting','vacation'],line:'연우의 새 그림에는 선화가 함께 볼 자리가 비워져 있었어요.'}
+    {id:'yeonwoo-1',title:'날아간 화첩',activities:['painting','vacation'],scene:'꽃밭 길',outfit:'붓집이 달린 바람 잘 타는 작업복',pose:'날아간 화첩을 두 손으로 받아내는 동작',expression:'놀라다 안도하는 표정',camera:'전신 사선샷',line:'바람에 날아간 화첩을 주워 주며 화공 연우와 처음 만났어요.'},
+    {id:'yeonwoo-2',title:'마르지 않은 색',activities:['painting'],scene:'화실',outfit:'색이 묻어도 자연스러운 화공 작업복',pose:'물감 접시를 옆으로 건네는 동작',expression:'차분한 집중 표정',camera:'책상 옆 중근경',line:'연우와 물감을 나누어 쓰며 같은 풍경을 서로 다른 색으로 그렸어요.'},
+    {id:'yeonwoo-3',title:'장단과 붓끝',activities:['music','dance'],scene:'연습 마루',outfit:'움직임이 넉넉한 공연복',pose:'장단에 맞춰 붓끝을 크게 돌리는 동작',expression:'흥이 오른 표정',camera:'움직임이 보이는 전신샷',line:'음악과 춤의 움직임을 화폭에 옮기는 연우의 작업을 도왔어요.'},
+    {id:'yeonwoo-4',title:'달빛 초상',activities:['vacation'],scene:'달빛 정원',outfit:'달빛 반사가 잘 어울리는 은은한 나들이옷',pose:'무릎을 세우고 앉아 멀리 바라보는 동작',expression:'그윽하게 미소 짓는 표정',camera:'측면 반신샷',line:'연우는 달빛 아래의 모습을 오래 기억하고 싶다며 붓을 들었어요.'},
+    {id:'yeonwoo-5',title:'비워 둔 자리',activities:['painting','vacation'],scene:'야외 화판 앞',outfit:'바람에 살짝 흔들리는 가벼운 외출복',pose:'화폭의 빈 자리를 손끝으로 짚는 동작',expression:'함께 기다리는 눈빛',camera:'화판 너머 3/4샷',line:'연우의 새 그림에는 선화가 함께 볼 자리가 비워져 있었어요.'}
   ],
   taegyeom:[
-    {id:'taegyeom-1',title:'잘못 묶인 짐표',activities:['errand','ferryhelp'],line:'뒤바뀐 짐표를 바로잡으며 상단 후계자 태겸과 처음 만났어요.'},
-    {id:'taegyeom-2',title:'한 냥의 흥정',activities:['shopping','merchanthelp'],line:'태겸과 물건값을 두고 재치 있는 흥정을 벌였어요.'},
-    {id:'taegyeom-3',title:'비에 젖은 장부',activities:['arithmetic','merchanthelp'],line:'젖은 장부를 함께 복원하며 태겸의 책임감을 알게 되었어요.'},
-    {id:'taegyeom-4',title:'나루의 저녁',activities:['ferryhelp','vacation'],line:'나루의 저녁 장사를 마치고 태겸과 따뜻한 차를 나누었어요.'},
-    {id:'taegyeom-5',title:'함께 갈 장길',activities:['shopping','vacation'],line:'태겸은 다음 큰 장에는 손님이 아니라 동행으로 와 달라고 했어요.'}
+    {id:'taegyeom-1',title:'잘못 묶인 짐표',activities:['errand','ferryhelp'],scene:'나루터',outfit:'짐 나르기 좋은 단단한 상단 복식',pose:'짐표를 바로 고쳐 묶는 동작',expression:'재빠르게 판단하는 표정',camera:'허리 높이 전신샷',line:'뒤바뀐 짐표를 바로잡으며 상단 후계자 태겸과 처음 만났어요.'},
+    {id:'taegyeom-2',title:'한 냥의 흥정',activities:['shopping','merchanthelp'],scene:'저잣거리',outfit:'장사꾼 느낌의 깔끔한 상단 옷',pose:'손가락으로 값을 세며 흥정하는 동작',expression:'장난기 있는 미소',camera:'맞은편 대치 구도',line:'태겸과 물건값을 두고 재치 있는 흥정을 벌였어요.'},
+    {id:'taegyeom-3',title:'비에 젖은 장부',activities:['arithmetic','merchanthelp'],scene:'상단 장부방',outfit:'소매를 접은 계산용 복식',pose:'젖은 장부를 닦고 숫자를 세는 동작',expression:'집중하고 책임감 있는 표정',camera:'책상 위 대각선샷',line:'젖은 장부를 함께 복원하며 태겸의 책임감을 알게 되었어요.'},
+    {id:'taegyeom-4',title:'나루의 저녁',activities:['ferryhelp','vacation'],scene:'나루터 저녁',outfit:'바람을 덜 타는 두꺼운 외출복',pose:'짐을 내려놓고 차를 건네는 동작',expression:'조용히 웃는 표정',camera:'노을을 뒤로한 반신샷',line:'나루의 저녁 장사를 마치고 태겸과 따뜻한 차를 나누었어요.'},
+    {id:'taegyeom-5',title:'함께 갈 장길',activities:['shopping','vacation'],scene:'큰 장 입구',outfit:'화사하지만 실용적인 상단 외출복',pose:'앞장서며 손을 내미는 동작',expression:'기대에 찬 미소',camera:'길을 함께 보는 2인 샷',line:'태겸은 다음 큰 장에는 손님이 아니라 동행으로 와 달라고 했어요.'}
   ],
   hyeon:[
-    {id:'hyeon-1',title:'평범한 윷놀이',activities:['manners','vacation'],line:'신분을 숨긴 청년 현과 소박한 놀이를 하며 처음 인사를 나눴어요.'},
-    {id:'hyeon-2',title:'낯선 호위',activities:['dungeon','swordsmanship'],line:'위험한 길에서 능숙하게 앞을 막아선 현의 낯선 모습을 보았어요.'},
-    {id:'hyeon-3',title:'궁 밖의 소문',activities:['shopping','errand'],line:'저잣거리의 소문을 듣던 현이 자신의 이야기는 조용히 감추었어요.'},
-    {id:'hyeon-4',title:'등불 아래 진심',activities:['vacation','spellcraft'],line:'등불 아래에서 현은 평범한 이름으로 불리고 싶다는 마음을 털어놓았어요.'},
-    {id:'hyeon-5',title:'다시 만날 문',activities:['manners','vacation'],line:'현은 언젠가 모든 것을 밝히고 다시 만나겠다고 약속했어요.'}
+    {id:'hyeon-1',title:'평범한 윷놀이',activities:['manners','vacation'],scene:'마당',outfit:'신분을 드러내지 않는 평복',pose:'윷을 던진 뒤 고개를 기울이는 동작',expression:'웃음을 참는 표정',camera:'작은 탁자 위 반신샷',line:'신분을 숨긴 청년 현과 소박한 놀이를 하며 처음 인사를 나눴어요.'},
+    {id:'hyeon-2',title:'낯선 호위',activities:['dungeon','swordsmanship'],scene:'어두운 길목',outfit:'움직임이 편한 호위복과 짧은 망토',pose:'앞을 가로막고 몸을 낮추는 동작',expression:'경계하는 날카로운 눈빛',camera:'측면 전신샷',line:'위험한 길에서 능숙하게 앞을 막아선 현의 낯선 모습을 보았어요.'},
+    {id:'hyeon-3',title:'궁 밖의 소문',activities:['shopping','errand'],scene:'저잣거리',outfit:'평민처럼 보이는 단정한 외출복',pose:'사람들 틈에서 뒤돌아 듣는 동작',expression:'말을 아끼는 차분한 표정',camera:'군중 사이 3/4샷',line:'저잣거리의 소문을 듣던 현이 자신의 이야기는 조용히 감추었어요.'},
+    {id:'hyeon-4',title:'등불 아래 진심',activities:['vacation','spellcraft'],scene:'등불 거리',outfit:'등불빛을 받으면 은근히 빛나는 나들이복',pose:'등불을 손으로 가리며 서 있는 동작',expression:'고백 직전의 흔들리는 표정',camera:'등불 뒤 역광 반신샷',line:'등불 아래에서 현은 평범한 이름으로 불리고 싶다는 마음을 털어놓았어요.'},
+    {id:'hyeon-5',title:'다시 만날 문',activities:['manners','vacation'],scene:'큰 문 앞',outfit:'신분을 밝힐 준비가 된 단정한 정장형 복식',pose:'문 쪽으로 한 걸음 내딛는 동작',expression:'결심한 듯한 표정',camera:'정면 대칭 구도',line:'현은 언젠가 모든 것을 밝히고 다시 만나겠다고 약속했어요.'}
   ]
 };
 const careerEndingCandidates=[
