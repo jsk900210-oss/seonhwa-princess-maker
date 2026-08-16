@@ -720,7 +720,7 @@ const endingRelationCandidates=[
   {id:'seojin',name:'서진',role:'선비',motif:'박보검',image:'../assets/characters/romance/seojin/vacation.png',baseSheet:'../assets/characters/romance/identity/fullbody/seojin-age-13-16-19-fullbody-v1.png',assetReady:true,minAge:13,ending:'선비와의 삶',dialogues:['“책에서 읽던 풍경보다 직접 보는 모습이 더 아름답군요.”','“이 경치를 시로 남긴다면 어떤 첫 구절이 좋을까요?”']},
   {id:'yeonwoo',name:'연우',role:'화공',motif:'박지훈',image:'../assets/characters/romance/yeonwoo/vacation.png',baseSheet:'../assets/characters/romance/identity/fullbody/yeonwoo-age-13-16-19-fullbody-v1.png',assetReady:true,minAge:13,ending:'화가의 동반자',dialogues:['“잠시 그대로 있어 봐. 이 순간을 그림에 담고 싶어.”','“같은 풍경도 함께 보는 사람에 따라 색이 달라 보여.”']},
   {id:'taegyeom',name:'태겸',role:'상단 후계자',motif:'최현욱',image:'../assets/characters/romance/taegyeom/vacation.png',baseSheet:'../assets/characters/romance/identity/fullbody/taegyeom-age-13-16-19-fullbody-v1.png',assetReady:true,minAge:13,ending:'대상인의 동반자',dialogues:['“좋은 물건보다 좋은 인연을 만나는 일이 더 귀하다고 하더군.”','“이 길 끝에 재미있는 장이 선다는데, 함께 가겠어?”']},
-  {id:'hyeon',name:'현',role:'정체를 숨긴 왕자',motif:'차은우',image:'../assets/characters/romance/hyeon/vacation.png',baseSheet:'../assets/characters/romance/identity/fullbody/hyeon-age-13-16-19-fullbody-v1.png',assetReady:true,minAge:13,ending:'왕자의 연인',dialogues:['“내가 누구인지는 잠시 잊고, 오늘만 평범하게 걸어도 될까?”','“또 만났네. 이쯤 되면 우연이라고만 하기는 어렵겠어.”']}
+  {id:'hyeon',name:'현',role:'정체를 숨긴 왕자',motif:'차은우',image:'../assets/characters/romance/hyeon/vacation.png',baseSheet:'../assets/characters/romance/identity/fullbody/hyeon-age-13-16-19-fullbody-v1.png',assetReady:true,minAge:15,ending:'왕자의 연인',dialogues:['“내가 누구인지는 잠시 잊고, 오늘만 평범하게 걸어도 될까?”','“또 만났네. 이쯤 되면 우연이라고만 하기는 어렵겠어.”']}
 ];
 function protagonistPortraitForAge(age=game.age){
   const actualAge=age>=19?18:age>=16?16:age>=13?13:9;
@@ -731,39 +731,39 @@ function relationPortraitMarkup(candidate,className=''){return `<span class="rel
 function applyRelationPortrait(element,candidate){if(!element||!candidate)return;element.classList.add('relation-sheet-portrait');element.style.setProperty('--relation-sheet',`url('${candidate.baseSheet}')`);element.style.setProperty('--relation-age-position',relationAgePosition());const image=element.matches('img')?element:element.querySelector('img');if(image){image.alt=`${candidate.name} ${game.age}세 모습`;image.hidden=true;}}
 const relationEpisodeCatalog={
   doyun:[
-    {id:'doyun-1',title:'흩어진 화살',activities:['swordsmanship','martial'],scene:'활터',outfit:'젊은 무관 도포와 팔이 좁은 활동복',pose:'화살을 함께 줍고 몸을 살짝 숙인 자세',expression:'경계하다가 안심한 표정',camera:'반측면 허리샷',line:'활터에 흩어진 화살을 함께 주우며 젊은 무관 도윤과 처음 인사를 나눴어요.'},
-    {id:'doyun-2',title:'마당의 충돌',activities:['sweeping','farmwork'],scene:'집 마당',outfit:'소매를 걷은 일손복과 묶은 띠',pose:'빗자루를 들고 서로 비켜 서는 동작',expression:'머쓱하게 웃는 표정',camera:'정면 약간 아래에서 본 전신',line:'일손을 돕던 도윤과 부딪힐 뻔했지만 서로 웃으며 길을 비켜 주었어요.'},
-    {id:'doyun-3',title:'산길의 발자국',activities:['dungeon','herbs'],scene:'산길 입구',outfit:'짧게 묶은 여행 복장과 장갑',pose:'발자국을 짚으며 손바닥으로 흙을 살피는 동작',expression:'집중한 표정',camera:'대각선 원경 전신',line:'산길의 낯선 발자국을 도윤과 함께 살펴 위험을 피했어요.'},
-    {id:'doyun-4',title:'강가의 약속',activities:['vacation'],scene:'강가 산책로',outfit:'바람에 잘 흩날리지 않는 담백한 나들이 옷',pose:'강을 향해 천천히 걷는 옆모습',expression:'차분히 말하는 표정',camera:'옆구도 허리 위 샷',line:'강바람 속에서 도윤이 지키고 싶은 것에 관한 이야기를 들려주었어요.'},
-    {id:'doyun-5',title:'나란히 선 활터',activities:['swordsmanship','vacation'],scene:'활터',outfit:'정돈된 무관 차림과 장식 없는 허리띠',pose:'활을 내려놓고 나란히 서서 쉬는 동작',expression:'약속을 건네는 미소',camera:'가까운 2인 반신샷',line:'도윤은 다음에는 우연이 아니라 약속을 정해 만나자고 말했어요.'}
+    {id:'doyun-1',title:'흩어진 화살',activities:['swordsmanship','martial'],scene:'활터',outfit:'젊은 무관 도포와 팔이 좁은 활동복',pose:'화살을 함께 줍고 몸을 살짝 숙인 자세',expression:'경계하다가 안심한 표정',camera:'반측면 허리샷',line:'활터에서 화살을 함께 주웠어요.'},
+    {id:'doyun-2',title:'마당의 충돌',activities:['sweeping','farmwork'],scene:'집 마당',outfit:'소매를 걷은 일손복과 묶은 띠',pose:'빗자루를 들고 서로 비켜 서는 동작',expression:'머쓱하게 웃는 표정',camera:'정면 약간 아래에서 본 전신',line:'일손을 돕다 도윤과 마주쳤어요.'},
+    {id:'doyun-3',title:'산길의 발자국',activities:['dungeon','herbs'],scene:'산길 입구',outfit:'짧게 묶은 여행 복장과 장갑',pose:'발자국을 짚으며 손바닥으로 흙을 살피는 동작',expression:'집중한 표정',camera:'대각선 원경 전신',line:'산길의 발자국을 함께 살폈어요.'},
+    {id:'doyun-4',title:'강가의 약속',activities:['vacation'],scene:'강가 산책로',outfit:'바람에 잘 흩날리지 않는 담백한 나들이 옷',pose:'강을 향해 천천히 걷는 옆모습',expression:'차분히 말하는 표정',camera:'옆구도 허리 위 샷',line:'강가에서 도윤과 다시 만났어요.'},
+    {id:'doyun-5',title:'나란히 선 활터',activities:['swordsmanship','vacation'],scene:'활터',outfit:'정돈된 무관 차림과 장식 없는 허리띠',pose:'활을 내려놓고 나란히 서서 쉬는 동작',expression:'약속을 건네는 미소',camera:'가까운 2인 반신샷',line:'도윤은 다음에 또 보자고 했어요.'}
   ],
   seojin:[
-    {id:'seojin-1',title:'바뀐 서책',activities:['reading','classics'],scene:'서당 서가',outfit:'깨끗한 서생 옷과 얇은 겹깃',pose:'책장을 두 손으로 바로잡는 동작',expression:'예의 바른 첫인사',camera:'책장 옆 중경샷',line:'서책이 뒤바뀐 일을 계기로 선비 서진과 처음 이야기를 나눴어요.'},
-    {id:'seojin-2',title:'먹이 번진 글',activities:['copying','reading'],scene:'서책상',outfit:'소매가 넓지 않은 필사복',pose:'번진 종이를 가볍게 들어 올리는 동작',expression:'난처하지만 다정한 미소',camera:'상단 사선 구도',line:'번진 먹 자국을 서진과 함께 수습하며 뜻밖의 웃음을 나눴어요.'},
-    {id:'seojin-3',title:'어려운 물음',activities:['tutoring','arithmetic'],scene:'서당 마루',outfit:'차분한 서생 차림과 매듭 장식',pose:'주판과 책을 번갈아 가리키는 동작',expression:'설명에 집중한 표정',camera:'탁자 너머 반신샷',line:'서진과 서로 다른 풀이를 내놓고 밤이 늦도록 답을 찾아보았어요.'},
-    {id:'seojin-4',title:'정자의 시구',activities:['vacation'],scene:'정자',outfit:'가벼운 나들이 도포와 고운 허리끈',pose:'난간에 기대어 풍경을 바라보는 동작',expression:'조용히 읊조리는 표정',camera:'옆모습 원경',line:'정자에서 서진이 풍경을 담은 짧은 시구를 들려주었어요.'},
-    {id:'seojin-5',title:'남겨 둔 책갈피',activities:['classics','vacation'],scene:'서책방',outfit:'책갈피가 잘 보이는 단정한 학자복',pose:'책갈피를 끼워 두고 돌아서는 동작',expression:'미소를 숨긴 눈빛',camera:'책상 위 클로즈업',line:'서진은 다시 만날 날을 표시하듯 서책에 작은 책갈피를 남겼어요.'}
+    {id:'seojin-1',title:'바뀐 서책',activities:['reading','classics'],scene:'서당 서가',outfit:'깨끗한 서생 옷과 얇은 겹깃',pose:'책장을 두 손으로 바로잡는 동작',expression:'예의 바른 첫인사',camera:'책장 옆 중경샷',line:'서책이 바뀌어 서진과 처음 말을 섞었어요.'},
+    {id:'seojin-2',title:'먹이 번진 글',activities:['copying','reading'],scene:'서책상',outfit:'소매가 넓지 않은 필사복',pose:'번진 종이를 가볍게 들어 올리는 동작',expression:'난처하지만 다정한 미소',camera:'상단 사선 구도',line:'번진 글을 함께 닦아냈어요.'},
+    {id:'seojin-3',title:'어려운 물음',activities:['tutoring','arithmetic'],scene:'서당 마루',outfit:'차분한 서생 차림과 매듭 장식',pose:'주판과 책을 번갈아 가리키는 동작',expression:'설명에 집중한 표정',camera:'탁자 너머 반신샷',line:'서진과 답을 맞추다 밤이 깊었어요.'},
+    {id:'seojin-4',title:'정자의 시구',activities:['vacation'],scene:'정자',outfit:'가벼운 나들이 도포와 고운 허리끈',pose:'난간에 기대어 풍경을 바라보는 동작',expression:'조용히 읊조리는 표정',camera:'옆모습 원경',line:'정자에서 서진과 시를 읊었어요.'},
+    {id:'seojin-5',title:'남겨 둔 책갈피',activities:['classics','vacation'],scene:'서책방',outfit:'책갈피가 잘 보이는 단정한 학자복',pose:'책갈피를 끼워 두고 돌아서는 동작',expression:'미소를 숨긴 눈빛',camera:'책상 위 클로즈업',line:'서진은 책갈피를 남기고 갔어요.'}
   ],
   yeonwoo:[
-    {id:'yeonwoo-1',title:'날아간 화첩',activities:['painting','vacation'],scene:'꽃밭 길',outfit:'붓집이 달린 바람 잘 타는 작업복',pose:'날아간 화첩을 두 손으로 받아내는 동작',expression:'놀라다 안도하는 표정',camera:'전신 사선샷',line:'바람에 날아간 화첩을 주워 주며 화공 연우와 처음 만났어요.'},
-    {id:'yeonwoo-2',title:'마르지 않은 색',activities:['painting'],scene:'화실',outfit:'색이 묻어도 자연스러운 화공 작업복',pose:'물감 접시를 옆으로 건네는 동작',expression:'차분한 집중 표정',camera:'책상 옆 중근경',line:'연우와 물감을 나누어 쓰며 같은 풍경을 서로 다른 색으로 그렸어요.'},
-    {id:'yeonwoo-3',title:'장단과 붓끝',activities:['music','dance'],scene:'연습 마루',outfit:'움직임이 넉넉한 공연복',pose:'장단에 맞춰 붓끝을 크게 돌리는 동작',expression:'흥이 오른 표정',camera:'움직임이 보이는 전신샷',line:'음악과 춤의 움직임을 화폭에 옮기는 연우의 작업을 도왔어요.'},
-    {id:'yeonwoo-4',title:'달빛 초상',activities:['vacation'],scene:'달빛 정원',outfit:'달빛 반사가 잘 어울리는 은은한 나들이옷',pose:'무릎을 세우고 앉아 멀리 바라보는 동작',expression:'그윽하게 미소 짓는 표정',camera:'측면 반신샷',line:'연우는 달빛 아래의 모습을 오래 기억하고 싶다며 붓을 들었어요.'},
-    {id:'yeonwoo-5',title:'비워 둔 자리',activities:['painting','vacation'],scene:'야외 화판 앞',outfit:'바람에 살짝 흔들리는 가벼운 외출복',pose:'화폭의 빈 자리를 손끝으로 짚는 동작',expression:'함께 기다리는 눈빛',camera:'화판 너머 3/4샷',line:'연우의 새 그림에는 선화가 함께 볼 자리가 비워져 있었어요.'}
+    {id:'yeonwoo-1',title:'날아간 화첩',activities:['painting','vacation'],scene:'꽃밭 길',outfit:'붓집이 달린 바람 잘 타는 작업복',pose:'날아간 화첩을 두 손으로 받아내는 동작',expression:'놀라다 안도하는 표정',camera:'전신 사선샷',line:'날아간 화첩을 주워 주며 연우를 만났어요.'},
+    {id:'yeonwoo-2',title:'마르지 않은 색',activities:['painting'],scene:'화실',outfit:'색이 묻어도 자연스러운 화공 작업복',pose:'물감 접시를 옆으로 건네는 동작',expression:'차분한 집중 표정',camera:'책상 옆 중근경',line:'연우와 색을 나눠 썼어요.'},
+    {id:'yeonwoo-3',title:'장단과 붓끝',activities:['music','dance'],scene:'연습 마루',outfit:'움직임이 넉넉한 공연복',pose:'장단에 맞춰 붓끝을 크게 돌리는 동작',expression:'흥이 오른 표정',camera:'움직임이 보이는 전신샷',line:'장단에 맞춰 붓이 같이 움직였어요.'},
+    {id:'yeonwoo-4',title:'달빛 초상',activities:['vacation'],scene:'달빛 정원',outfit:'달빛 반사가 잘 어울리는 은은한 나들이옷',pose:'무릎을 세우고 앉아 멀리 바라보는 동작',expression:'그윽하게 미소 짓는 표정',camera:'측면 반신샷',line:'연우와 달빛을 바라봤어요.'},
+    {id:'yeonwoo-5',title:'비워 둔 자리',activities:['painting','vacation'],scene:'야외 화판 앞',outfit:'바람에 살짝 흔들리는 가벼운 외출복',pose:'화폭의 빈 자리를 손끝으로 짚는 동작',expression:'함께 기다리는 눈빛',camera:'화판 너머 3/4샷',line:'연우의 화폭엔 늘 빈자리가 있었어요.'}
   ],
   taegyeom:[
-    {id:'taegyeom-1',title:'잘못 묶인 짐표',activities:['errand','ferryhelp'],scene:'나루터',outfit:'짐 나르기 좋은 단단한 상단 복식',pose:'짐표를 바로 고쳐 묶는 동작',expression:'재빠르게 판단하는 표정',camera:'허리 높이 전신샷',line:'뒤바뀐 짐표를 바로잡으며 상단 후계자 태겸과 처음 만났어요.'},
-    {id:'taegyeom-2',title:'한 냥의 흥정',activities:['shopping','merchanthelp'],scene:'저잣거리',outfit:'장사꾼 느낌의 깔끔한 상단 옷',pose:'손가락으로 값을 세며 흥정하는 동작',expression:'장난기 있는 미소',camera:'맞은편 대치 구도',line:'태겸과 물건값을 두고 재치 있는 흥정을 벌였어요.'},
-    {id:'taegyeom-3',title:'비에 젖은 장부',activities:['arithmetic','merchanthelp'],scene:'상단 장부방',outfit:'소매를 접은 계산용 복식',pose:'젖은 장부를 닦고 숫자를 세는 동작',expression:'집중하고 책임감 있는 표정',camera:'책상 위 대각선샷',line:'젖은 장부를 함께 복원하며 태겸의 책임감을 알게 되었어요.'},
-    {id:'taegyeom-4',title:'나루의 저녁',activities:['ferryhelp','vacation'],scene:'나루터 저녁',outfit:'바람을 덜 타는 두꺼운 외출복',pose:'짐을 내려놓고 차를 건네는 동작',expression:'조용히 웃는 표정',camera:'노을을 뒤로한 반신샷',line:'나루의 저녁 장사를 마치고 태겸과 따뜻한 차를 나누었어요.'},
-    {id:'taegyeom-5',title:'함께 갈 장길',activities:['shopping','vacation'],scene:'큰 장 입구',outfit:'화사하지만 실용적인 상단 외출복',pose:'앞장서며 손을 내미는 동작',expression:'기대에 찬 미소',camera:'길을 함께 보는 2인 샷',line:'태겸은 다음 큰 장에는 손님이 아니라 동행으로 와 달라고 했어요.'}
+    {id:'taegyeom-1',title:'잘못 묶인 짐표',activities:['errand','ferryhelp'],scene:'나루터',outfit:'짐 나르기 좋은 단단한 상단 복식',pose:'짐표를 바로 고쳐 묶는 동작',expression:'재빠르게 판단하는 표정',camera:'허리 높이 전신샷',line:'짐표를 바로잡다 태겸을 만났어요.'},
+    {id:'taegyeom-2',title:'한 냥의 흥정',activities:['shopping','merchanthelp'],scene:'저잣거리',outfit:'장사꾼 느낌의 깔끔한 상단 옷',pose:'손가락으로 값을 세며 흥정하는 동작',expression:'장난기 있는 미소',camera:'맞은편 대치 구도',line:'태겸과 값부터 주고받았어요.'},
+    {id:'taegyeom-3',title:'비에 젖은 장부',activities:['arithmetic','merchanthelp'],scene:'상단 장부방',outfit:'소매를 접은 계산용 복식',pose:'젖은 장부를 닦고 숫자를 세는 동작',expression:'집중하고 책임감 있는 표정',camera:'책상 위 대각선샷',line:'젖은 장부를 함께 정리했어요.'},
+    {id:'taegyeom-4',title:'나루의 저녁',activities:['ferryhelp','vacation'],scene:'나루터 저녁',outfit:'바람을 덜 타는 두꺼운 외출복',pose:'짐을 내려놓고 차를 건네는 동작',expression:'조용히 웃는 표정',camera:'노을을 뒤로한 반신샷',line:'나루터에서 태겸과 차를 마셨어요.'},
+    {id:'taegyeom-5',title:'함께 갈 장길',activities:['shopping','vacation'],scene:'큰 장 입구',outfit:'화사하지만 실용적인 상단 외출복',pose:'앞장서며 손을 내미는 동작',expression:'기대에 찬 미소',camera:'길을 함께 보는 2인 샷',line:'태겸은 다음 장에 같이 가자 했어요.'}
   ],
   hyeon:[
-    {id:'hyeon-1',title:'평범한 윷놀이',activities:['manners','vacation'],scene:'마당',outfit:'신분을 드러내지 않는 평복',pose:'윷을 던진 뒤 고개를 기울이는 동작',expression:'웃음을 참는 표정',camera:'작은 탁자 위 반신샷',line:'신분을 숨긴 청년 현과 소박한 놀이를 하며 처음 인사를 나눴어요.'},
-    {id:'hyeon-2',title:'낯선 호위',activities:['dungeon','swordsmanship'],scene:'어두운 길목',outfit:'움직임이 편한 호위복과 짧은 망토',pose:'앞을 가로막고 몸을 낮추는 동작',expression:'경계하는 날카로운 눈빛',camera:'측면 전신샷',line:'위험한 길에서 능숙하게 앞을 막아선 현의 낯선 모습을 보았어요.'},
-    {id:'hyeon-3',title:'궁 밖의 소문',activities:['shopping','errand'],scene:'저잣거리',outfit:'평민처럼 보이는 단정한 외출복',pose:'사람들 틈에서 뒤돌아 듣는 동작',expression:'말을 아끼는 차분한 표정',camera:'군중 사이 3/4샷',line:'저잣거리의 소문을 듣던 현이 자신의 이야기는 조용히 감추었어요.'},
-    {id:'hyeon-4',title:'등불 아래 진심',activities:['vacation','spellcraft'],scene:'등불 거리',outfit:'등불빛을 받으면 은근히 빛나는 나들이복',pose:'등불을 손으로 가리며 서 있는 동작',expression:'고백 직전의 흔들리는 표정',camera:'등불 뒤 역광 반신샷',line:'등불 아래에서 현은 평범한 이름으로 불리고 싶다는 마음을 털어놓았어요.'},
-    {id:'hyeon-5',title:'다시 만날 문',activities:['manners','vacation'],scene:'큰 문 앞',outfit:'신분을 밝힐 준비가 된 단정한 정장형 복식',pose:'문 쪽으로 한 걸음 내딛는 동작',expression:'결심한 듯한 표정',camera:'정면 대칭 구도',line:'현은 언젠가 모든 것을 밝히고 다시 만나겠다고 약속했어요.'}
+    {id:'hyeon-1',title:'평범한 윷놀이',activities:['manners','vacation'],scene:'마당',outfit:'신분을 드러내지 않는 평복',pose:'윷을 던진 뒤 고개를 기울이는 동작',expression:'웃음을 참는 표정',camera:'작은 탁자 위 반신샷',line:'윷놀이 판에서 현과 마주쳤어요.'},
+    {id:'hyeon-2',title:'낯선 호위',activities:['dungeon','swordsmanship'],scene:'어두운 길목',outfit:'움직임이 편한 호위복과 짧은 망토',pose:'앞을 가로막고 몸을 낮추는 동작',expression:'경계하는 날카로운 눈빛',camera:'측면 전신샷',line:'위험한 길목에서 현이 앞을 막았어요.'},
+    {id:'hyeon-3',title:'궁 밖의 소문',activities:['shopping','errand'],scene:'저잣거리',outfit:'평민처럼 보이는 단정한 외출복',pose:'사람들 틈에서 뒤돌아 듣는 동작',expression:'말을 아끼는 차분한 표정',camera:'군중 사이 3/4샷',line:'저잣거리에서 현의 이름을 들었어요.'},
+    {id:'hyeon-4',title:'등불 아래 진심',activities:['vacation','spellcraft'],scene:'등불 거리',outfit:'등불빛을 받으면 은근히 빛나는 나들이복',pose:'등불을 손으로 가리며 서 있는 동작',expression:'고백 직전의 흔들리는 표정',camera:'등불 뒤 역광 반신샷',line:'등불 아래서 현이 말을 걸었어요.'},
+    {id:'hyeon-5',title:'다시 만날 문',activities:['manners','vacation'],scene:'큰 문 앞',outfit:'신분을 밝힐 준비가 된 단정한 정장형 복식',pose:'문 쪽으로 한 걸음 내딛는 동작',expression:'결심한 듯한 표정',camera:'정면 대칭 구도',line:'현은 다음에 다시 보자 했어요.'}
   ]
 };
 const careerEndingCandidates=[
@@ -816,7 +816,7 @@ function normalizeRelations(){
     const completedEpisodes=Array.isArray(record.completedEpisodes)?[...new Set(record.completedEpisodes.filter(id=>typeof id==='string'))]:[];
     const affinity=Math.max(0,Math.min(100,Number(record.affinity)||meetings*5));
     const relationship=record.relationship==='결별'?'결별':affinity>=80?'연인':affinity>=60?'특별한 인연':affinity>=35?'친구':'지인';
-    game.relations[candidate.id]={meetings:Math.max(meetings,completedEpisodes.length),affinity,lastMetAt:record.lastMetAt||null,dateUnlocked:Boolean(record.dateUnlocked||(Math.max(meetings,completedEpisodes.length)>=5&&game.age>=16)),completedEpisodes,holidayFlags:record.holidayFlags&&typeof record.holidayFlags==='object'?record.holidayFlags:{},vacationMemories:Array.isArray(record.vacationMemories)?record.vacationMemories:[],relationship};
+    game.relations[candidate.id]={meetings:Math.max(meetings,completedEpisodes.length),affinity,lastMetAt:record.lastMetAt||null,dateUnlocked:Boolean(record.dateUnlocked||(Math.max(meetings,completedEpisodes.length)>=5)),completedEpisodes,holidayFlags:record.holidayFlags&&typeof record.holidayFlags==='object'?record.holidayFlags:{},vacationMemories:Array.isArray(record.vacationMemories)?record.vacationMemories:[],relationship};
   });
 }
 function relationRecord(id){normalizeRelations();return game.relations[id];}
@@ -824,7 +824,7 @@ function recordRelationEncounter(candidate,episode=null){
   const record=relationRecord(candidate.id),isNew=episode&&!record.completedEpisodes.includes(episode.id);
   if(isNew){record.completedEpisodes.push(episode.id);record.meetings=Math.min(5,record.meetings+1);}
   record.affinity=Math.min(100,record.affinity+(isNew?7:2));record.lastMetAt=game.currentDate||null;
-  if(record.meetings>=5&&game.age>=16)record.dateUnlocked=true;
+  if(record.meetings>=5)record.dateUnlocked=true;
   record.relationship=record.affinity>=80?'연인':record.affinity>=60?'특별한 인연':record.affinity>=35?'친구':'지인';
   return record;
 }
@@ -838,15 +838,15 @@ function rollHolidayRelationEvent(){
   const candidate=eligible.sort((left,right)=>relationRecord(left.id).meetings-relationRecord(right.id).meetings||relationRecord(left.id).affinity-relationRecord(right.id).affinity)[0],record=relationRecord(candidate.id);
   record.holidayFlags[flag]=true;record.affinity=Math.min(100,record.affinity+8);
   if(record.meetings<5){record.meetings+=1;record.completedEpisodes.push(`${candidate.id}-${flag}`);}
-  if(record.meetings>=5&&game.age>=16)record.dateUnlocked=true;
+  if(record.meetings>=5)record.dateUnlocked=true;
   record.relationship=record.affinity>=80?'연인':record.affinity>=60?'특별한 인연':record.affinity>=35?'친구':'지인';
-  const lines={설날:{doyun:'활터에서 새해 호신부를 나누었어요.',seojin:'새해 시구가 적힌 작은 서책을 받았어요.',yeonwoo:'복주머니에 서로의 작은 그림을 그렸어요.',taegyeom:'떡국을 나누며 세뱃돈 흥정을 했어요.',hyeon:'평범한 차림으로 윷놀이를 함께했어요.'},추석:{doyun:'야간 순찰길에서 함께 보름달을 보았어요.',seojin:'정자에서 달을 바라보며 시를 지었어요.',yeonwoo:'달빛 아래 잔치 풍경을 함께 그렸어요.',taegyeom:'송편 장사를 마치고 이웃에게 음식을 나누었어요.',hyeon:'신분을 감춘 채 등불 거리를 함께 걸었어요.'}};
+  const lines={설날:{doyun:'도윤과 새해 인사를 했어요.',seojin:'서진과 덕담을 나눴어요.',yeonwoo:'연우와 복주머니를 바꿨어요.',taegyeom:'태겸과 떡국을 먹었어요.',hyeon:'현과 윷놀이를 했어요.'},추석:{doyun:'도윤과 달을 봤어요.',seojin:'서진과 시를 읊었어요.',yeonwoo:'연우와 달빛을 그렸어요.',taegyeom:'태겸과 송편을 나눴어요.',hyeon:'현과 등불길을 걸었어요.'}};
   return {holiday,candidate,record,line:lines[holiday][candidate.id],flag};
 }
 function presentHolidayRelation(){
   if(!pendingHolidayRelation)return false;
   const event=pendingHolidayRelation;pendingHolidayRelation=null;panel.hidden=false;panelTitle.textContent=`${event.holiday}의 인연`;
-  panelBody.innerHTML=`<section class="holiday-relation-event">${relationPortraitMarkup(event.candidate,'holiday-relation-portrait')}<div><small>${event.holiday} 특별 만남</small><h3>${event.candidate.name}</h3><p>${event.line}</p><b>호감도 +8 · 현재 ${event.record.affinity}<br>${event.record.meetings} / 5회 만남 · ${event.record.relationship}</b><button id="holidayRelationContinue" type="button">추억 간직하기</button></div></section>`;
+  panelBody.innerHTML=`<section class="holiday-relation-event">${relationPortraitMarkup(event.candidate,'holiday-relation-portrait')}<div><small>${event.holiday}</small><h3>${event.candidate.name}</h3><p>${event.line}</p><b>호감 +8 · ${event.record.affinity}<br>${event.record.meetings}/5 · ${event.record.relationship}</b><button id="holidayRelationContinue" type="button">기억하기</button></div></section>`;
   document.querySelector('#holidayRelationContinue').addEventListener('click',()=>{panel.hidden=true;if(!presentActivityUnlocks())openVisitingMerchant();queueAutoSave();});
   return true;
 }
@@ -865,6 +865,9 @@ function balancedRelationCandidate(candidates){
   const pool=candidates.filter(candidate=>relationRecord(candidate.id).meetings<=minimum+1);
   return pool[Math.floor(Math.random()*pool.length)];
 }
+function relationOverlayCaption(candidate,episode){
+  return episode?.title?`${candidate.name} · ${episode.title}`:candidate.name;
+}
 function waitForVacationTap(label='화면을 터치해 계속'){
   const scene=document.querySelector('#vacationScene'),button=document.querySelector('#vacationNext');button.textContent=label;
   return new Promise(resolve=>{const advance=event=>{event.preventDefault();scene.removeEventListener('click',advance);resolve();};scene.addEventListener('click',advance,{once:true});});
@@ -875,7 +878,7 @@ function chooseVacationCompanion(){
   if(!eligible.length)return Promise.resolve(null);
   const phone=document.querySelector('.phone'),scene=document.querySelector('#vacationScene');
   scene.hidden=false;scene.classList.remove('child-live','has-encounter');phone.classList.add('vacation-playing');
-  scene.insertAdjacentHTML('beforeend',`<div class="vacation-companion-choice" id="vacationCompanionChoice" role="dialog" aria-modal="true" aria-label="바캉스 동행 선택"><section><small>이번 여행</small><h3>누구와 떠날까요?</h3><button data-vacation-companion="">혼자 간다</button>${eligible.map(candidate=>`<button data-vacation-companion="${candidate.id}">${candidate.name}과 함께 간다 <em>호감 ${relationRecord(candidate.id).affinity}</em></button>`).join('')}</section></div>`);
+  scene.insertAdjacentHTML('beforeend',`<div class="vacation-companion-choice" id="vacationCompanionChoice" role="dialog" aria-modal="true" aria-label="바캉스 동행 선택"><section><small>이번 여행</small><h3>누구와 갈까요?</h3><button data-vacation-companion="">혼자 간다</button>${eligible.map(candidate=>`<button data-vacation-companion="${candidate.id}">${candidate.name}과 함께 간다 <em>${relationRecord(candidate.id).affinity}</em></button>`).join('')}</section></div>`);
   return new Promise(resolve=>{document.querySelectorAll('[data-vacation-companion]').forEach(button=>button.addEventListener('click',()=>{const candidate=endingRelationCandidates.find(item=>item.id===button.dataset.vacationCompanion)||null;document.querySelector('#vacationCompanionChoice')?.remove();scene.hidden=true;phone.classList.remove('vacation-playing');resolve(candidate);},{once:true}));});
 }
 function renderVacationMotion(season){
@@ -917,14 +920,14 @@ async function playVacationScene(prize,index,companion=null){
     companionPortrait.src=relation.baseSheet;
     companionPortrait.style.setProperty('--relation-sheet',`url('${relation.baseSheet}')`);
     companionPortrait.style.setProperty('--relation-age-position',relationAgePosition());
-    companionName.textContent=relation.name;
-    playerText.textContent=`${game.guardianName||'신수'}와 함께 이 풍경을 바라보며 천천히 말을 건넸어요.`;
+    companionName.textContent=relationOverlayCaption(relation,episode);
+    playerText.textContent=`${game.guardianName||'신수'}가 먼저 인사를 건넸어요.`;
     companionText.textContent=episode?.line||relation.dialogues[Math.floor(Math.random()*relation.dialogues.length)];
     const fromLeft=Math.random()<.5;
     overlay.classList.toggle('companion-left',fromLeft);
     overlay.classList.toggle('companion-right',!fromLeft);
     const record=recordRelationEncounter(relation,episode);
-    if(companion){record.affinity=Math.min(100,record.affinity+10);record.relationship=record.affinity>=80?'연인':record.affinity>=60?'특별한 인연':'친구';const memory=`${game.age}-${sceneSeason}`;if(!record.vacationMemories.includes(memory))record.vacationMemories.push(memory);companionText.textContent=`${relation.name}과(와) 함께 ${prize.name}의 풍경을 오래 기억하기로 했어요.`;}
+    if(companion){record.affinity=Math.min(100,record.affinity+10);record.relationship=record.affinity>=80?'연인':record.affinity>=60?'특별한 인연':'친구';const memory=`${game.age}-${sceneSeason}`;if(!record.vacationMemories.includes(memory))record.vacationMemories.push(memory);companionText.textContent=`${relation.name}과 함께 왔어요.`;}
     await waitForVacationTap('대화를 읽은 뒤 터치');
   }
   overlay.hidden=true;scene.classList.remove('has-encounter','child-live');scene.hidden=true;scene.dataset.effect='';scene.dataset.season='';document.querySelector('#vacationMotion').replaceChildren();phone.classList.remove('vacation-playing');playHomeMusic();
@@ -1113,8 +1116,8 @@ function openPanel(type) {
     panelTitle.textContent = `${game.characterName || '아이'}의 상태`;
     normalizeBodyMetrics();
     normalizeRelations();
-    const relationCards=endingRelationCandidates.map(candidate=>{const relation=game.relations[candidate.id];const phase=relation.dateUnlocked?(relation.affinity>=60?`${relation.relationship} · 호감 ${relation.affinity}`:`데이트 가능 · 호감 ${relation.affinity}/60`):relation.meetings>=5?'16세부터 데이트 가능':`${relation.meetings} / 5회 만남`;return `<div class="relation-card ${relation.affinity>=60?'unlocked':''}">${relationPortraitMarkup(candidate,'relation-mini-portrait')}<b>${candidate.name}</b><small>${candidate.role}</small><small>비공식 외형 모티브 · ${candidate.motif}</small><span>${phase}</span><i style="--relation-progress:${Math.min(100,relation.affinity)}%"></i></div>`;}).join('');
-    panelBody.innerHTML = `<div class="status-summary"><span>${game.age}세 · ${game.season} ${game.week}주</span><b>${game.money.toLocaleString()}냥</b></div><section class="body-profile" aria-label="성장 정보"><div><small>키</small><b>${game.height.toFixed(1)} cm</b></div><div><small>몸무게</small><b>${game.weight.toFixed(1)} kg</b></div></section>${statGroups.map(group => `<section class="stat-group"><h3>${group.title}</h3>${group.stats.map(([key,label]) => statBar(key,label)).join('')}</section>`).join('')}<section class="stat-group condition-group"><h3>현재 상태</h3>${statBar('stress','스트레스')}</section><section class="stat-group"><h3>수호 인연</h3>${statBar('nannyAffinity','신수 유대감')}${statBar('fatherAffinity','아버지 친밀도')}</section><section class="relation-group"><h3>인연</h3><p>5회 만남은 데이트 해금 조건이며, 호감도 60 이상과 특별한 관계가 되어야 인연 엔딩 후보가 됩니다.</p><div class="relation-grid">${relationCards}</div></section>`;
+    const relationCards=endingRelationCandidates.map(candidate=>{const relation=game.relations[candidate.id];const phase=relation.dateUnlocked?(relation.affinity>=60?`${relation.relationship} · ${relation.affinity}`:`데이트 가능 · ${relation.affinity}/60`):`${relation.meetings}/5`;return `<div class="relation-card ${relation.affinity>=60?'unlocked':''}">${relationPortraitMarkup(candidate,'relation-mini-portrait')}<b>${candidate.name}</b><small>${candidate.role}</small><small>${candidate.motif}</small><span>${phase}</span><i style="--relation-progress:${Math.min(100,relation.affinity)}%"></i></div>`;}).join('');
+    panelBody.innerHTML = `<div class="status-summary"><span>${game.age}세 · ${game.season} ${game.week}주</span><b>${game.money.toLocaleString()}냥</b></div><section class="body-profile" aria-label="성장 정보"><div><small>키</small><b>${game.height.toFixed(1)} cm</b></div><div><small>몸무게</small><b>${game.weight.toFixed(1)} kg</b></div></section>${statGroups.map(group => `<section class="stat-group"><h3>${group.title}</h3>${group.stats.map(([key,label])=>statBar(key,label)).join('')}</section>`).join('')}<section class="stat-group condition-group"><h3>현재 상태</h3>${statBar('stress','스트레스')}</section><section class="stat-group"><h3>수호 인연</h3>${statBar('nannyAffinity','신수 유대감')}${statBar('fatherAffinity','아버지 친밀도')}</section><section class="relation-group"><h3>인연</h3><p>5회면 열려요. 60 이상이면 후보예요.</p><div class="relation-grid">${relationCards}</div></section>`;
   } else if (type === 'inventory') {
     playHomeMusic();
     renderInventory();
@@ -1229,7 +1232,7 @@ function renderSavePanel() {
     return `<div class="save-slot ${saved ? 'filled' : 'empty'}"><div><b>인연 ${slot}${current?' · 현재 키우는 중':''}</b><small>${label}${savedAt ? ` · ${savedAt}` : ''}</small></div>${saved?`<div class="save-slot-actions"><button data-load-slot="${slot}" ${current?'disabled':''}>${current?'현재 기록':'이어하기'}</button><button data-delete-slot="${slot}" ${current?'disabled':''}>기록 삭제</button></div>`:''}</div>`;
   }).join('');
   panelBody.innerHTML = `
-    <div class="save-info"><b>인연 기록 ${slots.filter(Boolean).length}/5</b><small>최대 다섯 명까지 동시에 키울 수 있으며 각 기록은 자동으로 저장됩니다.</small></div>
+    <div class="save-info"><b>인연 기록 ${slots.filter(Boolean).length}/5</b><small>최대 다섯 명까지 동시에 키울 수 있어요.</small></div>
     <div class="save-grid">${slotCards}</div>
     <div class="save-actions">
       <button class="new-growth" id="startNewGrowth">새롭게 시작하기</button>
@@ -1827,7 +1830,7 @@ function showEnding(){
   const categoryLabel={relation:'인연 엔딩',career:'직업 엔딩',downfall:'몰락 엔딩'}[result.category];
   const partner=result.partnerName?`<div><small>함께한 인연</small><b>${result.partnerName} · ${result.partnerRole}</b></div>`:'';
   panel.hidden=false; panelTitle.textContent=`${game.characterName || '아이'}의 성장 기록`;
-  panelBody.innerHTML=`<div class="ending-card ${result.category}"><small class="ending-date">마지막 생일 다음 날 · ${game.currentDate}</small><em>${categoryLabel}</em><h2>${result.title}</h2><p class="ending-lead">${result.description}</p><section class="ending-summary">${result.category==='relation'?`<div><small>성장한 직업 성향</small><b>${result.careerTitle}</b></div>`:''}${partner}<div><small>대표 능력</small><b>${result.strongest.map(stat=>`${stat.label} ${stat.value}`).join(' · ')}</b></div><div><small>바캉스 수집</small><b>${result.collectionCount} / ${result.collectionTotal}</b></div><div><small>마지막 은전</small><b>${Math.max(0,game.money).toLocaleString()}냥</b></div></section><button id="endingRestart">새로운 생일로 시작</button></div>`;
+  panelBody.innerHTML=`<div class="ending-card ${result.category}"><small class="ending-date">${game.currentDate}</small><em>${categoryLabel}</em><h2>${result.title}</h2><p class="ending-lead">${result.description}</p><section class="ending-summary">${result.category==='relation'?`<div><small>직업 성향</small><b>${result.careerTitle}</b></div>`:''}${partner}<div><small>대표 능력</small><b>${result.strongest.map(stat=>`${stat.label} ${stat.value}`).join(' · ')}</b></div><div><small>수집</small><b>${result.collectionCount} / ${result.collectionTotal}</b></div><div><small>은전</small><b>${Math.max(0,game.money).toLocaleString()}냥</b></div></section><button id="endingRestart">새로운 생일로 시작</button></div>`;
   document.querySelector('#endingRestart').addEventListener('click',beginNewGrowth);
 }
 function updatePrologueCopy(scene,index){
@@ -2000,7 +2003,7 @@ async function playWeeklySchedule(selected) {
       const relation=endingRelationCandidates.find(candidate=>candidate.id===action.relationId),record=relationRecord(action.relationId);dateRelation={candidate:relation,record};
       stageMap.src=backgrounds.market;stageMap.alt=`${relation.name}과 만난 저잣거리`;
       stageCharacter.hidden=true;stageProps.hidden=true;stageNpc.hidden=false;stageNpc.className='stage-npc npc-romance-date';applyRelationPortrait(stageNpc,relation);
-      document.querySelector('#dialogueText').textContent=`${relation.name}과(와) 약속한 장소에서 천천히 이야기를 나누었어요.`;
+      document.querySelector('#dialogueText').textContent=`${relation.name}과 만나기로 한 자리에 섰어요.`;
       await new Promise(resolve=>setTimeout(resolve,1250));
       record.affinity=Math.min(100,record.affinity+12);record.lastMetAt=game.currentDate||null;record.relationship=record.affinity>=80?'연인':record.affinity>=60?'특별한 인연':'친구';
       stageCharacter.hidden=false;stageProps.hidden=false;
@@ -2024,7 +2027,7 @@ async function playWeeklySchedule(selected) {
       await animateConditionEvent(stageCharacter,conditionCue,condition);
     }
     setScheduleDialogue(action,outcome,index);
-    if(dateRelation)document.querySelector('#dialogueText').textContent=`${dateRelation.candidate.name}과(와) 즐거운 시간을 보냈어요. 지금은 ${dateRelation.record.relationship} 사이예요.`;
+    if(dateRelation)document.querySelector('#dialogueText').textContent=`${dateRelation.candidate.name}과 조금 더 가까워졌어요. ${dateRelation.record.relationship}예요.`;
     stageCharacter.className = `stage-character pixel-sprite ${presentation.motion}${restActivity==='tea'?' rest-tea':''}`;
     const actualChange={};
     Object.entries(resolvedChange).forEach(([key,value])=>{const before=clampStat(key,game[key]||0),after=clampStat(key,before+value);game[key]=after;actualChange[key]=after-before;});
@@ -2040,7 +2043,7 @@ async function playWeeklySchedule(selected) {
     const moneyText = (moneyChange > 0 ? `은전 +${moneyChange}냥` : moneyChange < 0 ? `은전 ${moneyChange}냥` : isWork&&outcome==='mistake'?'실수하여 일당 없음':'비용 없음')+bonusText;
     const resultSummary=orderedChangeEntries(resolvedChange).filter(([,value])=>value!==0).map(([key,value])=>`${statLabels[key]||key} ${value>0?'+':''}${value}`).join(' · ');
     const relationEvent=maybeScheduleRelationEncounter(action);
-    dayResult.innerHTML = `<b>${action.name} · ${outcomeLabels[outcome]}</b><span>${resultSummary||'능력치 변화 없음'}<br>${moneyText} · 현재 ${game.money.toLocaleString()}냥${dateRelation?`<br>인연 · ${dateRelation.candidate.name} 호감도 +12 · 현재 ${dateRelation.record.affinity} · ${dateRelation.record.relationship}`:''}${relationEvent?`<br>인연 · ${relationEvent.candidate.name} — ${relationEvent.episode.title}`:''}</span>`;
+    dayResult.innerHTML = `<b>${action.name} · ${outcomeLabels[outcome]}</b><span>${resultSummary||'능력치 변화 없음'}<br>${moneyText} · 현재 ${game.money.toLocaleString()}냥${dateRelation?`<br>${dateRelation.candidate.name} +12 · ${dateRelation.record.affinity} · ${dateRelation.record.relationship}`:''}${relationEvent?`<br>${relationEvent.candidate.name} — ${relationEvent.episode.title}`:''}</span>`;
     if(relationEvent)document.querySelector('#dialogueText').textContent=relationEvent.episode.line;
     if(action.id!=='vacation'){
       dayResult.hidden = false;

@@ -1,22 +1,21 @@
 from pathlib import Path
+
 from PIL import Image, ImageDraw
 
-ROOT=Path(__file__).resolve().parents[1]
-files=sorted((ROOT/'assets/characters/seonhwa/wardrobe').rglob('*.png'))
-thumb_w,thumb_h=180,270
-sheet=Image.new('RGB',(thumb_w*6,thumb_h*5),(224,214,194));draw=ImageDraw.Draw(sheet)
-for i,path in enumerate(files):
-    image=Image.open(path).convert('RGBA'); background=Image.new('RGBA',(thumb_w,thumb_h),(238,231,215,255))
-    image.thumbnail((thumb_w-12,thumb_h-30),Image.Resampling.LANCZOS);background.alpha_composite(image,((thumb_w-image.width)//2,2))
-    x,y=(i%6)*thumb_w,(i//6)*thumb_h;sheet.paste(background.convert('RGB'),(x,y));draw.text((x+4,y+thumb_h-22),f'{path.parent.name}/{path.stem}',fill=(35,26,19))
-sheet.save(ROOT/'tmp-wardrobe-contact-sheet.jpg',quality=90)
 
-for age_dir in sorted((ROOT/'assets/characters/seonhwa/wardrobe').glob('age-*')):
-    age_files=sorted(age_dir.glob('*.png'))
-    rows=(len(age_files)+5)//6
-    age_sheet=Image.new('RGB',(thumb_w*6,thumb_h*rows),(224,214,194));age_draw=ImageDraw.Draw(age_sheet)
-    for i,path in enumerate(age_files):
-        image=Image.open(path).convert('RGBA');background=Image.new('RGBA',(thumb_w,thumb_h),(238,231,215,255))
-        image.thumbnail((thumb_w-12,thumb_h-30),Image.Resampling.LANCZOS);background.alpha_composite(image,((thumb_w-image.width)//2,2))
-        x,y=(i%6)*thumb_w,(i//6)*thumb_h;age_sheet.paste(background.convert('RGB'),(x,y));age_draw.text((x+4,y+thumb_h-22),path.stem,fill=(35,26,19))
-    age_sheet.save(ROOT/f'tmp-wardrobe-{age_dir.name}.jpg',quality=94)
+source = Path("assets/characters/seonhwa/wardrobe/age-09")
+files = sorted(source.glob("*.png"))
+cell_width, image_height, cell_height = 220, 300, 340
+sheet = Image.new("RGB", (cell_width * 4, cell_height * ((len(files) + 3) // 4)), "white")
+draw = ImageDraw.Draw(sheet)
+
+for index, path in enumerate(files):
+    image = Image.open(path).convert("RGBA")
+    image.thumbnail((cell_width, image_height))
+    x = index % 4 * cell_width + (cell_width - image.width) // 2
+    y = index // 4 * cell_height
+    sheet.paste(image, (x, y), image)
+    draw.text((index % 4 * cell_width + 5, y + image_height + 5), path.stem, fill="black")
+
+Path("tmp").mkdir(exist_ok=True)
+sheet.save("tmp/age09-wardrobe-contact.jpg", quality=92)
