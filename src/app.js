@@ -60,6 +60,7 @@ const guardianStoryScenes=[
 ];
 let guardianStoryIndex=0,guardianCinematicTimeline=[],guardianCinematicBeat=0,guardianInputLockedUntil=0,selectedGuardianType=null,introDialogueQueue=[],introDialogueIndex=0;
 let pendingActivityUnlocks=[];
+let pendingHolidayRelation=null;
 const statGroups = [
   { title: '신체', stats: [['health','체력'],['strength','힘'],['agility','민첩']] },
   { title: '지성·마음', stats: [['intelligence','지능'],['magic','마력'],['mentality','정신력']] },
@@ -819,6 +820,28 @@ function recordRelationEncounter(candidate,episode=null){
   if(record.meetings>=5&&game.age>=16)record.dateUnlocked=true;
   record.relationship=record.affinity>=80?'연인':record.affinity>=60?'특별한 인연':record.affinity>=35?'친구':'지인';
   return record;
+}
+function rollHolidayRelationEvent(){
+  if(game.age<13)return null;
+  const holiday=game.season==='봄'&&game.week===1?'설날':game.season==='가을'&&game.week===3?'추석':null;
+  if(!holiday)return null;
+  const year=new Date(`${game.currentDate}T00:00:00`).getFullYear(),flag=`${year}-${holiday}`;
+  const eligible=endingRelationCandidates.filter(candidate=>{const record=relationRecord(candidate.id);return record.meetings>0&&!record.holidayFlags[flag];});
+  if(!eligible.length)return null;
+  const candidate=eligible.sort((left,right)=>relationRecord(left.id).meetings-relationRecord(right.id).meetings||relationRecord(left.id).affinity-relationRecord(right.id).affinity)[0],record=relationRecord(candidate.id);
+  record.holidayFlags[flag]=true;record.affinity=Math.min(100,record.affinity+8);
+  if(record.meetings<5){record.meetings+=1;record.completedEpisodes.push(`${candidate.id}-${flag}`);}
+  if(record.meetings>=5&&game.age>=16)record.dateUnlocked=true;
+  record.relationship=record.affinity>=80?'연인':record.affinity>=60?'특별한 인연':record.affinity>=35?'친구':'지인';
+  const lines={설날:{doyun:'활터에서 새해 호신부를 나누었어요.',seojin:'새해 시구가 적힌 작은 서책을 받았어요.',yeonwoo:'복주머니에 서로의 작은 그림을 그렸어요.',taegyeom:'떡국을 나누며 세뱃돈 흥정을 했어요.',hyeon:'평범한 차림으로 윷놀이를 함께했어요.'},추석:{doyun:'야간 순찰길에서 함께 보름달을 보았어요.',seojin:'정자에서 달을 바라보며 시를 지었어요.',yeonwoo:'달빛 아래 잔치 풍경을 함께 그렸어요.',taegyeom:'송편 장사를 마치고 이웃에게 음식을 나누었어요.',hyeon:'신분을 감춘 채 등불 거리를 함께 걸었어요.'}};
+  return {holiday,candidate,record,line:lines[holiday][candidate.id],flag};
+}
+function presentHolidayRelation(){
+  if(!pendingHolidayRelation)return false;
+  const event=pendingHolidayRelation;pendingHolidayRelation=null;panel.hidden=false;panelTitle.textContent=`${event.holiday}의 인연`;
+  panelBody.innerHTML=`<section class="holiday-relation-event"><img src="${event.candidate.image}" alt="${event.candidate.name}"><div><small>${event.holiday} 특별 만남</small><h3>${event.candidate.name}</h3><p>${event.line}</p><b>호감도 +8 · 현재 ${event.record.affinity}<br>${event.record.meetings} / 5회 만남 · ${event.record.relationship}</b><button id="holidayRelationContinue" type="button">추억 간직하기</button></div></section>`;
+  document.querySelector('#holidayRelationContinue').addEventListener('click',()=>{panel.hidden=true;if(!presentActivityUnlocks())openVisitingMerchant();queueAutoSave();});
+  return true;
 }
 function nextRelationEpisode(candidate,activityId){return (relationEpisodeCatalog[candidate.id]||[]).find(episode=>episode.activities.includes(activityId)&&!relationRecord(candidate.id).completedEpisodes.includes(episode.id))||null;}
 function maybeScheduleRelationEncounter(action){
@@ -1622,7 +1645,7 @@ function showMonthlyReport(ledger){
   const net=ledger.income-ledger.expense;
   const condition=game.stress>=75?'스트레스가 높아요. 다음 달에는 휴식이 필요해요.':game.stress>=50?'마음이 조금 무겁지만 잘 버텼어요.':'좋은 컨디션으로 한 달을 마쳤어요.';
   panelBody.innerHTML=`<section class="monthly-balance"><div><span>수입</span><b>+${ledger.income.toLocaleString()}냥</b></div><div><span>지출</span><b>-${ledger.expense.toLocaleString()}냥</b></div><div class="net"><span>합계</span><b class="${net>=0?'good':'bad'}">${net>=0?'+':''}${net.toLocaleString()}냥</b></div></section><section class="monthly-report-section"><h3>이번 달 활동</h3><ul>${activityRows||'<li>기록 없음</li>'}</ul></section><section class="monthly-report-section"><h3>능력치 변화</h3><ul>${statRows||'<li>변화 없음</li>'}</ul></section><p class="monthly-condition">${condition}</p><button id="closeMonthlyReport" class="monthly-continue">다음 달 시작</button>`;
-  document.querySelector('#closeMonthlyReport').addEventListener('click',()=>{panel.hidden=true;document.querySelector('#dialogueText').textContent=`${game.month}월도 함께 힘내 보아요.`;if(!presentActivityUnlocks())openVisitingMerchant();});
+  document.querySelector('#closeMonthlyReport').addEventListener('click',()=>{panel.hidden=true;document.querySelector('#dialogueText').textContent=`${game.month}월도 함께 힘내 보아요.`;if(!presentHolidayRelation()&&!presentActivityUnlocks())openVisitingMerchant();});
 }
 
 async function runWeek() {
@@ -1646,6 +1669,7 @@ async function runWeek() {
   const completedLedgers=recordMonthlySchedule(playbackResult.dayRecords);
   game.homeReaction=null;
   const birthdayEvents=advanceGameDate(selected.length);
+  pendingHolidayRelation=rollHolidayRelationEvent();
   pendingActivityUnlocks=actions.filter(action=>actionUnlocked(action)&&!unlockedBefore.has(action.id));
   const completedLedger=completedLedgers[0]||null;
   const counts = selected.reduce((map, action) => (map[action.name]=(map[action.name]||0)+1,map),{});
@@ -1661,7 +1685,7 @@ async function runWeek() {
   rollVisitingMerchant();
   if (game.ended) showEnding();
   else if(completedLedger)showMonthlyReport(completedLedger);
-  else if(!presentActivityUnlocks())openVisitingMerchant();
+  else if(!presentHolidayRelation()&&!presentActivityUnlocks())openVisitingMerchant();
   clearTimeout(autoSaveTimer);
   writeLatestAutoSave();
 }
