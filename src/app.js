@@ -397,7 +397,11 @@ const correctedOutfitVariants=new Map([['13:age13-scholar','age13-scholar-fixed-
 const outfitImageForAge=(id,visualAge=growthVisualAge())=>{
   const outfit=outfits.find(item=>item.id===id);
   if(!outfit)return '';
-  const assetAge=outfit.category==='cash'?growthAssetAge(visualAge):outfit.assetAge||growthAssetAge(visualAge),corrected=correctedOutfitVariants.get(`${visualAge}:${id}`),suffix=visualAge===19&&correctedAdultOutfits.has(id)?'-v2':'';
+  const assetAge=outfit.category==='cash'
+    ? (visualAge===9 ? 9 : growthAssetAge(visualAge))
+    : outfit.assetAge||growthAssetAge(visualAge),
+    corrected=correctedOutfitVariants.get(`${visualAge}:${id}`),
+    suffix=visualAge===19&&correctedAdultOutfits.has(id)?'-v2':'';
   return `../assets/characters/seonhwa/wardrobe/age-${String(assetAge).padStart(2,'0')}/${corrected||`${id}${suffix}`}.png`;
 };
 const outfitImage=id=>outfitImageForAge(id,growthVisualAge());
@@ -1116,7 +1120,14 @@ function openPanel(type) {
     panelTitle.textContent = `${game.characterName || '아이'}의 상태`;
     normalizeBodyMetrics();
     normalizeRelations();
-    const relationCards=endingRelationCandidates.map(candidate=>{const relation=game.relations[candidate.id];const phase=relation.dateUnlocked?(relation.affinity>=60?`${relation.relationship} · ${relation.affinity}`:`데이트 가능 · ${relation.affinity}/60`):`${relation.meetings}/5`;return `<div class="relation-card ${relation.affinity>=60?'unlocked':''}">${relationPortraitMarkup(candidate,'relation-mini-portrait')}<b>${candidate.name}</b><small>${candidate.role}</small><small>${candidate.motif}</small><span>${phase}</span><i style="--relation-progress:${Math.min(100,relation.affinity)}%"></i></div>`;}).join('');
+    const relationCards=endingRelationCandidates.map(candidate=>{
+      const relation=game.relations[candidate.id];
+      const percent=Math.max(0,Math.min(100,relation.affinity));
+      const filled=Math.max(1,Math.min(10,Math.ceil(percent/10)||0));
+      const heartBar=Array.from({length:10},(_,index)=>`<span class="${index<filled?'on':''}">♥</span>`).join('');
+      const phase=relation.dateUnlocked?(relation.affinity>=60?`${relation.relationship}`:`데이트 가능`):`${relation.meetings}/5`;
+      return `<div class="relation-card ${relation.affinity>=60?'unlocked':''}"><b>${candidate.name}</b><small>${candidate.role}</small><span>${phase}</span><div class="relation-heart-meter" aria-label="${candidate.name} 호감도 ${percent}%">${heartBar}</div><em>${percent}%</em></div>`;
+    }).join('');
     panelBody.innerHTML = `<div class="status-summary"><span>${game.age}세 · ${game.season} ${game.week}주</span><b>${game.money.toLocaleString()}냥</b></div><section class="body-profile" aria-label="성장 정보"><div><small>키</small><b>${game.height.toFixed(1)} cm</b></div><div><small>몸무게</small><b>${game.weight.toFixed(1)} kg</b></div></section>${statGroups.map(group => `<section class="stat-group"><h3>${group.title}</h3>${group.stats.map(([key,label])=>statBar(key,label)).join('')}</section>`).join('')}<section class="stat-group condition-group"><h3>현재 상태</h3>${statBar('stress','스트레스')}</section><section class="stat-group"><h3>수호 인연</h3>${statBar('nannyAffinity','신수 유대감')}${statBar('fatherAffinity','아버지 친밀도')}</section><section class="relation-group"><h3>인연</h3><p>5회면 열려요. 60 이상이면 후보예요.</p><div class="relation-grid">${relationCards}</div></section>`;
   } else if (type === 'inventory') {
     playHomeMusic();
@@ -1534,9 +1545,11 @@ function showOutfitPreview(id){
   const agePreview=cash?`<div class="cash-age-preview" role="group" aria-label="연령별 의상 미리보기"><span>연령별 모습</span><div>${[9,13,16,19].map(age=>`<button type="button" data-cash-preview-age="${age}" class="${age===previewGrowthAge?'on':''}" aria-pressed="${age===previewGrowthAge}">${age}세</button>`).join('')}</div></div>`:'';
   const reason=owned?'이미 구매한 의상입니다.':ageLocked?`${outfitAgeLabel(outfit)}에 구매할 수 있습니다.`:insufficient?`보유 ${cash?'캐시':'은전'}가 부족합니다.`:cash?'테스트 캐시로 구매할 수 있습니다.':'미리 입어본 뒤 구매할 수 있습니다.';
   const grade=cash?'캐시 의상':isPremiumOutfit(outfit)?'고급 의상':'일반 의상';
+  panelBody.classList.add('outfit-preview-open');
   panelBody.insertAdjacentHTML('beforeend',`<div class="outfit-preview-backdrop" id="outfitPreview"><section class="outfit-preview-card ${cash?'cash-preview':''}" role="dialog" aria-modal="true" aria-label="${outfit.name} 미리보기"><button class="outfit-preview-close" id="outfitPreviewClose" aria-label="미리보기 닫기">×</button><div class="outfit-preview-image"><img id="outfitPreviewImage" src="${outfitImageForAge(outfit.id,previewGrowthAge)}" alt="${previewGrowthAge}세 ${outfit.name} 전신 미리보기"></div><div class="outfit-preview-info"><small>${grade}</small><h3>${outfit.name}</h3><p>${outfitAgeLabel(outfit)} · ${outfit.seasons.join('·')}<br>${formatChanges(outfit.change)}</p>${agePreview}<b>${cash?`${outfit.cashPrice.toLocaleString()}원`:`${outfit.price.toLocaleString()}냥`}</b><em>${reason}</em><button id="outfitPreviewBuy" ${owned||ageLocked||insufficient?'disabled':''}>${owned?'구매 완료':cash?'테스트 캐시로 구매하기':'이 의상 구매하기'}</button></div></section></div>`);
-  document.querySelector('#outfitPreviewClose').addEventListener('click',()=>document.querySelector('#outfitPreview')?.remove());
-  document.querySelector('#outfitPreview').addEventListener('click',event=>{if(event.target.id==='outfitPreview')event.currentTarget.remove();});
+  const closePreview=()=>{document.querySelector('#outfitPreview')?.remove();panelBody.classList.remove('outfit-preview-open');};
+  document.querySelector('#outfitPreviewClose').addEventListener('click',closePreview);
+  document.querySelector('#outfitPreview').addEventListener('click',event=>{if(event.target.id==='outfitPreview')closePreview();});
   document.querySelectorAll('[data-cash-preview-age]').forEach(button=>button.addEventListener('click',()=>{
     const age=Number(button.dataset.cashPreviewAge),image=document.querySelector('#outfitPreviewImage');image.src=outfitImageForAge(outfit.id,age);image.alt=`${age}세 ${outfit.name} 전신 미리보기`;
     document.querySelectorAll('[data-cash-preview-age]').forEach(item=>{const selected=item===button;item.classList.toggle('on',selected);item.setAttribute('aria-pressed',String(selected));});
