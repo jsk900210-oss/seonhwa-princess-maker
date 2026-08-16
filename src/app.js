@@ -784,7 +784,7 @@ const downfallEndingCandidates=[
 ];
 function careerEndingScore(candidate){const masteryScore=(candidate.masteryJobs||[]).reduce((score,id)=>score+Math.min(600,activityProgressFor(id).successes*2),0);return Object.entries(candidate.weights).reduce((score,[key,weight])=>score+clampStat(key,game[key])*weight,0)+Math.max(0,game.money||0)*(candidate.moneyWeight||0)+clampStat('guardianTrust',game.guardianTrust)*(candidate.guardianWeight||0)+masteryScore;}
 function resolveCareerEnding(){return careerEndingCandidates.map((candidate,index)=>({...candidate,index,score:careerEndingScore(candidate)})).sort((left,right)=>right.score-left.score||left.index-right.index)[0];}
-function resolveRelationEnding(){normalizeRelations();return endingRelationCandidates.map((candidate,index)=>({candidate,record:game.relations[candidate.id],index})).filter(entry=>entry.record.dateUnlocked&&entry.record.meetings>=5).sort((left,right)=>right.record.affinity-left.record.affinity||right.record.meetings-left.record.meetings||left.index-right.index)[0]||null;}
+function resolveRelationEnding(){normalizeRelations();return endingRelationCandidates.map((candidate,index)=>({candidate,record:game.relations[candidate.id],index})).filter(entry=>entry.record.dateUnlocked&&entry.record.meetings>=5&&entry.record.affinity>=60&&['특별한 인연','연인'].includes(entry.record.relationship)).sort((left,right)=>right.record.affinity-left.record.affinity||right.record.meetings-left.record.meetings||left.index-right.index)[0]||null;}
 function resolveEnding(){
   const career=resolveCareerEnding(),downfall=downfallEndingCandidates.find(candidate=>candidate.test()),relation=downfall?null:resolveRelationEnding();
   const category=downfall?'downfall':relation?'relation':'career';
@@ -801,7 +801,9 @@ function normalizeRelations(){
     const record=saved&&typeof saved==='object'?saved:{};
     const meetings=Math.max(0,Number(record.meetings??legacyMeetings)||0);
     const completedEpisodes=Array.isArray(record.completedEpisodes)?[...new Set(record.completedEpisodes.filter(id=>typeof id==='string'))]:[];
-    game.relations[candidate.id]={meetings:Math.max(meetings,completedEpisodes.length),affinity:Math.max(0,Math.min(100,Number(record.affinity)||meetings*5)),lastMetAt:record.lastMetAt||null,dateUnlocked:Boolean(record.dateUnlocked||(Math.max(meetings,completedEpisodes.length)>=5&&game.age>=16)),completedEpisodes,holidayFlags:record.holidayFlags&&typeof record.holidayFlags==='object'?record.holidayFlags:{},vacationMemories:Array.isArray(record.vacationMemories)?record.vacationMemories:[],relationship:record.relationship||'지인'};
+    const affinity=Math.max(0,Math.min(100,Number(record.affinity)||meetings*5));
+    const relationship=record.relationship==='결별'?'결별':affinity>=80?'연인':affinity>=60?'특별한 인연':affinity>=35?'친구':'지인';
+    game.relations[candidate.id]={meetings:Math.max(meetings,completedEpisodes.length),affinity,lastMetAt:record.lastMetAt||null,dateUnlocked:Boolean(record.dateUnlocked||(Math.max(meetings,completedEpisodes.length)>=5&&game.age>=16)),completedEpisodes,holidayFlags:record.holidayFlags&&typeof record.holidayFlags==='object'?record.holidayFlags:{},vacationMemories:Array.isArray(record.vacationMemories)?record.vacationMemories:[],relationship};
   });
 }
 function relationRecord(id){normalizeRelations();return game.relations[id];}
@@ -810,6 +812,7 @@ function recordRelationEncounter(candidate,episode=null){
   if(isNew){record.completedEpisodes.push(episode.id);record.meetings=Math.min(5,record.meetings+1);}
   record.affinity=Math.min(100,record.affinity+(isNew?7:2));record.lastMetAt=game.currentDate||null;
   if(record.meetings>=5&&game.age>=16)record.dateUnlocked=true;
+  record.relationship=record.affinity>=80?'연인':record.affinity>=60?'특별한 인연':record.affinity>=35?'친구':'지인';
   return record;
 }
 function nextRelationEpisode(candidate,activityId){return (relationEpisodeCatalog[candidate.id]||[]).find(episode=>episode.activities.includes(activityId)&&!relationRecord(candidate.id).completedEpisodes.includes(episode.id))||null;}
@@ -1053,8 +1056,8 @@ function openPanel(type) {
     panelTitle.textContent = `${game.characterName || '아이'}의 상태`;
     normalizeBodyMetrics();
     normalizeRelations();
-    const relationCards=endingRelationCandidates.map(candidate=>{const relation=game.relations[candidate.id];const phase=relation.dateUnlocked?'데이트 가능':relation.meetings>=5?'16세부터 데이트 가능':`${relation.meetings} / 5회 만남`;return `<div class="relation-card ${relation.dateUnlocked?'unlocked':''}"><b>${candidate.name}</b><small>${candidate.role}</small><span>${phase}</span><i style="--relation-progress:${Math.min(100,relation.meetings/5*100)}%"></i></div>`;}).join('');
-    panelBody.innerHTML = `<div class="status-summary"><span>${game.age}세 · ${game.season} ${game.week}주</span><b>${game.money.toLocaleString()}냥</b></div><section class="body-profile" aria-label="성장 정보"><div><small>키</small><b>${game.height.toFixed(1)} cm</b></div><div><small>몸무게</small><b>${game.weight.toFixed(1)} kg</b></div></section>${statGroups.map(group => `<section class="stat-group"><h3>${group.title}</h3>${group.stats.map(([key,label]) => statBar(key,label)).join('')}</section>`).join('')}<section class="stat-group condition-group"><h3>현재 상태</h3>${statBar('stress','스트레스')}</section><section class="stat-group"><h3>수호 인연</h3>${statBar('nannyAffinity','신수 유대감')}${statBar('fatherAffinity','아버지 친밀도')}</section><section class="relation-group"><h3>인연</h3><p>13세부터 우정으로 만나며, 5회 만남과 16세 이상을 충족하면 데이트가 열립니다.</p><div class="relation-grid">${relationCards}</div></section>`;
+    const relationCards=endingRelationCandidates.map(candidate=>{const relation=game.relations[candidate.id];const phase=relation.dateUnlocked?(relation.affinity>=60?`${relation.relationship} · 호감 ${relation.affinity}`:`데이트 가능 · 호감 ${relation.affinity}/60`):relation.meetings>=5?'16세부터 데이트 가능':`${relation.meetings} / 5회 만남`;return `<div class="relation-card ${relation.affinity>=60?'unlocked':''}"><b>${candidate.name}</b><small>${candidate.role}</small><span>${phase}</span><i style="--relation-progress:${Math.min(100,relation.affinity)}%"></i></div>`;}).join('');
+    panelBody.innerHTML = `<div class="status-summary"><span>${game.age}세 · ${game.season} ${game.week}주</span><b>${game.money.toLocaleString()}냥</b></div><section class="body-profile" aria-label="성장 정보"><div><small>키</small><b>${game.height.toFixed(1)} cm</b></div><div><small>몸무게</small><b>${game.weight.toFixed(1)} kg</b></div></section>${statGroups.map(group => `<section class="stat-group"><h3>${group.title}</h3>${group.stats.map(([key,label]) => statBar(key,label)).join('')}</section>`).join('')}<section class="stat-group condition-group"><h3>현재 상태</h3>${statBar('stress','스트레스')}</section><section class="stat-group"><h3>수호 인연</h3>${statBar('nannyAffinity','신수 유대감')}${statBar('fatherAffinity','아버지 친밀도')}</section><section class="relation-group"><h3>인연</h3><p>5회 만남은 데이트 해금 조건이며, 호감도 60 이상과 특별한 관계가 되어야 인연 엔딩 후보가 됩니다.</p><div class="relation-grid">${relationCards}</div></section>`;
   } else if (type === 'inventory') {
     playHomeMusic();
     renderInventory();
