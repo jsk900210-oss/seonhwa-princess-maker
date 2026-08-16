@@ -1335,6 +1335,12 @@ function scheduleProjection(){
   game.dailySchedule.forEach(id=>{const action=actions.find(item=>item.id===id);if(!action)return;money=Math.max(0,money-action.cost);stress=clampStat('stress',stress+(action.change.stress||0));});
   return {money,stress};
 }
+function masteryMeter(successes){
+  const current=Math.max(0,Number(successes)||0);
+  if(current>=30)return {label:'달인 완성',percent:100};
+  const start=current>=10?10:0,target=current>=10?30:10;
+  return {label:`${activityRankNames[current>=10?1:0]} → ${activityRankNames[current>=10?2:1]}까지 ${target-current}회`,percent:Math.round((current-start)/(target-start)*100)};
+}
 function renderSchedulePanel() {
   panelTitle.textContent = `${game.season} ${game.week}주 일정`;
   if (!Array.isArray(game.dailySchedule) || game.dailySchedule.length !== 7) game.dailySchedule = [null,null,null,null,null,null,null];
@@ -1346,7 +1352,7 @@ function renderSchedulePanel() {
     return `<button class="day-slot ${action ? 'filled' : ''} ${scheduleCursor===index?'selected':''}" data-day="${index}" aria-label="${dayNames[index]}요일 ${action ? action.name : '비어 있음'}"><b>${dayNames[index]}</b><small>${dateLabel}</small><span>${action ? action.name : '빈칸'}</span></button>`;
   }).join('');
   const categoryTabs=['교육','아르바이트','휴식'].map(category=>`<button data-schedule-category="${category}" class="${activeScheduleCategory===category?'on':''}">${category}</button>`).join('');
-  const actionCards=actions.filter(action=>action.category===activeScheduleCategory&&actionUnlocked(action)).map(action=>{const progress=activityProgressFor(action.id),rank=activityRankNames[activityRank(action.id)],requirement=activityRequirements[action.id],price=action.category==='아르바이트'?`+${activityPay(action)}냥`:action.cost>0?`-${action.cost}냥`:'무료',detail=['교육','아르바이트'].includes(action.category)?`${rank} · 경험 ${progress.attempts}일 · 성공 ${progress.successes}일${requirement?` · 권장 ${requirement[0]} ${requirement[1]}`:''}`:'';return `<button class="action ${selectedScheduleAction===action.id?'selected':''}" data-action="${action.id}"><img src="../assets/ui/activity-icons/activity-${action.icon||action.id}.png" alt=""><b>${action.name}</b><span>${price}</span><small>${action.summary||'직접 방문하여 선택'}</small>${detail?`<em>${detail}</em>`:''}</button>`;}).join('');
+  const actionCards=actions.filter(action=>action.category===activeScheduleCategory&&actionUnlocked(action)).map(action=>{const progress=activityProgressFor(action.id),rank=activityRankNames[activityRank(action.id)],requirement=activityRequirements[action.id],tracked=['교육','아르바이트'].includes(action.category),meter=tracked?masteryMeter(progress.successes):null,price=action.category==='아르바이트'?`+${activityPay(action)}냥`:action.cost>0?`-${action.cost}냥`:'무료',detail=tracked?`${rank} · 경험 ${progress.attempts}일 · 성공 ${progress.successes}일${requirement?` · 권장 ${requirement[0]} ${requirement[1]}`:''}`:'';return `<button class="action ${selectedScheduleAction===action.id?'selected':''}" data-action="${action.id}"><img src="../assets/ui/activity-icons/activity-${action.icon||action.id}.png" alt=""><b>${action.name}</b><span>${price}</span><small>${action.summary||'직접 방문하여 선택'}</small>${detail?`<em>${detail}</em><div class="mastery-meter"><i style="width:${meter.percent}%"></i><span>${meter.label}</span></div>`:''}</button>`;}).join('');
   const projection=scheduleProjection(),filled=game.dailySchedule.filter(Boolean).length;
   panelBody.innerHTML = `<div class="schedule-adviser"><b>${game.guardianName||guardianDefs[game.guardianType]?.name||'신수'}의 일정 조언</b><p>${projection.stress>=80?'스트레스가 높아 휴식을 넣는 것이 좋겠어요.':filled===7?'일주일 준비가 끝났어요. 실행 전에 비용과 상태를 확인하세요.':'요일을 고른 뒤 활동을 넣어 주세요.'}</p></div><div class="day-grid">${daySlots}</div><div class="schedule-tabs" role="tablist">${categoryTabs}</div><section class="schedule-category"><div class="action-grid">${actionCards}</div></section><div class="schedule-tools"><button id="scheduleFillRemaining" ${selectedScheduleAction?'':'disabled'}>선택 활동으로 빈칸 채우기</button><button id="scheduleClearAll" ${filled?'':'disabled'}>전체 비우기</button></div>`;
   panelBody.querySelectorAll('[data-action]').forEach(button => button.addEventListener('click', () => addDailyAction(button.dataset.action)));
