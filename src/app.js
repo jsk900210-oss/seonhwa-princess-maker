@@ -131,6 +131,13 @@ const actionPresentation = {
   manners: { motion:'motion-manners', location:'etiquetteRoom', prop:'none', activity:'manners', npc:'teacher' }, errand: { motion:'motion-errand', location:'marketErrand', prop:'none', activity:'errand', npc:null },
   sweeping: { motion:'motion-sweeping', location:'courtyard', prop:'none', activity:'sweeping', npc:'dolsoe' }, herbs: { motion:'motion-herbs', location:'herbField', prop:'none', activity:'herbs', npc:'herbalist' },
   houseclean: { motion:'motion-houseclean', location:'restRoom', prop:'none', activity:'houseclean', npc:null },
+  farmwork: { motion:'motion-herbs', location:'herbField', prop:'none', activity:'herbs', npc:'herbalist' },
+  childcare: { motion:'motion-houseclean', location:'restRoom', prop:'none', activity:'houseclean', npc:null },
+  kitchenhelp: { motion:'motion-arithmetic', location:'restRoom', prop:'none', activity:'arithmetic', npc:null },
+  woodwork: { motion:'motion-sweeping', location:'courtyard', prop:'none', activity:'sweeping', npc:'dolsoe' },
+  loomwork: { motion:'motion-houseclean', location:'restRoom', prop:'none', activity:'houseclean', npc:null },
+  masonry: { motion:'motion-sweeping', location:'courtyard', prop:'none', activity:'sweeping', npc:'dolsoe' },
+  clinichelp: { motion:'motion-herbs', location:'herbField', prop:'none', activity:'herbs', npc:'herbalist' },
   rest: { motion:'motion-resting', location:'restRoom', prop:'none', activity:'sleep', npc:null },
   sleep: { motion:'motion-sleep', location:'restRoom', prop:'none', activity:'sleep', npc:null },
   shopping: { motion:'motion-walk', location:'marketErrand', prop:'none', activity:null, npc:null },
@@ -143,6 +150,8 @@ const actionPresentation = {
   innhelp: { motion:'motion-errand', location:'marketErrand', prop:'none', activity:'errand', npc:null },
   sewing: { motion:'motion-houseclean', location:'restRoom', prop:'none', activity:'houseclean', npc:null },
   copying: { motion:'motion-calligraphy', location:'studyRoom', prop:'none', activity:'calligraphy', npc:'teacher' },
+  ferryhelp: { motion:'motion-errand', location:'marketErrand', prop:'none', activity:'errand', npc:null },
+  merchanthelp: { motion:'motion-errand', location:'marketErrand', prop:'none', activity:'errand', npc:null },
   accounting: { motion:'motion-arithmetic', location:'arithmeticRoom', prop:'none', activity:'arithmetic', npc:'teacher' },
   tutoring: { motion:'motion-calligraphy', location:'studyRoom', prop:'none', activity:'calligraphy', npc:'teacher' },
   dungeon: { motion:'motion-herbs', location:'herbField', prop:'none', activity:'herbs', npc:null }
@@ -226,7 +235,7 @@ activityFrames.houseclean=[1,2,3,4,5,6].map(n=>`../assets/characters/seonhwa/age
 activityFrames.sleep=[...activityFrames.rest];
 // v0.62.55: face-consistent awake sprites and a simple tea-only rest loop.
 activityFrames.sweeping=[1,2,3].map(n=>`../assets/characters/seonhwa/activity-consistent/age-09/sweeping-legacy-${n}.png`);
-activityFrames.errand=[1,2,3].map(n=>`../assets/characters/seonhwa/activity-consistent/age-09/errand-legacy-${n}.png`);
+activityFrames.errand=[1,2,3].map(n=>`../assets/characters/seonhwa/age-09/sprites/activities/errand-character-v4-${n}.png`);
 activityFrames.herbs=[1,2,3].map(n=>`../assets/characters/seonhwa/activity-consistent/age-09/herbs-legacy-${n}.png`);
 activityFrames.tea=[1,1,1].map(n=>`../assets/characters/seonhwa/activity-consistent/age-09/rest-legacy-${n}.png`);
 // The modular errand frames crop the top of the hair in frame 1. Keep the complete v4 frames.
@@ -249,6 +258,16 @@ const foods = [
   {id:'samgyetang',name:'삼계탕',detail:'닭과 약재를 푹 고은 탕',price:110,change:{stress:-5,healthiness:6}},
   {id:'galbijjim',name:'갈비찜',detail:'부드럽게 익힌 갈비',price:120,change:{stress:-9,healthiness:3}},
   {id:'jeongol',name:'전골',detail:'채소와 고기를 끓인 전골',price:95,change:{stress:-7,healthiness:5}}
+];
+const generalGoods = [
+  {id:'wooden-doll',name:'나무 인형',price:120,type:'accessory',detail:'마음을 달래 주는 작은 장난감',change:{sensitivity:4,stress:-12}},
+  {id:'basic-book',name:'천자문 서책',price:120,type:'event',detail:'글공부의 기초가 되는 서책',change:{intelligence:8}},
+  {id:'poetry-book',name:'시조 모음집',price:400,type:'event',detail:'고운 운율을 익히는 시집',change:{sensitivity:12,speech:3}},
+  {id:'ceramic-cup',name:'백자 찻잔',price:500,type:'accessory',detail:'차를 마실 때 쓰는 단정한 백자',change:{dignity:10,manners:3}},
+  {id:'herbal-pill',name:'회복 환약',price:80,type:'accessory',detail:'기운을 회복시키는 약방의 환약',change:{health:10,stress:-4},repeatable:true},
+  {id:'guardian-bell',name:'신수 방울',price:1000,type:'accessory',detail:'수호령의 기운을 맑게 울리는 방울',change:{magic:12,mentality:8},wealth:1000},
+  {id:'coral-norigae',name:'산호 노리개',price:1500,type:'accessory',detail:'귀한 산호로 엮은 장신구',change:{charm:14,dignity:8},wealth:3000},
+  {id:'jade-hairpin',name:'백옥 비녀',price:2200,type:'accessory',detail:'맑은 빛을 품은 상단의 귀물',change:{charm:18,reputation:10,manners:5},wealth:5000}
 ];
 const outfits = [
   {id:'age09-neat',age:9,ageEnd:12,name:'단정한 배움 한복',price:180,tone:'단정함',seasons:['가을','겨울'],situations:['reading','arithmetic','manners'],change:{manners:4,virtue:3,charm:1}},
@@ -277,6 +296,7 @@ const outfits = [
   {id:'premium-ink-scholar',age:9,ageEnd:18,name:'먹빛 서생 예복',price:1600,tone:'고급',seasons:['가을','겨울'],situations:['reading','arithmetic','manners'],change:{study:10,arts:8,reputation:7,charm:6}}
 ];
 foods.forEach(item=>{item.change=canonicalizeChange(item.change);});
+generalGoods.forEach(item=>{item.change=canonicalizeChange(item.change);});
 outfits.forEach(item=>{item.change=canonicalizeChange(item.change);});
 const outfitAgeLabel=outfit=>outfit.age===outfit.ageEnd?`${outfit.age}세`:`${outfit.age}–${outfit.ageEnd}세`;
 const outfitAvailable=outfit=>game.age>=outfit.age&&game.age<=outfit.ageEnd;
@@ -394,7 +414,7 @@ function conditionEvent(stress, dayIndex){
   if(stress>=55)return 'drowsy';
   return null;
 }
-const activitySkill={reading:'intelligence',arithmetic:'sense',manners:'manners',painting:'sensitivity',music:'sensitivity',dance:'agility',cooking:'sense',martial:'strength',classics:'intelligence',errand:'speech',sweeping:'strength',herbs:'sense',houseclean:'sense',innhelp:'speech',sewing:'sense',copying:'intelligence',accounting:'sense',tutoring:'intelligence',dungeon:'strength',rest:'mentality'};
+const activitySkill={reading:'intelligence',arithmetic:'sense',manners:'manners',painting:'sensitivity',music:'sensitivity',dance:'agility',cooking:'sense',martial:'strength',classics:'intelligence',errand:'speech',sweeping:'strength',herbs:'sense',houseclean:'sense',farmwork:'strength',childcare:'sensitivity',kitchenhelp:'sense',woodwork:'strength',loomwork:'sense',masonry:'strength',clinichelp:'intelligence',innhelp:'speech',sewing:'sense',copying:'intelligence',ferryhelp:'health',merchanthelp:'speech',accounting:'sense',tutoring:'intelligence',dungeon:'strength',rest:'mentality'};
 const outcomeLabels={perfect:'완벽',success:'성공',struggle:'힘겨움',mistake:'실수'};
 function activityOutcomeThresholds(action,stress){
   const skill=game[activitySkill[action.id]]||0;
@@ -494,9 +514,18 @@ const actions = [
   { id: 'sweeping', category: '아르바이트', name: '마당 쓸기', cost: -70, unlockAge:9, mentor:'돌쇠', icon:'sweeping', summary: '힘 +3 · 체력 +2 · 스트레스 +3 · 70냥 획득', change: { strength:3, health:2, stress:3 } },
   { id: 'herbs', category: '아르바이트', name: '약초 줍기', cost: -80, unlockAge:9, mentor:'약초꾼', icon:'herbs', summary: '센스 +2 · 지능 +1 · 체력 +1 · 스트레스 +4 · 80냥 획득', change: { sense:2, intelligence:1, health:1, stress:4 } },
   { id: 'houseclean', category: '아르바이트', name: '집 청소', cost: -60, unlockAge:9, mentor:'신수', icon:'houseclean', summary: '힘 +2 · 센스 +2 · 체력 +1 · 스트레스 +3 · 60냥 획득', change: { strength:2, sense:2, health:1, stress:3 } },
+  { id:'farmwork',category:'아르바이트',name:'농가 일손 돕기',cost:-100,unlockAge:10,mentor:'농가 어른',icon:'herbs',summary:'체력 +3 · 힘 +3 · 기품 -1 · 스트레스 +4 · 100냥 획득',change:{health:3,strength:3,dignity:-1,stress:4}},
+  { id:'childcare',category:'아르바이트',name:'아이 돌보기',cost:-85,unlockAge:10,mentor:'마을 어른',icon:'houseclean',summary:'감수성 +3 · 도덕 +2 · 스트레스 +4 · 85냥 획득',change:{sensitivity:3,virtue:2,stress:4}},
+  { id:'kitchenhelp',category:'아르바이트',name:'주방 보조',cost:-115,unlockAge:10,mentor:'찬모',icon:'arithmetic',summary:'센스 +3 · 체력 +2 · 스트레스 +4 · 115냥 획득',change:{sense:3,health:2,stress:4}},
+  { id:'woodwork',category:'아르바이트',name:'목공소 심부름',cost:-135,unlockAge:11,mentor:'목수',icon:'sweeping',summary:'힘 +4 · 센스 +2 · 스트레스 +5 · 135냥 획득',change:{strength:4,sense:2,stress:5}},
+  { id:'loomwork',category:'아르바이트',name:'베틀방 돕기',cost:-140,unlockAge:11,mentor:'직조 장인',icon:'houseclean',summary:'센스 +4 · 감수성 +2 · 스트레스 +4 · 140냥 획득',change:{sense:4,sensitivity:2,stress:4}},
+  { id:'masonry',category:'아르바이트',name:'기와·흙벽 보조',cost:-165,unlockAge:12,mentor:'와공',icon:'sweeping',summary:'체력 +4 · 힘 +4 · 기품 -2 · 스트레스 +5 · 165냥 획득',change:{health:4,strength:4,dignity:-2,stress:5}},
+  { id:'clinichelp',category:'아르바이트',name:'약방 견습',cost:-170,unlockAge:12,unlockStats:{intelligence:70,sense:45},mentor:'의원',icon:'herbs',summary:'지능 +3 · 센스 +3 · 도덕 +1 · 스트레스 +4 · 170냥 획득',change:{intelligence:3,sense:3,virtue:1,stress:4}},
   { id: 'innhelp', category:'아르바이트', name:'주막 돕기', cost:-110, unlockAge:13, mentor:'주모', icon:'errand', intro:'손님상은 빠르게, 말씨는 상냥하게 부탁하마.', summary:'화술 +3 · 체력 +2 · 스트레스 +4 · 110냥 획득', change:{speech:3,health:2,stress:4} },
   { id: 'sewing', category:'아르바이트', name:'바느질 돕기', cost:-120, unlockAge:13, mentor:'침선장', icon:'houseclean', intro:'작은 바늘땀 하나가 옷의 맵시를 정하는 법이란다.', summary:'센스 +4 · 감수성 +1 · 스트레스 +3 · 120냥 획득', change:{sense:4,sensitivity:1,stress:3} },
   { id: 'copying', category:'아르바이트', name:'서책 필사', cost:-130, unlockAge:13, mentor:'서책방 주인', icon:'reading', intro:'또박또박 옮겨 적되 원문의 한 자도 빠뜨리지 말거라.', summary:'지능 +3 · 센스 +2 · 스트레스 +4 · 130냥 획득', change:{intelligence:3,sense:2,stress:4} },
+  { id:'ferryhelp',category:'아르바이트',name:'나루터 짐 정리',cost:-190,unlockAge:14,mentor:'나루지기',icon:'errand',summary:'체력 +3 · 화술 +3 · 민첩 +2 · 스트레스 +5 · 190냥 획득',change:{health:3,speech:3,agility:2,stress:5}},
+  { id:'merchanthelp',category:'아르바이트',name:'상점 판매 보조',cost:-205,unlockAge:14,unlockStats:{speech:55,sense:60},mentor:'잡화상',icon:'errand',summary:'화술 +4 · 센스 +3 · 평판 +1 · 스트레스 +5 · 205냥 획득',change:{speech:4,sense:3,reputation:1,stress:5}},
   { id: 'accounting', category:'아르바이트', name:'상단 장부 정리', cost:-180, unlockAge:16, mentor:'상단 행수', icon:'arithmetic', intro:'숫자 하나가 상단의 신뢰를 좌우하니 꼼꼼히 살펴보거라.', summary:'센스 +4 · 화술 +2 · 스트레스 +4 · 180냥 획득', change:{sense:4,speech:2,stress:4} },
   { id: 'tutoring', category:'아르바이트', name:'학동 가르치기', cost:-230, unlockAge:16, unlockStats:{intelligence:140,manners:80,speech:60}, mentor:'서당 훈장', icon:'reading', intro:'배운 바가 충분하니 이제 어린 학동에게 글과 셈, 예절을 일러 주거라.', summary:'지능 +2 · 화술 +4 · 기품 +2 · 스트레스 +5 · 230냥 획득', change:{intelligence:2,speech:4,dignity:2,stress:5} },
   { id: 'rest', category: '휴식', name: '집에서 휴식', cost: 0, summary: '스트레스 -12 · 체력 +2 · 정신력 +2', change: { health:2, mentality:2, stress:-12 } },
@@ -777,6 +806,9 @@ function openPanel(type) {
   } else if (type === 'inventory') {
     playHomeMusic();
     renderInventory();
+  } else if (type === 'shop') {
+    playHomeMusic();
+    renderVisitShop();
   } else if (type === 'collection') {
     playHomeMusic();
     renderVacationCollection();
@@ -784,6 +816,19 @@ function openPanel(type) {
     playHomeMusic();
     renderSavePanel();
   }
+}
+
+function renderVisitShop(){
+  normalizeInventory();panelTitle.textContent='방문상점 · 잡화전';
+  const owned=new Set(game.items.map(item=>item.id));
+  const cards=generalGoods.filter(item=>!item.wealth||game.money>=item.wealth).map(item=>{const sold=!item.repeatable&&owned.has(item.id),disabled=sold||game.money<item.price;return `<button class="shop-card goods-card" data-general-good="${item.id}" ${disabled?'disabled':''}><i class="item-glyph type-${item.type}"></i><b>${item.name}</b><span>${item.price}냥</span><small>${item.detail}<br>${formatChanges(item.change)}${sold?'<br>보유 중':''}</small></button>`;}).join('');
+  panelBody.innerHTML=`<div class="shop-greeting"><div class="merchant-seal" aria-hidden="true">商</div><div><b>떠돌이 잡화상</b><p>서책과 장신구, 먼 지방에서 온 귀물을 살펴보세요.</p></div></div><div class="shop-money"><span>보유 은전 <b>${game.money.toLocaleString()}냥</b></span></div><p class="visit-shop-note">재산이 늘면 상인이 더 귀한 물건을 꺼내 보입니다.</p><div class="shop-grid">${cards}</div>`;
+  panelBody.querySelectorAll('[data-general-good]').forEach(button=>button.addEventListener('click',()=>buyGeneralGood(button.dataset.generalGood)));
+}
+function buyGeneralGood(id){
+  normalizeInventory();const good=generalGoods.find(item=>item.id===id);if(!good||game.money<good.price)return;const owned=game.items.find(item=>item.id===id);if(owned&&!good.repeatable)return;
+  game.money-=good.price;applyShopChanges(good.change);if(owned)owned.qty=(owned.qty||1)+1;else game.items.push({id:good.id,type:good.type,name:good.name,description:good.detail,qty:1});
+  document.querySelector('#dialogueText').textContent=`잡화상에게서 ${good.name}${objectParticle(good.name)} 구입했어요.`;showLiveChanges({change:good.change,cost:good.price});renderHud();renderVisitShop();queueAutoSave();
 }
 const inventoryCategories={all:'전체',accessory:'장신구',event:'이벤트'};
 const inventoryTypeLabels={food:'음식',outfit:'의상',accessory:'장신구',event:'이벤트'};
@@ -1605,7 +1650,7 @@ async function playWeeklySchedule(selected) {
       await animateConditionEvent(stageCharacter,conditionCue,condition);
     }
     setScheduleDialogue(action,outcome,index);
-    stageCharacter.className = `stage-character pixel-sprite ${presentation.motion}`;
+    stageCharacter.className = `stage-character pixel-sprite ${presentation.motion}${restActivity==='tea'?' rest-tea':''}`;
     const actualChange={};
     Object.entries(resolvedChange).forEach(([key,value])=>{const before=clampStat(key,game[key]||0),after=clampStat(key,before+value);game[key]=after;actualChange[key]=after-before;});
     const resolvedAction={...action,cost:-moneyChange,change:actualChange};
