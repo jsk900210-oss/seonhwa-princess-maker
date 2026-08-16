@@ -2,6 +2,7 @@ import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 
 const source = readFileSync(new URL('../src/app.js', import.meta.url), 'utf8').replace(/\r\n/g, '\n');
+const scheduleCss = readFileSync(new URL('../src/schedule.css', import.meta.url), 'utf8').replace(/\r\n/g, '\n');
 
 const mustContain = [
   ["scheduleConfirmDismissed = false;\n    renderSchedulePanel();", '일정 화면을 다시 열면 실행 확인창을 다시 준비해야 합니다.'],
@@ -16,6 +17,10 @@ const mustContain = [
 
 for (const [snippet, message] of mustContain) assert.ok(source.includes(snippet), message);
 
+assert.match(scheduleCss, /\.phone\.playing\.market-playing>\.dialogue\{[\s\S]*?bottom:9\.5%/, '저잣거리 대화창은 하단 귀가 버튼보다 위에 있어야 합니다.');
+assert.match(scheduleCss, /\.phone\.playing\.market-playing>nav\{[\s\S]*?safe-area-inset-bottom/, '저잣거리 귀가 버튼은 모바일 안전 영역을 반영해야 합니다.');
+
 console.log('PASS: 저장된 7일 일정도 일정 화면 진입 시 실행 확인창 표시');
 console.log('PASS: 저잣거리 종료 후 다음 일정과 홈 음악으로 복귀');
+console.log('PASS: 저잣거리 대화창과 집으로 돌아가기 버튼 영역 분리');
 console.log('PASS: 바캉스 전환 시 주문창 정리, 감상 종료 후 다음 일정 복귀');
