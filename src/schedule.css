@@ -504,6 +504,28 @@
 @keyframes job-skilled{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(-3px)}}
 @keyframes job-master{0%,100%{transform:translateX(-50%) translateY(0) scale(1)}50%{transform:translateX(-50%) translateY(-4px) scale(1.025)}}
 
+/* v0.62.66: 공통 작업 규칙 뒤에서 직업별 배경 기준선을 최종 고정한다. */
+.activity-stage.action-farmwork .stage-character.pixel-sprite.motion-job-farm{left:27%;bottom:2%;width:134px;height:134px}
+.activity-stage.action-childcare .stage-character.pixel-sprite.motion-job-childcare{left:33%;bottom:3%;width:150px;height:150px}
+.activity-stage.action-kitchenhelp .stage-character.pixel-sprite.motion-job-kitchen{left:51%;bottom:2%;width:150px;height:150px}
+.activity-stage.action-woodwork .stage-character.pixel-sprite.motion-job-woodwork{left:48%;bottom:1%;width:146px;height:146px}
+.activity-stage.action-loomwork .stage-character.pixel-sprite.motion-job-loom{left:50%;bottom:0;width:158px;height:158px}
+.activity-stage.action-masonry .stage-character.pixel-sprite.motion-job-masonry{left:46%;bottom:2%;width:140px;height:140px}
+.activity-stage.action-clinichelp .stage-character.pixel-sprite.motion-job-clinic{left:50%;bottom:1%;width:150px;height:150px}
+.activity-stage.action-ferryhelp .stage-character.pixel-sprite.motion-job-ferry{left:48%;bottom:1%;width:150px;height:150px}
+.activity-stage.action-merchanthelp .stage-character.pixel-sprite.motion-job-merchant{left:50%;bottom:1%;width:150px;height:150px}
+@media(max-width:430px){
+  .activity-stage.action-farmwork .stage-character.pixel-sprite.motion-job-farm{width:124px;height:124px}
+  .activity-stage.action-childcare .stage-character.pixel-sprite.motion-job-childcare{width:132px;height:132px}
+  .activity-stage.action-kitchenhelp .stage-character.pixel-sprite.motion-job-kitchen{width:132px;height:132px}
+  .activity-stage.action-woodwork .stage-character.pixel-sprite.motion-job-woodwork{width:128px;height:128px}
+  .activity-stage.action-loomwork .stage-character.pixel-sprite.motion-job-loom{width:138px;height:138px}
+  .activity-stage.action-masonry .stage-character.pixel-sprite.motion-job-masonry{width:124px;height:124px}
+  .activity-stage.action-clinichelp .stage-character.pixel-sprite.motion-job-clinic{width:132px;height:132px}
+  .activity-stage.action-ferryhelp .stage-character.pixel-sprite.motion-job-ferry{width:132px;height:132px}
+  .activity-stage.action-merchanthelp .stage-character.pixel-sprite.motion-job-merchant{width:132px;height:132px}
+}
+
 /* v0.62.60: core job actors share the background perspective and play readable 3-step loops. */
 .activity-stage.action-farmwork .stage-character.pixel-sprite.motion-job-farm{
   inset:auto;left:28%;bottom:1%;width:132px;height:132px;padding:0;animation:none!important;filter:drop-shadow(0 3px 1px #2d1b1266)
