@@ -716,8 +716,10 @@ function openPanel(type) {
   panel.hidden = false;
   if (type === 'schedule') {
     playHomeMusic();
+    scheduleConfirmDismissed = false;
     renderSchedulePanel();
     speakGuardian('schedule');
+    showScheduleConfirmation();
   } else if (type === 'status') {
     playHomeMusic();
     panelTitle.textContent = `${game.characterName || '아이'}의 상태`;
