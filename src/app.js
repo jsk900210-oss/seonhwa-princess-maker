@@ -625,8 +625,8 @@ const actions = [
   { id: 'painting', category: '교육', name: '회화 배우기', cost: 130, unlockAge:13, mentor:'화공 스승', icon:'reading', intro:'붓끝으로 보이는 것 너머의 빛까지 담아 보거라.', summary:'감수성 +4 · 센스 +2 · 스트레스 +3', change:{sensitivity:4,sense:2,stress:3} },
   { id: 'music', category: '교육', name: '악기 배우기', cost: 140, unlockAge:13, mentor:'악기 선생', icon:'manners', intro:'소리를 서두르지 말고 먼저 네 호흡을 들어 보렴.', summary:'감수성 +3 · 기품 +2 · 스트레스 +3', change:{sensitivity:3,dignity:2,stress:3} },
   { id: 'dance', category: '교육', name: '전통 춤사위', cost: 145, unlockAge:13, mentor:'춤 선생', icon:'manners', intro:'장단을 먼저 마음에 담고, 발디딤과 손끝을 이어 보렴.', summary:'민첩 +3 · 기품 +3 · 매력 +2 · 스트레스 +3', change:{agility:3,dignity:3,charm:2,stress:3} },
-  { id:'swordsmanship',category:'교육',name:'검술 수련',cost:165,unlockAge:13,unlockStats:{strength:35},mentor:'검술 사범',icon:'sweeping',intro:'칼을 휘두르기 전에 발과 호흡부터 바로 세워라.',summary:'힘 +4 · 민첩 +3 · 체력 +2 · 스트레스 +4',change:{strength:4,agility:3,health:2,stress:4}},
-  { id:'spellcraft',category:'교육',name:'술법 수련',cost:175,unlockAge:13,unlockStats:{intelligence:45,mentality:35},mentor:'수호신수',icon:'herbs',intro:'기운을 억지로 잡지 말고 숨결을 따라 흐르게 하렴.',summary:'마력 +5 · 지능 +2 · 정신력 +3 · 스트레스 +4',change:{magic:5,intelligence:2,mentality:3,stress:4}},
+  { id:'swordsmanship',category:'교육',name:'검술 수련',cost:165,unlockAge:13,unlockStats:{strength:120},mentor:'검술 사범',icon:'sweeping',intro:'칼을 휘두르기 전에 발과 호흡부터 바로 세워라.',summary:'힘 +4 · 민첩 +3 · 체력 +2 · 스트레스 +4',change:{strength:4,agility:3,health:2,stress:4}},
+  { id:'spellcraft',category:'교육',name:'술법 수련',cost:175,unlockAge:13,unlockStats:{intelligence:150,mentality:100},mentor:'수호신수',icon:'herbs',intro:'기운을 억지로 잡지 말고 숨결을 따라 흐르게 하렴.',summary:'마력 +5 · 지능 +2 · 정신력 +3 · 스트레스 +4',change:{magic:5,intelligence:2,mentality:3,stress:4}},
   { id: 'cooking', category: '교육', name: '향토 음식 익히기', cost: 120, unlockAge:13, mentor:'찬모', icon:'arithmetic', intro:'제철 재료의 맛을 살리고 불과 간을 세심히 다루어야 한단다.', summary:'센스 +4 · 체력 +1 · 감수성 +2 · 스트레스 +3', change:{sense:4,health:1,sensitivity:2,stress:3} },
   { id: 'martial', category: '교육', name: '무예 수련', cost: 150, unlockAge:13, mentor:'무예 사범', icon:'sweeping', intro:'힘만 앞세우지 말고 발과 마음을 함께 다스려라.', summary:'힘 +4 · 민첩 +3 · 스트레스 +4', change:{strength:4,agility:3,stress:4} },
   { id: 'classics', category: '교육', name: '경전 심화', cost: 190, unlockAge:16, mentor:'경학 스승', icon:'reading', intro:'이제 글자를 읽는 데서 그치지 말고 뜻을 논해 보자꾸나.', summary:'지능 +6 · 기품 +2 · 스트레스 +4', change:{intelligence:6,dignity:2,stress:4} },
@@ -640,23 +640,25 @@ const actions = [
   { id:'woodwork',category:'아르바이트',name:'목공소 심부름',cost:-135,unlockAge:11,mentor:'목수',icon:'sweeping',summary:'힘 +4 · 센스 +2 · 스트레스 +5 · 135냥 획득',change:{strength:4,sense:2,stress:5}},
   { id:'loomwork',category:'아르바이트',name:'베틀방 돕기',cost:-140,unlockAge:11,mentor:'직조 장인',icon:'houseclean',summary:'센스 +4 · 감수성 +2 · 스트레스 +4 · 140냥 획득',change:{sense:4,sensitivity:2,stress:4}},
   { id:'masonry',category:'아르바이트',name:'기와·흙벽 보조',cost:-165,unlockAge:12,mentor:'와공',icon:'sweeping',summary:'체력 +4 · 힘 +4 · 기품 -2 · 스트레스 +5 · 165냥 획득',change:{health:4,strength:4,dignity:-2,stress:5}},
-  { id:'clinichelp',category:'아르바이트',name:'약방 견습',cost:-170,unlockAge:12,unlockStats:{intelligence:70,sense:45},mentor:'의원',icon:'herbs',summary:'지능 +3 · 센스 +3 · 도덕 +1 · 스트레스 +4 · 170냥 획득',change:{intelligence:3,sense:3,virtue:1,stress:4}},
+  { id:'clinichelp',category:'아르바이트',name:'약방 견습',cost:-170,unlockAge:12,unlockStats:{intelligence:150,sense:100},mentor:'의원',icon:'herbs',summary:'지능 +3 · 센스 +3 · 도덕 +1 · 스트레스 +4 · 170냥 획득',change:{intelligence:3,sense:3,virtue:1,stress:4}},
   { id: 'innhelp', category:'아르바이트', name:'주막 돕기', cost:-110, unlockAge:13, mentor:'주모', icon:'errand', intro:'손님상은 빠르게, 말씨는 상냥하게 부탁하마.', summary:'화술 +3 · 체력 +2 · 스트레스 +4 · 110냥 획득', change:{speech:3,health:2,stress:4} },
   { id: 'sewing', category:'아르바이트', name:'바느질 돕기', cost:-120, unlockAge:13, mentor:'침선장', icon:'houseclean', intro:'작은 바늘땀 하나가 옷의 맵시를 정하는 법이란다.', summary:'센스 +4 · 감수성 +1 · 스트레스 +3 · 120냥 획득', change:{sense:4,sensitivity:1,stress:3} },
   { id: 'copying', category:'아르바이트', name:'서책 필사', cost:-130, unlockAge:13, mentor:'서책방 주인', icon:'reading', intro:'또박또박 옮겨 적되 원문의 한 자도 빠뜨리지 말거라.', summary:'지능 +3 · 센스 +2 · 스트레스 +4 · 130냥 획득', change:{intelligence:3,sense:2,stress:4} },
   { id:'ferryhelp',category:'아르바이트',name:'나루터 짐 정리',cost:-190,unlockAge:14,mentor:'나루지기',icon:'errand',summary:'체력 +3 · 화술 +3 · 민첩 +2 · 스트레스 +5 · 190냥 획득',change:{health:3,speech:3,agility:2,stress:5}},
-  { id:'merchanthelp',category:'아르바이트',name:'상점 판매 보조',cost:-205,unlockAge:14,unlockStats:{speech:55,sense:60},mentor:'잡화상',icon:'errand',summary:'화술 +4 · 센스 +3 · 평판 +1 · 스트레스 +5 · 205냥 획득',change:{speech:4,sense:3,reputation:1,stress:5}},
+  { id:'merchanthelp',category:'아르바이트',name:'상점 판매 보조',cost:-205,unlockAge:14,unlockStats:{speech:150,sense:150},mentor:'잡화상',icon:'errand',summary:'화술 +4 · 센스 +3 · 평판 +1 · 스트레스 +5 · 205냥 획득',change:{speech:4,sense:3,reputation:1,stress:5}},
   { id: 'accounting', category:'아르바이트', name:'상단 장부 정리', cost:-180, unlockAge:16, mentor:'상단 행수', icon:'arithmetic', intro:'숫자 하나가 상단의 신뢰를 좌우하니 꼼꼼히 살펴보거라.', summary:'센스 +4 · 화술 +2 · 스트레스 +4 · 180냥 획득', change:{sense:4,speech:2,stress:4} },
-  { id: 'tutoring', category:'아르바이트', name:'학동 가르치기', cost:-230, unlockAge:16, unlockStats:{intelligence:140,manners:80,speech:60}, mentor:'서당 훈장', icon:'reading', intro:'배운 바가 충분하니 이제 어린 학동에게 글과 셈, 예절을 일러 주거라.', summary:'지능 +2 · 화술 +4 · 기품 +2 · 스트레스 +5 · 230냥 획득', change:{intelligence:2,speech:4,dignity:2,stress:5} },
+  { id: 'tutoring', category:'아르바이트', name:'학동 가르치기', cost:-230, unlockAge:16, unlockStats:{intelligence:350,manners:220,speech:180}, mentor:'서당 훈장', icon:'reading', intro:'배운 바가 충분하니 이제 어린 학동에게 글과 셈, 예절을 일러 주거라.', summary:'지능 +2 · 화술 +4 · 기품 +2 · 스트레스 +5 · 230냥 획득', change:{intelligence:2,speech:4,dignity:2,stress:5} },
   { id: 'rest', category: '휴식', name: '집에서 휴식', cost: 0, summary: '스트레스 -12 · 체력 +2 · 정신력 +2', change: { health:2, mentality:2, stress:-12 } },
   { id: 'shopping', category: '휴식', name: '저잣거리', cost: 0, summary: '', change: {}, special:'market' },
   { id: 'vacation', category: '휴식', name: '바캉스', cost: 180, summary: '감수성 +3 · 매력 +1 · 스트레스 -25 · 추억 일러스트 획득', change: {sensitivity:3,charm:1,stress:-25}, special:'vacation' },
-  { id: 'dungeon', category: '휴식', name: '비경 탐사', cost: 50, unlockAge:13, mentor:'수호신수', icon:'herbs', intro:'성 밖의 숨은 길에는 보물과 위험이 함께 있단다. 준비를 갖추고 나서자.', summary:'체력 +2 · 힘 +2 · 마력 +2 · 스트레스 +5 · 보물 은전 획득 가능', change:{health:2,strength:2,magic:2,stress:5}, special:'dungeon' }
+  { id: 'dungeon', category: '휴식', name: '비경 탐사', cost: 50, unlockAge:13, unlockAnyStats:[{strength:120},{magic:120}], mentor:'수호신수', icon:'herbs', intro:'성 밖의 숨은 길에는 보물과 위험이 함께 있단다. 준비를 갖추고 나서자.', summary:'체력 +2 · 힘 +2 · 마력 +2 · 스트레스 +5 · 보물 은전 획득 가능', change:{health:2,strength:2,magic:2,stress:5}, special:'dungeon' }
 ];
-const activityRequirements={reading:['지능',20],arithmetic:['센스',15],manners:['예절',15],painting:['감수성',80],music:['기품',70],dance:['민첩',75],swordsmanship:['힘',35],spellcraft:['마력',20],cooking:['센스',70],martial:['체력',80],classics:['지능',180],errand:['화술',12],sweeping:['힘',15],herbs:['센스',18],houseclean:['체력',20],farmwork:['힘',25],childcare:['감수성',30],kitchenhelp:['센스',30],woodwork:['힘',40],loomwork:['센스',45],masonry:['체력',45],clinichelp:['지능',70],innhelp:['화술',70],sewing:['센스',75],copying:['지능',85],ferryhelp:['체력',55],merchanthelp:['화술',55],accounting:['센스',170],tutoring:['지능',140],dungeon:['힘',80]};
-const actionUnlocked=action=>game.age>=Number(action.unlockAge||9)&&Object.entries(action.unlockStats||{}).every(([stat,value])=>Number(game[stat]||0)>=value);
-const newlyUnlockedActions=(previousAge,nextAge)=>actions.filter(action=>Number(action.unlockAge||9)>previousAge&&Number(action.unlockAge||9)<=nextAge&&Object.entries(action.unlockStats||{}).every(([stat,value])=>Number(game[stat]||0)>=value));
+const activityRequirements={reading:['지능',50],arithmetic:['센스',50],manners:['예절',50],painting:['감수성',150],music:['기품',150],dance:['민첩',150],swordsmanship:['힘',120],spellcraft:['지능·정신력',150],cooking:['센스',130],martial:['체력',150],classics:['지능',300],errand:['화술',40],sweeping:['힘',50],herbs:['센스',50],houseclean:['체력',50],farmwork:['힘',80],childcare:['감수성',80],kitchenhelp:['센스',80],woodwork:['힘',120],loomwork:['센스',120],masonry:['체력',140],clinichelp:['지능·센스',150],innhelp:['화술',130],sewing:['센스',140],copying:['지능',160],ferryhelp:['체력',150],merchanthelp:['화술·센스',150],accounting:['센스',300],tutoring:['지능',350],dungeon:['힘 또는 마력',120]};
+const meetsStatSet=set=>Object.entries(set||{}).every(([stat,value])=>Number(game[stat]||0)>=value);
+const actionUnlocked=action=>game.age>=Number(action.unlockAge||9)&&meetsStatSet(action.unlockStats)&&(!action.unlockAnyStats||action.unlockAnyStats.some(meetsStatSet));
+const newlyUnlockedActions=(previousAge,nextAge)=>actions.filter(action=>Number(action.unlockAge||9)>previousAge&&Number(action.unlockAge||9)<=nextAge&&meetsStatSet(action.unlockStats)&&(!action.unlockAnyStats||action.unlockAnyStats.some(meetsStatSet)));
 const activityRankNames=['견습','숙련','달인'];
+const activityRankThresholds=[0,30,90];
 const dedicatedJobIds=new Set(['farmwork','childcare','kitchenhelp','woodwork','loomwork','masonry','clinichelp','ferryhelp','merchanthelp']);
 const jobRewardNames={farmwork:'튼튼한 곡식 자루',childcare:'아이의 종이꽃',kitchenhelp:'찬모의 조리 수첩',woodwork:'목수의 작은 자',loomwork:'명주실 타래',masonry:'와공의 기와패',clinichelp:'약방의 향약 꾸러미',ferryhelp:'나루터 통행패',merchanthelp:'상인의 행운 엽전'};
 function normalizeActivityProgress(){
@@ -664,7 +666,7 @@ function normalizeActivityProgress(){
   actions.forEach(action=>{const current=game.activityProgress[action.id]||{};game.activityProgress[action.id]={attempts:Math.max(0,Number(current.attempts)||0),successes:Math.max(0,Number(current.successes)||0),streak:Math.max(0,Number(current.streak)||0),perfectStreak:Math.max(0,Number(current.perfectStreak)||0),bestStreak:Math.max(0,Number(current.bestStreak)||0)};});
 }
 function activityProgressFor(id){normalizeActivityProgress();return game.activityProgress[id];}
-function activityRank(id){const successes=activityProgressFor(id).successes;return successes>=30?2:successes>=10?1:0;}
+function activityRank(id){const successes=activityProgressFor(id).successes;return successes>=activityRankThresholds[2]?2:successes>=activityRankThresholds[1]?1:0;}
 function activityPay(action){if(action.category!=='아르바이트')return -action.cost;return Math.round((-action.cost)*[1,1.25,1.6][activityRank(action.id)]);}
 function recordActivityProgress(action,outcome){
   if(!['교육','아르바이트'].includes(action.category))return {bonusPay:0,reward:null,rankUp:null};
@@ -1361,9 +1363,9 @@ function scheduleProjection(){
 }
 function masteryMeter(successes){
   const current=Math.max(0,Number(successes)||0);
-  if(current>=30)return {label:'달인 완성',percent:100};
-  const start=current>=10?10:0,target=current>=10?30:10;
-  return {label:`${activityRankNames[current>=10?1:0]} → ${activityRankNames[current>=10?2:1]}까지 ${target-current}회`,percent:Math.round((current-start)/(target-start)*100)};
+  if(current>=activityRankThresholds[2])return {label:'달인 완성',percent:100};
+  const skilled=current>=activityRankThresholds[1],start=skilled?activityRankThresholds[1]:0,target=skilled?activityRankThresholds[2]:activityRankThresholds[1];
+  return {label:`${activityRankNames[skilled?1:0]} → ${activityRankNames[skilled?2:1]}까지 ${target-current}회`,percent:Math.round((current-start)/(target-start)*100)};
 }
 function renderSchedulePanel() {
   panelTitle.textContent = `${game.season} ${game.week}주 일정`;

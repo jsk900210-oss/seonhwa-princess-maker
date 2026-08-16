@@ -18,14 +18,15 @@ for(const id of jobs){
   }
 }
 if(!app.includes("const activityRankNames=['견습','숙련','달인']"))throw new Error('3단계 숙련 명칭 누락');
-if(!app.includes('successes>=30?2:successes>=10?1:0'))throw new Error('성공 횟수 승급 기준 누락');
+if(!app.includes('const activityRankThresholds=[0,30,90]'))throw new Error('숙련 30회·달인 90회 기준 누락');
+if(!app.includes('successes>=activityRankThresholds[2]?2:successes>=activityRankThresholds[1]?1:0'))throw new Error('성공 횟수 승급 판정 누락');
 if(!app.includes("[1,1.25,1.6][activityRank(action.id)]"))throw new Error('숙련별 보수 배율 누락');
 if(!app.includes('progress.perfectStreak%3!==0'))throw new Error('연속 대성공 보상 기준 누락');
 if(!app.includes('masteryJobs'))throw new Error('직업 숙련 엔딩 반영 누락');
 if(!app.includes('const delay=dedicatedJob?[360,300,240][masteryRank]'))throw new Error('전용 직업 숙련별 프레임 속도 누락');
 if(!app.includes('currentRank>previousRank?activityRankNames[currentRank]:null'))throw new Error('10회·30회 성공 승급 알림 누락');
 if(!app.includes('progressReward.rankUp?` · ${progressReward.rankUp} 승급!`'))throw new Error('일정 결과의 승급 표시 누락');
-if(!app.includes("if(current>=30)return {label:'달인 완성',percent:100}"))throw new Error('일정 카드 달인 진행도 누락');
+if(!app.includes("if(current>=activityRankThresholds[2])return {label:'달인 완성',percent:100}"))throw new Error('일정 카드 달인 진행도 누락');
 if(!app.includes('class="mastery-meter"'))throw new Error('일정 카드 숙련 진행 바 누락');
 if(!app.includes("isNew?'newly-unlocked':''"))throw new Error('새 활동 카드 표시 누락');
 if(!app.includes('if(firstSelection)game.activityUnlocksSeen.push(id)'))throw new Error('첫 선택 후 새 활동 표시 해제 누락');
