@@ -472,7 +472,13 @@ async function animateActivitySprite(image,motion,activity,npcImage,npc,outfitId
     const coreJobSequences={
       farmwork:[0,0,1,1,2,2,2],
       childcare:[0,0,1,1,2,2,2],
-      kitchenhelp:[0,0,1,1,1,2,2,2]
+      kitchenhelp:[0,0,1,1,1,2,2,2],
+      woodwork:[0,0,1,1,2,2,2],
+      loomwork:[0,0,1,1,2,2,2],
+      masonry:[0,0,1,1,2,2,2],
+      clinichelp:[0,0,1,1,2,2,2],
+      ferryhelp:[0,0,1,1,2,2,2],
+      merchanthelp:[0,0,1,1,2,2,2]
     };
     const sequence=coreJobSequences[activity]||
       (activity==='errand'?[0,1,1,2,2,1,0]:activity==='houseclean'?[0,1,0,2,2,2]:activity==='sweeping'?[0,1,2,1,0,1,2,2,1,0,1,2,1,0]:activity==='sleep'?[0,1,2,1,0]:[0,1,2,1,0,1,2]);
