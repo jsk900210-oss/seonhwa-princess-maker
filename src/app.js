@@ -655,11 +655,16 @@ const actions = [
   { id: 'rest', category: '휴식', name: '집에서 휴식', cost: 0, summary: '스트레스 -12 · 체력 +2 · 정신력 +2', change: { health:2, mentality:2, stress:-12 } },
   { id: 'shopping', category: '휴식', name: '저잣거리', cost: 0, summary: '', change: {}, special:'market' },
   { id: 'vacation', category: '휴식', name: '바캉스', cost: 180, summary: '감수성 +3 · 매력 +1 · 스트레스 -25 · 추억 일러스트 획득', change: {sensitivity:3,charm:1,stress:-25}, special:'vacation' },
-  { id: 'dungeon', category: '휴식', name: '비경 탐사', cost: 50, unlockAge:13, unlockAnyStats:[{strength:120},{magic:120}], mentor:'수호신수', icon:'herbs', intro:'성 밖의 숨은 길에는 보물과 위험이 함께 있단다. 준비를 갖추고 나서자.', summary:'체력 +2 · 힘 +2 · 마력 +2 · 스트레스 +5 · 보물 은전 획득 가능', change:{health:2,strength:2,magic:2,stress:5}, special:'dungeon' }
+  { id: 'dungeon', category: '휴식', name: '비경 탐사', cost: 50, unlockAge:13, unlockAnyStats:[{strength:120},{magic:120}], mentor:'수호신수', icon:'herbs', intro:'성 밖의 숨은 길에는 보물과 위험이 함께 있단다. 준비를 갖추고 나서자.', summary:'체력 +2 · 힘 +2 · 마력 +2 · 스트레스 +5 · 보물 은전 획득 가능', change:{health:2,strength:2,magic:2,stress:5}, special:'dungeon' },
+  {id:'date-doyun',category:'인연',name:'도윤과 데이트',cost:100,unlockAge:16,relationId:'doyun',mentor:'도윤',icon:'manners',summary:'호감도 +12 · 감수성 +2 · 스트레스 -8',change:{sensitivity:2,stress:-8},special:'date'},
+  {id:'date-seojin',category:'인연',name:'서진과 데이트',cost:100,unlockAge:16,relationId:'seojin',mentor:'서진',icon:'reading',summary:'호감도 +12 · 지능 +2 · 스트레스 -8',change:{intelligence:2,stress:-8},special:'date'},
+  {id:'date-yeonwoo',category:'인연',name:'연우와 데이트',cost:100,unlockAge:16,relationId:'yeonwoo',mentor:'연우',icon:'manners',summary:'호감도 +12 · 감수성 +2 · 스트레스 -8',change:{sensitivity:2,stress:-8},special:'date'},
+  {id:'date-taegyeom',category:'인연',name:'태겸과 데이트',cost:100,unlockAge:16,relationId:'taegyeom',mentor:'태겸',icon:'errand',summary:'호감도 +12 · 화술 +2 · 스트레스 -8',change:{speech:2,stress:-8},special:'date'},
+  {id:'date-hyeon',category:'인연',name:'현과 데이트',cost:100,unlockAge:16,relationId:'hyeon',mentor:'현',icon:'manners',summary:'호감도 +12 · 기품 +2 · 스트레스 -8',change:{dignity:2,stress:-8},special:'date'}
 ];
 const activityRequirements={reading:['지능',50],arithmetic:['센스',50],manners:['예절',50],painting:['감수성',150],music:['기품',150],dance:['민첩',150],swordsmanship:['힘',120],spellcraft:['지능·정신력',150],cooking:['센스',130],martial:['체력',150],classics:['지능',300],errand:['화술',40],sweeping:['힘',50],herbs:['센스',50],houseclean:['체력',50],farmwork:['힘',80],childcare:['감수성',80],kitchenhelp:['센스',80],woodwork:['힘',120],loomwork:['센스',120],masonry:['체력',140],clinichelp:['지능·센스',150],innhelp:['화술',130],sewing:['센스',140],copying:['지능',160],ferryhelp:['체력',150],merchanthelp:['화술·센스',150],accounting:['센스',300],tutoring:['지능',350],dungeon:['힘 또는 마력',120]};
 const meetsStatSet=set=>Object.entries(set||{}).every(([stat,value])=>Number(game[stat]||0)>=value);
-const actionUnlocked=action=>game.age>=Number(action.unlockAge||9)&&meetsStatSet(action.unlockStats)&&(!action.unlockAnyStats||action.unlockAnyStats.some(meetsStatSet));
+const actionUnlocked=action=>game.age>=Number(action.unlockAge||9)&&meetsStatSet(action.unlockStats)&&(!action.unlockAnyStats||action.unlockAnyStats.some(meetsStatSet))&&(!action.relationId||Boolean(relationRecord(action.relationId).dateUnlocked));
 const newlyUnlockedActions=(previousAge,nextAge)=>actions.filter(action=>Number(action.unlockAge||9)>previousAge&&Number(action.unlockAge||9)<=nextAge&&meetsStatSet(action.unlockStats)&&(!action.unlockAnyStats||action.unlockAnyStats.some(meetsStatSet)));
 const activityRankNames=['견습','숙련','달인'];
 const activityRankThresholds=[0,100,300];
@@ -1399,7 +1404,9 @@ function renderSchedulePanel() {
     return `<button class="day-slot ${action ? 'filled' : ''} ${scheduleCursor===index?'selected':''}" data-day="${index}" aria-label="${dayNames[index]}요일 ${action ? action.name : '비어 있음'}"><b>${dayNames[index]}</b><small>${dateLabel}</small><span>${action ? action.name : '빈칸'}</span></button>`;
   }).join('');
   const unseenUnlocked=actions.filter(action=>actionUnlocked(action)&&Number(action.unlockAge||9)>9&&!game.activityUnlocksSeen.includes(action.id));
-  const categoryTabs=['교육','아르바이트','휴식'].map(category=>{const newCount=unseenUnlocked.filter(action=>action.category===category).length;return `<button data-schedule-category="${category}" class="${activeScheduleCategory===category?'on':''}">${category}${newCount?`<i>${newCount}</i>`:''}</button>`;}).join('');
+  const scheduleCategories=['교육','아르바이트','휴식',...(actions.some(action=>action.category==='인연'&&actionUnlocked(action))?['인연']:[])];
+  if(!scheduleCategories.includes(activeScheduleCategory))activeScheduleCategory='교육';
+  const categoryTabs=scheduleCategories.map(category=>{const newCount=unseenUnlocked.filter(action=>action.category===category).length;return `<button data-schedule-category="${category}" class="${activeScheduleCategory===category?'on':''}">${category}${newCount?`<i>${newCount}</i>`:''}</button>`;}).join('');
   const actionCards=actions.filter(action=>action.category===activeScheduleCategory&&actionUnlocked(action)).map(action=>{const progress=activityProgressFor(action.id),rank=activityRankNames[activityRank(action.id)],requirement=activityRequirements[action.id],isNew=unseenUnlocked.some(item=>item.id===action.id),tracked=['교육','아르바이트'].includes(action.category),meter=tracked?masteryMeter(progress.successes):null,price=action.category==='아르바이트'?`+${activityPay(action)}냥`:action.cost>0?`-${action.cost}냥`:'무료',detail=tracked?`${rank} · 경험 ${progress.attempts}일 · 성공 ${progress.successes}일${requirement?` · 권장 ${requirement[0]} ${requirement[1]}`:''}`:'';return `<button class="action ${selectedScheduleAction===action.id?'selected':''} ${isNew?'newly-unlocked':''}" data-action="${action.id}">${isNew?'<strong>새로 열림</strong>':''}<img src="../assets/ui/activity-icons/activity-${action.icon||action.id}.png" alt=""><b>${action.name}</b><span>${price}</span><small>${action.summary||'직접 방문하여 선택'}</small>${detail?`<em>${detail}</em><div class="mastery-meter"><i style="width:${meter.percent}%"></i><span>${meter.label}</span></div>`:''}</button>`;}).join('');
   const projection=scheduleProjection(),filled=game.dailySchedule.filter(Boolean).length;
   panelBody.innerHTML = `<div class="schedule-adviser"><b>${game.guardianName||guardianDefs[game.guardianType]?.name||'신수'}의 일정 조언</b><p>${projection.stress>=80?'스트레스가 높아 휴식을 넣는 것이 좋겠어요.':filled===7?'일주일 준비가 끝났어요. 실행 전에 비용과 상태를 확인하세요.':'요일을 고른 뒤 활동을 넣어 주세요.'}</p></div><div class="day-grid">${daySlots}</div><div class="schedule-tabs" role="tablist">${categoryTabs}</div><section class="schedule-category"><div class="action-grid">${actionCards}</div></section><div class="schedule-tools"><button id="scheduleFillRemaining" ${selectedScheduleAction?'':'disabled'}>선택 활동으로 빈칸 채우기</button><button id="scheduleClearAll" ${filled?'':'disabled'}>전체 비우기</button></div>`;
@@ -1917,7 +1924,7 @@ async function playWeeklySchedule(selected) {
     if(presentation.npc)stageNpcImage.src = (presentation.npc==='teacher'?npcFrames.teacherReading:npcFrames[presentation.npc])[0];
     stage.className = `activity-stage map-${presentation.location} action-${action.id} mastery-${currentMasteryRank}`;
     stageCharacter.className = `stage-character pixel-sprite ${presentation.motion}`;
-    let dungeonReward={money:0,gear:null};
+    let dungeonReward={money:0,gear:null},dateRelation=null;
     if(action.id==='shopping'){
       playMarketMusic();
       stageMap.src=backgrounds.market;
@@ -1934,9 +1941,17 @@ async function playWeeklySchedule(selected) {
       document.querySelector('#dialogueText').textContent=metSomeone?`바캉스에서 「${prize.name}」 일러스트와 ${metSomeone.name}의 인연 추억을 얻었어요.`:`바캉스에서 「${prize.name}」 일러스트를 획득했어요.`;
     }else if(action.id==='dungeon'){
       stageCharacter.hidden=true;stageNpc.hidden=true;stageProps.hidden=true;dungeonReward=await exploreDungeon();stageCharacter.hidden=false;stageProps.hidden=false;
+    }else if(action.special==='date'){
+      const relation=endingRelationCandidates.find(candidate=>candidate.id===action.relationId),record=relationRecord(action.relationId);dateRelation={candidate:relation,record};
+      stageMap.src=backgrounds.market;stageMap.alt=`${relation.name}과 만난 저잣거리`;
+      stageCharacter.hidden=true;stageProps.hidden=true;stageNpc.hidden=false;stageNpc.className='stage-npc npc-romance-date';stageNpcImage.src=relation.image;
+      document.querySelector('#dialogueText').textContent=`${relation.name}과(와) 약속한 장소에서 천천히 이야기를 나누었어요.`;
+      await new Promise(resolve=>setTimeout(resolve,1250));
+      record.affinity=Math.min(100,record.affinity+12);record.lastMetAt=game.currentDate||null;record.relationship=record.affinity>=80?'연인':record.affinity>=60?'특별한 인연':'친구';
+      stageCharacter.hidden=false;stageProps.hidden=false;
     }else await animateActivitySprite(stageCharacterImage,presentation.motion,restActivity||presentation.activity,stageNpcImage,presentation.npc,dailyOutfit,currentMasteryRank);
-    const guaranteedSuccess=['rest','vacation','dungeon'].includes(action.id);
-    const condition=['shopping','rest','vacation','dungeon'].includes(action.id)?null:conditionEvent(simulated.stress,index);
+    const guaranteedSuccess=['rest','vacation','dungeon'].includes(action.id)||action.special==='date';
+    const condition=['shopping','rest','vacation','dungeon'].includes(action.id)||action.special==='date'?null:conditionEvent(simulated.stress,index);
     let outcome=judgeActivityOutcome(action,simulated.stress);
     if(action.id==='dungeon')outcome=dungeonReward.money>=140?'perfect':dungeonReward.money>0?'normal':'struggle';
     if(!guaranteedSuccess&&condition==='mistake')outcome='mistake';
@@ -1954,6 +1969,7 @@ async function playWeeklySchedule(selected) {
       await animateConditionEvent(stageCharacter,conditionCue,condition);
     }
     setScheduleDialogue(action,outcome,index);
+    if(dateRelation)document.querySelector('#dialogueText').textContent=`${dateRelation.candidate.name}과(와) 즐거운 시간을 보냈어요. 지금은 ${dateRelation.record.relationship} 사이예요.`;
     stageCharacter.className = `stage-character pixel-sprite ${presentation.motion}${restActivity==='tea'?' rest-tea':''}`;
     const actualChange={};
     Object.entries(resolvedChange).forEach(([key,value])=>{const before=clampStat(key,game[key]||0),after=clampStat(key,before+value);game[key]=after;actualChange[key]=after-before;});
@@ -1969,7 +1985,7 @@ async function playWeeklySchedule(selected) {
     const moneyText = (moneyChange > 0 ? `은전 +${moneyChange}냥` : moneyChange < 0 ? `은전 ${moneyChange}냥` : isWork&&outcome==='mistake'?'실수하여 일당 없음':'비용 없음')+bonusText;
     const resultSummary=orderedChangeEntries(resolvedChange).filter(([,value])=>value!==0).map(([key,value])=>`${statLabels[key]||key} ${value>0?'+':''}${value}`).join(' · ');
     const relationEvent=maybeScheduleRelationEncounter(action);
-    dayResult.innerHTML = `<b>${action.name} · ${outcomeLabels[outcome]}</b><span>${resultSummary||'능력치 변화 없음'}<br>${moneyText} · 현재 ${game.money.toLocaleString()}냥${relationEvent?`<br>인연 · ${relationEvent.candidate.name} — ${relationEvent.episode.title}`:''}</span>`;
+    dayResult.innerHTML = `<b>${action.name} · ${outcomeLabels[outcome]}</b><span>${resultSummary||'능력치 변화 없음'}<br>${moneyText} · 현재 ${game.money.toLocaleString()}냥${dateRelation?`<br>인연 · ${dateRelation.candidate.name} 호감도 +12 · 현재 ${dateRelation.record.affinity} · ${dateRelation.record.relationship}`:''}${relationEvent?`<br>인연 · ${relationEvent.candidate.name} — ${relationEvent.episode.title}`:''}</span>`;
     if(relationEvent)document.querySelector('#dialogueText').textContent=relationEvent.episode.line;
     if(action.id!=='vacation'){
       dayResult.hidden = false;
