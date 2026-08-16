@@ -913,19 +913,30 @@ function guardianPortrait(){return `../assets/cinematics/guardian/guardian-${gam
 function closeGuardianConversation(change){
   document.querySelector('#homeGreeting').hidden=true;document.querySelector('.phone').classList.remove('greeting-active');showLiveChanges({change,cost:0});renderHud();queueAutoSave();
 }
+function renderGuardianTalkResult(change){
+  const result=document.querySelector('#guardianTalkResult');
+  const entries=orderedChangeEntries(change).filter(([,value])=>value!==0);
+  result.innerHTML=entries.map(([key,value])=>{
+    const beneficial=key==='stress'?value<0:value>0;
+    return `<span class="${beneficial?'up':'down'}"><b>${statLabels[key]||key}</b><em>${value>0?'+':''}${value}</em><small>현재 ${clampStat(key,game[key])}</small></span>`;
+  }).join('');
+  result.hidden=!entries.length;
+}
 function answerGuardianConversation(scene,index){
   const [reply,change,response]=scene.choices[index];
-  Object.entries(change).forEach(([key,value])=>game[key]=clampStat(key,(game[key]||0)+value));
+  const actualChange={};
+  Object.entries(change).forEach(([key,value])=>{const before=clampStat(key,game[key]);game[key]=clampStat(key,before+value);actualChange[key]=game[key]-before;});
   const speaker=document.querySelector('#homeGreetingSpeaker'),line=document.querySelector('#homeGreetingLine'),prompt=document.querySelector('#homeGreetingPrompt'),choices=document.querySelector('#homeGreetingChoices'),portrait=document.querySelector('#homeGreetingPortrait');
-  portrait.hidden=true;speaker.textContent=game.characterName||'아이';line.textContent=reply;prompt.textContent='';choices.innerHTML='<button id="guardianDialogueContinue">계속</button>';
-  document.querySelector('#guardianDialogueContinue').addEventListener('click',()=>{portrait.hidden=false;speaker.textContent=game.guardianName||guardianDefs[game.guardianType]?.name||'신수';line.textContent=response;choices.innerHTML='<button id="guardianDialogueClose">대화 마치기</button>';document.querySelector('#guardianDialogueClose').addEventListener('click',()=>closeGuardianConversation(change));});
+  portrait.hidden=false;portrait.classList.add('is-listening');speaker.textContent=game.characterName||'아이';line.textContent=reply;prompt.textContent='';renderGuardianTalkResult(actualChange);choices.innerHTML='<button id="guardianDialogueContinue">신수의 이야기 듣기</button>';
+  document.querySelector('#guardianDialogueContinue').addEventListener('click',()=>{portrait.classList.remove('is-listening');speaker.textContent=game.guardianName||guardianDefs[game.guardianType]?.name||'신수';line.textContent=response;choices.innerHTML='<button id="guardianDialogueClose">대화 마치기</button>';document.querySelector('#guardianDialogueClose').addEventListener('click',()=>closeGuardianConversation(actualChange));});
 }
 function startGuardianConversation(){
   const guardian=guardianDefs[game.guardianType];if(!guardian||introDialogueQueue.length)return false;
   if(game.lastGuardianTalkDate===game.currentDate){speakGuardian('home');document.querySelector('#dialogueText').textContent=`오늘은 이미 ${game.guardianName||guardian.name}과(와) 마음을 나누었어요. 다음 주에 다시 이야기해 봐요.`;return false;}
   game.lastGuardianTalkDate=game.currentDate;
   const scenes=guardianConversationSets[game.guardianType]||guardianConversationSets.hyeonmu,scene=scenes[Math.floor(Math.random()*scenes.length)];
-  const portrait=document.querySelector('#homeGreetingPortrait');portrait.hidden=false;portrait.src=guardianPortrait();portrait.alt=`${game.guardianName||guardian.name}의 모습`;
+  const portrait=document.querySelector('#homeGreetingPortrait');portrait.hidden=false;portrait.classList.remove('is-listening');portrait.src=guardianPortrait();portrait.alt=`${game.guardianName||guardian.name}의 모습`;
+  const result=document.querySelector('#guardianTalkResult');result.hidden=true;result.innerHTML='';
   document.querySelector('#homeGreetingSpeaker').textContent=game.guardianName||guardian.name;document.querySelector('#homeGreetingLine').textContent=scene.line;document.querySelector('#homeGreetingPrompt').textContent=`${game.characterName||'아이'}은(는) 어떻게 답할까요?`;
   const choices=document.querySelector('#homeGreetingChoices');choices.innerHTML=scene.choices.map((choice,index)=>`<button data-guardian-answer="${index}">${choice[0]}</button>`).join('');
   document.querySelector('#homeGreeting').hidden=false;document.querySelector('.phone').classList.add('greeting-active');choices.querySelectorAll('[data-guardian-answer]').forEach(button=>button.addEventListener('click',()=>answerGuardianConversation(scene,Number(button.dataset.guardianAnswer))));queueAutoSave();return true;
