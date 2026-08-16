@@ -99,6 +99,9 @@ const backgrounds = {
   restRoom: '../assets/backgrounds/pixel-activities/close/rest-room.webp',
   houseWorkroom: '../assets/backgrounds/pixel-activities/close/kitchen-workroom.webp'
 };
+Object.assign(backgrounds,{
+  farmJob:'../assets/backgrounds/pixel-jobs/farmwork.webp',childcareJob:'../assets/backgrounds/pixel-jobs/childcare.webp',kitchenJob:'../assets/backgrounds/pixel-jobs/kitchenhelp.webp',woodworkJob:'../assets/backgrounds/pixel-jobs/woodwork.webp',loomJob:'../assets/backgrounds/pixel-jobs/loomwork.webp',masonryJob:'../assets/backgrounds/pixel-jobs/masonry.webp',clinicJob:'../assets/backgrounds/pixel-jobs/clinichelp.webp',ferryJob:'../assets/backgrounds/pixel-jobs/ferryhelp.webp',merchantJob:'../assets/backgrounds/pixel-jobs/merchanthelp.webp'
+});
 const SAVE_KEY = 'seonhwa-princess-mvp-save-v2';
 const SESSION_ACTIVE_KEY = 'seonhwa-princess-mvp-session-active';
 const SAVE_SLOTS = [1,2,3,4,5];
@@ -131,27 +134,29 @@ const actionPresentation = {
   manners: { motion:'motion-manners', location:'etiquetteRoom', prop:'none', activity:'manners', npc:'teacher' }, errand: { motion:'motion-errand', location:'marketErrand', prop:'none', activity:'errand', npc:null },
   sweeping: { motion:'motion-sweeping', location:'courtyard', prop:'none', activity:'sweeping', npc:'dolsoe' }, herbs: { motion:'motion-herbs', location:'herbField', prop:'none', activity:'herbs', npc:'herbalist' },
   houseclean: { motion:'motion-houseclean', location:'restRoom', prop:'none', activity:'houseclean', npc:null },
-  farmwork: { motion:'motion-herbs', location:'herbField', prop:'none', activity:'herbs', npc:'herbalist' },
-  childcare: { motion:'motion-houseclean', location:'restRoom', prop:'none', activity:'houseclean', npc:null },
-  kitchenhelp: { motion:'motion-arithmetic', location:'restRoom', prop:'none', activity:'arithmetic', npc:null },
-  woodwork: { motion:'motion-sweeping', location:'courtyard', prop:'none', activity:'sweeping', npc:'dolsoe' },
-  loomwork: { motion:'motion-houseclean', location:'restRoom', prop:'none', activity:'houseclean', npc:null },
-  masonry: { motion:'motion-sweeping', location:'courtyard', prop:'none', activity:'sweeping', npc:'dolsoe' },
-  clinichelp: { motion:'motion-herbs', location:'herbField', prop:'none', activity:'herbs', npc:'herbalist' },
+  farmwork: { motion:'motion-job-farm', location:'farmJob', prop:'none', activity:'farmwork', npc:null },
+  childcare: { motion:'motion-job-childcare', location:'childcareJob', prop:'none', activity:'childcare', npc:null },
+  kitchenhelp: { motion:'motion-job-kitchen', location:'kitchenJob', prop:'none', activity:'kitchenhelp', npc:null },
+  woodwork: { motion:'motion-job-woodwork', location:'woodworkJob', prop:'none', activity:'woodwork', npc:null },
+  loomwork: { motion:'motion-job-loom', location:'loomJob', prop:'none', activity:'loomwork', npc:null },
+  masonry: { motion:'motion-job-masonry', location:'masonryJob', prop:'none', activity:'masonry', npc:null },
+  clinichelp: { motion:'motion-job-clinic', location:'clinicJob', prop:'none', activity:'clinichelp', npc:null },
   rest: { motion:'motion-resting', location:'restRoom', prop:'none', activity:'sleep', npc:null },
   sleep: { motion:'motion-sleep', location:'restRoom', prop:'none', activity:'sleep', npc:null },
   shopping: { motion:'motion-walk', location:'marketErrand', prop:'none', activity:null, npc:null },
   painting: { motion:'motion-calligraphy', location:'studyRoom', prop:'none', activity:'calligraphy', npc:'teacher' },
   music: { motion:'motion-manners', location:'etiquetteRoom', prop:'none', activity:'manners', npc:'teacher' },
   dance: { motion:'motion-manners', location:'etiquetteRoom', prop:'none', activity:'manners', npc:'teacher' },
+  swordsmanship: { motion:'motion-sweeping', location:'courtyard', prop:'none', activity:'sweeping', npc:null },
+  spellcraft: { motion:'motion-herbs', location:'herbField', prop:'none', activity:'herbs', npc:null },
   cooking: { motion:'motion-arithmetic', location:'restRoom', prop:'none', activity:'arithmetic', npc:null },
   martial: { motion:'motion-sweeping', location:'courtyard', prop:'none', activity:'sweeping', npc:'dolsoe' },
   classics: { motion:'motion-calligraphy', location:'studyRoom', prop:'none', activity:'calligraphy', npc:'teacher' },
   innhelp: { motion:'motion-errand', location:'marketErrand', prop:'none', activity:'errand', npc:null },
   sewing: { motion:'motion-houseclean', location:'restRoom', prop:'none', activity:'houseclean', npc:null },
   copying: { motion:'motion-calligraphy', location:'studyRoom', prop:'none', activity:'calligraphy', npc:'teacher' },
-  ferryhelp: { motion:'motion-errand', location:'marketErrand', prop:'none', activity:'errand', npc:null },
-  merchanthelp: { motion:'motion-errand', location:'marketErrand', prop:'none', activity:'errand', npc:null },
+  ferryhelp: { motion:'motion-job-ferry', location:'ferryJob', prop:'none', activity:'ferryhelp', npc:null },
+  merchanthelp: { motion:'motion-job-merchant', location:'merchantJob', prop:'none', activity:'merchanthelp', npc:null },
   accounting: { motion:'motion-arithmetic', location:'arithmeticRoom', prop:'none', activity:'arithmetic', npc:'teacher' },
   tutoring: { motion:'motion-calligraphy', location:'studyRoom', prop:'none', activity:'calligraphy', npc:'teacher' },
   dungeon: { motion:'motion-herbs', location:'herbField', prop:'none', activity:'herbs', npc:null }
@@ -238,6 +243,7 @@ activityFrames.sweeping=[1,2,3].map(n=>`../assets/characters/seonhwa/activity-co
 activityFrames.errand=[1,2,3].map(n=>`../assets/characters/seonhwa/age-09/sprites/activities/errand-character-v4-${n}.png`);
 activityFrames.herbs=[1,2,3].map(n=>`../assets/characters/seonhwa/activity-consistent/age-09/herbs-legacy-${n}.png`);
 activityFrames.tea=[1,1,1].map(n=>`../assets/characters/seonhwa/activity-consistent/age-09/rest-legacy-${n}.png`);
+['farmwork','childcare','kitchenhelp','woodwork','loomwork','masonry','clinichelp','ferryhelp','merchanthelp'].forEach(name=>{activityFrames[name]=[1,2,3].map(n=>`../assets/characters/seonhwa/job-actions/${name}-${n}.png`);});
 // The modular errand frames crop the top of the hair in frame 1. Keep the complete v4 frames.
 const modularActivities=new Set(['calligraphy','arithmetic','manners','houseclean','rest','sleep']);
 function activityFrameSet(activity){
@@ -313,6 +319,7 @@ const generalGoods = [
 ];
 let visitShopStock=[];
 let visitShopPurchaseMade=false;
+let pendingVisitShop=false;
 function prepareVisitShopStock(){
   if(!Array.isArray(game.purchasedGoods))game.purchasedGoods=[];
   const owned=new Set(game.purchasedGoods);
@@ -323,6 +330,18 @@ function prepareVisitShopStock(){
   }
   visitShopStock=eligible.slice(0,10).map(item=>item.id);
   visitShopPurchaseMade=false;
+}
+function rollVisitingMerchant(){
+  if(game.ended||generalGoods.every(item=>game.purchasedGoods?.includes(item.id)))return false;
+  pendingVisitShop=Math.random()<.18;
+  return pendingVisitShop;
+}
+function openVisitingMerchant(){
+  if(!pendingVisitShop)return;
+  pendingVisitShop=false;
+  document.querySelector('#speakerName').textContent='떠돌이 잡화상';
+  document.querySelector('#dialogueText').textContent='“마침 좋은 물건이 들어왔습니다. 오늘은 하나만 골라 보시지요.”';
+  openPanel('shop');
 }
 const outfits = [
   {id:'age09-neat',age:9,ageEnd:12,name:'단정한 배움 한복',price:180,tone:'단정함',seasons:['가을','겨울'],situations:['reading','arithmetic','manners'],change:{manners:4,virtue:3,charm:1}},
@@ -447,14 +466,15 @@ async function outfitActivityFrame(src,outfitId){
     }
     context.putImageData(frame,0,0);const result=canvas.toDataURL('image/png');activityOutfitFrameCache.set(key,result);resolve(result);}catch{resolve(src);}};source.onerror=()=>resolve(src);source.src=src;});
 }
-async function animateActivitySprite(image,motion,activity,npcImage,npc,outfitId){
+async function animateActivitySprite(image,motion,activity,npcImage,npc,outfitId,masteryRank=0){
   if(activity){
     const frames=activityFrameSet(activity);
     const sequence=activity==='errand'?[0,1,1,2,2,1,0]:activity==='houseclean'?[0,1,0,2,2,2]:activity==='sweeping'?[0,1,2,1,0,1,2,2,1,0,1,2,1,0]:activity==='sleep'?[0,1,2,1,0]:[0,1,2,1,0,1,2];
-    const delay=activity==='errand'?270:activity==='houseclean'?360:activity==='sleep'?430:activity==='tea'?460:190;
-    for(const [step,frame] of sequence.entries()){
-      if(activity==='houseclean')image.parentElement.style.left=`${[74,58,32,32,55,74][step]}%`;
-      if(activity==='sweeping')image.parentElement.style.left=`${[14,20,27,34,41,47,50,50,47,41,34,27,20,14][step]}%`;
+    const delay=Math.max(125,(activity==='errand'?270:activity==='houseclean'?360:activity==='sleep'?430:activity==='tea'?460:190)-masteryRank*35);
+    const rankedSequence=masteryRank===2?[...sequence,...sequence.slice(1)]:sequence;
+    for(const [step,frame] of rankedSequence.entries()){
+      if(activity==='houseclean')image.parentElement.style.left=`${[74,58,32,32,55,74][step%6]}%`;
+      if(activity==='sweeping')image.parentElement.style.left=`${[14,20,27,34,41,47,50,50,47,41,34,27,20,14][step%14]}%`;
       image.src=await outfitActivityFrame(frames[frame],outfitId);if(npc)npcImage.src=(npc==='teacher'?npcFrames.teacherReading:npcFrames[npc])[frame%3];await new Promise(resolve=>setTimeout(resolve,delay));
     }
     if(activity==='houseclean'||activity==='sweeping')image.parentElement.style.left='';
@@ -469,7 +489,7 @@ function conditionEvent(stress, dayIndex){
   if(stress>=55)return 'drowsy';
   return null;
 }
-const activitySkill={reading:'intelligence',arithmetic:'sense',manners:'manners',painting:'sensitivity',music:'sensitivity',dance:'agility',cooking:'sense',martial:'strength',classics:'intelligence',errand:'speech',sweeping:'strength',herbs:'sense',houseclean:'sense',farmwork:'strength',childcare:'sensitivity',kitchenhelp:'sense',woodwork:'strength',loomwork:'sense',masonry:'strength',clinichelp:'intelligence',innhelp:'speech',sewing:'sense',copying:'intelligence',ferryhelp:'health',merchanthelp:'speech',accounting:'sense',tutoring:'intelligence',dungeon:'strength',rest:'mentality'};
+const activitySkill={reading:'intelligence',arithmetic:'sense',manners:'manners',painting:'sensitivity',music:'sensitivity',dance:'agility',swordsmanship:'strength',spellcraft:'magic',cooking:'sense',martial:'strength',classics:'intelligence',errand:'speech',sweeping:'strength',herbs:'sense',houseclean:'sense',farmwork:'strength',childcare:'sensitivity',kitchenhelp:'sense',woodwork:'strength',loomwork:'sense',masonry:'strength',clinichelp:'intelligence',innhelp:'speech',sewing:'sense',copying:'intelligence',ferryhelp:'health',merchanthelp:'speech',accounting:'sense',tutoring:'intelligence',dungeon:'strength',rest:'mentality'};
 const outcomeLabels={perfect:'완벽',success:'성공',struggle:'힘겨움',mistake:'실수'};
 function activityOutcomeThresholds(action,stress){
   const skill=game[activitySkill[action.id]]||0;
@@ -514,11 +534,22 @@ const scheduleDialogue={
   arithmetic:{perfect:['주판알 소리가 아주 반듯하구나.','셈을 한 번도 틀리지 않았어요.'],normal:['주판알을 튕기니 답이 보여요.','조금 천천히 세면 틀리지 않을 거예요.']},
   manners:{perfect:['몸가짐이 한결 단정해졌구나.','오늘 인사는 아주 다소곳했어요.'],normal:['치맛자락을 가지런히 잡아 보았어요.','바른 인사를 잊지 않을게요.']},
   dance:{perfect:['장단과 춤사위가 물 흐르듯 이어졌어요.'],normal:['발디딤과 손끝을 차분히 맞춰 보았어요.']},
+  swordsmanship:{perfect:['검끝과 발디딤이 한 치도 흐트러지지 않았어요.'],normal:['기본 자세를 지키며 베기와 막기를 연습했어요.']},
+  spellcraft:{perfect:['신수의 기운과 주문이 맑게 맞물렸어요.'],normal:['호흡을 가다듬고 작은 빛의 술법을 익혔어요.']},
   cooking:{perfect:['간과 불 조절이 꼭 알맞았어요.'],normal:['제철 재료를 다듬어 한 상을 차려 보았어요.']},
   errand:{perfect:['부탁받은 물건을 빠짐없이 사 왔어요.'],normal:['사람이 많아서 장바구니를 꼭 잡았어요.','진열대를 살펴보며 좋은 물건을 골랐어요.']},
   sweeping:{perfect:['마당에 티끌 하나 남지 않았어요.'],normal:['마당을 쓸고 나니 마음도 개운해요.']},
   herbs:{perfect:['좋은 약초만 골라 바구니를 채웠어요.'],normal:['뿌리가 다치지 않도록 조심히 뽑았어요.']},
   houseclean:{perfect:['방 안이 반짝반짝해졌어요.'],normal:['가구 밑까지 깨끗하게 닦았어요.']},
+  farmwork:{perfect:['먹이와 밭일을 순서대로 완벽히 마쳤어요.'],normal:['가축에게 먹이를 주고 밭고랑을 고르게 다듬었어요.']},
+  childcare:{perfect:['아이가 하루 종일 환하게 웃었어요.'],normal:['장난감으로 놀아 주고 다치지 않도록 살폈어요.']},
+  kitchenhelp:{perfect:['재료 손질과 그릇 나르기를 막힘없이 해냈어요.'],normal:['채소를 다듬고 빈 그릇을 차곡차곡 옮겼어요.']},
+  woodwork:{perfect:['연장과 목재를 쓰임새대로 완벽히 정리했어요.'],normal:['나무 결을 살피며 연장을 안전하게 정리했어요.']},
+  loomwork:{perfect:['베틀의 북이 고른 장단으로 오갔어요.'],normal:['실이 엉키지 않도록 베틀을 천천히 움직였어요.']},
+  masonry:{perfect:['흙과 기와를 제때 건네 일이 빠르게 끝났어요.'],normal:['흙을 나르고 기와를 한 장씩 조심히 전달했어요.']},
+  clinichelp:{perfect:['약재를 정확히 나누고 탕약의 불도 잘 맞췄어요.'],normal:['약재를 분류하고 약탕기의 불을 살폈어요.']},
+  ferryhelp:{perfect:['짐표와 꾸러미가 하나도 어긋나지 않았어요.'],normal:['짐표를 확인하고 나룻배까지 꾸러미를 옮겼어요.']},
+  merchanthelp:{perfect:['손님마다 알맞은 물건을 건네고 셈도 정확했어요.'],normal:['상품을 건네고 주판으로 값을 차분히 계산했어요.']},
   tutoring:{perfect:['어린 학동이 어려운 대목을 모두 이해했어요.'],normal:['학동의 눈높이에 맞춰 글과 셈을 가르쳤어요.']},
   dungeon:{perfect:['비경 깊은 곳에서 귀한 보물을 찾았어요.'],normal:['낯선 길을 살피며 무사히 탐사를 마쳤어요.']},
   rest:{perfect:['푹 쉬었더니 몸이 가벼워졌어요.'],normal:['조용히 쉬면서 기운을 되찾았어요.']},
@@ -528,10 +559,11 @@ function pickLine(lines,index){return lines[index%lines.length];}
 function objectParticle(word){const last=word.charCodeAt(word.length-1);return last>=0xAC00&&last<=0xD7A3&&(last-0xAC00)%28?'을':'를';}
 function setScheduleDialogue(action,state,index){
   const education=action.category==='교육';
+  const rankName=activityRankNames[activityRank(action.id)];
   let speaker=game.characterName||'아이',line='오늘도 차근차근 해볼게요.';
   if(state==='start'){
     if(game.stress>=55)line='오늘은 컨디션이 좋지 않아요.';
-    else line=`오늘은 ${action.name}${objectParticle(action.name)} 열심히 해볼게요.`;
+    else line=dedicatedJobIds.has(action.id)?`${rankName}답게 ${action.name}${objectParticle(action.name)} 차근차근 해볼게요.`:`오늘은 ${action.name}${objectParticle(action.name)} 열심히 해볼게요.`;
   }else if(state==='drowsy'){
     speaker=education?'훈장님':(game.guardianName||guardianDefs[game.guardianType]?.name||'수호신수');
     line=education?'수업 중에 졸면 배운 것을 놓치게 된다. 정신을 차리거라.':'많이 피곤해 보이는구나. 잠시 숨을 고르렴.';
@@ -542,6 +574,10 @@ function setScheduleDialogue(action,state,index){
     line=game.stress>=55?'마음이 무거워 평소만큼 해내지는 못했어요.':'조금 어려웠지만 끝까지 포기하지 않았어요.';
   }else{
     line=pickLine(scheduleDialogue[action.id]?.[state==='perfect'?'perfect':'normal']||['오늘 일정을 무사히 마쳤어요.'],index);
+    if(dedicatedJobIds.has(action.id)){
+      const rankLead=rankName==='달인'?'달인의 솜씨로 막힘없이 해냈어요.':rankName==='숙련'?'이제 손에 익어 훨씬 능숙해졌어요.':'아직 서툴지만 하나씩 제대로 배웠어요.';
+      line=`${rankLead} ${line}`;
+    }
   }
   document.querySelector('#speakerName').textContent=speaker;
   document.querySelector('#dialogueText').textContent=line;
@@ -562,6 +598,8 @@ const actions = [
   { id: 'painting', category: '교육', name: '회화 배우기', cost: 130, unlockAge:13, mentor:'화공 스승', icon:'reading', intro:'붓끝으로 보이는 것 너머의 빛까지 담아 보거라.', summary:'감수성 +4 · 센스 +2 · 스트레스 +3', change:{sensitivity:4,sense:2,stress:3} },
   { id: 'music', category: '교육', name: '악기 배우기', cost: 140, unlockAge:13, mentor:'악기 선생', icon:'manners', intro:'소리를 서두르지 말고 먼저 네 호흡을 들어 보렴.', summary:'감수성 +3 · 기품 +2 · 스트레스 +3', change:{sensitivity:3,dignity:2,stress:3} },
   { id: 'dance', category: '교육', name: '전통 춤사위', cost: 145, unlockAge:13, mentor:'춤 선생', icon:'manners', intro:'장단을 먼저 마음에 담고, 발디딤과 손끝을 이어 보렴.', summary:'민첩 +3 · 기품 +3 · 매력 +2 · 스트레스 +3', change:{agility:3,dignity:3,charm:2,stress:3} },
+  { id:'swordsmanship',category:'교육',name:'검술 수련',cost:165,unlockAge:13,unlockStats:{strength:35},mentor:'검술 사범',icon:'sweeping',intro:'칼을 휘두르기 전에 발과 호흡부터 바로 세워라.',summary:'힘 +4 · 민첩 +3 · 체력 +2 · 스트레스 +4',change:{strength:4,agility:3,health:2,stress:4}},
+  { id:'spellcraft',category:'교육',name:'술법 수련',cost:175,unlockAge:13,unlockStats:{intelligence:45,mentality:35},mentor:'수호신수',icon:'herbs',intro:'기운을 억지로 잡지 말고 숨결을 따라 흐르게 하렴.',summary:'마력 +5 · 지능 +2 · 정신력 +3 · 스트레스 +4',change:{magic:5,intelligence:2,mentality:3,stress:4}},
   { id: 'cooking', category: '교육', name: '향토 음식 익히기', cost: 120, unlockAge:13, mentor:'찬모', icon:'arithmetic', intro:'제철 재료의 맛을 살리고 불과 간을 세심히 다루어야 한단다.', summary:'센스 +4 · 체력 +1 · 감수성 +2 · 스트레스 +3', change:{sense:4,health:1,sensitivity:2,stress:3} },
   { id: 'martial', category: '교육', name: '무예 수련', cost: 150, unlockAge:13, mentor:'무예 사범', icon:'sweeping', intro:'힘만 앞세우지 말고 발과 마음을 함께 다스려라.', summary:'힘 +4 · 민첩 +3 · 스트레스 +4', change:{strength:4,agility:3,stress:4} },
   { id: 'classics', category: '교육', name: '경전 심화', cost: 190, unlockAge:16, mentor:'경학 스승', icon:'reading', intro:'이제 글자를 읽는 데서 그치지 말고 뜻을 논해 보자꾸나.', summary:'지능 +6 · 기품 +2 · 스트레스 +4', change:{intelligence:6,dignity:2,stress:4} },
@@ -588,21 +626,31 @@ const actions = [
   { id: 'vacation', category: '휴식', name: '바캉스', cost: 180, summary: '감수성 +3 · 매력 +1 · 스트레스 -25 · 추억 일러스트 획득', change: {sensitivity:3,charm:1,stress:-25}, special:'vacation' },
   { id: 'dungeon', category: '휴식', name: '비경 탐사', cost: 50, unlockAge:13, mentor:'수호신수', icon:'herbs', intro:'성 밖의 숨은 길에는 보물과 위험이 함께 있단다. 준비를 갖추고 나서자.', summary:'체력 +2 · 힘 +2 · 마력 +2 · 스트레스 +5 · 보물 은전 획득 가능', change:{health:2,strength:2,magic:2,stress:5}, special:'dungeon' }
 ];
-const activityRequirements={reading:['지능',20],arithmetic:['센스',15],manners:['예절',15],painting:['감수성',80],music:['기품',70],dance:['민첩',75],cooking:['센스',70],martial:['체력',80],classics:['지능',180],errand:['화술',12],sweeping:['힘',15],herbs:['센스',18],houseclean:['체력',20],innhelp:['화술',70],sewing:['센스',75],copying:['지능',85],accounting:['센스',170],tutoring:['지능',140],dungeon:['힘',80]};
+const activityRequirements={reading:['지능',20],arithmetic:['센스',15],manners:['예절',15],painting:['감수성',80],music:['기품',70],dance:['민첩',75],swordsmanship:['힘',35],spellcraft:['마력',20],cooking:['센스',70],martial:['체력',80],classics:['지능',180],errand:['화술',12],sweeping:['힘',15],herbs:['센스',18],houseclean:['체력',20],farmwork:['힘',25],childcare:['감수성',30],kitchenhelp:['센스',30],woodwork:['힘',40],loomwork:['센스',45],masonry:['체력',45],clinichelp:['지능',70],innhelp:['화술',70],sewing:['센스',75],copying:['지능',85],ferryhelp:['체력',55],merchanthelp:['화술',55],accounting:['센스',170],tutoring:['지능',140],dungeon:['힘',80]};
 const actionUnlocked=action=>game.age>=Number(action.unlockAge||9)&&Object.entries(action.unlockStats||{}).every(([stat,value])=>Number(game[stat]||0)>=value);
 const newlyUnlockedActions=(previousAge,nextAge)=>actions.filter(action=>Number(action.unlockAge||9)>previousAge&&Number(action.unlockAge||9)<=nextAge&&Object.entries(action.unlockStats||{}).every(([stat,value])=>Number(game[stat]||0)>=value));
-const activityRankNames=['초급','익숙함','숙련','달인'];
+const activityRankNames=['견습','숙련','달인'];
+const dedicatedJobIds=new Set(['farmwork','childcare','kitchenhelp','woodwork','loomwork','masonry','clinichelp','ferryhelp','merchanthelp']);
+const jobRewardNames={farmwork:'튼튼한 곡식 자루',childcare:'아이의 종이꽃',kitchenhelp:'찬모의 조리 수첩',woodwork:'목수의 작은 자',loomwork:'명주실 타래',masonry:'와공의 기와패',clinichelp:'약방의 향약 꾸러미',ferryhelp:'나루터 통행패',merchanthelp:'상인의 행운 엽전'};
 function normalizeActivityProgress(){
   if(!game.activityProgress||typeof game.activityProgress!=='object')game.activityProgress={};
-  actions.forEach(action=>{const current=game.activityProgress[action.id]||{};game.activityProgress[action.id]={attempts:Math.max(0,Number(current.attempts)||0),successes:Math.max(0,Number(current.successes)||0),streak:Math.max(0,Number(current.streak)||0),bestStreak:Math.max(0,Number(current.bestStreak)||0)};});
+  actions.forEach(action=>{const current=game.activityProgress[action.id]||{};game.activityProgress[action.id]={attempts:Math.max(0,Number(current.attempts)||0),successes:Math.max(0,Number(current.successes)||0),streak:Math.max(0,Number(current.streak)||0),perfectStreak:Math.max(0,Number(current.perfectStreak)||0),bestStreak:Math.max(0,Number(current.bestStreak)||0)};});
 }
 function activityProgressFor(id){normalizeActivityProgress();return game.activityProgress[id];}
-function activityRank(id){const attempts=activityProgressFor(id).attempts;return attempts>=49?3:attempts>=21?2:attempts>=7?1:0;}
-function activityPay(action){if(action.category!=='아르바이트')return -action.cost;return Math.round((-action.cost)*[1,1.15,1.35,1.6][activityRank(action.id)]);}
+function activityRank(id){const successes=activityProgressFor(id).successes;return successes>=30?2:successes>=10?1:0;}
+function activityPay(action){if(action.category!=='아르바이트')return -action.cost;return Math.round((-action.cost)*[1,1.25,1.6][activityRank(action.id)]);}
 function recordActivityProgress(action,outcome){
-  if(!['교육','아르바이트'].includes(action.category))return;
+  if(!['교육','아르바이트'].includes(action.category))return {bonusPay:0,reward:null};
   const progress=activityProgressFor(action.id),succeeded=outcome!=='mistake';progress.attempts+=1;
   if(succeeded){progress.successes+=1;progress.streak+=1;progress.bestStreak=Math.max(progress.bestStreak,progress.streak);}else progress.streak=0;
+  progress.perfectStreak=outcome==='perfect'?progress.perfectStreak+1:0;
+  if(action.category!=='아르바이트'||progress.perfectStreak===0||progress.perfectStreak%3!==0)return {bonusPay:0,reward:null};
+  const rewardName=jobRewardNames[action.id];
+  if(rewardName&&Math.random()<.4){
+    normalizeInventory();const rewardId=`job-reward-${action.id}`;
+    if(!game.items.some(item=>item.id===rewardId)){const reward={id:rewardId,type:'event',name:rewardName,description:`${action.name} 연속 대성공으로 받은 기념품`,qty:1};game.items.push(reward);return {bonusPay:0,reward};}
+  }
+  return {bonusPay:Math.round(activityPay(action)*.5),reward:null};
 }
 function actionForStressLimit(action,stress){
   return stress>=statMaximum('stress')&&action.id!=='rest'?actions.find(item=>item.id==='rest'):action;
@@ -642,14 +690,14 @@ const careerEndingCandidates=[
   {id:'renowned-painter',title:'이름난 화가',description:'자유로운 시선으로 사람들의 마음을 움직이는 그림을 남겼습니다.',weights:{sensitivity:4,sense:4,speech:1,charm:1}},
   {id:'court-dancer',title:'궁중 무희',description:'기품과 아름다운 몸짓으로 궁중 연회의 중심에 섰습니다.',weights:{dignity:4,charm:4,sensitivity:2,agility:2}},
   {id:'master-entertainer',title:'명망 높은 예인',description:'시와 음악, 춤과 화술을 두루 익힌 최고의 예인이 되었습니다.',weights:{charm:4,sensitivity:3,speech:3,sense:2}},
-  {id:'great-general',title:'대장군',description:'강인한 몸과 흔들리지 않는 정신으로 나라를 지키는 장수가 되었습니다.',weights:{strength:5,agility:4,health:3,mentality:2}},
+  {id:'great-general',title:'대장군',description:'강인한 몸과 흔들리지 않는 정신으로 나라를 지키는 장수가 되었습니다.',weights:{strength:5,agility:4,health:3,mentality:2},masteryJobs:['farmwork','woodwork','masonry','swordsmanship']},
   {id:'martial-instructor',title:'무예 교관',description:'단단한 체력과 민첩한 몸놀림으로 다음 세대를 가르쳤습니다.',weights:{strength:4,agility:4,health:3,manners:1}},
   {id:'royal-magician',title:'왕실 술법사',description:'깊은 정신력과 마력으로 신수와 사람 사이의 지혜를 밝혔습니다.',weights:{magic:5,mentality:4,intelligence:2,sensitivity:1}},
   {id:'secret-explorer',title:'비경 탐험가',description:'두려움 없는 발걸음으로 알려지지 않은 땅과 유물을 발견했습니다.',weights:{agility:4,health:3,magic:2,sense:3}},
-  {id:'great-merchant',title:'대상인',description:'사람을 읽는 화술과 뛰어난 감각으로 큰 상단을 이끌었습니다.',weights:{speech:5,sense:4,intelligence:1,charm:1},moneyWeight:.012},
-  {id:'fashion-master',title:'의복 장인',description:'전통과 새로운 감각을 엮어 누구도 흉내 내지 못할 옷을 지었습니다.',weights:{sense:5,sensitivity:3,charm:2,dignity:1}},
-  {id:'royal-chef',title:'궁중 요리사',description:'세심한 손끝과 넉넉한 마음으로 사람들을 행복하게 하는 음식을 만들었습니다.',weights:{sense:4,health:3,sensitivity:2,manners:1}},
-  {id:'physician',title:'명의',description:'학문과 따뜻한 마음으로 아픈 사람을 살피는 의원이 되었습니다.',weights:{intelligence:4,magic:2,mentality:3,health:2}},
+  {id:'great-merchant',title:'대상인',description:'사람을 읽는 화술과 뛰어난 감각으로 큰 상단을 이끌었습니다.',weights:{speech:5,sense:4,intelligence:1,charm:1},moneyWeight:.012,masteryJobs:['merchanthelp','ferryhelp']},
+  {id:'fashion-master',title:'의복 장인',description:'전통과 새로운 감각을 엮어 누구도 흉내 내지 못할 옷을 지었습니다.',weights:{sense:5,sensitivity:3,charm:2,dignity:1},masteryJobs:['loomwork','sewing']},
+  {id:'royal-chef',title:'궁중 요리사',description:'세심한 손끝과 넉넉한 마음으로 사람들을 행복하게 하는 음식을 만들었습니다.',weights:{sense:4,health:3,sensitivity:2,manners:1},masteryJobs:['kitchenhelp','cooking']},
+  {id:'physician',title:'명의',description:'학문과 따뜻한 마음으로 아픈 사람을 살피는 의원이 되었습니다.',weights:{intelligence:4,magic:2,mentality:3,health:2},masteryJobs:['clinichelp','herbs']},
   {id:'diplomat',title:'외교 사절',description:'품격 있는 화술과 지혜로 먼 나라와 새로운 길을 열었습니다.',weights:{speech:5,dignity:4,intelligence:2,manners:2}},
   {id:'guardian-keeper',title:'신수의 수호자',description:'신수와 가장 깊은 유대를 맺고 세상의 균형을 지키는 사람이 되었습니다.',weights:{magic:4,mentality:4,dignity:2},guardianWeight:8},
   {id:'quiet-life',title:'평온한 삶',description:'화려한 명성 대신 소중한 사람들과 따뜻하고 단단한 일상을 선택했습니다.',weights:{health:2,mentality:3,manners:2,sensitivity:2}}
@@ -663,7 +711,7 @@ const downfallEndingCandidates=[
   {id:'debt-runaway',title:'빚더미 도망자',description:'무리한 선택을 되풀이한 끝에 빈손으로 먼 길을 떠나야 했습니다.',test:()=>game.money<=100&&game.stress>=95&&game.mentality<180},
   {id:'forsaken',title:'신수에게 버림받은 자',description:'거듭된 불신으로 수호의 계약이 끊기고 신수의 빛도 사라졌습니다.',test:()=>game.nannyAffinity<=5&&game.guardianTrust<=5}
 ];
-function careerEndingScore(candidate){return Object.entries(candidate.weights).reduce((score,[key,weight])=>score+clampStat(key,game[key])*weight,0)+Math.max(0,game.money||0)*(candidate.moneyWeight||0)+clampStat('guardianTrust',game.guardianTrust)*(candidate.guardianWeight||0);}
+function careerEndingScore(candidate){const masteryScore=(candidate.masteryJobs||[]).reduce((score,id)=>score+Math.min(300,activityProgressFor(id).successes*8),0);return Object.entries(candidate.weights).reduce((score,[key,weight])=>score+clampStat(key,game[key])*weight,0)+Math.max(0,game.money||0)*(candidate.moneyWeight||0)+clampStat('guardianTrust',game.guardianTrust)*(candidate.guardianWeight||0)+masteryScore;}
 function resolveCareerEnding(){return careerEndingCandidates.map((candidate,index)=>({...candidate,index,score:careerEndingScore(candidate)})).sort((left,right)=>right.score-left.score||left.index-right.index)[0];}
 function resolveRelationEnding(){normalizeRelations();return endingRelationCandidates.map((candidate,index)=>({candidate,record:game.relations[candidate.id],index})).filter(entry=>entry.record.dateUnlocked&&entry.record.meetings>=5).sort((left,right)=>right.record.affinity-left.record.affinity||right.record.meetings-left.record.meetings||left.index-right.index)[0]||null;}
 function resolveEnding(){
@@ -880,7 +928,7 @@ function renderVisitShop(){
   const displayed=visitShopStock.map(id=>generalGoods.find(item=>item.id===id)).filter(item=>item&&!owned.has(item.id));
   const cards=displayed.map(item=>`<button class="shop-card goods-card" data-general-good="${item.id}" ${(visitShopPurchaseMade||game.money<item.price)?'disabled':''}><i class="item-glyph type-${item.type}"></i><b>${item.name}</b><span>${item.price}냥</span><small>${item.detail}<br>${formatChanges(item.change)}</small></button>`).join('');
   const note=visitShopPurchaseMade?'이번 방문의 구매를 마쳤습니다. 다음 방문에 새 물건이 들어옵니다.':'이번 방문에는 진열된 물건 중 하나만 구매할 수 있습니다.';
-  panelBody.innerHTML=`<div class="shop-greeting"><div class="merchant-seal" aria-hidden="true">商</div><div><b>떠돌이 잡화상</b><p>방문할 때마다 새로운 물건 열 가지를 골라 가져옵니다.</p></div></div><div class="shop-money"><span>보유 은전 <b>${game.money.toLocaleString()}냥</b></span></div><p class="visit-shop-note">${note}<br>구매한 물건은 다시 진열되지 않습니다.</p><div class="shop-grid">${cards||'<p class="empty-shop">지금 살 수 있는 새 물건이 없습니다.</p>'}</div>`;
+  panelBody.innerHTML=`<div class="shop-greeting visiting-merchant"><img src="../assets/characters/companions/portraits/merchant.png" alt="집으로 찾아온 떠돌이 잡화상"><div><b>떠돌이 잡화상</b><p>집 앞에 들러 오늘의 물건 열 가지를 펼쳐 보였습니다.</p></div></div><div class="shop-money"><span>보유 은전 <b>${game.money.toLocaleString()}냥</b></span></div><p class="visit-shop-note">${note}<br>구매한 물건은 다시 진열되지 않습니다.</p><div class="shop-grid">${cards||'<p class="empty-shop">지금 살 수 있는 새 물건이 없습니다.</p>'}</div>`;
   panelBody.querySelectorAll('[data-general-good]').forEach(button=>button.addEventListener('click',()=>buyGeneralGood(button.dataset.generalGood)));
 }
 function buyGeneralGood(id){
@@ -1366,7 +1414,7 @@ function showMonthlyReport(ledger){
   const net=ledger.income-ledger.expense;
   const condition=game.stress>=75?'스트레스가 높아요. 다음 달에는 휴식이 필요해요.':game.stress>=50?'마음이 조금 무겁지만 잘 버텼어요.':'좋은 컨디션으로 한 달을 마쳤어요.';
   panelBody.innerHTML=`<section class="monthly-balance"><div><span>수입</span><b>+${ledger.income.toLocaleString()}냥</b></div><div><span>지출</span><b>-${ledger.expense.toLocaleString()}냥</b></div><div class="net"><span>합계</span><b class="${net>=0?'good':'bad'}">${net>=0?'+':''}${net.toLocaleString()}냥</b></div></section><section class="monthly-report-section"><h3>이번 달 활동</h3><ul>${activityRows||'<li>기록 없음</li>'}</ul></section><section class="monthly-report-section"><h3>능력치 변화</h3><ul>${statRows||'<li>변화 없음</li>'}</ul></section><p class="monthly-condition">${condition}</p><button id="closeMonthlyReport" class="monthly-continue">다음 달 시작</button>`;
-  document.querySelector('#closeMonthlyReport').addEventListener('click',()=>{panel.hidden=true;document.querySelector('#dialogueText').textContent=`${game.month}월도 함께 힘내 보아요.`;});
+  document.querySelector('#closeMonthlyReport').addEventListener('click',()=>{panel.hidden=true;document.querySelector('#dialogueText').textContent=`${game.month}월도 함께 힘내 보아요.`;openVisitingMerchant();});
 }
 
 async function runWeek() {
@@ -1400,8 +1448,10 @@ async function runWeek() {
   applyEquippedOutfit();
   renderHud();
   panel.hidden = true;
+  rollVisitingMerchant();
   if (game.ended) showEnding();
   else if(completedLedger)showMonthlyReport(completedLedger);
+  else openVisitingMerchant();
   clearTimeout(autoSaveTimer);
   writeLatestAutoSave();
 }
@@ -1654,6 +1704,7 @@ async function playWeeklySchedule(selected) {
       game.dailySchedule[index]=action.id;
     }
     const presentation = actionPresentation[action.id]||actionPresentation.rest;
+    const currentMasteryRank=activityRank(action.id);
     stage.hidden=false;stageCharacter.hidden=false;stageProps.hidden=false;
     setScheduleDialogue(action,'start',index);
     if(forcedRest)document.querySelector('#dialogueText').textContent='스트레스가 100에 도달해 오늘 일정은 집에서 휴식으로 변경했어요.';
@@ -1664,7 +1715,7 @@ async function playWeeklySchedule(selected) {
     const outfitName=outfits.find(item=>item.id===dailyOutfit)?.name;
     const showOutfitName=action.id!=='rest'&&Boolean(outfitName);
     const restActivity=action.id==='rest'?(Math.random()<.5?'tea':'sleep'):null;
-    document.querySelector('#stageCaption').textContent = `${dayNames[index]} · ${action.name}${restActivity?` · ${restActivity==='tea'?'차 마시기':'잠자기'}`:''}${showOutfitName?` · ${outfitName}`:''}`;
+    document.querySelector('#stageCaption').textContent = `${dayNames[index]} · ${action.name}${['교육','아르바이트'].includes(action.category)?` · ${activityRankNames[currentMasteryRank]}`:''}${restActivity?` · ${restActivity==='tea'?'차 마시기':'잠자기'}`:''}${showOutfitName?` · ${outfitName}`:''}`;
     document.querySelector('#playbackProgress').style.width = `${((index + 1) / selected.length) * 100}%`;
     bg.src = backgrounds[presentation.location];
     stageMap.src = backgrounds[presentation.location];
@@ -1673,7 +1724,7 @@ async function playWeeklySchedule(selected) {
     stageNpc.hidden = !presentation.npc;
     stageNpc.className = presentation.npc ? `stage-npc npc-${presentation.npc}` : 'stage-npc';
     if(presentation.npc)stageNpcImage.src = (presentation.npc==='teacher'?npcFrames.teacherReading:npcFrames[presentation.npc])[0];
-    stage.className = `activity-stage map-${presentation.location} action-${action.id}`;
+    stage.className = `activity-stage map-${presentation.location} action-${action.id} mastery-${currentMasteryRank}`;
     stageCharacter.className = `stage-character pixel-sprite ${presentation.motion}`;
     if(action.id==='shopping'){
       playMarketMusic();
@@ -1689,7 +1740,7 @@ async function playWeeklySchedule(selected) {
       stage.hidden=true;stageNpc.hidden=true;stageProps.hidden=true;stageCharacter.hidden=true;
       const metSomeone=await playVacationScene(prize,index);
       document.querySelector('#dialogueText').textContent=metSomeone?`바캉스에서 「${prize.name}」 일러스트와 ${metSomeone.name}의 인연 추억을 얻었어요.`:`바캉스에서 「${prize.name}」 일러스트를 획득했어요.`;
-    }else await animateActivitySprite(stageCharacterImage,presentation.motion,restActivity||presentation.activity,stageNpcImage,presentation.npc,dailyOutfit);
+    }else await animateActivitySprite(stageCharacterImage,presentation.motion,restActivity||presentation.activity,stageNpcImage,presentation.npc,dailyOutfit,currentMasteryRank);
     const guaranteedSuccess=['rest','vacation'].includes(action.id);
     const condition=['shopping','rest','vacation'].includes(action.id)?null:conditionEvent(simulated.stress,index);
     let outcome=judgeActivityOutcome(action,simulated.stress);
@@ -1702,7 +1753,8 @@ async function playWeeklySchedule(selected) {
       const treasure=outcome==='mistake'?0:outcome==='struggle'?30+Math.floor(Math.random()*41):outcome==='perfect'?150+Math.floor(Math.random()*91):80+Math.floor(Math.random()*81);
       moneyChange+=treasure;
     }
-    recordActivityProgress(action,outcome);
+    const progressReward=recordActivityProgress(action,outcome);
+    moneyChange+=progressReward.bonusPay;
     if(condition){
       setScheduleDialogue(action,condition,index);
       await animateConditionEvent(stageCharacter,conditionCue,condition);
@@ -1718,7 +1770,8 @@ async function playWeeklySchedule(selected) {
     const moneyLabel=document.querySelector('#moneyLabel');
     moneyLabel.classList.remove('money-changing');void moneyLabel.offsetWidth;moneyLabel.classList.add('money-changing');
     showLiveChanges(resolvedAction);
-    const moneyText = moneyChange > 0 ? `은전 +${moneyChange}냥` : moneyChange < 0 ? `은전 ${moneyChange}냥` : isWork&&outcome==='mistake'?'실수하여 일당 없음':'비용 없음';
+    const bonusText=progressReward.reward?` · ${progressReward.reward.name} 획득`:progressReward.bonusPay?` · 연속 대성공 보너스 +${progressReward.bonusPay}냥`:'';
+    const moneyText = (moneyChange > 0 ? `은전 +${moneyChange}냥` : moneyChange < 0 ? `은전 ${moneyChange}냥` : isWork&&outcome==='mistake'?'실수하여 일당 없음':'비용 없음')+bonusText;
     const resultSummary=orderedChangeEntries(resolvedChange).filter(([,value])=>value!==0).map(([key,value])=>`${statLabels[key]||key} ${value>0?'+':''}${value}`).join(' · ');
     dayResult.innerHTML = `<b>${action.name} · ${outcomeLabels[outcome]}</b><span>${resultSummary||'능력치 변화 없음'}<br>${moneyText} · 현재 ${game.money.toLocaleString()}냥</span>`;
     if(action.id!=='vacation'){

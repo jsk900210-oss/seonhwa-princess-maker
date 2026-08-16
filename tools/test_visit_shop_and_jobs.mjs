@@ -7,8 +7,10 @@ const requiredJobs=['farmwork','childcare','kitchenhelp','woodwork','loomwork','
 
 for(const id of requiredGoods)if(!app.includes(`id:'${id}'`))throw new Error(`방문상점 누락: ${id}`);
 for(const id of requiredJobs)if(!app.includes(`id:'${id}'`))throw new Error(`아르바이트 누락: ${id}`);
-if(!html.includes('data-panel="shop"'))throw new Error('방문상점 홈 버튼 누락');
+if(html.includes('data-panel="shop"'))throw new Error('방문상점이 상시 홈 버튼으로 남아 있음');
 if(!app.includes("renderVisitShop()"))throw new Error('방문상점 렌더링 연결 누락');
+if(!app.includes('Math.random()<.18'))throw new Error('방문상점 무작위 방문 확률 누락');
+if(!app.includes('openVisitingMerchant()'))throw new Error('방문상점 NPC 이벤트 연결 누락');
 if(!app.includes('errand-character-v4-'))throw new Error('장터 심부름 기존 v4 프레임 복구 누락');
 if(!app.includes("restActivity==='tea'?' rest-tea':''"))throw new Error('차 마시기 전용 표시 영역 누락');
 if(!app.includes('purchasedGoods:[]'))throw new Error('방문상점 별도 구매 기록 누락');

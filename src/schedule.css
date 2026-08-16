@@ -471,6 +471,19 @@
 }
 .activity-stage.action-sweeping:not(.market-choice-stage):has(.stage-npc.npc-dolsoe:not([hidden])) .stage-character.pixel-sprite.motion-sweeping{left:14%;bottom:3%;width:108px;height:108px;padding:2px;animation:none!important;transition:left .18s linear}
 .activity-stage.action-sweeping:not(.market-choice-stage):has(.stage-npc.npc-dolsoe:not([hidden])) .stage-npc.npc-dolsoe{right:1%;bottom:3%;left:auto;width:88px;height:108px;padding:2px;animation:none}
+
+/* v0.62.59: dedicated job stages and visible mastery motion tiers. */
+.activity-stage[class*="Job"] .stage-map{object-fit:cover;object-position:center}
+.activity-stage[class*="action-farmwork"] .stage-character,.activity-stage.action-masonry .stage-character{left:56%;bottom:2%}
+.activity-stage.action-childcare .stage-character{left:48%;bottom:5%}
+.activity-stage.action-kitchenhelp .stage-character,.activity-stage.action-woodwork .stage-character,.activity-stage.action-loomwork .stage-character,.activity-stage.action-clinichelp .stage-character,.activity-stage.action-merchanthelp .stage-character{left:52%;bottom:3%}
+.activity-stage.action-ferryhelp .stage-character{left:58%;bottom:2%}
+.activity-stage [class*="motion-job-"]{width:108px;height:108px;animation:job-apprentice 1s ease-in-out 2}
+.activity-stage.mastery-1 [class*="motion-job-"]{animation:job-skilled .72s ease-in-out 3}
+.activity-stage.mastery-2 [class*="motion-job-"]{animation:job-master .48s ease-in-out 5;filter:drop-shadow(0 4px 1px #0007) brightness(1.06)}
+@keyframes job-apprentice{0%,100%{transform:translateX(-50%) rotate(0)}45%{transform:translateX(-50%) rotate(-2deg)}70%{transform:translateX(-50%) rotate(1deg)}}
+@keyframes job-skilled{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(-3px)}}
+@keyframes job-master{0%,100%{transform:translateX(-50%) translateY(0) scale(1)}50%{transform:translateX(-50%) translateY(-4px) scale(1.025)}}
 .action em{grid-column:1/-1;padding-top:4px;border-top:1px dashed #bca47c;color:#72512f;font-size:9px;font-style:normal;font-weight:800}
 
 /* v0.62.53: keep market dialogue and the return-home action in separate lanes */
