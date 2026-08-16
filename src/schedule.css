@@ -484,6 +484,39 @@
 @keyframes job-apprentice{0%,100%{transform:translateX(-50%) rotate(0)}45%{transform:translateX(-50%) rotate(-2deg)}70%{transform:translateX(-50%) rotate(1deg)}}
 @keyframes job-skilled{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(-3px)}}
 @keyframes job-master{0%,100%{transform:translateX(-50%) translateY(0) scale(1)}50%{transform:translateX(-50%) translateY(-4px) scale(1.025)}}
+
+/* v0.62.60: core job actors share the background perspective and play readable 3-step loops. */
+.activity-stage.action-farmwork .stage-character.pixel-sprite.motion-job-farm{
+  inset:auto;left:28%;bottom:1%;width:132px;height:132px;padding:0;animation:none!important;filter:drop-shadow(0 3px 1px #2d1b1266)
+}
+.activity-stage.action-childcare .stage-character.pixel-sprite.motion-job-childcare{
+  inset:auto;left:34%;bottom:2%;width:150px;height:150px;padding:0;animation:none!important;filter:drop-shadow(0 3px 1px #2d1b1255)
+}
+.activity-stage.action-kitchenhelp .stage-character.pixel-sprite.motion-job-kitchen{
+  inset:auto;left:52%;bottom:-1%;width:148px;height:148px;padding:0;animation:none!important;filter:drop-shadow(0 3px 1px #2d1b1266)
+}
+.activity-stage.action-farmwork .stage-character img,
+.activity-stage.action-childcare .stage-character img,
+.activity-stage.action-kitchenhelp .stage-character img{
+  width:100%;height:100%;object-fit:contain;object-position:center bottom
+}
+@media(max-width:430px){
+  .activity-stage.action-farmwork .stage-character.pixel-sprite.motion-job-farm{left:27%;bottom:2%;width:116px;height:116px}
+  .activity-stage.action-childcare .stage-character.pixel-sprite.motion-job-childcare{left:33%;bottom:3%;width:132px;height:132px}
+  .activity-stage.action-kitchenhelp .stage-character.pixel-sprite.motion-job-kitchen{left:51%;bottom:0;width:132px;height:132px}
+}
+
+/* Keep both random home-rest variants wholly inside the stage on mobile. */
+.activity-stage.action-rest .stage-character.pixel-sprite.motion-resting{
+  inset:auto;left:50%;bottom:2%;width:184px;height:122px;padding:4px;overflow:visible;transform:translateX(-50%)
+}
+.activity-stage.action-rest .stage-character.pixel-sprite.motion-resting.rest-tea{
+  inset:auto;left:50%;bottom:3%;width:116px;height:116px;padding:5px
+}
+@media(max-width:430px){
+  .activity-stage.action-rest .stage-character.pixel-sprite.motion-resting{width:164px;height:112px;bottom:3%}
+  .activity-stage.action-rest .stage-character.pixel-sprite.motion-resting.rest-tea{width:108px;height:108px;bottom:4%}
+}
 .action em{grid-column:1/-1;padding-top:4px;border-top:1px dashed #bca47c;color:#72512f;font-size:9px;font-style:normal;font-weight:800}
 
 /* v0.62.53: keep market dialogue and the return-home action in separate lanes */

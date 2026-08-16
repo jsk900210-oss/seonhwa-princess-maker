@@ -48,7 +48,7 @@ function transitionPrologueToHomeMusic(){
   fadeAudio(prologueMusic,0,1600);
 }
 
-const game = { characterName:'', nannyName:'', guardianType:null, guardianName:'', profileSlot:null, age: 9, height:130, weight:28.5, month: 1, week: 1, season:'봄', money: 50000, cash:50000, health:42, strength:18, agility:20, intelligence:35, magic:8, mentality:30, dignity:36, manners:28, speech:14, sensitivity:40, sense:24, charm:30, stress:12, items: [], purchasedGoods:[], relations:{}, activityProgress:{}, activityUnlocksSeen:[], startingGiftId:null, fatherBirthdayYears:[], equippedOutfit:null, autoOutfit:true, dailySchedule: [null,null,null,null,null,null,null], birthday:null, currentDate:null, endingDate:null, ended:false, endingResult:null, birthdayCount:0, element:null, birthSeason:null, memory:0, truth:0, exposure:0, fatherAffinity:0, guardianTrust:50, nannyAffinity:50, lastGreetingDate:null, monthlyLedger:null };
+const game = { characterName:'', nannyName:'', guardianType:null, guardianName:'', profileSlot:null, age: 9, height:130, weight:28.5, month: 1, week: 1, season:'봄', money: 50000, cash:50000, health:42, strength:18, agility:20, intelligence:35, magic:8, mentality:30, dignity:36, manners:28, speech:14, sensitivity:40, sense:24, charm:30, stress:12, items: [], purchasedGoods:[], relations:{}, activityProgress:{}, activityUnlocksSeen:[], startingGiftId:null, fatherBirthdayYears:[], equippedOutfit:null, autoOutfit:true, dailySchedule: [null,null,null,null,null,null,null], birthday:null, currentDate:null, endingDate:null, ended:false, endingResult:null, birthdayCount:0, element:null, birthSeason:null, memory:0, truth:0, exposure:0, fatherAffinity:0, guardianTrust:50, nannyAffinity:50, lastGreetingDate:null, lastGuardianTalkDate:null, monthlyLedger:null };
 const guardianDefs={
   cheongryong:{name:'청룡',mark:'龍',theme:'#294e67',gift:{name:'푸른 여의주 조각',change:{intelligence:5,magic:4}},intro:'동쪽의 푸른 숨결. 배움과 술법의 길을 살피는 신수입니다.'},
   baekho:{name:'백호',mark:'虎',theme:'#ddd8ce',gift:{name:'흰 범의 방울',change:{strength:5,agility:4}},intro:'서쪽의 굳센 발걸음. 위험 앞에서 용기와 무예를 북돋는 신수입니다.'},
@@ -469,7 +469,13 @@ async function outfitActivityFrame(src,outfitId){
 async function animateActivitySprite(image,motion,activity,npcImage,npc,outfitId,masteryRank=0){
   if(activity){
     const frames=activityFrameSet(activity);
-    const sequence=activity==='errand'?[0,1,1,2,2,1,0]:activity==='houseclean'?[0,1,0,2,2,2]:activity==='sweeping'?[0,1,2,1,0,1,2,2,1,0,1,2,1,0]:activity==='sleep'?[0,1,2,1,0]:[0,1,2,1,0,1,2];
+    const coreJobSequences={
+      farmwork:[0,0,1,1,2,2,2],
+      childcare:[0,0,1,1,2,2,2],
+      kitchenhelp:[0,0,1,1,1,2,2,2]
+    };
+    const sequence=coreJobSequences[activity]||
+      (activity==='errand'?[0,1,1,2,2,1,0]:activity==='houseclean'?[0,1,0,2,2,2]:activity==='sweeping'?[0,1,2,1,0,1,2,2,1,0,1,2,1,0]:activity==='sleep'?[0,1,2,1,0]:[0,1,2,1,0,1,2]);
     const delay=Math.max(125,(activity==='errand'?270:activity==='houseclean'?360:activity==='sleep'?430:activity==='tea'?460:190)-masteryRank*35);
     const rankedSequence=masteryRank===2?[...sequence,...sequence.slice(1)]:sequence;
     for(const [step,frame] of rankedSequence.entries()){
@@ -812,6 +818,46 @@ const guardianVoice={
   jujak:['좋은 기운이 느껴지는구나! 즐겁게 배울 날과 신나게 쉬는 날을 골라 보자.','마음에 불꽃이 너무 커지면 잠시 쉬어도 괜찮단다.'],
   hyeonmu:['서두르지 않아도 괜찮다. 하루씩 차분히 채우면 한 주의 길이 보일 게다.','단단한 마음은 알맞은 쉼에서 시작되는 법이란다.']
 };
+const guardianConversationSets={
+  cheongryong:[
+    {line:'배움이 뜻대로 되지 않을 때, 너는 무엇부터 돌아보겠느냐?',choices:[['모르는 대목을 다시 읽어 볼게요.',{intelligence:4,mentality:2,nannyAffinity:3,guardianTrust:2},'좋은 답이구나. 되짚는 일은 뒤로 가는 것이 아니라 뿌리를 깊게 내리는 일이란다.'],['신수의 힘으로 답을 알려 주세요.',{magic:2,mentality:-2,nannyAffinity:-1,guardianTrust:-3},'답을 받는 것보다 스스로 찾아낸 한 줄이 오래 남는 법이지.'],['오늘은 잠시 쉬고 내일 다시 볼래요.',{stress:-5,mentality:2,nannyAffinity:2},'쉴 때를 아는 것도 지혜다. 내일은 맑은 눈으로 다시 보자.']]},
+    {line:'지혜와 힘 가운데 하나만 먼저 닦아야 한다면 무엇을 고르겠느냐?',choices:[['사람을 살리는 지혜를 고를게요.',{intelligence:3,magic:3,dignity:2,guardianTrust:3},'네 지혜가 누군가의 등불이 되기를 바라마.'],['나를 지킬 힘부터 기를게요.',{strength:3,mentality:2,guardianTrust:1},'스스로를 지킬 힘도 필요하지. 다만 그 힘의 쓰임을 잊지 말거라.'],['둘의 균형을 찾을게요.',{intelligence:2,strength:2,mentality:3,nannyAffinity:3},'균형을 택했구나. 서두르지 않으면 두 길은 결국 하나로 만난단다.']]}
+  ],
+  baekho:[
+    {line:'실패가 두려워 발이 떨어지지 않을 때에는 어찌하겠느냐?',choices:[['작게라도 한 걸음 내디딜게요.',{strength:3,agility:2,mentality:2,guardianTrust:3},'그 한 걸음이면 충분하다. 다음 발은 내가 곁에서 지켜 주마.'],['실패하지 않을 때까지 피할래요.',{stress:-2,mentality:-3,guardianTrust:-4},'두려움은 피할수록 커진다. 준비가 되면 다시 내 손을 잡거라.'],['도움을 청하고 함께 해볼게요.',{speech:2,mentality:3,nannyAffinity:4},'도움을 청하는 것은 약함이 아니다. 동료를 믿는 용기이지.']]},
+    {line:'강한 힘을 얻는다면 가장 먼저 어디에 쓰고 싶으냐?',choices:[['약한 사람을 지킬게요.',{strength:3,dignity:3,manners:2,guardianTrust:4},'그래, 지키기 위한 힘이 가장 오래 빛나는 법이다.'],['나를 무시한 사람에게 보여줄래요.',{strength:4,dignity:-3,manners:-2,guardianTrust:-3},'분노로 휘두른 힘은 결국 너에게 돌아온다. 마음부터 다스리거라.'],['힘을 자랑하지 않고 수련할게요.',{strength:2,mentality:4,nannyAffinity:3},'절제할 줄 아는 이가 진정 강한 사람이다.']]}
+  ],
+  jujak:[
+    {line:'마음이 지친 사람을 만난다면 어떤 온기를 건네겠느냐?',choices:[['말없이 곁에 있어 줄게요.',{sensitivity:4,mentality:2,nannyAffinity:4},'따뜻한 침묵은 때로 백 마디 말보다 깊이 닿는단다.'],['즐거운 이야기로 웃게 할래요.',{speech:3,charm:2,stress:-3,guardianTrust:2},'네 웃음이 다른 이의 마음에도 작은 불씨가 되겠구나.'],['스스로 이겨내야 한다고 말할래요.',{mentality:2,sensitivity:-3,guardianTrust:-2},'굳센 말도 필요하지만, 상처 난 마음에는 먼저 온기가 필요하단다.']]},
+    {line:'네가 가진 빛이 다른 사람보다 작아 보이면 어떻게 하겠느냐?',choices:[['내 빛의 색을 천천히 찾을게요.',{charm:3,sensitivity:3,mentality:3,nannyAffinity:3},'누구와도 같지 않은 네 빛을 나는 이미 보고 있단다.'],['더 화려하게 보여 주려고 애쓸래요.',{charm:4,stress:4,dignity:-2,guardianTrust:-1},'빛은 억지로 키우면 쉽게 흔들린다. 네 마음을 먼저 돌보렴.'],['다른 사람의 장점도 함께 배울게요.',{sense:3,sensitivity:2,manners:2,guardianTrust:3},'부러움을 배움으로 바꾸다니, 참 고운 선택이구나.']]}
+  ],
+  hyeonmu:[
+    {line:'긴 길에서 성과가 보이지 않아도 계속 걸을 수 있겠느냐?',choices:[['하루에 할 수 있는 만큼 이어갈게요.',{mentality:4,health:2,guardianTrust:3},'작은 발걸음이 쌓여 가장 단단한 길이 되는 법이다.'],['결과가 없으면 다른 길로 갈래요.',{agility:2,mentality:-2,guardianTrust:-2},'길을 바꾸는 것도 선택이지만, 조급함 때문에 놓치는 것은 없는지 살펴보거라.'],['잠시 멈춰 방향을 확인할게요.',{sense:3,mentality:3,stress:-3,nannyAffinity:3},'멈춤은 포기가 아니다. 물길도 굽이치며 바다로 가는 법이지.']]},
+    {line:'비밀을 지켜야 친구를 보호할 수 있다면 어떻게 하겠느냐?',choices:[['약속을 지키되 위험하면 도움을 청할게요.',{mentality:3,manners:2,speech:2,guardianTrust:4},'신중하고도 따뜻한 답이구나. 혼자 감당하지 않는 지혜도 중요하다.'],['무슨 일이 있어도 혼자 지킬게요.',{mentality:4,stress:4,nannyAffinity:-1},'책임감은 훌륭하지만 네 마음까지 다치게 두지는 말거라.'],['나와 상관없는 일이라고 외면할래요.',{stress:-2,dignity:-3,guardianTrust:-4},'외면은 잠시 편할 뿐이다. 인연을 지키는 마음을 다시 생각해 보렴.']]}
+  ]
+};
+Object.values(guardianConversationSets).flat().forEach(scene=>scene.choices.forEach(choice=>{choice[1]=canonicalizeChange(choice[1]);}));
+function guardianPortrait(){return `../assets/cinematics/guardian/guardian-${game.guardianType||'hyeonmu'}.png`;}
+function closeGuardianConversation(change){
+  document.querySelector('#homeGreeting').hidden=true;document.querySelector('.phone').classList.remove('greeting-active');showLiveChanges({change,cost:0});renderHud();queueAutoSave();
+}
+function answerGuardianConversation(scene,index){
+  const [reply,change,response]=scene.choices[index];
+  Object.entries(change).forEach(([key,value])=>game[key]=clampStat(key,(game[key]||0)+value));
+  const speaker=document.querySelector('#homeGreetingSpeaker'),line=document.querySelector('#homeGreetingLine'),prompt=document.querySelector('#homeGreetingPrompt'),choices=document.querySelector('#homeGreetingChoices'),portrait=document.querySelector('#homeGreetingPortrait');
+  portrait.hidden=true;speaker.textContent=game.characterName||'아이';line.textContent=reply;prompt.textContent='';choices.innerHTML='<button id="guardianDialogueContinue">계속</button>';
+  document.querySelector('#guardianDialogueContinue').addEventListener('click',()=>{portrait.hidden=false;speaker.textContent=game.guardianName||guardianDefs[game.guardianType]?.name||'신수';line.textContent=response;choices.innerHTML='<button id="guardianDialogueClose">대화 마치기</button>';document.querySelector('#guardianDialogueClose').addEventListener('click',()=>closeGuardianConversation(change));});
+}
+function startGuardianConversation(){
+  const guardian=guardianDefs[game.guardianType];if(!guardian||introDialogueQueue.length)return false;
+  if(game.lastGuardianTalkDate===game.currentDate){speakGuardian('home');document.querySelector('#dialogueText').textContent=`오늘은 이미 ${game.guardianName||guardian.name}과(와) 마음을 나누었어요. 다음 주에 다시 이야기해 봐요.`;return false;}
+  game.lastGuardianTalkDate=game.currentDate;
+  const scenes=guardianConversationSets[game.guardianType]||guardianConversationSets.hyeonmu,scene=scenes[Math.floor(Math.random()*scenes.length)];
+  const portrait=document.querySelector('#homeGreetingPortrait');portrait.hidden=false;portrait.src=guardianPortrait();portrait.alt=`${game.guardianName||guardian.name}의 모습`;
+  document.querySelector('#homeGreetingSpeaker').textContent=game.guardianName||guardian.name;document.querySelector('#homeGreetingLine').textContent=scene.line;document.querySelector('#homeGreetingPrompt').textContent=`${game.characterName||'아이'}은(는) 어떻게 답할까요?`;
+  const choices=document.querySelector('#homeGreetingChoices');choices.innerHTML=scene.choices.map((choice,index)=>`<button data-guardian-answer="${index}">${choice[0]}</button>`).join('');
+  document.querySelector('#homeGreeting').hidden=false;document.querySelector('.phone').classList.add('greeting-active');choices.querySelectorAll('[data-guardian-answer]').forEach(button=>button.addEventListener('click',()=>answerGuardianConversation(scene,Number(button.dataset.guardianAnswer))));queueAutoSave();return true;
+}
 function speakGuardian(context='home'){
   const guardian=guardianDefs[game.guardianType];if(!guardian||introDialogueQueue.length)return false;
   const name=game.guardianName||guardian.name,filled=game.dailySchedule.filter(Boolean).length;
@@ -1174,7 +1220,7 @@ function deleteCharacterRecord(slot){
 }
 
 function resetGameState() {
-  Object.assign(game, { characterName:'',nannyName:'',guardianType:null,guardianName:'',profileSlot:null,age:9,height:130,weight:28.5,month:1,week:1,season:'봄',money:50000,cash:50000,health:42,strength:18,agility:20,intelligence:35,magic:8,mentality:30,dignity:36,manners:28,speech:14,sensitivity:40,sense:24,charm:30,stress:12,items:[],purchasedGoods:[],relations:{},activityProgress:{},activityUnlocksSeen:[],startingGiftId:null,fatherBirthdayYears:[],equippedOutfit:null,autoOutfit:true,dailySchedule:[null,null,null,null,null,null,null],birthday:null,currentDate:null,endingDate:null,ended:false,endingResult:null,birthdayCount:0,element:null,birthSeason:null,memory:0,truth:0,exposure:0,fatherAffinity:0,guardianTrust:50,nannyAffinity:50,lastGreetingDate:null,monthlyLedger:null});
+  Object.assign(game, { characterName:'',nannyName:'',guardianType:null,guardianName:'',profileSlot:null,age:9,height:130,weight:28.5,month:1,week:1,season:'봄',money:50000,cash:50000,health:42,strength:18,agility:20,intelligence:35,magic:8,mentality:30,dignity:36,manners:28,speech:14,sensitivity:40,sense:24,charm:30,stress:12,items:[],purchasedGoods:[],relations:{},activityProgress:{},activityUnlocksSeen:[],startingGiftId:null,fatherBirthdayYears:[],equippedOutfit:null,autoOutfit:true,dailySchedule:[null,null,null,null,null,null,null],birthday:null,currentDate:null,endingDate:null,ended:false,endingResult:null,birthdayCount:0,element:null,birthSeason:null,memory:0,truth:0,exposure:0,fatherAffinity:0,guardianTrust:50,nannyAffinity:50,lastGreetingDate:null,lastGuardianTalkDate:null,monthlyLedger:null});
   document.querySelector('#liveChanges').innerHTML='';
   const greeting=document.querySelector('#homeGreeting');greeting.hidden=true;greeting.classList.remove('greeting-active');
   document.querySelector('#characterNameInput').value='';
@@ -1535,7 +1581,7 @@ function confirmGuardianChoice(){const guardian=guardianDefs[selectedGuardianTyp
 function finishGuardianNaming(){
   const guardian=guardianDefs[selectedGuardianType],guardianName=document.querySelector('#guardianNameInput').value.trim();
   if(!guardian||!guardianName){document.querySelector('#guardianNameTitle').textContent='신수의 이름을 지어주세요';return;}
-  Object.assign(game,{guardianType:selectedGuardianType,guardianName,nannyName:guardianName,nannyAffinity:50,guardianTrust:50});
+  Object.assign(game,{guardianType:selectedGuardianType,guardianName,nannyName:guardianName,nannyAffinity:50,guardianTrust:50,lastGuardianTalkDate:null});
   const guardianGift=awardStartingBirthdayGift(),fatherGift=awardFatherBirthdayGift(9);game.lastGreetingDate=game.currentDate;
   document.querySelector('#guardianNameSetup').hidden=true;panel.hidden=true;transitionPrologueToHomeMusic();
   const startingChanges={...(guardianGift?.actualChange||{})};Object.entries(fatherGift?.change||{}).forEach(([key,value])=>startingChanges[key]=(startingChanges[key]||0)+value);
@@ -1835,8 +1881,8 @@ document.querySelector('#guardianChoiceConfirm').addEventListener('click',confir
 document.querySelector('#guardianNameConfirm').addEventListener('click',finishGuardianNaming);
 document.querySelector('#guardianNameInput').addEventListener('keydown',event=>{if(event.key==='Enter')finishGuardianNaming();});
 document.querySelector('#guardianReselect').addEventListener('click',reselectGuardian);
-document.querySelector('#guardianCompanion').addEventListener('click',()=>speakGuardian('home'));
-document.querySelector('#guardianCompanion').addEventListener('keydown',event=>{if(event.key==='Enter'||event.key===' '){event.preventDefault();speakGuardian('home');}});
+document.querySelector('#guardianCompanion').addEventListener('click',startGuardianConversation);
+document.querySelector('#guardianCompanion').addEventListener('keydown',event=>{if(event.key==='Enter'||event.key===' '){event.preventDefault();startGuardianConversation();}});
 document.querySelector('.dialogue').addEventListener('click',advanceIntroDialogue);
 document.querySelector('#birthdayMonth').addEventListener('change',()=>syncBirthdaySelectors());
 document.querySelector('#birthdayDay').addEventListener('change',()=>syncBirthdaySelectors());
