@@ -3,8 +3,7 @@ from PIL import Image
 
 ROOT = Path(__file__).resolve().parents[1]
 SPRITES = ROOT / "assets" / "characters" / "seonhwa" / "job-actions"
-FILES = [*(SPRITES / f"childcare-v2-{n}.png" for n in range(1, 4)),
-         *(SPRITES / f"kitchenhelp-v2-{n}.png" for n in range(1, 4))]
+FILES = sorted(SPRITES.glob("*-v2-[1-3].png"))
 
 
 def clean_edge(path: Path) -> int:
