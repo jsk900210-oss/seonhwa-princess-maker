@@ -48,7 +48,7 @@ function transitionPrologueToHomeMusic(){
   fadeAudio(prologueMusic,0,1600);
 }
 
-const game = { characterName:'', nannyName:'', guardianType:null, guardianName:'', profileSlot:null, age: 9, height:130, weight:28.5, month: 1, week: 1, season:'봄', money: 50000, cash:50000, health:42, strength:18, agility:20, intelligence:35, magic:8, mentality:30, dignity:36, manners:28, speech:14, sensitivity:40, sense:24, charm:30, stress:12, items: [], relations:{}, activityProgress:{}, activityUnlocksSeen:[], startingGiftId:null, fatherBirthdayYears:[], equippedOutfit:null, autoOutfit:true, dailySchedule: [null,null,null,null,null,null,null], birthday:null, currentDate:null, endingDate:null, ended:false, endingResult:null, birthdayCount:0, element:null, birthSeason:null, memory:0, truth:0, exposure:0, fatherAffinity:0, guardianTrust:50, nannyAffinity:50, lastGreetingDate:null, monthlyLedger:null };
+const game = { characterName:'', nannyName:'', guardianType:null, guardianName:'', profileSlot:null, age: 9, height:130, weight:28.5, month: 1, week: 1, season:'봄', money: 50000, cash:50000, health:42, strength:18, agility:20, intelligence:35, magic:8, mentality:30, dignity:36, manners:28, speech:14, sensitivity:40, sense:24, charm:30, stress:12, items: [], purchasedGoods:[], relations:{}, activityProgress:{}, activityUnlocksSeen:[], startingGiftId:null, fatherBirthdayYears:[], equippedOutfit:null, autoOutfit:true, dailySchedule: [null,null,null,null,null,null,null], birthday:null, currentDate:null, endingDate:null, ended:false, endingResult:null, birthdayCount:0, element:null, birthSeason:null, memory:0, truth:0, exposure:0, fatherAffinity:0, guardianTrust:50, nannyAffinity:50, lastGreetingDate:null, monthlyLedger:null };
 const guardianDefs={
   cheongryong:{name:'청룡',mark:'龍',theme:'#294e67',gift:{name:'푸른 여의주 조각',change:{intelligence:5,magic:4}},intro:'동쪽의 푸른 숨결. 배움과 술법의 길을 살피는 신수입니다.'},
   baekho:{name:'백호',mark:'虎',theme:'#ddd8ce',gift:{name:'흰 범의 방울',change:{strength:5,agility:4}},intro:'서쪽의 굳센 발걸음. 위험 앞에서 용기와 무예를 북돋는 신수입니다.'},
@@ -264,11 +264,64 @@ const generalGoods = [
   {id:'basic-book',name:'천자문 서책',price:120,type:'event',detail:'글공부의 기초가 되는 서책',change:{intelligence:8}},
   {id:'poetry-book',name:'시조 모음집',price:400,type:'event',detail:'고운 운율을 익히는 시집',change:{sensitivity:12,speech:3}},
   {id:'ceramic-cup',name:'백자 찻잔',price:500,type:'accessory',detail:'차를 마실 때 쓰는 단정한 백자',change:{dignity:10,manners:3}},
-  {id:'herbal-pill',name:'회복 환약',price:80,type:'accessory',detail:'기운을 회복시키는 약방의 환약',change:{health:10,stress:-4},repeatable:true},
+  {id:'herbal-pill',name:'회복 환약',price:80,type:'accessory',detail:'기운을 회복시키는 약방의 환약',change:{health:10,stress:-4}},
   {id:'guardian-bell',name:'신수 방울',price:1000,type:'accessory',detail:'수호령의 기운을 맑게 울리는 방울',change:{magic:12,mentality:8},wealth:1000},
   {id:'coral-norigae',name:'산호 노리개',price:1500,type:'accessory',detail:'귀한 산호로 엮은 장신구',change:{charm:14,dignity:8},wealth:3000},
-  {id:'jade-hairpin',name:'백옥 비녀',price:2200,type:'accessory',detail:'맑은 빛을 품은 상단의 귀물',change:{charm:18,reputation:10,manners:5},wealth:5000}
+  {id:'jade-hairpin',name:'백옥 비녀',price:2200,type:'accessory',detail:'맑은 빛을 품은 상단의 귀물',change:{charm:18,reputation:10,manners:5},wealth:5000},
+  {id:'pine-inkstone',name:'송연 벼루',price:260,type:'event',detail:'먹을 곱게 갈 수 있는 단단한 벼루',change:{intelligence:5,sense:3}},
+  {id:'weasel-brush',name:'황모 붓',price:240,type:'event',detail:'섬세한 획을 살리는 글붓',change:{intelligence:4,arts:4}},
+  {id:'wooden-abacus',name:'나무 주판',price:220,type:'event',detail:'셈을 빠르게 익히는 작은 주판',change:{intelligence:3,sense:6}},
+  {id:'brass-compass',name:'놋쇠 패철',price:680,type:'accessory',detail:'방향과 지세를 살피는 도구',change:{sense:8,mentality:3}},
+  {id:'embroidery-kit',name:'자수 꾸러미',price:360,type:'event',detail:'색실과 바늘이 담긴 침선 꾸러미',change:{sense:6,arts:5}},
+  {id:'silk-pouch',name:'비단 향낭',price:430,type:'accessory',detail:'은은한 향이 배어 있는 작은 주머니',change:{charm:6,manners:4}},
+  {id:'flower-shoes',name:'꽃신',price:520,type:'accessory',detail:'발끝에 작은 꽃무늬를 수놓은 신',change:{charm:8,dignity:4}},
+  {id:'bamboo-flute',name:'대금 모형',price:620,type:'event',detail:'호흡과 음감을 익히는 연습용 악기',change:{arts:8,sensitivity:5}},
+  {id:'gayageum-strings',name:'가야금 명주실',price:480,type:'event',detail:'맑은 음색을 내는 여분의 현',change:{arts:7,sensitivity:4}},
+  {id:'dance-fan',name:'춤 부채',price:390,type:'accessory',detail:'춤사위의 손끝을 돋보이게 하는 부채',change:{agility:4,arts:5,charm:3}},
+  {id:'bronze-mirror',name:'청동 거울',price:760,type:'accessory',detail:'단정한 몸가짐을 비추는 손거울',change:{charm:7,manners:6}},
+  {id:'boxwood-comb',name:'회양목 빗',price:310,type:'accessory',detail:'머릿결을 가지런히 다듬는 촘촘한 빗',change:{charm:5,dignity:3}},
+  {id:'plum-perfume',name:'매화 향수',price:880,type:'accessory',detail:'매화 향을 담은 작은 향병',change:{charm:9,reputation:3}},
+  {id:'rice-cake-box',name:'약과 상자',price:180,type:'event',detail:'달콤한 약과가 정갈하게 담긴 상자',change:{stress:-10,health:2}},
+  {id:'herbal-tea',name:'쌍화차 재료',price:210,type:'event',detail:'기운을 돋우는 약재와 꿀 꾸러미',change:{health:6,stress:-5}},
+  {id:'dried-jujube',name:'말린 대추',price:140,type:'event',detail:'달고 따뜻한 기운의 대추',change:{health:4,stress:-3}},
+  {id:'honey-jar',name:'토종꿀 단지',price:340,type:'event',detail:'산에서 얻은 향긋한 꿀',change:{health:7,stress:-4}},
+  {id:'ginseng-tonic',name:'인삼 보약',price:920,type:'event',detail:'체력을 돋우는 진한 보약',change:{health:14,strength:4},wealth:1000},
+  {id:'clear-mind-tonic',name:'총명탕',price:980,type:'event',detail:'정신을 맑게 가다듬는 약',change:{intelligence:10,mentality:7},wealth:1000},
+  {id:'calming-incense',name:'안식향',price:540,type:'accessory',detail:'복잡한 마음을 가라앉히는 향',change:{mentality:6,stress:-10}},
+  {id:'wooden-beads',name:'염주',price:470,type:'accessory',detail:'마음을 다스리며 기도할 때 쓰는 염주',change:{virtue:7,mentality:5}},
+  {id:'protective-charm',name:'수호 부적',price:650,type:'accessory',detail:'나쁜 기운을 막는다고 전해지는 부적',change:{magic:5,mentality:6}},
+  {id:'mountain-map',name:'산천 지도',price:580,type:'event',detail:'비경과 나루가 표시된 손그림 지도',change:{sense:7,intelligence:3}},
+  {id:'hemp-rope',name:'삼베 밧줄',price:200,type:'event',detail:'탐사와 짐 운반에 쓰는 튼튼한 밧줄',change:{strength:3,agility:3}},
+  {id:'oil-lantern',name:'들기름 등잔',price:330,type:'event',detail:'어두운 길을 밝히는 휴대 등잔',change:{sense:4,mentality:3}},
+  {id:'flint-kit',name:'부싯돌 꾸러미',price:190,type:'event',detail:'야외에서 불을 피우는 도구',change:{sense:4,health:2}},
+  {id:'leather-gloves',name:'가죽 손등개',price:410,type:'accessory',detail:'거친 일을 할 때 손을 보호한다',change:{strength:4,health:4}},
+  {id:'rain-cape',name:'도롱이',price:450,type:'accessory',detail:'비바람을 막아 주는 짚 겉옷',change:{health:5,mentality:2}},
+  {id:'winter-muffler',name:'털 목도리',price:560,type:'accessory',detail:'겨울 한기를 막아 주는 따뜻한 목도리',change:{health:6,stress:-3}},
+  {id:'summer-fan',name:'합죽선',price:370,type:'accessory',detail:'여름 더위를 식히는 고운 부채',change:{dignity:4,stress:-5}},
+  {id:'copper-ring',name:'동제 가락지',price:420,type:'accessory',detail:'소박한 무늬가 새겨진 가락지',change:{charm:4,virtue:2}},
+  {id:'silver-ring',name:'은가락지',price:980,type:'accessory',detail:'단아한 광택을 지닌 은 장신구',change:{charm:8,dignity:6},wealth:1000},
+  {id:'jade-ring',name:'옥가락지',price:1680,type:'accessory',detail:'맑은 옥으로 깎은 귀한 가락지',change:{charm:12,dignity:10},wealth:3000},
+  {id:'amber-pendant',name:'호박 패물',price:1420,type:'accessory',detail:'따뜻한 빛을 품은 호박 장식',change:{charm:10,mentality:8},wealth:3000},
+  {id:'moonstone',name:'월광석',price:1880,type:'accessory',detail:'달빛 아래 희미하게 빛나는 돌',change:{magic:15,sensitivity:8},wealth:3000},
+  {id:'dragon-scale-charm',name:'용린 문양패',price:2600,type:'accessory',detail:'용의 비늘무늬를 새긴 수호패',change:{magic:16,strength:8,reputation:5},wealth:5000},
+  {id:'white-tiger-token',name:'백호 발톱패',price:2450,type:'accessory',detail:'용기를 북돋는 백호 문양 장식',change:{strength:14,agility:8},wealth:5000},
+  {id:'phoenix-pin',name:'주작 깃 비녀',price:2750,type:'accessory',detail:'불꽃과 깃털을 본뜬 화려한 비녀',change:{charm:15,magic:12},wealth:5000},
+  {id:'turtle-shell-token',name:'현무 귀갑패',price:2500,type:'accessory',detail:'인내와 보호를 상징하는 귀갑 문양패',change:{health:14,mentality:12},wealth:5000},
+  {id:'merchant-ledger',name:'상단 장부',price:720,type:'event',detail:'거래와 계산법을 기록한 장부',change:{sense:9,speech:5}},
+  {id:'recipe-book',name:'조리 비방서',price:680,type:'event',detail:'계절 음식의 손맛을 적은 조리서',change:{sense:8,health:4}},
+  {id:'medical-compendium',name:'향약 집성초',price:1320,type:'event',detail:'약초와 치료법을 정리한 의서',change:{intelligence:11,sense:7},wealth:1000}
 ];
+let visitShopStock=[];
+function prepareVisitShopStock(){
+  if(!Array.isArray(game.purchasedGoods))game.purchasedGoods=[];
+  const owned=new Set(game.purchasedGoods);
+  const eligible=generalGoods.filter(item=>!owned.has(item.id)&&(!item.wealth||game.money>=item.wealth));
+  for(let index=eligible.length-1;index>0;index--){
+    const swapIndex=Math.floor(Math.random()*(index+1));
+    [eligible[index],eligible[swapIndex]]=[eligible[swapIndex],eligible[index]];
+  }
+  visitShopStock=eligible.slice(0,10).map(item=>item.id);
+}
 const outfits = [
   {id:'age09-neat',age:9,ageEnd:12,name:'단정한 배움 한복',price:180,tone:'단정함',seasons:['가을','겨울'],situations:['reading','arithmetic','manners'],change:{manners:4,virtue:3,charm:1}},
   {id:'age09-flower',age:9,ageEnd:12,name:'연분홍 꽃 한복',price:230,tone:'화려함',seasons:['봄'],situations:['shopping','vacation'],change:{charm:5,reputation:2,stress:1}},
@@ -808,6 +861,7 @@ function openPanel(type) {
     renderInventory();
   } else if (type === 'shop') {
     playHomeMusic();
+    prepareVisitShopStock();
     renderVisitShop();
   } else if (type === 'collection') {
     playHomeMusic();
@@ -819,15 +873,16 @@ function openPanel(type) {
 }
 
 function renderVisitShop(){
-  normalizeInventory();panelTitle.textContent='방문상점 · 잡화전';
-  const owned=new Set(game.items.map(item=>item.id));
-  const cards=generalGoods.filter(item=>!item.wealth||game.money>=item.wealth).map(item=>{const sold=!item.repeatable&&owned.has(item.id),disabled=sold||game.money<item.price;return `<button class="shop-card goods-card" data-general-good="${item.id}" ${disabled?'disabled':''}><i class="item-glyph type-${item.type}"></i><b>${item.name}</b><span>${item.price}냥</span><small>${item.detail}<br>${formatChanges(item.change)}${sold?'<br>보유 중':''}</small></button>`;}).join('');
-  panelBody.innerHTML=`<div class="shop-greeting"><div class="merchant-seal" aria-hidden="true">商</div><div><b>떠돌이 잡화상</b><p>서책과 장신구, 먼 지방에서 온 귀물을 살펴보세요.</p></div></div><div class="shop-money"><span>보유 은전 <b>${game.money.toLocaleString()}냥</b></span></div><p class="visit-shop-note">재산이 늘면 상인이 더 귀한 물건을 꺼내 보입니다.</p><div class="shop-grid">${cards}</div>`;
+  normalizeInventory();if(!Array.isArray(game.purchasedGoods))game.purchasedGoods=[];panelTitle.textContent='방문상점 · 잡화전';
+  const owned=new Set(game.purchasedGoods);
+  const displayed=visitShopStock.map(id=>generalGoods.find(item=>item.id===id)).filter(item=>item&&!owned.has(item.id));
+  const cards=displayed.map(item=>`<button class="shop-card goods-card" data-general-good="${item.id}" ${game.money<item.price?'disabled':''}><i class="item-glyph type-${item.type}"></i><b>${item.name}</b><span>${item.price}냥</span><small>${item.detail}<br>${formatChanges(item.change)}</small></button>`).join('');
+  panelBody.innerHTML=`<div class="shop-greeting"><div class="merchant-seal" aria-hidden="true">商</div><div><b>떠돌이 잡화상</b><p>방문할 때마다 새로운 물건 열 가지를 골라 가져옵니다.</p></div></div><div class="shop-money"><span>보유 은전 <b>${game.money.toLocaleString()}냥</b></span></div><p class="visit-shop-note">구매한 물건은 다시 진열되지 않습니다.</p><div class="shop-grid">${cards||'<p class="empty-shop">지금 살 수 있는 새 물건이 없습니다.</p>'}</div>`;
   panelBody.querySelectorAll('[data-general-good]').forEach(button=>button.addEventListener('click',()=>buyGeneralGood(button.dataset.generalGood)));
 }
 function buyGeneralGood(id){
-  normalizeInventory();const good=generalGoods.find(item=>item.id===id);if(!good||game.money<good.price)return;const owned=game.items.find(item=>item.id===id);if(owned&&!good.repeatable)return;
-  game.money-=good.price;applyShopChanges(good.change);if(owned)owned.qty=(owned.qty||1)+1;else game.items.push({id:good.id,type:good.type,name:good.name,description:good.detail,qty:1});
+  if(!Array.isArray(game.purchasedGoods))game.purchasedGoods=[];const good=generalGoods.find(item=>item.id===id);if(!good||game.money<good.price||game.purchasedGoods.includes(id))return;
+  game.money-=good.price;applyShopChanges(good.change);game.purchasedGoods.push(id);
   document.querySelector('#dialogueText').textContent=`잡화상에게서 ${good.name}${objectParticle(good.name)} 구입했어요.`;showLiveChanges({change:good.change,cost:good.price});renderHud();renderVisitShop();queueAutoSave();
 }
 const inventoryCategories={all:'전체',accessory:'장신구',event:'이벤트'};
@@ -1068,7 +1123,7 @@ function deleteCharacterRecord(slot){
 }
 
 function resetGameState() {
-  Object.assign(game, { characterName:'',nannyName:'',guardianType:null,guardianName:'',profileSlot:null,age:9,height:130,weight:28.5,month:1,week:1,season:'봄',money:50000,cash:50000,health:42,strength:18,agility:20,intelligence:35,magic:8,mentality:30,dignity:36,manners:28,speech:14,sensitivity:40,sense:24,charm:30,stress:12,items:[],relations:{},activityProgress:{},activityUnlocksSeen:[],startingGiftId:null,fatherBirthdayYears:[],equippedOutfit:null,autoOutfit:true,dailySchedule:[null,null,null,null,null,null,null],birthday:null,currentDate:null,endingDate:null,ended:false,endingResult:null,birthdayCount:0,element:null,birthSeason:null,memory:0,truth:0,exposure:0,fatherAffinity:0,guardianTrust:50,nannyAffinity:50,lastGreetingDate:null,monthlyLedger:null});
+  Object.assign(game, { characterName:'',nannyName:'',guardianType:null,guardianName:'',profileSlot:null,age:9,height:130,weight:28.5,month:1,week:1,season:'봄',money:50000,cash:50000,health:42,strength:18,agility:20,intelligence:35,magic:8,mentality:30,dignity:36,manners:28,speech:14,sensitivity:40,sense:24,charm:30,stress:12,items:[],purchasedGoods:[],relations:{},activityProgress:{},activityUnlocksSeen:[],startingGiftId:null,fatherBirthdayYears:[],equippedOutfit:null,autoOutfit:true,dailySchedule:[null,null,null,null,null,null,null],birthday:null,currentDate:null,endingDate:null,ended:false,endingResult:null,birthdayCount:0,element:null,birthSeason:null,memory:0,truth:0,exposure:0,fatherAffinity:0,guardianTrust:50,nannyAffinity:50,lastGreetingDate:null,monthlyLedger:null});
   document.querySelector('#liveChanges').innerHTML='';
   const greeting=document.querySelector('#homeGreeting');greeting.hidden=true;greeting.classList.remove('greeting-active');
   document.querySelector('#characterNameInput').value='';
