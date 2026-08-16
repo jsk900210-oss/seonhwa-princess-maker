@@ -31,19 +31,14 @@ const scaledVolume=(base,kind)=>Math.max(0,Math.min(1,base*((userSettings[kind+'
 const gameMusic=new Audio();
 gameMusic.preload='auto';gameMusic.loop=true;gameMusic.volume=.24;
 const gameMusicTracks={home:'../assets/audio/music/gameplay/bgm-home-daily.mp3',market:'../assets/audio/music/gameplay/bgm-schedule.mp3'};
-function vacationMusicPath(){const age=game.age>=18?'18':game.age>=16?'16':game.age>=13?'13':'09';const season={봄:'spring',여름:'summer',가을:'autumn',겨울:'winter'}[game.season]||'spring';return `../assets/audio/music/vacation/age-${age}/vacation-${season}.mp3`;}
-function playGameMusic(source,volume=.24){if(!source)return;if(!gameMusic.src.endsWith(source.replace('../','/'))){gameMusic.pause();gameMusic.src=source;gameMusic.currentTime=0;}gameMusic.dataset.baseVolume=String(volume);gameMusic.volume=scaledVolume(volume,'bgm');if(userSettings.bgmEnabled)gameMusic.play().catch(()=>{});else gameMusic.pause();}
+function vacationMusicPath(seasonName=game.season,ageValue=game.age){const age=ageValue>=18?'18':ageValue>=16?'16':ageValue>=13?'13':'09';const season={봄:'spring',여름:'summer',가을:'autumn',겨울:'winter'}[seasonName]||'spring';return `../assets/audio/music/vacation/age-${age}/vacation-${season}.mp3`;}
+function playGameMusic(source,volume=.24){if(!source)return;const target=new URL(source,document.baseURI).href;if(gameMusic.src!==target){gameMusic.pause();gameMusic.src=target;gameMusic.currentTime=0;gameMusic.load();}gameMusic.dataset.track=source;gameMusic.dataset.baseVolume=String(volume);gameMusic.volume=scaledVolume(volume,'bgm');if(userSettings.bgmEnabled)gameMusic.play().catch(()=>{});else gameMusic.pause();}
 function playHomeMusic(){playGameMusic(gameMusicTracks.home,.22);}
 function playMarketMusic(){playGameMusic(gameMusicTracks.market,.20);}
-function playVacationMusic(){
-  const source=vacationMusicPath();
-  if(gameMusic.src.endsWith(source.replace('../','/'))){
-    gameMusic.dataset.baseVolume='.28';gameMusic.volume=scaledVolume(.28,'bgm');
-    if(userSettings.bgmEnabled)gameMusic.play().catch(()=>{});
-    return;
-  }
-  fadeAudio(gameMusic,0,450);
-  window.setTimeout(()=>playGameMusic(source,.28),460);
+function playVacationMusic(seasonName=game.season){
+  const source=vacationMusicPath(seasonName);
+  playGameMusic(source,.04);
+  fadeAudio(gameMusic,scaledVolume(.28,'bgm'),900);
 }
 function stopGameMusic(){fadeAudio(gameMusic,0,350);}
 function transitionPrologueToHomeMusic(){
@@ -590,7 +585,7 @@ function renderVacationMotion(season){
 async function playVacationScene(prize,index){
   const phone=document.querySelector('.phone'),scene=document.querySelector('#vacationScene'),image=document.querySelector('#vacationImage');
   const person=document.querySelector('#encounterCharacter'),talk=document.querySelector('#encounterDialogue');
-  playVacationMusic();renderVacationMotion(prize.season||game.season);image.src=prize.image;document.querySelector('#vacationTitle').textContent=prize.name;scene.dataset.effect=prize.effect||'';scene.dataset.season=prize.season||game.season;
+  playVacationMusic(prize.season||game.season);renderVacationMotion(prize.season||game.season);image.src=prize.image;document.querySelector('#vacationTitle').textContent=prize.name;scene.dataset.effect=prize.effect||'';scene.dataset.season=prize.season||game.season;
   scene.classList.remove('has-encounter');scene.classList.add('child-live');person.hidden=true;talk.hidden=true;phone.classList.add('vacation-playing');scene.hidden=false;
   await waitForVacationTap('일러스트를 감상한 뒤 터치');
   const candidates=endingRelationCandidates.filter(candidate=>game.age>=candidate.minAge&&candidate.assetReady);
