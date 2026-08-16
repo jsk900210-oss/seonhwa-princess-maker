@@ -716,11 +716,11 @@ function awardVacationIllustration(){
   return prize;
 }
 const endingRelationCandidates=[
-  {id:'doyun',name:'도윤',role:'젊은 무관',image:'../assets/characters/romance/doyun/vacation.png',assetReady:true,minAge:13,ending:'무관의 아내',dialogues:['“활쏘기보다 고요한 풍경을 바라보는 일이 더 어렵군.”','“혼자 걷는 길인 줄 알았는데, 동행이 생겼군.”']},
-  {id:'seojin',name:'서진',role:'선비',image:'../assets/characters/romance/seojin/vacation.png',assetReady:true,minAge:13,ending:'선비와의 삶',dialogues:['“책에서 읽던 풍경보다 직접 보는 모습이 더 아름답군요.”','“이 경치를 시로 남긴다면 어떤 첫 구절이 좋을까요?”']},
-  {id:'yeonwoo',name:'연우',role:'화공',image:'../assets/characters/romance/yeonwoo/vacation.png',assetReady:true,minAge:13,ending:'화가의 동반자',dialogues:['“잠시 그대로 있어 봐. 이 순간을 그림에 담고 싶어.”','“같은 풍경도 함께 보는 사람에 따라 색이 달라 보여.”']},
-  {id:'taegyeom',name:'태겸',role:'상단 후계자',image:'../assets/characters/romance/taegyeom/vacation.png',assetReady:true,minAge:13,ending:'대상인의 동반자',dialogues:['“좋은 물건보다 좋은 인연을 만나는 일이 더 귀하다고 하더군.”','“이 길 끝에 재미있는 장이 선다는데, 함께 가겠어?”']},
-  {id:'hyeon',name:'현',role:'정체를 숨긴 왕자',image:'../assets/characters/romance/hyeon/vacation.png',assetReady:true,minAge:13,ending:'왕자의 연인',dialogues:['“내가 누구인지는 잠시 잊고, 오늘만 평범하게 걸어도 될까?”','“또 만났네. 이쯤 되면 우연이라고만 하기는 어렵겠어.”']}
+  {id:'doyun',name:'도윤',role:'젊은 무관',motif:'최산',image:'../assets/characters/romance/doyun/vacation.png',assetReady:true,minAge:13,ending:'무관의 아내',dialogues:['“활쏘기보다 고요한 풍경을 바라보는 일이 더 어렵군.”','“혼자 걷는 길인 줄 알았는데, 동행이 생겼군.”']},
+  {id:'seojin',name:'서진',role:'선비',motif:'박보검',image:'../assets/characters/romance/seojin/vacation.png',assetReady:true,minAge:13,ending:'선비와의 삶',dialogues:['“책에서 읽던 풍경보다 직접 보는 모습이 더 아름답군요.”','“이 경치를 시로 남긴다면 어떤 첫 구절이 좋을까요?”']},
+  {id:'yeonwoo',name:'연우',role:'화공',motif:'박지훈',image:'../assets/characters/romance/yeonwoo/vacation.png',assetReady:true,minAge:13,ending:'화가의 동반자',dialogues:['“잠시 그대로 있어 봐. 이 순간을 그림에 담고 싶어.”','“같은 풍경도 함께 보는 사람에 따라 색이 달라 보여.”']},
+  {id:'taegyeom',name:'태겸',role:'상단 후계자',motif:'최현욱',image:'../assets/characters/romance/taegyeom/vacation.png',assetReady:true,minAge:13,ending:'대상인의 동반자',dialogues:['“좋은 물건보다 좋은 인연을 만나는 일이 더 귀하다고 하더군.”','“이 길 끝에 재미있는 장이 선다는데, 함께 가겠어?”']},
+  {id:'hyeon',name:'현',role:'정체를 숨긴 왕자',motif:'차은우',image:'../assets/characters/romance/hyeon/vacation.png',assetReady:true,minAge:13,ending:'왕자의 연인',dialogues:['“내가 누구인지는 잠시 잊고, 오늘만 평범하게 걸어도 될까?”','“또 만났네. 이쯤 되면 우연이라고만 하기는 어렵겠어.”']}
 ];
 const relationEpisodeCatalog={
   doyun:[
@@ -1094,7 +1094,7 @@ function openPanel(type) {
     panelTitle.textContent = `${game.characterName || '아이'}의 상태`;
     normalizeBodyMetrics();
     normalizeRelations();
-    const relationCards=endingRelationCandidates.map(candidate=>{const relation=game.relations[candidate.id];const phase=relation.dateUnlocked?(relation.affinity>=60?`${relation.relationship} · 호감 ${relation.affinity}`:`데이트 가능 · 호감 ${relation.affinity}/60`):relation.meetings>=5?'16세부터 데이트 가능':`${relation.meetings} / 5회 만남`;return `<div class="relation-card ${relation.affinity>=60?'unlocked':''}"><b>${candidate.name}</b><small>${candidate.role}</small><span>${phase}</span><i style="--relation-progress:${Math.min(100,relation.affinity)}%"></i></div>`;}).join('');
+    const relationCards=endingRelationCandidates.map(candidate=>{const relation=game.relations[candidate.id];const phase=relation.dateUnlocked?(relation.affinity>=60?`${relation.relationship} · 호감 ${relation.affinity}`:`데이트 가능 · 호감 ${relation.affinity}/60`):relation.meetings>=5?'16세부터 데이트 가능':`${relation.meetings} / 5회 만남`;return `<div class="relation-card ${relation.affinity>=60?'unlocked':''}"><b>${candidate.name}</b><small>${candidate.role}</small><small>비공식 외형 모티브 · ${candidate.motif}</small><span>${phase}</span><i style="--relation-progress:${Math.min(100,relation.affinity)}%"></i></div>`;}).join('');
     panelBody.innerHTML = `<div class="status-summary"><span>${game.age}세 · ${game.season} ${game.week}주</span><b>${game.money.toLocaleString()}냥</b></div><section class="body-profile" aria-label="성장 정보"><div><small>키</small><b>${game.height.toFixed(1)} cm</b></div><div><small>몸무게</small><b>${game.weight.toFixed(1)} kg</b></div></section>${statGroups.map(group => `<section class="stat-group"><h3>${group.title}</h3>${group.stats.map(([key,label]) => statBar(key,label)).join('')}</section>`).join('')}<section class="stat-group condition-group"><h3>현재 상태</h3>${statBar('stress','스트레스')}</section><section class="stat-group"><h3>수호 인연</h3>${statBar('nannyAffinity','신수 유대감')}${statBar('fatherAffinity','아버지 친밀도')}</section><section class="relation-group"><h3>인연</h3><p>5회 만남은 데이트 해금 조건이며, 호감도 60 이상과 특별한 관계가 되어야 인연 엔딩 후보가 됩니다.</p><div class="relation-grid">${relationCards}</div></section>`;
   } else if (type === 'inventory') {
     playHomeMusic();
