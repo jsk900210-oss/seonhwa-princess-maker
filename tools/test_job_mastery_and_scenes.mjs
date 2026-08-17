@@ -28,7 +28,7 @@ if(!app.includes('currentRank>previousRank?activityRankNames[currentRank]:null')
 if(!app.includes('progressReward.rankUp?` · ${progressReward.rankUp} 승급!`'))throw new Error('일정 결과의 승급 표시 누락');
 if(!app.includes("if(current>=activityRankThresholds[2])return {label:'달인 완성',percent:100}"))throw new Error('일정 카드 달인 진행도 누락');
 if(!app.includes('class="mastery-meter"'))throw new Error('일정 카드 숙련 진행 바 누락');
-if(!app.includes("isNew?'newly-unlocked':''"))throw new Error('새 활동 카드 표시 누락');
+if(app.includes("isNew?'newly-unlocked':''"))throw new Error('활동 카드 위 겹치는 새 활동 표시는 제거해야 합니다.');
 if(!app.includes('if(firstSelection)game.activityUnlocksSeen.push(id)'))throw new Error('첫 선택 후 새 활동 표시 해제 누락');
 for(const id of ['swordsmanship','spellcraft'])if(!app.includes(`id:'${id}'`))throw new Error(`신규 교육 누락: ${id}`);
 console.log('PASS: 전용 직업 장면 9종, 3단계 숙련·보수·연속 대성공·엔딩 반영, 검술·술법 교육');
