@@ -14,8 +14,8 @@ assert.ok(app.includes('if(phaseAdvanced)rollVisitingMerchant()'),'방문객은 
 assert.ok(app.includes('lastGuardianTalkPhase===phaseKey'),'신수 대화는 페이즈마다 갱신해야 합니다.');
 assert.ok(app.includes('phase.index} / ${phase.total}'),'일정 화면에 현재/전체 페이즈 수가 보여야 합니다.');
 assert.ok(css.includes('.phase-progress-track'),'페이즈 진행률 막대가 필요합니다.');
-assert.ok(app.includes('[-2,-1,0,1,2].map'),'편성창은 가운데 현재 칸을 기준으로 총 5칸이어야 합니다.');
-assert.ok(app.includes('class="phase-mini-slot current"'),'가운데 편성 전 칸이 보여야 합니다.');
+assert.ok(app.includes('Array.from({length:2}')&&app.includes('Array.from({length:3}'),'편성창은 완료 2칸과 신규 3칸, 총 5칸이어야 합니다.');
+assert.ok(app.includes("index===0?'current':'empty'"),'첫 신규 편성 칸이 현재 칸으로 보여야 합니다.');
 assert.ok(app.includes('game.dailySchedule.push(id);scheduleCursor=game.dailySchedule.length-1'),'새 페이즈는 가운데 칸에 채워져야 합니다.');
 assert.ok(app.includes('class="action compact-action'),'스케줄 항목은 이름 중심의 간결한 버튼이어야 합니다.');
 assert.ok(css.includes('grid-template-columns:repeat(5,minmax(0,1fr))'),'편성 5칸이 한 줄에 유지되어야 합니다.');
@@ -23,7 +23,17 @@ assert.ok(css.includes('.compact-schedule-grid'),'교육·아르바이트·휴�
 assert.ok(css.includes('Main categories are broad, dark tabs'),'큰 카테고리와 세부 일정의 시각적 위계가 필요합니다.');
 assert.ok(css.includes('.compact-tabs button.on'),'선택한 큰 카테고리가 진한 탭으로 보여야 합니다.');
 assert.ok(css.includes('.compact-schedule-grid>.compact-action'),'세부 일정은 작은 이름 버튼으로 보여야 합니다.');
-assert.ok(app.includes('scheduleActionEmojis'),'각 세부 일정에는 특징을 나타내는 이모지가 필요합니다.');
-assert.ok(css.includes('@keyframes schedule-icon-motion'),'세부 일정 이모지는 가벼운 동작 효과가 있어야 합니다.');
+assert.ok(app.includes('scheduleActionIconAliases'),'각 세부 일정에는 기존 얼굴형 활동 아이콘이 필요합니다.');
+assert.ok(app.includes('class="schedule-action-face"'),'세부 일정에 원형 얼굴 아이콘이 표시되어야 합니다.');
+assert.ok(css.includes('@keyframes schedule-icon-motion'),'세부 일정 얼굴 아이콘은 가벼운 동작 효과가 있어야 합니다.');
+assert.ok(app.includes('animateScheduleAssignment'),'일정 선택 카드는 중앙 편성칸으로 이동하는 연출이 필요합니다.');
+assert.ok(css.includes('@keyframes phase-slot-shift'),'기존 일정은 새 일정 편성 시 왼쪽으로 밀려야 합니다.');
+assert.ok(app.includes('제${phase.index+index}페이즈'),'편성된 각 일정에 페이즈 번호가 표시되어야 합니다.');
+assert.ok(app.includes('function phaseDailyChange(change)'),'14일 페이즈용 스트레스 변화량 보정이 필요합니다.');
+assert.ok(app.includes('Math.ceil(stress/3)'),'일일 스트레스 증가는 기존 수치의 약 1/3로 낮춰야 합니다.');
+assert.ok(app.includes('playbackDailyStats'),'각 날짜마다 능력치 전후 수치를 표시해야 합니다.');
+assert.ok(css.includes('.playback-daily-stats'),'일별 능력치 변화 표시 UI가 필요합니다.');
+assert.ok(app.includes('game.dailySchedule=game.dailySchedule.filter(id=>id===holiday.id||id===\'rest\').slice(0,1)'),'명절 페이즈에는 행사 또는 휴식 하나만 편성해야 합니다.');
+assert.ok(app.includes('awardPhaseMastery(dayRecords)'),'숙련도는 하루가 아니라 페이즈 종료 시 평가해야 합니다.');
 
 console.log('PASS: 14일 페이즈와 PM3식 5칸 편성·간결한 활동 목록');

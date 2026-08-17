@@ -9,8 +9,8 @@ const mustContain = [
   ["renderSchedulePanel();\n    speakGuardian('schedule');\n    showScheduleConfirmation();", '이미 7일이 채워진 저장 일정도 실행 확인창을 보여야 합니다.'],
   ['await exploreMarket();', '저잣거리 일정은 사용자가 나갈 때까지 다음 날로 넘어가면 안 됩니다.'],
   ['marketShoppingActive=false;\n      playHomeMusic();', '저잣거리 종료 후 일정 재생 상태와 기본 음악을 복구해야 합니다.'],
-  ['closeMarketUiForTransition();\n      const vacationCompanion=await chooseVacationCompanion();', '바캉스 전환 전에 저잣거리 주문창을 닫아야 합니다.'],
-  ['const metSomeone=await playVacationScene(prize,index,vacationCompanion);', '바캉스 동행 선택·감상·인연 장면이 끝날 때까지 다음 일정은 대기해야 합니다.'],
+  ['closeMarketUiForTransition();\n      if(index%14===0){const vacationCompanion=await chooseVacationCompanion();', '바캉스 전환 전에 저잣거리 주문창을 닫아야 합니다.'],
+  ['const metSomeone=await playVacationScene(prize,index,vacationCompanion,scheduleStart);', '바캉스 동행 선택·감상·인연 장면이 끝날 때까지 다음 일정은 대기해야 합니다.'],
   ["scene.classList.remove('has-encounter','child-live');scene.hidden=true", '바캉스 종료 시 일러스트와 인연 UI를 숨겨야 합니다.'],
   ["phone.classList.remove('playing');\n  return {weeklyChange,dayRecords};", '주간 일정 종료 시 홈 화면 조작 상태를 복구해야 합니다.'],
 ];

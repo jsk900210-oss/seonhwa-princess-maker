@@ -35,7 +35,7 @@
 .phone.guardian-dialogue-active{isolation:isolate}
 .phone.guardian-dialogue-active:after{content:"";position:absolute;z-index:22;inset:0;pointer-events:none;background:linear-gradient(180deg,#100c0814 0 45%,#100c08b8 70%,#100c08f2 100%)}
 .home-greeting.guardian-overlay{display:block!important;z-index:25;background:transparent}
-.home-greeting.guardian-overlay .home-greeting-head img{left:50%;bottom:36%;width:88%;height:61%;object-position:50% 100%;transform:translateX(-50%);-webkit-mask-image:radial-gradient(ellipse 68% 64% at 50% 47%,#000 48%,#000d 67%,transparent 100%);mask-image:radial-gradient(ellipse 68% 64% at 50% 47%,#000 48%,#000d 67%,transparent 100%)}
+.home-greeting.guardian-overlay .home-greeting-head img{left:50%;bottom:36%;width:88%;height:61%;object-position:50% 100%;transform:translateX(-50%);mix-blend-mode:screen;-webkit-mask-image:radial-gradient(ellipse 61% 62% at 50% 48%,#000 42%,#000d 58%,transparent 78%);mask-image:radial-gradient(ellipse 61% 62% at 50% 48%,#000 42%,#000d 58%,transparent 78%)}
 .home-greeting.guardian-overlay .home-greeting-head b{left:5%;bottom:35%;min-width:34%;padding:7px 12px}
 .home-greeting.guardian-overlay>p{left:4%;right:4%;bottom:20%;min-height:82px;max-height:112px;padding:12px 14px;overflow:auto;font-size:14px;line-height:1.5}
 .home-greeting.guardian-overlay> b{left:6%;bottom:17.2%;font-size:11px}

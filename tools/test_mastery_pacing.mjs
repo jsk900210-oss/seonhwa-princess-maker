@@ -1,8 +1,7 @@
 import assert from 'node:assert/strict';
 
-const skilled=100,master=300,totalWeeks=52*10;
-assert.equal(Math.ceil(skilled/7),15,'7일 집중 시 숙련은 약 15주여야 합니다.');
-assert.equal(Math.ceil(master/7),43,'7일 집중 시 달인은 약 43주여야 합니다.');
-assert.ok(master<totalWeeks,'주 1회 편성으로 10년 안에 달인 달성이 가능해야 합니다.');
-assert.ok(master>totalWeeks/2,'주 1회 편성 시 달인은 성장 후반에 달성해야 합니다.');
-console.log('PASS: 숙련 100회·달인 300회 장기 성장 속도');
+const skilled=10,master=30;
+assert.equal(Math.ceil(skilled/3),4,'매 페이즈 최상 평가라도 숙련까지 최소 4페이즈가 필요해야 합니다.');
+assert.equal(Math.ceil(master/3),10,'매 페이즈 최상 평가라도 달인까지 최소 10페이즈가 필요해야 합니다.');
+assert.equal(Math.ceil(master/2),15,'보통의 우수 평가라면 달인까지 약 15페이즈가 필요해야 합니다.');
+console.log('PASS: 페이즈 평가형 숙련 10점·달인 30점 성장 속도');
