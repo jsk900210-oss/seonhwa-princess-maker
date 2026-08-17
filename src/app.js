@@ -476,13 +476,20 @@ async function outfitActivityFrame(src,outfitId){
   const key=`${growthVisualAge()}|${outfitId}|${src}`;if(activityOutfitFrameCache.has(key))return activityOutfitFrameCache.get(key);
   return new Promise(resolve=>{const source=new Image();source.onload=()=>{try{const canvas=document.createElement('canvas');canvas.width=source.naturalWidth;canvas.height=source.naturalHeight;const context=canvas.getContext('2d',{willReadFrequently:true});context.drawImage(source,0,0);const frame=context.getImageData(0,0,canvas.width,canvas.height),data=frame.data,isRest=/\/(rest|sleep)-/.test(src);
     for(let y=0;y<canvas.height;y++)for(let x=0;x<canvas.width;x++){const i=(y*canvas.width+x)*4;if(data[i+3]<24)continue;const r=data[i],g=data[i+1],b=data[i+2];
-      const pink=!isRest&&r>155&&g>42&&g<155&&b>52&&b<180&&r>g*1.32&&r>b*1.12;
-      const central=x>canvas.width*.16&&x<canvas.width*.84&&y>canvas.height*.2&&y<canvas.height*.76;
-      const skin=r>170&&g>92&&b>64&&r>g*1.07&&g>b*1.06;
-      const ivory=central&&!skin&&r>188&&g>165&&b>130&&r-b<62&&r-g<45;
-      const ribbon=central&&!skin&&r>72&&r>g*1.35&&r>b*1.2&&g<108&&b<108;
-      const fallback=ribbon?palette.accent:pink?palette.skirt:(ivory&&palette.top?palette.top:null);if(!fallback)continue;
-      const light=Math.max(.62,Math.min(1.28,(r+g+b)/3/170));data[i]=Math.min(255,fallback[0]*light);data[i+1]=Math.min(255,fallback[1]*light);data[i+2]=Math.min(255,fallback[2]*light);
+      const bodyCore=x>canvas.width*.22&&x<canvas.width*.78&&y>canvas.height*.18&&y<canvas.height*.82;
+      const lowerCore=x>canvas.width*.28&&x<canvas.width*.74&&y>canvas.height*.42&&y<canvas.height*.92;
+      const upperCore=x>canvas.width*.24&&x<canvas.width*.76&&y>canvas.height*.16&&y<canvas.height*.60;
+      const hueSpread=Math.max(r,g,b)-Math.min(r,g,b);
+      const skin=r>168&&g>94&&b>65&&r>g*1.06&&g>b*1.05&&hueSpread<96;
+      const clothTone=!skin&&hueSpread>18&&r+g+b>165&&r+g+b<700;
+      const ribbon=bodyCore&&r>74&&r>g*1.25&&r>b*1.18&&g<112&&b<114&&hueSpread>42;
+      const skirtTone=lowerCore&&clothTone&&r>120&&g>55&&b>55;
+      const topTone=upperCore&&clothTone&&r>145&&g>135&&b>110;
+      const fallback=ribbon?palette.accent:skirtTone?palette.skirt:(topTone&&palette.top?palette.top:null);if(!fallback)continue;
+      const light=Math.max(.78,Math.min(1.05,(r+g+b)/3/180));
+      data[i]=Math.min(255,fallback[0]*light);
+      data[i+1]=Math.min(255,fallback[1]*light);
+      data[i+2]=Math.min(255,fallback[2]*light);
     }
     context.putImageData(frame,0,0);const result=canvas.toDataURL('image/png');activityOutfitFrameCache.set(key,result);resolve(result);}catch{resolve(src);}};source.onerror=()=>resolve(src);source.src=src;});
 }
@@ -872,13 +879,32 @@ function balancedRelationCandidate(candidates){
 function relationOverlayCaption(candidate,episode){
   return episode?.title?`${candidate.name} · ${episode.title}`:candidate.name;
 }
-function waitForVacationTap(label='화면을 터치해 계속'){
-  const scene=document.querySelector('#vacationScene'),button=document.querySelector('#vacationNext');button.textContent=label;
-  return new Promise(resolve=>{const advance=event=>{event.preventDefault();scene.removeEventListener('click',advance);resolve();};scene.addEventListener('click',advance,{once:true});});
+function waitForVacationTap(label='화면을 터치해 계속',buttonOnly=false){
+  const scene=document.querySelector('#vacationScene'),button=document.querySelector('#vacationNext');
+  button.textContent=label;
+  button.hidden=false;
+  return new Promise(resolve=>{
+    const target=buttonOnly?button:scene;
+    const advance=event=>{event.preventDefault();target.removeEventListener('click',advance);resolve();};
+    target.addEventListener('click',advance,{once:true});
+  });
 }
 function chooseVacationCompanion(){
   normalizeRelations();
-  const eligible=endingRelationCandidates.filter(candidate=>relationRecord(candidate.id).dateUnlocked);
+  const eligible=endingRelationCandidates
+    .map(candidate=>({candidate,episode:nextRelationEpisode(candidate,'vacation')}))
+    .filter(entry=>{
+      const record=relationRecord(entry.candidate.id);
+      return Boolean(
+        entry.episode
+        && record.dateUnlocked
+        && record.meetings>=5
+        && record.affinity>=80
+        && ['특별한 인연','연인'].includes(record.relationship)
+        && record.completedEpisodes.length>=3
+      );
+    })
+    .map(entry=>entry.candidate);
   if(!eligible.length)return Promise.resolve(null);
   const phone=document.querySelector('.phone'),scene=document.querySelector('#vacationScene');
   scene.hidden=false;scene.classList.remove('child-live','has-encounter');phone.classList.add('vacation-playing');
@@ -914,25 +940,30 @@ async function playVacationScene(prize,index,companion=null){
   playVacationMusic(sceneSeason);renderVacationMotion(sceneSeason);image.src=prize.image;document.querySelector('#vacationTitle').textContent=prize.name;scene.dataset.effect=sceneEffect;scene.dataset.season=sceneSeason;
   scene.classList.remove('has-encounter');scene.classList.add('child-live');overlay.hidden=true;phone.classList.add('vacation-playing');scene.hidden=false;
   await waitForVacationTap('일러스트를 감상한 뒤 터치');
-  const candidates=endingRelationCandidates.filter(candidate=>game.age>=candidate.minAge&&candidate.assetReady);
-  const encounter=Boolean(companion)||(candidates.length>0&&Math.random()<.35);
   let relation=null;
-  if(encounter){
-    relation=companion||balancedRelationCandidate(candidates);scene.classList.add('has-encounter');overlay.hidden=false;
+  if(companion){
+    relation=companion;scene.classList.add('has-encounter');overlay.hidden=false;
     const episode=nextRelationEpisode(relation,'vacation');
     playerPortrait.src=protagonistPortraitForAge();
     companionPortrait.src=relation.baseSheet;
     companionPortrait.style.setProperty('--relation-sheet',`url('${relation.baseSheet}')`);
     companionPortrait.style.setProperty('--relation-age-position',relationAgePosition());
     companionName.textContent=relationOverlayCaption(relation,episode);
-    playerText.textContent=`${game.guardianName||'신수'}가 먼저 인사를 건넸어요.`;
-    companionText.textContent=episode?.line||relation.dialogues[Math.floor(Math.random()*relation.dialogues.length)];
+    const openingLine=episode?.line||relation.dialogues[Math.floor(Math.random()*relation.dialogues.length)];
+    playerText.textContent=`${game.guardianName||'신수'}가 먼저 말을 걸었어요.`;
+    companionText.textContent=openingLine;
     const fromLeft=Math.random()<.5;
     overlay.classList.toggle('companion-left',fromLeft);
     overlay.classList.toggle('companion-right',!fromLeft);
     const record=recordRelationEncounter(relation,episode);
-    if(companion){record.affinity=Math.min(100,record.affinity+10);record.relationship=record.affinity>=80?'연인':record.affinity>=60?'특별한 인연':'친구';const memory=`${game.age}-${sceneSeason}`;if(!record.vacationMemories.includes(memory))record.vacationMemories.push(memory);companionText.textContent=`${relation.name}과 함께 왔어요.`;}
-    await waitForVacationTap('대화를 읽은 뒤 터치');
+    record.affinity=Math.min(100,record.affinity+10);
+    record.relationship=record.affinity>=80?'연인':record.affinity>=60?'특별한 인연':'친구';
+    const memory=`${game.age}-${sceneSeason}`;
+    if(!record.vacationMemories.includes(memory))record.vacationMemories.push(memory);
+    await waitForVacationTap('첫 마디를 읽고 누르세요',true);
+    playerText.textContent=`${game.characterName||'선화'}가 조용히 대답했어요.`;
+    companionText.textContent=episode?.title?`${relation.name} · ${episode.title}`:`${relation.name}과 조금 더 이야기를 나눴어요.`;
+    await waitForVacationTap('대화를 다 읽고 누르세요',true);
   }
   overlay.hidden=true;scene.classList.remove('has-encounter','child-live');scene.hidden=true;scene.dataset.effect='';scene.dataset.season='';document.querySelector('#vacationMotion').replaceChildren();phone.classList.remove('vacation-playing');playHomeMusic();
   return relation;
@@ -955,6 +986,24 @@ function renderHud() {
   document.querySelector('#speakerName').textContent = game.guardianName || guardian?.name || '수호신수';
   const companion=document.querySelector('#guardianCompanion');
   if(companion){companion.hidden=!guardian;document.querySelector('#guardianCompanionMark').textContent=guardian?.mark||'守';document.querySelector('#guardianCompanionName').textContent=game.guardianName||guardian?.name||'';if(guardian)document.querySelector('#guardianCompanionMark').style.background=guardian.theme;}
+}
+
+function resetTransientScenes(){
+  const phone=document.querySelector('.phone');
+  const vacationScene=document.querySelector('#vacationScene');
+  const vacationOverlay=document.querySelector('#vacationDuoOverlay');
+  const vacationMotion=document.querySelector('#vacationMotion');
+  const vacationNext=document.querySelector('#vacationNext');
+  if(phone)phone.classList.remove('vacation-playing','market-playing','greeting-active','settings-open');
+  if(vacationScene){
+    vacationScene.hidden=true;
+    vacationScene.classList.remove('has-encounter','child-live');
+    vacationScene.dataset.effect='';
+    vacationScene.dataset.season='';
+  }
+  if(vacationOverlay)vacationOverlay.hidden=true;
+  if(vacationMotion)vacationMotion.replaceChildren();
+  if(vacationNext)vacationNext.hidden=true;
 }
 
 const guardianVoice={
@@ -1314,6 +1363,7 @@ function applySavePayload(saved) {
   if(!game.monthlyLedger&&game.currentDate){const date=new Date(`${game.currentDate}T00:00:00`);game.monthlyLedger=createMonthlyLedger(date.getFullYear(),date.getMonth()+1);}
   bg.src = backgrounds.home;
   applyEquippedOutfit();
+  resetTransientScenes();
   renderHud();
   setTimeout(()=>{if(!showHomeGreeting())speakGuardian('return');},350);
   panel.hidden = true;
@@ -1419,6 +1469,7 @@ function resetGameState() {
   document.querySelector('#birthdayTitle').textContent='아이의 이름과 생일';
   bg.src = backgrounds.home;
   character.src = expressions[0][0];
+  resetTransientScenes();
   renderHud();
   panel.hidden = true;
   document.querySelector('#birthdaySetup').hidden = true;
