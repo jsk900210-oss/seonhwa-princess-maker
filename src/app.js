@@ -48,7 +48,7 @@ function transitionPrologueToHomeMusic(){
   fadeAudio(prologueMusic,0,1600);
 }
 
-const game = { characterName:'', nannyName:'', guardianType:null, guardianName:'', profileSlot:null, age: 9, height:130, weight:28.5, month: 1, week: 1, season:'봄', money: 50000, cash:50000, health:42, strength:18, agility:20, intelligence:35, magic:8, mentality:30, dignity:36, manners:28, speech:14, sensitivity:40, sense:24, charm:30, stress:12, items: [], purchasedGoods:[], relations:{}, activityProgress:{}, activityUnlocksSeen:[], startingGiftId:null, fatherBirthdayYears:[], equippedOutfit:null, autoOutfit:true, dailySchedule: [null,null,null,null,null,null,null], birthday:null, currentDate:null, endingDate:null, ended:false, endingResult:null, birthdayCount:0, element:null, birthSeason:null, memory:0, truth:0, exposure:0, fatherAffinity:0, guardianTrust:50, nannyAffinity:50, lastGreetingDate:null, lastGuardianTalkDate:null, monthlyLedger:null };
+const game = { characterName:'', nannyName:'', guardianType:null, guardianName:'', profileSlot:null, age: 9, height:130, weight:28.5, month: 1, week: 1, season:'봄', money: 50000, cash:50000, health:42, strength:18, agility:20, intelligence:35, magic:8, mentality:30, dignity:36, manners:28, speech:14, sensitivity:40, sense:24, charm:30, stress:12, items: [], purchasedGoods:[], relations:{}, activityProgress:{}, activityUnlocksSeen:[], startingGiftId:null, fatherBirthdayYears:[], equippedOutfit:null, autoOutfit:true, dailySchedule: [null,null,null,null,null,null,null], birthday:null, currentDate:null, endingDate:null, ended:false, endingResult:null, birthdayCount:0, element:null, birthSeason:null, memory:0, truth:0, exposure:0, fatherAffinity:0, guardianTrust:50, nannyAffinity:50, lastGreetingDate:null, lastGuardianTalkDate:null, lastGuardianTalkPhase:null, monthlyLedger:null };
 const guardianDefs={
   cheongryong:{name:'청룡',mark:'龍',theme:'#294e67',gift:{name:'푸른 여의주 조각',change:{intelligence:5,magic:4}},intro:'동쪽의 푸른 숨결. 배움과 술법의 길을 살피는 신수입니다.'},
   baekho:{name:'백호',mark:'虎',theme:'#ddd8ce',gift:{name:'흰 범의 방울',change:{strength:5,agility:4}},intro:'서쪽의 굳센 발걸음. 위험 앞에서 용기와 무예를 북돋는 신수입니다.'},
@@ -144,6 +144,7 @@ const actionPresentation = {
   masonry: { motion:'motion-job-masonry', location:'masonryJob', prop:'none', activity:'masonry', npc:null },
   clinichelp: { motion:'motion-job-clinic', location:'clinicJob', prop:'none', activity:'clinichelp', npc:null },
   rest: { motion:'motion-resting', location:'restRoom', prop:'none', activity:'sleep', npc:null },
+  freeTime: { motion:'motion-walk', location:'courtyard', prop:'none', activity:null, npc:null },
   sleep: { motion:'motion-sleep', location:'restRoom', prop:'none', activity:'sleep', npc:null },
   shopping: { motion:'motion-walk', location:'marketErrand', prop:'none', activity:null, npc:null },
   painting: { motion:'motion-calligraphy', location:'studyRoom', prop:'none', activity:'calligraphy', npc:'teacher' },
@@ -352,12 +353,12 @@ function rollVisitingMerchant(){
 function openVisitingMerchant(){
   if(!pendingVisitShop)return;
   pendingVisitShop=false;
-  document.querySelector('#speakerName').textContent='떠돌이 잡화상';
-  document.querySelector('#dialogueText').textContent='집 앞에서 낯선 행상이 짐을 내려놓고 인사를 건넸어요.';
+  document.querySelector('.phone').classList.add('merchant-speaking');
   document.querySelector('#merchantVisit').hidden=false;
 }
 function closeVisitingMerchant(openShop=false){
   document.querySelector('#merchantVisit').hidden=true;
+  document.querySelector('.phone').classList.remove('merchant-speaking');
   if(openShop)openPanel('shop');
   else{document.querySelector('#speakerName').textContent=game.guardianName||guardianDefs[game.guardianType]?.name||'수호신수';document.querySelector('#dialogueText').textContent='떠돌이 잡화상은 다음 장날을 기약하며 길을 떠났어요.';}
 }
@@ -562,7 +563,7 @@ function conditionEvent(stress, dayIndex){
   if(stress>=55)return 'drowsy';
   return null;
 }
-const activitySkill={reading:'intelligence',arithmetic:'sense',manners:'manners',painting:'sensitivity',music:'sensitivity',dance:'agility',swordsmanship:'strength',spellcraft:'magic',cooking:'sense',martial:'strength',classics:'intelligence',errand:'speech',sweeping:'strength',herbs:'sense',houseclean:'sense',farmwork:'strength',childcare:'sensitivity',kitchenhelp:'sense',woodwork:'strength',loomwork:'sense',masonry:'strength',clinichelp:'intelligence',innhelp:'speech',sewing:'sense',copying:'intelligence',ferryhelp:'health',merchanthelp:'speech',accounting:'sense',tutoring:'intelligence',dungeon:'strength',rest:'mentality'};
+const activitySkill={reading:'intelligence',arithmetic:'sense',manners:'manners',painting:'sensitivity',music:'sensitivity',dance:'agility',swordsmanship:'strength',spellcraft:'magic',cooking:'sense',martial:'strength',classics:'intelligence',errand:'speech',sweeping:'strength',herbs:'sense',houseclean:'sense',farmwork:'strength',childcare:'sensitivity',kitchenhelp:'sense',woodwork:'strength',loomwork:'sense',masonry:'strength',clinichelp:'intelligence',innhelp:'speech',sewing:'sense',copying:'intelligence',ferryhelp:'health',merchanthelp:'speech',accounting:'sense',tutoring:'intelligence',dungeon:'strength',rest:'mentality',freeTime:'sense'};
 const outcomeLabels={perfect:'완벽',success:'성공',struggle:'힘겨움',mistake:'실수'};
 function activityOutcomeThresholds(action,stress){
   const skill=game[activitySkill[action.id]]||0;
@@ -579,7 +580,7 @@ function activityOutcomeThresholds(action,stress){
   return {perfect,success,struggle};
 }
 function judgeActivityOutcome(action,stress){
-  if(['shopping','vacation'].includes(action.id))return 'success';
+  if(['shopping','vacation','freeTime'].includes(action.id))return 'success';
   if(action.id==='rest')return stress<35&&Math.random()<.35?'perfect':'success';
   const chance=activityOutcomeThresholds(action,stress);
   const roll=Math.random()*100;
@@ -589,7 +590,7 @@ function judgeActivityOutcome(action,stress){
   return 'mistake';
 }
 function resolvedActivityChange(action,outcome){
-  if(['rest','vacation'].includes(action.id)&&['struggle','mistake'].includes(outcome))outcome='success';
+  if(['rest','vacation','freeTime'].includes(action.id)&&['struggle','mistake'].includes(outcome))outcome='success';
   const change={};
   Object.entries(action.change).forEach(([key,value])=>{
     const beneficial=key==='stress'?value<0:value>0;
@@ -698,6 +699,7 @@ const actions = [
   { id: 'accounting', category:'아르바이트', name:'상단 장부 정리', cost:-180, unlockAge:16, mentor:'상단 행수', icon:'arithmetic', intro:'숫자 하나가 상단의 신뢰를 좌우하니 꼼꼼히 살펴보거라.', summary:'센스 +4 · 화술 +2 · 스트레스 +4 · 180냥 획득', change:{sense:4,speech:2,stress:4} },
   { id: 'tutoring', category:'아르바이트', name:'학동 가르치기', cost:-230, unlockAge:16, unlockStats:{intelligence:350,manners:220,speech:180}, mentor:'서당 훈장', icon:'reading', intro:'배운 바가 충분하니 이제 어린 학동에게 글과 셈, 예절을 일러 주거라.', summary:'지능 +2 · 화술 +4 · 기품 +2 · 스트레스 +5 · 230냥 획득', change:{intelligence:2,speech:4,dignity:2,stress:5} },
   { id: 'rest', category: '휴식', name: '집에서 휴식', cost: 0, summary: '스트레스 -12 · 체력 +2 · 정신력 +2', change: { health:2, mentality:2, stress:-12 } },
+  { id: 'freeTime', category: '휴식', name: '자유행동', cost: 0, summary: '가벼운 외출·취미·산책 중 하나 · 스트레스 감소', change: { sense:1, stress:-8 }, special:'free-time' },
   { id: 'shopping', category: '휴식', name: '저잣거리', cost: 0, summary: '', change: {}, special:'market' },
   { id: 'vacation', category: '휴식', name: '바캉스', cost: 180, summary: '감수성 +3 · 매력 +1 · 스트레스 -25 · 추억 일러스트 획득', change: {sensitivity:3,charm:1,stress:-25}, special:'vacation' },
   { id: 'dungeon', category: '휴식', name: '비경 탐사', cost: 50, unlockAge:13, unlockAnyStats:[{strength:120},{magic:120}], mentor:'수호신수', icon:'herbs', intro:'성 밖의 숨은 길에는 보물과 위험이 함께 있단다. 준비를 갖추고 나서자.', summary:'체력 +2 · 힘 +2 · 마력 +2 · 스트레스 +5 · 보물 은전 획득 가능', change:{health:2,strength:2,magic:2,stress:5}, special:'dungeon' },
@@ -1027,7 +1029,8 @@ function renderHud() {
   if(game.nannyName&&!game.guardianName){game.guardianName=game.nannyName;game.guardianType=game.guardianType||'hyeonmu';}
   normalizeStats();
   const date = game.currentDate ? new Date(`${game.currentDate}T00:00:00`) : null;
-  document.querySelector('#dateLabel').textContent = date ? `${game.age}세 · ${date.getFullYear()}년 ${date.getMonth()+1}월 ${date.getDate()}일 · ${game.season} ${game.week}주` : '생일 설정 전';
+  const phase=phaseInfo();
+  document.querySelector('#dateLabel').textContent = date ? `${game.age}세 · ${date.getFullYear()}년 ${date.getMonth()+1}월 ${date.getDate()}일 · 제${phase.index}페이즈 ${phase.week}주차` : '생일 설정 전';
   document.querySelector('#moneyLabel').textContent = `${game.money.toLocaleString()}냥`;
   document.querySelector('#cashLabel').textContent = `캐시 ${game.cash.toLocaleString()}원`;
   const guardian=guardianDefs[game.guardianType];
@@ -1042,7 +1045,7 @@ function resetTransientScenes(){
   const vacationOverlay=document.querySelector('#vacationDuoOverlay');
   const vacationMotion=document.querySelector('#vacationMotion');
   const vacationNext=document.querySelector('#vacationNext');
-  if(phone)phone.classList.remove('vacation-playing','market-playing','greeting-active','settings-open');
+  if(phone)phone.classList.remove('vacation-playing','market-playing','greeting-active','settings-open','merchant-speaking');
   if(vacationScene){
     vacationScene.hidden=true;
     vacationScene.classList.remove('has-encounter','child-live');
@@ -1116,8 +1119,9 @@ function answerGuardianConversation(scene,index){
 }
 function startGuardianConversation(){
   const guardian=guardianDefs[game.guardianType];if(!guardian||introDialogueQueue.length)return false;
-  if(game.lastGuardianTalkDate===game.currentDate){speakGuardian('home');document.querySelector('#dialogueText').textContent=`오늘은 이미 ${game.guardianName||guardian.name}과(와) 마음을 나누었어요. 다음 주에 다시 이야기해 봐요.`;return false;}
-  game.lastGuardianTalkDate=game.currentDate;
+  const phaseKey=phaseInfo().key;
+  if(game.lastGuardianTalkPhase===phaseKey){speakGuardian('home');document.querySelector('#dialogueText').textContent=`이번 페이즈에는 이미 ${game.guardianName||guardian.name}과(와) 마음을 나누었어요. 다음 페이즈에 다시 이야기해 봐요.`;return false;}
+  game.lastGuardianTalkDate=game.currentDate;game.lastGuardianTalkPhase=phaseKey;
   const scenes=guardianConversationSets[game.guardianType]||guardianConversationSets.hyeonmu,scene=scenes[Math.floor(Math.random()*scenes.length)];
   const portrait=document.querySelector('#homeGreetingPortrait');portrait.hidden=false;portrait.classList.remove('is-listening');portrait.src=guardianPortrait();portrait.alt=`${game.guardianName||guardian.name}의 모습`;
   const result=document.querySelector('#guardianTalkResult');result.hidden=true;result.innerHTML='';
@@ -1240,7 +1244,8 @@ function openPanel(type) {
       const phase=relation.dateUnlocked?(relation.affinity>=60?`${relation.relationship}`:`데이트 가능`):`${relation.meetings}/5`;
       return `<div class="relation-card ${relation.affinity>=60?'unlocked':''}"><b>${candidate.name}</b><small>${candidate.role}</small><span>${phase}</span><div class="relation-heart-meter" aria-label="${candidate.name} 호감도 ${percent}%">${heartBar}</div><em>${percent}%</em></div>`;
     }).join('');
-    panelBody.innerHTML = `<div class="status-summary"><span>${game.age}세 · ${game.season} ${game.week}주</span><b>${game.money.toLocaleString()}냥</b></div><section class="body-profile" aria-label="성장 정보"><div><small>키</small><b>${game.height.toFixed(1)} cm</b></div><div><small>몸무게</small><b>${game.weight.toFixed(1)} kg</b></div></section>${statGroups.map(group => `<section class="stat-group"><h3>${group.title}</h3>${group.stats.map(([key,label])=>statBar(key,label)).join('')}</section>`).join('')}<section class="stat-group condition-group"><h3>현재 상태</h3>${statBar('stress','스트레스')}</section><section class="stat-group"><h3>수호 인연</h3>${statBar('nannyAffinity','신수 유대감')}${statBar('fatherAffinity','아버지 친밀도')}</section><section class="relation-group"><h3>인연</h3><p>5회면 열려요. 60 이상이면 후보예요.</p><div class="relation-grid">${relationCards}</div></section>`;
+    const phase=phaseInfo();
+    panelBody.innerHTML = `<div class="status-summary"><span>${game.age}세 · 제${phase.index}페이즈 ${phase.week}주차</span><b>${game.money.toLocaleString()}냥</b></div><section class="body-profile" aria-label="성장 정보"><div><small>키</small><b>${game.height.toFixed(1)} cm</b></div><div><small>몸무게</small><b>${game.weight.toFixed(1)} kg</b></div></section>${statGroups.map(group => `<section class="stat-group"><h3>${group.title}</h3>${group.stats.map(([key,label])=>statBar(key,label)).join('')}</section>`).join('')}<section class="stat-group condition-group"><h3>현재 상태</h3>${statBar('stress','스트레스')}</section><section class="stat-group"><h3>수호 인연</h3>${statBar('nannyAffinity','신수 유대감')}${statBar('fatherAffinity','아버지 친밀도')}</section><section class="relation-group"><h3>인연</h3><p>5회면 열려요. 60 이상이면 후보예요.</p><div class="relation-grid">${relationCards}</div></section>`;
   } else if (type === 'inventory') {
     playHomeMusic();
     renderInventory();
@@ -1525,7 +1530,7 @@ function deleteCharacterRecord(slot){
 }
 
 function resetGameState() {
-  Object.assign(game, { characterName:'',nannyName:'',guardianType:null,guardianName:'',profileSlot:null,age:9,height:130,weight:28.5,month:1,week:1,season:'봄',money:50000,cash:50000,health:42,strength:18,agility:20,intelligence:35,magic:8,mentality:30,dignity:36,manners:28,speech:14,sensitivity:40,sense:24,charm:30,stress:12,items:[],purchasedGoods:[],relations:{},activityProgress:{},activityUnlocksSeen:[],startingGiftId:null,fatherBirthdayYears:[],equippedOutfit:null,autoOutfit:true,dailySchedule:[null,null,null,null,null,null,null],birthday:null,currentDate:null,endingDate:null,ended:false,endingResult:null,birthdayCount:0,element:null,birthSeason:null,memory:0,truth:0,exposure:0,fatherAffinity:0,guardianTrust:50,nannyAffinity:50,lastGreetingDate:null,lastGuardianTalkDate:null,monthlyLedger:null});
+  Object.assign(game, { characterName:'',nannyName:'',guardianType:null,guardianName:'',profileSlot:null,age:9,height:130,weight:28.5,month:1,week:1,season:'봄',money:50000,cash:50000,health:42,strength:18,agility:20,intelligence:35,magic:8,mentality:30,dignity:36,manners:28,speech:14,sensitivity:40,sense:24,charm:30,stress:12,items:[],purchasedGoods:[],relations:{},activityProgress:{},activityUnlocksSeen:[],startingGiftId:null,fatherBirthdayYears:[],equippedOutfit:null,autoOutfit:true,dailySchedule:[null,null,null,null,null,null,null],birthday:null,currentDate:null,endingDate:null,ended:false,endingResult:null,birthdayCount:0,element:null,birthSeason:null,memory:0,truth:0,exposure:0,fatherAffinity:0,guardianTrust:50,nannyAffinity:50,lastGreetingDate:null,lastGuardianTalkDate:null,lastGuardianTalkPhase:null,monthlyLedger:null});
   document.querySelector('#liveChanges').innerHTML='';
   const greeting=document.querySelector('#homeGreeting');greeting.hidden=true;greeting.classList.remove('greeting-active');
   document.querySelector('#characterNameInput').value='';
@@ -1576,7 +1581,8 @@ function masteryMeter(successes){
   return {label:`${activityRankNames[skilled?1:0]} → ${activityRankNames[skilled?2:1]}까지 ${target-current}회`,percent:Math.round((current-start)/(target-start)*100)};
 }
 function renderSchedulePanel() {
-  panelTitle.textContent = `${game.season} ${game.week}주 일정`;
+  const phase=phaseInfo();
+  panelTitle.textContent = `제${phase.index}페이즈 · ${phase.week}주차 일정`;
   if (!Array.isArray(game.dailySchedule) || game.dailySchedule.length !== 7) game.dailySchedule = [null,null,null,null,null,null,null];
   game.dailySchedule=game.dailySchedule.map(id=>{const action=actions.find(item=>item.id===id);return action&&actionUnlocked(action)?id:null;});
   const dayNames = ['월','화','수','목','금','토','일'],start=game.currentDate?new Date(`${game.currentDate}T00:00:00`):null;
@@ -1591,7 +1597,7 @@ function renderSchedulePanel() {
   const categoryTabs=scheduleCategories.map(category=>{const newCount=unseenUnlocked.filter(action=>action.category===category).length;return `<button data-schedule-category="${category}" class="${activeScheduleCategory===category?'on':''}">${category}${newCount?`<i>${newCount}</i>`:''}</button>`;}).join('');
   const actionCards=actions.filter(action=>action.category===activeScheduleCategory&&actionUnlocked(action)).map(action=>{const progress=activityProgressFor(action.id),rank=activityRankNames[activityRank(action.id)],requirement=activityRequirements[action.id],isNew=unseenUnlocked.some(item=>item.id===action.id),tracked=['교육','아르바이트'].includes(action.category),meter=tracked?masteryMeter(progress.successes):null,price=action.category==='아르바이트'?`+${activityPay(action)}냥`:action.cost>0?`-${action.cost}냥`:'무료',detail=tracked?`${rank} · 경험 ${progress.attempts}일 · 성공 ${progress.successes}일${requirement?` · 권장 ${requirement[0]} ${requirement[1]}`:''}`:'';return `<button class="action ${selectedScheduleAction===action.id?'selected':''} ${isNew?'newly-unlocked':''}" data-action="${action.id}">${isNew?'<strong>새로 열림</strong>':''}<img src="../assets/ui/activity-icons/activity-${action.icon||action.id}.png" alt=""><b>${action.name}</b><span>${price}</span><small>${action.summary||'직접 방문하여 선택'}</small>${detail?`<em>${detail}</em><div class="mastery-meter"><i style="width:${meter.percent}%"></i><span>${meter.label}</span></div>`:''}</button>`;}).join('');
   const projection=scheduleProjection(),filled=game.dailySchedule.filter(Boolean).length;
-  panelBody.innerHTML = `<div class="schedule-adviser"><b>${game.guardianName||guardianDefs[game.guardianType]?.name||'신수'}의 일정 조언</b><p>${projection.stress>=80?'스트레스가 높아 휴식을 넣는 것이 좋겠어요.':filled===7?'일주일 준비가 끝났어요. 실행 전에 비용과 상태를 확인하세요.':'요일을 고른 뒤 활동을 넣어 주세요.'}</p></div><div class="day-grid">${daySlots}</div><div class="schedule-tabs" role="tablist">${categoryTabs}</div><section class="schedule-category"><div class="action-grid">${actionCards}</div></section><div class="schedule-tools"><button id="scheduleFillRemaining" ${selectedScheduleAction?'':'disabled'}>선택 활동으로 빈칸 채우기</button><button id="scheduleClearAll" ${filled?'':'disabled'}>전체 비우기</button></div>`;
+  panelBody.innerHTML = `<section class="phase-progress" aria-label="전체 성장 페이즈 진행률"><div><b>제${phase.index}페이즈</b><span>${phase.index} / ${phase.total}</span></div><div class="phase-progress-track"><i style="width:${phase.percent}%"></i></div><small><em class="${phase.week===1?'on':''}">1주차</em><em class="${phase.week===2?'on':''}">2주차</em> · 남은 페이즈 ${phase.remaining}</small></section><div class="schedule-adviser"><b>${game.guardianName||guardianDefs[game.guardianType]?.name||'신수'}의 일정 조언</b><p>${projection.stress>=80?'스트레스가 높아 휴식을 넣는 것이 좋겠어요.':filled===7?'일주일 준비가 끝났어요. 실행 전에 비용과 상태를 확인하세요.':'요일을 고른 뒤 활동을 넣어 주세요.'}</p></div><div class="day-grid">${daySlots}</div><div class="schedule-tabs" role="tablist">${categoryTabs}</div><section class="schedule-category"><div class="action-grid">${actionCards}</div></section><div class="schedule-tools"><button id="scheduleFillRemaining" ${selectedScheduleAction?'':'disabled'}>선택 활동으로 빈칸 채우기</button><button id="scheduleClearAll" ${filled?'':'disabled'}>전체 비우기</button></div>`;
   panelBody.querySelectorAll('[data-action]').forEach(button => button.addEventListener('click', () => addDailyAction(button.dataset.action)));
   panelBody.querySelectorAll('[data-day]').forEach(button => button.addEventListener('click', () => selectScheduleDay(Number(button.dataset.day))));
   panelBody.querySelectorAll('[data-schedule-category]').forEach(button=>button.addEventListener('click',()=>{activeScheduleCategory=button.dataset.scheduleCategory;renderSchedulePanel();}));
@@ -1815,17 +1821,19 @@ async function runWeek() {
     return;
   }
   const completedWeek = game.week;
+  const phaseBefore=phaseInfo();
   panel.hidden = true;
   const playbackResult = await playWeeklySchedule(selected);
   const completedLedgers=recordMonthlySchedule(playbackResult.dayRecords);
   game.homeReaction=null;
   const birthdayEvents=advanceGameDate(selected.length);
+  const phaseAfter=phaseInfo(),phaseAdvanced=phaseAfter.index>phaseBefore.index;
   pendingHolidayRelation=rollHolidayRelationEvent();
   pendingActivityUnlocks=actions.filter(action=>actionUnlocked(action)&&!unlockedBefore.has(action.id));
   const completedLedger=completedLedgers[0]||null;
   const counts = selected.reduce((map, action) => (map[action.name]=(map[action.name]||0)+1,map),{});
   const summary = Object.entries(counts).map(([name,count]) => count > 1 ? `${name} ${count}일` : name).join(' · ');
-  document.querySelector('#dialogueText').textContent = birthdayEvents.length?birthdayEvents.map(event=>event.message).join(' '):(game.ended?`마지막 ${selected.length}일 일정(${summary})을 마쳤어요.`:`${completedWeek}주 일정(${summary})을 마쳤어요.`);
+  document.querySelector('#dialogueText').textContent = birthdayEvents.length?birthdayEvents.map(event=>event.message).join(' '):(game.ended?`마지막 ${selected.length}일 일정(${summary})을 마쳤어요.`:phaseAdvanced?`제${phaseBefore.index}페이즈를 마쳤어요. ${summary}의 기록을 정리하고 새 페이즈를 시작합니다.`:`제${phaseBefore.index}페이즈 ${phaseBefore.week}주차 일정(${summary})을 마쳤어요.`);
   if(birthdayEvents.length){const birthdayChange={};birthdayEvents.forEach(event=>Object.entries(event.change).forEach(([key,value])=>birthdayChange[key]=(birthdayChange[key]||0)+value));showLiveChanges({change:birthdayChange,cost:0});}
   game.dailySchedule = [null,null,null,null,null,null,null];
   bg.src = backgrounds.home;
@@ -1833,7 +1841,7 @@ async function runWeek() {
   applyEquippedOutfit();
   renderHud();
   panel.hidden = true;
-  rollVisitingMerchant();
+  if(phaseAdvanced)rollVisitingMerchant();else pendingVisitShop=false;
   if (game.ended) showEnding();
   else if(completedLedger)showMonthlyReport(completedLedger);
   else if(!presentHolidayRelation()&&!presentActivityUnlocks())openVisitingMerchant();
@@ -1843,6 +1851,16 @@ async function runWeek() {
 
 function isoDate(date){ const y=date.getFullYear(); const m=String(date.getMonth()+1).padStart(2,'0'); const d=String(date.getDate()).padStart(2,'0'); return `${y}-${m}-${d}`; }
 function addYears(date, years){ const next=new Date(date); next.setFullYear(next.getFullYear()+years); return next; }
+// 프메3의 반월 페이즈를 현재 7일 일정에 맞춰 2주(14일) 단위로 적용한다.
+// 일정은 계속 일주일씩 진행하고, 두 번째 주가 끝날 때 대화와 방문 이벤트가 갱신된다.
+function phaseInfo(dateValue=game.currentDate){
+  if(!game.birthday||!dateValue)return {index:1,week:1,key:'phase-1',total:1,remaining:0,percent:0};
+  const birth=new Date(`${game.birthday}T00:00:00`),start=addYears(birth,9),current=new Date(`${dateValue}T00:00:00`);
+  const ending=game.endingDate?new Date(`${game.endingDate}T00:00:00`):addYears(birth,19),total=Math.max(1,Math.ceil((ending-start)/86400000/14));
+  const elapsed=Math.max(0,Math.floor((current-start)/86400000)),index=Math.min(total,Math.floor(elapsed/14)+1),week=Math.floor((elapsed%14)/7)+1;
+  const completed=Math.min(total,(index-1)+(week-1)/2),percent=Math.max(0,Math.min(100,Math.round(completed/total*100)));
+  return {index,week,key:`phase-${index}`,total,remaining:Math.max(0,total-index),percent};
+}
 const startingBirthdayGifts=[
   {id:'birthday-calligraphy-set',name:'작은 붓과 벼루',change:{intelligence:6,sensitivity:3}},
   {id:'birthday-silk-ribbon',name:'비단 댕기',change:{charm:6,dignity:3}},
@@ -2103,7 +2121,13 @@ async function playWeeklySchedule(selected) {
   const weeklyChange={};
   const dayRecords=[];
   const scheduleStart=new Date(`${game.currentDate}T00:00:00`);
+  const playbackPhase=phaseInfo();
   const dayNames = ['월요일','화요일','수요일','목요일','금요일','토요일','일요일'];
+  const freeTimeVariants=[
+    {name:'마을 산책',change:{agility:1,sensitivity:1,stress:-8},line:'천천히 마을을 걸으며 머리를 식혔어요.'},
+    {name:'취미 시간',change:{sense:2,sensitivity:1,stress:-7},line:'마음 가는 일을 하며 여유로운 시간을 보냈어요.'},
+    {name:'가벼운 외출',change:{speech:1,charm:1,stress:-9},line:'바깥바람을 쐬고 사람들을 구경하며 기분을 풀었어요.'}
+  ];
   document.querySelector('#homeGreeting').hidden=true;
   phone.classList.remove('greeting-active');
   phone.classList.add('playing');
@@ -2119,18 +2143,21 @@ async function playWeeklySchedule(selected) {
       game.dailySchedule[index]=action.id;
     }
     const presentation = actionPresentation[action.id]||actionPresentation.rest;
+    const freeTimeVariant=action.id==='freeTime'?freeTimeVariants[Math.floor(Math.random()*freeTimeVariants.length)]:null;
     const currentMasteryRank=activityRank(action.id);
     stage.hidden=false;stageCharacter.hidden=false;stageProps.hidden=false;
     setScheduleDialogue(action,'start',index);
     if(forcedRest)document.querySelector('#dialogueText').textContent='스트레스가 100에 도달해 오늘 일정은 집에서 휴식으로 변경했어요.';
     const dailyOutfit=game.autoOutfit?updateAutoOutfit(action.id):game.equippedOutfit;
-    document.querySelector('#playbackDay').textContent = dayNames[index];
-    document.querySelector('#playbackAction').textContent = action.name;
+    document.querySelector('#playbackDay').textContent = `제${playbackPhase.index}페이즈 · ${playbackPhase.week}주차 · ${dayNames[index]}`;
+    document.querySelector('#playbackAction').textContent = ['교육','아르바이트'].includes(action.category)
+      ? `${action.category} · ${action.name} · ${activityRankNames[currentMasteryRank]}`
+      : action.name;
     document.querySelectorAll('#playbackWeek span').forEach((day,dayIndex)=>{day.classList.toggle('done',dayIndex<index);day.classList.toggle('current',dayIndex===index);});
     const outfitName=outfits.find(item=>item.id===dailyOutfit)?.name;
     const showOutfitName=action.id!=='rest'&&Boolean(outfitName);
     const restActivity=action.id==='rest'?(Math.random()<.5?'tea':'sleep'):null;
-    document.querySelector('#stageCaption').textContent = `${dayNames[index]} · ${action.name}${['교육','아르바이트'].includes(action.category)?` · ${activityRankNames[currentMasteryRank]}`:''}${restActivity?` · ${restActivity==='tea'?'차 마시기':'잠자기'}`:''}${showOutfitName?` · ${outfitName}`:''}`;
+    document.querySelector('#stageCaption').textContent = `${dayNames[index]} · ${action.name}${freeTimeVariant?` · ${freeTimeVariant.name}`:''}${['교육','아르바이트'].includes(action.category)?` · ${activityRankNames[currentMasteryRank]}`:''}${restActivity?` · ${restActivity==='tea'?'차 마시기':'잠자기'}`:''}${showOutfitName?` · ${outfitName}`:''}`;
     document.querySelector('#playbackProgress').style.width = `${((index + 1) / selected.length) * 100}%`;
     bg.src = backgrounds[presentation.location];
     stageMap.src = backgrounds[presentation.location];
@@ -2140,7 +2167,8 @@ async function playWeeklySchedule(selected) {
     stageNpc.className = presentation.npc ? `stage-npc npc-${presentation.npc}` : 'stage-npc';
     stageNpc.style.removeProperty('--relation-sheet');stageNpc.style.removeProperty('--relation-age-position');stageNpcImage.hidden=false;
     if(presentation.npc)stageNpcImage.src = await normalizeActivityFrame((presentation.npc==='teacher'?npcFrames.teacherReading:npcFrames[presentation.npc])[0]);
-    stage.className = `activity-stage map-${presentation.location} action-${action.id} mastery-${currentMasteryRank}`;
+    const phaseSceneType=action.category==='교육'?'pm3-phase-scene lesson-scene':action.category==='아르바이트'?'pm3-phase-scene work-scene':'pm3-phase-scene daily-scene';
+    stage.className = `activity-stage ${phaseSceneType} map-${presentation.location} action-${action.id} mastery-${currentMasteryRank}`;
     stageCharacter.className = `stage-character pixel-sprite ${presentation.motion}`;
     let dungeonReward={money:0,gear:null},dateRelation=null;
     if(action.id==='shopping'){
@@ -2169,13 +2197,13 @@ async function playWeeklySchedule(selected) {
       record.affinity=Math.min(100,record.affinity+12);record.lastMetAt=game.currentDate||null;record.relationship=record.affinity>=80?'연인':record.affinity>=60?'특별한 인연':'친구';
       stageCharacter.hidden=false;stageProps.hidden=false;
     }else await animateActivitySprite(stageCharacterImage,presentation.motion,restActivity||presentation.activity,stageNpcImage,presentation.npc,dailyOutfit,currentMasteryRank);
-    const guaranteedSuccess=['rest','vacation','dungeon'].includes(action.id)||action.special==='date';
-    const condition=['shopping','rest','vacation','dungeon'].includes(action.id)||action.special==='date'?null:conditionEvent(simulated.stress,index);
+    const guaranteedSuccess=['rest','freeTime','vacation','dungeon'].includes(action.id)||action.special==='date';
+    const condition=['shopping','rest','freeTime','vacation','dungeon'].includes(action.id)||action.special==='date'?null:conditionEvent(simulated.stress,index);
     let outcome=judgeActivityOutcome(action,simulated.stress);
     if(action.id==='dungeon')outcome=dungeonReward.money>=140?'perfect':dungeonReward.money>0?'normal':'struggle';
     if(!guaranteedSuccess&&condition==='mistake')outcome='mistake';
     else if(!guaranteedSuccess&&condition==='drowsy'&&outcome!=='mistake')outcome='struggle';
-    const resolvedChange=resolvedActivityChange(action,outcome);
+    const resolvedChange=freeTimeVariant?{...freeTimeVariant.change}:resolvedActivityChange(action,outcome);
     const isWork=action.category==='아르바이트',basePay=isWork?activityPay(action):0;
     let moneyChange=isWork?(outcome==='mistake'?0:outcome==='struggle'?Math.round(basePay*.5):basePay):-action.cost;
     if(action.id==='dungeon'){
@@ -2188,6 +2216,7 @@ async function playWeeklySchedule(selected) {
       await animateConditionEvent(stageCharacter,conditionCue,condition);
     }
     setScheduleDialogue(action,outcome,index);
+    if(freeTimeVariant)document.querySelector('#dialogueText').textContent=freeTimeVariant.line;
     if(dateRelation)document.querySelector('#dialogueText').textContent=`${dateRelation.candidate.name}과 조금 더 가까워졌어요. ${dateRelation.record.relationship}예요.`;
     stageCharacter.className = `stage-character pixel-sprite ${presentation.motion}${restActivity==='tea'?' rest-tea':''}`;
     const actualChange={};

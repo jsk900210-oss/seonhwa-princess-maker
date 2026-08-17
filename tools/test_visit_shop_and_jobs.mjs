@@ -13,7 +13,7 @@ if(!app.includes('Math.random()<.08'))throw new Error('방문상점 8% 무작위
 if(!app.includes('weeksSince<6'))throw new Error('방문상점 6주 재등장 제한 누락');
 if(!app.includes('openVisitingMerchant()'))throw new Error('방문상점 NPC 이벤트 연결 누락');
 if(!html.includes('id="merchantVisit"'))throw new Error('방문상점 등장 선택 장면 누락');
-if(!app.includes('errand-character-v4-'))throw new Error('장터 심부름 기존 v4 프레임 복구 누락');
+if(!app.includes('activity-consistent/age-09/errand-${n}.png'))throw new Error('장터 심부름 확정 기준 프레임 연결 누락');
 if(!app.includes("restActivity==='tea'?' rest-tea':''"))throw new Error('차 마시기 전용 표시 영역 누락');
 if(!app.includes('purchasedGoods:[]'))throw new Error('방문상점 별도 구매 기록 누락');
 if(app.includes("game.items.push({id:good.id"))throw new Error('방문상점 상품이 소지품에 보관됨');
