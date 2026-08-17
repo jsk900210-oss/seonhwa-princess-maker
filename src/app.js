@@ -457,11 +457,12 @@ const activityOutfitStyleCache=new Map();
 const normalizedActivityFrameCache=new Map();
 // 쯔꾸르 인물은 원본 파일 크기가 아니라 불투명한 머리-발끝 높이로 통일한다.
 // 서기 100%를 기준으로 앉기 88%, 바닥 동작(엎드림·눕기) 78%만 허용한다.
-const activityPoseRatio=Object.freeze({standing:1,seated:.88,floorwork:.78});
+const activityPoseRatio=Object.freeze({standing:1,bent:.92,seated:.86,floorwork:.74});
 function activityPoseType(src=''){
   if(/rest-legacy|tea/.test(src))return 'seated';
-  if(/houseclean|resting|rest-|sleep|eating/.test(src))return 'floorwork';
-  if(/calligraphy|arithmetic|childcare|masonry/.test(src))return 'seated';
+  if(/houseclean|resting|rest-|sleep|eating|farmwork|masonry|herbs/.test(src))return 'floorwork';
+  if(/calligraphy|arithmetic|childcare|kitchenhelp|woodwork|loomwork|clinichelp/.test(src))return 'seated';
+  if(/sweeping|gather/.test(src))return 'bent';
   return 'standing';
 }
 function activityOutfitPalette(outfitId){
@@ -1602,7 +1603,7 @@ function statBar(key, label) {
   return `<div class="stat-row"><span>${label}</span><div class="stat-track"><i class="${isCondition ? 'condition' : ''}" style="width:${value}%"></i></div><b>${game[key]}</b></div>`;
 }
 
-let activeScheduleCategory='교육',scheduleCursor=-1,scheduleTimelineOffset=0,selectedScheduleAction=null;
+let activeScheduleCategory='교육',scheduleCursor=-1,scheduleTimelineOffset=0,scheduleTimelineMotion='',selectedScheduleAction=null;
 function currentPhaseHoliday(dateValue=game.currentDate){
   if(!dateValue)return null;const start=new Date(`${dateValue}T00:00:00`),formatter=new Intl.DateTimeFormat('en-u-ca-chinese',{month:'numeric',day:'numeric'});
   for(let offset=0;offset<14;offset++){const date=new Date(start);date.setDate(start.getDate()+offset);const parts=Object.fromEntries(formatter.formatToParts(date).filter(part=>part.type==='month'||part.type==='day').map(part=>[part.type,Number(part.value)]));if(parts.month===1&&parts.day===1)return {id:'holiday-seollal',name:'설날',date};if(parts.month===8&&parts.day===15)return {id:'holiday-chuseok',name:'추석',date};}return null;
@@ -1658,11 +1659,12 @@ function renderSchedulePanel() {
   const categoryTabs=scheduleCategories.map(category=>{const newCount=unseenUnlocked.filter(action=>action.category===category).length;return `<button data-schedule-category="${category}" class="${activeScheduleCategory===category?'on':''}">${category}${newCount?`<i>${newCount}</i>`:''}</button>`;}).join('');
   const availableActions=holiday?[actions.find(action=>action.id===holiday.id),actions.find(action=>action.id==='rest')]:actions.filter(action=>action.category===activeScheduleCategory&&actionUnlocked(action));
   const actionCards=availableActions.map(action=>`<button class="action compact-action ${selectedScheduleAction===action.id?'selected':''}" data-action="${action.id}" ${holiday&&filled?'disabled':''}><img class="schedule-action-face" src="../assets/ui/activity-icons/activity-${scheduleActionIcon(action)}.png" alt=""><b>${action.name}</b><small class="schedule-action-money">${scheduleActionMoneyLabel(action)}</small></button>`).join('');
-  panelBody.innerHTML = `<section class="phase-progress compact" aria-label="전체 성장 페이즈 진행률"><div><b>제${phase.index}페이즈</b><span>${phase.index} / ${phase.total}</span></div><div class="phase-progress-track"><i style="width:${phase.percent}%"></i></div></section><div class="phase-five-wrap"><button id="phasePrev" aria-label="이전 페이즈 기록" ${timelineStart>0?'':'disabled'}>◀</button><div class="phase-five-grid">${phaseSlots}</div><button id="phaseNext" aria-label="다음 페이즈 기록" ${timelineStart<latestStart?'':'disabled'}>▶</button></div><small class="phase-slide-count">완료 이력은 회색으로 보존됩니다 · ${timelineStart+1}–${Math.min(timelineStart+5,timeline.length)} / ${timeline.length}</small>${holiday?`<p class="fixed-holiday-phase"><b>${holiday.name} 고정 페이즈</b><span>${holiday.date.getMonth()+1}월 ${holiday.date.getDate()}일 포함 · 참가하지 않으면 집에서 휴식</span></p>`:`<div class="schedule-tabs compact-tabs" role="tablist">${categoryTabs}</div>`}<section class="schedule-category compact-category"><div class="action-grid compact-schedule-grid">${actionCards}</div></section><div class="schedule-tools compact-tools"><button id="scheduleRunPhases" ${filled?'':'disabled'}>${filled}개 페이즈 실행</button><button id="scheduleClearAll" ${filled?'':'disabled'}>전체 비우기</button></div>`;
+  const timelineMotion=scheduleTimelineMotion;scheduleTimelineMotion='';
+  panelBody.innerHTML = `<section class="phase-progress compact" aria-label="전체 성장 페이즈 진행률"><div><b>제${phase.index}페이즈</b><span>${phase.index} / ${phase.total}</span></div><div class="phase-progress-track"><i style="width:${phase.percent}%"></i></div></section><div class="phase-five-wrap"><button id="phasePrev" aria-label="이전 페이즈 기록" ${timelineStart>0?'':'disabled'}>◀</button><div class="phase-five-grid ${timelineMotion?`slide-${timelineMotion}`:''}">${phaseSlots}</div><button id="phaseNext" aria-label="다음 페이즈 기록" ${timelineStart<latestStart?'':'disabled'}>▶</button></div><small class="phase-slide-count">완료 이력은 회색으로 보존됩니다 · ${timelineStart+1}–${Math.min(timelineStart+5,timeline.length)} / ${timeline.length}</small>${holiday?`<p class="fixed-holiday-phase"><b>${holiday.name} 고정 페이즈</b><span>${holiday.date.getMonth()+1}월 ${holiday.date.getDate()}일 포함 · 참가하지 않으면 집에서 휴식</span></p>`:`<div class="schedule-tabs compact-tabs" role="tablist">${categoryTabs}</div>`}<section class="schedule-category compact-category"><div class="action-grid compact-schedule-grid">${actionCards}</div></section><div class="schedule-tools compact-tools"><button id="scheduleRunPhases" ${filled?'':'disabled'}>${filled}개 페이즈 실행</button><button id="scheduleClearAll" ${filled?'':'disabled'}>전체 비우기</button></div>`;
   panelBody.querySelectorAll('[data-action]').forEach(button => button.addEventListener('click', () => addDailyAction(button.dataset.action,button)));
   panelBody.querySelectorAll('[data-phase-remove]').forEach(button=>button.addEventListener('click',()=>clearDailyAction(Number(button.dataset.phaseRemove))));
-  document.querySelector('#phasePrev').addEventListener('click',()=>{scheduleTimelineOffset=Math.min(latestStart,scheduleTimelineOffset+5);renderSchedulePanel();});
-  document.querySelector('#phaseNext').addEventListener('click',()=>{scheduleTimelineOffset=Math.max(0,scheduleTimelineOffset-5);renderSchedulePanel();});
+  document.querySelector('#phasePrev').addEventListener('click',()=>{scheduleTimelineOffset=Math.min(latestStart,scheduleTimelineOffset+1);scheduleTimelineMotion='older';renderSchedulePanel();});
+  document.querySelector('#phaseNext').addEventListener('click',()=>{scheduleTimelineOffset=Math.max(0,scheduleTimelineOffset-1);scheduleTimelineMotion='newer';renderSchedulePanel();});
   panelBody.querySelectorAll('[data-schedule-category]').forEach(button=>button.addEventListener('click',()=>{activeScheduleCategory=button.dataset.scheduleCategory;renderSchedulePanel();}));
   document.querySelector('#scheduleRunPhases').addEventListener('click',()=>{scheduleConfirmDismissed=false;showScheduleConfirmation();});
   document.querySelector('#scheduleClearAll').addEventListener('click',clearAllSchedule);
