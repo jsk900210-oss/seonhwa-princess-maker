@@ -1253,9 +1253,15 @@ function answerHomeGreeting(scene,index){
 function renderStagePm3Hud(date,change={}){
   const hud=document.querySelector('#stagePm3Hud');if(!hud)return;hud.hidden=false;
   const dateCard=hud.firstElementChild;dateCard.classList.remove('date-tick');void dateCard.offsetWidth;dateCard.classList.add('date-tick');
+  const phaseCard=hud.querySelector('.stage-hud-phase');if(phaseCard){phaseCard.classList.remove('date-tick');void phaseCard.offsetWidth;phaseCard.classList.add('date-tick');}
   const dayNames=['일','월','화','수','목','금','토'];
+  const phase=phaseInfo(date);
   document.querySelector('#stageHudDate').textContent=`${date.getFullYear()}년 ${date.getMonth()+1}월 ${date.getDate()}일 (${dayNames[date.getDay()]})`;
   document.querySelector('#stageHudMoney').textContent=`${game.money.toLocaleString()}냥`;
+  const phaseLabel=document.querySelector('#stageHudPhase');
+  if(phaseLabel)phaseLabel.textContent=`제${phase.index}페이즈 · ${phase.week}주차 · ${phase.remaining}페이즈 남음`;
+  const phaseProgress=document.querySelector('#stageHudPhaseProgress');
+  if(phaseProgress)phaseProgress.style.width=`${phase.percent}%`;
   const keys=['strength','dignity','manners','intelligence','charm','stress'];
   document.querySelector('#stageHudStats').innerHTML=keys.map(key=>{const value=clampStat(key,game[key]),delta=change[key]||0,maximum=statMaximum(key),direction=delta>0?'▲':delta<0?'▼':'';return `<span class="stage-hud-stat ${delta>0?'up':delta<0?'down':''}"><b>${statLabels[key]}</b><i style="--value:${Math.round(value/maximum*100)}%"></i><em>${value}${delta?`<small>${direction}${Math.abs(delta)}</small>`:''}</em></span>`;}).join('');
 }
