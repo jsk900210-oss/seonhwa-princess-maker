@@ -47,6 +47,8 @@ assert.ok(!app.includes('오늘 변화 계산 중'),'일정 실행 전 계산 �
 assert.ok(app.includes("result.classList.add('phase-brief-result')"),'착실히 해낸 일수는 페이즈 종료 시 작은 오버레이로 한 번만 보여야 합니다.');
 assert.ok(!app.includes('id="phaseResultContinue"'),'프메3에 없는 대형 다음 페이즈 결과창을 사용하면 안 됩니다.');
 assert.ok(app.includes('for(let day=0;day<14;day+=1)'),'바캉스 한 페이즈의 날짜가 14일 동안 순차 변경되어야 합니다.');
+assert.ok(app.includes('await schedulePlaybackDelay(340)')&&!app.includes("waitForVacationTap('일러스트를 감상한 뒤 터치')"),'바캉스 날짜는 터치 대기 없이 14일 동안 자동 진행되어야 합니다.');
+assert.ok(app.includes("querySelectorAll('[data-playback-speed-toggle]')")&&css.includes('.vacation-speed-toggle'),'일반 일정과 바캉스 모두 상단 우측 2배속 토글을 제공해야 합니다.');
 assert.ok(app.includes('scheduleTimelineOffset=Math.min(latestStart,scheduleTimelineOffset+5)'),'이전 완료 페이즈 이력을 볼 수 있어야 합니다.');
 assert.ok(!app.includes('game.completedPhases=game.completedPhases.slice(-24)'),'완료한 페이즈 이력을 임의로 삭제하면 안 됩니다.');
 

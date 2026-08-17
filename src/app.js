@@ -64,6 +64,7 @@ let pendingActivityUnlocks=[];
 let pendingHolidayRelation=null;
 let schedulePlaybackSpeed=1;
 const schedulePlaybackDelay=milliseconds=>new Promise(resolve=>setTimeout(resolve,Math.max(40,Math.round(milliseconds/schedulePlaybackSpeed))));
+function syncPlaybackSpeedToggle(){const enabled=schedulePlaybackSpeed===2;document.querySelectorAll('[data-playback-speed-toggle]').forEach(button=>{button.classList.toggle('active',enabled);button.setAttribute('aria-pressed',String(enabled));button.textContent=enabled?'2배속 켜짐':'2배속';});}
 const statGroups = [
   { title: '신체', stats: [['health','체력'],['strength','힘'],['agility','민첩']] },
   { title: '지성·마음', stats: [['intelligence','지능'],['magic','마력'],['mentality','정신력']] },
@@ -1012,8 +1013,8 @@ async function playVacationScene(prize,index,companion=null,scheduleStart=null){
   const sceneEffect=seasonalEffects[sceneSeason]?.has(prize.effect)?prize.effect:'calm';
   playVacationMusic(sceneSeason);renderVacationMotion(sceneSeason);image.src=prize.image;document.querySelector('#vacationTitle').textContent=prize.name;scene.dataset.effect=sceneEffect;scene.dataset.season=sceneSeason;
   scene.classList.remove('has-encounter');scene.classList.add('child-live');overlay.hidden=true;phone.classList.add('vacation-playing');scene.hidden=false;
-  for(let day=0;day<14;day+=1){const date=new Date(phaseStart);date.setDate(phaseStart.getDate()+day);dateFlow.querySelector('b').textContent=`${date.getFullYear()}년 ${date.getMonth()+1}월 ${date.getDate()}일`;dateFlow.querySelector('span').textContent=`제${day+1}일 / 14일`;dateFlow.querySelector('em').style.width=`${Math.round((day+1)/14*100)}%`;await schedulePlaybackDelay(180);}
-  await waitForVacationTap('일러스트를 감상한 뒤 터치');
+  syncPlaybackSpeedToggle();
+  for(let day=0;day<14;day+=1){const date=new Date(phaseStart);date.setDate(phaseStart.getDate()+day);dateFlow.classList.remove('date-tick');void dateFlow.offsetWidth;dateFlow.classList.add('date-tick');dateFlow.querySelector('b').textContent=`${date.getFullYear()}년 ${date.getMonth()+1}월 ${date.getDate()}일`;dateFlow.querySelector('span').textContent=`제${day+1}일 / 14일`;dateFlow.querySelector('em').style.width=`${Math.round((day+1)/14*100)}%`;await schedulePlaybackDelay(340);}
   let relation=null;
   if(companion){
     relation=companion;scene.classList.add('has-encounter');overlay.hidden=false;
@@ -2224,7 +2225,7 @@ async function playWeeklySchedule(selected) {
   phone.classList.remove('greeting-active');
   phone.classList.add('playing');
   playback.hidden = false;
-  playback.querySelectorAll('[data-speed]').forEach(button=>button.classList.toggle('active',Number(button.dataset.speed)===schedulePlaybackSpeed));
+  syncPlaybackSpeedToggle();
   stage.hidden = false;
   stageCharacterImage.src = spriteFrames.down[1];
   for (let index = 0; index < selected.length; index += 1) {
@@ -2368,7 +2369,7 @@ document.querySelector('#marketFinish').addEventListener('click',finishMarket);
 document.querySelector('#marketFinish').addEventListener('pointerup',finishMarket);
 document.querySelector('#scheduleConfirmYes').addEventListener('click',()=>{scheduleConfirmDismissed=false;runWeek();});
 document.querySelector('#scheduleConfirmNo').addEventListener('click',()=>{scheduleConfirmDismissed=true;hideScheduleConfirmation();panel.hidden=false;renderSchedulePanel();});
-document.querySelector('#activityPlayback').addEventListener('click',event=>{const button=event.target.closest('[data-speed]');if(!button)return;schedulePlaybackSpeed=Number(button.dataset.speed)||1;document.querySelectorAll('#activityPlayback [data-speed]').forEach(item=>item.classList.toggle('active',item===button));});
+document.querySelectorAll('[data-playback-speed-toggle]').forEach(button=>button.addEventListener('click',event=>{event.stopPropagation();schedulePlaybackSpeed=schedulePlaybackSpeed===2?1:2;syncPlaybackSpeedToggle();}));
 window.addEventListener('keydown',event=>{if(document.querySelector('#marketExplore').hidden)return;if(event.key==='ArrowLeft')selectMarketShop('food');if(event.key==='ArrowRight')selectMarketShop('outfit');if(event.key==='Enter'&&marketSelection)enterMarketShop(marketSelection);});
 bg.addEventListener('load', updateImageState);
 document.querySelector('#wardrobeButton')?.addEventListener('click',renderWardrobe);
