@@ -1044,6 +1044,7 @@ async function playVacationScene(prize,index,companion=null,scheduleStart=null){
     companionText.textContent=dialogue.close;
     await waitForVacationTap('대화 마치기',true);
   }
+  if(vacationNext)await waitForVacationTap('터치해 다음 칸으로',true);
   overlay.hidden=true;scene.classList.remove('has-encounter','child-live');scene.hidden=true;scene.dataset.effect='';scene.dataset.season='';document.querySelector('#vacationMotion').replaceChildren();phone.classList.remove('vacation-playing');playHomeMusic();
   return relation;
 }
@@ -1907,9 +1908,13 @@ function showPhaseReport(dayRecords,phaseStart){
     `<span><b>실패</b><em>${counts.mistake}회</em></span>`,
     `<span><b>수입</b><em>+${income.toLocaleString()}냥</em></span>`
   ].join('');
-  result.innerHTML=`<header><div><b>제${phaseStart.index}페이즈 완료</b><small>${phaseStart.week}주차의 기록을 정리했습니다</small></div></header><div class="phase-result-counts">${summaryRows}</div><div class="phase-result-money"><span><b>수입 합계</b><strong>+${income.toLocaleString()}냥</strong></span><span><b>숙련 변화</b><strong>${mastery?`+${mastery.earned}점${mastery.rankUp?` · ${mastery.rankUp} 승급!`:''}`:'변화 없음'}</strong></span></div><div class="phase-work-summary"><span>이 페이즈를 잘 마무리했어요.</span><em>${dayRecords.length}일 진행</em></div>`;
+  result.innerHTML=`<header><div><b>제${phaseStart.index}페이즈 완료</b><small>${phaseStart.week}주차의 기록을 정리했습니다</small></div><button id="phaseResultNext" type="button">터치해 다음 페이즈</button></header><div class="phase-result-counts">${summaryRows}</div><div class="phase-result-money"><span><b>수입 합계</b><strong>+${income.toLocaleString()}냥</strong></span><span><b>숙련 변화</b><strong>${mastery?`+${mastery.earned}점${mastery.rankUp?` · ${mastery.rankUp} 승급!`:''}`:'변화 없음'}</strong></span></div><div class="phase-work-summary"><span>이 페이즈를 잘 마무리했어요.</span><em>${dayRecords.length}일 진행</em></div>`;
+  const closePhaseReport=()=>{result.hidden=true;result.classList.remove('phase-brief-result');};
+  const nextButton=result.querySelector('#phaseResultNext');
+  nextButton?.addEventListener('click',closePhaseReport,{once:true});
+  result.addEventListener('click',event=>{if(event.target===result)closePhaseReport();},{once:true});
   result.hidden=false;
-  return schedulePlaybackDelay(1500).then(()=>{result.hidden=true;result.classList.remove('phase-brief-result');});
+  return new Promise(resolve=>{nextButton?.addEventListener('click',()=>resolve(),{once:true});result.addEventListener('click',event=>{if(event.target===result)resolve();},{once:true});});
 }
 
 async function runWeek() {
@@ -1966,8 +1971,11 @@ function addYears(date, years){ const next=new Date(date); next.setFullYear(next
 // 일정은 계속 일주일씩 진행하고, 두 번째 주가 끝날 때 대화와 방문 이벤트가 갱신된다.
 function phaseInfo(dateValue=game.currentDate){
   if(!game.birthday||!dateValue)return {index:1,week:1,key:'phase-1',total:1,remaining:0,percent:0};
-  const birth=new Date(`${game.birthday}T00:00:00`),start=addYears(birth,9),current=new Date(`${dateValue}T00:00:00`);
-  const ending=game.endingDate?new Date(`${game.endingDate}T00:00:00`):addYears(birth,19),total=Math.max(1,Math.ceil((ending-start)/86400000/14));
+  const birth=new Date(`${game.birthday}T00:00:00`),current=new Date(`${dateValue}T00:00:00`);
+  if(Number.isNaN(birth.getTime())||Number.isNaN(current.getTime()))return {index:1,week:1,key:'phase-1',total:1,remaining:0,percent:0};
+  const start=addYears(birth,9),ending=game.endingDate?new Date(`${game.endingDate}T00:00:00`):addYears(birth,19);
+  if(Number.isNaN(start.getTime())||Number.isNaN(ending.getTime()))return {index:1,week:1,key:'phase-1',total:1,remaining:0,percent:0};
+  const total=Math.max(1,Math.ceil((ending-start)/86400000/14));
   const elapsed=Math.max(0,Math.floor((current-start)/86400000)),index=Math.min(total,Math.floor(elapsed/14)+1),week=Math.floor((elapsed%14)/7)+1;
   const completed=Math.min(total,(index-1)+(week-1)/2),percent=Math.max(0,Math.min(100,Math.round(completed/total*100)));
   return {index,week,key:`phase-${index}`,total,remaining:Math.max(0,total-index),percent};
@@ -2313,7 +2321,13 @@ async function playWeeklySchedule(selected) {
       }
     }else if(action.id==='vacation'){
       closeMarketUiForTransition();
-      if(index%14===0){const vacationCompanion=await chooseVacationCompanion();const prize=awardVacationIllustration();stage.hidden=true;stageNpc.hidden=true;stageProps.hidden=true;stageCharacter.hidden=true;const metSomeone=await playVacationScene(prize,index,vacationCompanion,scheduleStart);document.querySelector('#dialogueText').textContent=metSomeone?`바캉스에서 「${prize.name}」 일러스트와 ${metSomeone.name}의 인연 추억을 얻었어요.`:`바캉스에서 「${prize.name}」 일러스트를 획득했어요.`;}else document.querySelector('#dialogueText').textContent='같은 여행지에서 느긋하게 휴식을 이어 갔어요.';
+      if(index%14===0){
+        const vacationCompanion=await chooseVacationCompanion();
+        const prize=awardVacationIllustration();
+        stage.hidden=true;stageNpc.hidden=true;stageProps.hidden=true;stageCharacter.hidden=true;
+        const metSomeone=await playVacationScene(prize,index,vacationCompanion,scheduleStart);
+        document.querySelector('#dialogueText').textContent=metSomeone?`바캉스에서 「${prize.name}」 일러스트와 ${metSomeone.name}의 인연 추억을 얻었어요.`:`바캉스에서 「${prize.name}」 일러스트를 획득했어요.`;
+      }else document.querySelector('#dialogueText').textContent='같은 여행지에서 느긋하게 휴식을 이어 갔어요.';
     }else if(action.id==='dungeon'){
       stageCharacter.hidden=true;stageNpc.hidden=true;stageProps.hidden=true;dungeonReward=await exploreDungeon();stageCharacter.hidden=false;stageProps.hidden=false;
     }else if(action.special==='date'){

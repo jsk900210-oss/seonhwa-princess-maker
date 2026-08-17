@@ -686,6 +686,58 @@
 .mastery-meter{position:relative;grid-column:1/-1;height:14px;margin-top:2px;overflow:hidden;border:1px solid #b99b72;border-radius:999px;background:#e3d6bd;color:#4f3824;font-size:8px;line-height:12px;text-align:center}.mastery-meter>i{position:absolute;inset:0 auto 0 0;border-radius:inherit;background:linear-gradient(90deg,#9a7441,#d6ad62);transition:width .25s ease}.mastery-meter>span{position:relative;z-index:1;display:block;text-shadow:0 1px #fff8df}
 .schedule-tabs button{position:relative}.schedule-tabs button>i{position:absolute;right:5px;top:4px;display:grid;place-items:center;min-width:17px;height:17px;padding:0 4px;border-radius:999px;background:#a74531;color:#fff;font-size:9px;font-style:normal}.action.newly-unlocked{border-color:#a66b26;box-shadow:inset 0 0 0 2px #e8be67,0 2px 6px #7b4d2440}.action.newly-unlocked>strong{position:absolute;left:5px;top:5px;padding:2px 5px;border-radius:999px;background:#a66b26;color:#fff7df;font-size:8px;z-index:1}
 
+/* v0.63.27: make phase result and vacation advance explicit taps again. */
+.day-result.phase-brief-result header button,
+.vacation-next{
+  border:1px solid #f0d6a1;
+  border-radius:999px;
+  background:#3a2615e6;
+  color:#fff8e3;
+  font-weight:900;
+  box-shadow:0 2px 6px #0004;
+}
+.day-result.phase-brief-result header button{
+  margin-left:auto;
+  padding:7px 10px;
+  font-size:11px;
+  white-space:nowrap;
+}
+.day-result.phase-brief-result header button:active,
+.vacation-next:active{
+  transform:translateY(1px);
+}
+
+/* Tea resting frame: keep the whole cup-and-hand sprite inside the stage. */
+.activity-stage.action-rest .stage-character.pixel-sprite.motion-resting.rest-tea{
+  left:50%!important;
+  bottom:3%!important;
+  width:126px!important;
+  height:126px!important;
+  padding:0!important;
+  box-sizing:border-box!important;
+  overflow:visible!important;
+  transform:translateX(-50%)!important;
+}
+.activity-stage.action-rest .stage-character.pixel-sprite.motion-resting.rest-tea img{
+  display:block!important;
+  width:100%!important;
+  height:100%!important;
+  max-width:none!important;
+  max-height:none!important;
+  object-fit:contain!important;
+  object-position:center bottom!important;
+  transform:none!important;
+  transform-origin:center bottom!important;
+  clip-path:none!important;
+}
+@media(max-width:430px){
+  .activity-stage.action-rest .stage-character.pixel-sprite.motion-resting.rest-tea{
+    width:116px!important;
+    height:116px!important;
+    bottom:3%!important;
+  }
+}
+
 /* v0.62.53: keep market dialogue and the return-home action in separate lanes */
 .phone.playing.market-playing>.dialogue{
   left:4%;
