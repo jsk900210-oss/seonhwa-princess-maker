@@ -149,10 +149,12 @@ const actionPresentation = {
   painting: { motion:'motion-calligraphy', location:'studyRoom', prop:'none', activity:'calligraphy', npc:'teacher' },
   music: { motion:'motion-manners', location:'etiquetteRoom', prop:'none', activity:'manners', npc:'teacher' },
   dance: { motion:'motion-manners', location:'etiquetteRoom', prop:'none', activity:'manners', npc:'teacher' },
-  swordsmanship: { motion:'motion-sweeping', location:'courtyard', prop:'none', activity:'sweeping', npc:null },
-  spellcraft: { motion:'motion-herbs', location:'herbField', prop:'none', activity:'herbs', npc:null },
+  // 고급 교육도 현재 연령의 공통 베이스 얼굴을 사용한다. 전용 동작 자산이 없는 동안
+  // 9세 고정 프레임으로 빠지지 않게 서기/집중 자세의 연령별 모듈 프레임을 연결한다.
+  swordsmanship: { motion:'motion-manners', location:'courtyard', prop:'none', activity:'manners', npc:null },
+  spellcraft: { motion:'motion-calligraphy', location:'herbField', prop:'none', activity:'calligraphy', npc:null },
   cooking: { motion:'motion-arithmetic', location:'restRoom', prop:'none', activity:'arithmetic', npc:null },
-  martial: { motion:'motion-sweeping', location:'courtyard', prop:'none', activity:'sweeping', npc:'dolsoe' },
+  martial: { motion:'motion-manners', location:'courtyard', prop:'none', activity:'manners', npc:'dolsoe' },
   classics: { motion:'motion-calligraphy', location:'studyRoom', prop:'none', activity:'calligraphy', npc:'teacher' },
   innhelp: { motion:'motion-errand', location:'marketErrand', prop:'none', activity:'errand', npc:null },
   sewing: { motion:'motion-houseclean', location:'restRoom', prop:'none', activity:'houseclean', npc:null },
@@ -452,6 +454,7 @@ const normalizedActivityFrameCache=new Map();
 // 서기 100%를 기준으로 앉기 88%, 바닥 동작(엎드림·눕기) 78%만 허용한다.
 const activityPoseRatio=Object.freeze({standing:1,seated:.88,floorwork:.78});
 function activityPoseType(src=''){
+  if(/rest-legacy|tea/.test(src))return 'seated';
   if(/houseclean|resting|rest-|sleep|eating/.test(src))return 'floorwork';
   if(/calligraphy|arithmetic|childcare|masonry/.test(src))return 'seated';
   return 'standing';

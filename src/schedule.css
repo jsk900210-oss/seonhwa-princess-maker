@@ -670,6 +670,16 @@
   .activity-stage:not(.market-choice-stage) .stage-character.pixel-sprite,
   .activity-stage:not(.market-choice-stage) .stage-npc:not(.npc-romance-date){width:128px!important;height:128px!important;bottom:3%!important}
 }
+/* v0.62.98: tea already uses the seated 88% normalizer; never enlarge it again. */
+.activity-stage.action-rest .stage-character.pixel-sprite.motion-resting.rest-tea{
+  left:50%!important;width:136px!important;height:136px!important;bottom:3%!important;padding:0!important;overflow:visible!important;transform:translateX(-50%)!important
+}
+.activity-stage.action-rest .stage-character.pixel-sprite.motion-resting.rest-tea img{
+  width:100%!important;height:100%!important;max-width:none!important;max-height:none!important;object-fit:contain!important;object-position:center bottom!important;transform:none!important;clip-path:none!important
+}
+@media(max-width:430px){
+  .activity-stage.action-rest .stage-character.pixel-sprite.motion-resting.rest-tea{width:128px!important;height:128px!important;bottom:3%!important}
+}
 .action em{grid-column:1/-1;padding-top:4px;border-top:1px dashed #bca47c;color:#72512f;font-size:9px;font-style:normal;font-weight:800}
 .mastery-meter{position:relative;grid-column:1/-1;height:14px;margin-top:2px;overflow:hidden;border:1px solid #b99b72;border-radius:999px;background:#e3d6bd;color:#4f3824;font-size:8px;line-height:12px;text-align:center}.mastery-meter>i{position:absolute;inset:0 auto 0 0;border-radius:inherit;background:linear-gradient(90deg,#9a7441,#d6ad62);transition:width .25s ease}.mastery-meter>span{position:relative;z-index:1;display:block;text-shadow:0 1px #fff8df}
 .schedule-tabs button{position:relative}.schedule-tabs button>i{position:absolute;right:5px;top:4px;display:grid;place-items:center;min-width:17px;height:17px;padding:0 4px;border-radius:999px;background:#a74531;color:#fff;font-size:9px;font-style:normal}.action.newly-unlocked{border-color:#a66b26;box-shadow:inset 0 0 0 2px #e8be67,0 2px 6px #7b4d2440}.action.newly-unlocked>strong{position:absolute;left:5px;top:5px;padding:2px 5px;border-radius:999px;background:#a66b26;color:#fff7df;font-size:8px;z-index:1}
