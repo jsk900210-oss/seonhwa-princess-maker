@@ -2246,6 +2246,8 @@ async function playWeeklySchedule(selected) {
   syncPlaybackSpeedToggle();
   stage.hidden = false;
   stageCharacterImage.src = spriteFrames.down[1];
+  const playbackWeek=document.querySelector('#playbackWeek');
+  if(playbackWeek)playbackWeek.innerHTML=Array.from({length:14},(_,day)=>`<span>${day+1}</span>`).join('');
   for (let index = 0; index < selected.length; index += 1) {
     const activityDate=new Date(scheduleStart);activityDate.setDate(scheduleStart.getDate()+index);
     renderStagePm3Hud(activityDate);
@@ -2267,7 +2269,7 @@ async function playWeeklySchedule(selected) {
       ? `${action.category} · ${action.name} · ${activityRankNames[currentMasteryRank]}`
       : action.name;
     document.querySelector('#playbackDailyStats').innerHTML='';
-    document.querySelectorAll('#playbackWeek span').forEach((day,dayIndex)=>{day.classList.toggle('done',dayIndex<index);day.classList.toggle('current',dayIndex===index);});
+    document.querySelectorAll('#playbackWeek span').forEach((day,dayIndex)=>{day.classList.toggle('done',dayIndex<=(index%14)-1);day.classList.toggle('current',dayIndex===(index%14));});
     const outfitName=outfits.find(item=>item.id===dailyOutfit)?.name;
     const showOutfitName=action.id!=='rest'&&Boolean(outfitName);
     const restActivity=action.id==='rest'?(Math.random()<.5?'tea':'sleep'):null;
