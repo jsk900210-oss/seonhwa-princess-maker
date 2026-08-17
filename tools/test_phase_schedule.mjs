@@ -14,9 +14,9 @@ assert.ok(app.includes('if(phaseAdvanced)rollVisitingMerchant()'),'방문객은 
 assert.ok(app.includes('lastGuardianTalkPhase===phaseKey'),'신수 대화는 페이즈마다 갱신해야 합니다.');
 assert.ok(app.includes('phase.index} / ${phase.total}'),'일정 화면에 현재/전체 페이즈 수가 보여야 합니다.');
 assert.ok(css.includes('.phase-progress-track'),'페이즈 진행률 막대가 필요합니다.');
-assert.ok(app.includes("game.completedPhases.map(record=>({kind:'completed',record}))")&&app.includes('Array.from({length:3}'),'완료 이력과 신규 3개 페이즈가 하나의 연속 표에 있어야 합니다.');
-assert.ok(app.includes('Math.max(0,2-game.completedPhases.length)')&&app.includes("item.kind==='paper'"),'초기 왼쪽 두 칸은 빈 종이이며 완료 이력이 생기면 차례로 교체되어야 합니다.');
-assert.ok(app.includes('if(game.dailySchedule.length>=3)return;game.dailySchedule.push(id)'),'일정은 가운데부터 오른쪽으로 최대 세 페이즈까지 연속 편성되어야 합니다.');
+assert.ok(app.includes("game.completedPhases.map(record=>({kind:'completed',record}))")&&app.includes('const nextEntries=Array.from({length:3}'),'완료 이력과 현재·다음 페이즈가 하나의 연속 표에 있어야 합니다.');
+assert.ok(app.includes('Math.max(0,2-game.completedPhases.length-scheduledEntries.length)')&&app.includes("item.kind==='paper'"),'초기 왼쪽 두 칸은 빈 종이이며 편성·완료 이력으로 차례로 교체되어야 합니다.');
+assert.ok(app.includes('const scheduledEntries=game.dailySchedule.map'),'편성한 일정은 누적되어 새 선택 때마다 왼쪽으로 이동해야 합니다.');
 assert.ok(app.includes('timeline.slice(timelineStart,timelineStart+5)'),'페이즈 표는 전체 이력 중 다섯 칸씩 보여야 합니다.');
 assert.ok(app.includes('const current=item.index===filled'),'완료 기록 뒤 첫 빈 페이즈가 현재 편성 칸이어야 합니다.');
 assert.ok(app.includes('game.dailySchedule.push(id);scheduleCursor=game.dailySchedule.length-1'),'새 페이즈는 가운데 칸에 채워져야 합니다.');
