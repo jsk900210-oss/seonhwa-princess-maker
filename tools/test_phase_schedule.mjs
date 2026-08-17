@@ -35,5 +35,9 @@ assert.ok(app.includes('playbackDailyStats'),'각 날짜마다 능력치 전후 
 assert.ok(css.includes('.playback-daily-stats'),'일별 능력치 변화 표시 UI가 필요합니다.');
 assert.ok(app.includes('game.dailySchedule=game.dailySchedule.filter(id=>id===holiday.id||id===\'rest\').slice(0,1)'),'명절 페이즈에는 행사 또는 휴식 하나만 편성해야 합니다.');
 assert.ok(app.includes('awardPhaseMastery(dayRecords)'),'숙련도는 하루가 아니라 페이즈 종료 시 평가해야 합니다.');
+assert.ok(!app.includes('오늘 변화 계산 중'),'일정 실행 전 계산 중 문구를 노출하면 안 됩니다.');
+assert.ok(app.includes("result.classList.add('phase-brief-result')"),'착실히 해낸 일수는 페이즈 종료 시 작은 오버레이로 한 번만 보여야 합니다.');
+assert.ok(!app.includes('id="phaseResultContinue"'),'프메3에 없는 대형 다음 페이즈 결과창을 사용하면 안 됩니다.');
+assert.ok(app.includes('for(let day=0;day<14;day+=1)'),'바캉스 한 페이즈의 날짜가 14일 동안 순차 변경되어야 합니다.');
 
 console.log('PASS: 14일 페이즈와 PM3식 5칸 편성·간결한 활동 목록');

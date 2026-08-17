@@ -25,7 +25,7 @@ if(!app.includes('progress.perfectStreak%3!==0'))throw new Error('연속 대성�
 if(!app.includes('masteryJobs'))throw new Error('직업 숙련 엔딩 반영 누락');
 if(!app.includes('const delay=dedicatedJob?[360,300,240][masteryRank]'))throw new Error('전용 직업 숙련별 프레임 속도 누락');
 if(!app.includes('currentRank>previousRank?activityRankNames[currentRank]:null'))throw new Error('10점·30점 승급 알림 누락');
-if(!app.includes('mastery.rankUp?`<strong>${mastery.rankUp} 승급!</strong>`'))throw new Error('페이즈 결과의 승급 표시 누락');
+if(!app.includes("mastery?.rankUp?` · ${mastery.rankUp} 승급!`"))throw new Error('페이즈 종료 오버레이의 승급 표시 누락');
 if(!app.includes("if(current>=activityRankThresholds[2])return {label:'달인 완성',percent:100}"))throw new Error('일정 카드 달인 진행도 누락');
 if(app.includes("isNew?'newly-unlocked':''"))throw new Error('활동 카드 위 겹치는 새 활동 표시는 제거해야 합니다.');
 if(!app.includes('if(firstSelection)game.activityUnlocksSeen.push(id)'))throw new Error('첫 선택 후 새 활동 표시 해제 누락');
