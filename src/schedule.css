@@ -779,3 +779,14 @@
 @media(max-width:430px){.phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage:not(.market-choice-stage){--actor-floor:15%;--npc-floor:15%}.phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-houseclean,.phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-rest{--actor-floor:13%}}
 .phase-mini-slot.opening-paper{border-color:#d7c5a8;background:linear-gradient(135deg,#fffef8 0 87%,#eee2cd 88% 100%);box-shadow:inset 0 0 0 1px #fff;opacity:.82}
 .phase-mini-slot.opening-paper b{color:#9b8c76;font-size:8px}.phase-mini-slot.conveyor-arrive{animation:phase-conveyor-left .46s cubic-bezier(.2,.75,.25,1)}@keyframes phase-conveyor-left{0%{transform:translateX(calc(100% + 3px));filter:brightness(1.18)}100%{transform:translateX(0);filter:none}}
+
+/* v0.63.19: one PM3-style status panel, prominent flowing date, and readable dialogue. */
+.phone.playing:not(.market-playing):not(.vacation-playing) .activity-gauges{display:none!important}
+.phone.playing:not(.market-playing):not(.vacation-playing) .stage-pm3-hud{top:17%;left:3%;right:3%}
+.phone.playing:not(.market-playing):not(.vacation-playing) .stage-pm3-hud>div:first-child{min-height:34px;padding:8px 11px;border-width:2px;background:#21170de8;font-size:12px}
+.phone.playing:not(.market-playing):not(.vacation-playing) #stageHudDate{font-size:14px;letter-spacing:.02em;text-shadow:0 1px 3px #000}
+.phone.playing:not(.market-playing):not(.vacation-playing) #stageHudMoney{align-self:center;font-size:11px;font-weight:900}
+.stage-pm3-hud>div:first-child.date-tick{animation:pm3-date-tick .34s ease-out}@keyframes pm3-date-tick{0%{opacity:.3;transform:translateX(16px)}100%{opacity:1;transform:translateX(0)}}
+.phone.playing:not(.market-playing):not(.vacation-playing)>.dialogue{left:3%;right:3%;bottom:max(2%,env(safe-area-inset-bottom));min-height:84px;max-height:104px;padding:10px 13px;overflow:auto}
+.phone.playing:not(.market-playing):not(.vacation-playing)>.dialogue b{font-size:13px}.phone.playing:not(.market-playing):not(.vacation-playing)>.dialogue p{margin-top:4px;font-size:12px;line-height:1.45}
+@media(max-width:430px){.phone.playing:not(.market-playing):not(.vacation-playing)>.dialogue{min-height:78px;max-height:96px;padding:9px 12px}.phone.playing:not(.market-playing):not(.vacation-playing)>.dialogue p{font-size:11px}}

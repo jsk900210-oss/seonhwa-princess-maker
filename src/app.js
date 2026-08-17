@@ -1248,6 +1248,7 @@ function answerHomeGreeting(scene,index){
 }
 function renderStagePm3Hud(date,change={}){
   const hud=document.querySelector('#stagePm3Hud');if(!hud)return;hud.hidden=false;
+  const dateCard=hud.firstElementChild;dateCard.classList.remove('date-tick');void dateCard.offsetWidth;dateCard.classList.add('date-tick');
   const dayNames=['일','월','화','수','목','금','토'];
   document.querySelector('#stageHudDate').textContent=`${date.getFullYear()}년 ${date.getMonth()+1}월 ${date.getDate()}일 (${dayNames[date.getDay()]})`;
   document.querySelector('#stageHudMoney').textContent=`${game.money.toLocaleString()}냥`;

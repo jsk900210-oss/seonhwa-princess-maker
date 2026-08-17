@@ -38,6 +38,9 @@ assert.ok(app.includes('function phaseDailyChange(change)'),'14일 페이즈용 
 assert.ok(app.includes('Math.ceil(stress/3)'),'일일 스트레스 증가는 기존 수치의 약 1/3로 낮춰야 합니다.');
 assert.ok(app.includes('playbackDailyStats'),'각 날짜마다 능력치 전후 수치를 표시해야 합니다.');
 assert.ok(css.includes('.playback-daily-stats'),'일별 능력치 변화 표시 UI가 필요합니다.');
+assert.ok(css.includes('.activity-gauges{display:none!important}')&&css.includes('#stageHudDate{font-size:14px'),'일정 실행 중 중복 스테이터스창을 없애고 날짜를 크게 보여야 합니다.');
+assert.ok(app.includes("dateCard.classList.add('date-tick')")&&css.includes('@keyframes pm3-date-tick'),'날짜가 바뀔 때 프메3처럼 눈에 띄는 전환 효과가 필요합니다.');
+assert.ok(css.includes('min-height:84px;max-height:104px'),'일정 실행 중 하단 대화창은 충분한 읽기 높이를 가져야 합니다.');
 assert.ok(app.includes('game.dailySchedule=game.dailySchedule.filter(id=>id===holiday.id||id===\'rest\').slice(0,1)'),'명절 페이즈에는 행사 또는 휴식 하나만 편성해야 합니다.');
 assert.ok(app.includes('awardPhaseMastery(dayRecords)'),'숙련도는 하루가 아니라 페이즈 종료 시 평가해야 합니다.');
 assert.ok(!app.includes('오늘 변화 계산 중'),'일정 실행 전 계산 중 문구를 노출하면 안 됩니다.');
