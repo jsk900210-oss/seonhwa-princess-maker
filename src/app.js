@@ -253,6 +253,7 @@ activityFrames.sweeping=[1,2,3].map(n=>`../assets/characters/seonhwa/activity-co
 activityFrames.errand=[1,2,3].map(n=>`../assets/characters/seonhwa/activity-consistent/age-09/errand-${n}.png`);
 activityFrames.herbs=[1,2,3].map(n=>`../assets/characters/seonhwa/activity-consistent/age-09/herbs-legacy-${n}.png`);
 activityFrames.tea=[1,1,1].map(n=>`../assets/characters/seonhwa/activity-consistent/age-09/rest-legacy-${n}.png`);
+activityFrames.eating=[1,2,3].map(n=>`../assets/characters/seonhwa/age-09/sprites/activities/eating-${n}.png`);
 // 모든 전용 일자리 교정본은 새 파일명을 사용해 이전 깨진 프레임 캐시가 재사용되지 않게 한다.
 ['farmwork','childcare','kitchenhelp','woodwork','loomwork','masonry','clinichelp','ferryhelp','merchanthelp'].forEach(name=>{activityFrames[name]=[1,2,3].map(n=>`../assets/characters/seonhwa/job-actions/${name}-v2-${n}.png`);});
 // 10세 해금 아이 돌보기는 9~12세 공통 얼굴·머리·기본 의상으로 다시 제작한 통일 프레임을 사용한다.
@@ -535,7 +536,8 @@ function normalizeActivityFrame(src){
 async function animateActivitySprite(image,motion,activity,npcImage,npc,outfitId,masteryRank=0){
   if(activity){
     if(!outfitId)outfitId=game.autoOutfit?recommendOutfit(activity):game.equippedOutfit;
-    const frames=activityFrameSet(activity);
+    // 신규/랜덤 활동의 전용 프레임이 빠져 있어도 일정 전체를 멈추지 않는다.
+    const frames=activityFrameSet(activity)||activityFrameSet('errand')||spriteFrames.down;
     const coreJobSequences={
       farmwork:[0,0,1,1,2,2,2],
       childcare:[0,0,1,1,2,2,2],
@@ -2274,17 +2276,25 @@ async function playWeeklySchedule(selected) {
       stageMap.src=backgrounds.market;
       document.querySelector('#stageCaption').textContent=`저잣거리 · 좌우로 움직여 가게를 선택하세요`;
       marketShoppingActive=true;
-      await exploreMarket();
-      marketShoppingActive=false;
-      playHomeMusic();
+      try{await exploreMarket();}
+      finally{
+        marketShoppingActive=false;
+        closeMarketUiForTransition();
+        stage.hidden=false;stageCharacter.hidden=false;stageProps.hidden=false;
+        playHomeMusic();
+      }
     }else if(action.id==='freeTime'){
       stageMap.src=backgrounds.market;stageMap.alt='자유행동으로 둘러보는 가로형 저잣거리';
       stage.className=`activity-stage ${phaseSceneType} map-market action-freeTime free-time-market`;
       stageProps.className='stage-props prop-stall';stageNpc.hidden=true;
       stageCharacter.style.left='12%';
-      for(const position of [18,27,37,48,freeTimeVariant.stop]){stageCharacter.style.left=`${position}%`;await animateActivitySprite(stageCharacterImage,'motion-walk',null,stageNpcImage,null,dailyOutfit,currentMasteryRank);}
-      await animateActivitySprite(stageCharacterImage,presentation.motion,freeTimeVariant.activity,stageNpcImage,null,dailyOutfit,currentMasteryRank);
-      stageCharacter.style.removeProperty('left');
+      try{
+        for(const position of [18,27,37,48,freeTimeVariant?.stop??56]){stageCharacter.style.left=`${position}%`;await animateActivitySprite(stageCharacterImage,'motion-walk',null,stageNpcImage,null,dailyOutfit,currentMasteryRank);}
+        await animateActivitySprite(stageCharacterImage,presentation.motion,freeTimeVariant?.activity||'errand',stageNpcImage,null,dailyOutfit,currentMasteryRank);
+      }finally{
+        stageCharacter.style.removeProperty('left');
+        stageCharacter.hidden=false;stageProps.hidden=false;
+      }
     }else if(action.id==='vacation'){
       closeMarketUiForTransition();
       if(index%14===0){const vacationCompanion=await chooseVacationCompanion();const prize=awardVacationIllustration();stage.hidden=true;stageNpc.hidden=true;stageProps.hidden=true;stageCharacter.hidden=true;const metSomeone=await playVacationScene(prize,index,vacationCompanion,scheduleStart);document.querySelector('#dialogueText').textContent=metSomeone?`바캉스에서 「${prize.name}」 일러스트와 ${metSomeone.name}의 인연 추억을 얻었어요.`:`바캉스에서 「${prize.name}」 일러스트를 획득했어요.`;}else document.querySelector('#dialogueText').textContent='같은 여행지에서 느긋하게 휴식을 이어 갔어요.';
