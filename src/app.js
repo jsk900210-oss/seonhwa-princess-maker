@@ -1569,7 +1569,7 @@ function statBar(key, label) {
   return `<div class="stat-row"><span>${label}</span><div class="stat-track"><i class="${isCondition ? 'condition' : ''}" style="width:${value}%"></i></div><b>${game[key]}</b></div>`;
 }
 
-let activeScheduleCategory='교육',scheduleCursor=0,selectedScheduleAction=null;
+let activeScheduleCategory='교육',scheduleCursor=-1,selectedScheduleAction=null;
 function normalizePhaseSchedule(){
   if(!Array.isArray(game.dailySchedule))game.dailySchedule=[];
   if(game.scheduleFormat!=='phase-v1'){
@@ -1595,11 +1595,12 @@ function renderSchedulePanel() {
   panelTitle.textContent = `페이즈 일정 편성`;
   normalizePhaseSchedule();
   const filled=game.dailySchedule.length;
-  scheduleCursor=Math.max(0,Math.min(scheduleCursor,filled));
+  if(scheduleCursor<0)scheduleCursor=Math.max(0,filled-1);
+  scheduleCursor=Math.max(0,Math.min(scheduleCursor,Math.max(0,filled-1)));
   const phaseSlots=[-2,-1,0,1,2].map(offset=>{
     const index=scheduleCursor+offset,id=game.dailySchedule[index],action=actions.find(item=>item.id===id);
     if(action)return `<button class="phase-mini-slot filled" data-phase-remove="${index}" aria-label="${action.name} 일정 삭제"><b>${action.name}</b></button>`;
-    if(index===filled)return `<div class="phase-mini-slot current"><b>편성 전</b></div>`;
+    if(!filled&&offset===0)return `<div class="phase-mini-slot current"><b>편성 전</b></div>`;
     return `<div class="phase-mini-slot empty" aria-hidden="true"></div>`;
   }).join('');
   const unseenUnlocked=actions.filter(action=>actionUnlocked(action)&&Number(action.unlockAge||9)>9&&!game.activityUnlocksSeen.includes(action.id));
@@ -1607,11 +1608,11 @@ function renderSchedulePanel() {
   if(!scheduleCategories.includes(activeScheduleCategory))activeScheduleCategory='교육';
   const categoryTabs=scheduleCategories.map(category=>{const newCount=unseenUnlocked.filter(action=>action.category===category).length;return `<button data-schedule-category="${category}" class="${activeScheduleCategory===category?'on':''}">${category}${newCount?`<i>${newCount}</i>`:''}</button>`;}).join('');
   const actionCards=actions.filter(action=>action.category===activeScheduleCategory&&actionUnlocked(action)).map(action=>`<button class="action compact-action ${selectedScheduleAction===action.id?'selected':''}" data-action="${action.id}"><b>${action.name}</b></button>`).join('');
-  panelBody.innerHTML = `<section class="phase-progress compact" aria-label="전체 성장 페이즈 진행률"><div><b>제${phase.index}페이즈</b><span>${phase.index} / ${phase.total}</span></div><div class="phase-progress-track"><i style="width:${phase.percent}%"></i></div></section><div class="phase-five-wrap"><button id="phasePrev" aria-label="이전 편성" ${scheduleCursor<=0?'disabled':''}>◀</button><div class="phase-five-grid">${phaseSlots}</div><button id="phaseNext" aria-label="다음 편성" ${scheduleCursor>=filled?'disabled':''}>▶</button></div><small class="phase-slide-count">가운데 칸에 다음 페이즈를 편성합니다</small><div class="schedule-tabs compact-tabs" role="tablist">${categoryTabs}</div><section class="schedule-category compact-category"><div class="action-grid compact-schedule-grid">${actionCards}</div></section><div class="schedule-tools compact-tools"><button id="scheduleRunPhases" ${filled?'':'disabled'}>${filled}개 페이즈 실행</button><button id="scheduleClearAll" ${filled?'':'disabled'}>전체 비우기</button></div>`;
+  panelBody.innerHTML = `<section class="phase-progress compact" aria-label="전체 성장 페이즈 진행률"><div><b>제${phase.index}페이즈</b><span>${phase.index} / ${phase.total}</span></div><div class="phase-progress-track"><i style="width:${phase.percent}%"></i></div></section><div class="phase-five-wrap"><button id="phasePrev" aria-label="이전 편성" ${scheduleCursor<=0?'disabled':''}>◀</button><div class="phase-five-grid">${phaseSlots}</div><button id="phaseNext" aria-label="다음 편성" ${scheduleCursor>=filled-1?'disabled':''}>▶</button></div><small class="phase-slide-count">선택한 페이즈가 가운데 칸에 채워집니다</small><div class="schedule-tabs compact-tabs" role="tablist">${categoryTabs}</div><section class="schedule-category compact-category"><div class="action-grid compact-schedule-grid">${actionCards}</div></section><div class="schedule-tools compact-tools"><button id="scheduleRunPhases" ${filled?'':'disabled'}>${filled}개 페이즈 실행</button><button id="scheduleClearAll" ${filled?'':'disabled'}>전체 비우기</button></div>`;
   panelBody.querySelectorAll('[data-action]').forEach(button => button.addEventListener('click', () => addDailyAction(button.dataset.action)));
   panelBody.querySelectorAll('[data-phase-remove]').forEach(button=>button.addEventListener('click',()=>clearDailyAction(Number(button.dataset.phaseRemove))));
   document.querySelector('#phasePrev').addEventListener('click',()=>{scheduleCursor=Math.max(0,scheduleCursor-1);renderSchedulePanel();});
-  document.querySelector('#phaseNext').addEventListener('click',()=>{scheduleCursor=Math.min(game.dailySchedule.length,scheduleCursor+1);renderSchedulePanel();});
+  document.querySelector('#phaseNext').addEventListener('click',()=>{scheduleCursor=Math.min(Math.max(0,game.dailySchedule.length-1),scheduleCursor+1);renderSchedulePanel();});
   panelBody.querySelectorAll('[data-schedule-category]').forEach(button=>button.addEventListener('click',()=>{activeScheduleCategory=button.dataset.scheduleCategory;renderSchedulePanel();}));
   document.querySelector('#scheduleRunPhases').addEventListener('click',()=>{scheduleConfirmDismissed=false;showScheduleConfirmation();});
   document.querySelector('#scheduleClearAll').addEventListener('click',clearAllSchedule);
@@ -1752,7 +1753,7 @@ function exploreDungeon(){
 function addDailyAction(id) {
   const chosenAction=actions.find(action=>action.id===id);
   if(!chosenAction||!actionUnlocked(chosenAction))return;
-  normalizePhaseSchedule();game.dailySchedule.splice(scheduleCursor,0,id);scheduleCursor=Math.min(game.dailySchedule.length,scheduleCursor+1);selectedScheduleAction=id;
+  normalizePhaseSchedule();game.dailySchedule.push(id);scheduleCursor=game.dailySchedule.length-1;selectedScheduleAction=id;
   const firstSelection=!game.activityUnlocksSeen.includes(id);
   if(firstSelection)game.activityUnlocksSeen.push(id);
   if(chosenAction.intro&&firstSelection){document.querySelector('#speakerName').textContent=chosenAction.mentor;document.querySelector('#dialogueText').textContent=chosenAction.intro;}
@@ -1776,7 +1777,7 @@ function clearAllSchedule(){game.dailySchedule=[];game.scheduleFormat='phase-v1'
 function clearDailyAction(index) {
   if (!game.dailySchedule[index]) return;
   game.dailySchedule.splice(index,1);
-  scheduleCursor=Math.min(scheduleCursor,game.dailySchedule.length);
+  scheduleCursor=Math.min(scheduleCursor,Math.max(0,game.dailySchedule.length-1));
   scheduleConfirmDismissed = false;
   hideScheduleConfirmation();
   renderSchedulePanel();
