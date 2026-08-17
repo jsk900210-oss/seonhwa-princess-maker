@@ -649,7 +649,7 @@
   .activity-stage:not(.market-choice-stage) .stage-character.pixel-sprite{width:136px;height:136px;bottom:3%;padding:0}
 }
 
-/* v0.62.93: one visual head-to-foot scale for every activity actor and helper NPC. */
+/* v0.62.97: one 136px actor viewport; JS normalizes head-to-foot pose ratios to 100/88/78. */
 .activity-stage:not(.market-choice-stage) .stage-character.pixel-sprite{
   width:136px!important;height:136px!important;bottom:3%!important;padding:0!important;overflow:visible!important
 }

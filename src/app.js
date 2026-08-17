@@ -448,6 +448,14 @@ function updateAutoOutfit(actionId=null){
 const activityOutfitFrameCache=new Map();
 const activityOutfitStyleCache=new Map();
 const normalizedActivityFrameCache=new Map();
+// 쯔꾸르 인물은 원본 파일 크기가 아니라 불투명한 머리-발끝 높이로 통일한다.
+// 서기 100%를 기준으로 앉기 88%, 바닥 동작(엎드림·눕기) 78%만 허용한다.
+const activityPoseRatio=Object.freeze({standing:1,seated:.88,floorwork:.78});
+function activityPoseType(src=''){
+  if(/houseclean|resting|rest-|sleep|eating/.test(src))return 'floorwork';
+  if(/calligraphy|arithmetic|childcare|masonry/.test(src))return 'seated';
+  return 'standing';
+}
 function activityOutfitPalette(outfitId){
   if(!outfitId)return null;
   if(/cash-ember|rose-paisley/.test(outfitId))return {skirt:[96,25,47],top:[185,68,93],accent:[224,166,62]};
@@ -510,8 +518,7 @@ function normalizeActivityFrame(src){
     for(let y=0;y<scan.height;y++)for(let x=0;x<scan.width;x++){if(data[(y*scan.width+x)*4+3]<24)continue;left=Math.min(left,x);top=Math.min(top,y);right=Math.max(right,x);bottom=Math.max(bottom,y);}
     if(right<left||bottom<top){resolve(src);return;}
     const output=document.createElement('canvas');output.width=296;output.height=296;const context=output.getContext('2d');const width=right-left+1,height=bottom-top+1,padding=18;
-    // 서 있는 인물은 같은 머리-발끝 높이를 사용하고, 앉거나 숙이는 자세만 실제 자세만큼 낮춘다.
-    const poseScale=/houseclean|masonry/.test(src)?.82:/resting|sleep|eating/.test(src)?.78:/calligraphy|arithmetic|childcare/.test(src)?.88:/kitchenhelp|farmwork/.test(src)?.92:1;
+    const poseScale=activityPoseRatio[activityPoseType(src)];
     const scale=Math.min((output.width-padding*2)/width,(output.height-padding*2)/height)*poseScale;const drawWidth=width*scale,drawHeight=height*scale,drawX=(output.width-drawWidth)/2,drawY=output.height-padding-drawHeight;
     context.imageSmoothingEnabled=false;context.drawImage(source,left,top,width,height,drawX,drawY,drawWidth,drawHeight);const result=output.toDataURL('image/png');normalizedActivityFrameCache.set(src,result);resolve(result);
   }catch{resolve(src);}};source.onerror=()=>resolve(src);source.src=src;});
