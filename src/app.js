@@ -1644,9 +1644,10 @@ function renderSchedulePanel() {
   const filled=game.dailySchedule.length;
   if(scheduleCursor<0)scheduleCursor=Math.max(0,filled-1);
   scheduleCursor=Math.max(0,Math.min(scheduleCursor,Math.max(0,filled-1)));
-  const timeline=[...game.completedPhases.map(record=>({kind:'completed',record})),...Array.from({length:3},(_,index)=>({kind:'queue',index,action:actions.find(item=>item.id===game.dailySchedule[index])}))];
+  const openingPaperSlots=Array.from({length:Math.max(0,2-game.completedPhases.length)},()=>({kind:'paper'}));
+  const timeline=[...openingPaperSlots,...game.completedPhases.map(record=>({kind:'completed',record})),...Array.from({length:3},(_,index)=>({kind:'queue',index,action:actions.find(item=>item.id===game.dailySchedule[index])}))];
   const latestStart=Math.max(0,timeline.length-5);scheduleTimelineOffset=Math.max(0,Math.min(scheduleTimelineOffset,latestStart));const timelineStart=Math.max(0,latestStart-scheduleTimelineOffset);
-  const visibleTimeline=timeline.slice(timelineStart,timelineStart+5),phaseSlots=visibleTimeline.map(item=>{if(item.kind==='completed')return `<div class="phase-mini-slot completed"><small>제${item.record.index}페이즈</small><b>${item.record.name}</b></div>`;if(item.action)return `<button class="phase-mini-slot filled" data-phase-remove="${item.index}" aria-label="제${phase.index+item.index}페이즈 ${item.action.name} 일정 삭제"><small>제${phase.index+item.index}페이즈</small><b>${item.action.name}</b></button>`;const current=item.index===filled;return `<div class="phase-mini-slot ${current?'current':'empty'}" aria-hidden="true"><small>제${phase.index+item.index}페이즈</small>${current?'<b>편성 전</b>':''}</div>`;}).join(''),holiday=currentPhaseHoliday();
+  const visibleTimeline=timeline.slice(timelineStart,timelineStart+5),phaseSlots=visibleTimeline.map(item=>{if(item.kind==='paper')return '<div class="phase-mini-slot opening-paper" aria-hidden="true"></div>';if(item.kind==='completed')return `<div class="phase-mini-slot completed"><small>제${item.record.index}페이즈</small><b>${item.record.name}</b></div>`;if(item.action)return `<button class="phase-mini-slot filled" data-phase-remove="${item.index}" aria-label="제${phase.index+item.index}페이즈 ${item.action.name} 일정 삭제"><small>제${phase.index+item.index}페이즈</small><b>${item.action.name}</b></button>`;const current=item.index===filled;return `<div class="phase-mini-slot ${current?'current':'empty'}" aria-hidden="true"><small>제${phase.index+item.index}페이즈</small>${current?'<b>편성 전</b>':''}</div>`;}).join(''),holiday=currentPhaseHoliday();
   const unseenUnlocked=actions.filter(action=>actionUnlocked(action)&&Number(action.unlockAge||9)>9&&!game.activityUnlocksSeen.includes(action.id));
   const scheduleCategories=['교육','아르바이트','휴식',...(actions.some(action=>action.category==='인연'&&actionUnlocked(action))?['인연']:[])];
   if(!scheduleCategories.includes(activeScheduleCategory))activeScheduleCategory='교육';
@@ -1804,7 +1805,7 @@ function addDailyAction(id,sourceButton) {
   const chosenAction=actions.find(action=>action.id===id);
   if(!chosenAction||!actionUnlocked(chosenAction))return;
   const holiday=currentPhaseHoliday();if(holiday&&game.dailySchedule.length)return;
-  normalizePhaseSchedule();game.dailySchedule.push(id);scheduleCursor=game.dailySchedule.length-1;selectedScheduleAction=id;
+  normalizePhaseSchedule();if(game.dailySchedule.length>=3)return;game.dailySchedule.push(id);scheduleCursor=game.dailySchedule.length-1;selectedScheduleAction=id;
   const firstSelection=!game.activityUnlocksSeen.includes(id);
   if(firstSelection)game.activityUnlocksSeen.push(id);
   if(chosenAction.intro&&firstSelection){document.querySelector('#speakerName').textContent=chosenAction.mentor;document.querySelector('#dialogueText').textContent=chosenAction.intro;}
