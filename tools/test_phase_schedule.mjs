@@ -14,8 +14,9 @@ assert.ok(app.includes('if(phaseAdvanced)rollVisitingMerchant()'),'방문객은 
 assert.ok(app.includes('lastGuardianTalkPhase===phaseKey'),'신수 대화는 페이즈마다 갱신해야 합니다.');
 assert.ok(app.includes('phase.index} / ${phase.total}'),'일정 화면에 현재/전체 페이즈 수가 보여야 합니다.');
 assert.ok(css.includes('.phase-progress-track'),'페이즈 진행률 막대가 필요합니다.');
-assert.ok(app.includes('Array.from({length:2}')&&app.includes('Array.from({length:3}'),'편성창은 완료 2칸과 신규 3칸, 총 5칸이어야 합니다.');
-assert.ok(app.includes("index===0?'current':'empty'"),'첫 신규 편성 칸이 현재 칸으로 보여야 합니다.');
+assert.ok(app.includes("game.completedPhases.map(record=>({kind:'completed',record}))")&&app.includes('Array.from({length:3}'),'완료 이력과 신규 3개 페이즈가 하나의 연속 표에 있어야 합니다.');
+assert.ok(app.includes('timeline.slice(timelineStart,timelineStart+5)'),'페이즈 표는 전체 이력 중 다섯 칸씩 보여야 합니다.');
+assert.ok(app.includes('const current=item.index===filled'),'완료 기록 뒤 첫 빈 페이즈가 현재 편성 칸이어야 합니다.');
 assert.ok(app.includes('game.dailySchedule.push(id);scheduleCursor=game.dailySchedule.length-1'),'새 페이즈는 가운데 칸에 채워져야 합니다.');
 assert.ok(app.includes('class="action compact-action'),'스케줄 항목은 이름 중심의 간결한 버튼이어야 합니다.');
 assert.ok(css.includes('grid-template-columns:repeat(5,minmax(0,1fr))'),'편성 5칸이 한 줄에 유지되어야 합니다.');
@@ -28,7 +29,7 @@ assert.ok(app.includes('class="schedule-action-face"'),'세부 일정에 원형 
 assert.ok(css.includes('@keyframes schedule-icon-motion'),'세부 일정 얼굴 아이콘은 가벼운 동작 효과가 있어야 합니다.');
 assert.ok(app.includes('animateScheduleAssignment'),'일정 선택 카드는 중앙 편성칸으로 이동하는 연출이 필요합니다.');
 assert.ok(css.includes('@keyframes phase-slot-shift'),'기존 일정은 새 일정 편성 시 왼쪽으로 밀려야 합니다.');
-assert.ok(app.includes('제${phase.index+index}페이즈'),'편성된 각 일정에 페이즈 번호가 표시되어야 합니다.');
+assert.ok(app.includes('제${phase.index+item.index}페이즈'),'편성된 각 일정에 페이즈 번호가 표시되어야 합니다.');
 assert.ok(app.includes('function phaseDailyChange(change)'),'14일 페이즈용 스트레스 변화량 보정이 필요합니다.');
 assert.ok(app.includes('Math.ceil(stress/3)'),'일일 스트레스 증가는 기존 수치의 약 1/3로 낮춰야 합니다.');
 assert.ok(app.includes('playbackDailyStats'),'각 날짜마다 능력치 전후 수치를 표시해야 합니다.');
@@ -39,5 +40,7 @@ assert.ok(!app.includes('오늘 변화 계산 중'),'일정 실행 전 계산 �
 assert.ok(app.includes("result.classList.add('phase-brief-result')"),'착실히 해낸 일수는 페이즈 종료 시 작은 오버레이로 한 번만 보여야 합니다.');
 assert.ok(!app.includes('id="phaseResultContinue"'),'프메3에 없는 대형 다음 페이즈 결과창을 사용하면 안 됩니다.');
 assert.ok(app.includes('for(let day=0;day<14;day+=1)'),'바캉스 한 페이즈의 날짜가 14일 동안 순차 변경되어야 합니다.');
+assert.ok(app.includes('scheduleTimelineOffset=Math.min(latestStart,scheduleTimelineOffset+5)'),'이전 완료 페이즈 이력을 볼 수 있어야 합니다.');
+assert.ok(!app.includes('game.completedPhases=game.completedPhases.slice(-24)'),'완료한 페이즈 이력을 임의로 삭제하면 안 됩니다.');
 
 console.log('PASS: 14일 페이즈와 PM3식 5칸 편성·간결한 활동 목록');
