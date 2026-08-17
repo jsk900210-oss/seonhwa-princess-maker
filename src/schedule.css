@@ -753,3 +753,26 @@
 .phone.playing:not(.market-playing):not(.vacation-playing) .activity-gauge-label,.phone.playing:not(.market-playing):not(.vacation-playing) .activity-gauge-value b{color:#fff4dc}
 .phone.playing:not(.market-playing):not(.vacation-playing)>.dialogue{z-index:12;left:3%;right:3%;bottom:max(2%,env(safe-area-inset-bottom));max-height:64px}
 @media(min-width:700px){.phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage:not(.market-choice-stage) .stage-character.pixel-sprite{width:190px;height:190px}.phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage:not(.market-choice-stage) .stage-npc{width:180px;height:180px}}
+
+/* v0.63.13: full-screen scene anchors follow each background's actual floor line. */
+.phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage:not(.market-choice-stage){--actor-left:46%;--actor-floor:16%;--npc-right:8%;--npc-floor:16%;--scene-focus:center 58%}
+.phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage:not(.market-choice-stage) .stage-map{object-position:var(--scene-focus)!important}
+.phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage:not(.market-choice-stage) .stage-character.pixel-sprite{inset:auto!important;left:var(--actor-left)!important;bottom:var(--actor-floor)!important}
+.phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage:not(.market-choice-stage) .stage-npc:not(.npc-romance-date){inset:auto!important;right:var(--npc-right)!important;bottom:var(--npc-floor)!important}
+.phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.map-phaseStudy,.phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.map-phaseArithmetic,.phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.map-phaseEtiquette,.phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.map-phasePainting,.phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.map-phaseMusic,.phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.map-phaseDance,.phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.map-phaseMagic{--actor-left:25%;--actor-floor:17%;--npc-right:5%;--npc-floor:17%;--scene-focus:center 60%}
+.phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.map-phaseMartial{--actor-left:30%;--actor-floor:18%;--npc-right:8%;--npc-floor:18%;--scene-focus:center 62%}
+.phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.map-marketErrand{--actor-left:43%;--actor-floor:15%;--scene-focus:center 58%}
+.phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.map-courtyard{--actor-left:16%;--actor-floor:17%;--npc-right:4%;--npc-floor:17%;--scene-focus:center 62%}
+.phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.map-herbField{--actor-left:36%;--actor-floor:16%;--npc-right:5%;--npc-floor:16%;--scene-focus:center 62%}
+.phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.map-restRoom{--actor-left:42%;--actor-floor:16%;--scene-focus:center 61%}
+.phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.map-farmJob{--actor-left:20%;--actor-floor:15%;--scene-focus:35% 58%}
+.phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.map-childcareJob{--actor-left:24%;--actor-floor:17%;--scene-focus:38% 60%}
+.phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.map-kitchenJob{--actor-left:45%;--actor-floor:16%;--scene-focus:55% 58%}
+.phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.map-woodworkJob{--actor-left:35%;--actor-floor:16%;--scene-focus:42% 59%}
+.phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.map-loomJob{--actor-left:43%;--actor-floor:16%;--scene-focus:50% 59%}
+.phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.map-masonryJob{--actor-left:47%;--actor-floor:15%;--scene-focus:62% 59%}
+.phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.map-clinicJob{--actor-left:37%;--actor-floor:16%;--scene-focus:43% 59%}
+.phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.map-ferryJob{--actor-left:42%;--actor-floor:17%;--scene-focus:52% 60%}
+.phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.map-merchantJob{--actor-left:49%;--actor-floor:16%;--scene-focus:58% 59%}
+.phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-houseclean{--actor-floor:14%}.phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-rest{--actor-floor:14%}
+@media(max-width:430px){.phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage:not(.market-choice-stage){--actor-floor:15%;--npc-floor:15%}.phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-houseclean,.phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-rest{--actor-floor:13%}}
