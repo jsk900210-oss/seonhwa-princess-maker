@@ -251,10 +251,9 @@ activityFrames.tea=[1,1,1].map(n=>`../assets/characters/seonhwa/activity-consist
 ['farmwork','childcare','kitchenhelp','woodwork','loomwork','masonry','clinichelp','ferryhelp','merchanthelp'].forEach(name=>{activityFrames[name]=[1,2,3].map(n=>`../assets/characters/seonhwa/job-actions/${name}-v2-${n}.png`);});
 // 10세 해금 아이 돌보기는 9~12세 공통 얼굴·머리·기본 의상으로 다시 제작한 통일 프레임을 사용한다.
 activityFrames.childcare=[1,2,3].map(n=>`../assets/characters/seonhwa/job-actions/childcare-v3-${n}.png`);
-// 장터 심부름은 얼굴 교정된 연령별 프레임을 사용한다.
-// Rest keeps the clean horizontal bedding frames. The age-modular rest sheet is
-// diagonally posed and becomes visibly jagged when reduced inside the mobile stage.
-const modularActivities=new Set(['calligraphy','arithmetic','manners','errand','houseclean']);
+// 승인된 4장(age09/13/16/18-eyes-v2)을 모든 기본 쯔꾸르 동작의 단일 원본으로 사용한다.
+// 잠자기도 연령별 기준 시트에서 불러와 얼굴·체형·기본 의상이 섞이지 않게 한다.
+const modularActivities=new Set(['calligraphy','arithmetic','manners','errand','houseclean','sleep']);
 function activityFrameSet(activity){
   if(!modularActivities.has(activity))return activityFrames[activity];
   const name=activity==='sleep'?'rest':activity,age=String(growthAssetAge(growthVisualAge())).padStart(2,'0');

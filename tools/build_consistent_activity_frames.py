@@ -104,14 +104,4 @@ for age in AGES:
         for column in range(3):
             save_cell(sheet, 3, 6, column, row, BASE / f"age-{age}" / f"{activity}-{column + 1}.png", "checker")
 
-core = Image.open(SOURCE / "age09-core-eyes-v2.png")
-for row, activity in enumerate(("sweeping", "manners", "calligraphy")):
-    for column in range(3):
-        save_cell(core, 3, 3, column, row, BASE / "age-09" / f"{activity}-legacy-{column + 1}.png", "green")
-
-remaining = Image.open(SOURCE / "age09-remaining-eyes-v2.png")
-for row, activity in enumerate(("arithmetic", "errand", "herbs", "rest")):
-    for column in range(3):
-        save_cell(remaining, 3, 4, column, row, BASE / "age-09" / f"{activity}-legacy-{column + 1}.png", "green")
-
-print("Built face-consistent activity frames for ages 09, 13, 16 and 18.")
+print("Built the canonical RPG activity frames from the four approved age sheets.")
