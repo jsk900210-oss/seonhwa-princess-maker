@@ -1899,7 +1899,15 @@ function showPhaseReport(dayRecords,phaseStart){
   const mastery=awardPhaseMastery(dayRecords);
   const result=document.querySelector('#dayResult');
   result.classList.add('phase-brief-result');
-  result.innerHTML=`<b>제${phaseStart.index}페이즈 완료</b><span>착실히 해낸 일수 ${dayRecords.length}일 중 ${diligent}일 (${rate}%)</span><span>수입 +${income.toLocaleString()}냥${mastery?` · 숙련 +${mastery.earned}점`:''}${mastery?.rankUp?` · ${mastery.rankUp} 승급!`:''}</span>`;
+  const summaryRows=[
+    `<span><b>착실히 해낸 일수</b><em>${diligent}일 / ${dayRecords.length}일 (${rate}%)</em></span>`,
+    `<span><b>대성공</b><em>${counts.perfect}회</em></span>`,
+    `<span><b>성공</b><em>${counts.success}회</em></span>`,
+    `<span><b>힘겨움</b><em>${counts.struggle}회</em></span>`,
+    `<span><b>실패</b><em>${counts.mistake}회</em></span>`,
+    `<span><b>수입</b><em>+${income.toLocaleString()}냥</em></span>`
+  ].join('');
+  result.innerHTML=`<header><div><b>제${phaseStart.index}페이즈 완료</b><small>${phaseStart.week}주차의 기록을 정리했습니다</small></div></header><div class="phase-result-counts">${summaryRows}</div><div class="phase-result-money"><span><b>수입 합계</b><strong>+${income.toLocaleString()}냥</strong></span><span><b>숙련 변화</b><strong>${mastery?`+${mastery.earned}점${mastery.rankUp?` · ${mastery.rankUp} 승급!`:''}`:'변화 없음'}</strong></span></div><div class="phase-work-summary"><span>이 페이즈를 잘 마무리했어요.</span><em>${dayRecords.length}일 진행</em></div>`;
   result.hidden=false;
   return schedulePlaybackDelay(1500).then(()=>{result.hidden=true;result.classList.remove('phase-brief-result');});
 }
