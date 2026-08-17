@@ -237,20 +237,20 @@ activityFrames.calligraphy=[1,2,3].map(n=>`../assets/characters/seonhwa/age-09/s
 // The third source cell belonged to calligraphy; keep arithmetic on the abacus-only frames.
 activityFrames.arithmetic=[1,2,3].map(n=>`../assets/characters/seonhwa/age-09/sprites/activities/arithmetic-v2-${n}.png`);
 activityFrames.manners=[1,2,3].map(n=>`../assets/characters/seonhwa/age-09/sprites/activities/manners-fixed-${n}.png`);
-activityFrames.errand=[1,2,3].map(n=>`../assets/characters/seonhwa/age-09/sprites/activities/errand-character-v4-${n}.png`);
+activityFrames.errand=[1,2,3].map(n=>`../assets/characters/seonhwa/activity-consistent/age-09/errand-${n}.png`);
 activityFrames.houseclean=[1,2,3,4,5,6].map(n=>`../assets/characters/seonhwa/age-09/sprites/activities/houseclean-side-${n}.png`);
 activityFrames.sleep=[...activityFrames.rest];
 // v0.62.55: face-consistent awake sprites and a simple tea-only rest loop.
 activityFrames.sweeping=[1,2,3].map(n=>`../assets/characters/seonhwa/activity-consistent/age-09/sweeping-legacy-${n}.png`);
-activityFrames.errand=[1,2,3].map(n=>`../assets/characters/seonhwa/age-09/sprites/activities/errand-character-v4-${n}.png`);
+activityFrames.errand=[1,2,3].map(n=>`../assets/characters/seonhwa/activity-consistent/age-09/errand-${n}.png`);
 activityFrames.herbs=[1,2,3].map(n=>`../assets/characters/seonhwa/activity-consistent/age-09/herbs-legacy-${n}.png`);
 activityFrames.tea=[1,1,1].map(n=>`../assets/characters/seonhwa/activity-consistent/age-09/rest-legacy-${n}.png`);
 // 모든 전용 일자리 교정본은 새 파일명을 사용해 이전 깨진 프레임 캐시가 재사용되지 않게 한다.
 ['farmwork','childcare','kitchenhelp','woodwork','loomwork','masonry','clinichelp','ferryhelp','merchanthelp'].forEach(name=>{activityFrames[name]=[1,2,3].map(n=>`../assets/characters/seonhwa/job-actions/${name}-v2-${n}.png`);});
-// The modular errand frames crop the top of the hair in frame 1. Keep the complete v4 frames.
+// 장터 심부름은 얼굴 교정된 연령별 프레임을 사용한다.
 // Rest keeps the clean horizontal bedding frames. The age-modular rest sheet is
 // diagonally posed and becomes visibly jagged when reduced inside the mobile stage.
-const modularActivities=new Set(['calligraphy','arithmetic','manners','houseclean']);
+const modularActivities=new Set(['calligraphy','arithmetic','manners','errand','houseclean']);
 function activityFrameSet(activity){
   if(!modularActivities.has(activity))return activityFrames[activity];
   const name=activity==='sleep'?'rest':activity,age=String(growthAssetAge(growthVisualAge())).padStart(2,'0');
@@ -420,7 +420,14 @@ function updateHomeCharacter(){
   character.src=game.equippedOutfit?outfitImage(game.equippedOutfit):homeConditionPoses[condition];
 }
 function applyEquippedOutfit(){updateHomeCharacter();}
-const outfitSituation={reading:['scholar','neat'],arithmetic:['scholar','neat'],manners:['court','ceremony','festival','neat'],errand:['travel','work','active'],sweeping:['work','active','simple'],herbs:['travel','work','active'],houseclean:['work','active','simple'],rest:['simple','neat'],sleep:['simple','neat'],shopping:['festival','flower','silk']};
+const outfitSituation={
+  reading:['scholar','neat'],arithmetic:['scholar','neat'],painting:['art','scholar'],classics:['scholar','neat'],copying:['scholar','neat'],tutoring:['scholar','neat'],accounting:['scholar','neat'],
+  manners:['court','ceremony','festival','neat'],music:['ceremony','festival'],dance:['festival','ceremony'],
+  swordsmanship:['active','work'],martial:['active','work'],spellcraft:['court','ceremony'],cooking:['work','simple'],
+  errand:['travel','work','active'],sweeping:['work','active','simple'],herbs:['travel','work','active'],houseclean:['work','active','simple'],
+  farmwork:['work','active','simple'],childcare:['simple','neat'],kitchenhelp:['work','active'],woodwork:['work','active'],loomwork:['work','simple'],masonry:['work','active'],clinichelp:['scholar','neat'],innhelp:['work','active'],sewing:['simple','neat'],ferryhelp:['travel','work','active'],merchanthelp:['work','neat'],
+  rest:['simple','neat'],tea:['simple','neat'],sleep:['simple','neat'],shopping:['festival','flower','silk']
+};
 const seasonPreference={봄:['flower','festival','art'],여름:['active','work','travel','simple'],가을:['scholar','neat','court'],겨울:['ceremony','silk','court','festival']};
 function recommendOutfit(actionId=null){
   normalizeInventory();const owned=game.items.filter(item=>item.type==='outfit'&&outfits.some(outfit=>outfit.id===item.id));if(!owned.length)return null;
@@ -428,9 +435,17 @@ function recommendOutfit(actionId=null){
   const score=item=>{const outfit=outfits.find(entry=>entry.id===item.id);let value=0;if(outfit.situations.includes(actionId))value+=45;if(outfit.seasons.includes(game.season))value+=30;situation.forEach((tag,index)=>{if(item.id.includes(tag))value+=12-index;});season.forEach((tag,index)=>{if(item.id.includes(tag))value+=7-index;});value-=Math.max(0,game.age-outfit.ageEnd)*2;return value;};
   return owned.sort((a,b)=>score(b)-score(a))[0]?.id||null;
 }
-function updateAutoOutfit(actionId=null){if(!game.autoOutfit)return game.equippedOutfit;game.equippedOutfit=recommendOutfit(actionId);applyEquippedOutfit();return game.equippedOutfit;}
+function updateAutoOutfit(actionId=null){
+  if(!game.autoOutfit)return game.equippedOutfit;
+  const recommended=recommendOutfit(actionId);
+  // 보유 의상 중 추천할 수 있는 항목이 없을 때 착용 중인 옷을 벗기지 않는다.
+  if(recommended)game.equippedOutfit=recommended;
+  applyEquippedOutfit();
+  return game.equippedOutfit;
+}
 const activityOutfitFrameCache=new Map();
 const activityOutfitStyleCache=new Map();
+const normalizedActivityFrameCache=new Map();
 function activityOutfitPalette(outfitId){
   if(!outfitId)return null;
   if(/cash-ember|rose-paisley/.test(outfitId))return {skirt:[96,25,47],top:[185,68,93],accent:[224,166,62]};
@@ -470,31 +485,38 @@ function resolveActivityOutfitStyle(outfitId){
   }catch{resolve(fallback);}};outfitSource.onerror=()=>resolve(fallback);outfitSource.src=outfitImageForAge(outfitId,age);});
 }
 async function outfitActivityFrame(src,outfitId){
-  // 누운 휴식 프레임은 이불까지 합쳐진 전용 원화이므로 의상 색상 치환을 하지 않는다.
-  if(/\/(rest|sleep)-/.test(src))return src;
-  const palette=await resolveActivityOutfitStyle(outfitId);if(!palette)return src;
-  const key=`${growthVisualAge()}|${outfitId}|${src}`;if(activityOutfitFrameCache.has(key))return activityOutfitFrameCache.get(key);
-  return new Promise(resolve=>{const source=new Image();source.onload=()=>{try{const canvas=document.createElement('canvas');canvas.width=source.naturalWidth;canvas.height=source.naturalHeight;const context=canvas.getContext('2d',{willReadFrequently:true});context.drawImage(source,0,0);const frame=context.getImageData(0,0,canvas.width,canvas.height),data=frame.data,isRest=/\/(rest|sleep)-/.test(src);
-    for(let y=0;y<canvas.height;y++)for(let x=0;x<canvas.width;x++){const i=(y*canvas.width+x)*4;if(data[i+3]<24)continue;const r=data[i],g=data[i+1],b=data[i+2];
-      const bodyCore=x>canvas.width*.22&&x<canvas.width*.78&&y>canvas.height*.18&&y<canvas.height*.82;
-      const lowerCore=x>canvas.width*.28&&x<canvas.width*.74&&y>canvas.height*.42&&y<canvas.height*.92;
-      const upperCore=x>canvas.width*.24&&x<canvas.width*.76&&y>canvas.height*.16&&y<canvas.height*.60;
-      const hueSpread=Math.max(r,g,b)-Math.min(r,g,b);
-      const skin=r>168&&g>94&&b>65&&r>g*1.06&&g>b*1.05&&hueSpread<96;
-      const clothTone=!skin&&hueSpread>18&&r+g+b>165&&r+g+b<700;
-      const ribbon=bodyCore&&r>74&&r>g*1.25&&r>b*1.18&&g<112&&b<114&&hueSpread>42;
-      const skirtTone=lowerCore&&clothTone&&r>120&&g>55&&b>55;
-      const topTone=upperCore&&clothTone&&r>145&&g>135&&b>110;
-      const fallback=ribbon?palette.accent:skirtTone?palette.skirt:(topTone&&palette.top?palette.top:null);if(!fallback)continue;
-      const light=Math.max(.78,Math.min(1.05,(r+g+b)/3/180));
-      data[i]=Math.min(255,fallback[0]*light);
-      data[i+1]=Math.min(255,fallback[1]*light);
-      data[i+2]=Math.min(255,fallback[2]*light);
-    }
-    context.putImageData(frame,0,0);const result=canvas.toDataURL('image/png');activityOutfitFrameCache.set(key,result);resolve(result);}catch{resolve(src);}};source.onerror=()=>resolve(src);source.src=src;});
+  const exact=outfitId?activityOutfitAsset(src,outfitId):null;
+  if(exact&&await imageAssetExists(exact))return exact;
+  // 전용 의상 프레임이 없을 때 색상 합성을 하지 않는다. 얼굴·머리·소품 변색보다
+  // 깨끗한 기본 의상을 보여 주는 편이 안전하며, 전용 자산이 추가되면 자동 교체된다.
+  return normalizeActivityFrame(src);
+}
+function activityOutfitAsset(src,outfitId){
+  const file=(src.split('/').pop()||'').replace(/-v\d+(?=-\d+\.png$)/,'').replace(/-legacy(?=-\d+\.png$)/,'').replace(/-fixed(?=-\d+\.png$)/,'').replace(/-side(?=-\d+\.png$)/,'').replace(/-character(?=-\d+\.png$)/,'');
+  const age=String(growthAssetAge(growthVisualAge())).padStart(2,'0');
+  return `../assets/characters/seonhwa/activity-outfits/${outfitId}/age-${age}/${file}`;
+}
+function imageAssetExists(src){
+  if(activityOutfitFrameCache.has(src))return Promise.resolve(activityOutfitFrameCache.get(src));
+  return new Promise(resolve=>{const image=new Image();image.onload=()=>{activityOutfitFrameCache.set(src,true);resolve(true);};image.onerror=()=>{activityOutfitFrameCache.set(src,false);resolve(false);};image.src=src;});
+}
+function normalizeActivityFrame(src){
+  if(normalizedActivityFrameCache.has(src))return Promise.resolve(normalizedActivityFrameCache.get(src));
+  return new Promise(resolve=>{const source=new Image();source.onload=()=>{try{
+    const scan=document.createElement('canvas');scan.width=source.naturalWidth;scan.height=source.naturalHeight;const scanContext=scan.getContext('2d',{willReadFrequently:true});scanContext.drawImage(source,0,0);const data=scanContext.getImageData(0,0,scan.width,scan.height).data;
+    let left=scan.width,top=scan.height,right=-1,bottom=-1;
+    for(let y=0;y<scan.height;y++)for(let x=0;x<scan.width;x++){if(data[(y*scan.width+x)*4+3]<24)continue;left=Math.min(left,x);top=Math.min(top,y);right=Math.max(right,x);bottom=Math.max(bottom,y);}
+    if(right<left||bottom<top){resolve(src);return;}
+    const output=document.createElement('canvas');output.width=296;output.height=296;const context=output.getContext('2d');const width=right-left+1,height=bottom-top+1,padding=18;
+    // 서 있는 인물은 같은 머리-발끝 높이를 사용하고, 앉거나 숙이는 자세만 실제 자세만큼 낮춘다.
+    const poseScale=/houseclean|masonry/.test(src)?.82:/resting|sleep|eating/.test(src)?.78:/calligraphy|arithmetic|childcare/.test(src)?.88:/kitchenhelp|farmwork/.test(src)?.92:1;
+    const scale=Math.min((output.width-padding*2)/width,(output.height-padding*2)/height)*poseScale;const drawWidth=width*scale,drawHeight=height*scale,drawX=(output.width-drawWidth)/2,drawY=output.height-padding-drawHeight;
+    context.imageSmoothingEnabled=false;context.drawImage(source,left,top,width,height,drawX,drawY,drawWidth,drawHeight);const result=output.toDataURL('image/png');normalizedActivityFrameCache.set(src,result);resolve(result);
+  }catch{resolve(src);}};source.onerror=()=>resolve(src);source.src=src;});
 }
 async function animateActivitySprite(image,motion,activity,npcImage,npc,outfitId,masteryRank=0){
   if(activity){
+    if(!outfitId)outfitId=game.autoOutfit?recommendOutfit(activity):game.equippedOutfit;
     const frames=activityFrameSet(activity);
     const coreJobSequences={
       farmwork:[0,0,1,1,2,2,2],
@@ -515,7 +537,7 @@ async function animateActivitySprite(image,motion,activity,npcImage,npc,outfitId
     for(const [step,frame] of rankedSequence.entries()){
       if(activity==='houseclean')image.parentElement.style.left=`${[74,58,32,32,55,74][step%6]}%`;
       if(activity==='sweeping')image.parentElement.style.left=`${[14,20,27,34,41,47,50,50,47,41,34,27,20,14][step%14]}%`;
-      image.src=await outfitActivityFrame(frames[frame],outfitId);if(npc)npcImage.src=(npc==='teacher'?npcFrames.teacherReading:npcFrames[npc])[frame%3];await new Promise(resolve=>setTimeout(resolve,delay));
+      image.src=await outfitActivityFrame(frames[frame],outfitId);if(npc)npcImage.src=await normalizeActivityFrame((npc==='teacher'?npcFrames.teacherReading:npcFrames[npc])[frame%3]);await new Promise(resolve=>setTimeout(resolve,delay));
     }
     if(activity==='houseclean'||activity==='sweeping')image.parentElement.style.left='';
     return;
@@ -879,6 +901,19 @@ function balancedRelationCandidate(candidates){
 function relationOverlayCaption(candidate,episode){
   return episode?.title?`${candidate.name} · ${episode.title}`:candidate.name;
 }
+const vacationRelationDialogue={
+  doyun:{open:'바람이 좋군. 함께 걷겠나?',reply:'그래. 천천히 가자.',close:'네 곁이라면 서두르지 않아도 되겠어.'},
+  seojin:{open:'이 풍경, 한 줄로 남겨 볼래?',reply:'오늘은 글보다 오래 기억할래.',close:'그 답이 더 마음에 드는군.'},
+  yeonwoo:{open:'잠시 그대로 있어 줄래?',reply:'또 나를 그리고 싶어?',close:'응. 지금 네 표정은 놓치기 싫어.'},
+  taegyeom:{open:'좋은 길을 찾았어. 같이 갈래?',reply:'이번엔 어디로 데려가려고?',close:'네가 웃을 만한 곳으로.'},
+  hyeon:{open:'오늘만은 신분도 근심도 잊자.',reply:'그럼 그냥 현으로 있을 거야?',close:'네 앞에서는 늘 그러고 싶어.'}
+};
+function compactVacationDialogue(relation,episode){
+  const scripted=vacationRelationDialogue[relation.id];
+  if(scripted)return scripted;
+  const fallback=episode?.line||relation.dialogues[Math.floor(Math.random()*relation.dialogues.length)];
+  return {open:fallback,reply:'그래, 조금 더 함께 걷자.',close:'오늘을 오래 기억하겠어.'};
+}
 function waitForVacationTap(label='화면을 터치해 계속',buttonOnly=false){
   const scene=document.querySelector('#vacationScene'),button=document.querySelector('#vacationNext');
   button.textContent=label;
@@ -930,6 +965,7 @@ async function playVacationScene(prize,index,companion=null){
   const phone=document.querySelector('.phone'),scene=document.querySelector('#vacationScene'),image=document.querySelector('#vacationImage');
   const overlay=document.querySelector('#vacationDuoOverlay');
   const playerPortrait=document.querySelector('#vacationPlayerPortrait');
+  const playerName=document.querySelector('#vacationPlayerName');
   const playerText=document.querySelector('#vacationPlayerText');
   const companionPortrait=document.querySelector('#vacationCompanionPortrait');
   const companionName=document.querySelector('#encounterName');
@@ -945,13 +981,14 @@ async function playVacationScene(prize,index,companion=null){
     relation=companion;scene.classList.add('has-encounter');overlay.hidden=false;
     const episode=nextRelationEpisode(relation,'vacation');
     playerPortrait.src=protagonistPortraitForAge();
+    playerName.textContent=game.characterName||'선화';
     companionPortrait.src=relation.baseSheet;
     companionPortrait.style.setProperty('--relation-sheet',`url('${relation.baseSheet}')`);
     companionPortrait.style.setProperty('--relation-age-position',relationAgePosition());
     companionName.textContent=relationOverlayCaption(relation,episode);
-    const openingLine=episode?.line||relation.dialogues[Math.floor(Math.random()*relation.dialogues.length)];
-    playerText.textContent=`${game.guardianName||'신수'}가 먼저 말을 걸었어요.`;
-    companionText.textContent=openingLine;
+    const dialogue=compactVacationDialogue(relation,episode);
+    playerText.textContent='';
+    companionText.textContent=dialogue.open;
     const fromLeft=Math.random()<.5;
     overlay.classList.toggle('companion-left',fromLeft);
     overlay.classList.toggle('companion-right',!fromLeft);
@@ -960,10 +997,10 @@ async function playVacationScene(prize,index,companion=null){
     record.relationship=record.affinity>=80?'연인':record.affinity>=60?'특별한 인연':'친구';
     const memory=`${game.age}-${sceneSeason}`;
     if(!record.vacationMemories.includes(memory))record.vacationMemories.push(memory);
-    await waitForVacationTap('첫 마디를 읽고 누르세요',true);
-    playerText.textContent=`${game.characterName||'선화'}가 조용히 대답했어요.`;
-    companionText.textContent=episode?.title?`${relation.name} · ${episode.title}`:`${relation.name}과 조금 더 이야기를 나눴어요.`;
-    await waitForVacationTap('대화를 다 읽고 누르세요',true);
+    await waitForVacationTap('다음',true);
+    playerText.textContent=dialogue.reply;
+    companionText.textContent=dialogue.close;
+    await waitForVacationTap('대화 마치기',true);
   }
   overlay.hidden=true;scene.classList.remove('has-encounter','child-live');scene.hidden=true;scene.dataset.effect='';scene.dataset.season='';document.querySelector('#vacationMotion').replaceChildren();phone.classList.remove('vacation-playing');playHomeMusic();
   return relation;
@@ -1031,9 +1068,23 @@ const guardianConversationSets={
   ]
 };
 Object.values(guardianConversationSets).flat().forEach(scene=>scene.choices.forEach(choice=>{choice[1]=canonicalizeChange(choice[1]);}));
-function guardianPortrait(){return `../assets/cinematics/guardian/guardian-${game.guardianType||'hyeonmu'}.png`;}
+function guardianPortrait(mood='neutral'){return `../assets/cinematics/guardian/humanized/poses/${game.guardianType||'hyeonmu'}-${mood}.png`;}
+function openGuardianDialogueOverlay(mood='neutral'){
+  const greeting=document.querySelector('#homeGreeting'),portrait=document.querySelector('#homeGreetingPortrait');
+  greeting.classList.remove('mood-neutral','mood-happy','mood-concerned','mood-surprised');
+  greeting.classList.add('guardian-overlay',`mood-${mood}`);
+  greeting.dataset.guardian=game.guardianType||'hyeonmu';
+  document.querySelector('.phone').classList.add('greeting-active','guardian-dialogue-active');
+  portrait.hidden=false;portrait.src=guardianPortrait(mood);portrait.alt=`${game.guardianName||guardianDefs[game.guardianType]?.name||'신수'}의 ${mood} 표정`;
+}
+function closeGuardianDialogueOverlay(){
+  const greeting=document.querySelector('#homeGreeting');
+  greeting.hidden=true;greeting.classList.remove('guardian-overlay','mood-neutral','mood-happy','mood-concerned','mood-surprised');
+  delete greeting.dataset.guardian;
+  document.querySelector('.phone').classList.remove('greeting-active','guardian-dialogue-active');
+}
 function closeGuardianConversation(change){
-  document.querySelector('#homeGreeting').hidden=true;document.querySelector('.phone').classList.remove('greeting-active');showLiveChanges({change,cost:0});renderHud();queueAutoSave();
+  closeGuardianDialogueOverlay();showLiveChanges({change,cost:0});renderHud();queueAutoSave();
 }
 function renderGuardianTalkResult(change){
   const result=document.querySelector('#guardianTalkResult');
@@ -1050,7 +1101,7 @@ function answerGuardianConversation(scene,index){
   Object.entries(change).forEach(([key,value])=>{const before=clampStat(key,game[key]);game[key]=clampStat(key,before+value);actualChange[key]=game[key]-before;});
   const speaker=document.querySelector('#homeGreetingSpeaker'),line=document.querySelector('#homeGreetingLine'),prompt=document.querySelector('#homeGreetingPrompt'),choices=document.querySelector('#homeGreetingChoices'),portrait=document.querySelector('#homeGreetingPortrait');
   portrait.hidden=false;portrait.classList.add('is-listening');speaker.textContent=game.characterName||'아이';line.textContent=reply;prompt.textContent='';renderGuardianTalkResult(actualChange);choices.innerHTML='<button id="guardianDialogueContinue">신수의 이야기 듣기</button>';
-  document.querySelector('#guardianDialogueContinue').addEventListener('click',()=>{portrait.classList.remove('is-listening');speaker.textContent=game.guardianName||guardianDefs[game.guardianType]?.name||'신수';line.textContent=response;choices.innerHTML='<button id="guardianDialogueClose">대화 마치기</button>';document.querySelector('#guardianDialogueClose').addEventListener('click',()=>closeGuardianConversation(actualChange));});
+  document.querySelector('#guardianDialogueContinue').addEventListener('click',()=>{portrait.classList.remove('is-listening');const positive=Object.entries(actualChange).filter(([,value])=>value!==0).every(([key,value])=>key==='stress'?value<=0:value>=0);openGuardianDialogueOverlay(positive?'happy':'concerned');speaker.textContent=game.guardianName||guardianDefs[game.guardianType]?.name||'신수';line.textContent=response;choices.innerHTML='<button id="guardianDialogueClose">대화 마치기</button>';document.querySelector('#guardianDialogueClose').addEventListener('click',()=>closeGuardianConversation(actualChange));});
 }
 function startGuardianConversation(){
   const guardian=guardianDefs[game.guardianType];if(!guardian||introDialogueQueue.length)return false;
@@ -1061,7 +1112,7 @@ function startGuardianConversation(){
   const result=document.querySelector('#guardianTalkResult');result.hidden=true;result.innerHTML='';
   document.querySelector('#homeGreetingSpeaker').textContent=game.guardianName||guardian.name;document.querySelector('#homeGreetingLine').textContent=scene.line;document.querySelector('#homeGreetingPrompt').textContent=`${game.characterName||'아이'}은(는) 어떻게 답할까요?`;
   const choices=document.querySelector('#homeGreetingChoices');choices.innerHTML=scene.choices.map((choice,index)=>`<button data-guardian-answer="${index}">${choice[0]}</button>`).join('');
-  document.querySelector('#homeGreeting').hidden=false;document.querySelector('.phone').classList.add('greeting-active');choices.querySelectorAll('[data-guardian-answer]').forEach(button=>button.addEventListener('click',()=>answerGuardianConversation(scene,Number(button.dataset.guardianAnswer))));queueAutoSave();return true;
+  document.querySelector('#homeGreeting').hidden=false;openGuardianDialogueOverlay(game.stress>=70?'concerned':'neutral');choices.querySelectorAll('[data-guardian-answer]').forEach(button=>button.addEventListener('click',()=>answerGuardianConversation(scene,Number(button.dataset.guardianAnswer))));queueAutoSave();return true;
 }
 function presentActivityUnlocks(){
   if(!pendingActivityUnlocks.length)return false;
@@ -1073,8 +1124,8 @@ function presentActivityUnlocks(){
   document.querySelector('#homeGreetingPrompt').textContent='신수의 새 활동 안내';
   const result=document.querySelector('#guardianTalkResult');result.hidden=true;result.innerHTML='';
   const choices=document.querySelector('#homeGreetingChoices');choices.innerHTML='<button id="activityUnlockClose">일정에서 확인하기</button>';
-  document.querySelector('#homeGreeting').hidden=false;document.querySelector('.phone').classList.add('greeting-active');
-  document.querySelector('#activityUnlockClose').addEventListener('click',()=>{document.querySelector('#homeGreeting').hidden=true;document.querySelector('.phone').classList.remove('greeting-active');openVisitingMerchant();});
+  document.querySelector('#homeGreeting').hidden=false;openGuardianDialogueOverlay('happy');
+  document.querySelector('#activityUnlockClose').addEventListener('click',()=>{closeGuardianDialogueOverlay();openVisitingMerchant();});
   return true;
 }
 function speakGuardian(context='home'){
@@ -1142,6 +1193,7 @@ function showHomeGreeting(force=false){
   const available=scenes.map((scene,index)=>({scene,index})).filter(item=>`${mood}-${item.index}`!==game.lastGreetingScene);
   const picked=available[Math.floor(Math.random()*available.length)]||{scene:scenes[0],index:0},scene=picked.scene;
   game.lastGreetingScene=`${mood}-${picked.index}`;
+  const greeting=document.querySelector('#homeGreeting');greeting.classList.remove('guardian-overlay','mood-neutral','mood-happy','mood-concerned','mood-surprised');document.querySelector('.phone').classList.remove('guardian-dialogue-active');document.querySelector('#homeGreetingPortrait').hidden=true;
   document.querySelector('#speakerName').textContent=game.characterName||'아이';document.querySelector('#dialogueText').textContent=scene.line;
   document.querySelector('#homeGreetingSpeaker').textContent=game.characterName||'아이';
   document.querySelector('#homeGreetingLine').textContent=scene.line;
@@ -1423,6 +1475,7 @@ function continueRecovery(){
   const saved=pendingRecoverySave;
   document.querySelector('#prologue').hidden=true;
   panel.hidden=true;
+  resetTransientScenes();
   if(!isPlayableSave(saved)||!applySavePayload(saved)){
     pendingRecoverySave=null;
     showUnavailableRecovery();
@@ -1436,6 +1489,7 @@ function continueRecovery(){
 function declineRecovery(){
   pendingRecoverySave=null;
   document.querySelector('#recoveryPrompt').hidden=true;
+  resetTransientScenes();
   renderPrologue();
 }
 function initializeRecoverySession(){
@@ -1608,7 +1662,7 @@ function showOutfitPreview(id){
   document.querySelector('#outfitPreviewBuy').addEventListener('click',()=>buyOutfit(id));
 }
 async function buyFood(id){const food=foods.find(item=>item.id===id);if(!food||game.money<food.price||marketMealConsumed)return;marketMealConsumed=true;panel.hidden=true;const stage=document.querySelector('#activityStage'),image=document.querySelector('#stageCharacterImage'),character=document.querySelector('#stageCharacter');document.querySelector('#marketExplore').hidden=true;stage.hidden=false;stage.className='activity-stage map-restRoom eating-stage';document.querySelector('#stageMap').src=backgrounds.restRoom;document.querySelector('#stageNpc').hidden=true;document.querySelector('#stageProps').hidden=true;document.querySelector('#stageCaption').textContent=`주막 · ${food.name}`;character.hidden=false;character.className='stage-character pixel-sprite motion-eating';for(const n of [1,2,3,2,1,2,3]){image.src=await outfitActivityFrame(`../assets/characters/seonhwa/age-09/sprites/activities/eating-${n}.png`,game.equippedOutfit);await new Promise(r=>setTimeout(r,320));}stage.hidden=true;game.money-=food.price;applyShopChanges(food.change);document.querySelector('#dialogueText').textContent=`주막에서 ${food.name}을(를) 맛있게 먹었어요. 이번 저잣거리 방문의 식사는 끝났어요.`;showLiveChanges({change:food.change,cost:food.price});panel.hidden=false;renderShopPanel('food',true);queueAutoSave();}
-function buyOutfit(id){normalizeInventory();const outfit=outfits.find(item=>item.id===id);if(!outfit||!outfitAvailable(outfit))return;const cash=isCashOutfit(outfit);if(cash?game.cash<outfit.cashPrice:game.money<outfit.price)return;if(game.items.some(item=>item.type==='outfit'&&item.id===id)){document.querySelector('#dialogueText').textContent=`${outfit.name}은(는) 이미 보유하고 있어요.`;renderShopPanel('outfit',activeShopMarketMode,activeOutfitShopCategory);return;}if(cash)game.cash-=outfit.cashPrice;else game.money-=outfit.price;game.items.push({id:outfit.id,type:'outfit',name:outfit.name,age:outfit.age,ageEnd:outfit.ageEnd,tone:outfit.tone,seasons:outfit.seasons,qty:1});game.equippedOutfit=id;applyEquippedOutfit();applyShopChanges(outfit.change);document.querySelector('#dialogueText').textContent=`${outfit.name}을(를) 구입하고 갈아입었어요.`;if(!cash)showLiveChanges({change:outfit.change,cost:outfit.price});renderHud();renderShopPanel('outfit',activeShopMarketMode,activeOutfitShopCategory);queueAutoSave();}
+function buyOutfit(id){normalizeInventory();const outfit=outfits.find(item=>item.id===id);if(!outfit||!outfitAvailable(outfit))return;const cash=isCashOutfit(outfit);if(cash?game.cash<outfit.cashPrice:game.money<outfit.price)return;if(game.items.some(item=>item.type==='outfit'&&item.id===id)){document.querySelector('#dialogueText').textContent=`${outfit.name}은(는) 이미 보유하고 있어요.`;renderShopPanel('outfit',activeShopMarketMode,activeOutfitShopCategory);return;}if(cash)game.cash-=outfit.cashPrice;else game.money-=outfit.price;game.items.push({id:outfit.id,type:'outfit',name:outfit.name,age:outfit.age,ageEnd:outfit.ageEnd,tone:outfit.tone,seasons:outfit.seasons,qty:1});game.autoOutfit=false;game.equippedOutfit=id;applyEquippedOutfit();applyShopChanges(outfit.change);document.querySelector('#dialogueText').textContent=`${outfit.name}을(를) 구입하고 갈아입었어요. 일정에서도 이 의상이 유지돼요.`;if(!cash)showLiveChanges({change:outfit.change,cost:outfit.price});renderHud();renderShopPanel('outfit',activeShopMarketMode,activeOutfitShopCategory);queueAutoSave();}
 
 const marketPlaces=[
   {id:'food',side:-1,label:'주막'},
@@ -2016,6 +2070,7 @@ function finishStudioIntro(){
   studioIntroFinished=true;
   const loading=document.querySelector('#studioLoading');
   document.querySelector('#birthdaySetup').hidden=true;
+  resetTransientScenes();
   if(!showRecoveryPrompt())renderPrologue();
   loading.classList.add('is-leaving');
   setTimeout(()=>{loading.hidden=true;},520);
@@ -2073,7 +2128,7 @@ async function playWeeklySchedule(selected) {
     stageNpc.hidden = !presentation.npc;
     stageNpc.className = presentation.npc ? `stage-npc npc-${presentation.npc}` : 'stage-npc';
     stageNpc.style.removeProperty('--relation-sheet');stageNpc.style.removeProperty('--relation-age-position');stageNpcImage.hidden=false;
-    if(presentation.npc)stageNpcImage.src = (presentation.npc==='teacher'?npcFrames.teacherReading:npcFrames[presentation.npc])[0];
+    if(presentation.npc)stageNpcImage.src = await normalizeActivityFrame((presentation.npc==='teacher'?npcFrames.teacherReading:npcFrames[presentation.npc])[0]);
     stage.className = `activity-stage map-${presentation.location} action-${action.id} mastery-${currentMasteryRank}`;
     stageCharacter.className = `stage-character pixel-sprite ${presentation.motion}`;
     let dungeonReward={money:0,gear:null},dateRelation=null;
