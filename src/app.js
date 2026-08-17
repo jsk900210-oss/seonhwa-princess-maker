@@ -1649,7 +1649,7 @@ function renderSchedulePanel() {
   const nextEntries=Array.from({length:3},(_,offset)=>({kind:'queue',index:filled+offset,action:null}));
   const timeline=[...openingPaperSlots,...game.completedPhases.map(record=>({kind:'completed',record})),...scheduledEntries,...nextEntries];
   const latestStart=Math.max(0,timeline.length-5);scheduleTimelineOffset=Math.max(0,Math.min(scheduleTimelineOffset,latestStart));const timelineStart=Math.max(0,latestStart-scheduleTimelineOffset);
-  const visibleTimeline=timeline.slice(timelineStart,timelineStart+5),phaseSlots=visibleTimeline.map(item=>{if(item.kind==='paper')return '<div class="phase-mini-slot opening-paper" aria-hidden="true"></div>';if(item.kind==='completed')return `<div class="phase-mini-slot completed"><small>제${item.record.index}페이즈</small><b>${item.record.name}</b></div>`;if(item.action)return `<button class="phase-mini-slot filled" data-phase-remove="${item.index}" aria-label="제${phase.index+item.index}페이즈 ${item.action.name} 일정 삭제"><small>제${phase.index+item.index}페이즈</small><b>${item.action.name}</b></button>`;const current=item.index===filled;return `<div class="phase-mini-slot ${current?'current':'empty'}" aria-hidden="true"><small>제${phase.index+item.index}페이즈</small>${current?'<b>편성 전</b>':''}</div>`;}).join(''),holiday=currentPhaseHoliday();
+  const visibleTimeline=timeline.slice(timelineStart,timelineStart+5),phaseSlots=visibleTimeline.map(item=>{if(item.kind==='paper')return '<div class="phase-mini-slot opening-paper" aria-label="시작 불가"><b>시작 불가</b></div>';if(item.kind==='completed')return `<div class="phase-mini-slot completed"><small>제${item.record.index}페이즈</small><b>${item.record.name}</b></div>`;if(item.action)return `<button class="phase-mini-slot filled" data-phase-remove="${item.index}" aria-label="제${phase.index+item.index}페이즈 ${item.action.name} 일정 삭제"><small>제${phase.index+item.index}페이즈</small><b>${item.action.name}</b></button>`;const current=item.index===filled;return `<div class="phase-mini-slot ${current?'current':'empty'}" aria-hidden="true"><small>제${phase.index+item.index}페이즈</small>${current?'<b>편성 전</b>':''}</div>`;}).join(''),holiday=currentPhaseHoliday();
   const unseenUnlocked=actions.filter(action=>actionUnlocked(action)&&Number(action.unlockAge||9)>9&&!game.activityUnlocksSeen.includes(action.id));
   const scheduleCategories=['교육','아르바이트','휴식',...(actions.some(action=>action.category==='인연'&&actionUnlocked(action))?['인연']:[])];
   if(!scheduleCategories.includes(activeScheduleCategory))activeScheduleCategory='교육';
@@ -1822,11 +1822,12 @@ function animateScheduleAssignment(sourceRect,sourceMarkup,phaseIndex){
   const target=panelBody.querySelector(`[data-phase-remove="${phaseIndex}"]`);if(!target)return;
   const previous=[...panelBody.querySelectorAll('.phase-mini-slot.filled')].filter(slot=>slot!==target);
   previous.slice(-2).forEach(slot=>{slot.classList.add('moved-left');slot.addEventListener('animationend',()=>slot.classList.remove('moved-left'),{once:true});});
-  if(!sourceRect||matchMedia('(prefers-reduced-motion: reduce)').matches){target.classList.add('just-filled');setTimeout(()=>target.classList.remove('just-filled'),420);return;}
-  const targetRect=target.getBoundingClientRect(),flyer=document.createElement('div');flyer.className='schedule-flying-card';flyer.innerHTML=sourceMarkup||`<b>${target.textContent}</b>`;document.body.appendChild(flyer);
+  const shiftFromCenter=()=>{target.classList.add('conveyor-arrive');setTimeout(()=>target.classList.remove('conveyor-arrive'),460);};
+  if(!sourceRect||matchMedia('(prefers-reduced-motion: reduce)').matches){shiftFromCenter();return;}
+  const centerSlot=panelBody.querySelector('.phase-mini-slot.current'),targetRect=(centerSlot||target).getBoundingClientRect(),flyer=document.createElement('div');flyer.className='schedule-flying-card';flyer.innerHTML=sourceMarkup||`<b>${target.textContent}</b>`;document.body.appendChild(flyer);
   Object.assign(flyer.style,{left:`${sourceRect.left}px`,top:`${sourceRect.top}px`,width:`${sourceRect.width}px`,height:`${sourceRect.height}px`});
   const flight=flyer.animate([{transform:'translate(0,0) scale(1)',opacity:1},{transform:`translate(${targetRect.left-sourceRect.left}px,${targetRect.top-sourceRect.top}px) scale(.72)`,opacity:.92}],{duration:460,easing:'cubic-bezier(.2,.75,.25,1)',fill:'forwards'});
-  flight.finished.finally(()=>{flyer.remove();target.classList.add('just-filled');setTimeout(()=>target.classList.remove('just-filled'),420);});
+  flight.finished.finally(()=>{flyer.remove();shiftFromCenter();});
 }
 
 function selectScheduleDay(index){

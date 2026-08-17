@@ -17,6 +17,8 @@ assert.ok(css.includes('.phase-progress-track'),'페이즈 진행률 막대가 �
 assert.ok(app.includes("game.completedPhases.map(record=>({kind:'completed',record}))")&&app.includes('const nextEntries=Array.from({length:3}'),'완료 이력과 현재·다음 페이즈가 하나의 연속 표에 있어야 합니다.');
 assert.ok(app.includes('Math.max(0,2-game.completedPhases.length-scheduledEntries.length)')&&app.includes("item.kind==='paper'"),'초기 왼쪽 두 칸은 빈 종이이며 편성·완료 이력으로 차례로 교체되어야 합니다.');
 assert.ok(app.includes('const scheduledEntries=game.dailySchedule.map'),'편성한 일정은 누적되어 새 선택 때마다 왼쪽으로 이동해야 합니다.');
+assert.ok(app.includes('aria-label="시작 불가"')&&app.includes('shiftFromCenter'),'초기 두 칸은 시작 불가이며 새 일정은 중앙 진입 후 왼쪽으로 이동해야 합니다.');
+assert.ok(css.includes('@keyframes phase-conveyor-left'),'중앙에서 왼쪽으로 움직이는 컨베이어 애니메이션이 필요합니다.');
 assert.ok(app.includes('timeline.slice(timelineStart,timelineStart+5)'),'페이즈 표는 전체 이력 중 다섯 칸씩 보여야 합니다.');
 assert.ok(app.includes('const current=item.index===filled'),'완료 기록 뒤 첫 빈 페이즈가 현재 편성 칸이어야 합니다.');
 assert.ok(app.includes('game.dailySchedule.push(id);scheduleCursor=game.dailySchedule.length-1'),'새 페이즈는 가운데 칸에 채워져야 합니다.');
