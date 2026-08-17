@@ -247,6 +247,8 @@ activityFrames.herbs=[1,2,3].map(n=>`../assets/characters/seonhwa/activity-consi
 activityFrames.tea=[1,1,1].map(n=>`../assets/characters/seonhwa/activity-consistent/age-09/rest-legacy-${n}.png`);
 // 모든 전용 일자리 교정본은 새 파일명을 사용해 이전 깨진 프레임 캐시가 재사용되지 않게 한다.
 ['farmwork','childcare','kitchenhelp','woodwork','loomwork','masonry','clinichelp','ferryhelp','merchanthelp'].forEach(name=>{activityFrames[name]=[1,2,3].map(n=>`../assets/characters/seonhwa/job-actions/${name}-v2-${n}.png`);});
+// 10세 해금 아이 돌보기는 9~12세 공통 얼굴·머리·기본 의상으로 다시 제작한 통일 프레임을 사용한다.
+activityFrames.childcare=[1,2,3].map(n=>`../assets/characters/seonhwa/job-actions/childcare-v3-${n}.png`);
 // 장터 심부름은 얼굴 교정된 연령별 프레임을 사용한다.
 // Rest keeps the clean horizontal bedding frames. The age-modular rest sheet is
 // diagonally posed and becomes visibly jagged when reduced inside the mobile stage.
