@@ -14,5 +14,10 @@ assert.ok(app.includes('if(phaseAdvanced)rollVisitingMerchant()'),'방문객은 
 assert.ok(app.includes('lastGuardianTalkPhase===phaseKey'),'신수 대화는 페이즈마다 갱신해야 합니다.');
 assert.ok(app.includes('phase.index} / ${phase.total}'),'일정 화면에 현재/전체 페이즈 수가 보여야 합니다.');
 assert.ok(css.includes('.phase-progress-track'),'페이즈 진행률 막대가 필요합니다.');
+assert.ok(app.includes('[-2,-1,0,1,2].map'),'편성창은 가운데 현재 칸을 기준으로 총 5칸이어야 합니다.');
+assert.ok(app.includes('class="phase-mini-slot current"'),'가운데 편성 전 칸이 보여야 합니다.');
+assert.ok(app.includes('class="action compact-action'),'스케줄 항목은 이름 중심의 간결한 버튼이어야 합니다.');
+assert.ok(css.includes('grid-template-columns:repeat(5,minmax(0,1fr))'),'편성 5칸이 한 줄에 유지되어야 합니다.');
+assert.ok(css.includes('.compact-schedule-grid'),'교육·아르바이트·휴식 목록은 한 화면용 격자여야 합니다.');
 
-console.log('PASS: 14일 페이즈, 1·2주차, 대화·방문 갱신과 전체 진행 UI');
+console.log('PASS: 14일 페이즈와 PM3식 5칸 편성·간결한 활동 목록');

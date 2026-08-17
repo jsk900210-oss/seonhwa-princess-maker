@@ -1594,20 +1594,24 @@ function renderSchedulePanel() {
   const phase=phaseInfo();
   panelTitle.textContent = `페이즈 일정 편성`;
   normalizePhaseSchedule();
-  const start=game.currentDate?new Date(`${game.currentDate}T00:00:00`):null;
-  scheduleCursor=Math.max(0,Math.min(scheduleCursor,Math.max(0,game.dailySchedule.length-1)));
-  const phaseRows=game.dailySchedule.map((id,index)=>{const action=actions.find(item=>item.id===id),from=start?new Date(start.getFullYear(),start.getMonth(),start.getDate()+index*14):null,to=from?new Date(from.getFullYear(),from.getMonth(),from.getDate()+13):null;return `<li class="phase-plan-item ${scheduleCursor===index?'active':''}"><span><b>제${phase.index+index}페이즈</b><small>${from?`${from.getMonth()+1}/${from.getDate()}–${to.getMonth()+1}/${to.getDate()}`:'14일'}</small></span><strong>${action.name}</strong><button data-phase-remove="${index}" aria-label="${action.name} 일정 삭제">×</button></li>`;}).join('');
+  const filled=game.dailySchedule.length;
+  scheduleCursor=Math.max(0,Math.min(scheduleCursor,filled));
+  const phaseSlots=[-2,-1,0,1,2].map(offset=>{
+    const index=scheduleCursor+offset,id=game.dailySchedule[index],action=actions.find(item=>item.id===id);
+    if(action)return `<button class="phase-mini-slot filled" data-phase-remove="${index}" aria-label="${action.name} 일정 삭제"><b>${action.name}</b></button>`;
+    if(index===filled)return `<div class="phase-mini-slot current"><b>편성 전</b></div>`;
+    return `<div class="phase-mini-slot empty" aria-hidden="true"></div>`;
+  }).join('');
   const unseenUnlocked=actions.filter(action=>actionUnlocked(action)&&Number(action.unlockAge||9)>9&&!game.activityUnlocksSeen.includes(action.id));
   const scheduleCategories=['교육','아르바이트','휴식',...(actions.some(action=>action.category==='인연'&&actionUnlocked(action))?['인연']:[])];
   if(!scheduleCategories.includes(activeScheduleCategory))activeScheduleCategory='교육';
   const categoryTabs=scheduleCategories.map(category=>{const newCount=unseenUnlocked.filter(action=>action.category===category).length;return `<button data-schedule-category="${category}" class="${activeScheduleCategory===category?'on':''}">${category}${newCount?`<i>${newCount}</i>`:''}</button>`;}).join('');
-  const actionCards=actions.filter(action=>action.category===activeScheduleCategory&&actionUnlocked(action)).map(action=>{const progress=activityProgressFor(action.id),rank=activityRankNames[activityRank(action.id)],requirement=activityRequirements[action.id],tracked=['교육','아르바이트'].includes(action.category),meter=tracked?masteryMeter(progress.successes):null,price=action.category==='아르바이트'?`+${activityPay(action)}냥/일`:action.cost>0?`-${action.cost}냥/일`:'무료',detail=tracked?`${rank} · 성공 ${progress.successes}일${requirement?` · 권장 ${requirement[0]} ${requirement[1]}`:''}`:'';return `<button class="action ${selectedScheduleAction===action.id?'selected':''}" data-action="${action.id}"><img src="../assets/ui/activity-icons/activity-${action.icon||action.id}.png" alt=""><b>${action.name}</b><span>${price}</span><small>${action.summary||'직접 방문하여 선택'}</small>${detail?`<em>${detail}</em><div class="mastery-meter"><i style="width:${meter.percent}%"></i><span>${meter.label}</span></div>`:''}</button>`;}).join('');
-  const projection=scheduleProjection(),filled=game.dailySchedule.length;
-  panelBody.innerHTML = `<section class="phase-progress" aria-label="전체 성장 페이즈 진행률"><div><b>제${phase.index}페이즈</b><span>${phase.index} / ${phase.total}</span></div><div class="phase-progress-track"><i style="width:${phase.percent}%"></i></div><small>1페이즈 = 14일 · 남은 페이즈 ${phase.remaining}</small></section><div class="schedule-adviser"><b>${game.guardianName||guardianDefs[game.guardianType]?.name||'신수'}의 일정 조언</b><p>${projection.stress>=80?'스트레스가 높아 휴식 페이즈가 필요해요.':filled?`${filled}개 페이즈가 순서대로 준비됐어요.`:'아래 활동을 눌러 첫 페이즈를 추가하세요.'}</p></div><div class="phase-slider"><button id="phasePrev" aria-label="이전 페이즈" ${scheduleCursor<=0?'disabled':''}>◀</button><ol class="phase-plan-list">${phaseRows||'<li class="phase-plan-empty">편성 전</li>'}</ol><button id="phaseNext" aria-label="다음 페이즈" ${scheduleCursor>=filled-1?'disabled':''}>▶</button></div><small class="phase-slide-count">${filled?`${scheduleCursor+1} / ${filled}`:'0 / 0'}</small><div class="schedule-tabs" role="tablist">${categoryTabs}</div><section class="schedule-category"><div class="action-grid phase-action-slider">${actionCards}</div></section><div class="schedule-tools"><button id="scheduleRunPhases" ${filled?'':'disabled'}>${filled}개 페이즈 실행</button><button id="scheduleClearAll" ${filled?'':'disabled'}>전체 비우기</button></div>`;
+  const actionCards=actions.filter(action=>action.category===activeScheduleCategory&&actionUnlocked(action)).map(action=>`<button class="action compact-action ${selectedScheduleAction===action.id?'selected':''}" data-action="${action.id}"><b>${action.name}</b></button>`).join('');
+  panelBody.innerHTML = `<section class="phase-progress compact" aria-label="전체 성장 페이즈 진행률"><div><b>제${phase.index}페이즈</b><span>${phase.index} / ${phase.total}</span></div><div class="phase-progress-track"><i style="width:${phase.percent}%"></i></div></section><div class="phase-five-wrap"><button id="phasePrev" aria-label="이전 편성" ${scheduleCursor<=0?'disabled':''}>◀</button><div class="phase-five-grid">${phaseSlots}</div><button id="phaseNext" aria-label="다음 편성" ${scheduleCursor>=filled?'disabled':''}>▶</button></div><small class="phase-slide-count">가운데 칸에 다음 페이즈를 편성합니다</small><div class="schedule-tabs compact-tabs" role="tablist">${categoryTabs}</div><section class="schedule-category compact-category"><div class="action-grid compact-schedule-grid">${actionCards}</div></section><div class="schedule-tools compact-tools"><button id="scheduleRunPhases" ${filled?'':'disabled'}>${filled}개 페이즈 실행</button><button id="scheduleClearAll" ${filled?'':'disabled'}>전체 비우기</button></div>`;
   panelBody.querySelectorAll('[data-action]').forEach(button => button.addEventListener('click', () => addDailyAction(button.dataset.action)));
   panelBody.querySelectorAll('[data-phase-remove]').forEach(button=>button.addEventListener('click',()=>clearDailyAction(Number(button.dataset.phaseRemove))));
   document.querySelector('#phasePrev').addEventListener('click',()=>{scheduleCursor=Math.max(0,scheduleCursor-1);renderSchedulePanel();});
-  document.querySelector('#phaseNext').addEventListener('click',()=>{scheduleCursor=Math.min(game.dailySchedule.length-1,scheduleCursor+1);renderSchedulePanel();});
+  document.querySelector('#phaseNext').addEventListener('click',()=>{scheduleCursor=Math.min(game.dailySchedule.length,scheduleCursor+1);renderSchedulePanel();});
   panelBody.querySelectorAll('[data-schedule-category]').forEach(button=>button.addEventListener('click',()=>{activeScheduleCategory=button.dataset.scheduleCategory;renderSchedulePanel();}));
   document.querySelector('#scheduleRunPhases').addEventListener('click',()=>{scheduleConfirmDismissed=false;showScheduleConfirmation();});
   document.querySelector('#scheduleClearAll').addEventListener('click',clearAllSchedule);
@@ -1748,7 +1752,7 @@ function exploreDungeon(){
 function addDailyAction(id) {
   const chosenAction=actions.find(action=>action.id===id);
   if(!chosenAction||!actionUnlocked(chosenAction))return;
-  normalizePhaseSchedule();game.dailySchedule.push(id);scheduleCursor=game.dailySchedule.length-1;selectedScheduleAction=id;
+  normalizePhaseSchedule();game.dailySchedule.splice(scheduleCursor,0,id);scheduleCursor=Math.min(game.dailySchedule.length,scheduleCursor+1);selectedScheduleAction=id;
   const firstSelection=!game.activityUnlocksSeen.includes(id);
   if(firstSelection)game.activityUnlocksSeen.push(id);
   if(chosenAction.intro&&firstSelection){document.querySelector('#speakerName').textContent=chosenAction.mentor;document.querySelector('#dialogueText').textContent=chosenAction.intro;}
@@ -1771,7 +1775,8 @@ function clearAllSchedule(){game.dailySchedule=[];game.scheduleFormat='phase-v1'
 
 function clearDailyAction(index) {
   if (!game.dailySchedule[index]) return;
-  game.dailySchedule[index] = null;
+  game.dailySchedule.splice(index,1);
+  scheduleCursor=Math.min(scheduleCursor,game.dailySchedule.length);
   scheduleConfirmDismissed = false;
   hideScheduleConfirmation();
   renderSchedulePanel();
