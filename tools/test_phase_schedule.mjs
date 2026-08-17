@@ -23,5 +23,7 @@ assert.ok(css.includes('.compact-schedule-grid'),'교육·아르바이트·휴�
 assert.ok(css.includes('Main categories are broad, dark tabs'),'큰 카테고리와 세부 일정의 시각적 위계가 필요합니다.');
 assert.ok(css.includes('.compact-tabs button.on'),'선택한 큰 카테고리가 진한 탭으로 보여야 합니다.');
 assert.ok(css.includes('.compact-schedule-grid>.compact-action'),'세부 일정은 작은 이름 버튼으로 보여야 합니다.');
+assert.ok(app.includes('scheduleActionEmojis'),'각 세부 일정에는 특징을 나타내는 이모지가 필요합니다.');
+assert.ok(css.includes('@keyframes schedule-icon-motion'),'세부 일정 이모지는 가벼운 동작 효과가 있어야 합니다.');
 
 console.log('PASS: 14일 페이즈와 PM3식 5칸 편성·간결한 활동 목록');
