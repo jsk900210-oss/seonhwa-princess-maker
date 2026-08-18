@@ -1067,6 +1067,67 @@
   .phone.playing:not(.market-playing):not(.vacation-playing) .day-result.phase-brief-result{bottom:-130px!important;min-height:124px!important;max-height:124px!important}
 }
 
+/* v0.63.47: remove duplicate date/money UI and place phase summary below the frame. */
+.phone.playing:not(.market-playing):not(.vacation-playing)>.home-header{
+  top:2%!important;
+  left:auto!important;
+  right:4%!important;
+  width:148px!important;
+  min-height:44px!important;
+  display:grid!important;
+  grid-template-columns:1fr auto!important;
+  gap:3px 6px!important;
+  padding:6px 9px!important
+}
+.phone.playing:not(.market-playing):not(.vacation-playing)>.home-header>#dateLabel{
+  display:none!important
+}
+.phone.playing:not(.market-playing):not(.vacation-playing)>.home-header>#cashLabel{
+  grid-column:1/-1!important;
+  justify-self:end!important;
+  padding:1px 5px!important;
+  font-size:8px!important
+}
+.phone.playing:not(.market-playing):not(.vacation-playing)>.home-header>#moneyLabel{
+  grid-column:1/-1!important;
+  justify-self:end!important;
+  font-size:14px!important;
+  line-height:1!important
+}
+.phone.playing:not(.market-playing):not(.vacation-playing) .stage-pm3-hud>.stage-hud-calendar{
+  width:104px!important;
+  min-height:84px!important;
+  padding:6px!important;
+  border-width:3px!important;
+  background:#fffdf5!important
+}
+.phone.playing:not(.market-playing):not(.vacation-playing) .stage-pm3-hud>.stage-hud-calendar>#stageHudMoney{
+  display:none!important
+}
+.phone.playing:not(.market-playing):not(.vacation-playing) #stageHudDate b{
+  font-size:38px!important;
+  line-height:.95!important
+}
+.phone.playing:not(.market-playing):not(.vacation-playing) #stageHudDate span,
+.phone.playing:not(.market-playing):not(.vacation-playing) #stageHudDate em{
+  font-size:11px!important;
+  font-weight:900!important
+}
+.phone.playing:not(.market-playing):not(.vacation-playing) .day-result.phase-brief-result{
+  top:auto!important;
+  bottom:-72px!important;
+  left:3%!important;
+  right:auto!important;
+  width:58%!important;
+  min-height:62px!important;
+  max-height:62px!important
+}
+@media(max-width:380px){
+  .phone.playing:not(.market-playing):not(.vacation-playing)>.home-header{right:3%!important;width:140px!important}
+  .phone.playing:not(.market-playing):not(.vacation-playing) .stage-pm3-hud>.stage-hud-calendar{width:98px!important;min-height:80px!important}
+  .phone.playing:not(.market-playing):not(.vacation-playing) .day-result.phase-brief-result{bottom:-70px!important;left:3%!important;width:62%!important}
+}
+
 /* v0.63.44: remove the remaining translucent floor overlay on holidays. */
 .phone.playing.schedule-holiday:not(.market-playing):not(.vacation-playing) .stage-map-shade{
   display:none!important
