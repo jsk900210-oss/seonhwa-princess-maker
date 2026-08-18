@@ -1067,6 +1067,33 @@
   .phone.playing:not(.market-playing):not(.vacation-playing) .day-result.phase-brief-result{bottom:-130px!important;min-height:124px!important;max-height:124px!important}
 }
 
+/* v0.63.48: enlarge the schedule calendar for mobile readability. */
+.phone.playing:not(.market-playing):not(.vacation-playing) .stage-pm3-hud>.stage-hud-calendar{
+  width:122px!important;
+  min-height:96px!important;
+  padding:7px 8px!important
+}
+.phone.playing:not(.market-playing):not(.vacation-playing) #stageHudDate small{
+  font-size:9px!important;
+  line-height:1.2!important
+}
+.phone.playing:not(.market-playing):not(.vacation-playing) #stageHudDate b{
+  font-size:46px!important;
+  line-height:.9!important
+}
+.phone.playing:not(.market-playing):not(.vacation-playing) #stageHudDate span,
+.phone.playing:not(.market-playing):not(.vacation-playing) #stageHudDate em{
+  font-size:13px!important;
+  line-height:1.1!important
+}
+@media(max-width:380px){
+  .phone.playing:not(.market-playing):not(.vacation-playing) .stage-pm3-hud>.stage-hud-calendar{
+    width:114px!important;
+    min-height:91px!important
+  }
+  .phone.playing:not(.market-playing):not(.vacation-playing) #stageHudDate b{font-size:43px!important}
+}
+
 /* v0.63.47: remove duplicate date/money UI and place phase summary below the frame. */
 .phone.playing:not(.market-playing):not(.vacation-playing)>.home-header{
   top:2%!important;
