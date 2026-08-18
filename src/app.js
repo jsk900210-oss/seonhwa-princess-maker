@@ -1911,10 +1911,14 @@ function showPhaseReport(dayRecords,phaseStart){
   result.innerHTML=`<header><div><b>제${phaseStart.index}페이즈 완료</b><small>${phaseStart.week}주차의 기록을 정리했습니다</small></div><button id="phaseResultNext" type="button">터치해 다음 페이즈</button></header><div class="phase-result-counts">${summaryRows}</div><div class="phase-result-money"><span><b>수입 합계</b><strong>+${income.toLocaleString()}냥</strong></span><span><b>숙련 변화</b><strong>${mastery?`+${mastery.earned}점${mastery.rankUp?` · ${mastery.rankUp} 승급!`:''}`:'변화 없음'}</strong></span></div><div class="phase-work-summary"><span>이 페이즈를 잘 마무리했어요.</span><em>${dayRecords.length}일 진행</em></div>`;
   const closePhaseReport=()=>{result.hidden=true;result.classList.remove('phase-brief-result');};
   const nextButton=result.querySelector('#phaseResultNext');
-  nextButton?.addEventListener('click',closePhaseReport,{once:true});
+  let phaseReportReady=false;
+  nextButton.disabled=true;
+  nextButton.textContent='잠시 정리 중';
+  setTimeout(()=>{phaseReportReady=true;nextButton.disabled=false;nextButton.textContent='터치해 다음 페이즈';},850);
+  nextButton?.addEventListener('click',()=>{if(phaseReportReady)closePhaseReport();},{once:false});
   result.addEventListener('click',event=>{if(event.target===result)closePhaseReport();},{once:true});
   result.hidden=false;
-  return new Promise(resolve=>{nextButton?.addEventListener('click',()=>resolve(),{once:true});result.addEventListener('click',event=>{if(event.target===result)resolve();},{once:true});});
+  return new Promise(resolve=>{const finish=()=>{if(phaseReportReady){closePhaseReport();resolve();}};nextButton?.addEventListener('click',finish,{once:false});result.addEventListener('click',event=>{if(event.target===result)finish();},{once:true});});
 }
 
 async function runWeek() {
@@ -2255,6 +2259,7 @@ async function playWeeklySchedule(selected) {
   stage.hidden = false;
   stageCharacterImage.src = spriteFrames.down[1];
   const playbackWeek=document.querySelector('#playbackWeek');
+  const playbackHolidayMark=document.querySelector('#playbackHolidayMark');
   if(playbackWeek)playbackWeek.innerHTML=Array.from({length:14},(_,day)=>`<span>${day+1}</span>`).join('');
   for (let index = 0; index < selected.length; index += 1) {
     const activityDate=new Date(scheduleStart);activityDate.setDate(scheduleStart.getDate()+index);
@@ -2278,6 +2283,10 @@ async function playWeeklySchedule(selected) {
       : action.name;
     document.querySelector('#playbackDailyStats').innerHTML='';
     document.querySelectorAll('#playbackWeek span').forEach((day,dayIndex)=>{day.classList.toggle('done',dayIndex<=(index%14)-1);day.classList.toggle('current',dayIndex===(index%14));});
+    if(playbackHolidayMark){
+      const holidayIndex=[5,6,12,13].includes(index%14);
+      playbackHolidayMark.hidden=!holidayIndex;
+    }
     const outfitName=outfits.find(item=>item.id===dailyOutfit)?.name;
     const showOutfitName=action.id!=='rest'&&Boolean(outfitName);
     const restActivity=action.id==='rest'?(Math.random()<.5?'tea':'sleep'):null;
