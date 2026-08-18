@@ -1067,6 +1067,12 @@
   .phone.playing:not(.market-playing):not(.vacation-playing) .day-result.phase-brief-result{bottom:-130px!important;min-height:124px!important;max-height:124px!important}
 }
 
+/* v0.63.49: calendar overlapped the decorative roof studs on holiday scenes. */
+.phone.playing.schedule-holiday:not(.market-playing):not(.vacation-playing) .stage-roof::before,
+.phone.playing.schedule-holiday:not(.market-playing):not(.vacation-playing) .stage-roof::after{
+  display:none!important
+}
+
 /* v0.63.48: enlarge the schedule calendar for mobile readability. */
 .phone.playing:not(.market-playing):not(.vacation-playing) .stage-pm3-hud>.stage-hud-calendar{
   width:122px!important;
