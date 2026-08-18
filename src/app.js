@@ -233,38 +233,26 @@ const vacationIllustrations=[
   ,{id:'vacation-modern-age19-winter-onsen',age:19,season:'겨울',name:'설경 속 노천온천',image:'../assets/events/vacation/modern/age-19/winter-openair-onsen.png',effect:'snow',rarity:'special',description:'눈 덮인 산과 소나무를 바라보며 온천의 김 속에서 쉬었던 현대의 특별한 추억.'}
   ,{id:'vacation-modern-age19-winter-garden',age:19,season:'겨울',name:'눈 내린 탕의 아침',image:'../assets/events/vacation/modern/age-19/winter-spa-garden.png?v=0.62.45-debug',effect:'steam',rarity:'special',description:'눈 덮인 한옥 정원을 바라보며 따뜻한 노천탕에서 맞이한 고요한 겨울 아침.'}
 ];
+// 일정 화면은 승인된 연령별 기준 얼굴만 사용한다. 걷기 전용 통합 프레임이
+// 완성되기 전까지 장보기 프레임을 공통 이동 루프로 사용해 구형 얼굴 혼입을 막는다.
+function unifiedAgeFolder(){return String(growthAssetAge(growthVisualAge())).padStart(2,'0');}
+function unifiedFrames(name){const age=unifiedAgeFolder();return [1,2,3].map(n=>`../assets/characters/seonhwa/activity-consistent/age-${age}/${name}-${n}.png`);}
 const spriteFrames = {
-  down: [1,2,3].map(n=>`../assets/characters/seonhwa/age-09/sprites/walk/seonhwa-walk-down-${n}.png`),
-  left: [1,2,3].map(n=>`../assets/characters/seonhwa/age-09/sprites/walk/seonhwa-walk-left-${n}.png`),
-  right: [1,2,3].map(n=>`../assets/characters/seonhwa/age-09/sprites/walk/seonhwa-walk-right-${n}.png`)
+  get down(){return unifiedFrames('errand');},
+  get left(){return unifiedFrames('errand');},
+  get right(){return unifiedFrames('errand');}
 };
-const activityFrames = Object.fromEntries(['sweeping','manners','calligraphy','arithmetic','errand','herbs','rest'].map(name=>[name,[1,2,3].map(n=>`../assets/characters/seonhwa/age-09/sprites/activities/${name}-${n}.png`)]));
-// 집에서 휴식은 이불에 누워 잠드는 3프레임 호흡 루프를 사용한다.
-activityFrames.rest=[1,2,3].map(n=>`../assets/characters/seonhwa/age-09/sprites/activities/rest-${n}.png`);
-activityFrames.calligraphy=[1,2,3].map(n=>`../assets/characters/seonhwa/age-09/sprites/activities/calligraphy-v2-${n}.png`);
-// The third source cell belonged to calligraphy; keep arithmetic on the abacus-only frames.
-activityFrames.arithmetic=[1,2,3].map(n=>`../assets/characters/seonhwa/age-09/sprites/activities/arithmetic-v2-${n}.png`);
-activityFrames.manners=[1,2,3].map(n=>`../assets/characters/seonhwa/age-09/sprites/activities/manners-fixed-${n}.png`);
-activityFrames.errand=[1,2,3].map(n=>`../assets/characters/seonhwa/activity-consistent/age-09/errand-${n}.png`);
-activityFrames.houseclean=[1,2,3,4,5,6].map(n=>`../assets/characters/seonhwa/age-09/sprites/activities/houseclean-side-${n}.png`);
-activityFrames.sleep=[...activityFrames.rest];
-// v0.62.55: face-consistent awake sprites and a simple tea-only rest loop.
-activityFrames.sweeping=[1,2,3].map(n=>`../assets/characters/seonhwa/activity-consistent/age-09/sweeping-legacy-${n}.png`);
-activityFrames.errand=[1,2,3].map(n=>`../assets/characters/seonhwa/activity-consistent/age-09/errand-${n}.png`);
-activityFrames.herbs=[1,2,3].map(n=>`../assets/characters/seonhwa/activity-consistent/age-09/herbs-legacy-${n}.png`);
-activityFrames.tea=[1,1,1].map(n=>`../assets/characters/seonhwa/activity-consistent/age-09/rest-legacy-${n}.png`);
-activityFrames.eating=[1,2,3].map(n=>`../assets/characters/seonhwa/age-09/sprites/activities/eating-${n}.png`);
-// 모든 전용 일자리 교정본은 새 파일명을 사용해 이전 깨진 프레임 캐시가 재사용되지 않게 한다.
-['farmwork','childcare','kitchenhelp','woodwork','loomwork','masonry','clinichelp','ferryhelp','merchanthelp'].forEach(name=>{activityFrames[name]=[1,2,3].map(n=>`../assets/characters/seonhwa/job-actions/${name}-v2-${n}.png`);});
-// 10세 해금 아이 돌보기는 9~12세 공통 얼굴·머리·기본 의상으로 다시 제작한 통일 프레임을 사용한다.
-activityFrames.childcare=[1,2,3].map(n=>`../assets/characters/seonhwa/job-actions/childcare-v3-${n}.png`);
 // 승인된 4장(age09/13/16/18-eyes-v2)을 모든 기본 쯔꾸르 동작의 단일 원본으로 사용한다.
 // 잠자기도 연령별 기준 시트에서 불러와 얼굴·체형·기본 의상이 섞이지 않게 한다.
-const modularActivities=new Set(['calligraphy','arithmetic','manners','errand','houseclean','sleep']);
+const canonicalActivityAliases={
+  calligraphy:'calligraphy',study:'calligraphy',painting:'calligraphy',music:'calligraphy',dance:'manners',magic:'calligraphy',
+  arithmetic:'arithmetic',cooking:'arithmetic',swordsmanship:'manners',martial:'manners',manners:'manners',
+  errand:'errand',herbs:'errand',farmwork:'errand',kitchenhelp:'errand',ferryhelp:'errand',merchanthelp:'arithmetic',eating:'errand',
+  houseclean:'houseclean',sweeping:'houseclean',woodwork:'houseclean',loomwork:'houseclean',masonry:'houseclean',
+  childcare:'manners',clinichelp:'calligraphy',rest:'rest',sleep:'rest',tea:'rest'
+};
 function activityFrameSet(activity){
-  if(!modularActivities.has(activity))return activityFrames[activity];
-  const name=activity==='sleep'?'rest':activity,age=String(growthAssetAge(growthVisualAge())).padStart(2,'0');
-  return [1,2,3].map(frame=>`../assets/characters/seonhwa/activity-consistent/age-${age}/${name}-${frame}.png`);
+  return unifiedFrames(canonicalActivityAliases[activity]||'errand');
 }
 const npcFrames = Object.fromEntries(['teacher','dolsoe','herbalist','nanny'].map(name=>[name,[1,2,3].map(n=>`../assets/characters/npcs/activity/${name}-${n}.png`)]));
 npcFrames.teacherReading=[1,2,3].map(n=>`../assets/characters/npcs/activity/teacher-reading-${n}.png`);
@@ -1762,7 +1750,7 @@ function showOutfitPreview(id){
   }));
   document.querySelector('#outfitPreviewBuy').addEventListener('click',()=>buyOutfit(id));
 }
-async function buyFood(id){const food=foods.find(item=>item.id===id);if(!food||game.money<food.price||marketMealConsumed)return;marketMealConsumed=true;panel.hidden=true;const stage=document.querySelector('#activityStage'),image=document.querySelector('#stageCharacterImage'),character=document.querySelector('#stageCharacter');document.querySelector('#marketExplore').hidden=true;stage.hidden=false;stage.className='activity-stage map-restRoom eating-stage';document.querySelector('#stageMap').src=backgrounds.restRoom;document.querySelector('#stageNpc').hidden=true;document.querySelector('#stageProps').hidden=true;document.querySelector('#stageCaption').textContent=`주막 · ${food.name}`;character.hidden=false;character.className='stage-character pixel-sprite motion-eating';for(const n of [1,2,3,2,1,2,3]){image.src=await outfitActivityFrame(`../assets/characters/seonhwa/age-09/sprites/activities/eating-${n}.png`,game.equippedOutfit);await new Promise(r=>setTimeout(r,320));}stage.hidden=true;game.money-=food.price;applyShopChanges(food.change);document.querySelector('#dialogueText').textContent=`주막에서 ${food.name}을(를) 맛있게 먹었어요. 이번 저잣거리 방문의 식사는 끝났어요.`;showLiveChanges({change:food.change,cost:food.price});panel.hidden=false;renderShopPanel('food',true);queueAutoSave();}
+async function buyFood(id){const food=foods.find(item=>item.id===id);if(!food||game.money<food.price||marketMealConsumed)return;marketMealConsumed=true;panel.hidden=true;const stage=document.querySelector('#activityStage'),image=document.querySelector('#stageCharacterImage'),character=document.querySelector('#stageCharacter');document.querySelector('#marketExplore').hidden=true;stage.hidden=false;stage.className='activity-stage map-restRoom eating-stage';document.querySelector('#stageMap').src=backgrounds.restRoom;document.querySelector('#stageNpc').hidden=true;document.querySelector('#stageProps').hidden=true;document.querySelector('#stageCaption').textContent=`주막 · ${food.name}`;character.hidden=false;character.className='stage-character pixel-sprite motion-eating';const eatingFrames=activityFrameSet('eating');for(const n of [0,1,2,1,0,1,2]){image.src=await outfitActivityFrame(eatingFrames[n],game.equippedOutfit);await new Promise(r=>setTimeout(r,320));}stage.hidden=true;game.money-=food.price;applyShopChanges(food.change);document.querySelector('#dialogueText').textContent=`주막에서 ${food.name}을(를) 맛있게 먹었어요. 이번 저잣거리 방문의 식사는 끝났어요.`;showLiveChanges({change:food.change,cost:food.price});panel.hidden=false;renderShopPanel('food',true);queueAutoSave();}
 function buyOutfit(id){normalizeInventory();const outfit=outfits.find(item=>item.id===id);if(!outfit||!outfitAvailable(outfit))return;const cash=isCashOutfit(outfit);if(cash?game.cash<outfit.cashPrice:game.money<outfit.price)return;if(game.items.some(item=>item.type==='outfit'&&item.id===id)){document.querySelector('#dialogueText').textContent=`${outfit.name}은(는) 이미 보유하고 있어요.`;panelBody.classList.remove('outfit-preview-open');renderShopPanel('outfit',activeShopMarketMode,activeOutfitShopCategory);return;}if(cash)game.cash-=outfit.cashPrice;else game.money-=outfit.price;game.items.push({id:outfit.id,type:'outfit',name:outfit.name,age:outfit.age,ageEnd:outfit.ageEnd,tone:outfit.tone,seasons:outfit.seasons,qty:1});game.autoOutfit=false;game.equippedOutfit=id;applyEquippedOutfit();applyShopChanges(outfit.change);document.querySelector('#dialogueText').textContent=`${outfit.name}을(를) 구입하고 갈아입었어요. 일정에서도 이 의상이 유지돼요.`;if(!cash)showLiveChanges({change:outfit.change,cost:outfit.price});renderHud();panelBody.classList.remove('outfit-preview-open');renderShopPanel('outfit',activeShopMarketMode,activeOutfitShopCategory);queueAutoSave();}
 
 const marketPlaces=[
