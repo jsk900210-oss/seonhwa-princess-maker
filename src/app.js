@@ -2263,6 +2263,7 @@ async function playWeeklySchedule(selected) {
   if(playbackWeek)playbackWeek.innerHTML=Array.from({length:14},(_,day)=>`<span>${day+1}</span>`).join('');
   for (let index = 0; index < selected.length; index += 1) {
     const activityDate=new Date(scheduleStart);activityDate.setDate(scheduleStart.getDate()+index);
+    const weekdayLabels=['일','월','화','수','목','금','토'];
     renderStagePm3Hud(activityDate);
     const plannedAction = selected[index];
     const action = actionForStressLimit(plannedAction,simulated.stress);
@@ -2277,14 +2278,16 @@ async function playWeeklySchedule(selected) {
     setScheduleDialogue(action,'start',index);
     if(forcedRest)document.querySelector('#dialogueText').textContent='스트레스가 100에 도달해 오늘 일정은 집에서 휴식으로 변경했어요.';
     const dailyOutfit=game.autoOutfit?updateAutoOutfit(action.id):game.equippedOutfit;
-    document.querySelector('#playbackDay').textContent = `제${playbackPhase.index+Math.floor(index/14)}페이즈 · ${index%14+1}/14일`;
+    const playbackDay=document.querySelector('#playbackDay');
+    playbackDay.classList.remove('date-tick');void playbackDay.offsetWidth;playbackDay.classList.add('date-tick');
+    playbackDay.textContent = `${activityDate.getFullYear()}년 ${activityDate.getMonth()+1}월 ${activityDate.getDate()}일 (${weekdayLabels[activityDate.getDay()]})`;
     document.querySelector('#playbackAction').textContent = ['교육','아르바이트'].includes(action.category)
       ? `${action.category} · ${action.name} · ${activityRankNames[currentMasteryRank]}`
       : action.name;
     document.querySelector('#playbackDailyStats').innerHTML='';
     document.querySelectorAll('#playbackWeek span').forEach((day,dayIndex)=>{day.classList.toggle('done',dayIndex<=(index%14)-1);day.classList.toggle('current',dayIndex===(index%14));});
     if(playbackHolidayMark){
-      const holidayIndex=[5,6,12,13].includes(index%14);
+      const holidayIndex=activityDate.getDay()===0||activityDate.getDay()===6;
       playbackHolidayMark.hidden=!holidayIndex;
     }
     const outfitName=outfits.find(item=>item.id===dailyOutfit)?.name;
