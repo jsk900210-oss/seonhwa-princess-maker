@@ -1116,3 +1116,8 @@
     max-height:98px!important
   }
 }
+
+/* v0.63.42: the holiday scene keeps only its calendar, title and characters. */
+.phone.playing.schedule-holiday:not(.market-playing):not(.vacation-playing) .stage-pm3-hud>#stageHudStats{
+  display:none!important
+}
