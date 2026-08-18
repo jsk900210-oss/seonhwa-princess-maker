@@ -1067,6 +1067,11 @@
   .phone.playing:not(.market-playing):not(.vacation-playing) .day-result.phase-brief-result{bottom:-130px!important;min-height:124px!important;max-height:124px!important}
 }
 
+/* v0.63.44: remove the remaining translucent floor overlay on holidays. */
+.phone.playing.schedule-holiday:not(.market-playing):not(.vacation-playing) .stage-map-shade{
+  display:none!important
+}
+
 /* v0.63.40: controls sit directly below the top information card. */
 .phone.playing:not(.market-playing):not(.vacation-playing) .activity-playback{
   top:15.8%!important;
