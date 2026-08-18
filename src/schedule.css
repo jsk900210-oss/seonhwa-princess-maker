@@ -1080,3 +1080,39 @@
   .phone.playing:not(.market-playing):not(.vacation-playing) .activity-playback{right:5%!important}
   .phone.playing:not(.market-playing):not(.vacation-playing)>.settings-gear{right:calc(5% + 70px)!important}
 }
+
+/* v0.63.41: compact PM4-style phase result, shown for three seconds. */
+.phone.playing:not(.market-playing):not(.vacation-playing) .day-result.phase-brief-result{
+  bottom:-104px!important;
+  min-height:98px!important;
+  max-height:98px!important;
+  gap:2px!important;
+  padding:7px 10px!important
+}
+.day-result.phase-brief-result header{
+  display:flex!important;
+  align-items:center!important;
+  justify-content:space-between!important;
+  min-height:20px!important;
+  padding:0 0 3px!important
+}
+.day-result.phase-brief-result header b{font-size:12px!important}
+.day-result.phase-brief-result header small{
+  display:block!important;
+  color:#d9c9a8!important;
+  font-size:8px!important;
+  font-weight:500!important
+}
+.day-result.phase-brief-result p{
+  min-height:16px!important;
+  padding:1px 0!important;
+  font-size:9px!important
+}
+.day-result.phase-brief-result>button{display:none!important}
+@media(max-width:380px){
+  .phone.playing:not(.market-playing):not(.vacation-playing) .day-result.phase-brief-result{
+    bottom:-104px!important;
+    min-height:98px!important;
+    max-height:98px!important
+  }
+}

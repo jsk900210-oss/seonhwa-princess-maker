@@ -1905,17 +1905,10 @@ function showPhaseReport(dayRecords,phaseStart){
   const mastery=awardPhaseMastery(dayRecords);
   const result=document.querySelector('#dayResult');
   result.classList.add('phase-brief-result');
-  result.innerHTML=`<header><b>제${phaseStart.index}페이즈 결과</b></header><p><span>착실히 해낸 일수</span><strong>${diligent}일 / ${dayRecords.length}일 (${rate}%)</strong></p><p><span>수입</span><strong>+${income.toLocaleString()}냥</strong></p><p><span>숙련</span><strong>${mastery?`+${mastery.earned}점${mastery.rankUp?` · ${mastery.rankUp} 승급`:''}`:'변화 없음'}</strong></p><button id="phaseResultNext" type="button">터치해 다음 페이즈</button>`;
+  result.innerHTML=`<header><b>제${phaseStart.index}페이즈 결과</b><small>3초 후 계속</small></header><p><span>일한 일수</span><strong>${diligent}/${dayRecords.length}일 · ${rate}%</strong></p><p><span>수입</span><strong>+${income.toLocaleString()}냥</strong></p><p><span>숙련</span><strong>${mastery?`+${mastery.earned}점${mastery.rankUp?` · ${mastery.rankUp} 승급`:''}`:'변화 없음'}</strong></p>`;
   const closePhaseReport=()=>{result.hidden=true;result.classList.remove('phase-brief-result');};
-  const nextButton=result.querySelector('#phaseResultNext');
-  let phaseReportReady=false;
-  nextButton.disabled=true;
-  nextButton.textContent='잠시 정리 중';
-  setTimeout(()=>{phaseReportReady=true;nextButton.disabled=false;nextButton.textContent='터치해 다음 페이즈';},850);
-  nextButton?.addEventListener('click',()=>{if(phaseReportReady)closePhaseReport();},{once:false});
-  result.addEventListener('click',event=>{if(event.target===result)closePhaseReport();},{once:true});
   result.hidden=false;
-  return new Promise(resolve=>{const finish=()=>{if(phaseReportReady){closePhaseReport();resolve();}};nextButton?.addEventListener('click',finish,{once:false});result.addEventListener('click',event=>{if(event.target===result)finish();},{once:true});});
+  return new Promise(resolve=>setTimeout(()=>{closePhaseReport();resolve();},3000));
 }
 
 async function runWeek() {
