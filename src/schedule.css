@@ -1380,3 +1380,33 @@
   .activity-stage:not(.market-choice-stage)>.stage-roof{
   box-shadow:inset 0 1px 0 #e3c98d66!important
 }
+
+/* v0.63.54: holiday is the plain room scene. Remove every decorative floor
+   layer that can read as a translucent oval, including legacy pseudo layers. */
+.phone.playing.schedule-holiday:not(.market-playing):not(.vacation-playing)
+  .activity-stage:not(.market-choice-stage) .stage-map-shade,
+.phone.playing.schedule-holiday:not(.market-playing):not(.vacation-playing)
+  .activity-stage:not(.market-choice-stage)>.stage-inner::before{
+  content:none!important;
+  display:none!important;
+  background:none!important;
+  border:0!important;
+  box-shadow:none!important
+}
+
+/* Keep short mistake cues below the fixed status HUD instead of underneath it. */
+.phone.playing:not(.market-playing):not(.vacation-playing) .condition-cue{
+  z-index:13!important;
+  left:50%!important;
+  top:29%!important;
+  min-width:64px!important;
+  padding:6px 11px!important;
+  border-radius:10px!important;
+  transform:translateX(-50%);
+  white-space:nowrap!important
+}
+@keyframes condition-cue{
+  0%{opacity:0;transform:translateX(-50%) translateY(8px) scale(.8)}
+  25%,75%{opacity:1;transform:translateX(-50%) translateY(0) scale(1)}
+  100%{opacity:0;transform:translateX(-50%) translateY(-10px) scale(.92)}
+}
