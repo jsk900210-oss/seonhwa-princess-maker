@@ -1066,3 +1066,17 @@
   .phone.playing:not(.market-playing):not(.vacation-playing)>.settings-gear{right:calc(5% + 70px)!important}
   .phone.playing:not(.market-playing):not(.vacation-playing) .day-result.phase-brief-result{bottom:-130px!important;min-height:124px!important;max-height:124px!important}
 }
+
+/* v0.63.40: controls sit directly below the top information card. */
+.phone.playing:not(.market-playing):not(.vacation-playing) .activity-playback{
+  top:15.8%!important;
+  right:6%!important
+}
+.phone.playing:not(.market-playing):not(.vacation-playing)>.settings-gear{
+  top:15.8%!important;
+  right:calc(6% + 70px)!important
+}
+@media(max-width:380px){
+  .phone.playing:not(.market-playing):not(.vacation-playing) .activity-playback{right:5%!important}
+  .phone.playing:not(.market-playing):not(.vacation-playing)>.settings-gear{right:calc(5% + 70px)!important}
+}
