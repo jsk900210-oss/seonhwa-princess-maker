@@ -1282,7 +1282,7 @@ function openPanel(type) {
       return `<div class="relation-card ${relation.affinity>=60?'unlocked':''}"><b>${candidate.name}</b><small>${candidate.role}</small><span>${phase}</span><div class="relation-heart-meter" aria-label="${candidate.name} 호감도 ${percent}%">${heartBar}</div><em>${percent}%</em></div>`;
     }).join('');
     const phase=phaseInfo();
-    panelBody.innerHTML = `<div class="status-summary"><span>${game.age}세 · 제${phase.index}페이즈 ${phase.week}주차</span><b>${game.money.toLocaleString()}냥</b></div><section class="body-profile" aria-label="성장 정보"><div><small>키</small><b>${game.height.toFixed(1)} cm</b></div><div><small>몸무게</small><b>${game.weight.toFixed(1)} kg</b></div></section>${statGroups.map(group => `<section class="stat-group"><h3>${group.title}</h3>${group.stats.map(([key,label])=>statBar(key,label)).join('')}</section>`).join('')}<section class="stat-group condition-group"><h3>현재 상태</h3>${statBar('stress','스트레스')}</section><section class="stat-group"><h3>수호 인연</h3>${statBar('nannyAffinity','신수 유대감')}${statBar('fatherAffinity','아버지 친밀도')}</section><section class="relation-group"><h3>인연</h3><p>5회면 열려요. 60 이상이면 후보예요.</p><div class="relation-grid">${relationCards}</div></section>`;
+    panelBody.innerHTML = `<div class="status-summary"><span>${game.age}세 · 제${phase.index}페이즈 ${phase.week}주차</span><b>${game.money.toLocaleString()}냥</b></div><section class="body-profile" aria-label="성장 정보"><div><small>키</small><b>${game.height.toFixed(1)} cm</b></div><div><small>몸무게</small><b>${game.weight.toFixed(1)} kg</b></div></section>${statGroups.map(group => `<section class="stat-group"><h3>${group.title}</h3>${group.stats.map(([key,label])=>statBar(key,label)).join('')}</section>`).join('')}<section class="stat-group condition-group"><h3>현재 상태</h3>${statBar('stress','스트레스')}</section><section class="stat-group"><h3>수호 인연</h3>${statBar('nannyAffinity','신수 유대감')}${statBar('fatherAffinity','아버지 친밀도')}</section><section class="relation-group"><h3>인연</h3><p>5회 만남으로 데이트가 열리고, 호감도 60 이상과 특별한 관계부터 엔딩 후보가 됩니다.</p><div class="relation-grid">${relationCards}</div></section>`;
   } else if (type === 'inventory') {
     playHomeMusic();
     renderInventory();
@@ -1893,7 +1893,7 @@ function showPhaseReport(dayRecords,phaseStart){
   const mastery=awardPhaseMastery(dayRecords);
   const result=document.querySelector('#dayResult');
   result.classList.add('phase-brief-result');
-  result.innerHTML=`<p class="phase-work-days"><span>착실히 일한 일수</span><strong>${dayRecords.length}일 중 ${diligent}일 (${rate}%)</strong></p><p class="phase-work-income"><span>수입</span><strong>+${income.toLocaleString()}냥</strong></p>`;
+  result.innerHTML=`<p class="phase-work-days"><span>착실히 일한 일수</span><strong>${dayRecords.length}일 중 ${diligent}일 (${rate}%)</strong></p><p class="phase-work-income"><span>수입${mastery?.rankUp?` · ${mastery.rankUp} 승급!`:''}</span><strong>+${income.toLocaleString()}냥</strong></p>`;
   const closePhaseReport=()=>{result.hidden=true;result.classList.remove('phase-brief-result');};
   result.hidden=false;
   return new Promise(resolve=>setTimeout(()=>{closePhaseReport();resolve();},3000));

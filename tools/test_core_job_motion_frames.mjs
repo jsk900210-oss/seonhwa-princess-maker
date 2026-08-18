@@ -20,6 +20,6 @@ for(const job of jobs){
 assert.match(app,/farmwork:\[0,0,1,1,2,2,2\]/);
 assert.match(app,/childcare:\[0,0,1,1,2,2,2\]/);
 assert.match(app,/kitchenhelp:\[0,0,1,1,1,2,2,2\]/);
-assert.match(app,/\$\{name\}-v2-\$\{n\}\.png/);
+assert.match(app,/function activityFrameSet\(activity\)[\s\S]*?unifiedFrames\(canonicalActivityAliases\[activity\]\|\|'errand'\)/);
 assert.match(app,/guardianCompanion'\)\.addEventListener\('click',startGuardianConversation\)/);
 console.log('PASS: 농가·아이 돌보기·주방 보조 전용 3프레임과 배경별 배치·신수 대화 연결');

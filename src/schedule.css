@@ -1312,8 +1312,8 @@
   }
 }
 
-/* v0.63.50: final schedule layout contract.
-   Keep this block last so older PM3 experiments cannot override it. */
+/* v0.63.53: canonical schedule layout contract.
+   This is the only final contract; older experiments above are inert. */
 .phone.playing:not(.market-playing):not(.vacation-playing)
   .activity-stage:not(.market-choice-stage)>.stage-pm3-hud{
   top:2%!important;
@@ -1324,16 +1324,16 @@
 .phone.playing:not(.market-playing):not(.vacation-playing)
   .stage-pm3-hud>.stage-hud-calendar{
   position:absolute!important;
-  top:-12px!important;
+  top:-65px!important;
   left:0!important;
-  width:122px!important;
-  min-height:96px!important;
-  padding:7px 8px!important;
+  width:132px!important;
+  min-height:104px!important;
+  padding:8px 9px!important;
   transform:translateY(-100%)!important;
   z-index:24!important
 }
 .phone.playing:not(.market-playing):not(.vacation-playing) #stageHudDate b{
-  font-size:46px!important;
+  font-size:50px!important;
   line-height:.9!important
 }
 .phone.playing:not(.market-playing):not(.vacation-playing) #stageHudDate span,
@@ -1359,27 +1359,18 @@
 @media(max-width:380px){
   .phone.playing:not(.market-playing):not(.vacation-playing)
     .stage-pm3-hud>.stage-hud-calendar{
-    width:116px!important;
-    min-height:92px!important
+    top:-71px!important;
+    width:124px!important;
+    min-height:98px!important
+  }
+  .phone.playing:not(.market-playing):not(.vacation-playing) #stageHudDate b{
+    font-size:47px!important
   }
   .phone.playing:not(.market-playing):not(.vacation-playing)
     .day-result.phase-brief-result{
     bottom:-76px!important;
     width:68%!important
   }
-}
-
-/* v0.63.51: final holiday layout override.
-   This block must remain at the physical end of the file. */
-.phone.playing:not(.market-playing):not(.vacation-playing)
-  .stage-pm3-hud>.stage-hud-calendar{
-  top:-65px!important;
-  width:132px!important;
-  min-height:104px!important;
-  padding:8px 9px!important
-}
-.phone.playing:not(.market-playing):not(.vacation-playing) #stageHudDate b{
-  font-size:50px!important
 }
 .phone.playing.schedule-holiday:not(.market-playing):not(.vacation-playing)
   .activity-stage:not(.market-choice-stage){
@@ -1388,15 +1379,4 @@
 .phone.playing.schedule-holiday:not(.market-playing):not(.vacation-playing)
   .activity-stage:not(.market-choice-stage)>.stage-roof{
   box-shadow:inset 0 1px 0 #e3c98d66!important
-}
-@media(max-width:380px){
-  .phone.playing:not(.market-playing):not(.vacation-playing)
-    .stage-pm3-hud>.stage-hud-calendar{
-    top:-71px!important;
-    width:124px!important;
-    min-height:98px!important
-  }
-  .phone.playing:not(.market-playing):not(.vacation-playing) #stageHudDate b{
-    font-size:47px!important
-  }
 }
