@@ -1905,7 +1905,7 @@ function showPhaseReport(dayRecords,phaseStart){
   const mastery=awardPhaseMastery(dayRecords);
   const result=document.querySelector('#dayResult');
   result.classList.add('phase-brief-result');
-  result.innerHTML=`<header><b>제${phaseStart.index}페이즈 결과</b><small>3초 후 계속</small></header><p><span>일한 일수</span><strong>${diligent}/${dayRecords.length}일 · ${rate}%</strong></p><p><span>수입</span><strong>+${income.toLocaleString()}냥</strong></p><p><span>숙련</span><strong>${mastery?`+${mastery.earned}점${mastery.rankUp?` · ${mastery.rankUp} 승급`:''}`:'변화 없음'}</strong></p>`;
+  result.innerHTML=`<p class="phase-work-days"><span>착실히 일한 일수</span><strong>${dayRecords.length}일 중 ${diligent}일 (${rate}%)</strong></p><p class="phase-work-income"><span>수입</span><strong>+${income.toLocaleString()}냥</strong></p>`;
   const closePhaseReport=()=>{result.hidden=true;result.classList.remove('phase-brief-result');};
   result.hidden=false;
   return new Promise(resolve=>setTimeout(()=>{closePhaseReport();resolve();},3000));
