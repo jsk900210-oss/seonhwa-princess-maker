@@ -913,13 +913,15 @@
 .activity-stage.action-rest .stage-character.pixel-sprite.motion-resting.rest-tea{
   left:50%!important;
   bottom:4%!important;
-  width:128px!important;
-  height:128px!important;
+  width:120px!important;
+  height:120px!important;
   padding:0!important;
   overflow:visible!important;
   transform:translateX(-50%)!important;
 }
 .activity-stage.action-rest .stage-character.pixel-sprite.motion-resting.rest-tea img{
+  width:100%!important;
+  height:100%!important;
   object-fit:contain!important;
   object-position:center bottom!important;
   transform:none!important;
@@ -935,8 +937,8 @@
     height:128px!important;
   }
   .activity-stage.action-rest .stage-character.pixel-sprite.motion-resting.rest-tea{
-    width:118px!important;
-    height:118px!important;
+    width:112px!important;
+    height:112px!important;
     bottom:4%!important;
   }
 }
