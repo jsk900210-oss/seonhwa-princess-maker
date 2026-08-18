@@ -995,3 +995,74 @@
 .phone.playing:not(.market-playing):not(.vacation-playing) .day-result.phase-brief-result{top:auto!important;bottom:-122px!important;left:7%!important;right:7%!important;max-height:116px!important;gap:3px!important;padding:7px 9px!important;overflow:auto!important}
 .day-result.phase-brief-result header{padding-bottom:3px!important}.day-result.phase-brief-result p{padding:1px 0!important}.day-result.phase-brief-result>button{min-height:27px!important;margin-top:1px!important;padding:3px!important}
 @media(max-width:380px){.phone.playing:not(.market-playing):not(.vacation-playing) .day-result.phase-brief-result{left:5%!important;right:5%!important;bottom:-120px!important}}
+
+/* v0.63.39: keep playback controls above the framed stage and make reports legible. */
+.phone.playing:not(.market-playing):not(.vacation-playing) .activity-playback{
+  top:19.2%!important;
+  right:7%!important;
+  width:64px!important;
+  z-index:22!important
+}
+.phone.playing:not(.market-playing):not(.vacation-playing)>.settings-gear{
+  display:grid!important;
+  z-index:22!important;
+  top:19.2%!important;
+  left:auto!important;
+  right:calc(7% + 70px)!important;
+  width:32px!important;
+  height:28px!important;
+  border-radius:999px!important;
+  font-size:15px!important
+}
+.phone.playing:not(.market-playing):not(.vacation-playing) .playback-speed button{
+  min-height:28px!important;
+  padding:4px 8px!important;
+  background:#f7e5bd!important;
+  color:#4a321e!important;
+  box-shadow:0 2px 7px #0005!important
+}
+.phone.playing:not(.market-playing):not(.vacation-playing) .playback-speed button.active{
+  background:#76502f!important;
+  color:#fff9e8!important
+}
+.phone.playing.schedule-holiday:not(.market-playing):not(.vacation-playing) .activity-stage:not(.market-choice-stage):after{
+  content:"휴일"!important;
+  font-family:"Noto Serif KR","Malgun Gothic",serif!important;
+  font-size:clamp(38px,11vw,58px)!important;
+  font-weight:600!important;
+  letter-spacing:.08em!important;
+  text-shadow:0 2px 0 #665f59,0 5px 11px #000a!important
+}
+.phone.playing:not(.market-playing):not(.vacation-playing) .day-result.phase-brief-result{
+  bottom:-130px!important;
+  min-height:124px!important;
+  max-height:124px!important;
+  gap:4px!important;
+  padding:8px 10px!important;
+  overflow:hidden!important;
+  box-sizing:border-box!important
+}
+.day-result.phase-brief-result header{
+  min-height:18px!important;
+  line-height:1.3!important
+}
+.day-result.phase-brief-result p{
+  min-height:17px!important;
+  padding:2px 0!important;
+  line-height:1.35!important
+}
+.day-result.phase-brief-result p span,
+.day-result.phase-brief-result p strong{
+  display:block!important;
+  min-width:0!important;
+  line-height:1.35!important
+}
+.day-result.phase-brief-result>button{
+  min-height:29px!important;
+  line-height:1.2!important
+}
+@media(max-width:380px){
+  .phone.playing:not(.market-playing):not(.vacation-playing) .activity-playback{right:5%!important}
+  .phone.playing:not(.market-playing):not(.vacation-playing)>.settings-gear{right:calc(5% + 70px)!important}
+  .phone.playing:not(.market-playing):not(.vacation-playing) .day-result.phase-brief-result{bottom:-130px!important;min-height:124px!important;max-height:124px!important}
+}
