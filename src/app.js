@@ -1257,14 +1257,18 @@ function renderStagePm3Hud(date,change={}){
   const phaseCard=hud.querySelector('.stage-hud-phase');if(phaseCard){phaseCard.classList.remove('date-tick');void phaseCard.offsetWidth;phaseCard.classList.add('date-tick');}
   const dayNames=['일','월','화','수','목','금','토'];
   const phase=phaseInfo(date);
-  document.querySelector('#stageHudDate').textContent=`${date.getFullYear()}년 ${date.getMonth()+1}월 ${date.getDate()}일 (${dayNames[date.getDay()]})`;
+  const growthStart=addYears(new Date(`${game.birthday}T00:00:00`),9);
+  const growthEnd=game.endingDate?new Date(`${game.endingDate}T00:00:00`):addYears(growthStart,10);
+  const elapsedDay=Math.max(1,Math.floor((date-growthStart)/86400000)+1);
+  const totalDays=Math.max(1,Math.floor((growthEnd-growthStart)/86400000)+1);
+  document.querySelector('#stageHudDate').innerHTML=`<small>${Math.min(elapsedDay,totalDays)} / ${totalDays}</small><span>${date.getMonth()+1}월</span><b>${date.getDate()}</b><em>${dayNames[date.getDay()]}</em>`;
   document.querySelector('#stageHudMoney').textContent=`${game.money.toLocaleString()}냥`;
   const phaseLabel=document.querySelector('#stageHudPhase');
-  if(phaseLabel)phaseLabel.textContent=`제${phase.index}페이즈 · ${phase.week}주차 · ${phase.remaining}페이즈 남음`;
+  if(phaseLabel)phaseLabel.textContent=`제${phase.index} / ${phase.total}페이즈`;
   const phaseProgress=document.querySelector('#stageHudPhaseProgress');
   if(phaseProgress)phaseProgress.style.width=`${phase.percent}%`;
   const keys=['strength','dignity','manners','intelligence','charm','stress'];
-  document.querySelector('#stageHudStats').innerHTML=keys.map(key=>{const value=clampStat(key,game[key]),delta=change[key]||0,maximum=statMaximum(key),direction=delta>0?'▲':delta<0?'▼':'';return `<span class="stage-hud-stat ${delta>0?'up':delta<0?'down':''}"><b>${statLabels[key]}</b><i style="--value:${Math.round(value/maximum*100)}%"></i><em>${value}${delta?`<small>${direction}${Math.abs(delta)}</small>`:''}</em></span>`;}).join('');
+  document.querySelector('#stageHudStats').innerHTML=keys.map(key=>{const value=clampStat(key,game[key]),delta=change[key]||0,maximum=statMaximum(key),direction=delta>0?'▲':delta<0?'▼':'',beneficial=key==='stress'?delta<0:delta>0;return `<span class="stage-hud-stat ${delta?(beneficial?'up':'down'):''}"><b>${statLabels[key]}</b><i style="--value:${Math.round(value/maximum*100)}%"></i><em>${value}${delta?`<small>${direction}${Math.abs(delta)}</small>`:''}</em></span>`;}).join('');
 }
 
 function openPanel(type) {
@@ -1900,15 +1904,7 @@ function showPhaseReport(dayRecords,phaseStart){
   const mastery=awardPhaseMastery(dayRecords);
   const result=document.querySelector('#dayResult');
   result.classList.add('phase-brief-result');
-  const summaryRows=[
-    `<span><b>착실히 해낸 일수</b><em>${diligent}일 / ${dayRecords.length}일 (${rate}%)</em></span>`,
-    `<span><b>대성공</b><em>${counts.perfect}회</em></span>`,
-    `<span><b>성공</b><em>${counts.success}회</em></span>`,
-    `<span><b>힘겨움</b><em>${counts.struggle}회</em></span>`,
-    `<span><b>실패</b><em>${counts.mistake}회</em></span>`,
-    `<span><b>수입</b><em>+${income.toLocaleString()}냥</em></span>`
-  ].join('');
-  result.innerHTML=`<header><div><b>제${phaseStart.index}페이즈 완료</b><small>${phaseStart.week}주차의 기록을 정리했습니다</small></div><button id="phaseResultNext" type="button">터치해 다음 페이즈</button></header><div class="phase-result-counts">${summaryRows}</div><div class="phase-result-money"><span><b>수입 합계</b><strong>+${income.toLocaleString()}냥</strong></span><span><b>숙련 변화</b><strong>${mastery?`+${mastery.earned}점${mastery.rankUp?` · ${mastery.rankUp} 승급!`:''}`:'변화 없음'}</strong></span></div><div class="phase-work-summary"><span>이 페이즈를 잘 마무리했어요.</span><em>${dayRecords.length}일 진행</em></div>`;
+  result.innerHTML=`<header><b>제${phaseStart.index}페이즈 결과</b></header><p><span>착실히 해낸 일수</span><strong>${diligent}일 / ${dayRecords.length}일 (${rate}%)</strong></p><p><span>수입</span><strong>+${income.toLocaleString()}냥</strong></p><p><span>숙련</span><strong>${mastery?`+${mastery.earned}점${mastery.rankUp?` · ${mastery.rankUp} 승급`:''}`:'변화 없음'}</strong></p><button id="phaseResultNext" type="button">터치해 다음 페이즈</button>`;
   const closePhaseReport=()=>{result.hidden=true;result.classList.remove('phase-brief-result');};
   const nextButton=result.querySelector('#phaseResultNext');
   let phaseReportReady=false;
@@ -2289,6 +2285,7 @@ async function playWeeklySchedule(selected) {
     if(playbackHolidayMark){
       const holidayIndex=activityDate.getDay()===0||activityDate.getDay()===6;
       playbackHolidayMark.hidden=!holidayIndex;
+      phone.classList.toggle('schedule-holiday',holidayIndex);
     }
     const outfitName=outfits.find(item=>item.id===dailyOutfit)?.name;
     const showOutfitName=action.id!=='rest'&&Boolean(outfitName);
@@ -2411,7 +2408,7 @@ async function playWeeklySchedule(selected) {
   conditionCue.hidden = true;
   document.querySelector('.dialogue').classList.remove('schedule-speaking');
   document.querySelector('#speakerName').textContent=game.guardianName||guardianDefs[game.guardianType]?.name||'수호신수';
-  phone.classList.remove('playing');
+  phone.classList.remove('playing','schedule-holiday');
   return {weeklyChange,dayRecords};
 }
 
