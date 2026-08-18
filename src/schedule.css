@@ -872,3 +872,71 @@
 .phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage:not(.market-choice-stage) .stage-npc:not(.npc-romance-date){width:var(--npc-box)!important;height:var(--npc-box)!important}
 .phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage:not(.market-choice-stage) .stage-character.pixel-sprite>img,.phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage:not(.market-choice-stage) .stage-npc:not(.npc-romance-date)>img{width:100%!important;height:100%!important;object-fit:contain!important;object-position:center bottom!important;transform:none!important;clip-path:none!important}
 @media(max-width:430px){.phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage:not(.market-choice-stage){--actor-box:128px;--npc-box:124px}}
+
+/* v0.63.30: lock the final sprite size rules so every activity keeps the same body ratio. */
+.phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage:not(.market-choice-stage){
+  --actor-box:136px;
+  --npc-box:132px;
+}
+.phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage:not(.market-choice-stage) .stage-character.pixel-sprite{
+  width:var(--actor-box)!important;
+  height:var(--actor-box)!important;
+  bottom:3%!important;
+  padding:0!important;
+  overflow:visible!important;
+}
+.phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage:not(.market-choice-stage) .stage-npc:not(.npc-romance-date){
+  width:var(--npc-box)!important;
+  height:var(--npc-box)!important;
+  bottom:3%!important;
+  padding:0!important;
+  overflow:visible!important;
+}
+.phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage:not(.market-choice-stage) .stage-character.pixel-sprite>img,
+.phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage:not(.market-choice-stage) .stage-npc:not(.npc-romance-date)>img{
+  width:100%!important;
+  height:100%!important;
+  object-fit:contain!important;
+  object-position:center bottom!important;
+  transform:none!important;
+  clip-path:none!important;
+}
+.activity-stage.action-rest .stage-character.pixel-sprite.motion-resting{
+  left:50%!important;
+  bottom:3%!important;
+  width:136px!important;
+  height:136px!important;
+  padding:0!important;
+  overflow:visible!important;
+  transform:translateX(-50%)!important;
+}
+.activity-stage.action-rest .stage-character.pixel-sprite.motion-resting.rest-tea{
+  left:50%!important;
+  bottom:4%!important;
+  width:128px!important;
+  height:128px!important;
+  padding:0!important;
+  overflow:visible!important;
+  transform:translateX(-50%)!important;
+}
+.activity-stage.action-rest .stage-character.pixel-sprite.motion-resting.rest-tea img{
+  object-fit:contain!important;
+  object-position:center bottom!important;
+  transform:none!important;
+  clip-path:none!important;
+}
+@media(max-width:430px){
+  .phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage:not(.market-choice-stage){
+    --actor-box:128px;
+    --npc-box:124px;
+  }
+  .activity-stage.action-rest .stage-character.pixel-sprite.motion-resting{
+    width:128px!important;
+    height:128px!important;
+  }
+  .activity-stage.action-rest .stage-character.pixel-sprite.motion-resting.rest-tea{
+    width:118px!important;
+    height:118px!important;
+    bottom:4%!important;
+  }
+}
