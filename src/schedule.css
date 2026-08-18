@@ -1368,3 +1368,35 @@
     width:68%!important
   }
 }
+
+/* v0.63.51: final holiday layout override.
+   This block must remain at the physical end of the file. */
+.phone.playing:not(.market-playing):not(.vacation-playing)
+  .stage-pm3-hud>.stage-hud-calendar{
+  top:-65px!important;
+  width:132px!important;
+  min-height:104px!important;
+  padding:8px 9px!important
+}
+.phone.playing:not(.market-playing):not(.vacation-playing) #stageHudDate b{
+  font-size:50px!important
+}
+.phone.playing.schedule-holiday:not(.market-playing):not(.vacation-playing)
+  .activity-stage:not(.market-choice-stage){
+  box-shadow:inset 0 0 0 1px #f0d59b55,inset 0 0 0 7px #211610!important
+}
+.phone.playing.schedule-holiday:not(.market-playing):not(.vacation-playing)
+  .activity-stage:not(.market-choice-stage)>.stage-roof{
+  box-shadow:inset 0 1px 0 #e3c98d66!important
+}
+@media(max-width:380px){
+  .phone.playing:not(.market-playing):not(.vacation-playing)
+    .stage-pm3-hud>.stage-hud-calendar{
+    top:-71px!important;
+    width:124px!important;
+    min-height:98px!important
+  }
+  .phone.playing:not(.market-playing):not(.vacation-playing) #stageHudDate b{
+    font-size:47px!important
+  }
+}
