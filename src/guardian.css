@@ -14,6 +14,7 @@
 
 /* v0.62.92: Uzu-inspired guardian adviser overlay. */
 .phone.guardian-dialogue-active .character-slot,.phone.guardian-dialogue-active .guardian-companion,.phone.guardian-dialogue-active .home-side-actions,.phone.guardian-dialogue-active>.dialogue,.phone.guardian-dialogue-active>.home-header,.phone.guardian-dialogue-active>.live-changes,.phone.guardian-dialogue-active>.settings-gear,.phone.guardian-dialogue-active>nav{display:none!important}
+.guardian-companion{display:none!important}
 .home-greeting.guardian-overlay{z-index:24;inset:0;max-height:none;overflow:hidden;padding:0;border:0;border-radius:0;background:linear-gradient(180deg,#17110b22 0 38%,#17110b99 70%,#17110bee);box-shadow:none}
 .home-greeting.guardian-overlay .home-greeting-head{position:absolute;inset:0;display:block;margin:0}
 .home-greeting.guardian-overlay .home-greeting-head img{position:absolute;left:2%;bottom:22%;width:82%;height:72%;border:0;border-radius:0;background:transparent;object-fit:contain;object-position:20% 100%;filter:drop-shadow(0 12px 15px #0009);transform-origin:50% 100%;animation:guardian-overlay-enter .42s ease-out both}
@@ -35,8 +36,20 @@
 .phone.guardian-dialogue-active{isolation:isolate}
 .phone.guardian-dialogue-active:after{content:"";position:absolute;z-index:22;inset:0;pointer-events:none;background:linear-gradient(180deg,#100c0814 0 45%,#100c08b8 70%,#100c08f2 100%)}
 .home-greeting.guardian-overlay{display:block!important;z-index:25;background:transparent}
-.home-greeting.guardian-overlay .home-greeting-head img{left:50%;bottom:36%;width:88%;height:61%;object-position:50% 100%;transform:translateX(-50%);mix-blend-mode:screen;-webkit-mask-image:radial-gradient(ellipse 61% 62% at 50% 48%,#000 42%,#000d 58%,transparent 78%);mask-image:radial-gradient(ellipse 61% 62% at 50% 48%,#000 42%,#000d 58%,transparent 78%)}
-.home-greeting.guardian-overlay .home-greeting-head b{left:5%;bottom:35%;min-width:34%;padding:7px 12px}
+.home-greeting.guardian-overlay .home-greeting-head img{
+  left:-6%;
+  bottom:34%;
+  width:82%;
+  height:62%;
+  object-fit:contain;
+  object-position:left bottom;
+  transform:translateX(0);
+  mix-blend-mode:normal;
+  -webkit-mask-image:none;
+  mask-image:none;
+  background:transparent;
+}
+.home-greeting.guardian-overlay .home-greeting-head b{left:5%;bottom:33.5%;min-width:34%;padding:7px 12px}
 .home-greeting.guardian-overlay>p{left:4%;right:4%;bottom:20%;min-height:82px;max-height:112px;padding:12px 14px;overflow:auto;font-size:14px;line-height:1.5}
 .home-greeting.guardian-overlay> b{left:6%;bottom:17.2%;font-size:11px}
 .home-greeting.guardian-overlay>#homeGreetingChoices{left:4%;right:4%;bottom:2.2%;gap:6px}
@@ -46,7 +59,48 @@
 .home-greeting.guardian-overlay[data-guardian="baekho"] .home-greeting-head img{filter:drop-shadow(0 12px 15px #111a)}
 .home-greeting.guardian-overlay[data-guardian="jujak"] .home-greeting-head img{filter:drop-shadow(0 12px 15px #4e0c08aa)}
 .home-greeting.guardian-overlay[data-guardian="hyeonmu"] .home-greeting-head img{filter:drop-shadow(0 12px 15px #072922aa)}
-@keyframes guardian-overlay-enter{from{opacity:0;transform:translateX(-58%) scale(.97)}to{opacity:1;transform:translateX(-50%) scale(1)}}
-@keyframes guardian-happy-bob{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(-5px)}}
-@keyframes guardian-alert{0%,100%{transform:translateX(-50%)}40%{transform:translateX(calc(-50% + 7px))}}
-@media(max-width:380px){.home-greeting.guardian-overlay .home-greeting-head img{left:50%;bottom:37%;width:94%;height:59%}.home-greeting.guardian-overlay .home-greeting-head b{bottom:35.5%}.home-greeting.guardian-overlay>p{bottom:20.5%;min-height:78px;font-size:13px}.home-greeting.guardian-overlay> b{bottom:17.5%}.home-greeting.guardian-overlay>#homeGreetingChoices{bottom:2%}.home-greeting.guardian-overlay button{min-height:35px;font-size:11px}}
+@keyframes guardian-overlay-enter{from{opacity:0;transform:translateX(-34%) scale(.98)}to{opacity:1;transform:translateX(0) scale(1)}}
+@keyframes guardian-happy-bob{0%,100%{transform:translateX(0) translateY(0)}50%{transform:translateX(0) translateY(-5px)}}
+@keyframes guardian-alert{0%,100%{transform:translateX(0)}40%{transform:translateX(7px)}}
+@media(max-width:380px){
+  .home-greeting.guardian-overlay .home-greeting-head img{left:-10%;bottom:36%;width:88%;height:60%}
+  .home-greeting.guardian-overlay .home-greeting-head b{bottom:34%}
+  .home-greeting.guardian-overlay>p{bottom:20.5%;min-height:78px;font-size:13px}
+  .home-greeting.guardian-overlay> b{bottom:17.5%}
+  .home-greeting.guardian-overlay>#homeGreetingChoices{bottom:2%}
+  .home-greeting.guardian-overlay button{min-height:35px;font-size:11px}
+}
+
+/* v0.63.66: genuinely transparent guardian cutouts, slower Uzu-style entry,
+   and a soft lower garment fade into the home background. */
+.home-greeting.guardian-overlay .home-greeting-head img{
+  left:-4%!important;
+  bottom:29%!important;
+  width:88%!important;
+  height:70%!important;
+  border:0!important;
+  background:transparent!important;
+  object-fit:contain!important;
+  object-position:left bottom!important;
+  -webkit-mask-image:linear-gradient(to bottom,#000 0%,#000 82%,transparent 100%)!important;
+  mask-image:linear-gradient(to bottom,#000 0%,#000 82%,transparent 100%)!important;
+  -webkit-mask-size:100% 100%!important;
+  mask-size:100% 100%!important;
+  animation:guardian-overlay-enter-slow 1.15s cubic-bezier(.18,.72,.28,1) both!important;
+}
+.home-greeting.guardian-overlay .home-greeting-head b{bottom:31%!important}
+.home-greeting.guardian-overlay.mood-happy .home-greeting-head img{
+  animation:guardian-overlay-enter-slow 1.15s cubic-bezier(.18,.72,.28,1) both,guardian-happy-bob 1.8s ease-in-out 1.15s infinite!important;
+}
+.home-greeting.guardian-overlay.mood-surprised .home-greeting-head img{
+  animation:guardian-overlay-enter-slow 1.15s cubic-bezier(.18,.72,.28,1) both,guardian-alert .45s ease-out 1.15s!important;
+}
+@keyframes guardian-overlay-enter-slow{
+  from{opacity:0;transform:translateX(-48%) scale(.985)}
+  72%{opacity:1;transform:translateX(1.5%) scale(1)}
+  to{opacity:1;transform:translateX(0) scale(1)}
+}
+@media(max-width:380px){
+  .home-greeting.guardian-overlay .home-greeting-head img{left:-8%!important;bottom:30%!important;width:94%!important;height:68%!important}
+  .home-greeting.guardian-overlay .home-greeting-head b{bottom:31.5%!important}
+}

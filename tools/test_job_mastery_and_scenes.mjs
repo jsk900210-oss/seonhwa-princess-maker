@@ -5,11 +5,12 @@ import {fileURLToPath} from 'node:url';
 const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..');
 const app=fs.readFileSync(path.join(root,'src/app.js'),'utf8');
 const jobs=['farmwork','childcare','kitchenhelp','woodwork','loomwork','masonry','clinichelp','ferryhelp','merchanthelp'];
+const pixelAction={farmwork:'herbs',childcare:'childcare',kitchenhelp:'kitchenhelp',woodwork:'woodwork',loomwork:'loomwork',masonry:'masonry',clinichelp:'clinichelp',ferryhelp:'ferryhelp',merchanthelp:'merchanthelp'};
 for(const id of jobs){
   const asset=path.join(root,'assets/backgrounds/pixel-jobs',`${id}.webp`);
   if(!fs.existsSync(asset)||fs.statSync(asset).size<10000)throw new Error(`전용 직업 배경 누락 또는 손상: ${id}`);
   for(let frame=1;frame<=3;frame++){
-    const sprite=path.join(root,'assets/characters/seonhwa/job-actions',`${id}-v2-${frame}.png`);
+    const sprite=path.join(root,'assets/characters/seonhwa/schedule-actions',`${pixelAction[id]}-pixel-${frame}.png`);
     if(!fs.existsSync(sprite)||fs.statSync(sprite).size<5000)throw new Error(`전용 직업 동작 누락 또는 손상: ${id}-${frame}`);
   }
   if(!app.includes(`location:'${id.replace('work','Job').replace('childcare','childcareJob').replace('kitchenhelp','kitchenJob').replace('woodJob','woodworkJob').replace('loomJob','loomJob').replace('masonry','masonryJob').replace('clinichelp','clinicJob').replace('ferryhelp','ferryJob').replace('merchanthelp','merchantJob')}'`)){

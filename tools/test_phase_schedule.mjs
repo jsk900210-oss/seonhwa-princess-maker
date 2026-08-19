@@ -52,7 +52,7 @@ assert.ok(app.includes("querySelectorAll('[data-playback-speed-toggle]')")&&css.
 assert.ok(app.includes('scheduleTimelineOffset=Math.min(latestStart,scheduleTimelineOffset+1)')&&app.includes('scheduleTimelineOffset=Math.max(0,scheduleTimelineOffset-1)'),'좌우 화살표는 페이즈 이력을 한 칸씩 이동해야 합니다.');
 assert.ok(app.includes("scheduleTimelineMotion='older'")&&css.includes('@keyframes phase-slide-older'),'좌우 이동 시 방향에 맞는 슬라이드 효과가 필요합니다.');
 assert.ok(css.includes('.day-result:not(.phase-brief-result)')&&css.includes('top:38%!important'),'일일 결과 UI는 상단 상태창과 겹치지 않는 별도 위치여야 합니다.');
-assert.ok(app.includes("standing:1,bent:.92,seated:.86,floorwork:.74")&&app.includes('farmwork|masonry|herbs'),'캐릭터는 서기·숙이기·앉기·바닥 동작의 머리-발끝 비율로 정규화되어야 합니다.');
+assert.ok(app.includes("standing:1,bent:.98,seated:.94,floorwork:.88")&&app.includes('farmwork|masonry|herbs'),'캐릭터는 서기·숙이기·앉기·바닥 동작의 머리-발끝 비율로 정규화되어야 합니다.');
 assert.ok(css.includes('--actor-box:128px;--npc-box:124px'),'모바일 일정에서 주인공과 보조 NPC의 기준 크기가 고정되어야 합니다.');
 assert.ok(!app.includes('game.completedPhases=game.completedPhases.slice(-24)'),'완료한 페이즈 이력을 임의로 삭제하면 안 됩니다.');
 

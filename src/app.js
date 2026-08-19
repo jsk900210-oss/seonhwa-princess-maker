@@ -50,7 +50,7 @@ function transitionPrologueToHomeMusic(){
 }
 
 const game = { characterName:'', nannyName:'', guardianType:null, guardianName:'', profileSlot:null, age: 9, height:130, weight:28.5, month: 1, week: 1, season:'봄', money: 50000, cash:50000, health:42, strength:18, agility:20, intelligence:35, magic:8, mentality:30, dignity:36, manners:28, speech:14, sensitivity:40, sense:24, charm:30, stress:12, items: [], purchasedGoods:[], relations:{}, activityProgress:{}, activityUnlocksSeen:[], completedPhases:[], startingGiftId:null, fatherBirthdayYears:[], equippedOutfit:null, autoOutfit:true, dailySchedule: [], scheduleFormat:'phase-v1', birthday:null, currentDate:null, endingDate:null, ended:false, endingResult:null, birthdayCount:0, element:null, birthSeason:null, memory:0, truth:0, exposure:0, fatherAffinity:0, guardianTrust:50, nannyAffinity:50, lastGreetingDate:null, lastGuardianTalkDate:null, lastGuardianTalkPhase:null, monthlyLedger:null };
-const baseSpritePath='../assets/characters/seonhwa/age-09/base/seonhwa-age09-base.png';
+const baseSpritePath='../assets/characters/seonhwa/age-09/base/seonhwa-age09-home-main-v5-transparent.png';
 const guardianDefs={
   cheongryong:{name:'청룡',mark:'龍',theme:'#294e67',gift:{name:'푸른 여의주 조각',change:{intelligence:5,magic:4}},intro:'동쪽의 푸른 숨결. 배움과 술법의 길을 살피는 신수입니다.'},
   baekho:{name:'백호',mark:'虎',theme:'#ddd8ce',gift:{name:'흰 범의 방울',change:{strength:5,agility:4}},intro:'서쪽의 굳센 발걸음. 위험 앞에서 용기와 무예를 북돋는 신수입니다.'},
@@ -151,14 +151,14 @@ const actionPresentation = {
   'holiday-seollal': { motion:'motion-manners', location:'restRoom', prop:'none', activity:'manners', npc:null },
   'holiday-chuseok': { motion:'motion-manners', location:'restRoom', prop:'none', activity:'manners', npc:null },
   painting: { motion:'motion-calligraphy', location:'phasePainting', prop:'none', activity:'calligraphy', npc:'teacher' },
-  music: { motion:'motion-manners', location:'phaseMusic', prop:'none', activity:'manners', npc:'teacher' },
-  dance: { motion:'motion-manners', location:'phaseDance', prop:'none', activity:'manners', npc:'teacher' },
+  music: { motion:'motion-manners', location:'phaseMusic', prop:'none', activity:'sit', npc:'teacher' },
+  dance: { motion:'motion-manners', location:'phaseDance', prop:'none', activity:'sit', npc:'teacher' },
   // 고급 교육도 현재 연령의 공통 베이스 얼굴을 사용한다. 전용 동작 자산이 없는 동안
   // 9세 고정 프레임으로 빠지지 않게 서기/집중 자세의 연령별 모듈 프레임을 연결한다.
-  swordsmanship: { motion:'motion-manners', location:'phaseMartial', prop:'none', activity:'manners', npc:null },
+  swordsmanship: { motion:'motion-sweeping', location:'phaseMartial', prop:'none', activity:'sweeping', npc:null },
   spellcraft: { motion:'motion-calligraphy', location:'phaseMagic', prop:'none', activity:'calligraphy', npc:null },
-  cooking: { motion:'motion-arithmetic', location:'phaseKitchen', prop:'none', activity:'arithmetic', npc:null },
-  martial: { motion:'motion-manners', location:'phaseMartial', prop:'none', activity:'manners', npc:'dolsoe' },
+  cooking: { motion:'motion-job-kitchen', location:'phaseKitchen', prop:'none', activity:'kitchenhelp', npc:null },
+  martial: { motion:'motion-sweeping', location:'phaseMartial', prop:'none', activity:'sweeping', npc:'dolsoe' },
   classics: { motion:'motion-calligraphy', location:'phaseStudy', prop:'none', activity:'calligraphy', npc:'teacher' },
   innhelp: { motion:'motion-errand', location:'marketErrand', prop:'none', activity:'errand', npc:null },
   sewing: { motion:'motion-houseclean', location:'restRoom', prop:'none', activity:'houseclean', npc:null },
@@ -237,37 +237,62 @@ function unifiedAgeFolder(){return '09';}
 function scheduleFramePath(file){return `../assets/characters/seonhwa/schedule-actions/${file}`;}
 function scheduleBasePath(file){return `../assets/characters/seonhwa/schedule-base/${file}`;}
 function repeatedFrame(src){return [src,src,src];}
+function frameTriplet(prefix, folder='actions'){
+  const build=folder==='base'?scheduleBasePath:scheduleFramePath;
+  return [build(`${prefix}-1.png`),build(`${prefix}-2.png`),build(`${prefix}-3.png`)];
+}
+function sheetTriplet(file,row,rows){
+  return [1,2,3].map(frame=>`${scheduleFramePath(file)}?row=${row}&rows=${rows}&frame=${frame}`);
+}
 const spriteFrames = {
-  get down(){return [scheduleBasePath('walk-1.png'),scheduleBasePath('stand-1.png'),scheduleBasePath('walk-2.png')];},
-  get left(){return [scheduleBasePath('walk-1.png'),scheduleBasePath('stand-1.png'),scheduleBasePath('walk-2.png')];},
-  get right(){return [scheduleBasePath('walk-1.png'),scheduleBasePath('stand-1.png'),scheduleBasePath('walk-2.png')];}
+  get down(){return repeatedFrame(scheduleBasePath('stand-front-v3-pixel.png'));},
+  get left(){return repeatedFrame(scheduleBasePath('stand-left-v3-pixel.png'));},
+  get right(){return frameTriplet('errand-pixel');}
 };
 const scheduleActionFrames={
-  calligraphy:repeatedFrame(scheduleFramePath('study-1.png')),
-  arithmetic:repeatedFrame(scheduleFramePath('study-1.png')),
-  manners:repeatedFrame(scheduleFramePath('sit-1.png')),
-  houseclean:repeatedFrame(scheduleFramePath('houseclean-1.png')),
-  errand:repeatedFrame(scheduleFramePath('errand-1.png')),
-  herbs:repeatedFrame(scheduleFramePath('herbs-1.png')),
-  sweeping:repeatedFrame(scheduleFramePath('sweeping-1.png')),
-  childcare:repeatedFrame(scheduleFramePath('childcare-1.png')),
-  kitchenhelp:repeatedFrame(scheduleFramePath('kitchenhelp-1.png')),
-  merchanthelp:repeatedFrame(scheduleFramePath('merchanthelp-1.png')),
-  eating:repeatedFrame(scheduleFramePath('merchanthelp-1.png')),
-  rest:repeatedFrame(scheduleBasePath('sleep-1.png')),
-  sleep:repeatedFrame(scheduleBasePath('sleep-1.png')),
-  tea:repeatedFrame(scheduleFramePath('sit-1.png'))
+  calligraphy:frameTriplet('calligraphy-pixel'),
+  arithmetic:frameTriplet('arithmetic-pixel'),
+  manners:frameTriplet('manners-pixel'),
+  sit:frameTriplet('sit-pixel'),
+  houseclean:frameTriplet('houseclean-pixel'),
+  errand:frameTriplet('errand-pixel'),
+  herbs:frameTriplet('herbs-pixel'),
+  sweeping:frameTriplet('sweeping-pixel'),
+  childcare:frameTriplet('childcare-pixel'),
+  kitchenhelp:frameTriplet('kitchenhelp-pixel'),
+  woodwork:frameTriplet('woodwork-pixel'),
+  loomwork:frameTriplet('loomwork-pixel'),
+  masonry:frameTriplet('masonry-pixel'),
+  clinichelp:frameTriplet('clinichelp-pixel'),
+  ferryhelp:frameTriplet('ferryhelp-pixel'),
+  merchanthelp:frameTriplet('merchanthelp-pixel'),
+  eating:frameTriplet('eating-pixel'),
+  rest:frameTriplet('tea-pixel'),
+  sleep:frameTriplet('sleep-pixel'),
+  tea:frameTriplet('tea-pixel'),
+  fail:frameTriplet('fail-pixel')
 };
 // 승인된 4장(age09/13/16/18-eyes-v2)을 모든 기본 쯔꾸르 동작의 단일 원본으로 사용한다.
 // 잠자기도 연령별 기준 시트에서 불러와 얼굴·체형·기본 의상이 섞이지 않게 한다.
 const canonicalActivityAliases={
   calligraphy:'calligraphy',study:'calligraphy',painting:'calligraphy',music:'calligraphy',dance:'manners',magic:'calligraphy',
-  arithmetic:'arithmetic',cooking:'arithmetic',swordsmanship:'manners',martial:'manners',manners:'manners',
-  errand:'errand',herbs:'errand',farmwork:'errand',kitchenhelp:'errand',ferryhelp:'errand',merchanthelp:'arithmetic',eating:'errand',
-  houseclean:'houseclean',sweeping:'houseclean',woodwork:'houseclean',loomwork:'houseclean',masonry:'houseclean',
-  childcare:'manners',clinichelp:'calligraphy',rest:'rest',sleep:'rest',tea:'rest'
+  arithmetic:'arithmetic',cooking:'arithmetic',swordsmanship:'manners',martial:'manners',manners:'manners',sit:'sit',
+  errand:'errand',farmwork:'herbs',eating:'errand',
+  herbs:'herbs',
+  houseclean:'houseclean',
+  sweeping:'sweeping',
+  childcare:'childcare',
+  kitchenhelp:'kitchenhelp',
+  woodwork:'woodwork',
+  loomwork:'loomwork',
+  masonry:'masonry',
+  clinichelp:'clinichelp',
+  ferryhelp:'ferryhelp',
+  merchanthelp:'merchanthelp',
+  rest:'rest',sleep:'sleep',tea:'tea'
 };
 function activityFrameSet(activity){
+  if(activity && scheduleActionFrames[activity])return scheduleActionFrames[activity];
   const canonical=canonicalActivityAliases[activity]||'errand';
   return scheduleActionFrames[canonical]||scheduleActionFrames.errand;
 }
@@ -458,9 +483,14 @@ const activityOutfitFrameCache=new Map();
 const activityOutfitStyleCache=new Map();
 const normalizedActivityFrameCache=new Map();
 // 쯔꾸르 인물은 원본 파일 크기가 아니라 불투명한 머리-발끝 높이로 통일한다.
-// 서기 100%를 기준으로 앉기 88%, 바닥 동작(엎드림·눕기) 78%만 허용한다.
-const activityPoseRatio=Object.freeze({standing:1,bent:.92,seated:.86,floorwork:.74});
+// 서기 100%를 기준으로 숙이기 98%, 앉기 94%, 바닥 동작 88%만 허용한다.
+const activityPoseRatio=Object.freeze({standing:1,bent:.98,seated:.94,floorwork:.88});
 function activityPoseType(src=''){
+  if(/manners-sheet/.test(src))return 'standing';
+  if(/core-sheet-v3.*row=5/.test(src))return 'floorwork';
+  if(/core-sheet-v3.*row=3/.test(src))return 'floorwork';
+  if(/core-sheet-v3.*row=1/.test(src))return 'seated';
+  if(/core-sheet-v3.*row=4/.test(src))return 'bent';
   if(/rest-legacy|tea/.test(src))return 'seated';
   if(/houseclean|resting|rest-|sleep|eating|farmwork|masonry|herbs/.test(src))return 'floorwork';
   if(/calligraphy|arithmetic|childcare|kitchenhelp|woodwork|loomwork|clinichelp/.test(src))return 'seated';
@@ -523,44 +553,148 @@ function imageAssetExists(src){
 }
 function normalizeActivityFrame(src){
   if(normalizedActivityFrameCache.has(src))return Promise.resolve(normalizedActivityFrameCache.get(src));
+  // 신규 픽셀 프레임은 이미 320×320 캔버스와 자세별 머리-발끝 규격으로
+  // 완성되어 있다. 다시 자르거나 확대하면 NPC보다 흐려지고 크기가 변한다.
+  if(src.includes('-pixel-')){normalizedActivityFrameCache.set(src,src);return Promise.resolve(src);}
   return new Promise(resolve=>{const source=new Image();source.onload=()=>{try{
-    const scan=document.createElement('canvas');scan.width=source.naturalWidth;scan.height=source.naturalHeight;const scanContext=scan.getContext('2d',{willReadFrequently:true});scanContext.drawImage(source,0,0);const data=scanContext.getImageData(0,0,scan.width,scan.height).data;
+    const frameMatch=src.match(/[?&]frame=([123])/),rowMatch=src.match(/[?&]row=(\d+)/),rowsMatch=src.match(/[?&]rows=(\d+)/);
+    const sourceFrame=frameMatch?Number(frameMatch[1])-1:null;
+    const totalRows=rowsMatch?Math.max(1,Number(rowsMatch[1])):1;
+    const sourceRow=rowMatch?Math.max(0,Number(rowMatch[1])-1):0;
+    const sourceWidth=sourceFrame===null?source.naturalWidth:Math.floor(source.naturalWidth/3);
+    const sourceHeight=Math.floor(source.naturalHeight/totalRows);
+    const sourceX=sourceFrame===null?0:sourceFrame*sourceWidth,sourceY=sourceRow*sourceHeight;
+    const scan=document.createElement('canvas');scan.width=sourceWidth;scan.height=sourceHeight;const scanContext=scan.getContext('2d',{willReadFrequently:true});scanContext.drawImage(source,sourceX,sourceY,sourceWidth,sourceHeight,0,0,sourceWidth,sourceHeight);
+    const shouldClean=sourceFrame!==null||src.includes('/schedule-actions/');
+    if(shouldClean){
+      const pixels=scanContext.getImageData(0,0,scan.width,scan.height),data=pixels.data;
+      // 배경색과 비슷한 얼굴·저고리 픽셀까지 전역 삭제하면 눈과 머리 주변이
+      // 깨진다. 캔버스 가장자리와 실제로 연결된 밝은 체크/검은 배경만 지운다.
+      const visited=new Uint8Array(scan.width*scan.height),queue=[];
+      const isBackground=point=>{const index=point*4,red=data[index],green=data[index+1],blue=data[index+2],light=Math.min(red,green,blue),chroma=Math.max(red,green,blue)-light;return (light>=198&&chroma<=24)||(Math.max(red,green,blue)<=22&&chroma<=14);};
+      const enqueue=point=>{if(point<0||point>=visited.length||visited[point]||!isBackground(point))return;visited[point]=1;queue.push(point);};
+      for(let x=0;x<scan.width;x++){enqueue(x);enqueue((scan.height-1)*scan.width+x);}
+      for(let y=0;y<scan.height;y++){enqueue(y*scan.width);enqueue(y*scan.width+scan.width-1);}
+      for(let head=0;head<queue.length;head++){
+        const point=queue[head],x=point%scan.width;data[point*4+3]=0;
+        if(x>0)enqueue(point-1);if(x+1<scan.width)enqueue(point+1);enqueue(point-scan.width);enqueue(point+scan.width);
+      }
+      scanContext.putImageData(pixels,0,0);
+    }
+    // 마당쓸기 원화의 발밑에 흩어진 독립 낙엽/얼룩은 배우 본체와
+    // 연결되지 않은 작은 조각이다. 가장 큰 연결 성분만 남겨 캐릭터와
+    // 빗자루가 깨끗하게 보이게 한다.
+    if(/core-sheet-v3.*row=4/.test(src)){
+      const pixels=scanContext.getImageData(0,0,scan.width,scan.height),data=pixels.data;
+      const visited=new Uint8Array(scan.width*scan.height),components=[];
+      for(let start=0;start<visited.length;start++){
+        if(visited[start]||data[start*4+3]<24)continue;
+        const queue=[start],component=[];visited[start]=1;
+        for(let head=0;head<queue.length;head++){
+          const point=queue[head],x=point%scan.width,y=Math.floor(point/scan.width);component.push(point);
+          for(const next of [point-1,point+1,point-scan.width,point+scan.width]){
+            if(next<0||next>=visited.length||visited[next]||data[next*4+3]<24)continue;
+            const nextX=next%scan.width;if(Math.abs(nextX-x)>1)continue;
+            visited[next]=1;queue.push(next);
+          }
+        }
+        components.push(component);
+      }
+      components.sort((a,b)=>b.length-a.length);
+      for(const component of components.slice(1))for(const point of component)data[point*4+3]=0;
+      scanContext.putImageData(pixels,0,0);
+    }
+    const data=scanContext.getImageData(0,0,scan.width,scan.height).data;
     let left=scan.width,top=scan.height,right=-1,bottom=-1;
     for(let y=0;y<scan.height;y++)for(let x=0;x<scan.width;x++){if(data[(y*scan.width+x)*4+3]<24)continue;left=Math.min(left,x);top=Math.min(top,y);right=Math.max(right,x);bottom=Math.max(bottom,y);}
     if(right<left||bottom<top){resolve(src);return;}
-    const output=document.createElement('canvas');output.width=296;output.height=296;const context=output.getContext('2d');const width=right-left+1,height=bottom-top+1,padding=18;
+    // 넉넉한 중간 해상도로 정규화한 뒤 브라우저가 최종 크기로 한 번만
+    // 축소하게 한다. 작은 296px 캔버스를 재확대하며 생기던 흐림을 막는다.
+    const output=document.createElement('canvas');output.width=512;output.height=512;const context=output.getContext('2d');const width=right-left+1,height=bottom-top+1,padding=14;
     const poseScale=activityPoseRatio[activityPoseType(src)];
     const scale=Math.min((output.width-padding*2)/width,(output.height-padding*2)/height)*poseScale;const drawWidth=width*scale,drawHeight=height*scale,drawX=(output.width-drawWidth)/2,drawY=output.height-padding-drawHeight;
-    context.imageSmoothingEnabled=false;context.drawImage(source,left,top,width,height,drawX,drawY,drawWidth,drawHeight);const result=output.toDataURL('image/png');normalizedActivityFrameCache.set(src,result);resolve(result);
+    context.imageSmoothingEnabled=true;context.imageSmoothingQuality='high';context.filter='contrast(1.065) saturate(1.035)';context.drawImage(scan,left,top,width,height,drawX,drawY,drawWidth,drawHeight);context.filter='none';const result=output.toDataURL('image/png');normalizedActivityFrameCache.set(src,result);resolve(result);
   }catch{resolve(src);}};source.onerror=()=>resolve(src);source.src=src;});
+}
+function applyFallbackSpriteMotion(image,step,totalSteps,activity){
+  if(!image)return;
+  const wave=step%3;
+  const isFloorwork=['houseclean','sweeping','herbs','farmwork','masonry'].includes(activity);
+  const isRest=['rest','sleep','tea'].includes(activity);
+  if(isRest){
+    image.style.transform=wave===1?'translateY(1px) scale(1.01)':wave===2?'translateY(0) scale(.995)':'translateY(0) scale(1)';
+    return;
+  }
+  if(isFloorwork){
+    image.style.transform=wave===1?'translateY(-2px) rotate(-2deg)':wave===2?'translateY(0) rotate(2deg)':'translateY(1px) rotate(0deg)';
+    return;
+  }
+  const swing=wave===1?'-3deg':wave===2?'3deg':'0deg';
+  const bob=wave===1?'-2px':wave===2?'1px':'0px';
+  image.style.transform=`translateY(${bob}) rotate(${swing})`;
+}
+function clearFallbackSpriteMotion(image){
+  if(!image)return;
+  image.style.transform='';
+}
+async function animateActionStumble(image,level='mistake'){
+  if(!image)return;
+  const frames=level==='mistake'
+    ? ['translateY(0px) rotate(0deg)','translateY(1px) rotate(-7deg)','translateY(3px) rotate(6deg)','translateY(1px) rotate(-4deg)','translateY(0px) rotate(0deg)']
+    : ['translateY(0px) rotate(0deg)','translateY(1px) rotate(-3deg)','translateY(0px) rotate(2deg)','translateY(0px) rotate(0deg)'];
+  for(const transform of frames){
+    image.style.transform=transform;
+    await schedulePlaybackDelay(level==='mistake'?95:120);
+  }
+  image.style.transform='';
 }
 async function animateActivitySprite(image,motion,activity,npcImage,npc,outfitId,masteryRank=0){
   if(activity){
     if(!outfitId)outfitId=game.autoOutfit?recommendOutfit(activity):game.equippedOutfit;
     // 신규/랜덤 활동의 전용 프레임이 빠져 있어도 일정 전체를 멈추지 않는다.
     const frames=activityFrameSet(activity)||activityFrameSet('errand')||spriteFrames.down;
+    // 모든 일정은 세 장의 전용 프레임을 한 묶음으로 사용한다.
+    // 제자리 활동은 손/상체 프레임만 바꾸고, 실제 이동이 필요한 마당쓸기만
+    // 무대 위 위치를 바꾼다. 예전처럼 모든 동작을 좌우로 흔들지 않는다.
     const coreJobSequences={
-      farmwork:[0,0,1,1,2,2,2],
-      childcare:[0,0,1,1,2,2,2],
-      kitchenhelp:[0,0,1,1,1,2,2,2],
-      woodwork:[0,0,1,1,2,2,2],
-      loomwork:[0,0,1,1,2,2,2],
-      masonry:[0,0,1,1,2,2,2],
-      clinichelp:[0,0,1,1,2,2,2],
-      ferryhelp:[0,0,1,1,2,2,2],
-      merchanthelp:[0,0,1,1,2,2,2]
+      farmwork:[0,1,2,1,0],
+      childcare:[0,1,2,1,0],
+      kitchenhelp:[0,1,2,1,0],
+      woodwork:[0,1,2,1,0],
+      loomwork:[0,1,2,1,0],
+      masonry:[0,1,2,1,0],
+      clinichelp:[0,1,2,1,0],
+      ferryhelp:[0,1,2,1,0],
+      merchanthelp:[0,1,2,1,0]
     };
     const sequence=coreJobSequences[activity]||
-      (activity==='errand'?[0,1,1,2,2,1,0]:activity==='houseclean'?[0,1,0,2,2,2]:activity==='sweeping'?[0,1,2,1,0,1,2,2,1,0,1,2,1,0]:activity==='sleep'?[0,1,2,1,0]:[0,1,2,1,0,1,2]);
+      (activity==='errand'?[0,1,2,1,0]
+        :activity==='houseclean'?[0,1,2,1,0]
+        :activity==='sweeping'?[0,1,2,1,0,1,2,1,0]
+        :activity==='sleep'?[0,1,2,1,0]
+        :activity==='tea'?[0,1,2,1,0]
+        :[0,1,2,1,0]);
     const dedicatedJob=Object.hasOwn(coreJobSequences,activity);
-    const delay=dedicatedJob?[360,300,240][masteryRank]:Math.max(125,(activity==='errand'?270:activity==='houseclean'?360:activity==='sleep'?430:activity==='tea'?460:190)-masteryRank*35);
+    const staticFrameFallback=new Set(frames).size<=1;
+    const delay=dedicatedJob?[360,300,240][masteryRank]:Math.max(150,(activity==='errand'?290:activity==='houseclean'?340:activity==='sweeping'?260:activity==='sleep'?430:activity==='tea'?460:240)-masteryRank*30);
     const rankedSequence=masteryRank===2?[...sequence,...sequence.slice(1)]:sequence;
     for(const [step,frame] of rankedSequence.entries()){
-      if(activity==='houseclean')image.parentElement.style.left=`${[74,58,32,32,55,74][step%6]}%`;
-      if(activity==='sweeping')image.parentElement.style.left=`${[14,20,27,34,41,47,50,50,47,41,34,27,20,14][step%14]}%`;
-      image.src=await outfitActivityFrame(frames[frame],outfitId);if(npc)npcImage.src=await normalizeActivityFrame((npc==='teacher'?npcFrames.teacherReading:npcFrames[npc])[frame%3]);await schedulePlaybackDelay(delay);
+      if(activity==='errand'){
+        const errandTrack=[18,31,44,57,70];
+        image.parentElement.style.setProperty('left',`${errandTrack[step%errandTrack.length]}%`,'important');
+      }
+      if(activity==='sweeping'){
+        // 돌쇠 앞에서 멈춘 뒤 되돌아온다. 빗자루 끝까지 포함한 실제
+        // 프레임 폭을 고려해 오른쪽 한계를 46%로 제한한다.
+        const sweepTrack=[14,22,30,38,46,38,30,22,14];
+        image.parentElement.style.setProperty('left',`${sweepTrack[step%sweepTrack.length]}%`,'important');
+      }
+      image.src=await outfitActivityFrame(frames[frame],outfitId);if(npc)npcImage.src=await normalizeActivityFrame((npc==='teacher'?npcFrames.teacherReading:npcFrames[npc])[frame%3]);
+      if(staticFrameFallback)applyFallbackSpriteMotion(image,step,rankedSequence.length,activity);
+      await schedulePlaybackDelay(delay);
     }
-    if(activity==='houseclean'||activity==='sweeping')image.parentElement.style.left='';
+    clearFallbackSpriteMotion(image);
+    if(activity==='sweeping')image.parentElement.style.removeProperty('left');
     return;
   }
   const direction=motion==='motion-walk'?'right':'down';
@@ -1102,7 +1236,7 @@ function renderHud() {
   const guardian=guardianDefs[game.guardianType];
   document.querySelector('#speakerName').textContent = game.guardianName || guardian?.name || '수호신수';
   const companion=document.querySelector('#guardianCompanion');
-  if(companion){companion.hidden=!guardian;document.querySelector('#guardianCompanionMark').textContent=guardian?.mark||'守';document.querySelector('#guardianCompanionName').textContent=game.guardianName||guardian?.name||'';if(guardian)document.querySelector('#guardianCompanionMark').style.background=guardian.theme;}
+  if(companion){companion.hidden=true;document.querySelector('#guardianCompanionMark').textContent=guardian?.mark||'守';document.querySelector('#guardianCompanionName').textContent=game.guardianName||guardian?.name||'';if(guardian)document.querySelector('#guardianCompanionMark').style.background=guardian.theme;}
 }
 
 function resetTransientScenes(){
@@ -1148,7 +1282,7 @@ const guardianConversationSets={
   ]
 };
 Object.values(guardianConversationSets).flat().forEach(scene=>scene.choices.forEach(choice=>{choice[1]=canonicalizeChange(choice[1]);}));
-function guardianPortrait(mood='neutral'){return `../assets/cinematics/guardian/humanized/poses/${game.guardianType||'hyeonmu'}-${mood}.png`;}
+function guardianPortrait(mood='neutral'){return `../assets/cinematics/guardian/humanized/poses/${game.guardianType||'hyeonmu'}-${mood}-transparent-v2.png`;}
 function openGuardianDialogueOverlay(mood='neutral'){
   const greeting=document.querySelector('#homeGreeting'),portrait=document.querySelector('#homeGreetingPortrait');
   greeting.classList.remove('mood-neutral','mood-happy','mood-concerned','mood-surprised');
@@ -1270,19 +1404,7 @@ function showHomeGreeting(force=false){
   if(!game.birthday||document.querySelector('.phone').classList.contains('playing')||game.lastGreetingDate===game.currentDate)return false;
   game.lastGreetingDate=game.currentDate;
   if(!force&&Math.random()>=.18)return false;
-  const mood=game.stress>=55?'tired':game.stress>=45?'stressed':'bright',scenes=greetingChoices[mood];
-  const available=scenes.map((scene,index)=>({scene,index})).filter(item=>`${mood}-${item.index}`!==game.lastGreetingScene);
-  const picked=available[Math.floor(Math.random()*available.length)]||{scene:scenes[0],index:0},scene=picked.scene;
-  game.lastGreetingScene=`${mood}-${picked.index}`;
-  const greeting=document.querySelector('#homeGreeting');greeting.classList.remove('guardian-overlay','mood-neutral','mood-happy','mood-concerned','mood-surprised');document.querySelector('.phone').classList.remove('guardian-dialogue-active');document.querySelector('#homeGreetingPortrait').hidden=true;
-  document.querySelector('#speakerName').textContent=game.characterName||'아이';document.querySelector('#dialogueText').textContent=scene.line;
-  document.querySelector('#homeGreetingSpeaker').textContent=game.characterName||'아이';
-  document.querySelector('#homeGreetingLine').textContent=scene.line;
-  document.querySelector('#homeGreetingPrompt').textContent=`${game.guardianName||guardianDefs[game.guardianType]?.name||'신수'}에게 어떻게 답할까요?`;
-  const choices=document.querySelector('#homeGreetingChoices');choices.innerHTML=scene.choices.map((choice,i)=>`<button data-greeting-choice="${i}">${choice[0]}</button>`).join('');
-  document.querySelector('#homeGreeting').hidden=false;document.querySelector('.phone').classList.add('greeting-active');
-  choices.querySelectorAll('button').forEach(button=>button.addEventListener('click',()=>answerHomeGreeting(scene,Number(button.dataset.greetingChoice))));
-  return true;
+  return startGuardianConversation();
 }
 function answerHomeGreeting(scene,index){
   const [,change,result]=scene.choices[index];Object.entries(canonicalizeChange(change)).forEach(([key,value])=>game[key]=clampStat(key,(game[key]||0)+value));
@@ -2413,6 +2535,9 @@ async function playWeeklySchedule(selected) {
     if(action.id==='dungeon')outcome=dungeonReward.money>=140?'perfect':dungeonReward.money>0?'normal':'struggle';
     if(!guaranteedSuccess&&condition==='mistake')outcome='mistake';
     else if(!guaranteedSuccess&&condition==='drowsy'&&outcome!=='mistake')outcome='struggle';
+    if(!guaranteedSuccess&&(outcome==='mistake'||outcome==='struggle')&&action.id!=='shopping'){
+      await animateActionStumble(stageCharacterImage,outcome);
+    }
     const resolvedChange=phaseDailyChange(freeTimeVariant?{...freeTimeVariant.change}:resolvedActivityChange(action,outcome));
     if(holidayContestResult){
       const contestChange=phaseDailyChange(holidayContestResult.change);
@@ -2505,7 +2630,7 @@ document.querySelector('#referralCode').addEventListener('keydown',event=>{if(ev
 bg.addEventListener('error', updateImageState);
 character.addEventListener('load', updateImageState);
 character.addEventListener('error',()=>{
-  if(!character.src.endsWith('/seonhwa-age09-base.png'))character.src=baseSpritePath;
+  if(!character.src.endsWith('/seonhwa-age09-home-main-v5-transparent.png'))character.src=baseSpritePath;
   updateImageState();
 });
 document.querySelectorAll('[data-panel]').forEach(button => button.addEventListener('click', () => openPanel(button.dataset.panel)));

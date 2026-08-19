@@ -1,0 +1,42 @@
+{
+  "version": 1,
+  "updatedAt": "2026-08-19",
+  "sheet": "background-npc-trio-concept-v1.png",
+  "style": "semi-real painted Korean historical fantasy mobile game NPC",
+  "usage": "background ambient NPCs for home, study, kitchen, yard, market-adjacent scenes",
+  "characters": [
+    {
+      "id": "dolsoe",
+      "nameKo": "돌쇠",
+      "role": "yard helper / labor support",
+      "priority": 1,
+      "notes": [
+        "충직하고 든든한 분위기",
+        "마당쓸기, 짐 나르기, 심부름 배경에 적합",
+        "플레이어와 직접 대화 가능한 조연으로 확장 가능"
+      ]
+    },
+    {
+      "id": "kitchen_aunt",
+      "nameKo": "부엌 아주머니",
+      "role": "kitchen support / home life background NPC",
+      "priority": 2,
+      "notes": [
+        "따뜻하고 생활감 있는 인상",
+        "주방보조, 휴식, 명절 음식 준비 배경에 적합",
+        "조리 관련 이벤트의 안내자 역할 가능"
+      ]
+    },
+    {
+      "id": "study_child",
+      "nameKo": "글방 아이",
+      "role": "study room background child NPC",
+      "priority": 3,
+      "notes": [
+        "글읽기, 셈하기, 글방 장면에 적합",
+        "주인공보다 살짝 옆에서 보조적으로 보이는 구조에 어울림",
+        "학업 관련 분위기 강화용"
+      ]
+    }
+  ]
+}
