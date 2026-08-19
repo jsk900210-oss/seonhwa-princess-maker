@@ -231,14 +231,32 @@ const vacationIllustrations=[
   ,{id:'vacation-modern-age19-winter-onsen',age:19,season:'겨울',name:'설경 속 노천온천',image:'../assets/events/vacation/modern/age-19/winter-openair-onsen.png',effect:'snow',rarity:'special',description:'눈 덮인 산과 소나무를 바라보며 온천의 김 속에서 쉬었던 현대의 특별한 추억.'}
   ,{id:'vacation-modern-age19-winter-garden',age:19,season:'겨울',name:'눈 내린 탕의 아침',image:'../assets/events/vacation/modern/age-19/winter-spa-garden.png?v=0.62.45-debug',effect:'steam',rarity:'special',description:'눈 덮인 한옥 정원을 바라보며 따뜻한 노천탕에서 맞이한 고요한 겨울 아침.'}
 ];
-// 일정 화면은 승인된 연령별 기준 얼굴만 사용한다. 걷기 전용 통합 프레임이
-// 완성되기 전까지 장보기 프레임을 공통 이동 루프로 사용해 구형 얼굴 혼입을 막는다.
+// 일정 화면은 홈 대표 캐릭터와 분리된 9세 단일 쯔꾸르 기준 자산만 사용한다.
+// 새 schedule-base / schedule-actions 폴더를 우선 사용하고, 빠진 프레임만 임시 기본값으로 되돌린다.
 function unifiedAgeFolder(){return '09';}
-function unifiedFrames(){return [baseSpritePath,baseSpritePath,baseSpritePath];}
+function scheduleFramePath(file){return `../assets/characters/seonhwa/schedule-actions/${file}`;}
+function scheduleBasePath(file){return `../assets/characters/seonhwa/schedule-base/${file}`;}
+function repeatedFrame(src){return [src,src,src];}
 const spriteFrames = {
-  get down(){return unifiedFrames('errand');},
-  get left(){return unifiedFrames('errand');},
-  get right(){return unifiedFrames('errand');}
+  get down(){return [scheduleBasePath('walk-1.png'),scheduleBasePath('stand-1.png'),scheduleBasePath('walk-2.png')];},
+  get left(){return [scheduleBasePath('walk-1.png'),scheduleBasePath('stand-1.png'),scheduleBasePath('walk-2.png')];},
+  get right(){return [scheduleBasePath('walk-1.png'),scheduleBasePath('stand-1.png'),scheduleBasePath('walk-2.png')];}
+};
+const scheduleActionFrames={
+  calligraphy:repeatedFrame(scheduleFramePath('study-1.png')),
+  arithmetic:repeatedFrame(scheduleFramePath('study-1.png')),
+  manners:repeatedFrame(scheduleFramePath('sit-1.png')),
+  houseclean:repeatedFrame(scheduleFramePath('houseclean-1.png')),
+  errand:repeatedFrame(scheduleFramePath('errand-1.png')),
+  herbs:repeatedFrame(scheduleFramePath('herbs-1.png')),
+  sweeping:repeatedFrame(scheduleFramePath('sweeping-1.png')),
+  childcare:repeatedFrame(scheduleFramePath('childcare-1.png')),
+  kitchenhelp:repeatedFrame(scheduleFramePath('kitchenhelp-1.png')),
+  merchanthelp:repeatedFrame(scheduleFramePath('merchanthelp-1.png')),
+  eating:repeatedFrame(scheduleFramePath('merchanthelp-1.png')),
+  rest:repeatedFrame(scheduleBasePath('sleep-1.png')),
+  sleep:repeatedFrame(scheduleBasePath('sleep-1.png')),
+  tea:repeatedFrame(scheduleFramePath('sit-1.png'))
 };
 // 승인된 4장(age09/13/16/18-eyes-v2)을 모든 기본 쯔꾸르 동작의 단일 원본으로 사용한다.
 // 잠자기도 연령별 기준 시트에서 불러와 얼굴·체형·기본 의상이 섞이지 않게 한다.
@@ -250,7 +268,8 @@ const canonicalActivityAliases={
   childcare:'manners',clinichelp:'calligraphy',rest:'rest',sleep:'rest',tea:'rest'
 };
 function activityFrameSet(activity){
-  return unifiedFrames(canonicalActivityAliases[activity]||'errand');
+  const canonical=canonicalActivityAliases[activity]||'errand';
+  return scheduleActionFrames[canonical]||scheduleActionFrames.errand;
 }
 const npcFrames = Object.fromEntries(['teacher','dolsoe','herbalist','nanny'].map(name=>[name,[1,2,3].map(n=>`../assets/characters/npcs/activity/${name}-${n}.png`)]));
 npcFrames.teacherReading=[1,2,3].map(n=>`../assets/characters/npcs/activity/teacher-reading-${n}.png`);
@@ -1688,7 +1707,7 @@ function renderSchedulePanel() {
   const scheduleCategories=['교육','아르바이트','휴식',...(actions.some(action=>action.category==='인연'&&actionUnlocked(action))?['인연']:[])];
   if(!scheduleCategories.includes(activeScheduleCategory))activeScheduleCategory='교육';
   const categoryTabs=scheduleCategories.map(category=>{const newCount=unseenUnlocked.filter(action=>action.category===category).length;return `<button data-schedule-category="${category}" class="${activeScheduleCategory===category?'on':''}">${category}${newCount?`<i>${newCount}</i>`:''}</button>`;}).join('');
-  const availableActions=holiday?[actions.find(action=>action.id===holiday.id),actions.find(action=>action.id==='rest')]:actions.filter(action=>action.category===activeScheduleCategory&&actionUnlocked(action));
+  const availableActions=holiday?[actions.find(action=>action.id===holiday.id),actions.find(action=>action.id==='rest')]:actions.filter(action=>action.category===activeScheduleCategory&&actionUnlocked(action)&&action.id!=='shopping');
   const actionCards=availableActions.map(action=>`<button class="action compact-action ${selectedScheduleAction===action.id?'selected':''}" data-action="${action.id}" ${holiday&&filled?'disabled':''}><img class="schedule-action-face" src="../assets/ui/activity-icons/activity-${scheduleActionIcon(action)}.png" alt=""><b>${action.name}</b><small class="schedule-action-money">${scheduleActionMoneyLabel(action)}</small></button>`).join('');
   const timelineMotion=scheduleTimelineMotion;scheduleTimelineMotion='';
   panelBody.innerHTML = `<section class="phase-progress compact" aria-label="전체 성장 페이즈 진행률"><div><b>제${phase.index}페이즈</b><span>${phase.index} / ${phase.total}</span></div><div class="phase-progress-track"><i style="width:${phase.percent}%"></i></div></section><div class="phase-five-wrap"><button id="phasePrev" aria-label="이전 페이즈 기록" ${timelineStart>0?'':'disabled'}>◀</button><div class="phase-five-grid ${timelineMotion?`slide-${timelineMotion}`:''}">${phaseSlots}</div><button id="phaseNext" aria-label="다음 페이즈 기록" ${timelineStart<latestStart?'':'disabled'}>▶</button></div><small class="phase-slide-count">완료 이력은 회색으로 보존됩니다 · ${timelineStart+1}–${Math.min(timelineStart+5,timeline.length)} / ${timeline.length}</small>${holiday?`<p class="fixed-holiday-phase"><b>${holiday.name} 고정 페이즈</b><span>${holiday.date.getMonth()+1}월 ${holiday.date.getDate()}일 포함 · 참가하지 않으면 집에서 휴식</span></p>`:`<div class="schedule-tabs compact-tabs" role="tablist">${categoryTabs}</div>`}<section class="schedule-category compact-category"><div class="action-grid compact-schedule-grid">${actionCards}</div></section><div class="schedule-tools compact-tools"><button id="scheduleRunPhases" ${filled?'':'disabled'}>${filled}개 페이즈 실행</button><button id="scheduleClearAll" ${filled?'':'disabled'}>전체 비우기</button></div>`;
@@ -1716,6 +1735,16 @@ let marketShoppingActive=false;
 let marketMealConsumed=false;
 let activeShopMarketMode=false;
 let activeOutfitShopCategory='general';
+function openHomeMarket(){
+  document.querySelector('#speakerName').textContent='선화';
+  document.querySelector('#dialogueText').textContent='저잣거리로 나가 볼까요?';
+  playMarketMusic();
+  exploreMarket().then(()=>{
+    playHomeMusic();
+    document.querySelector('#speakerName').textContent=game.guardianName||guardianDefs[game.guardianType]?.name||'수호신수';
+    document.querySelector('#dialogueText').textContent='저잣거리에서 돌아왔어요.';
+  });
+}
 function closeMarketUiForTransition(){
   document.querySelector('#outfitPreview')?.remove();
   panelBody.classList.remove('outfit-preview-open');
@@ -1747,7 +1776,7 @@ function renderShopPanel(tab='food',marketMode=marketShoppingActive,outfitCatego
   panelTitle.textContent=tab==='food'?'저잣거리 · 주막':'저잣거리 · 한복점';
   const keeper=tab==='food'?{name:'주모',image:'../assets/characters/npcs/shops/tavern-hostess.png',greeting:'어서 오세요. 따뜻한 음식이 준비되어 있답니다.'}:{name:'한복점 주인',image:'../assets/characters/npcs/shops/hanbok-owner.png',greeting:'어서 오세요. 곱게 지은 한복을 천천히 살펴보세요.'};
   const owned=new Set(game.items.filter(item=>typeof item==='object').map(item=>item.id));
-  const foodCards=foods.map(food=>`<button class="shop-card visual-card" data-food="${food.id}" ${game.money<food.price||marketMealConsumed?'disabled':''}><img src="../assets/items/food/${food.id}.png" alt="${food.name}"><b>${food.name}</b><span>${food.price}냥</span><small>${marketMealConsumed?'이번 방문에는 이미 식사했어요':`${food.detail}<br>${formatChanges(food.change)}`}</small></button>`).join('');
+  const foodCards=foods.map(food=>`<button class="shop-card visual-card" data-food="${food.id}" ${game.money<food.price?'disabled':''}><img src="../assets/items/food/${food.id}.png" alt="${food.name}"><b>${food.name}</b><span>${food.price}냥</span><small>${food.detail}<br>${formatChanges(food.change)}</small></button>`).join('');
   const visibleOutfits=outfits.filter(outfit=>outfitShopCategory(outfit)===outfitCategory);
   const outfitCards=visibleOutfits.map(outfit=>{const premium=isPremiumOutfit(outfit),cash=isCashOutfit(outfit),available=outfitAvailable(outfit),insufficient=cash?game.cash<outfit.cashPrice:game.money<outfit.price,locked=!available||owned.has(outfit.id)||insufficient,displayAge=available?growthVisualAge():outfit.age;return `<button class="shop-card outfit-card visual-card ${available?'available':''} ${premium?'premium':''} ${cash?'cash':''} ${locked?'locked':''}" data-outfit-preview="${outfit.id}" aria-label="${outfit.name} 미리보기"><img src="${outfitImageForAge(outfit.id,displayAge)}" alt="${outfit.name}"><b>${outfit.name}</b><span>${cash?`${outfit.cashPrice.toLocaleString()}원`:`${outfit.price}냥`}</span><small>${cash?'캐시 의상 · ':premium?'고급 의상 · ':''}${outfitAgeLabel(outfit)} · ${outfit.seasons.join('·')}<br>${formatChanges(outfit.change)}${owned.has(outfit.id)?'<br>보유 중':''}</small></button>`;}).join('');
   const outfitCategoryTabs=tab==='outfit'?`<div class="outfit-shop-tabs" role="tablist" aria-label="의상 등급"><button data-outfit-category="general" class="${outfitCategory==='general'?'on':''}">일반 의상</button><button data-outfit-category="premium" class="${outfitCategory==='premium'?'on':''}">고급 의상</button><button data-outfit-category="cash" class="${outfitCategory==='cash'?'on':''}">캐시 의상</button></div>`:'';
@@ -1779,7 +1808,7 @@ function showOutfitPreview(id){
   }));
   document.querySelector('#outfitPreviewBuy').addEventListener('click',()=>buyOutfit(id));
 }
-async function buyFood(id){const food=foods.find(item=>item.id===id);if(!food||game.money<food.price||marketMealConsumed)return;marketMealConsumed=true;panel.hidden=true;const stage=document.querySelector('#activityStage'),image=document.querySelector('#stageCharacterImage'),character=document.querySelector('#stageCharacter');document.querySelector('#marketExplore').hidden=true;stage.hidden=false;stage.className='activity-stage map-restRoom eating-stage';document.querySelector('#stageMap').src=backgrounds.restRoom;document.querySelector('#stageNpc').hidden=true;document.querySelector('#stageProps').hidden=true;document.querySelector('#stageCaption').textContent=`주막 · ${food.name}`;character.hidden=false;character.className='stage-character pixel-sprite motion-eating';const eatingFrames=activityFrameSet('eating');for(const n of [0,1,2,1,0,1,2]){image.src=await outfitActivityFrame(eatingFrames[n],game.equippedOutfit);await new Promise(r=>setTimeout(r,320));}stage.hidden=true;game.money-=food.price;applyShopChanges(food.change);document.querySelector('#dialogueText').textContent=`주막에서 ${food.name}을(를) 맛있게 먹었어요. 이번 저잣거리 방문의 식사는 끝났어요.`;showLiveChanges({change:food.change,cost:food.price});panel.hidden=false;renderShopPanel('food',true);queueAutoSave();}
+async function buyFood(id){const food=foods.find(item=>item.id===id);if(!food||game.money<food.price)return;panel.hidden=true;const stage=document.querySelector('#activityStage'),image=document.querySelector('#stageCharacterImage'),character=document.querySelector('#stageCharacter');document.querySelector('#marketExplore').hidden=true;stage.hidden=false;stage.className='activity-stage map-restRoom eating-stage';document.querySelector('#stageMap').src=backgrounds.restRoom;document.querySelector('#stageNpc').hidden=true;document.querySelector('#stageProps').hidden=true;document.querySelector('#stageCaption').textContent=`주막 · ${food.name}`;character.hidden=false;character.className='stage-character pixel-sprite motion-eating';const eatingFrames=activityFrameSet('eating');for(const n of [0,1,2,1,0,1,2]){image.src=await outfitActivityFrame(eatingFrames[n],game.equippedOutfit);await new Promise(r=>setTimeout(r,320));}stage.hidden=true;game.money-=food.price;applyShopChanges(food.change);document.querySelector('#dialogueText').textContent=`주막에서 ${food.name}을(를) 맛있게 먹었어요. 다시 둘러볼 수 있어요.`;showLiveChanges({change:food.change,cost:food.price});panel.hidden=false;renderShopPanel('food',true);queueAutoSave();}
 function buyOutfit(id){normalizeInventory();const outfit=outfits.find(item=>item.id===id);if(!outfit||!outfitAvailable(outfit))return;const cash=isCashOutfit(outfit);if(cash?game.cash<outfit.cashPrice:game.money<outfit.price)return;if(game.items.some(item=>item.type==='outfit'&&item.id===id)){document.querySelector('#dialogueText').textContent=`${outfit.name}은(는) 이미 보유하고 있어요.`;panelBody.classList.remove('outfit-preview-open');renderShopPanel('outfit',activeShopMarketMode,activeOutfitShopCategory);return;}if(cash)game.cash-=outfit.cashPrice;else game.money-=outfit.price;game.items.push({id:outfit.id,type:'outfit',name:outfit.name,age:outfit.age,ageEnd:outfit.ageEnd,tone:outfit.tone,seasons:outfit.seasons,qty:1});game.autoOutfit=false;game.equippedOutfit=id;applyEquippedOutfit();applyShopChanges(outfit.change);document.querySelector('#dialogueText').textContent=`${outfit.name}을(를) 구입하고 갈아입었어요. 일정에서도 이 의상이 유지돼요.`;if(!cash)showLiveChanges({change:outfit.change,cost:outfit.price});renderHud();panelBody.classList.remove('outfit-preview-open');renderShopPanel('outfit',activeShopMarketMode,activeOutfitShopCategory);queueAutoSave();}
 
 const marketPlaces=[
@@ -1842,7 +1871,14 @@ function addDailyAction(id,sourceButton) {
   const chosenAction=actions.find(action=>action.id===id);
   if(!chosenAction||!actionUnlocked(chosenAction))return;
   const holiday=currentPhaseHoliday();if(holiday&&game.dailySchedule.length)return;
-  normalizePhaseSchedule();game.dailySchedule.push(id);scheduleCursor=game.dailySchedule.length-1;scheduleTimelineOffset=0;selectedScheduleAction=id;
+  normalizePhaseSchedule();
+  if(id==='shopping'&&game.dailySchedule.includes('shopping')){
+    document.querySelector('#speakerName').textContent='수호신수';
+    document.querySelector('#dialogueText').textContent='저잣거리는 한 페이즈에 한 번만 나갈 수 있어요.';
+    renderSchedulePanel();
+    return;
+  }
+  game.dailySchedule.push(id);scheduleCursor=game.dailySchedule.length-1;scheduleTimelineOffset=0;selectedScheduleAction=id;
   const firstSelection=!game.activityUnlocksSeen.includes(id);
   if(firstSelection)game.activityUnlocksSeen.push(id);
   if(chosenAction.intro&&firstSelection){document.querySelector('#speakerName').textContent=chosenAction.mentor;document.querySelector('#dialogueText').textContent=chosenAction.intro;}
@@ -2452,6 +2488,7 @@ document.querySelector('#scheduleConfirmNo').addEventListener('click',()=>{sched
 document.querySelectorAll('[data-playback-speed-toggle]').forEach(button=>button.addEventListener('click',event=>{event.stopPropagation();schedulePlaybackSpeed=schedulePlaybackSpeed===2?1:2;syncPlaybackSpeedToggle();}));
 window.addEventListener('keydown',event=>{if(document.querySelector('#marketExplore').hidden)return;if(event.key==='ArrowLeft')selectMarketShop('food');if(event.key==='ArrowRight')selectMarketShop('outfit');if(event.key==='Enter'&&marketSelection)enterMarketShop(marketSelection);});
 bg.addEventListener('load', updateImageState);
+document.querySelector('#marketHomeButton')?.addEventListener('click',openHomeMarket);
 document.querySelector('#wardrobeButton')?.addEventListener('click',renderWardrobe);
 document.querySelector('#collectionBookButton')?.addEventListener('click',()=>openPanel('collection'));
 document.querySelector('#gameRecordButton')?.addEventListener('click',()=>openPanel('save'));
