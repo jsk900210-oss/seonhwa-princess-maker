@@ -1398,11 +1398,13 @@
 .phone.playing:not(.market-playing):not(.vacation-playing) .condition-cue{
   z-index:13!important;
   left:50%!important;
-  top:29%!important;
-  min-width:64px!important;
+  top:35%!important;
+  min-width:72px!important;
+  max-width:min(72vw,240px)!important;
   padding:6px 11px!important;
   border-radius:10px!important;
   transform:translateX(-50%);
+  text-align:center!important;
   white-space:nowrap!important
 }
 @keyframes condition-cue{

@@ -50,6 +50,7 @@ function transitionPrologueToHomeMusic(){
 }
 
 const game = { characterName:'', nannyName:'', guardianType:null, guardianName:'', profileSlot:null, age: 9, height:130, weight:28.5, month: 1, week: 1, season:'봄', money: 50000, cash:50000, health:42, strength:18, agility:20, intelligence:35, magic:8, mentality:30, dignity:36, manners:28, speech:14, sensitivity:40, sense:24, charm:30, stress:12, items: [], purchasedGoods:[], relations:{}, activityProgress:{}, activityUnlocksSeen:[], completedPhases:[], startingGiftId:null, fatherBirthdayYears:[], equippedOutfit:null, autoOutfit:true, dailySchedule: [], scheduleFormat:'phase-v1', birthday:null, currentDate:null, endingDate:null, ended:false, endingResult:null, birthdayCount:0, element:null, birthSeason:null, memory:0, truth:0, exposure:0, fatherAffinity:0, guardianTrust:50, nannyAffinity:50, lastGreetingDate:null, lastGuardianTalkDate:null, lastGuardianTalkPhase:null, monthlyLedger:null };
+const baseSpritePath='../assets/characters/seonhwa/age-09/base/seonhwa-age09-base.png';
 const guardianDefs={
   cheongryong:{name:'청룡',mark:'龍',theme:'#294e67',gift:{name:'푸른 여의주 조각',change:{intelligence:5,magic:4}},intro:'동쪽의 푸른 숨결. 배움과 술법의 길을 살피는 신수입니다.'},
   baekho:{name:'백호',mark:'虎',theme:'#ddd8ce',gift:{name:'흰 범의 방울',change:{strength:5,agility:4}},intro:'서쪽의 굳센 발걸음. 위험 앞에서 용기와 무예를 북돋는 신수입니다.'},
@@ -75,21 +76,16 @@ const statDisplayOrder=[...statGroups.flatMap(group=>group.stats.map(([key])=>ke
 const statDisplayRank=new Map(statDisplayOrder.map((key,index)=>[key,index]));
 const orderedChangeEntries=(change={})=>Object.entries(change).sort(([left],[right])=>(statDisplayRank.get(left)??999)-(statDisplayRank.get(right)??999));
 const expressions = [
-  ['../assets/characters/seonhwa/age-09/base/seonhwa-age09-base.png','기본'],
-  ['../assets/characters/seonhwa/age-09/fullbody-expressions/seonhwa-age09-fullbody-happy.png','웃음'],
-  ['../assets/characters/seonhwa/age-09/fullbody-expressions/seonhwa-age09-fullbody-sad.png','슬픔'],
-  ['../assets/characters/seonhwa/age-09/fullbody-expressions/seonhwa-age09-fullbody-surprised.png','당황'],
-  ['../assets/characters/seonhwa/age-09/fullbody-expressions/seonhwa-age09-fullbody-angry.png','화남'],
-  ['../assets/characters/seonhwa/age-09/fullbody-expressions/seonhwa-age09-fullbody-tired.png','피곤함']
+  [baseSpritePath,'기본']
 ];
 const homeConditionPoses={
-  happy:'../assets/characters/seonhwa/age-09/fullbody-expressions/seonhwa-age09-fullbody-happy.png',
-  sad:'../assets/characters/seonhwa/age-09/fullbody-expressions/seonhwa-age09-fullbody-sad.png',
-  shocked:'../assets/characters/seonhwa/age-09/fullbody-expressions/seonhwa-age09-fullbody-shocked.png',
-  angry:'../assets/characters/seonhwa/age-09/fullbody-expressions/seonhwa-age09-fullbody-angry.png',
-  tired:'../assets/characters/seonhwa/age-09/fullbody-expressions/seonhwa-age09-fullbody-tired.png',
-  rebellious:'../assets/characters/seonhwa/age-09/fullbody-expressions/seonhwa-age09-fullbody-rebellious.png',
-  normal:'../assets/characters/seonhwa/age-09/base/seonhwa-age09-base.png'
+  happy:baseSpritePath,
+  sad:baseSpritePath,
+  shocked:baseSpritePath,
+  angry:baseSpritePath,
+  tired:baseSpritePath,
+  rebellious:baseSpritePath,
+  normal:()=>baseSpritePath
 };
 const backgrounds = {
   home: '../assets/backgrounds/home/home-room-morning.webp',
@@ -152,6 +148,8 @@ const actionPresentation = {
   freeTime: { motion:'motion-market-roam', location:'market', prop:'none', activity:null, npc:null },
   sleep: { motion:'motion-sleep', location:'restRoom', prop:'none', activity:'sleep', npc:null },
   shopping: { motion:'motion-walk', location:'marketErrand', prop:'none', activity:null, npc:null },
+  'holiday-seollal': { motion:'motion-manners', location:'restRoom', prop:'none', activity:'manners', npc:null },
+  'holiday-chuseok': { motion:'motion-manners', location:'restRoom', prop:'none', activity:'manners', npc:null },
   painting: { motion:'motion-calligraphy', location:'phasePainting', prop:'none', activity:'calligraphy', npc:'teacher' },
   music: { motion:'motion-manners', location:'phaseMusic', prop:'none', activity:'manners', npc:'teacher' },
   dance: { motion:'motion-manners', location:'phaseDance', prop:'none', activity:'manners', npc:'teacher' },
@@ -235,8 +233,8 @@ const vacationIllustrations=[
 ];
 // 일정 화면은 승인된 연령별 기준 얼굴만 사용한다. 걷기 전용 통합 프레임이
 // 완성되기 전까지 장보기 프레임을 공통 이동 루프로 사용해 구형 얼굴 혼입을 막는다.
-function unifiedAgeFolder(){return String(growthAssetAge(growthVisualAge())).padStart(2,'0');}
-function unifiedFrames(name){const age=unifiedAgeFolder();return [1,2,3].map(n=>`../assets/characters/seonhwa/activity-consistent/age-${age}/${name}-${n}.png`);}
+function unifiedAgeFolder(){return '09';}
+function unifiedFrames(){return [baseSpritePath,baseSpritePath,baseSpritePath];}
 const spriteFrames = {
   get down(){return unifiedFrames('errand');},
   get left(){return unifiedFrames('errand');},
@@ -395,12 +393,7 @@ const correctedOutfitVariants=new Map([['13:age13-scholar','age13-scholar-fixed-
 const outfitImageForAge=(id,visualAge=growthVisualAge())=>{
   const outfit=outfits.find(item=>item.id===id);
   if(!outfit)return '';
-  const assetAge=outfit.category==='cash'
-    ? (visualAge===9 ? 9 : growthAssetAge(visualAge))
-    : outfit.assetAge||growthAssetAge(visualAge),
-    corrected=correctedOutfitVariants.get(`${visualAge}:${id}`),
-    suffix=visualAge===19&&correctedAdultOutfits.has(id)?'-v2':'';
-  return `../assets/characters/seonhwa/wardrobe/age-${String(assetAge).padStart(2,'0')}/${corrected||`${id}${suffix}`}.png`;
+  return baseSpritePath;
 };
 const outfitImage=id=>outfitImageForAge(id,growthVisualAge());
 function homeCondition(){
@@ -415,7 +408,8 @@ function updateHomeCharacter(){
   const condition=homeCondition();
   document.querySelector('#characterSlot').dataset.condition=condition;
   character.alt=`${game.characterName||'아이'} · ${condition}`;
-  character.src=game.equippedOutfit?outfitImage(game.equippedOutfit):homeConditionPoses[condition];
+  const fallbackPose=homeConditionPoses[condition];
+  character.src=game.equippedOutfit?outfitImage(game.equippedOutfit):(typeof fallbackPose==='function'?fallbackPose():fallbackPose);
 }
 function applyEquippedOutfit(){updateHomeCharacter();}
 const outfitSituation={
@@ -706,7 +700,7 @@ const actions = [
   { id: 'vacation', category: '휴식', name: '바캉스', cost: 180, summary: '감수성 +3 · 매력 +1 · 스트레스 -25 · 추억 일러스트 획득', change: {sensitivity:3,charm:1,stress:-25}, special:'vacation' },
   { id: 'dungeon', category: '휴식', name: '비경 탐사', cost: 50, unlockAge:13, unlockAnyStats:[{strength:120},{magic:120}], mentor:'수호신수', icon:'herbs', intro:'성 밖의 숨은 길에는 보물과 위험이 함께 있단다. 준비를 갖추고 나서자.', summary:'체력 +2 · 힘 +2 · 마력 +2 · 스트레스 +5 · 보물 은전 획득 가능', change:{health:2,strength:2,magic:2,stress:5}, special:'dungeon' },
   {id:'holiday-seollal',category:'명절',name:'설날 행사 참가',cost:0,icon:'manners',holidayOnly:'설날',summary:'설날 고정 이벤트',change:{dignity:2,manners:2,stress:-10},special:'holiday'},
-  {id:'holiday-chuseok',category:'명절',name:'추석 행사 참가',cost:0,icon:'manners',holidayOnly:'추석',summary:'추석 고정 이벤트',change:{sensitivity:2,charm:1,stress:-10},special:'holiday'},
+  {id:'holiday-chuseok',category:'명절',name:'추석 행사 참가',cost:0,icon:'manners',holidayOnly:'추석',summary:'차례상·윷놀이·제기차기·송편만들기',change:{},special:'holiday'},
   {id:'date-doyun',category:'인연',name:'도윤과 데이트',cost:100,unlockAge:16,relationId:'doyun',mentor:'도윤',icon:'manners',summary:'호감도 +12 · 감수성 +2 · 스트레스 -8',change:{sensitivity:2,stress:-8},special:'date'},
   {id:'date-seojin',category:'인연',name:'서진과 데이트',cost:100,unlockAge:16,relationId:'seojin',mentor:'서진',icon:'reading',summary:'호감도 +12 · 지능 +2 · 스트레스 -8',change:{intelligence:2,stress:-8},special:'date'},
   {id:'date-yeonwoo',category:'인연',name:'연우와 데이트',cost:100,unlockAge:16,relationId:'yeonwoo',mentor:'연우',icon:'manners',summary:'호감도 +12 · 감수성 +2 · 스트레스 -8',change:{sensitivity:2,stress:-8},special:'date'},
@@ -901,6 +895,41 @@ function rollHolidayRelationEvent(){
   record.relationship=record.affinity>=80?'연인':record.affinity>=60?'특별한 인연':record.affinity>=35?'친구':'지인';
   const lines={설날:{doyun:'도윤과 새해 인사를 했어요.',seojin:'서진과 덕담을 나눴어요.',yeonwoo:'연우와 복주머니를 바꿨어요.',taegyeom:'태겸과 떡국을 먹었어요.',hyeon:'현과 윷놀이를 했어요.'},추석:{doyun:'도윤과 달을 봤어요.',seojin:'서진과 시를 읊었어요.',yeonwoo:'연우와 달빛을 그렸어요.',taegyeom:'태겸과 송편을 나눴어요.',hyeon:'현과 등불길을 걸었어요.'}};
   return {holiday,candidate,record,line:lines[holiday][candidate.id],flag};
+}
+const chuseokContestRules=[
+  {id:'yut',name:'윷놀이',stat:'intelligence',base:58,growth:5},
+  {id:'jegi',name:'제기차기',stat:'agility',base:54,growth:5},
+  {id:'songpyeon',name:'송편만들기',stat:'sense',base:56,growth:5}
+];
+const chuseokContestRanks=['예선탈락','장려상','우수상','대상'];
+function chuseokContestYearIndex(){return Math.max(0,game.age-9);}
+function chuseokContestRank(score,threshold){
+  if(score>=threshold)return '대상';
+  if(score>=threshold-8)return '우수상';
+  if(score>=threshold-16)return '장려상';
+  return '예선탈락';
+}
+function evaluateChuseokFestival(){
+  const yearIndex=chuseokContestYearIndex(),ceremonyChange={dignity:1,manners:2,stress:-3};
+  const contests=chuseokContestRules.map(rule=>{
+    const threshold=rule.base+(yearIndex*rule.growth),score=Math.round(Number(game[rule.stat])||0),rank=chuseokContestRank(score,threshold);
+    const reward={
+      대상:{[rule.stat]:4,stress:-4},
+      우수상:{[rule.stat]:3,stress:-3},
+      장려상:{[rule.stat]:2,stress:-2},
+      예선탈락:{[rule.stat]:1,stress:-1}
+    }[rank];
+    Object.entries(canonicalizeChange(reward)).forEach(([key,value])=>{ceremonyChange[key]=(ceremonyChange[key]||0)+value;});
+    return { ...rule, threshold, score, rank };
+  });
+  const overallRank=contests.reduce((best,entry)=>chuseokContestRanks.indexOf(entry.rank)>chuseokContestRanks.indexOf(best.rank)?entry:best,contests[0])?.rank||'예선탈락';
+  return {
+    opening:'차례상을 차리고 절한 뒤, 추석 3종세트를 시작했어요.',
+    contests,
+    overallRank,
+    summary:contests.map(item=>`${item.name} ${item.rank} (${item.score}/${item.threshold})`).join(' · '),
+    change:canonicalizeChange(ceremonyChange)
+  };
 }
 function presentHolidayRelation(){
   if(!pendingHolidayRelation)return false;
@@ -1381,7 +1410,7 @@ function showVacationCollectionCard(id){
 function renderWardrobe(){
   panel.hidden=false;panelTitle.textContent='옷 갈아입기';
   const owned=game.items.filter(item=>item&&item.type==='outfit');
-  panelBody.innerHTML=`<div class="auto-outfit"><div><b>계절·상황 자동 갈아입기</b><small>${game.autoOutfit?'보유한 한복 중 알맞은 옷을 자동 선택합니다.':'직접 선택한 한복을 계속 입습니다.'}</small></div><button id="autoOutfitToggle" class="${game.autoOutfit?'on':''}">${game.autoOutfit?'켜짐':'꺼짐'}</button></div><div class="wardrobe-grid"><button class="wardrobe-card ${!game.equippedOutfit?'on':''}" data-wear=""><img src="${expressions[0][0]}" alt="기본 한복"><b>기본 한복</b></button>${owned.map(item=>{const meta=outfits.find(outfit=>outfit.id===item.id);return `<button class="wardrobe-card ${game.equippedOutfit===item.id?'on':''}" data-wear="${item.id}"><img src="${outfitImage(item.id)}" alt="${item.name}"><b>${item.name}</b><small>${meta?`${outfitAgeLabel(meta)} · ${meta.seasons.join('·')}<br>`:''}${meta&&game.age>meta.ageEnd?'자라서 조금 꼭 맞음':'현재 몸에 맞음'}</small></button>`;}).join('')}</div>`;
+  panelBody.innerHTML=`<div class="auto-outfit"><div><b>계절·상황 자동 갈아입기</b><small>${game.autoOutfit?'보유한 한복 중 알맞은 옷을 자동 선택합니다.':'직접 선택한 한복을 계속 입습니다.'}</small></div><button id="autoOutfitToggle" class="${game.autoOutfit?'on':''}">${game.autoOutfit?'켜짐':'꺼짐'}</button></div><div class="wardrobe-grid"><button class="wardrobe-card ${!game.equippedOutfit?'on':''}" data-wear=""><img src="${baseSpritePath}" alt="기본 한복"><b>기본 한복</b></button>${owned.map(item=>{const meta=outfits.find(outfit=>outfit.id===item.id);return `<button class="wardrobe-card ${game.equippedOutfit===item.id?'on':''}" data-wear="${item.id}"><img src="${outfitImage(item.id)}" alt="${item.name}"><b>${item.name}</b><small>${meta?`${outfitAgeLabel(meta)} · ${meta.seasons.join('·')}<br>`:''}${meta&&game.age>meta.ageEnd?'자라서 조금 꼭 맞음':'현재 몸에 맞음'}</small></button>`;}).join('')}</div>`;
   document.querySelector('#autoOutfitToggle').addEventListener('click',()=>{game.autoOutfit=!game.autoOutfit;if(game.autoOutfit)updateAutoOutfit();renderWardrobe();});
   panelBody.querySelectorAll('[data-wear]').forEach(button=>button.addEventListener('click',()=>{game.autoOutfit=false;game.equippedOutfit=button.dataset.wear||null;applyEquippedOutfit();renderWardrobe();}));
 }
@@ -1575,7 +1604,7 @@ function resetGameState() {
   syncBirthdaySelectors(true);
   document.querySelector('#birthdayTitle').textContent='아이의 이름과 생일';
   bg.src = backgrounds.home;
-  character.src = expressions[0][0];
+  character.src = baseSpritePath;
   resetTransientScenes();
   renderHud();
   panel.hidden = true;
@@ -2285,8 +2314,9 @@ async function playWeeklySchedule(selected) {
     const phaseSceneType=action.category==='교육'?'pm3-phase-scene lesson-scene':action.category==='아르바이트'?'pm3-phase-scene work-scene':'pm3-phase-scene daily-scene';
     stage.className = `activity-stage ${phaseSceneType} map-${presentation.location} action-${action.id} mastery-${currentMasteryRank}`;
     stageCharacter.className = `stage-character pixel-sprite ${presentation.motion}`;
-    let dungeonReward={money:0,gear:null},dateRelation=null;
-    if(action.id==='shopping'){
+  let dungeonReward={money:0,gear:null},dateRelation=null;
+  let holidayContestResult=null;
+  if(action.id==='shopping'){
       playMarketMusic();
       stageMap.src=backgrounds.market;
       document.querySelector('#stageCaption').textContent=`저잣거리 · 좌우로 움직여 가게를 선택하세요`;
@@ -2319,6 +2349,16 @@ async function playWeeklySchedule(selected) {
         const metSomeone=await playVacationScene(prize,index,vacationCompanion,scheduleStart);
         document.querySelector('#dialogueText').textContent=metSomeone?`바캉스에서 「${prize.name}」 일러스트와 ${metSomeone.name}의 인연 추억을 얻었어요.`:`바캉스에서 「${prize.name}」 일러스트를 획득했어요.`;
       }else document.querySelector('#dialogueText').textContent='같은 여행지에서 느긋하게 휴식을 이어 갔어요.';
+    }else if(action.id==='holiday-chuseok'){
+      stageMap.src=backgrounds.restRoom;
+      stageMap.alt='추석 차례상과 전통놀이';
+      stage.className=`activity-stage ${phaseSceneType} map-restRoom action-holiday-chuseok`;
+      stageProps.className='stage-props prop-none';
+      stageNpc.hidden=true;
+      holidayContestResult=evaluateChuseokFestival();
+      document.querySelector('#dialogueText').textContent=holidayContestResult.opening;
+      await schedulePlaybackDelay(900);
+      document.querySelector('#dialogueText').textContent=holidayContestResult.summary;
     }else if(action.id==='dungeon'){
       stageCharacter.hidden=true;stageNpc.hidden=true;stageProps.hidden=true;dungeonReward=await exploreDungeon();stageCharacter.hidden=false;stageProps.hidden=false;
     }else if(action.special==='date'){
@@ -2330,13 +2370,18 @@ async function playWeeklySchedule(selected) {
       record.affinity=Math.min(100,record.affinity+12);record.lastMetAt=game.currentDate||null;record.relationship=record.affinity>=80?'연인':record.affinity>=60?'특별한 인연':'친구';
       stageCharacter.hidden=false;stageProps.hidden=false;
     }else await animateActivitySprite(stageCharacterImage,presentation.motion,restActivity||presentation.activity,stageNpcImage,presentation.npc,dailyOutfit,currentMasteryRank);
-    const guaranteedSuccess=['rest','freeTime','vacation','dungeon'].includes(action.id)||action.special==='date';
+    const guaranteedSuccess=['rest','freeTime','vacation','dungeon','holiday-chuseok'].includes(action.id)||action.special==='date';
     const condition=['shopping','rest','freeTime','vacation','dungeon'].includes(action.id)||action.special==='date'?null:conditionEvent(simulated.stress,index);
     let outcome=judgeActivityOutcome(action,simulated.stress);
+    if(action.id==='holiday-chuseok')outcome='success';
     if(action.id==='dungeon')outcome=dungeonReward.money>=140?'perfect':dungeonReward.money>0?'normal':'struggle';
     if(!guaranteedSuccess&&condition==='mistake')outcome='mistake';
     else if(!guaranteedSuccess&&condition==='drowsy'&&outcome!=='mistake')outcome='struggle';
     const resolvedChange=phaseDailyChange(freeTimeVariant?{...freeTimeVariant.change}:resolvedActivityChange(action,outcome));
+    if(holidayContestResult){
+      const contestChange=phaseDailyChange(holidayContestResult.change);
+      Object.entries(contestChange).forEach(([key,value])=>{resolvedChange[key]=(resolvedChange[key]||0)+value;});
+    }
     const isWork=action.category==='아르바이트',basePay=isWork?activityPay(action):0;
     let moneyChange=isWork?(outcome==='mistake'?0:outcome==='struggle'?Math.round(basePay*.5):basePay):-action.cost-(freeTimeVariant?.cost||0);
     if(action.id==='dungeon'){
@@ -2368,7 +2413,9 @@ async function playWeeklySchedule(selected) {
     const moneyText = (moneyChange > 0 ? `은전 +${moneyChange}냥` : moneyChange < 0 ? `은전 ${moneyChange}냥` : isWork&&outcome==='mistake'?'실수하여 일당 없음':'비용 없음')+bonusText;
     const resultSummary=orderedChangeEntries(actualChange).filter(([,value])=>value!==0).map(([key,value])=>`${statLabels[key]||key} ${value>0?'+':''}${value}`).join(' · ');
     const relationEvent=maybeScheduleRelationEncounter(action);
-    dayResult.innerHTML = `<b>${action.name} · ${outcomeLabels[outcome]}</b><span>${resultSummary||'능력치 변화 없음'}<br>${moneyText} · 현재 ${game.money.toLocaleString()}냥${dateRelation?`<br>${dateRelation.candidate.name} +12 · ${dateRelation.record.affinity} · ${dateRelation.record.relationship}`:''}${relationEvent?`<br>${relationEvent.candidate.name} — ${relationEvent.episode.title}`:''}</span>`;
+    const holidayResultText=holidayContestResult?`<br>${holidayContestResult.summary}`:'';
+    const resultTitle=holidayContestResult?`추석 3종세트 · ${holidayContestResult.overallRank}`:`${action.name} · ${outcomeLabels[outcome]}`;
+    dayResult.innerHTML = `<b>${resultTitle}</b><span>${resultSummary||'능력치 변화 없음'}${holidayResultText}<br>${moneyText} · 현재 ${game.money.toLocaleString()}냥${dateRelation?`<br>${dateRelation.candidate.name} +12 · ${dateRelation.record.affinity} · ${dateRelation.record.relationship}`:''}${relationEvent?`<br>${relationEvent.candidate.name} — ${relationEvent.episode.title}`:''}</span>`;
     if(relationEvent)document.querySelector('#dialogueText').textContent=relationEvent.episode.line;
     if(action.id!=='vacation'){
       dayResult.hidden = false;
@@ -2420,7 +2467,10 @@ document.querySelector('#referralSave').addEventListener('click',saveReferralCod
 document.querySelector('#referralCode').addEventListener('keydown',event=>{if(event.key==='Enter')saveReferralCode();});
 bg.addEventListener('error', updateImageState);
 character.addEventListener('load', updateImageState);
-character.addEventListener('error', updateImageState);
+character.addEventListener('error',()=>{
+  if(!character.src.endsWith('/seonhwa-age09-base.png'))character.src=baseSpritePath;
+  updateImageState();
+});
 document.querySelectorAll('[data-panel]').forEach(button => button.addEventListener('click', () => openPanel(button.dataset.panel)));
 document.querySelector('#closePanel').addEventListener('click', () => {if(marketShoppingActive)returnToMarketSelection();else{panel.hidden=true;playHomeMusic();}});
 document.querySelector('#recoveryFresh').addEventListener('click',declineRecovery);

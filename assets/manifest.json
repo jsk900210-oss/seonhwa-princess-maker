@@ -15,44 +15,35 @@
       "kind": "character",
       "status": "ready",
       "path": "assets/characters/seonhwa/age-09/base/seonhwa-age09-base.png",
+      "width": 1254,
+      "height": 1254,
+      "alphaRequired": false
+    },
+    {
+      "id": "seonhwa-age13-base",
+      "kind": "character",
+      "status": "ready",
+      "path": "assets/characters/seonhwa/age-13/base/seonhwa-age13-base.png",
       "width": 1024,
       "height": 1536,
       "alphaRequired": true
     },
     {
-      "id": "seonhwa-age09-expression-neutral",
-      "kind": "expression",
+      "id": "seonhwa-age16-base",
+      "kind": "character",
       "status": "ready",
-      "path": "assets/characters/seonhwa/age-09/expressions/seonhwa-age09-expression-neutral.png",
-      "width": 512,
-      "height": 512,
+      "path": "assets/characters/seonhwa/age-16/base/seonhwa-age16-base.png",
+      "width": 1024,
+      "height": 1536,
       "alphaRequired": true
     },
     {
-      "id": "seonhwa-age09-expression-happy",
-      "kind": "expression",
+      "id": "seonhwa-age18-base",
+      "kind": "character",
       "status": "ready",
-      "path": "assets/characters/seonhwa/age-09/expressions/seonhwa-age09-expression-happy.png",
-      "width": 512,
-      "height": 512,
-      "alphaRequired": true
-    },
-    {
-      "id": "seonhwa-age09-expression-sad",
-      "kind": "expression",
-      "status": "ready",
-      "path": "assets/characters/seonhwa/age-09/expressions/seonhwa-age09-expression-sad.png",
-      "width": 512,
-      "height": 512,
-      "alphaRequired": true
-    },
-    {
-      "id": "seonhwa-age09-expression-surprised",
-      "kind": "expression",
-      "status": "ready",
-      "path": "assets/characters/seonhwa/age-09/expressions/seonhwa-age09-expression-surprised.png",
-      "width": 512,
-      "height": 512,
+      "path": "assets/characters/seonhwa/age-18/base/seonhwa-age18-base.png",
+      "width": 1024,
+      "height": 1536,
       "alphaRequired": true
     },
     {
@@ -63,51 +54,6 @@
       "width": 1080,
       "height": 1920,
       "alphaRequired": false
-    },
-    {
-      "id": "seonhwa-age09-fullbody-happy",
-      "kind": "character",
-      "status": "ready",
-      "path": "assets/characters/seonhwa/age-09/fullbody-expressions/seonhwa-age09-fullbody-happy.png",
-      "width": 1024,
-      "height": 1536,
-      "alphaRequired": true
-    },
-    {
-      "id": "seonhwa-age09-fullbody-sad",
-      "kind": "character",
-      "status": "ready",
-      "path": "assets/characters/seonhwa/age-09/fullbody-expressions/seonhwa-age09-fullbody-sad.png",
-      "width": 1024,
-      "height": 1536,
-      "alphaRequired": true
-    },
-    {
-      "id": "seonhwa-age09-fullbody-surprised",
-      "kind": "character",
-      "status": "ready",
-      "path": "assets/characters/seonhwa/age-09/fullbody-expressions/seonhwa-age09-fullbody-surprised.png",
-      "width": 1024,
-      "height": 1536,
-      "alphaRequired": true
-    },
-    {
-      "id": "seonhwa-age09-fullbody-angry",
-      "kind": "character",
-      "status": "ready",
-      "path": "assets/characters/seonhwa/age-09/fullbody-expressions/seonhwa-age09-fullbody-angry.png",
-      "width": 1024,
-      "height": 1536,
-      "alphaRequired": true
-    },
-    {
-      "id": "seonhwa-age09-fullbody-tired",
-      "kind": "character",
-      "status": "ready",
-      "path": "assets/characters/seonhwa/age-09/fullbody-expressions/seonhwa-age09-fullbody-tired.png",
-      "width": 1024,
-      "height": 1536,
-      "alphaRequired": true
     },
     {
       "id": "bg-market-day",

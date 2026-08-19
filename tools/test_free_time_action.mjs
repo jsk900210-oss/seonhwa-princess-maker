@@ -7,7 +7,7 @@ const root=dirname(dirname(fileURLToPath(import.meta.url)));
 const app=readFileSync(join(root,'src','app.js'),'utf8');
 
 assert.ok(app.includes("id: 'freeTime', category: '휴식', name: '자유행동'"),'휴식 탭에 자유행동이 있어야 합니다.');
-assert.ok(app.includes("['rest','freeTime','vacation','dungeon']"),'자유행동은 실패하지 않아야 합니다.');
+assert.ok(app.includes("['rest','freeTime','vacation','dungeon','holiday-chuseok']"),'자유행동은 실패하지 않아야 합니다.');
 assert.ok(app.includes("name:'주막 간식'"),'자유행동에 주막 체류 결과가 있어야 합니다.');
 assert.ok(app.includes("name:'작은 장신구'"),'자유행동에 장터 구매 결과가 있어야 합니다.');
 assert.ok(app.includes("name:'노점 먹거리'"),'자유행동에 노점 체류 결과가 있어야 합니다.');
