@@ -236,7 +236,7 @@ const vacationIllustrations=[
 function unifiedAgeFolder(){return '09';}
 function scheduleFramePath(file){return `../assets/characters/seonhwa/schedule-actions/${file}`;}
 function scheduleBasePath(file){return `../assets/characters/seonhwa/schedule-base/${file}`;}
-const scheduleAssetRevision='0.63.70-debug';
+const scheduleAssetRevision='0.63.74-debug';
 function versionedScheduleAsset(src){return `${src}?v=${scheduleAssetRevision}`;}
 function repeatedFrame(src){return [src,src,src];}
 function frameTriplet(prefix, folder='actions'){
@@ -1286,7 +1286,7 @@ const guardianConversationSets={
   ]
 };
 Object.values(guardianConversationSets).flat().forEach(scene=>scene.choices.forEach(choice=>{choice[1]=canonicalizeChange(choice[1]);}));
-function guardianPortrait(mood='neutral'){return `../assets/cinematics/guardian/humanized/poses/${game.guardianType||'hyeonmu'}-${mood}-transparent-v2.png`;}
+function guardianPortrait(mood='neutral'){return `../assets/cinematics/guardian/humanized/poses/${game.guardianType||'hyeonmu'}-${mood}-transparent-v3.png`;}
 function openGuardianDialogueOverlay(mood='neutral'){
   const greeting=document.querySelector('#homeGreeting'),portrait=document.querySelector('#homeGreetingPortrait');
   greeting.classList.remove('mood-neutral','mood-happy','mood-concerned','mood-surprised');
@@ -1365,6 +1365,8 @@ const statLabels={health:'체력',strength:'힘',agility:'민첩',intelligence:'
 statLabels.nannyAffinity='신수 유대감';
 statLabels.fatherAffinity='아버지 친밀도';
 statLabels.guardianTrust='신수 신뢰';
+statLabels.reputation='평판';
+statLabels.virtue='도덕';
 function showLiveChanges(action){
   const items=orderedChangeEntries(action.change).map(([key,value])=>{const positive=key==='stress'?value<0:value>=0;const current=clampStat(key,game[key]);return `<span class="${positive?'up':'down'}">${statLabels[key]||key} <b>${current}</b> <small>(${value>0?'+':''}${value})</small></span>`;});
   if(action.cost!==0)items.push(`<span class="money">은전 ${action.cost>0?'-':'+'}${Math.abs(action.cost)}냥</span>`);
@@ -1414,7 +1416,7 @@ function answerHomeGreeting(scene,index){
   const [,change,result]=scene.choices[index];Object.entries(canonicalizeChange(change)).forEach(([key,value])=>game[key]=clampStat(key,(game[key]||0)+value));
   document.querySelector('#homeGreeting').hidden=true;document.querySelector('.phone').classList.remove('greeting-active');document.querySelector('#speakerName').textContent=game.characterName||'아이';document.querySelector('#dialogueText').textContent=result;showLiveChanges({change:canonicalizeChange(change),cost:0});renderHud();queueAutoSave();
 }
-function renderStagePm3Hud(date,change={}){
+function renderStagePm3Hud(date,change={},action=null){
   const hud=document.querySelector('#stagePm3Hud');if(!hud)return;hud.hidden=false;
   const dateCard=hud.firstElementChild;dateCard.classList.remove('date-tick');void dateCard.offsetWidth;dateCard.classList.add('date-tick');
   const phaseCard=hud.querySelector('.stage-hud-phase');if(phaseCard){phaseCard.classList.remove('date-tick');void phaseCard.offsetWidth;phaseCard.classList.add('date-tick');}
@@ -1430,7 +1432,8 @@ function renderStagePm3Hud(date,change={}){
   if(phaseLabel)phaseLabel.textContent=`제${phase.index} / ${phase.total}페이즈`;
   const phaseProgress=document.querySelector('#stageHudPhaseProgress');
   if(phaseProgress)phaseProgress.style.width=`${phase.percent}%`;
-  const keys=['strength','dignity','manners','intelligence','charm','stress'];
+  const affectedKeys=action&&action.change?Object.keys(action.change):Object.keys(change);
+  const keys=[...new Set([...affectedKeys,'stress'])].filter(key=>statLabels[key]);
   document.querySelector('#stageHudStats').innerHTML=keys.map(key=>{const value=clampStat(key,game[key]),delta=change[key]||0,maximum=statMaximum(key),direction=delta>0?'▲':delta<0?'▼':'',beneficial=key==='stress'?delta<0:delta>0;return `<span class="stage-hud-stat ${delta?(beneficial?'up':'down'):''}"><b>${statLabels[key]}</b><i style="--value:${Math.round(value/maximum*100)}%"></i><em>${value}${delta?`<small>${direction}${Math.abs(delta)}</small>`:''}</em></span>`;}).join('');
 }
 
@@ -2433,9 +2436,9 @@ async function playWeeklySchedule(selected) {
   for (let index = 0; index < selected.length; index += 1) {
     const activityDate=new Date(scheduleStart);activityDate.setDate(scheduleStart.getDate()+index);
     const weekdayLabels=['일','월','화','수','목','금','토'];
-    renderStagePm3Hud(activityDate);
     const plannedAction = selected[index];
     const action = actionForStressLimit(plannedAction,simulated.stress);
+    renderStagePm3Hud(activityDate,{},action);
     const forcedRest = action.id!==plannedAction.id;
     if(forcedRest){
       selected[index]=action;
@@ -2475,6 +2478,7 @@ async function playWeeklySchedule(selected) {
     if(presentation.npc)stageNpcImage.src = await normalizeActivityFrame((presentation.npc==='teacher'?npcFrames.teacherReading:npcFrames[presentation.npc])[0]);
     const phaseSceneType=action.category==='교육'?'pm3-phase-scene lesson-scene':action.category==='아르바이트'?'pm3-phase-scene work-scene':'pm3-phase-scene daily-scene';
     stage.className = `activity-stage ${phaseSceneType} map-${presentation.location} action-${action.id} mastery-${currentMasteryRank}`;
+    stage.classList.remove('scene-enter');void stage.offsetWidth;stage.classList.add('scene-enter');
     stageCharacter.className = `stage-character pixel-sprite ${presentation.motion}`;
   let dungeonReward={money:0,gear:null},dateRelation=null;
   let holidayContestResult=null;
@@ -2565,7 +2569,7 @@ async function playWeeklySchedule(selected) {
     const actualChange={};
     Object.entries(resolvedChange).forEach(([key,value])=>{const before=clampStat(key,game[key]||0),after=clampStat(key,before+value);game[key]=after;actualChange[key]=after-before;});
     document.querySelector('#playbackDailyStats').innerHTML=orderedChangeEntries(actualChange).filter(([,value])=>value!==0).map(([key,value])=>{const after=clampStat(key,game[key]),before=after-value,beneficial=key==='stress'?value<0:value>0;return `<span class="${beneficial?'up':'down'}"><b>${statLabels[key]||key}</b> ${before}→${after} <small>${value>0?'+':''}${value}</small></span>`;}).join('')||'<span>오늘 능력치 변화 없음</span>';
-    renderStagePm3Hud(activityDate,actualChange);
+    renderStagePm3Hud(activityDate,actualChange,action);
     const resolvedAction={...action,cost:-moneyChange,change:actualChange};
     renderActivityGauges(resolvedAction);
     game.money=Math.max(0,game.money+moneyChange);

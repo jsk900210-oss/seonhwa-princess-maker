@@ -104,3 +104,13 @@
   .home-greeting.guardian-overlay .home-greeting-head img{left:-8%!important;bottom:30%!important;width:94%!important;height:68%!important}
   .home-greeting.guardian-overlay .home-greeting-head b{bottom:31.5%!important}
 }
+
+
+/* v0.63.74: 신수 대화 응답 영역(프롬프트+선택지)을 하단 고정 플렉스 독으로 묶어
+   버튼 수(1개/3개)와 무관하게 프롬프트가 항상 버튼 위에 놓이도록 → 겹침 근절. */
+.home-greeting.guardian-overlay>.greeting-answer-dock{position:absolute;z-index:4;left:4%;right:4%;bottom:2%;display:flex;flex-direction:column;gap:5px}
+.greeting-answer-dock>#homeGreetingPrompt{position:static;margin:0 0 1px;padding:0 2px;font-size:11px;line-height:1.3}
+.home-greeting.guardian-overlay .greeting-answer-dock>#homeGreetingPrompt{color:#f8e8c4;text-shadow:0 2px 4px #000}
+.greeting-answer-dock>#homeGreetingChoices{position:static;display:grid;grid-template-columns:1fr;gap:5px}
+.home-greeting.guardian-overlay .greeting-answer-dock button{min-height:33px;padding:7px 11px;font-size:12px;line-height:1.3}
+@media(max-width:380px){.home-greeting.guardian-overlay .greeting-answer-dock button{min-height:31px;font-size:11px}}

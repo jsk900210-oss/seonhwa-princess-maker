@@ -990,8 +990,7 @@
 .phone.playing:not(.market-playing):not(.vacation-playing) #stageHudDate{color:#201b16!important;text-shadow:none!important}.phone.playing:not(.market-playing):not(.vacation-playing) #stageHudDate small{border-bottom-color:#554c40!important;color:#3d352c!important;font-size:9px!important}.phone.playing:not(.market-playing):not(.vacation-playing) #stageHudDate span{color:#3c342b!important;font-size:12px!important}.phone.playing:not(.market-playing):not(.vacation-playing) #stageHudDate b{color:#17130f!important;font-size:38px!important;font-weight:900!important;line-height:.95!important;text-shadow:0 1px #fff!important}.phone.playing:not(.market-playing):not(.vacation-playing) #stageHudDate em{color:#9e2722!important;font-size:11px!important;font-weight:900!important}
 
 /* v0.63.57: market scenes should not use the framed tsukuru box. */
-.phone.playing:not(.vacation-playing) .activity-stage.map-marketErrand:not(.market-choice-stage),
-.phone.playing:not(.vacation-playing) .activity-stage.free-time-market:not(.market-choice-stage){
+.phone.playing:not(.vacation-playing) .activity-stage.map-marketErrand:not(.market-choice-stage){
   inset:0!important;
   left:0!important;
   right:0!important;
@@ -1008,15 +1007,10 @@
 .phone.playing:not(.vacation-playing) .activity-stage.map-marketErrand:not(.market-choice-stage):before,
 .phone.playing:not(.vacation-playing) .activity-stage.map-marketErrand:not(.market-choice-stage):after,
 .phone.playing:not(.vacation-playing) .activity-stage.map-marketErrand:not(.market-choice-stage)>.stage-roof,
-.phone.playing:not(.vacation-playing) .activity-stage.free-time-market:not(.market-choice-stage):before,
-.phone.playing:not(.vacation-playing) .activity-stage.free-time-market:not(.market-choice-stage):after,
-.phone.playing:not(.vacation-playing) .activity-stage.free-time-market:not(.market-choice-stage)>.stage-roof,
-.phone.playing:not(.vacation-playing) .activity-stage.map-marketErrand:not(.market-choice-stage)>.stage-caption,
-.phone.playing:not(.vacation-playing) .activity-stage.free-time-market:not(.market-choice-stage)>.stage-caption{
+.phone.playing:not(.vacation-playing) .activity-stage.map-marketErrand:not(.market-choice-stage)>.stage-caption{
   display:none!important;
 }
-.phone.playing:not(.vacation-playing) .activity-stage.map-marketErrand:not(.market-choice-stage)>.stage-inner,
-.phone.playing:not(.vacation-playing) .activity-stage.free-time-market:not(.market-choice-stage)>.stage-inner{
+.phone.playing:not(.vacation-playing) .activity-stage.map-marketErrand:not(.market-choice-stage)>.stage-inner{
   position:absolute!important;
   inset:0!important;
   width:100%!important;
@@ -1926,3 +1920,23 @@
   backface-visibility:hidden;
   filter:drop-shadow(0 3px 2px #0005) contrast(1.035) saturate(1.025)!important;
 }
+
+
+/* =========================================================
+   v0.63.73 · PM3 스케줄 시네마틱 연출 (Claude)
+   프메3식 일정 진행 영상효과: 장면 카메라 무빙(켄번즈) · 날짜/달력 전환 ·
+   활동 시작 비트 · 결과 비트. 전부 "추가" 애니메이션이며 레이아웃 계약값은
+   건드리지 않는다. 파일 끝에 유지(순서상 마지막에 적용되어야 승리).
+   ========================================================= */
+/* (1) 장면 카메라 무빙 — 켄번즈(느린 줌+드리프트). 좌우 이동 있는 저잣거리·자유행동·데이트/선택 장면 제외 */
+@keyframes pm3-ken-burns{0%{transform:scale(1.045)}100%{transform:scale(1.11) translate3d(-1.4%,-1%,0)}}
+.phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.pm3-phase-scene:not(.map-market):not(.free-time-market):not(.market-choice-stage):not(.action-shopping):not(.action-freeTime):not(.action-vacation) .stage-map{animation:pm3-ken-burns 15s ease-in-out infinite alternate;will-change:transform}
+/* (2) 날짜·달력 전환 — HUD 달력 카드가 위에서 넘어오듯 플립 인 (기존 date-tick 재트리거 재사용, JS 불필요) */
+@keyframes pm3-calendar-flip{0%{opacity:0;transform:perspective(420px) rotateX(-78deg)}58%{opacity:1;transform:perspective(420px) rotateX(7deg)}100%{opacity:1;transform:perspective(420px) rotateX(0)}}
+.stage-pm3-hud>.stage-hud-calendar.date-tick{animation:pm3-calendar-flip .5s ease-out both;transform-origin:top center}
+/* (3) 활동 시작 비트 — 새 하루 장면 진입 시 살짝 밀려 들어오며 페이드 (JS: scene-enter 재트리거) */
+@keyframes pm3-scene-enter{0%{opacity:.4;transform:translateY(9px) scale(.986)}100%{opacity:1;transform:translateY(0) scale(1)}}
+.phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.pm3-phase-scene.scene-enter{animation:pm3-scene-enter .44s cubic-bezier(.2,.8,.3,1) both}
+/* (4) 결과 비트 — 하루 결과 카드가 탄력 있게 팝인 (기존 result-pop 재트리거 재사용, JS 불필요) */
+@keyframes pm3-result-beat{0%{opacity:0;transform:translateY(13px) scale(.9)}62%{transform:translateY(-2px) scale(1.02)}100%{opacity:1;transform:translateY(0) scale(1)}}
+.phone.playing:not(.market-playing):not(.vacation-playing) .day-result:not(.phase-brief-result){animation:pm3-result-beat .46s cubic-bezier(.22,.9,.3,1.15) both}
