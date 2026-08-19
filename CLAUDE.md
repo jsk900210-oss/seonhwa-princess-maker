@@ -22,4 +22,12 @@ node tools/test_job_mastery_and_scenes.mjs
 node tools/test_pixel_schedule_assets.mjs
 ```
 
-현재 기준 버전은 `v0.63.69-debug`다.
+## Claude·Co-work 디버그 저장 규칙
+
+- `main`은 검수가 끝난 정식 버전 전용이다. Claude와 Co-work는 `main`에 직접 커밋하거나 푸시하지 않는다.
+- 협업 수정본은 `agent/pixel-schedule-handoff` 또는 별도 `agent/*` 브랜치에 저장한다.
+- 디버그 버전은 `v0.63.70-claude-debug.1`처럼 정식 버전과 구분되는 이름을 사용하고, 수정할 때마다 마지막 숫자를 올린다.
+- 매 작업은 커밋·푸시 후 커밋 해시와 웹 미리보기 주소를 기록한다. 사용자가 확인하기 전에는 정식 버전으로 병합하지 않는다.
+- 승인된 수정만 PR을 통해 `main`에 병합한다. 문제가 있으면 해당 디버그 커밋을 유지한 채 이전 검증 커밋으로 되돌린다.
+
+현재 로컬 기준 버전은 `v0.63.70-debug`다. Claude가 이어서 수정할 최초 저장 버전은 `v0.63.70-claude-debug.1`로 시작한다.

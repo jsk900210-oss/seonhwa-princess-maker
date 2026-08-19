@@ -3,7 +3,7 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const directory = path.join(root, "assets/characters/seonhwa/schedule-actions");
-const activities = ["calligraphy", "arithmetic", "manners", "sweeping", "herbs", "childcare", "kitchenhelp", "houseclean", "woodwork", "loomwork", "masonry", "clinichelp", "ferryhelp", "merchanthelp", "errand", "tea", "sleep", "fail", "eating", "sit"];
+const activities = ["calligraphy", "arithmetic", "manners", "sweeping", "herbs", "farmwork", "childcare", "kitchenhelp", "houseclean", "woodwork", "loomwork", "masonry", "clinichelp", "ferryhelp", "merchanthelp", "errand", "tea", "sleep", "fail", "eating", "sit"];
 
 for (const activity of activities) for (let frame = 1; frame <= 3; frame += 1) {
   const file = path.join(directory, `${activity}-pixel-${frame}.png`);
@@ -17,4 +17,4 @@ for (const activity of activities) for (let frame = 1; frame <= 3; frame += 1) {
   if (right < left || left < 8 || top < 8 || right > 311 || bottom > 311) throw new Error(`unsafe crop: ${activity}-${frame} (${left},${top})-(${right},${bottom})`);
 }
 
-console.log("PASS: 20 activities × 3 pixel frames, 320px canvas, transparent safety margins");
+console.log(`PASS: ${activities.length} activities × 3 pixel frames, 320px canvas, transparent safety margins`);

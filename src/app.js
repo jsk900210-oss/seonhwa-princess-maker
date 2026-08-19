@@ -236,17 +236,19 @@ const vacationIllustrations=[
 function unifiedAgeFolder(){return '09';}
 function scheduleFramePath(file){return `../assets/characters/seonhwa/schedule-actions/${file}`;}
 function scheduleBasePath(file){return `../assets/characters/seonhwa/schedule-base/${file}`;}
+const scheduleAssetRevision='0.63.70-debug';
+function versionedScheduleAsset(src){return `${src}?v=${scheduleAssetRevision}`;}
 function repeatedFrame(src){return [src,src,src];}
 function frameTriplet(prefix, folder='actions'){
   const build=folder==='base'?scheduleBasePath:scheduleFramePath;
-  return [build(`${prefix}-1.png`),build(`${prefix}-2.png`),build(`${prefix}-3.png`)];
+  return [1,2,3].map(frame=>versionedScheduleAsset(build(`${prefix}-${frame}.png`)));
 }
 function sheetTriplet(file,row,rows){
   return [1,2,3].map(frame=>`${scheduleFramePath(file)}?row=${row}&rows=${rows}&frame=${frame}`);
 }
 const spriteFrames = {
-  get down(){return repeatedFrame(scheduleBasePath('stand-front-v3-pixel.png'));},
-  get left(){return repeatedFrame(scheduleBasePath('stand-left-v3-pixel.png'));},
+  get down(){return repeatedFrame(versionedScheduleAsset(scheduleBasePath('stand-front-v3-pixel.png')));},
+  get left(){return repeatedFrame(versionedScheduleAsset(scheduleBasePath('stand-left-v3-pixel.png')));},
   get right(){return frameTriplet('errand-pixel');}
 };
 const scheduleActionFrames={
@@ -257,6 +259,7 @@ const scheduleActionFrames={
   houseclean:frameTriplet('houseclean-pixel'),
   errand:frameTriplet('errand-pixel'),
   herbs:frameTriplet('herbs-pixel'),
+  farmwork:frameTriplet('farmwork-pixel'),
   sweeping:frameTriplet('sweeping-pixel'),
   childcare:frameTriplet('childcare-pixel'),
   kitchenhelp:frameTriplet('kitchenhelp-pixel'),
@@ -275,9 +278,10 @@ const scheduleActionFrames={
 // 승인된 4장(age09/13/16/18-eyes-v2)을 모든 기본 쯔꾸르 동작의 단일 원본으로 사용한다.
 // 잠자기도 연령별 기준 시트에서 불러와 얼굴·체형·기본 의상이 섞이지 않게 한다.
 const canonicalActivityAliases={
-  calligraphy:'calligraphy',study:'calligraphy',painting:'calligraphy',music:'calligraphy',dance:'manners',magic:'calligraphy',
-  arithmetic:'arithmetic',cooking:'arithmetic',swordsmanship:'manners',martial:'manners',manners:'manners',sit:'sit',
-  errand:'errand',farmwork:'herbs',eating:'errand',
+  calligraphy:'calligraphy',reading:'calligraphy',study:'calligraphy',painting:'calligraphy',music:'calligraphy',classics:'calligraphy',copying:'calligraphy',tutoring:'calligraphy',
+  dance:'manners',koreanDance:'manners',magic:'calligraphy',spellcraft:'calligraphy',
+  arithmetic:'arithmetic',accounting:'arithmetic',cooking:'arithmetic',swordsmanship:'manners',martial:'manners',dungeon:'manners',manners:'manners',sit:'sit',
+  errand:'errand',farmwork:'farmwork',eating:'errand',
   herbs:'herbs',
   houseclean:'houseclean',
   sweeping:'sweeping',
@@ -288,7 +292,7 @@ const canonicalActivityAliases={
   masonry:'masonry',
   clinichelp:'clinichelp',
   ferryhelp:'ferryhelp',
-  merchanthelp:'merchanthelp',
+  merchanthelp:'merchanthelp',innhelp:'merchanthelp',sewing:'loomwork',freeTime:'errand',
   rest:'rest',sleep:'sleep',tea:'tea'
 };
 function activityFrameSet(activity){
