@@ -236,7 +236,7 @@ const vacationIllustrations=[
 function unifiedAgeFolder(){return '09';}
 function scheduleFramePath(file){return `../assets/characters/seonhwa/schedule-actions/${file}`;}
 function scheduleBasePath(file){return `../assets/characters/seonhwa/schedule-base/${file}`;}
-const scheduleAssetRevision='0.63.75-claude-debug.1';
+const scheduleAssetRevision='0.63.75-claude-debug.4';
 function versionedScheduleAsset(src){return `${src}?v=${scheduleAssetRevision}`;}
 function repeatedFrame(src){return [src,src,src];}
 function frameTriplet(prefix, folder='actions'){
@@ -838,17 +838,17 @@ const actions = [
   { id: 'herbs', category: '아르바이트', name: '약초 줍기', cost: -80, unlockAge:9, mentor:'약초꾼', icon:'herbs', summary: '센스 +2 · 지능 +1 · 체력 +1 · 스트레스 +4 · 80냥 획득', change: { sense:2, intelligence:1, health:1, stress:4 } },
   { id: 'houseclean', category: '아르바이트', name: '집 청소', cost: -60, unlockAge:9, mentor:'신수', icon:'houseclean', summary: '힘 +2 · 센스 +2 · 체력 +1 · 스트레스 +3 · 60냥 획득', change: { strength:2, sense:2, health:1, stress:3 } },
   { id:'farmwork',category:'아르바이트',name:'농가 일손 돕기',cost:-100,unlockAge:10,mentor:'농가 어른',icon:'herbs',summary:'체력 +3 · 힘 +3 · 기품 -1 · 스트레스 +4 · 100냥 획득',change:{health:3,strength:3,dignity:-1,stress:4}},
-  { id:'childcare',category:'아르바이트',name:'아이 돌보기',cost:-85,unlockAge:10,mentor:'마을 어른',icon:'houseclean',summary:'감수성 +3 · 도덕 +2 · 스트레스 +4 · 85냥 획득',change:{sensitivity:3,virtue:2,stress:4}},
+  { id:'childcare',category:'아르바이트',name:'아이 돌보기',cost:-85,unlockAge:10,mentor:'마을 어른',icon:'houseclean',summary:'감수성 +3 · 기품 +2 · 스트레스 +4 · 85냥 획득',change:{sensitivity:3,virtue:2,stress:4}},
   { id:'kitchenhelp',category:'아르바이트',name:'주방 보조',cost:-115,unlockAge:10,mentor:'찬모',icon:'arithmetic',summary:'센스 +3 · 체력 +2 · 스트레스 +4 · 115냥 획득',change:{sense:3,health:2,stress:4}},
   { id:'woodwork',category:'아르바이트',name:'목공소 심부름',cost:-135,unlockAge:11,mentor:'목수',icon:'sweeping',summary:'힘 +4 · 센스 +2 · 스트레스 +5 · 135냥 획득',change:{strength:4,sense:2,stress:5}},
   { id:'loomwork',category:'아르바이트',name:'베틀방 돕기',cost:-140,unlockAge:11,mentor:'직조 장인',icon:'houseclean',summary:'센스 +4 · 감수성 +2 · 스트레스 +4 · 140냥 획득',change:{sense:4,sensitivity:2,stress:4}},
   { id:'masonry',category:'아르바이트',name:'기와·흙벽 보조',cost:-165,unlockAge:12,mentor:'와공',icon:'sweeping',summary:'체력 +4 · 힘 +4 · 기품 -2 · 스트레스 +5 · 165냥 획득',change:{health:4,strength:4,dignity:-2,stress:5}},
-  { id:'clinichelp',category:'아르바이트',name:'약방 견습',cost:-170,unlockAge:12,unlockStats:{intelligence:150,sense:100},mentor:'의원',icon:'herbs',summary:'지능 +3 · 센스 +3 · 도덕 +1 · 스트레스 +4 · 170냥 획득',change:{intelligence:3,sense:3,virtue:1,stress:4}},
+  { id:'clinichelp',category:'아르바이트',name:'약방 견습',cost:-170,unlockAge:12,unlockStats:{intelligence:150,sense:100},mentor:'의원',icon:'herbs',summary:'지능 +3 · 센스 +3 · 기품 +1 · 스트레스 +4 · 170냥 획득',change:{intelligence:3,sense:3,virtue:1,stress:4}},
   { id: 'innhelp', category:'아르바이트', name:'주막 돕기', cost:-110, unlockAge:13, mentor:'주모', icon:'errand', intro:'손님상은 빠르게, 말씨는 상냥하게 부탁하마.', summary:'화술 +3 · 체력 +2 · 스트레스 +4 · 110냥 획득', change:{speech:3,health:2,stress:4} },
   { id: 'sewing', category:'아르바이트', name:'바느질 돕기', cost:-120, unlockAge:13, mentor:'침선장', icon:'houseclean', intro:'작은 바늘땀 하나가 옷의 맵시를 정하는 법이란다.', summary:'센스 +4 · 감수성 +1 · 스트레스 +3 · 120냥 획득', change:{sense:4,sensitivity:1,stress:3} },
   { id: 'copying', category:'아르바이트', name:'서책 필사', cost:-130, unlockAge:13, mentor:'서책방 주인', icon:'reading', intro:'또박또박 옮겨 적되 원문의 한 자도 빠뜨리지 말거라.', summary:'지능 +3 · 센스 +2 · 스트레스 +4 · 130냥 획득', change:{intelligence:3,sense:2,stress:4} },
   { id:'ferryhelp',category:'아르바이트',name:'나루터 짐 정리',cost:-190,unlockAge:14,mentor:'나루지기',icon:'errand',summary:'체력 +3 · 화술 +3 · 민첩 +2 · 스트레스 +5 · 190냥 획득',change:{health:3,speech:3,agility:2,stress:5}},
-  { id:'merchanthelp',category:'아르바이트',name:'상점 판매 보조',cost:-205,unlockAge:14,unlockStats:{speech:150,sense:150},mentor:'잡화상',icon:'errand',summary:'화술 +4 · 센스 +3 · 평판 +1 · 스트레스 +5 · 205냥 획득',change:{speech:4,sense:3,reputation:1,stress:5}},
+  { id:'merchanthelp',category:'아르바이트',name:'상점 판매 보조',cost:-205,unlockAge:14,unlockStats:{speech:150,sense:150},mentor:'잡화상',icon:'errand',summary:'화술 +5 · 센스 +3 · 스트레스 +5 · 205냥 획득',change:{speech:4,sense:3,reputation:1,stress:5}},
   { id: 'accounting', category:'아르바이트', name:'상단 장부 정리', cost:-180, unlockAge:16, mentor:'상단 행수', icon:'arithmetic', intro:'숫자 하나가 상단의 신뢰를 좌우하니 꼼꼼히 살펴보거라.', summary:'센스 +4 · 화술 +2 · 스트레스 +4 · 180냥 획득', change:{sense:4,speech:2,stress:4} },
   { id: 'tutoring', category:'아르바이트', name:'학동 가르치기', cost:-230, unlockAge:16, unlockStats:{intelligence:350,manners:220,speech:180}, mentor:'서당 훈장', icon:'reading', intro:'배운 바가 충분하니 이제 어린 학동에게 글과 셈, 예절을 일러 주거라.', summary:'지능 +2 · 화술 +4 · 기품 +2 · 스트레스 +5 · 230냥 획득', change:{intelligence:2,speech:4,dignity:2,stress:5} },
   { id: 'rest', category: '휴식', name: '집에서 휴식', cost: 0, summary: '스트레스 -12 · 체력 +2 · 정신력 +2', change: { health:2, mentality:2, stress:-12 } },
@@ -864,6 +864,7 @@ const actions = [
   {id:'date-taegyeom',category:'인연',name:'태겸과 데이트',cost:100,unlockAge:16,relationId:'taegyeom',mentor:'태겸',icon:'errand',summary:'호감도 +12 · 화술 +2 · 스트레스 -8',change:{speech:2,stress:-8},special:'date'},
   {id:'date-hyeon',category:'인연',name:'현과 데이트',cost:100,unlockAge:16,relationId:'hyeon',mentor:'현',icon:'manners',summary:'호감도 +12 · 기품 +2 · 스트레스 -8',change:{dignity:2,stress:-8},special:'date'}
 ];
+actions.forEach(item=>{if(item.change)item.change=canonicalizeChange(item.change);});
 const activityRequirements={reading:['지능',50],arithmetic:['센스',50],manners:['예절',50],painting:['감수성',150],music:['기품',150],dance:['민첩',150],swordsmanship:['힘',120],spellcraft:['지능·정신력',150],cooking:['센스',130],martial:['체력',150],classics:['지능',300],errand:['화술',40],sweeping:['힘',50],herbs:['센스',50],houseclean:['체력',50],farmwork:['힘',80],childcare:['감수성',80],kitchenhelp:['센스',80],woodwork:['힘',120],loomwork:['센스',120],masonry:['체력',140],clinichelp:['지능·센스',150],innhelp:['화술',130],sewing:['센스',140],copying:['지능',160],ferryhelp:['체력',150],merchanthelp:['화술·센스',150],accounting:['센스',300],tutoring:['지능',350],dungeon:['힘 또는 마력',120]};
 const meetsStatSet=set=>Object.entries(set||{}).every(([stat,value])=>Number(game[stat]||0)>=value);
 const actionUnlocked=action=>game.age>=Number(action.unlockAge||9)&&meetsStatSet(action.unlockStats)&&(!action.unlockAnyStats||action.unlockAnyStats.some(meetsStatSet))&&(!action.relationId||Boolean(relationRecord(action.relationId).dateUnlocked))&&(!action.holidayOnly||currentPhaseHoliday()?.name===action.holidayOnly);
@@ -1365,8 +1366,6 @@ const statLabels={health:'체력',strength:'힘',agility:'민첩',intelligence:'
 statLabels.nannyAffinity='신수 유대감';
 statLabels.fatherAffinity='아버지 친밀도';
 statLabels.guardianTrust='신수 신뢰';
-statLabels.reputation='평판';
-statLabels.virtue='도덕';
 function showLiveChanges(action){
   const items=orderedChangeEntries(action.change).map(([key,value])=>{const positive=key==='stress'?value<0:value>=0;const current=clampStat(key,game[key]);return `<span class="${positive?'up':'down'}">${statLabels[key]||key} <b>${current}</b> <small>(${value>0?'+':''}${value})</small></span>`;});
   if(action.cost!==0)items.push(`<span class="money">은전 ${action.cost>0?'-':'+'}${Math.abs(action.cost)}냥</span>`);
