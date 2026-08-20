@@ -1948,3 +1948,12 @@
 .phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-childcare:not(.market-choice-stage) .stage-npc.npc-child{left:10%!important;right:auto!important;bottom:2%!important;width:70px!important;height:88px!important;transform:scaleX(-1)!important;transform-origin:50% 100%;z-index:5;animation:none!important;filter:drop-shadow(0 3px 2px #0006)}
 .phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-childcare:not(.market-choice-stage) .stage-npc.npc-child>img{width:100%!important;height:100%!important;object-fit:contain!important;object-position:center bottom!important;image-rendering:auto!important}
 @media(max-width:430px){.phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-childcare:not(.market-choice-stage) .stage-npc.npc-child{width:64px!important;height:82px!important;left:8%!important}}
+
+
+/* v0.63.75-claude-debug.3: 스트레스 최대 시 '자는' 휴식 장면(rest의 sleep 변형)에서만
+   선화를 약 140% 확대하고 침구에 자연스럽게 겹치도록 바닥선을 낮춘다.
+   rest-tea(차 마시기)·교육·아르바이트 등 다른 캐릭터 크기는 불변. 선택자는
+   일반 --actor-box(128px)!important 규칙을 이기도록 .phone.playing… 최고 특이도로 작성. */
+.phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-rest:not(.market-choice-stage) .stage-character.pixel-sprite.motion-resting:not(.rest-tea){width:186px!important;height:172px!important;bottom:5%!important;padding:4px!important}
+.phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-rest:not(.market-choice-stage) .stage-character.pixel-sprite.motion-resting:not(.rest-tea) img{object-fit:contain!important;object-position:center bottom!important}
+@media(max-width:430px){.phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-rest:not(.market-choice-stage) .stage-character.pixel-sprite.motion-resting:not(.rest-tea){width:178px!important;height:164px!important;bottom:5%!important}}
