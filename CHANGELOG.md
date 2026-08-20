@@ -1,3 +1,10 @@
+# v0.63.75-claude-debug.1 · 2026-08-20
+
+- 아이돌보기: 선화가 손 뻗는 쪽에 더 어린 아이를 별도 NPC 레이어로 배치(캐릭터 합성 대신 분리)
+- actionPresentation.childcare.npc=child, npcFrames에 child 등록, .npc-child CSS로 위치·크기·좌우반전 관리
+- child-1..3.png는 임시 플레이스홀더(원본에서 추출) — 코덱스 픽셀 아트로 동일 경로 교체 예정
+- Claude 디버그 버전 규칙(claude-debug.N) 적용 시작
+
 # v0.63.74-debug · 2026-08-19
 
 - 신수 휴먼화 초상화 흰 후광(배경 잔재) 강화 제거: 1px 침식 + 근백색 가장자리 제거로 근백색 링 비율 평균 0.18→0.08, 형태·머리색 보존

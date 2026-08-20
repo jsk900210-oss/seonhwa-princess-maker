@@ -1940,3 +1940,11 @@
 /* (4) 결과 비트 — 하루 결과 카드가 탄력 있게 팝인 (기존 result-pop 재트리거 재사용, JS 불필요) */
 @keyframes pm3-result-beat{0%{opacity:0;transform:translateY(13px) scale(.9)}62%{transform:translateY(-2px) scale(1.02)}100%{opacity:1;transform:translateY(0) scale(1)}}
 .phone.playing:not(.market-playing):not(.vacation-playing) .day-result:not(.phase-brief-result){animation:pm3-result-beat .46s cubic-bezier(.22,.9,.3,1.15) both}
+
+
+/* v0.63.75-claude-debug.1: 아이돌보기 — 선화가 손 뻗는 쪽(왼쪽 아래)에 더 어린 아이를
+   별도 NPC 레이어(.npc-child)로 배치. child-1..3.png는 임시 플레이스홀더이며 코덱스 픽셀
+   아트로 교체 예정. 위치/크기는 이 블록에서만 조정한다. */
+.activity-stage.action-childcare .stage-npc.npc-child{left:12%!important;right:auto!important;bottom:2%!important;width:84px!important;height:100px!important;transform:scaleX(-1);transform-origin:50% 100%;z-index:5;animation:none!important;filter:drop-shadow(0 3px 2px #0006)}
+.activity-stage.action-childcare .stage-npc.npc-child>img{width:100%!important;height:100%!important;object-fit:contain!important;object-position:center bottom!important;image-rendering:auto!important}
+@media(max-width:380px){.activity-stage.action-childcare .stage-npc.npc-child{width:78px!important;height:94px!important;left:9%!important}}

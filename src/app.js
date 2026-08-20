@@ -138,7 +138,7 @@ const actionPresentation = {
   sweeping: { motion:'motion-sweeping', location:'courtyard', prop:'none', activity:'sweeping', npc:'dolsoe' }, herbs: { motion:'motion-herbs', location:'herbField', prop:'none', activity:'herbs', npc:'herbalist' },
   houseclean: { motion:'motion-houseclean', location:'restRoom', prop:'none', activity:'houseclean', npc:null },
   farmwork: { motion:'motion-job-farm', location:'farmJob', prop:'none', activity:'farmwork', npc:null },
-  childcare: { motion:'motion-job-childcare', location:'childcareJob', prop:'none', activity:'childcare', npc:null },
+  childcare: { motion:'motion-job-childcare', location:'childcareJob', prop:'none', activity:'childcare', npc:'child' },
   kitchenhelp: { motion:'motion-job-kitchen', location:'kitchenJob', prop:'none', activity:'kitchenhelp', npc:null },
   woodwork: { motion:'motion-job-woodwork', location:'woodworkJob', prop:'none', activity:'woodwork', npc:null },
   loomwork: { motion:'motion-job-loom', location:'loomJob', prop:'none', activity:'loomwork', npc:null },
@@ -236,7 +236,7 @@ const vacationIllustrations=[
 function unifiedAgeFolder(){return '09';}
 function scheduleFramePath(file){return `../assets/characters/seonhwa/schedule-actions/${file}`;}
 function scheduleBasePath(file){return `../assets/characters/seonhwa/schedule-base/${file}`;}
-const scheduleAssetRevision='0.63.74-debug';
+const scheduleAssetRevision='0.63.75-claude-debug.1';
 function versionedScheduleAsset(src){return `${src}?v=${scheduleAssetRevision}`;}
 function repeatedFrame(src){return [src,src,src];}
 function frameTriplet(prefix, folder='actions'){
@@ -300,7 +300,7 @@ function activityFrameSet(activity){
   const canonical=canonicalActivityAliases[activity]||'errand';
   return scheduleActionFrames[canonical]||scheduleActionFrames.errand;
 }
-const npcFrames = Object.fromEntries(['teacher','dolsoe','herbalist','nanny'].map(name=>[name,[1,2,3].map(n=>`../assets/characters/npcs/activity/${name}-${n}.png`)]));
+const npcFrames = Object.fromEntries(['teacher','dolsoe','herbalist','nanny','child'].map(name=>[name,[1,2,3].map(n=>`../assets/characters/npcs/activity/${name}-${n}.png`)]));
 npcFrames.teacherReading=[1,2,3].map(n=>`../assets/characters/npcs/activity/teacher-reading-${n}.png`);
 const foods = [
   {id:'bunsik',name:'분식 세트',detail:'떡볶이 · 튀김 · 순대',price:45,change:{stress:-8,healthiness:-1}},

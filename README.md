@@ -1,5 +1,13 @@
 # 선화공주 만들기 — MVP 이미지 자산 패키지
 
+## v0.63.75-claude-debug.1 · 아이돌보기 아이 NPC 레이어 (코드)
+
+- 아이돌보기에서 선화가 손 뻗는 쪽에 아무도 없던 문제를 수정했습니다. 원인은 픽셀 프레임 생성 시 "가장 큰 덩어리만 남기기"로 작은 아이가 잘려 나간 것. 캐릭터에 합치는 대신 **별도 NPC 레이어**로 아이를 배치하도록 코드를 배선했습니다.
+- `actionPresentation.childcare.npc`를 `child`로 바꾸고, `npcFrames`에 child(1~3)를 등록. 위치·크기·좌우반전(선화를 향하도록)은 `schedule.css`의 `.npc-child` 블록에서 관리합니다.
+- `assets/characters/npcs/activity/child-1..3.png`는 **임시 플레이스홀더**(원본 일러스트에서 오려낸 아이)입니다. 코덱스가 동일 경로에 픽셀 스타일 아이(3프레임·투명·토들러)로 교체하면 자동 반영됩니다.
+- 변경 파일: `src/app.js`(childcare npc=child, npcFrames child 등록, 버전 0.63.75-claude-debug.1), `src/schedule.css`(.npc-child 위치/크기 규칙), `src/index.html`(app.js·schedule.css 캐시), `assets/.../npcs/activity/child-1..3.png`(임시).
+
+
 ## v0.63.74-debug · 신수 대화 배경제거 강화 + 채팅창 겹침 수정
 
 - 신수(휴먼화) 초상화의 흰 후광(배경 잔재)을 더 확실히 제거했습니다. 실루엣 가장자리에 남아 있던 밝은 배경 링을 1px 침식 + 근백색 픽셀 제거로 깎아, 근백색 가장자리 비율을 평균 0.18→0.08 수준으로 낮췄습니다(캐릭터 형태·따뜻한 머리색은 보존). 결과는 `-transparent-v3.png`로 새로 저장(캐시 새로고침), 기존 v2는 `_pre_defringe_v2_backup/`에 백업.
