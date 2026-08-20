@@ -1,3 +1,7 @@
+# v0.63.75-claude-debug.6 · 2026-08-20
+
+- 추석 3종세트(holiday-chuseok)를 conditionEvent 제외 목록에 추가 → 성공 확정 행사 중 '아차!/Zzz' 실수 연출이 잘못 뜨던 것 방지
+
 # v0.63.75-claude-debug.5 · 2026-08-20
 
 - 검수 후속 3건: 던전 결과 'normal' 라벨('무난') 추가로 "비경 탐사 · undefined" 제거

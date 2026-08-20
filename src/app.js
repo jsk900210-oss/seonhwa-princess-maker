@@ -236,7 +236,7 @@ const vacationIllustrations=[
 function unifiedAgeFolder(){return '09';}
 function scheduleFramePath(file){return `../assets/characters/seonhwa/schedule-actions/${file}`;}
 function scheduleBasePath(file){return `../assets/characters/seonhwa/schedule-base/${file}`;}
-const scheduleAssetRevision='0.63.75-claude-debug.5';
+const scheduleAssetRevision='0.63.75-claude-debug.6';
 function versionedScheduleAsset(src){return `${src}?v=${scheduleAssetRevision}`;}
 function repeatedFrame(src){return [src,src,src];}
 function frameTriplet(prefix, folder='actions'){
@@ -2536,7 +2536,7 @@ async function playWeeklySchedule(selected) {
       stageCharacter.hidden=false;stageProps.hidden=false;
     }else await animateActivitySprite(stageCharacterImage,presentation.motion,restActivity||presentation.activity,stageNpcImage,presentation.npc,dailyOutfit,currentMasteryRank);
     const guaranteedSuccess=['rest','freeTime','vacation','dungeon','holiday-chuseok'].includes(action.id)||action.special==='date';
-    const condition=['shopping','rest','freeTime','vacation','dungeon'].includes(action.id)||action.special==='date'?null:conditionEvent(simulated.stress,index);
+    const condition=['shopping','rest','freeTime','vacation','dungeon','holiday-chuseok'].includes(action.id)||action.special==='date'?null:conditionEvent(simulated.stress,index);
     let outcome=judgeActivityOutcome(action,simulated.stress);
     if(action.id==='holiday-chuseok')outcome='success';
     if(action.id==='dungeon')outcome=dungeonReward.money>=140?'perfect':dungeonReward.money>0?'normal':'struggle';
