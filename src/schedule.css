@@ -1945,6 +1945,6 @@
 /* v0.63.75-claude-debug.1: 아이돌보기 — 선화가 손 뻗는 쪽(왼쪽 아래)에 더 어린 아이를
    별도 NPC 레이어(.npc-child)로 배치. child-1..3.png는 임시 플레이스홀더이며 코덱스 픽셀
    아트로 교체 예정. 위치/크기는 이 블록에서만 조정한다. */
-.activity-stage.action-childcare .stage-npc.npc-child{left:12%!important;right:auto!important;bottom:2%!important;width:84px!important;height:100px!important;transform:scaleX(-1);transform-origin:50% 100%;z-index:5;animation:none!important;filter:drop-shadow(0 3px 2px #0006)}
-.activity-stage.action-childcare .stage-npc.npc-child>img{width:100%!important;height:100%!important;object-fit:contain!important;object-position:center bottom!important;image-rendering:auto!important}
-@media(max-width:380px){.activity-stage.action-childcare .stage-npc.npc-child{width:78px!important;height:94px!important;left:9%!important}}
+.phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-childcare:not(.market-choice-stage) .stage-npc.npc-child{left:10%!important;right:auto!important;bottom:2%!important;width:70px!important;height:88px!important;transform:scaleX(-1)!important;transform-origin:50% 100%;z-index:5;animation:none!important;filter:drop-shadow(0 3px 2px #0006)}
+.phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-childcare:not(.market-choice-stage) .stage-npc.npc-child>img{width:100%!important;height:100%!important;object-fit:contain!important;object-position:center bottom!important;image-rendering:auto!important}
+@media(max-width:430px){.phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-childcare:not(.market-choice-stage) .stage-npc.npc-child{width:64px!important;height:82px!important;left:8%!important}}
