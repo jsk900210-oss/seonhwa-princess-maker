@@ -236,7 +236,7 @@ const vacationIllustrations=[
 function unifiedAgeFolder(){return '09';}
 function scheduleFramePath(file){return `../assets/characters/seonhwa/schedule-actions/${file}`;}
 function scheduleBasePath(file){return `../assets/characters/seonhwa/schedule-base/${file}`;}
-const scheduleAssetRevision='0.63.75-claude-debug.7';
+const scheduleAssetRevision='0.63.76-claude-debug.1';
 function versionedScheduleAsset(src){return `${src}?v=${scheduleAssetRevision}`;}
 function repeatedFrame(src){return [src,src,src];}
 function frameTriplet(prefix, folder='actions'){
@@ -704,6 +704,39 @@ async function animateActivitySprite(image,motion,activity,npcImage,npc,outfitId
   const direction=motion==='motion-walk'?'right':'down';
   const sequence=motion==='motion-walk'?[0,1,2,1,0,1,2,1]:[1,0,1,2,1,0,1];
   for(const frame of sequence){image.src=spriteFrames[direction][frame];await schedulePlaybackDelay(motion==='motion-walk'?135:170);}
+}
+async function playKitchenhelpScene(seonImage,outfitId,rank){
+  const inner=document.querySelector('#activityStage .stage-inner');
+  if(!inner)return;
+  const base='../assets/schedule-layers/kitchenhelp',v=`?v=${scheduleAssetRevision}`;
+  const make=(cls,file)=>{const img=document.createElement('img');img.className=`kitchen-layer ${cls}`;img.decoding='async';img.setAttribute('aria-hidden','true');img.src=`${base}/${file}${v}`;inner.appendChild(img);return img;};
+  const cauldron=make('kl-cauldron','props/cauldron.png');
+  const jumo=make('kl-jumo','npc/jumo-1.png');
+  const veg=make('kl-veg','props/vegetable-prep-1.png');
+  const fire=make('kl-fire','effects/fire-1.png');
+  const frames=activityFrameSet('kitchenhelp')||spriteFrames.down;
+  const delay=[360,300,250][rank]||300;
+  const phases=[
+    {veg:'props/vegetable-prep-1.png',jumo:'npc/jumo-1.png'},
+    {veg:'props/vegetable-prep-2.png',jumo:'npc/jumo-2.png'},
+    {veg:'props/vegetable-prep-3.png',jumo:'npc/jumo-3.png'}
+  ];
+  let tick=0;
+  try{
+    for(const phase of phases){
+      veg.src=`${base}/${phase.veg}${v}`;
+      jumo.src=`${base}/${phase.jumo}${v}`;
+      for(let step=0;step<3;step+=1){
+        const f=tick%3;
+        seonImage.src=await outfitActivityFrame(frames[f],outfitId);
+        fire.src=`${base}/effects/fire-${f+1}.png${v}`;
+        tick+=1;
+        await schedulePlaybackDelay(delay);
+      }
+    }
+  }finally{
+    [cauldron,jumo,veg,fire].forEach(el=>el.remove());
+  }
 }
 function conditionEvent(stress, dayIndex){
   if(stress>=80||(stress>=70&&dayIndex%2===1))return 'mistake';
@@ -2502,7 +2535,7 @@ async function playWeeklySchedule(selected) {
       await schedulePlaybackDelay(1250);
       record.affinity=Math.min(100,record.affinity+12);record.lastMetAt=game.currentDate||null;record.relationship=record.affinity>=80?'연인':record.affinity>=60?'특별한 인연':'친구';
       stageCharacter.hidden=false;stageProps.hidden=false;
-    }else await animateActivitySprite(stageCharacterImage,presentation.motion,restActivity||presentation.activity,stageNpcImage,presentation.npc,dailyOutfit,currentMasteryRank);
+    }else if(action.id==='kitchenhelp'){stageNpc.hidden=true;stageProps.hidden=true;await playKitchenhelpScene(stageCharacterImage,dailyOutfit,currentMasteryRank);}else await animateActivitySprite(stageCharacterImage,presentation.motion,restActivity||presentation.activity,stageNpcImage,presentation.npc,dailyOutfit,currentMasteryRank);
     const guaranteedSuccess=['rest','freeTime','vacation','dungeon','holiday-chuseok'].includes(action.id)||action.special==='date';
     const condition=['shopping','rest','freeTime','vacation','dungeon','holiday-chuseok'].includes(action.id)||action.special==='date'?null:conditionEvent(simulated.stress,index);
     let outcome=judgeActivityOutcome(action,simulated.stress);

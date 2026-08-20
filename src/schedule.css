@@ -1957,3 +1957,17 @@
 .phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-rest:not(.market-choice-stage) .stage-character.pixel-sprite.motion-resting:not(.rest-tea){width:186px!important;height:172px!important;bottom:5%!important;padding:4px!important}
 .phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-rest:not(.market-choice-stage) .stage-character.pixel-sprite.motion-resting:not(.rest-tea) img{object-fit:contain!important;object-position:center bottom!important}
 @media(max-width:430px){.phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-rest:not(.market-choice-stage) .stage-character.pixel-sprite.motion-resting:not(.rest-tea){width:178px!important;height:164px!important;bottom:5%!important}}
+
+
+/* v0.63.76-claude-debug.1: 주방보조 6레이어 (배경>가마솥>주모>선화>채소>불꽃).
+   .action-kitchenhelp에만 스코프 — 아이돌보기·농가 등 다른 일정 CSS엔 영향 없음.
+   좌표는 선화 128px 기준 합성 미리보기에서 산출. 라이브 검수 후 미세조정 가능. */
+.activity-stage.action-kitchenhelp .kitchen-layer{position:absolute;height:auto;image-rendering:pixelated;pointer-events:none;filter:drop-shadow(0 2px 2px #0004)}
+.activity-stage.action-kitchenhelp .stage-props,.activity-stage.action-kitchenhelp .stage-npc{display:none!important}
+.phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-kitchenhelp{--actor-left:48%}
+.phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-kitchenhelp:not(.market-choice-stage) .stage-character.pixel-sprite{z-index:4!important;bottom:10%!important}
+.activity-stage.action-kitchenhelp .kl-cauldron{z-index:2;left:0%;bottom:5%;width:33%}
+.activity-stage.action-kitchenhelp .kl-jumo{z-index:3;left:9%;bottom:8%;width:42%}
+.activity-stage.action-kitchenhelp .kl-veg{z-index:5;left:50%;bottom:-5%;width:31%}
+.activity-stage.action-kitchenhelp .kl-fire{z-index:6;left:10%;bottom:8%;width:21%}
+@media(max-width:380px){.activity-stage.action-kitchenhelp .kl-jumo{width:44%}.activity-stage.action-kitchenhelp .kl-cauldron{width:35%}}
