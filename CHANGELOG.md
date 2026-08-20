@@ -1,3 +1,9 @@
+# v0.63.75-claude-debug.8 · 2026-08-20 (테스트/QA)
+
+- 9→19 완성 QA: 30개 노드 테스트 실행 → 25 통과. 실패 5건 전부 실제 게임 버그 아님(낡은 테스트 4·sharp 미설치 1)로 판정
+- 낡은 테스트 2건 갱신: test_phase_video_format(renderStagePm3Hud 인자 추가 반영), test_visit_shop_and_jobs(errand 프레임 검사를 현재 canonicalActivityAliases 방식으로) → 27 통과
+- 남은 실패 3건은 코덱스 영역(옛 activity-consistent/job-actions 자산 구조 검사 2건) + 환경(sharp) 1건, 게임 로직 무관
+
 # v0.63.75-claude-debug.7 · 2026-08-20
 
 - 죽은 코드 정리(동작 무변화): greetingChoices 데이터+canonicalize, answerHomeGreeting, selectScheduleDay, fillRemainingSchedule, 미사용 completedWeek 제거(약 3.9KB). showHomeGreeting/clearAllSchedule 등 사용 중 함수는 보존
