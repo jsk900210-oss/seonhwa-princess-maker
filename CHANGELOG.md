@@ -1,3 +1,9 @@
+# v0.63.75-claude-debug.5 · 2026-08-20
+
+- 검수 후속 3건: 던전 결과 'normal' 라벨('무난') 추가로 "비경 탐사 · undefined" 제거
+- 데이트도 성공 보정 대상에 포함 → 광고한 감수성/기품 등 스탯이 그대로 적용(랜덤 감소·마이너스 방지)
+- playVacationScene의 vacationNext 암묵 전역 참조를 querySelector로 교체(안전)
+
 # v0.63.75-claude-debug.4 · 2026-08-20
 
 - '도덕/평판' 유령 스탯 정리: actions도 canonicalizeChange 통과시켜 virtue→기품, reputation→화술로 folding(아이돌보기 도덕+2가 실제 기품+2로 반영)

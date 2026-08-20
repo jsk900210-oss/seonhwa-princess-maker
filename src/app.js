@@ -236,7 +236,7 @@ const vacationIllustrations=[
 function unifiedAgeFolder(){return '09';}
 function scheduleFramePath(file){return `../assets/characters/seonhwa/schedule-actions/${file}`;}
 function scheduleBasePath(file){return `../assets/characters/seonhwa/schedule-base/${file}`;}
-const scheduleAssetRevision='0.63.75-claude-debug.4';
+const scheduleAssetRevision='0.63.75-claude-debug.5';
 function versionedScheduleAsset(src){return `${src}?v=${scheduleAssetRevision}`;}
 function repeatedFrame(src){return [src,src,src];}
 function frameTriplet(prefix, folder='actions'){
@@ -711,7 +711,7 @@ function conditionEvent(stress, dayIndex){
   return null;
 }
 const activitySkill={reading:'intelligence',arithmetic:'sense',manners:'manners',painting:'sensitivity',music:'sensitivity',dance:'agility',swordsmanship:'strength',spellcraft:'magic',cooking:'sense',martial:'strength',classics:'intelligence',errand:'speech',sweeping:'strength',herbs:'sense',houseclean:'sense',farmwork:'strength',childcare:'sensitivity',kitchenhelp:'sense',woodwork:'strength',loomwork:'sense',masonry:'strength',clinichelp:'intelligence',innhelp:'speech',sewing:'sense',copying:'intelligence',ferryhelp:'health',merchanthelp:'speech',accounting:'sense',tutoring:'intelligence',dungeon:'strength',rest:'mentality',freeTime:'sense'};
-const outcomeLabels={perfect:'완벽',success:'성공',struggle:'힘겨움',mistake:'실수'};
+const outcomeLabels={perfect:'완벽',success:'성공',struggle:'힘겨움',mistake:'실수',normal:'무난'};
 function activityOutcomeThresholds(action,stress){
   const skill=game[activitySkill[action.id]]||0;
   const recommended=Math.max(50,Number(activityRequirements[action.id]?.[1])||100);
@@ -737,7 +737,7 @@ function judgeActivityOutcome(action,stress){
   return 'mistake';
 }
 function resolvedActivityChange(action,outcome){
-  if(['rest','vacation','freeTime'].includes(action.id)&&['struggle','mistake'].includes(outcome))outcome='success';
+  if((['rest','vacation','freeTime'].includes(action.id)||action.special==='date')&&['struggle','mistake'].includes(outcome))outcome='success';
   const change={};
   Object.entries(action.change).forEach(([key,value])=>{
     const beneficial=key==='stress'?value<0:value>0;
@@ -1219,7 +1219,7 @@ async function playVacationScene(prize,index,companion=null,scheduleStart=null){
     companionText.textContent=dialogue.close;
     await waitForVacationTap('대화 마치기',true);
   }
-  if(vacationNext)await waitForVacationTap('터치해 다음 칸으로',true);
+  if(document.querySelector('#vacationNext'))await waitForVacationTap('터치해 다음 칸으로',true);
   overlay.hidden=true;scene.classList.remove('has-encounter','child-live');scene.hidden=true;scene.dataset.effect='';scene.dataset.season='';document.querySelector('#vacationMotion').replaceChildren();phone.classList.remove('vacation-playing');playHomeMusic();
   return relation;
 }
