@@ -1,3 +1,7 @@
+# v0.63.75-claude-debug.7 · 2026-08-20
+
+- 죽은 코드 정리(동작 무변화): greetingChoices 데이터+canonicalize, answerHomeGreeting, selectScheduleDay, fillRemainingSchedule, 미사용 completedWeek 제거(약 3.9KB). showHomeGreeting/clearAllSchedule 등 사용 중 함수는 보존
+
 # v0.63.75-claude-debug.6 · 2026-08-20
 
 - 추석 3종세트(holiday-chuseok)를 conditionEvent 제외 목록에 추가 → 성공 확정 행사 중 '아차!/Zzz' 실수 연출이 잘못 뜨던 것 방지

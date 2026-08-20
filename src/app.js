@@ -236,7 +236,7 @@ const vacationIllustrations=[
 function unifiedAgeFolder(){return '09';}
 function scheduleFramePath(file){return `../assets/characters/seonhwa/schedule-actions/${file}`;}
 function scheduleBasePath(file){return `../assets/characters/seonhwa/schedule-base/${file}`;}
-const scheduleAssetRevision='0.63.75-claude-debug.6';
+const scheduleAssetRevision='0.63.75-claude-debug.7';
 function versionedScheduleAsset(src){return `${src}?v=${scheduleAssetRevision}`;}
 function repeatedFrame(src){return [src,src,src];}
 function frameTriplet(prefix, folder='actions'){
@@ -1387,33 +1387,11 @@ function renderActivityGauges(action){
   box.hidden=false;
 }
 
-const greetingChoices={
-  tired:[
-    {line:'오늘은 마음이 조금 무거워요. 그래도 잘 해낼 수 있을까요?',choices:[['오늘은 천천히 해도 괜찮아.',{stress:-4,nannyAffinity:3},'곁에서 지켜봐 준다니 마음이 놓여요.'],['따뜻한 차부터 마시자.',{stress:-3,healthiness:2,nannyAffinity:2},'따뜻한 차를 마시면 기운이 날 것 같아요!'],['계획대로 움직여 보자.',{virtue:2,stress:2,nannyAffinity:-1},'네… 조금 힘들어도 해볼게요.']]},
-    {line:'오늘은 아무것도 하고 싶지 않아요.',choices:[['잠깐 마음을 쉬게 하자.',{stress:-6,nannyAffinity:3},'고마워요. 마음이 조금 가벼워졌어요.'],['바람을 쐬고 오자.',{stress:-3,health:2,nannyAffinity:2},'바깥 공기를 마시면 기분이 나아질 것 같아요.'],['작은 일부터 시작하자.',{manners:2,stress:2,nannyAffinity:-1},'알겠어요. 하나씩 해볼게요.']]},
-    {line:'어제 너무 무리했나 봐요. 마음이 복잡해요.',choices:[['오늘 일정은 가볍게 하자.',{stress:-5,nannyAffinity:3},'한결 마음이 편해졌어요.'],['따뜻하게 몸을 풀어보자.',{healthiness:3,stress:-3,nannyAffinity:2},'조금씩 움직이면 괜찮아질 것 같아요.'],['참는 것도 수련이란다.',{virtue:2,stress:2,nannyAffinity:-2},'네… 견뎌볼게요.']]}
-  ],
-  stressed:[
-    {line:'마음이 자꾸 산만해져요. 잠깐 이야기해도 될까요?',choices:[['무슨 일이든 천천히 말해 줘.',{stress:-5,nannyAffinity:4},'제 이야기를 들어줘서 고마워요.'],['마당을 함께 걸어볼까?',{stress:-4,health:1,nannyAffinity:2},'함께 걸으면 기분이 좋아질 것 같아요!'],['오늘 할 일부터 정리해 보자.',{study:2,stress:1,nannyAffinity:-1},'해야 할 일부터 생각해 볼게요.']]},
-    {line:'오늘은 작은 일에도 자꾸 짜증이 나요. 제가 이상한 걸까요?',choices:[['그럴 때도 있는 법이야.',{stress:-5,nannyAffinity:4},'그 말에 마음이 놓였어요.'],['무엇이 속상했는지 말해보렴.',{stress:-4,sensitivity:2,nannyAffinity:3},'차근차근 이야기해 볼게요.'],['마음을 다스리는 연습을 하자.',{virtue:3,stress:1,nannyAffinity:-1},'쉽지는 않지만 노력할게요.']]},
-    {line:'잘하고 싶은데 마음처럼 되지 않아서 속상해요.',choices:[['이미 충분히 잘하고 있어.',{stress:-5,nannyAffinity:4},'조금 더 자신을 믿어볼게요.'],['어려운 부분부터 같이 보자.',{study:2,stress:-3,nannyAffinity:3},'함께라면 다시 해볼 수 있어요.'],['실수도 배움의 일부란다.',{sensitivity:2,virtue:1,nannyAffinity:2},'다음에는 덜 두려워할게요.']]}
-  ],
-  bright:[
-    {line:'좋은 아침이에요! 오늘은 왠지 멋진 일이 생길 것 같아요.',choices:[['그 기운으로 즐겁게 보내자!',{charm:2,nannyAffinity:3},'네! 오늘 하루가 정말 기대돼요!'],['오늘 배우고 싶은 게 있니?',{study:2,nannyAffinity:2},'새로운 글을 하나 더 배우고 싶어요.'],['먼저 유모에게 인사부터 할까?',{manners:2,virtue:1,nannyAffinity:2},'좋은 아침이에요, 유모님!']]},
-    {line:'뜰에 햇살이 참 예뻐요. 오늘은 무엇을 하면 좋을까요?',choices:[['함께 꽃을 보러 가자.',{sensitivity:3,stress:-2,nannyAffinity:3},'좋아요! 예쁜 꽃을 찾아볼래요.'],['새로운 공부에 도전해 보자.',{study:3,nannyAffinity:2},'오늘은 어려운 글도 읽어볼게요!'],['집안일을 먼저 도와주렴.',{virtue:3,craft:1,nannyAffinity:2},'네! 금방 깨끗하게 해둘게요.']]},
-    {line:'어젯밤 재미있는 꿈을 꿨어요. 큰 궁궐을 걷고 있었어요.',choices:[['꿈 이야기를 더 들려주렴.',{sensitivity:3,nannyAffinity:4},'기억나는 장면을 모두 말해드릴게요.'],['언젠가 직접 볼 수도 있겠구나.',{charm:2,reputation:1,nannyAffinity:2},'정말 그런 날이 올까요?'],['꿈보다 오늘을 충실히 보내자.',{virtue:3,nannyAffinity:1},'네, 오늘 할 일부터 잘할게요.']]}
-  ]
-};
-Object.values(greetingChoices).flat().forEach(scene=>scene.choices.forEach(choice=>{choice[1]=canonicalizeChange(choice[1]);}));
 function showHomeGreeting(force=false){
   if(!game.birthday||document.querySelector('.phone').classList.contains('playing')||game.lastGreetingDate===game.currentDate)return false;
   game.lastGreetingDate=game.currentDate;
   if(!force&&Math.random()>=.18)return false;
   return startGuardianConversation();
-}
-function answerHomeGreeting(scene,index){
-  const [,change,result]=scene.choices[index];Object.entries(canonicalizeChange(change)).forEach(([key,value])=>game[key]=clampStat(key,(game[key]||0)+value));
-  document.querySelector('#homeGreeting').hidden=true;document.querySelector('.phone').classList.remove('greeting-active');document.querySelector('#speakerName').textContent=game.characterName||'아이';document.querySelector('#dialogueText').textContent=result;showLiveChanges({change:canonicalizeChange(change),cost:0});renderHud();queueAutoSave();
 }
 function renderStagePm3Hud(date,change={},action=null){
   const hud=document.querySelector('#stagePm3Hud');if(!hud)return;hud.hidden=false;
@@ -2029,15 +2007,6 @@ function animateScheduleAssignment(sourceRect,sourceMarkup,phaseIndex){
   flight.finished.finally(()=>{flyer.remove();shiftFromCenter();});
 }
 
-function selectScheduleDay(index){
-  scheduleCursor=index;
-  if(game.dailySchedule[index]){game.dailySchedule[index]=null;scheduleConfirmDismissed=false;hideScheduleConfirmation();document.querySelector('#dialogueText').textContent=`${['월','화','수','목','금','토','일'][index]}요일 일정을 비웠어요.`;}
-  renderSchedulePanel();queueAutoSave();
-}
-function fillRemainingSchedule(){
-  const action=actions.find(item=>item.id===selectedScheduleAction);if(!action||!actionUnlocked(action))return;
-  game.dailySchedule=game.dailySchedule.map(id=>id||selectedScheduleAction);scheduleCursor=-1;scheduleConfirmDismissed=false;renderSchedulePanel();showScheduleConfirmation();queueAutoSave();
-}
 function clearAllSchedule(){game.dailySchedule=[];game.scheduleFormat='phase-v1';scheduleCursor=0;selectedScheduleAction=null;scheduleConfirmDismissed=false;hideScheduleConfirmation();renderSchedulePanel();queueAutoSave();}
 
 function clearDailyAction(index) {
@@ -2108,7 +2077,6 @@ async function runWeek() {
     panel.hidden = true;
     return;
   }
-  const completedWeek = game.week;
   const phaseBefore=phaseInfo();
   panel.hidden = true;
   const playbackResult = await playWeeklySchedule(selected);
