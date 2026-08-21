@@ -2,7 +2,8 @@ import fs from 'node:fs';
 import assert from 'node:assert/strict';
 
 const app=fs.readFileSync(new URL('../src/app.js',import.meta.url),'utf8');
-const catalog=app.match(/const relationEpisodeCatalog=\{([\s\S]*?)\n\};\nconst careerEndingCandidates=/)?.[1]||'';
+const story=fs.readFileSync(new URL('../src/story-data.js',import.meta.url),'utf8');
+const catalog=story.match(/relationEpisodes:\{([\s\S]*?)\n\s*\},\n\s*careerEndings:/)?.[1]||story;
 for(const id of ['doyun','seojin','yeonwoo','taegyeom','hyeon']){
   assert.equal((catalog.match(new RegExp(`id:'${id}-[1-5]'`,'g'))||[]).length,5,`${id} needs five unique episodes`);
 }

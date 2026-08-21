@@ -453,9 +453,9 @@
       "existingBackground": "../assets/backgrounds/phase-scenes/farm.webp",
       "backgroundOverlay": null,
       "npc": [
-        "npc/farmer-1.png",
-        "npc/farmer-2.png",
-        "npc/farmer-3.png"
+        "npc/farmer-v3-1.png",
+        "npc/farmer-v3-2.png",
+        "npc/farmer-v3-3.png"
       ],
       "patterns": {
         "success-a": [
@@ -474,9 +474,9 @@
           "fail-a/feed-spill-3.png"
         ],
         "fail-b": [
-          "success-b/chicken-1.png",
-          "success-b/chicken-2.png",
-          "success-b/chicken-3.png"
+          "fail-b/chicken-chase-v3-1.png",
+          "fail-b/chicken-chase-v3-2.png",
+          "fail-b/chicken-chase-v3-3.png"
         ]
       },
       "placement": {
