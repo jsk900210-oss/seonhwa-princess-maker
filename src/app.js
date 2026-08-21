@@ -1232,7 +1232,7 @@ function renderVacationMotion(season){
     return particle;
   }));
 }
-async function playVacationScene(prize,index,companion=null,scheduleStart=null){
+async function playVacationScene(prize,index,companion=null,scheduleStart=null,hasNextSchedule=false){
   const phone=document.querySelector('.phone'),scene=document.querySelector('#vacationScene'),image=document.querySelector('#vacationImage');
   const overlay=document.querySelector('#vacationDuoOverlay');
   const playerPortrait=document.querySelector('#vacationPlayerPortrait');
@@ -1279,8 +1279,8 @@ async function playVacationScene(prize,index,companion=null,scheduleStart=null){
     companionText.textContent=dialogue.close;
     await waitForVacationTap('대화 마치기',true);
   }
-  if(document.querySelector('#vacationNext'))await waitForVacationTap('터치해 다음 칸으로',true);
-  overlay.hidden=true;scene.classList.remove('has-encounter','child-live');scene.hidden=true;scene.dataset.effect='';scene.dataset.season='';document.querySelector('#vacationMotion').replaceChildren();phone.classList.remove('vacation-playing');playHomeMusic();
+  overlay.hidden=true;scene.classList.remove('has-encounter','child-live');scene.hidden=true;scene.dataset.effect='';scene.dataset.season='';document.querySelector('#vacationMotion').replaceChildren();phone.classList.remove('vacation-playing');
+  if(!hasNextSchedule)playHomeMusic();
   return relation;
 }
 
@@ -2520,7 +2520,7 @@ async function playWeeklySchedule(selected) {
         const vacationCompanion=await chooseVacationCompanion();
         const prize=awardVacationIllustration();
         stage.hidden=true;stageNpc.hidden=true;stageProps.hidden=true;stageCharacter.hidden=true;
-        const metSomeone=await playVacationScene(prize,index,vacationCompanion,scheduleStart);
+        const metSomeone=await playVacationScene(prize,index,vacationCompanion,scheduleStart,index<selected.length-1);
         document.querySelector('#dialogueText').textContent=metSomeone?`바캉스에서 「${prize.name}」 일러스트와 ${metSomeone.name}의 인연 추억을 얻었어요.`:`바캉스에서 「${prize.name}」 일러스트를 획득했어요.`;
       }else document.querySelector('#dialogueText').textContent='같은 여행지에서 느긋하게 휴식을 이어 갔어요.';
     }else if(action.id==='holiday-chuseok'){
