@@ -1,0 +1,76 @@
+/* v0.63.83: 떠돌이 잡화상·아버지·신수 선물 실물 일러스트 */
+.goods-card[data-general-good]::before,
+.inventory-slot.filled[data-item]::before{
+  content:"";
+  display:block;
+  width:72px;
+  height:72px;
+  margin:0 auto 5px;
+  background:var(--item-art) center/contain no-repeat;
+  image-rendering:auto;
+}
+.goods-card[data-general-good] .item-glyph,
+.inventory-slot.filled[data-item][style*="--item-art"] .item-glyph{display:none}
+.inventory-slot.filled[data-item]::before{width:42px;height:42px;margin:0 auto 2px}
+
+[data-general-good="wooden-doll"],[data-item="wooden-doll"]{--item-art:url('../assets/items/illustrated/wooden-doll.png')}
+[data-general-good="basic-book"],[data-item="basic-book"]{--item-art:url('../assets/items/illustrated/basic-book.png')}
+[data-general-good="poetry-book"],[data-item="poetry-book"]{--item-art:url('../assets/items/illustrated/poetry-book.png')}
+[data-general-good="ceramic-cup"],[data-item="ceramic-cup"]{--item-art:url('../assets/items/illustrated/ceramic-cup.png')}
+[data-general-good="herbal-pill"],[data-item="herbal-pill"]{--item-art:url('../assets/items/illustrated/herbal-pill.png')}
+[data-general-good="guardian-bell"],[data-item="guardian-bell"]{--item-art:url('../assets/items/illustrated/guardian-bell.png')}
+[data-general-good="coral-norigae"],[data-item="coral-norigae"]{--item-art:url('../assets/items/illustrated/coral-norigae.png')}
+[data-general-good="jade-hairpin"],[data-item="jade-hairpin"]{--item-art:url('../assets/items/illustrated/jade-hairpin.png')}
+[data-general-good="pine-inkstone"],[data-item="pine-inkstone"]{--item-art:url('../assets/items/illustrated/pine-inkstone.png')}
+[data-general-good="weasel-brush"],[data-item="weasel-brush"]{--item-art:url('../assets/items/illustrated/weasel-brush.png')}
+[data-general-good="wooden-abacus"],[data-item="wooden-abacus"]{--item-art:url('../assets/items/illustrated/wooden-abacus.png')}
+[data-general-good="brass-compass"],[data-item="brass-compass"]{--item-art:url('../assets/items/illustrated/brass-compass.png')}
+[data-general-good="embroidery-kit"],[data-item="embroidery-kit"]{--item-art:url('../assets/items/illustrated/embroidery-kit.png')}
+[data-general-good="silk-pouch"],[data-item="silk-pouch"]{--item-art:url('../assets/items/illustrated/silk-pouch.png')}
+[data-general-good="flower-shoes"],[data-item="flower-shoes"]{--item-art:url('../assets/items/illustrated/flower-shoes.png')}
+[data-general-good="bamboo-flute"],[data-item="bamboo-flute"]{--item-art:url('../assets/items/illustrated/bamboo-flute.png')}
+[data-general-good="gayageum-strings"],[data-item="gayageum-strings"]{--item-art:url('../assets/items/illustrated/gayageum-strings.png')}
+[data-general-good="dance-fan"],[data-item="dance-fan"]{--item-art:url('../assets/items/illustrated/dance-fan.png')}
+[data-general-good="bronze-mirror"],[data-item="bronze-mirror"]{--item-art:url('../assets/items/illustrated/bronze-mirror.png')}
+[data-general-good="boxwood-comb"],[data-item="boxwood-comb"]{--item-art:url('../assets/items/illustrated/boxwood-comb.png')}
+[data-general-good="plum-perfume"],[data-item="plum-perfume"]{--item-art:url('../assets/items/illustrated/plum-perfume.png')}
+[data-general-good="rice-cake-box"],[data-item="rice-cake-box"]{--item-art:url('../assets/items/illustrated/rice-cake-box.png')}
+[data-general-good="herbal-tea"],[data-item="herbal-tea"]{--item-art:url('../assets/items/illustrated/herbal-tea.png')}
+[data-general-good="dried-jujube"],[data-item="dried-jujube"]{--item-art:url('../assets/items/illustrated/dried-jujube.png')}
+[data-general-good="honey-jar"],[data-item="honey-jar"]{--item-art:url('../assets/items/illustrated/honey-jar.png')}
+[data-general-good="ginseng-tonic"],[data-item="ginseng-tonic"]{--item-art:url('../assets/items/illustrated/ginseng-tonic.png')}
+[data-general-good="clear-mind-tonic"],[data-item="clear-mind-tonic"]{--item-art:url('../assets/items/illustrated/clear-mind-tonic.png')}
+[data-general-good="calming-incense"],[data-item="calming-incense"]{--item-art:url('../assets/items/illustrated/calming-incense.png')}
+[data-general-good="wooden-beads"],[data-item="wooden-beads"]{--item-art:url('../assets/items/illustrated/wooden-beads.png')}
+[data-general-good="protective-charm"],[data-item="protective-charm"]{--item-art:url('../assets/items/illustrated/protective-charm.png')}
+[data-general-good="mountain-map"],[data-item="mountain-map"]{--item-art:url('../assets/items/illustrated/mountain-map.png')}
+[data-general-good="hemp-rope"],[data-item="hemp-rope"]{--item-art:url('../assets/items/illustrated/hemp-rope.png')}
+[data-general-good="oil-lantern"],[data-item="oil-lantern"]{--item-art:url('../assets/items/illustrated/oil-lantern.png')}
+[data-general-good="flint-kit"],[data-item="flint-kit"]{--item-art:url('../assets/items/illustrated/flint-kit.png')}
+[data-general-good="leather-gloves"],[data-item="leather-gloves"]{--item-art:url('../assets/items/illustrated/leather-gloves.png')}
+[data-general-good="rain-cape"],[data-item="rain-cape"]{--item-art:url('../assets/items/illustrated/rain-cape.png')}
+[data-general-good="winter-muffler"],[data-item="winter-muffler"]{--item-art:url('../assets/items/illustrated/winter-muffler.png')}
+[data-general-good="summer-fan"],[data-item="summer-fan"]{--item-art:url('../assets/items/illustrated/summer-fan.png')}
+[data-general-good="copper-ring"],[data-item="copper-ring"]{--item-art:url('../assets/items/illustrated/copper-ring.png')}
+[data-general-good="silver-ring"],[data-item="silver-ring"]{--item-art:url('../assets/items/illustrated/silver-ring.png')}
+[data-general-good="jade-ring"],[data-item="jade-ring"]{--item-art:url('../assets/items/illustrated/jade-ring.png')}
+[data-general-good="amber-pendant"],[data-item="amber-pendant"]{--item-art:url('../assets/items/illustrated/amber-pendant.png')}
+[data-general-good="moonstone"],[data-item="moonstone"]{--item-art:url('../assets/items/illustrated/moonstone.png')}
+[data-general-good="dragon-scale-charm"],[data-item="dragon-scale-charm"]{--item-art:url('../assets/items/illustrated/dragon-scale-charm.png')}
+[data-general-good="white-tiger-token"],[data-item="white-tiger-token"]{--item-art:url('../assets/items/illustrated/white-tiger-token.png')}
+[data-general-good="phoenix-pin"],[data-item="phoenix-pin"]{--item-art:url('../assets/items/illustrated/phoenix-pin.png')}
+[data-general-good="turtle-shell-token"],[data-item="turtle-shell-token"]{--item-art:url('../assets/items/illustrated/turtle-shell-token.png')}
+[data-general-good="merchant-ledger"],[data-item="merchant-ledger"]{--item-art:url('../assets/items/illustrated/merchant-ledger.png')}
+[data-general-good="recipe-book"],[data-item="recipe-book"]{--item-art:url('../assets/items/illustrated/recipe-book.png')}
+[data-general-good="medical-compendium"],[data-item="medical-compendium"]{--item-art:url('../assets/items/illustrated/medical-compendium.png')}
+
+[data-item^="guardian-cheongryong-"]{--item-art:url('../assets/items/illustrated/guardian-cheongryong-gift.png')}
+[data-item^="guardian-baekho-"]{--item-art:url('../assets/items/illustrated/guardian-baekho-gift.png')}
+[data-item^="guardian-jujak-"]{--item-art:url('../assets/items/illustrated/guardian-jujak-gift.png')}
+[data-item^="guardian-hyeonmu-"]{--item-art:url('../assets/items/illustrated/guardian-hyeonmu-gift.png')}
+[data-item="birthday-calligraphy-set"]{--item-art:url('../assets/items/illustrated/birthday-calligraphy-set.png')}
+[data-item="birthday-silk-ribbon"]{--item-art:url('../assets/items/illustrated/birthday-silk-ribbon.png')}
+[data-item="birthday-training-bow"]{--item-art:url('../assets/items/illustrated/birthday-training-bow.png')}
+[data-item="birthday-etiquette-book"]{--item-art:url('../assets/items/illustrated/birthday-etiquette-book.png')}
+[data-item="birthday-herb-pouch"]{--item-art:url('../assets/items/illustrated/birthday-herb-pouch.png')}
+[data-item^="father-birthday-letter-"]{--item-art:url('../assets/items/illustrated/father-letter-gift.png')}
