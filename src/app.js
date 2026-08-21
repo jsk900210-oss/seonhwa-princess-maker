@@ -237,7 +237,7 @@ const vacationIllustrations=[
 function unifiedAgeFolder(){return '09';}
 function scheduleFramePath(file){return `../assets/characters/seonhwa/schedule-actions/${file}`;}
 function scheduleBasePath(file){return `../assets/characters/seonhwa/schedule-base/${file}`;}
-const scheduleAssetRevision='0.63.85-debug';
+const scheduleAssetRevision='0.63.86-debug';
 const scheduleQaParams=new URLSearchParams(location.search);
 const scheduleLayerStandaloneQa=scheduleQaParams.get('qa')==='1';
 const lockedScheduleQaMode=scheduleQaParams.has('qaSchedules')||scheduleLayerStandaloneQa;
@@ -2759,7 +2759,7 @@ async function startScheduleLayerQaPattern(pattern){
 }
 function initScheduleLayerQa(){
   const actionId=scheduleQaParams.get('qaSchedule')||'kitchenhelp';
-  if(!scheduleLayerV2PilotIds.has(actionId))return;
+  if(!scheduleLayerIds.has(actionId))return;
   scheduleQaActionId=actionId;
   ['studioLoading','prologue','birthdaySetup','recoveryPrompt','guardianStory','guardianChoice','guardianNaming'].forEach(id=>{const element=document.querySelector(`#${id}`);if(element)element.hidden=true;});
   panel.hidden=true;
@@ -2768,10 +2768,10 @@ function initScheduleLayerQa(){
   stage.hidden=false;stage.className=`activity-stage pm3-phase-scene work-scene action-${actionId}`;
   document.querySelector('#activityPlayback').hidden=true;
   document.querySelector('#stagePm3Hud').hidden=true;
-  document.querySelector('#stageCaption').textContent='QA · 주방 보조 v2 파일럿';
-  const character=document.querySelector('#stageCharacter');character.hidden=false;character.className='stage-character pixel-sprite motion-job-kitchen';
+  document.querySelector('#stageCaption').textContent=`QA · ${actions.find(action=>action.id===actionId)?.name||actionId}`;
+  const character=document.querySelector('#stageCharacter');character.hidden=false;character.className=`stage-character pixel-sprite ${actionPresentation[actionId]?.motion||'motion-study'}`;
   document.querySelector('#stageNpc').hidden=true;document.querySelector('#stageProps').hidden=true;
-  const controls=document.createElement('aside');controls.className='schedule-layer-qa';controls.innerHTML=`<strong>${actionId} v2 QA</strong><div>${['success-a','success-b','fail-a','fail-b'].map(pattern=>`<button type="button" data-qa-pattern="${pattern}">${pattern}</button>`).join('')}</div><div><button type="button" data-qa-speed="1">1×</button><button type="button" data-qa-speed="2">2×</button></div><small>선화 고정 132px · 1→2→3 반복</small>`;phone.appendChild(controls);
+  const controls=document.createElement('aside');controls.className='schedule-layer-qa';controls.innerHTML=`<strong>${actionId} QA</strong><div>${['success-a','success-b','fail-a','fail-b'].map(pattern=>`<button type="button" data-qa-pattern="${pattern}">${pattern}</button>`).join('')}</div><div><button type="button" data-qa-speed="1">1×</button><button type="button" data-qa-speed="2">2×</button></div><small>선화 고정 132px · 1→2→3 반복</small>`;phone.appendChild(controls);
   controls.querySelectorAll('[data-qa-pattern]').forEach(button=>button.addEventListener('click',()=>startScheduleLayerQaPattern(button.dataset.qaPattern)));
   controls.querySelectorAll('[data-qa-speed]').forEach(button=>button.addEventListener('click',()=>{schedulePlaybackSpeed=Number(button.dataset.qaSpeed);controls.querySelectorAll('[data-qa-speed]').forEach(item=>item.classList.toggle('active',Number(item.dataset.qaSpeed)===schedulePlaybackSpeed));}));
   controls.querySelector('[data-qa-speed="1"]').classList.add('active');
