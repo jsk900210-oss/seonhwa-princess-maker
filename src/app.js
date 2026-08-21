@@ -766,7 +766,7 @@ async function playScheduleLayerScene(actionId,seonImage,rank,outcome,dayIndex){
     const delay=[360,300,250][rank]||300;
     for(let loop=0;loop<3;loop+=1){
       for(let frame=0;frame<3;frame+=1){
-        if(actionId==='farmwork'&&patternKey==='fail-b')stage.style.setProperty('--layer-hero-left',`${30+frame*6}%`);
+        if(actionId==='farmwork'&&patternKey==='fail-b')stage.style.setProperty('--layer-hero-left',`${24+frame*2}%`);
         seonImage.src=v2Spec?`${base}/${heroFrames[frame]}${v}`:`${heroFrames[frame]}${v}`;
         npc.src=`${base}/${npcFrames[frame]}${v}`;
         pattern.src=`${base}/${patternFrames[frame]}${v}`;

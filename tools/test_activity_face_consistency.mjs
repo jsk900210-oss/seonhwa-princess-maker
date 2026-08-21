@@ -5,7 +5,7 @@ import { dirname, join } from 'node:path';
 
 const root = dirname(dirname(fileURLToPath(import.meta.url)));
 const app = readFileSync(join(root, 'src', 'app.js'), 'utf8').replace(/\r\n/g, '\n');
-const modular = ['calligraphy', 'arithmetic', 'manners', 'houseclean', 'errand', 'rest'];
+const modular = ['calligraphy', 'arithmetic', 'manners', 'houseclean', 'errand', 'tea'];
 for (const activity of modular) {
   for (let frame = 1; frame <= 3; frame += 1) {
     assert.ok(existsSync(join(root, 'assets', 'characters', 'seonhwa', 'schedule-actions', `${activity}-pixel-${frame}.png`)), `${activity} 공통 3프레임이 필요합니다.`);

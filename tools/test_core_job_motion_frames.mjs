@@ -1,9 +1,9 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import assert from 'node:assert/strict';
-const manifest=JSON.parse(fs.readFileSync(path.join(root,'manifest.json'),'utf8'));
 
 const root=path.resolve(import.meta.dirname,'..');
+const manifest=JSON.parse(fs.readFileSync(path.join(root,'manifest.json'),'utf8'));
 const app=fs.readFileSync(path.join(root,'src/app.js'),'utf8');
 const css=fs.readFileSync(path.join(root,'src/schedule.css'),'utf8');
 const jobs=['farmwork','childcare','kitchenhelp','woodwork','loomwork','masonry','clinichelp','ferryhelp','merchanthelp'];
