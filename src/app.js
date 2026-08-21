@@ -237,7 +237,7 @@ const vacationIllustrations=[
 function unifiedAgeFolder(){return '09';}
 function scheduleFramePath(file){return `../assets/characters/seonhwa/schedule-actions/${file}`;}
 function scheduleBasePath(file){return `../assets/characters/seonhwa/schedule-base/${file}`;}
-const scheduleAssetRevision='0.63.77-schedule-layers.3';
+const scheduleAssetRevision='0.63.77-schedule-layers.4';
 const lockedScheduleQaMode=new URLSearchParams(location.search).has('qaSchedules');
 let scheduleLayerManifestPromise;
 const scheduleLayerIds=new Set(['painting','music','dance','swordsmanship','spellcraft','cooking','martial','classics','farmwork','childcare','kitchenhelp','woodwork','loomwork','masonry','clinichelp','innhelp','sewing','copying','ferryhelp','merchanthelp','accounting','tutoring']);
@@ -2607,7 +2607,11 @@ async function playWeeklySchedule(selected) {
     Object.entries(actualChange).forEach(([key,value])=>weeklyChange[key]=(weeklyChange[key]||0)+value);
     dayRecords.push({date:isoDate(activityDate),action:{...action,cost:-moneyChange},actualChange,outcome,moneyChange});
     simulated.stress=clampStat('stress',simulated.stress+(resolvedChange.stress||0));
-    if((index+1)%14===0||index===selected.length-1){const start=index-index%14;await showPhaseReport(dayRecords.slice(start,index+1),{...playbackPhase,index:playbackPhase.index+Math.floor(index/14)});}
+    if((index+1)%14===0||index===selected.length-1){
+      const start=index-index%14,phaseRecords=dayRecords.slice(start,index+1);
+      const vacationContinuesToNextSchedule=phaseRecords.length>0&&phaseRecords.every(record=>record.action?.id==='vacation')&&index<selected.length-1;
+      if(!vacationContinuesToNextSchedule)await showPhaseReport(phaseRecords,{...playbackPhase,index:playbackPhase.index+Math.floor(index/14)});
+    }
   }
   playback.hidden = true;
   stage.hidden = true;
