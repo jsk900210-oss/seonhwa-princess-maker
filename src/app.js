@@ -745,6 +745,7 @@ async function playScheduleLayerScene(actionId,seonImage,rank,outcome,dayIndex){
   const patternFrames=v2Spec?patternSpec?.frames:patternSpec;
   const npcFrames=v2Spec?spec.npc?.frames||[]:spec.npc||[];
   const heroFrames=spec.existingHeroFrames||[];
+  const activeHeroFrames=failed&&Array.isArray(spec.failureHeroFrames)&&spec.failureHeroFrames.length===3?spec.failureHeroFrames:heroFrames;
   if(heroFrames.length!==3||npcFrames.length!==3||patternFrames?.length!==3)throw new Error(`schedule layer frame count invalid: ${actionId}/${patternKey}`);
   const placement=spec.placement||{};
   const layers=[];
@@ -760,13 +761,15 @@ async function playScheduleLayerScene(actionId,seonImage,rank,outcome,dayIndex){
   try{
     if(spec.backgroundOverlay)layers.push(make('background',spec.backgroundOverlay));
     const npc=make('npc',npcFrames[0]);
+    if(actionId==='farmwork'&&failed)npc.hidden=true;
     const patternLayer=v2Spec&&patternSpec?.layer==='effects'?'effect':'pattern';
-    const pattern=make(`${patternLayer} ${patternKey.startsWith('fail-')?'dedicated-failure':''}`,patternFrames[0]);
+    const pattern=make(`${patternLayer} ${patternKey} ${patternKey.startsWith('fail-')?'dedicated-failure':''}`,patternFrames[0]);
     layers.push(npc,pattern);
     const delay=[360,300,250][rank]||300;
     for(let loop=0;loop<3;loop+=1){
       for(let frame=0;frame<3;frame+=1){
-        seonImage.src=v2Spec?`${base}/${heroFrames[frame]}${v}`:`${heroFrames[frame]}${v}`;
+        if(actionId==='farmwork'&&failed){stage.style.setProperty('--layer-hero-left',`${31+frame*8}%`);pattern.style.left=`${57+frame*10}%`;}
+        seonImage.src=v2Spec?`${base}/${activeHeroFrames[frame]}${v}`:`${activeHeroFrames[frame]}${v}`;
         npc.src=`${base}/${npcFrames[frame]}${v}`;
         pattern.src=`${base}/${patternFrames[frame]}${v}`;
         await schedulePlaybackDelay(delay);
@@ -826,15 +829,24 @@ function resolvedActivityChange(action,outcome){
   }
   return change;
 }
-function phaseDailyChange(change){
+function phaseChangeFactor(key,value,actionId=''){
+  if(actionId==='vacation')return 1;
+  if(key!=='stress')return 2;
+  if(value>0)return 4;
+  return actionId==='rest'?3:2;
+}
+function phaseTotalChange(change,actionId=''){
+  const total={};Object.entries(change||{}).forEach(([key,value])=>{const numeric=Number(value)||0;total[key]=Math.round(numeric*phaseChangeFactor(key,numeric,actionId));});return total;
+}
+function phaseDailyChange(change,actionId='',dayInPhase=0){
   const scaled={};
   Object.entries(change||{}).forEach(([key,value])=>{
     const numeric=Number(value)||0;
-    scaled[key]=key==='stress'||numeric===0?numeric:Math.sign(numeric)*Math.max(1,Math.round(Math.abs(numeric)*.5));
+    if(actionId==='vacation'){scaled[key]=numeric;return;}
+    const target=Math.round(numeric*phaseChangeFactor(key,numeric,actionId));
+    const day=Math.max(0,Math.min(13,Number(dayInPhase)||0));
+    scaled[key]=Math.trunc(target*(day+1)/14)-Math.trunc(target*day/14);
   });
-  const stress=Number(scaled.stress)||0;
-  if(stress>0)scaled.stress=Math.max(1,Math.ceil(stress/3));
-  else if(stress<0)scaled.stress=Math.min(-1,Math.round(stress/3));
   return scaled;
 }
 const scheduleDialogue={
@@ -930,7 +942,7 @@ const actions = [
   { id: 'rest', category: '휴식', name: '집에서 휴식', cost: 0, summary: '스트레스 -12 · 체력 +2 · 정신력 +2', change: { health:2, mentality:2, stress:-12 } },
   { id: 'freeTime', category: '휴식', name: '자유행동', cost: 0, summary: '가벼운 외출·취미·산책 중 하나 · 스트레스 감소', change: { sense:1, stress:-8 }, special:'free-time' },
   { id: 'shopping', category: '휴식', name: '저잣거리', cost: 0, summary: '', change: {}, special:'market' },
-  { id: 'vacation', category: '휴식', name: '바캉스', cost: 180, summary: '감수성 +3 · 매력 +1 · 스트레스 -25 · 추억 일러스트 획득', change: {sensitivity:3,charm:1,stress:-25}, special:'vacation' },
+  { id: 'vacation', category: '휴식', name: '바캉스', cost: 180, summary: '감수성 +3 · 매력 +1 · 스트레스 -45 · 추억 일러스트 획득', change: {sensitivity:3,charm:1,stress:-45}, special:'vacation' },
   { id: 'dungeon', category: '휴식', name: '비경 탐사', cost: 50, unlockAge:13, unlockAnyStats:[{strength:120},{magic:120}], mentor:'수호신수', icon:'herbs', intro:'성 밖의 숨은 길에는 보물과 위험이 함께 있단다. 준비를 갖추고 나서자.', summary:'체력 +2 · 힘 +2 · 마력 +2 · 스트레스 +5 · 보물 은전 획득 가능', change:{health:2,strength:2,magic:2,stress:5}, special:'dungeon' },
   {id:'holiday-seollal',category:'명절',name:'설날 행사 참가',cost:0,icon:'manners',holidayOnly:'설날',summary:'설날 고정 이벤트',change:{dignity:2,manners:2,stress:-10},special:'holiday'},
   {id:'holiday-chuseok',category:'명절',name:'추석 행사 참가',cost:0,icon:'manners',holidayOnly:'추석',summary:'차례상·윷놀이·제기차기·송편만들기',change:{},special:'holiday'},
@@ -1459,7 +1471,7 @@ statLabels.nannyAffinity='신수 유대감';
 statLabels.fatherAffinity='아버지 친밀도';
 statLabels.guardianTrust='신수 신뢰';
 function showLiveChanges(action){
-  const items=orderedChangeEntries(phaseDailyChange(action.change)).map(([key,value])=>{const positive=key==='stress'?value<0:value>=0;const current=clampStat(key,game[key]);return `<span class="${positive?'up':'down'}">${statLabels[key]||key} <b>${current}</b> <small>(${value>0?'+':''}${value})</small></span>`;});
+  const items=orderedChangeEntries(phaseTotalChange(action.change,action.id)).map(([key,value])=>{const positive=key==='stress'?value<0:value>=0;const current=clampStat(key,game[key]);return `<span class="${positive?'up':'down'}">${statLabels[key]||key} <b>${current}</b> <small>(${value>0?'+':''}${value})</small></span>`;});
   if(action.cost!==0)items.push(`<span class="money">은전 ${action.cost>0?'-':'+'}${Math.abs(action.cost)}냥</span>`);
   document.querySelector('#liveChanges').innerHTML=items.join('');
   if(Object.values(action.change||{}).some(value=>Math.abs(value)>=8))game.homeReaction='shocked';
@@ -1468,7 +1480,7 @@ function showLiveChanges(action){
 }
 function renderActivityGauges(action){
   const box=document.querySelector('#activityGauges');
-  const entries=orderedChangeEntries(phaseDailyChange(action.change)).filter(([,value])=>value!==0);
+  const entries=orderedChangeEntries(phaseTotalChange(action.change,action.id)).filter(([,value])=>value!==0);
   if(!entries.length||['shopping','vacation'].includes(action.id)){box.hidden=true;box.innerHTML='';return;}
   box.innerHTML=entries.map(([key,value])=>{
     const max=statMaximum(key),next=clampStat(key,game[key]),current=clampStat(key,next-value);
@@ -1872,7 +1884,7 @@ function normalizePhaseSchedule(){
 }
 function scheduleProjection(){
   let money=game.money,stress=game.stress;
-  game.dailySchedule.forEach(id=>{const action=actions.find(item=>item.id===id);if(!action)return;const dailyStress=phaseDailyChange(action.change).stress||0;for(let day=0;day<14;day+=1){money=Math.max(0,money-action.cost);stress=clampStat('stress',stress+dailyStress);}});
+  game.dailySchedule.forEach(id=>{const action=actions.find(item=>item.id===id);if(!action)return;for(let day=0;day<14;day+=1){const dailyStress=phaseDailyChange(action.change,action.id,day).stress||0;money=Math.max(0,money-action.cost);stress=clampStat('stress',stress+dailyStress);}});
   return {money,stress};
 }
 function masteryMeter(points){
@@ -2014,9 +2026,26 @@ const marketPlaces=[
   {id:'outfit',side:1,label:'한복점'}
   // 추후 {id:'pub',side:-2,label:'주점'}, {id:'gift',side:2,label:'선물가게'} 추가 가능
 ];
-let marketSelection=null,marketResolve=null;
+let marketSelection=null,marketResolve=null,marketRoamToken=0;
+const marketRoamFrames=frameTriplet('errand-pixel');
+const marketStumbleFrames=frameTriplet('fail-pixel');
+async function playMarketRoamingScene(){
+  const explore=document.querySelector('#marketExplore'),token=++marketRoamToken;
+  let actor=explore.querySelector('.market-roaming-seonhwa');
+  if(!actor){actor=document.createElement('img');actor.className='market-roaming-seonhwa';actor.alt='매대를 둘러보는 선화';explore.appendChild(actor);}
+  actor.hidden=false;actor.classList.remove('is-looking','is-stumbling');
+  const route=[14,22,31,39,47,55,63,70];
+  for(let step=0;step<route.length&&token===marketRoamToken&&!explore.hidden;step+=1){
+    actor.style.left=`${route[step]}%`;actor.src=marketRoamFrames[step%3];
+    actor.classList.toggle('is-looking',step===2||step===5);
+    await new Promise(resolve=>setTimeout(resolve,step===2||step===5?520:230));
+    if(step===4&&Math.random()<.28){actor.classList.add('is-stumbling');for(const frame of marketStumbleFrames){actor.src=frame;await new Promise(resolve=>setTimeout(resolve,210));}actor.classList.remove('is-stumbling');}
+  }
+  if(token===marketRoamToken&&!explore.hidden){actor.classList.add('is-looking');actor.src=marketRoamFrames[1];}
+}
 function finishMarket(){
   if(typeof marketResolve!=='function')return;
+  marketRoamToken+=1;
   const resolve=marketResolve;
   marketResolve=null;
   closeMarketUiForTransition();
@@ -2042,6 +2071,7 @@ function askMarketShop(type){
 function closeMarketConfirm(){document.querySelector('#marketConfirm').hidden=true;selectMarketShop(null);}
 function exploreMarket(){
   const explore=document.querySelector('#marketExplore'),stage=document.querySelector('#activityStage');document.querySelector('.phone').classList.add('market-playing');stage.classList.add('market-choice-stage');explore.hidden=false;document.querySelector('#marketConfirm').hidden=true;document.querySelector('#stageCharacter').hidden=true;document.querySelector('#stageNpc').hidden=true;document.querySelector('#stageProps').hidden=true;marketMealConsumed=false;marketSelection=null;selectMarketShop(null);
+  playMarketRoamingScene();
   return new Promise(resolve=>{marketResolve=()=>{document.querySelector('.phone').classList.remove('market-playing');explore.hidden=true;document.querySelector('#stageCharacter').hidden=false;document.querySelector('#stageProps').hidden=false;resolve();};});
 }
 function enterMarketShop(type){if(!type)return;const place=marketPlaces.find(item=>item.id===type);document.querySelector('#dialogueText').textContent=`${place?.label||'가게'} 주인이 “어서 오세요.” 하고 반겨요.`;document.querySelector('#marketExplore').hidden=true;document.querySelector('#activityStage').hidden=true;document.querySelector('.phone').classList.add('market-shop-open');panel.hidden=false;renderShopPanel(type,true);}
@@ -2444,6 +2474,7 @@ async function playWeeklySchedule(selected) {
   const dayResult = document.querySelector('#dayResult');
   const conditionCue = document.querySelector('#conditionCue');
   const simulated={stress:game.stress};
+  let forcedRestPhase=-1;
   const weeklyChange={};
   const dayRecords=[];
   const scheduleStart=new Date(`${game.currentDate}T00:00:00`);
@@ -2468,7 +2499,9 @@ async function playWeeklySchedule(selected) {
     const activityDate=new Date(scheduleStart);activityDate.setDate(scheduleStart.getDate()+index);
     const weekdayLabels=['일','월','화','수','목','금','토'];
     const plannedAction = selected[index];
-    const action = actionForStressLimit(plannedAction,simulated.stress);
+    const currentSchedulePhase=Math.floor(index/14);
+    if(simulated.stress>=100)forcedRestPhase=currentSchedulePhase;
+    const action = forcedRestPhase===currentSchedulePhase?(actions.find(item=>item.id==='rest')||plannedAction):actionForStressLimit(plannedAction,simulated.stress);
     playScheduleMusic(action);
     renderStagePm3Hud(activityDate,{},action);
     const forcedRest = action.id!==plannedAction.id;
@@ -2588,9 +2621,9 @@ async function playWeeklySchedule(selected) {
     if(!guaranteedSuccess&&(outcome==='mistake'||outcome==='struggle')&&action.id!=='shopping'&&!scheduleLayerIds.has(action.id)){
       await animateActionStumble(stageCharacterImage,outcome);
     }
-    const resolvedChange=phaseDailyChange(freeTimeVariant?{...freeTimeVariant.change}:resolvedActivityChange(action,outcome));
+    const resolvedChange=phaseDailyChange(freeTimeVariant?{...freeTimeVariant.change}:resolvedActivityChange(action,outcome),action.id,index%14);
     if(holidayContestResult){
-      const contestChange=phaseDailyChange(holidayContestResult.change);
+      const contestChange=phaseDailyChange(holidayContestResult.change,action.id,index%14);
       Object.entries(contestChange).forEach(([key,value])=>{resolvedChange[key]=(resolvedChange[key]||0)+value;});
     }
     const isWork=action.category==='아르바이트',basePay=isWork?activityPay(action):0;
@@ -2637,6 +2670,7 @@ async function playWeeklySchedule(selected) {
     Object.entries(actualChange).forEach(([key,value])=>weeklyChange[key]=(weeklyChange[key]||0)+value);
     dayRecords.push({date:isoDate(activityDate),action:{...action,cost:-moneyChange},actualChange,outcome,moneyChange});
     simulated.stress=clampStat('stress',simulated.stress+(resolvedChange.stress||0));
+    if(simulated.stress>=100)forcedRestPhase=currentSchedulePhase;
     if(action.id==='vacation'&&index%14===0)index=Math.min(index+13,selected.length-1);
     if((index+1)%14===0||index===selected.length-1){
       const start=index-index%14,phaseRecords=dayRecords.slice(start,index+1);

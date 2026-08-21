@@ -18,6 +18,9 @@ assert.ok(app.includes("if(outcome==='mistake')document.querySelector('#dialogue
 assert.ok(app.includes("if(action.id!=='vacation'&&outcome!=='mistake')"),'실수 판정에서 결과 글씨 팝업을 표시하면 안 됩니다.');
 assert.ok(app.includes("scheduleQaParams.get('qaPattern')"),'QA 패턴 강제 재생이 필요합니다.');
 assert.ok(app.includes("const failed=outcome==='mistake'"),'struggle은 전용 실패 레이어를 사용하면 안 됩니다.');
+assert.ok(app.includes('`${patternLayer} ${patternKey}'),'성공·실패 패턴별 좌표 클래스를 렌더링해야 합니다.');
+assert.ok(css.includes('.activity-stage.action-childcare.schedule-layered .schedule-scene-layer.fail-a')&&css.includes('.activity-stage.action-kitchenhelp.schedule-layered .schedule-scene-layer.success-a'),'아이돌보기 실패와 주방보조 성공 소품에 전용 좌표가 필요합니다.');
+assert.ok(app.includes("if(actionId==='farmwork'&&failed)npc.hidden=true")&&app.includes("pattern.style.left=`${57+frame*10}%`"),'농사 실패는 농부를 숨기고 달아나는 닭을 추격해야 합니다.');
 assert.ok(!app.includes("setProperty('--layer-hero-scale'"),'일정별 선화 배율 적용이 남아 있습니다.');
 assert.match(css,/activity-stage\.schedule-layered \.stage-character\.pixel-sprite\{[\s\S]*?width:146px!important;[\s\S]*?height:146px!important;/,'레이어 일정 선화 크기가 고정되지 않았습니다.');
 console.log('PASS: kitchenhelp/childcare/painting v2 파일럿, QA 패턴, 선화 고정 크기');

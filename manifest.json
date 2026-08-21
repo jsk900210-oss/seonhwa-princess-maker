@@ -450,6 +450,11 @@
         "../assets/characters/seonhwa/schedule-actions/farmwork-pixel-2.png",
         "../assets/characters/seonhwa/schedule-actions/farmwork-pixel-3.png"
       ],
+      "failureHeroFrames": [
+        "../assets/characters/seonhwa/schedule-actions/errand-pixel-1.png",
+        "../assets/characters/seonhwa/schedule-actions/errand-pixel-2.png",
+        "../assets/characters/seonhwa/schedule-actions/errand-pixel-3.png"
+      ],
       "existingBackground": "../assets/backgrounds/phase-scenes/farm.webp",
       "backgroundOverlay": "background-overlay/farmwork-background-overlay.png",
       "npc": [
@@ -469,14 +474,14 @@
           "success-b/chicken-3.png"
         ],
         "fail-a": [
-          "fail-a/feed-spill-1.png",
-          "fail-a/feed-spill-2.png",
-          "fail-a/feed-spill-3.png"
+          "success-b/chicken-1.png",
+          "success-b/chicken-2.png",
+          "success-b/chicken-3.png"
         ],
         "fail-b": [
-          "fail-b/mud-scatter-1.png",
-          "fail-b/mud-scatter-2.png",
-          "fail-b/mud-scatter-3.png"
+          "success-b/chicken-1.png",
+          "success-b/chicken-2.png",
+          "success-b/chicken-3.png"
         ]
       },
       "placement": {
