@@ -7,7 +7,7 @@ for(const activityId of ['kitchenhelp','childcare','painting','music','dance','s
   const manifest=JSON.parse(fs.readFileSync(new URL(`../assets/schedule-layers-v2/${activityId}/manifest.json`,import.meta.url),'utf8'));
   assert.deepEqual(manifest.animation.sequence,[1,2,3],`${activityId}는 1→2→3 순환이어야 합니다.`);
   assert.equal(manifest.existingHeroFrames.length,3,'기존 선화 3프레임을 참조해야 합니다.');
-  const heroFrameId=['painting','copying'].includes(activityId)?'calligraphy':activityId==='sewing'?'loomwork':activityId==='music'?'manners':activityId;
+  const heroFrameId=['painting','copying'].includes(activityId)?'calligraphy':activityId==='sewing'?'loomwork':activityId==='music'?'sit':activityId;
   assert.ok(manifest.existingHeroFrames.every(path=>path.includes(`characters/seonhwa/schedule-actions/${heroFrameId}-pixel-`)),'신규 선화로 교체하면 안 됩니다.');
   for(const key of ['success-a','success-b','fail-a','fail-b'])assert.equal(manifest.patterns[key].frames.length,3,`${activityId} ${key}는 3프레임이어야 합니다.`);
 }

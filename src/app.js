@@ -30,13 +30,13 @@ function saveSettings(){localStorage.setItem(SETTINGS_KEY,JSON.stringify(userSet
 const scaledVolume=(base,kind)=>Math.max(0,Math.min(1,base*((userSettings[kind+'Volume']??100)/100)));
 const gameMusic=new Audio();
 gameMusic.preload='auto';gameMusic.loop=true;gameMusic.volume=.24;
-const gameMusicTracks={home:'../assets/audio/music/gameplay/bgm-home-town-square.mp3',market:'../assets/audio/music/gameplay/bgm-market-morning.mp3',work:'../assets/audio/music/gameplay/bgm-work-morning.mp3',education:'../assets/audio/music/gameplay/bgm-education-study.mp3'};
+const gameMusicTracks={home:'../assets/audio/music/gameplay/bgm-home-daily.mp3',market:'../assets/audio/music/gameplay/bgm-market-morning.mp3',work:'../assets/audio/music/gameplay/bgm-work-morning.mp3',education:'../assets/audio/music/gameplay/bgm-education-study.mp3'};
 function vacationMusicPath(seasonName=game.season,ageValue=game.age){const age=ageValue>=18?'18':ageValue>=16?'16':ageValue>=13?'13':'09';const season={봄:'spring',여름:'summer',가을:'autumn',겨울:'winter'}[seasonName]||'spring';return `../assets/audio/music/vacation/age-${age}/vacation-${season}.mp3`;}
 function stopCompetingBgm(active=gameMusic){document.querySelectorAll('audio').forEach(audio=>{if(audio!==active&&audio.id!=='rainAudio'){audio.pause();}});}
-function playGameMusic(source,volume=.24){if(!source)return;stopCompetingBgm(gameMusic);const target=new URL(source,document.baseURI).href;if(gameMusic.src!==target){gameMusic.pause();gameMusic.src=target;gameMusic.currentTime=0;gameMusic.load();}gameMusic.dataset.track=source;gameMusic.dataset.baseVolume=String(volume);gameMusic.volume=scaledVolume(volume,'bgm');if(userSettings.bgmEnabled&&!gameMusic.paused&&gameMusic.src===target)return;if(userSettings.bgmEnabled)gameMusic.play().catch(()=>{});else gameMusic.pause();}
+function playGameMusic(source,volume=.24,playbackRate=1){if(!source)return;stopCompetingBgm(gameMusic);const target=new URL(source,document.baseURI).href;if(gameMusic.src!==target){gameMusic.pause();gameMusic.src=target;gameMusic.currentTime=0;gameMusic.load();}gameMusic.playbackRate=playbackRate;gameMusic.dataset.track=source;gameMusic.dataset.baseVolume=String(volume);gameMusic.dataset.playbackRate=String(playbackRate);gameMusic.volume=scaledVolume(volume,'bgm');if(userSettings.bgmEnabled&&!gameMusic.paused&&gameMusic.src===target)return;if(userSettings.bgmEnabled)gameMusic.play().catch(()=>{});else gameMusic.pause();}
 function playHomeMusic(){playGameMusic(gameMusicTracks.home,.22);}
 function playMarketMusic(){playGameMusic(gameMusicTracks.market,.20);}
-function playScheduleMusic(action){if(['shopping','freeTime','vacation'].includes(action?.id))return;if(action?.category==='교육')playGameMusic(gameMusicTracks.education,.20);else if(action?.category==='아르바이트')playGameMusic(gameMusicTracks.work,.20);else playHomeMusic();}
+function playScheduleMusic(action){if(['shopping','freeTime','vacation'].includes(action?.id))return;if(action?.category==='교육')playGameMusic(gameMusicTracks.education,.20,1.12);else if(action?.category==='아르바이트')playGameMusic(gameMusicTracks.work,.20,1.12);else playHomeMusic();}
 function playVacationMusic(seasonName=game.season){
   const source=vacationMusicPath(seasonName);
   playGameMusic(source,.04);
@@ -50,7 +50,7 @@ function transitionPrologueToHomeMusic(){
   fadeAudio(prologueMusic,0,1600);
 }
 
-const game = { characterName:'', nannyName:'', guardianType:null, guardianName:'', profileSlot:null, age: 9, height:130, weight:28.5, month: 1, week: 1, season:'봄', money: 50000, cash:50000, health:42, strength:18, agility:20, intelligence:35, magic:8, mentality:30, dignity:36, manners:28, speech:14, sensitivity:40, sense:24, charm:30, stress:12, items: [], purchasedGoods:[], relations:{}, activityProgress:{}, activityUnlocksSeen:[], completedPhases:[], startingGiftId:null, fatherBirthdayYears:[], equippedOutfit:null, autoOutfit:true, dailySchedule: [], scheduleFormat:'phase-v1', birthday:null, currentDate:null, endingDate:null, ended:false, endingResult:null, birthdayCount:0, element:null, birthSeason:null, memory:0, truth:0, exposure:0, fatherAffinity:0, guardianTrust:50, nannyAffinity:50, lastGreetingDate:null, lastGuardianTalkDate:null, lastGuardianTalkPhase:null, monthlyLedger:null };
+const game = { characterName:'', nannyName:'', guardianType:null, guardianName:'', profileSlot:null, age: 9, height:130, weight:28.5, month: 1, week: 1, season:'봄', money: 50000, cash:50000, health:42, strength:18, agility:20, intelligence:35, magic:8, mentality:30, dignity:36, manners:28, speech:14, sensitivity:40, sense:24, charm:30, stress:0, items: [], purchasedGoods:[], relations:{}, activityProgress:{}, activityUnlocksSeen:[], completedPhases:[], startingGiftId:null, fatherBirthdayYears:[], equippedOutfit:null, autoOutfit:true, dailySchedule: [], scheduleFormat:'phase-v1', birthday:null, currentDate:null, endingDate:null, ended:false, endingResult:null, birthdayCount:0, element:null, birthSeason:null, memory:0, truth:0, exposure:0, fatherAffinity:0, guardianTrust:50, nannyAffinity:50, lastGreetingDate:null, lastGuardianTalkDate:null, lastGuardianTalkPhase:null, monthlyLedger:null };
 const baseSpritePath='../assets/characters/seonhwa/age-09/base/seonhwa-age09-home-main-v5-transparent.png';
 const guardianDefs={
   cheongryong:{name:'청룡',mark:'龍',theme:'#294e67',gift:{name:'푸른 여의주 조각',change:{intelligence:5,magic:4}},intro:'동쪽의 푸른 숨결. 배움과 술법의 길을 살피는 신수입니다.'},
@@ -1813,7 +1813,7 @@ function deleteCharacterRecord(slot){
 }
 
 function resetGameState() {
-  Object.assign(game, { characterName:'',nannyName:'',guardianType:null,guardianName:'',profileSlot:null,age:9,height:130,weight:28.5,month:1,week:1,season:'봄',money:50000,cash:50000,health:42,strength:18,agility:20,intelligence:35,magic:8,mentality:30,dignity:36,manners:28,speech:14,sensitivity:40,sense:24,charm:30,stress:12,items:[],purchasedGoods:[],relations:{},activityProgress:{},activityUnlocksSeen:[],startingGiftId:null,fatherBirthdayYears:[],equippedOutfit:null,autoOutfit:true,dailySchedule:[],scheduleFormat:'phase-v1',birthday:null,currentDate:null,endingDate:null,ended:false,endingResult:null,birthdayCount:0,element:null,birthSeason:null,memory:0,truth:0,exposure:0,fatherAffinity:0,guardianTrust:50,nannyAffinity:50,lastGreetingDate:null,lastGuardianTalkDate:null,lastGuardianTalkPhase:null,monthlyLedger:null});
+  Object.assign(game, { characterName:'',nannyName:'',guardianType:null,guardianName:'',profileSlot:null,age:9,height:130,weight:28.5,month:1,week:1,season:'봄',money:50000,cash:50000,health:42,strength:18,agility:20,intelligence:35,magic:8,mentality:30,dignity:36,manners:28,speech:14,sensitivity:40,sense:24,charm:30,stress:0,items:[],purchasedGoods:[],relations:{},activityProgress:{},activityUnlocksSeen:[],startingGiftId:null,fatherBirthdayYears:[],equippedOutfit:null,autoOutfit:true,dailySchedule:[],scheduleFormat:'phase-v1',birthday:null,currentDate:null,endingDate:null,ended:false,endingResult:null,birthdayCount:0,element:null,birthSeason:null,memory:0,truth:0,exposure:0,fatherAffinity:0,guardianTrust:50,nannyAffinity:50,lastGreetingDate:null,lastGuardianTalkDate:null,lastGuardianTalkPhase:null,monthlyLedger:null});
   document.querySelector('#liveChanges').innerHTML='';
   const greeting=document.querySelector('#homeGreeting');greeting.hidden=true;greeting.classList.remove('greeting-active');
   document.querySelector('#characterNameInput').value='';
@@ -2264,7 +2264,7 @@ function startWithBirthday(){
   const start=addYears(birth,9);
   const ending=addYears(birth,19); ending.setDate(ending.getDate()+1);
   const month=birth.getMonth()+1; const birthSeason=seasonForMonth(month); const element=['금','수','목','화','토'][(birth.getMonth()+birth.getDate())%5];
-  Object.assign(game,{characterName,guardianType:null,guardianName:'',nannyName:'',profileSlot,birthday:value,currentDate:isoDate(start),endingDate:isoDate(ending),age:9,height:130,weight:28.5,month,season:birthSeason,birthSeason,element,week:Math.floor((start.getDate()-1)/7)+1,ended:false,endingResult:null,birthdayCount:0,fatherBirthdayYears:[],fatherAffinity:0,startingGiftId:null});
+  Object.assign(game,{characterName,guardianType:null,guardianName:'',nannyName:'',profileSlot,birthday:value,currentDate:isoDate(start),endingDate:isoDate(ending),age:9,height:130,weight:28.5,month,season:birthSeason,birthSeason,element,week:Math.floor((start.getDate()-1)/7)+1,stress:0,ended:false,endingResult:null,birthdayCount:0,fatherBirthdayYears:[],fatherAffinity:0,startingGiftId:null});
   game.monthlyLedger=createMonthlyLedger(start.getFullYear(),month);
   document.querySelector('#birthdaySetup').hidden=true;
   guardianStoryIndex=0;showGuardianStory();
@@ -2637,6 +2637,7 @@ async function playWeeklySchedule(selected) {
     Object.entries(actualChange).forEach(([key,value])=>weeklyChange[key]=(weeklyChange[key]||0)+value);
     dayRecords.push({date:isoDate(activityDate),action:{...action,cost:-moneyChange},actualChange,outcome,moneyChange});
     simulated.stress=clampStat('stress',simulated.stress+(resolvedChange.stress||0));
+    if(action.id==='vacation'&&index%14===0)index=Math.min(index+13,selected.length-1);
     if((index+1)%14===0||index===selected.length-1){
       const start=index-index%14,phaseRecords=dayRecords.slice(start,index+1);
       const vacationContinuesToNextSchedule=phaseRecords.length>0&&phaseRecords.every(record=>record.action?.id==='vacation')&&index<selected.length-1;
