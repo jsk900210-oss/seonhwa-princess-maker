@@ -30,12 +30,13 @@ function saveSettings(){localStorage.setItem(SETTINGS_KEY,JSON.stringify(userSet
 const scaledVolume=(base,kind)=>Math.max(0,Math.min(1,base*((userSettings[kind+'Volume']??100)/100)));
 const gameMusic=new Audio();
 gameMusic.preload='auto';gameMusic.loop=true;gameMusic.volume=.24;
-const gameMusicTracks={home:'../assets/audio/music/gameplay/bgm-home-daily.mp3',market:'../assets/audio/music/gameplay/bgm-schedule.mp3'};
+const gameMusicTracks={home:'../assets/audio/music/gameplay/bgm-home-town-square.mp3',market:'../assets/audio/music/gameplay/bgm-market-morning.mp3',work:'../assets/audio/music/gameplay/bgm-work-morning.mp3',education:'../assets/audio/music/gameplay/bgm-education-study.mp3'};
 function vacationMusicPath(seasonName=game.season,ageValue=game.age){const age=ageValue>=18?'18':ageValue>=16?'16':ageValue>=13?'13':'09';const season={봄:'spring',여름:'summer',가을:'autumn',겨울:'winter'}[seasonName]||'spring';return `../assets/audio/music/vacation/age-${age}/vacation-${season}.mp3`;}
 function stopCompetingBgm(active=gameMusic){document.querySelectorAll('audio').forEach(audio=>{if(audio!==active&&audio.id!=='rainAudio'){audio.pause();}});}
 function playGameMusic(source,volume=.24){if(!source)return;stopCompetingBgm(gameMusic);const target=new URL(source,document.baseURI).href;if(gameMusic.src!==target){gameMusic.pause();gameMusic.src=target;gameMusic.currentTime=0;gameMusic.load();}gameMusic.dataset.track=source;gameMusic.dataset.baseVolume=String(volume);gameMusic.volume=scaledVolume(volume,'bgm');if(userSettings.bgmEnabled&&!gameMusic.paused&&gameMusic.src===target)return;if(userSettings.bgmEnabled)gameMusic.play().catch(()=>{});else gameMusic.pause();}
 function playHomeMusic(){playGameMusic(gameMusicTracks.home,.22);}
 function playMarketMusic(){playGameMusic(gameMusicTracks.market,.20);}
+function playScheduleMusic(action){if(['shopping','freeTime','vacation'].includes(action?.id))return;if(action?.category==='교육')playGameMusic(gameMusicTracks.education,.20);else if(action?.category==='아르바이트')playGameMusic(gameMusicTracks.work,.20);else playHomeMusic();}
 function playVacationMusic(seasonName=game.season){
   const source=vacationMusicPath(seasonName);
   playGameMusic(source,.04);
@@ -236,7 +237,7 @@ const vacationIllustrations=[
 function unifiedAgeFolder(){return '09';}
 function scheduleFramePath(file){return `../assets/characters/seonhwa/schedule-actions/${file}`;}
 function scheduleBasePath(file){return `../assets/characters/seonhwa/schedule-base/${file}`;}
-const scheduleAssetRevision='0.63.77-schedule-layers.1';
+const scheduleAssetRevision='0.63.77-schedule-layers.2';
 const lockedScheduleQaMode=new URLSearchParams(location.search).has('qaSchedules');
 let scheduleLayerManifestPromise;
 const scheduleLayerIds=new Set(['painting','music','dance','swordsmanship','spellcraft','cooking','martial','classics','farmwork','childcare','kitchenhelp','woodwork','loomwork','masonry','clinichelp','innhelp','sewing','copying','ferryhelp','merchanthelp','accounting','tutoring']);
@@ -1294,6 +1295,7 @@ function renderHud() {
   normalizeStats();
   const date = game.currentDate ? new Date(`${game.currentDate}T00:00:00`) : null;
   const phase=phaseInfo();
+  document.querySelector('.phone').dataset.growthAge=String(growthVisualAge());
   document.querySelector('#dateLabel').textContent = date ? `${game.age}세 · ${date.getFullYear()}년 ${date.getMonth()+1}월 ${date.getDate()}일 · 제${phase.index}페이즈 ${phase.week}주차` : '생일 설정 전';
   document.querySelector('#moneyLabel').textContent = `${game.money.toLocaleString()}냥`;
   document.querySelector('#cashLabel').textContent = `캐시 ${game.cash.toLocaleString()}원`;
@@ -2236,37 +2238,6 @@ function startWithBirthday(){
   document.querySelector('#birthdaySetup').hidden=true;
   guardianStoryIndex=0;showGuardianStory();
 }
-function startThirteenTestGrowth(){
-  enforceBirthday1990();
-  const value=document.querySelector('#birthdayInput').value;
-  const characterName=document.querySelector('#characterNameInput').value.trim()||'테스트 선화';
-  if(value<'1990-01-01'||value>'1990-12-31') return;
-  const profileSlot=game.profileSlot||SAVE_SLOTS.find(slot=>!readSave(slot));
-  if(!profileSlot){document.querySelector('#birthdayTitle').textContent='동시에 키울 수 있는 다섯 명의 기록이 모두 찼어요';return;}
-  const birth=new Date(`${value}T00:00:00`);
-  const start=addYears(birth,13);
-  const ending=addYears(birth,19); ending.setDate(ending.getDate()+1);
-  const month=birth.getMonth()+1; const birthSeason=seasonForMonth(month); const element=['금','수','목','화','토'][(birth.getMonth()+birth.getDate())%5];
-  Object.assign(game,{characterName,guardianType:null,guardianName:'',nannyName:'',profileSlot,birthday:value,currentDate:isoDate(start),endingDate:isoDate(ending),age:13,height:150,weight:39.5,month:start.getMonth()+1,season:seasonForMonth(start.getMonth()+1),birthSeason,element,week:Math.floor((start.getDate()-1)/7)+1,ended:false,endingResult:null,birthdayCount:0,fatherBirthdayYears:[],fatherAffinity:0,startingGiftId:null});
-  game.monthlyLedger=createMonthlyLedger(start.getFullYear(),start.getMonth()+1);
-  game.relations={};
-  normalizeRelations();
-  const testRelation=relationRecord('doyun');
-  testRelation.meetings=5;
-  testRelation.affinity=70;
-  testRelation.dateUnlocked=true;
-  testRelation.relationship='특별한 인연';
-  testRelation.completedEpisodes=['doyun-1','doyun-2','doyun-3','doyun-4','doyun-5'];
-  testRelation.lastMetAt=game.currentDate;
-  document.querySelector('#birthdaySetup').hidden=true;
-  document.querySelector('#guardianStory').hidden=true;
-  document.querySelector('#guardianChoice').hidden=true;
-  document.querySelector('#guardianNameSetup').hidden=true;
-  renderHud();
-  applyEquippedOutfit();
-  document.querySelector('#dialogueText').textContent='13세 테스트 캐릭터가 준비되었어요. 인연 메뉴에서 바로 확인해 보세요.';
-  queueAutoSave();
-}
 function showGuardianStory(){
   const story=document.querySelector('#guardianStory'),scene=guardianStoryScenes[guardianStoryIndex],copy=story.querySelector('.guardian-story-copy'),image=document.querySelector('#guardianStoryImage'),next=document.querySelector('#guardianStoryNext');
   story.hidden=false;story.classList.add('group-scene');story.dataset.effect=scene.effect;image.src=scene.image;image.alt=scene.alt;next.hidden=true;next.disabled=true;next.textContent='신수 선택하기';copy.classList.remove('is-changing');
@@ -2467,6 +2438,7 @@ async function playWeeklySchedule(selected) {
     const weekdayLabels=['일','월','화','수','목','금','토'];
     const plannedAction = selected[index];
     const action = actionForStressLimit(plannedAction,simulated.stress);
+    playScheduleMusic(action);
     renderStagePm3Hud(activityDate,{},action);
     const forcedRest = action.id!==plannedAction.id;
     if(forcedRest){
@@ -2685,7 +2657,6 @@ document.querySelector('#closePanel').addEventListener('click', () => {if(market
 document.querySelector('#recoveryFresh').addEventListener('click',declineRecovery);
 document.querySelector('#recoveryContinue').addEventListener('click',continueRecovery);
 document.querySelector('#startGame').addEventListener('click', startWithBirthday);
-document.querySelector('#startTestThirteen').addEventListener('click', startThirteenTestGrowth);
 document.querySelector('#guardianStoryNext').addEventListener('click',nextGuardianStory);
 document.querySelector('#guardianStory').addEventListener('click',event=>{if(!event.target.closest('button'))nextGuardianStory();});
 document.querySelectorAll('[data-guardian]').forEach(button=>button.addEventListener('click',()=>chooseGuardian(button.dataset.guardian)));

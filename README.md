@@ -1488,3 +1488,9 @@ python tools/verify_assets.py
 - 애니메이션은 모든 구성요소가 `1→2→3` 순서로 반복됩니다.
 - QA 즉시 해금: 로컬 주소 끝에 `?qaSchedules`를 붙입니다. 예: `src/index.html?qaSchedules`.
 - 정적 검증: `node tools/test_locked_schedule_layers.mjs`.
+# v0.63.77-schedule-layers.2 · 시작 화면·홈 크기·BGM 패턴
+
+- 이름·생일 설정 화면의 `13세 테스트 시작` 바로가기를 제거했습니다.
+- 9세 홈 캐릭터에만 더 넓은 상하좌우 여백을 적용해 13세 이상보다 작게 표시합니다.
+- 프메3식 화면·행동 분류에 따라 홈(`Gwangjang Morning Walk`), 저잣거리(`Market Morning Run`), 아르바이트(`Market Morning Run` 긴 버전), 교육(`Hanbok Study Desk`) BGM을 전환합니다.
+- 같은 분류의 일정이 이어지면 현재 곡을 유지하고, 저잣거리·바캉스는 각각 기존 전용 전환 흐름을 사용합니다.
