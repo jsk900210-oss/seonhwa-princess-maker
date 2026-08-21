@@ -1972,6 +1972,30 @@
 .activity-stage.action-kitchenhelp .kl-fire{z-index:6;left:10%;bottom:8%;width:21%}
 @media(max-width:380px){.activity-stage.action-kitchenhelp .kl-jumo{width:44%}.activity-stage.action-kitchenhelp .kl-cauldron{width:35%}}
 
+/* v0.63.77: manifest-driven locked education/job scene layers. */
+.activity-stage.schedule-layered .stage-inner{overflow:hidden}
+.activity-stage.schedule-layered .stage-npc,.activity-stage.schedule-layered .stage-props{display:none!important}
+.phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.schedule-layered .stage-character.pixel-sprite{
+  left:var(--layer-hero-left)!important;
+  bottom:var(--layer-floor)!important;
+  width:clamp(126px,38%,166px)!important;
+  height:clamp(126px,38%,166px)!important;
+  z-index:4!important;
+  transform:translateX(-50%) scale(var(--layer-hero-scale))!important;
+  transform-origin:50% 100%;
+  animation:none!important;
+}
+.schedule-scene-layer{position:absolute;display:block;height:auto;pointer-events:none;user-select:none;image-rendering:pixelated}
+.schedule-scene-layer.layer-background{inset:0;z-index:1;width:100%;height:100%;object-fit:cover;image-rendering:auto}
+.schedule-scene-layer.layer-npc{left:var(--layer-npc-left);bottom:var(--layer-floor);z-index:3;width:clamp(122px,37%,160px);transform:translateX(-50%) scale(var(--layer-npc-scale));transform-origin:50% 100%;object-fit:contain;filter:drop-shadow(0 3px 2px #0005)}
+.schedule-scene-layer.layer-pattern{left:var(--layer-prop-left);bottom:var(--layer-prop-bottom);z-index:5;width:clamp(94px,29%,126px);transform:translateX(-50%);object-fit:contain;filter:drop-shadow(0 2px 2px #0004)}
+.schedule-scene-layer.layer-pattern.dedicated-failure{z-index:6}
+@media(max-width:380px){
+  .phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.schedule-layered .stage-character.pixel-sprite{width:132px!important;height:132px!important}
+  .schedule-scene-layer.layer-npc{width:126px}
+  .schedule-scene-layer.layer-pattern{width:100px}
+}
+
 
 /* v0.63.76-claude-debug.2: 요리 배우기(cooking) 캐릭터 좌표 — 전용 값이 없어 기본 46%로
    부엌 한가운데 떠 있던 것을 화덕 쪽(좌)으로 배치. action-cooking 스코프. */

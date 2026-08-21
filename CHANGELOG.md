@@ -846,3 +846,12 @@
 - 자유행동 실행 시 쯔꾸르 프레임이 사라지던 문제 수정(v0.63.57 무프레임 규칙에서 free-time-market 제외).
 - 자유행동을 일반 활동처럼 프레임 안에 표시. 장터 심부름은 기존 유지.
 - 변경 파일: src/schedule.css, src/index.html(schedule.css 캐시 0.63.72-debug).
+# v0.63.77-schedule-layers.1 · 2026-08-21
+
+- 잠금 교육 8종·아르바이트 14종을 `manifest.json` 기반 공통 일정 레이어 렌더러에 연결했습니다.
+- 선화는 기존 `assets/characters/seonhwa/schedule-actions/*-pixel-1~3.png`만 사용하며 NPC·배경 오버레이·성공/실패 패턴만 별도 레이어로 합성합니다.
+- 성공 A/B·실패 A/B를 날짜 패리티로 선택하고 모든 레이어를 정확히 `1→2→3` 순서로 반복합니다.
+- 실패 전용 레이어가 있는 22종에서는 공통 흔들림 연출을 생략하며, 일정 종료 시 생성한 레이어와 배치 변수를 정리합니다.
+- `?qaSchedules` URL 모드에서 잠금 일정 22종을 연령·능력치와 무관하게 선택할 수 있습니다.
+- 주방보조 초기 배치는 선화 42%, 주모 72%, 소품 52%를 manifest에서 적용합니다.
+- 검증 도구 `tools/test_locked_schedule_layers.mjs`를 추가했습니다.

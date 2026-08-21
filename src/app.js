@@ -236,7 +236,17 @@ const vacationIllustrations=[
 function unifiedAgeFolder(){return '09';}
 function scheduleFramePath(file){return `../assets/characters/seonhwa/schedule-actions/${file}`;}
 function scheduleBasePath(file){return `../assets/characters/seonhwa/schedule-base/${file}`;}
-const scheduleAssetRevision='0.63.76-claude-debug.2';
+const scheduleAssetRevision='0.63.77-schedule-layers.1';
+const lockedScheduleQaMode=new URLSearchParams(location.search).has('qaSchedules');
+let scheduleLayerManifestPromise;
+const scheduleLayerIds=new Set(['painting','music','dance','swordsmanship','spellcraft','cooking','martial','classics','farmwork','childcare','kitchenhelp','woodwork','loomwork','masonry','clinichelp','innhelp','sewing','copying','ferryhelp','merchanthelp','accounting','tutoring']);
+function scheduleLayerManifest(){
+  scheduleLayerManifestPromise??=fetch(`../manifest.json?v=${scheduleAssetRevision}`,{cache:'no-store'}).then(response=>{
+    if(!response.ok)throw new Error(`schedule manifest HTTP ${response.status}`);
+    return response.json();
+  });
+  return scheduleLayerManifestPromise;
+}
 function versionedScheduleAsset(src){return `${src}?v=${scheduleAssetRevision}`;}
 function repeatedFrame(src){return [src,src,src];}
 function frameTriplet(prefix, folder='actions'){
@@ -705,37 +715,51 @@ async function animateActivitySprite(image,motion,activity,npcImage,npc,outfitId
   const sequence=motion==='motion-walk'?[0,1,2,1,0,1,2,1]:[1,0,1,2,1,0,1];
   for(const frame of sequence){image.src=spriteFrames[direction][frame];await schedulePlaybackDelay(motion==='motion-walk'?135:170);}
 }
-async function playKitchenhelpScene(seonImage,outfitId,rank){
+async function playScheduleLayerScene(actionId,seonImage,rank,outcome,dayIndex){
   const inner=document.querySelector('#activityStage .stage-inner');
-  if(!inner)return;
-  const base='../assets/schedule-layers/kitchenhelp',v=`?v=${scheduleAssetRevision}`;
-  const make=(cls,file)=>{const img=document.createElement('img');img.className=`kitchen-layer ${cls}`;img.decoding='async';img.setAttribute('aria-hidden','true');img.src=`${base}/${file}${v}`;inner.appendChild(img);return img;};
-  const cauldron=make('kl-cauldron','props/cauldron.png');
-  const jumo=make('kl-jumo','npc/jumo-1.png');
-  const veg=make('kl-veg','props/vegetable-prep-1.png');
-  const fire=make('kl-fire','effects/fire-1.png');
-  const frames=activityFrameSet('kitchenhelp')||spriteFrames.down;
-  const delay=[360,300,250][rank]||300;
-  const phases=[
-    {veg:'props/vegetable-prep-1.png',jumo:'npc/jumo-1.png'},
-    {veg:'props/vegetable-prep-2.png',jumo:'npc/jumo-2.png'},
-    {veg:'props/vegetable-prep-3.png',jumo:'npc/jumo-3.png'}
-  ];
-  let tick=0;
+  const stage=document.querySelector('#activityStage');
+  if(!inner||!stage)return;
+  const manifest=await scheduleLayerManifest();
+  const spec=manifest.schedules?.[actionId];
+  if(!spec)throw new Error(`schedule layer missing: ${actionId}`);
+  const stageMap=document.querySelector('#stageMap');
+  if(stageMap&&spec.existingBackground)stageMap.src=spec.existingBackground;
+  const base=`../assets/schedule-layers/${actionId}`,v=`?v=${scheduleAssetRevision}`;
+  const make=(kind,file)=>{const img=document.createElement('img');img.className=`schedule-scene-layer layer-${kind}`;img.decoding='async';img.setAttribute('aria-hidden','true');img.src=`${base}/${file}${v}`;inner.appendChild(img);return img;};
+  const failed=outcome==='mistake'||outcome==='struggle';
+  const patternKey=`${failed?'fail':'success'}-${dayIndex%2===0?'a':'b'}`;
+  const patternFrames=spec.patterns?.[patternKey];
+  const npcFrames=spec.npc||[];
+  const heroFrames=spec.existingHeroFrames||[];
+  if(heroFrames.length!==3||npcFrames.length!==3||patternFrames?.length!==3)throw new Error(`schedule layer frame count invalid: ${actionId}/${patternKey}`);
+  const placement=spec.placement||{};
+  const layers=[];
+  stage.classList.add('schedule-layered');
+  stage.style.setProperty('--layer-hero-left',placement.heroLeft||'40%');
+  stage.style.setProperty('--layer-floor',placement.heroBottom||'5%');
+  stage.style.setProperty('--layer-hero-scale',placement.heroScale||1);
+  stage.style.setProperty('--layer-npc-left',placement.npcLeft||'72%');
+  stage.style.setProperty('--layer-npc-scale',placement.npcScale||1);
+  stage.style.setProperty('--layer-prop-left',placement.propLeft||'52%');
+  stage.style.setProperty('--layer-prop-bottom',placement.propBottom||'7%');
   try{
-    for(const phase of phases){
-      veg.src=`${base}/${phase.veg}${v}`;
-      jumo.src=`${base}/${phase.jumo}${v}`;
-      for(let step=0;step<3;step+=1){
-        const f=tick%3;
-        seonImage.src=await outfitActivityFrame(frames[f],outfitId);
-        fire.src=`${base}/effects/fire-${f+1}.png${v}`;
-        tick+=1;
+    if(spec.backgroundOverlay)layers.push(make('background',spec.backgroundOverlay));
+    const npc=make('npc',npcFrames[0]);
+    const pattern=make(`pattern ${failed?'dedicated-failure':''}`,patternFrames[0]);
+    layers.push(npc,pattern);
+    const delay=[360,300,250][rank]||300;
+    for(let loop=0;loop<3;loop+=1){
+      for(let frame=0;frame<3;frame+=1){
+        seonImage.src=`${heroFrames[frame]}${v}`;
+        npc.src=`${base}/${npcFrames[frame]}${v}`;
+        pattern.src=`${base}/${patternFrames[frame]}${v}`;
         await schedulePlaybackDelay(delay);
       }
     }
   }finally{
-    [cauldron,jumo,veg,fire].forEach(el=>el.remove());
+    layers.forEach(layer=>layer.remove());
+    stage.classList.remove('schedule-layered');
+    ['--layer-hero-left','--layer-floor','--layer-hero-scale','--layer-npc-left','--layer-npc-scale','--layer-prop-left','--layer-prop-bottom'].forEach(name=>stage.style.removeProperty(name));
   }
 }
 function conditionEvent(stress, dayIndex){
@@ -900,7 +924,7 @@ const actions = [
 actions.forEach(item=>{if(item.change)item.change=canonicalizeChange(item.change);});
 const activityRequirements={reading:['지능',50],arithmetic:['센스',50],manners:['예절',50],painting:['감수성',150],music:['기품',150],dance:['민첩',150],swordsmanship:['힘',120],spellcraft:['지능·정신력',150],cooking:['센스',130],martial:['체력',150],classics:['지능',300],errand:['화술',40],sweeping:['힘',50],herbs:['센스',50],houseclean:['체력',50],farmwork:['힘',80],childcare:['감수성',80],kitchenhelp:['센스',80],woodwork:['힘',120],loomwork:['센스',120],masonry:['체력',140],clinichelp:['지능·센스',150],innhelp:['화술',130],sewing:['센스',140],copying:['지능',160],ferryhelp:['체력',150],merchanthelp:['화술·센스',150],accounting:['센스',300],tutoring:['지능',350],dungeon:['힘 또는 마력',120]};
 const meetsStatSet=set=>Object.entries(set||{}).every(([stat,value])=>Number(game[stat]||0)>=value);
-const actionUnlocked=action=>game.age>=Number(action.unlockAge||9)&&meetsStatSet(action.unlockStats)&&(!action.unlockAnyStats||action.unlockAnyStats.some(meetsStatSet))&&(!action.relationId||Boolean(relationRecord(action.relationId).dateUnlocked))&&(!action.holidayOnly||currentPhaseHoliday()?.name===action.holidayOnly);
+const actionUnlocked=action=>(lockedScheduleQaMode&&scheduleLayerIds.has(action.id))||(game.age>=Number(action.unlockAge||9)&&meetsStatSet(action.unlockStats)&&(!action.unlockAnyStats||action.unlockAnyStats.some(meetsStatSet))&&(!action.relationId||Boolean(relationRecord(action.relationId).dateUnlocked))&&(!action.holidayOnly||currentPhaseHoliday()?.name===action.holidayOnly));
 const newlyUnlockedActions=(previousAge,nextAge)=>actions.filter(action=>Number(action.unlockAge||9)>previousAge&&Number(action.unlockAge||9)<=nextAge&&meetsStatSet(action.unlockStats)&&(!action.unlockAnyStats||action.unlockAnyStats.some(meetsStatSet)));
 const activityRankNames=['견습','숙련','달인'];
 const activityRankThresholds=[0,10,30];
@@ -2487,6 +2511,13 @@ async function playWeeklySchedule(selected) {
     stageCharacter.className = `stage-character pixel-sprite ${presentation.motion}`;
   let dungeonReward={money:0,gear:null},dateRelation=null;
   let holidayContestResult=null;
+  let condition=null,outcome=null;
+  if(scheduleLayerIds.has(action.id)){
+    condition=conditionEvent(simulated.stress,index);
+    outcome=judgeActivityOutcome(action,simulated.stress);
+    if(condition==='mistake')outcome='mistake';
+    else if(condition==='drowsy'&&outcome!=='mistake')outcome='struggle';
+  }
   if(action.id==='shopping'){
       playMarketMusic();
       stageMap.src=backgrounds.market;
@@ -2540,15 +2571,18 @@ async function playWeeklySchedule(selected) {
       await schedulePlaybackDelay(1250);
       record.affinity=Math.min(100,record.affinity+12);record.lastMetAt=game.currentDate||null;record.relationship=record.affinity>=80?'연인':record.affinity>=60?'특별한 인연':'친구';
       stageCharacter.hidden=false;stageProps.hidden=false;
-    }else if(action.id==='kitchenhelp'){stageNpc.hidden=true;stageProps.hidden=true;await playKitchenhelpScene(stageCharacterImage,dailyOutfit,currentMasteryRank);}else await animateActivitySprite(stageCharacterImage,presentation.motion,restActivity||presentation.activity,stageNpcImage,presentation.npc,dailyOutfit,currentMasteryRank);
+    }else if(scheduleLayerIds.has(action.id)){
+      stageNpc.hidden=true;stageProps.hidden=true;
+      await playScheduleLayerScene(action.id,stageCharacterImage,currentMasteryRank,outcome,index);
+    }else await animateActivitySprite(stageCharacterImage,presentation.motion,restActivity||presentation.activity,stageNpcImage,presentation.npc,dailyOutfit,currentMasteryRank);
     const guaranteedSuccess=['rest','freeTime','vacation','dungeon','holiday-chuseok'].includes(action.id)||action.special==='date';
-    const condition=['shopping','rest','freeTime','vacation','dungeon','holiday-chuseok'].includes(action.id)||action.special==='date'?null:conditionEvent(simulated.stress,index);
-    let outcome=judgeActivityOutcome(action,simulated.stress);
+    if(condition===null&&!['shopping','rest','freeTime','vacation','dungeon','holiday-chuseok'].includes(action.id)&&!action.special)condition=conditionEvent(simulated.stress,index);
+    if(outcome===null)outcome=judgeActivityOutcome(action,simulated.stress);
     if(action.id==='holiday-chuseok')outcome='success';
     if(action.id==='dungeon')outcome=dungeonReward.money>=140?'perfect':dungeonReward.money>0?'normal':'struggle';
     if(!guaranteedSuccess&&condition==='mistake')outcome='mistake';
     else if(!guaranteedSuccess&&condition==='drowsy'&&outcome!=='mistake')outcome='struggle';
-    if(!guaranteedSuccess&&(outcome==='mistake'||outcome==='struggle')&&action.id!=='shopping'){
+    if(!guaranteedSuccess&&(outcome==='mistake'||outcome==='struggle')&&action.id!=='shopping'&&!scheduleLayerIds.has(action.id)){
       await animateActionStumble(stageCharacterImage,outcome);
     }
     const resolvedChange=phaseDailyChange(freeTimeVariant?{...freeTimeVariant.change}:resolvedActivityChange(action,outcome));

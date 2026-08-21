@@ -287,3 +287,10 @@
 
 - 홈 화면의 `loadStatus` 출력 요소를 제거했다.
 - 이미지 로딩에 따른 캐릭터 표시·대체 처리는 기존 `updateImageState`로 유지했다.
+# 2026-08-21 · 잠금 일정 전체 레이어 연결
+
+- 인계 문서 `docs/HANDOFF_CODEX_SEONHWA_SCHEDULE_LAYERS_2026-08-21.md`는 저장소와 상위 Codex 폴더에서 발견되지 않았습니다. 사용자 제공 핵심 규칙과 `manifest.json`, `docs/inventory.json`, `docs/verification.json`을 기준으로 구현했습니다.
+- 기존 주방보조 전용 6레이어 함수를 제거하고 22종 공통 manifest 렌더러로 교체했습니다.
+- 신규 레이어 PNG 352개를 검사해 RGBA·투명 픽셀을 확인했고, 로컬 HTTP HEAD 검사에서 전부 200을 확인했습니다.
+- 아이돌보기 NPC 3장은 서로 다른 SHA-256 해시를 확인했습니다.
+- 모바일 390×844 QA 모드에서 교육 8종·아르바이트 14종 노출과 회화 일정 실행·종료 후 레이어 정리를 확인했습니다.

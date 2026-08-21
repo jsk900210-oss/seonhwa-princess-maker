@@ -1481,3 +1481,10 @@ python tools/verify_assets.py
 - 일정 실행 중 `1배속 / 1.5배속 / 2배속`을 즉시 전환할 수 있습니다.
 - 일정 카드에 교육 비용·아르바이트 일당·무료 여부를 다시 표시합니다.
 - 자유행동을 가로형 저잣거리 동선으로 옮기고 주막 간식, 장신구 구매, 노점 먹거리 행동과 소액 지출을 연결했습니다.
+# 잠금 일정 레이어 QA (v0.63.77)
+
+- 잠금 교육 8종과 잠금 아르바이트 14종은 `manifest.json`을 읽는 공통 레이어 렌더러로 재생됩니다.
+- 선화 캐릭터는 기존 `schedule-actions/*-pixel-1~3.png`만 사용합니다. NPC, 배경 오버레이, 성공/실패 소품·효과만 `assets/schedule-layers/`에서 겹칩니다.
+- 애니메이션은 모든 구성요소가 `1→2→3` 순서로 반복됩니다.
+- QA 즉시 해금: 로컬 주소 끝에 `?qaSchedules`를 붙입니다. 예: `src/index.html?qaSchedules`.
+- 정적 검증: `node tools/test_locked_schedule_layers.mjs`.

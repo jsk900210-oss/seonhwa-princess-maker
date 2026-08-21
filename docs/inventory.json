@@ -1,0 +1,325 @@
+[
+  {
+    "id": "painting",
+    "name": "회화 배우기",
+    "category": "교육",
+    "unlockAge": 13,
+    "unlockStats": null,
+    "pngCount": 16,
+    "existingHeroFrames": [
+      "../assets/characters/seonhwa/schedule-actions/calligraphy-pixel-1.png",
+      "../assets/characters/seonhwa/schedule-actions/calligraphy-pixel-2.png",
+      "../assets/characters/seonhwa/schedule-actions/calligraphy-pixel-3.png"
+    ],
+    "existingBackground": "../assets/backgrounds/phase-scenes/painting.webp"
+  },
+  {
+    "id": "music",
+    "name": "악기 배우기",
+    "category": "교육",
+    "unlockAge": 13,
+    "unlockStats": null,
+    "pngCount": 16,
+    "existingHeroFrames": [
+      "../assets/characters/seonhwa/schedule-actions/calligraphy-pixel-1.png",
+      "../assets/characters/seonhwa/schedule-actions/calligraphy-pixel-2.png",
+      "../assets/characters/seonhwa/schedule-actions/calligraphy-pixel-3.png"
+    ],
+    "existingBackground": "../assets/backgrounds/phase-scenes/music.webp"
+  },
+  {
+    "id": "dance",
+    "name": "전통 춤사위",
+    "category": "교육",
+    "unlockAge": 13,
+    "unlockStats": null,
+    "pngCount": 16,
+    "existingHeroFrames": [
+      "../assets/characters/seonhwa/schedule-actions/manners-pixel-1.png",
+      "../assets/characters/seonhwa/schedule-actions/manners-pixel-2.png",
+      "../assets/characters/seonhwa/schedule-actions/manners-pixel-3.png"
+    ],
+    "existingBackground": "../assets/backgrounds/phase-scenes/dance.webp"
+  },
+  {
+    "id": "swordsmanship",
+    "name": "검술 수련",
+    "category": "교육",
+    "unlockAge": 13,
+    "unlockStats": {
+      "strength": 120
+    },
+    "pngCount": 16,
+    "existingHeroFrames": [
+      "../assets/characters/seonhwa/schedule-actions/manners-pixel-1.png",
+      "../assets/characters/seonhwa/schedule-actions/manners-pixel-2.png",
+      "../assets/characters/seonhwa/schedule-actions/manners-pixel-3.png"
+    ],
+    "existingBackground": "../assets/backgrounds/phase-scenes/martial.webp"
+  },
+  {
+    "id": "spellcraft",
+    "name": "술법 수련",
+    "category": "교육",
+    "unlockAge": 13,
+    "unlockStats": {
+      "intelligence": 150,
+      "mentality": 100
+    },
+    "pngCount": 16,
+    "existingHeroFrames": [
+      "../assets/characters/seonhwa/schedule-actions/calligraphy-pixel-1.png",
+      "../assets/characters/seonhwa/schedule-actions/calligraphy-pixel-2.png",
+      "../assets/characters/seonhwa/schedule-actions/calligraphy-pixel-3.png"
+    ],
+    "existingBackground": "../assets/backgrounds/phase-scenes/magic.webp"
+  },
+  {
+    "id": "cooking",
+    "name": "향토 음식 익히기",
+    "category": "교육",
+    "unlockAge": 13,
+    "unlockStats": null,
+    "pngCount": 16,
+    "existingHeroFrames": [
+      "../assets/characters/seonhwa/schedule-actions/arithmetic-pixel-1.png",
+      "../assets/characters/seonhwa/schedule-actions/arithmetic-pixel-2.png",
+      "../assets/characters/seonhwa/schedule-actions/arithmetic-pixel-3.png"
+    ],
+    "existingBackground": "../assets/backgrounds/phase-scenes/kitchen.webp"
+  },
+  {
+    "id": "martial",
+    "name": "무예 수련",
+    "category": "교육",
+    "unlockAge": 13,
+    "unlockStats": null,
+    "pngCount": 16,
+    "existingHeroFrames": [
+      "../assets/characters/seonhwa/schedule-actions/manners-pixel-1.png",
+      "../assets/characters/seonhwa/schedule-actions/manners-pixel-2.png",
+      "../assets/characters/seonhwa/schedule-actions/manners-pixel-3.png"
+    ],
+    "existingBackground": "../assets/backgrounds/phase-scenes/martial.webp"
+  },
+  {
+    "id": "classics",
+    "name": "경전 심화",
+    "category": "교육",
+    "unlockAge": 16,
+    "unlockStats": null,
+    "pngCount": 16,
+    "existingHeroFrames": [
+      "../assets/characters/seonhwa/schedule-actions/calligraphy-pixel-1.png",
+      "../assets/characters/seonhwa/schedule-actions/calligraphy-pixel-2.png",
+      "../assets/characters/seonhwa/schedule-actions/calligraphy-pixel-3.png"
+    ],
+    "existingBackground": "../assets/backgrounds/phase-scenes/study.webp"
+  },
+  {
+    "id": "farmwork",
+    "name": "농가 일손 돕기",
+    "category": "아르바이트",
+    "unlockAge": 10,
+    "unlockStats": null,
+    "pngCount": 16,
+    "existingHeroFrames": [
+      "../assets/characters/seonhwa/schedule-actions/farmwork-pixel-1.png",
+      "../assets/characters/seonhwa/schedule-actions/farmwork-pixel-2.png",
+      "../assets/characters/seonhwa/schedule-actions/farmwork-pixel-3.png"
+    ],
+    "existingBackground": "../assets/backgrounds/phase-scenes/farm.webp"
+  },
+  {
+    "id": "childcare",
+    "name": "아이 돌보기",
+    "category": "아르바이트",
+    "unlockAge": 10,
+    "unlockStats": null,
+    "pngCount": 16,
+    "existingHeroFrames": [
+      "../assets/characters/seonhwa/schedule-actions/childcare-pixel-1.png",
+      "../assets/characters/seonhwa/schedule-actions/childcare-pixel-2.png",
+      "../assets/characters/seonhwa/schedule-actions/childcare-pixel-3.png"
+    ],
+    "existingBackground": "../assets/backgrounds/phase-scenes/childcare.webp"
+  },
+  {
+    "id": "kitchenhelp",
+    "name": "주방 보조",
+    "category": "아르바이트",
+    "unlockAge": 10,
+    "unlockStats": null,
+    "pngCount": 16,
+    "existingHeroFrames": [
+      "../assets/characters/seonhwa/schedule-actions/kitchenhelp-pixel-1.png",
+      "../assets/characters/seonhwa/schedule-actions/kitchenhelp-pixel-2.png",
+      "../assets/characters/seonhwa/schedule-actions/kitchenhelp-pixel-3.png"
+    ],
+    "existingBackground": "../assets/backgrounds/phase-scenes/kitchen.webp"
+  },
+  {
+    "id": "woodwork",
+    "name": "목공소 심부름",
+    "category": "아르바이트",
+    "unlockAge": 11,
+    "unlockStats": null,
+    "pngCount": 16,
+    "existingHeroFrames": [
+      "../assets/characters/seonhwa/schedule-actions/woodwork-pixel-1.png",
+      "../assets/characters/seonhwa/schedule-actions/woodwork-pixel-2.png",
+      "../assets/characters/seonhwa/schedule-actions/woodwork-pixel-3.png"
+    ],
+    "existingBackground": "../assets/backgrounds/phase-scenes/woodwork.webp"
+  },
+  {
+    "id": "loomwork",
+    "name": "베틀방 돕기",
+    "category": "아르바이트",
+    "unlockAge": 11,
+    "unlockStats": null,
+    "pngCount": 16,
+    "existingHeroFrames": [
+      "../assets/characters/seonhwa/schedule-actions/loomwork-pixel-1.png",
+      "../assets/characters/seonhwa/schedule-actions/loomwork-pixel-2.png",
+      "../assets/characters/seonhwa/schedule-actions/loomwork-pixel-3.png"
+    ],
+    "existingBackground": "../assets/backgrounds/phase-scenes/loom.webp"
+  },
+  {
+    "id": "masonry",
+    "name": "기와·흙벽 보조",
+    "category": "아르바이트",
+    "unlockAge": 12,
+    "unlockStats": null,
+    "pngCount": 16,
+    "existingHeroFrames": [
+      "../assets/characters/seonhwa/schedule-actions/masonry-pixel-1.png",
+      "../assets/characters/seonhwa/schedule-actions/masonry-pixel-2.png",
+      "../assets/characters/seonhwa/schedule-actions/masonry-pixel-3.png"
+    ],
+    "existingBackground": "../assets/backgrounds/phase-scenes/woodwork.webp"
+  },
+  {
+    "id": "clinichelp",
+    "name": "약방 견습",
+    "category": "아르바이트",
+    "unlockAge": 12,
+    "unlockStats": {
+      "intelligence": 150,
+      "sense": 100
+    },
+    "pngCount": 16,
+    "existingHeroFrames": [
+      "../assets/characters/seonhwa/schedule-actions/clinichelp-pixel-1.png",
+      "../assets/characters/seonhwa/schedule-actions/clinichelp-pixel-2.png",
+      "../assets/characters/seonhwa/schedule-actions/clinichelp-pixel-3.png"
+    ],
+    "existingBackground": "../assets/backgrounds/phase-scenes/clinic.webp"
+  },
+  {
+    "id": "innhelp",
+    "name": "주막 돕기",
+    "category": "아르바이트",
+    "unlockAge": 13,
+    "unlockStats": null,
+    "pngCount": 16,
+    "existingHeroFrames": [
+      "../assets/characters/seonhwa/schedule-actions/merchanthelp-pixel-1.png",
+      "../assets/characters/seonhwa/schedule-actions/merchanthelp-pixel-2.png",
+      "../assets/characters/seonhwa/schedule-actions/merchanthelp-pixel-3.png"
+    ],
+    "existingBackground": "../assets/backgrounds/pixel-activities/close/market-errand-v2.webp"
+  },
+  {
+    "id": "sewing",
+    "name": "바느질 돕기",
+    "category": "아르바이트",
+    "unlockAge": 13,
+    "unlockStats": null,
+    "pngCount": 16,
+    "existingHeroFrames": [
+      "../assets/characters/seonhwa/schedule-actions/loomwork-pixel-1.png",
+      "../assets/characters/seonhwa/schedule-actions/loomwork-pixel-2.png",
+      "../assets/characters/seonhwa/schedule-actions/loomwork-pixel-3.png"
+    ],
+    "existingBackground": "../assets/backgrounds/pixel-activities/close/rest-room.webp"
+  },
+  {
+    "id": "copying",
+    "name": "서책 필사",
+    "category": "아르바이트",
+    "unlockAge": 13,
+    "unlockStats": null,
+    "pngCount": 16,
+    "existingHeroFrames": [
+      "../assets/characters/seonhwa/schedule-actions/calligraphy-pixel-1.png",
+      "../assets/characters/seonhwa/schedule-actions/calligraphy-pixel-2.png",
+      "../assets/characters/seonhwa/schedule-actions/calligraphy-pixel-3.png"
+    ],
+    "existingBackground": "../assets/backgrounds/pixel-activities/close/study-room-clear.webp"
+  },
+  {
+    "id": "ferryhelp",
+    "name": "나루터 짐 정리",
+    "category": "아르바이트",
+    "unlockAge": 14,
+    "unlockStats": null,
+    "pngCount": 16,
+    "existingHeroFrames": [
+      "../assets/characters/seonhwa/schedule-actions/ferryhelp-pixel-1.png",
+      "../assets/characters/seonhwa/schedule-actions/ferryhelp-pixel-2.png",
+      "../assets/characters/seonhwa/schedule-actions/ferryhelp-pixel-3.png"
+    ],
+    "existingBackground": "../assets/backgrounds/phase-scenes/ferry.webp"
+  },
+  {
+    "id": "merchanthelp",
+    "name": "상점 판매 보조",
+    "category": "아르바이트",
+    "unlockAge": 14,
+    "unlockStats": {
+      "speech": 150,
+      "sense": 150
+    },
+    "pngCount": 16,
+    "existingHeroFrames": [
+      "../assets/characters/seonhwa/schedule-actions/merchanthelp-pixel-1.png",
+      "../assets/characters/seonhwa/schedule-actions/merchanthelp-pixel-2.png",
+      "../assets/characters/seonhwa/schedule-actions/merchanthelp-pixel-3.png"
+    ],
+    "existingBackground": "../assets/backgrounds/phase-scenes/merchant.webp"
+  },
+  {
+    "id": "accounting",
+    "name": "상단 장부 정리",
+    "category": "아르바이트",
+    "unlockAge": 16,
+    "unlockStats": null,
+    "pngCount": 16,
+    "existingHeroFrames": [
+      "../assets/characters/seonhwa/schedule-actions/arithmetic-pixel-1.png",
+      "../assets/characters/seonhwa/schedule-actions/arithmetic-pixel-2.png",
+      "../assets/characters/seonhwa/schedule-actions/arithmetic-pixel-3.png"
+    ],
+    "existingBackground": "../assets/backgrounds/pixel-activities/close/arithmetic-room.webp"
+  },
+  {
+    "id": "tutoring",
+    "name": "학동 가르치기",
+    "category": "아르바이트",
+    "unlockAge": 16,
+    "unlockStats": {
+      "intelligence": 350,
+      "manners": 220,
+      "speech": 180
+    },
+    "pngCount": 16,
+    "existingHeroFrames": [
+      "../assets/characters/seonhwa/schedule-actions/calligraphy-pixel-1.png",
+      "../assets/characters/seonhwa/schedule-actions/calligraphy-pixel-2.png",
+      "../assets/characters/seonhwa/schedule-actions/calligraphy-pixel-3.png"
+    ],
+    "existingBackground": "../assets/backgrounds/pixel-activities/close/study-room-clear.webp"
+  }
+]

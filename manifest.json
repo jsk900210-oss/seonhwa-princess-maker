@@ -1,0 +1,1154 @@
+{
+  "pack": "seonhwa-locked-schedules-complete-v1",
+  "scope": "현재 코드에 등록된 잠금 교육 8종 + 잠금 아르바이트 14종 전체",
+  "heroPolicy": "선화 이미지는 생성·교체하지 않는다. manifest의 existingHeroFrames만 사용한다.",
+  "animation": {
+    "sequence": [
+      1,
+      2,
+      3
+    ],
+    "loop": "1→2→3 반복",
+    "forbiddenSequence": "1→2→3→2→1"
+  },
+  "canvases": {
+    "npc": [
+      320,
+      320
+    ],
+    "pattern": [
+      192,
+      192
+    ],
+    "backgroundOverlay": [
+      384,
+      256
+    ]
+  },
+  "layerOrder": [
+    "existing-background",
+    "background-overlay",
+    "rear-props",
+    "npc",
+    "existing-seonhwa",
+    "front-pattern",
+    "effects"
+  ],
+  "schedules": {
+    "painting": {
+      "nameKo": "회화 배우기",
+      "category": "교육",
+      "unlockAge": 13,
+      "unlockStats": null,
+      "existingHeroFrames": [
+        "../assets/characters/seonhwa/schedule-actions/calligraphy-pixel-1.png",
+        "../assets/characters/seonhwa/schedule-actions/calligraphy-pixel-2.png",
+        "../assets/characters/seonhwa/schedule-actions/calligraphy-pixel-3.png"
+      ],
+      "existingBackground": "../assets/backgrounds/phase-scenes/painting.webp",
+      "backgroundOverlay": "background-overlay/painting-background-overlay.png",
+      "npc": [
+        "npc/painting-1.png",
+        "npc/painting-2.png",
+        "npc/painting-3.png"
+      ],
+      "patterns": {
+        "success-a": [
+          "success-a/painting-brush-1.png",
+          "success-a/painting-brush-2.png",
+          "success-a/painting-brush-3.png"
+        ],
+        "success-b": [
+          "success-b/painting-spark-1.png",
+          "success-b/painting-spark-2.png",
+          "success-b/painting-spark-3.png"
+        ],
+        "fail-a": [
+          "fail-a/ink-spill-1.png",
+          "fail-a/ink-spill-2.png",
+          "fail-a/ink-spill-3.png"
+        ],
+        "fail-b": [
+          "fail-b/smudged-paper-1.png",
+          "fail-b/smudged-paper-2.png",
+          "fail-b/smudged-paper-3.png"
+        ]
+      },
+      "placement": {
+        "heroLeft": "39%",
+        "heroBottom": "5%",
+        "heroScale": 1.22,
+        "npcLeft": "73%",
+        "npcBottom": "5%",
+        "npcScale": 0.96,
+        "propLeft": "54%",
+        "propBottom": "7%"
+      }
+    },
+    "music": {
+      "nameKo": "악기 배우기",
+      "category": "교육",
+      "unlockAge": 13,
+      "unlockStats": null,
+      "existingHeroFrames": [
+        "../assets/characters/seonhwa/schedule-actions/calligraphy-pixel-1.png",
+        "../assets/characters/seonhwa/schedule-actions/calligraphy-pixel-2.png",
+        "../assets/characters/seonhwa/schedule-actions/calligraphy-pixel-3.png"
+      ],
+      "existingBackground": "../assets/backgrounds/phase-scenes/music.webp",
+      "backgroundOverlay": "background-overlay/music-background-overlay.png",
+      "npc": [
+        "npc/music-1.png",
+        "npc/music-2.png",
+        "npc/music-3.png"
+      ],
+      "patterns": {
+        "success-a": [
+          "success-a/instrument-string-1.png",
+          "success-a/instrument-string-2.png",
+          "success-a/instrument-string-3.png"
+        ],
+        "success-b": [
+          "success-b/drum-note-1.png",
+          "success-b/drum-note-2.png",
+          "success-b/drum-note-3.png"
+        ],
+        "fail-a": [
+          "fail-a/broken-string-1.png",
+          "fail-a/broken-string-2.png",
+          "fail-a/broken-string-3.png"
+        ],
+        "fail-b": [
+          "fail-b/dropped-pick-1.png",
+          "fail-b/dropped-pick-2.png",
+          "fail-b/dropped-pick-3.png"
+        ]
+      },
+      "placement": {
+        "heroLeft": "39%",
+        "heroBottom": "5%",
+        "heroScale": 1.22,
+        "npcLeft": "73%",
+        "npcBottom": "5%",
+        "npcScale": 0.96,
+        "propLeft": "54%",
+        "propBottom": "7%"
+      }
+    },
+    "dance": {
+      "nameKo": "전통 춤사위",
+      "category": "교육",
+      "unlockAge": 13,
+      "unlockStats": null,
+      "existingHeroFrames": [
+        "../assets/characters/seonhwa/schedule-actions/manners-pixel-1.png",
+        "../assets/characters/seonhwa/schedule-actions/manners-pixel-2.png",
+        "../assets/characters/seonhwa/schedule-actions/manners-pixel-3.png"
+      ],
+      "existingBackground": "../assets/backgrounds/phase-scenes/dance.webp",
+      "backgroundOverlay": "background-overlay/dance-background-overlay.png",
+      "npc": [
+        "npc/dance-1.png",
+        "npc/dance-2.png",
+        "npc/dance-3.png"
+      ],
+      "patterns": {
+        "success-a": [
+          "success-a/ribbon-swirl-1.png",
+          "success-a/ribbon-swirl-2.png",
+          "success-a/ribbon-swirl-3.png"
+        ],
+        "success-b": [
+          "success-b/fan-petals-1.png",
+          "success-b/fan-petals-2.png",
+          "success-b/fan-petals-3.png"
+        ],
+        "fail-a": [
+          "fail-a/tangled-ribbon-1.png",
+          "fail-a/tangled-ribbon-2.png",
+          "fail-a/tangled-ribbon-3.png"
+        ],
+        "fail-b": [
+          "fail-b/stumble-dust-1.png",
+          "fail-b/stumble-dust-2.png",
+          "fail-b/stumble-dust-3.png"
+        ]
+      },
+      "placement": {
+        "heroLeft": "40%",
+        "heroBottom": "4%",
+        "heroScale": 1.15,
+        "npcLeft": "72%",
+        "npcBottom": "5%",
+        "npcScale": 0.96,
+        "propLeft": "52%",
+        "propBottom": "6%"
+      }
+    },
+    "swordsmanship": {
+      "nameKo": "검술 수련",
+      "category": "교육",
+      "unlockAge": 13,
+      "unlockStats": {
+        "strength": 120
+      },
+      "existingHeroFrames": [
+        "../assets/characters/seonhwa/schedule-actions/manners-pixel-1.png",
+        "../assets/characters/seonhwa/schedule-actions/manners-pixel-2.png",
+        "../assets/characters/seonhwa/schedule-actions/manners-pixel-3.png"
+      ],
+      "existingBackground": "../assets/backgrounds/phase-scenes/martial.webp",
+      "backgroundOverlay": "background-overlay/swordsmanship-background-overlay.png",
+      "npc": [
+        "npc/swordsmanship-1.png",
+        "npc/swordsmanship-2.png",
+        "npc/swordsmanship-3.png"
+      ],
+      "patterns": {
+        "success-a": [
+          "success-a/sword-slash-1.png",
+          "success-a/sword-slash-2.png",
+          "success-a/sword-slash-3.png"
+        ],
+        "success-b": [
+          "success-b/target-hit-1.png",
+          "success-b/target-hit-2.png",
+          "success-b/target-hit-3.png"
+        ],
+        "fail-a": [
+          "fail-a/dropped-sword-1.png",
+          "fail-a/dropped-sword-2.png",
+          "fail-a/dropped-sword-3.png"
+        ],
+        "fail-b": [
+          "fail-b/broken-target-1.png",
+          "fail-b/broken-target-2.png",
+          "fail-b/broken-target-3.png"
+        ]
+      },
+      "placement": {
+        "heroLeft": "40%",
+        "heroBottom": "4%",
+        "heroScale": 1.15,
+        "npcLeft": "72%",
+        "npcBottom": "5%",
+        "npcScale": 0.96,
+        "propLeft": "52%",
+        "propBottom": "6%"
+      }
+    },
+    "spellcraft": {
+      "nameKo": "술법 수련",
+      "category": "교육",
+      "unlockAge": 13,
+      "unlockStats": {
+        "intelligence": 150,
+        "mentality": 100
+      },
+      "existingHeroFrames": [
+        "../assets/characters/seonhwa/schedule-actions/calligraphy-pixel-1.png",
+        "../assets/characters/seonhwa/schedule-actions/calligraphy-pixel-2.png",
+        "../assets/characters/seonhwa/schedule-actions/calligraphy-pixel-3.png"
+      ],
+      "existingBackground": "../assets/backgrounds/phase-scenes/magic.webp",
+      "backgroundOverlay": "background-overlay/spellcraft-background-overlay.png",
+      "npc": [
+        "npc/spellcraft-1.png",
+        "npc/spellcraft-2.png",
+        "npc/spellcraft-3.png"
+      ],
+      "patterns": {
+        "success-a": [
+          "success-a/magic-seal-1.png",
+          "success-a/magic-seal-2.png",
+          "success-a/magic-seal-3.png"
+        ],
+        "success-b": [
+          "success-b/magic-orb-1.png",
+          "success-b/magic-orb-2.png",
+          "success-b/magic-orb-3.png"
+        ],
+        "fail-a": [
+          "fail-a/smoke-puff-1.png",
+          "fail-a/smoke-puff-2.png",
+          "fail-a/smoke-puff-3.png"
+        ],
+        "fail-b": [
+          "fail-b/magic-backlash-1.png",
+          "fail-b/magic-backlash-2.png",
+          "fail-b/magic-backlash-3.png"
+        ]
+      },
+      "placement": {
+        "heroLeft": "39%",
+        "heroBottom": "5%",
+        "heroScale": 1.22,
+        "npcLeft": "73%",
+        "npcBottom": "5%",
+        "npcScale": 0.96,
+        "propLeft": "54%",
+        "propBottom": "7%"
+      }
+    },
+    "cooking": {
+      "nameKo": "향토 음식 익히기",
+      "category": "교육",
+      "unlockAge": 13,
+      "unlockStats": null,
+      "existingHeroFrames": [
+        "../assets/characters/seonhwa/schedule-actions/arithmetic-pixel-1.png",
+        "../assets/characters/seonhwa/schedule-actions/arithmetic-pixel-2.png",
+        "../assets/characters/seonhwa/schedule-actions/arithmetic-pixel-3.png"
+      ],
+      "existingBackground": "../assets/backgrounds/phase-scenes/kitchen.webp",
+      "backgroundOverlay": "background-overlay/cooking-background-overlay.png",
+      "npc": [
+        "npc/cooking-1.png",
+        "npc/cooking-2.png",
+        "npc/cooking-3.png"
+      ],
+      "patterns": {
+        "success-a": [
+          "success-a/chop-board-1.png",
+          "success-a/chop-board-2.png",
+          "success-a/chop-board-3.png"
+        ],
+        "success-b": [
+          "success-b/boiling-pot-1.png",
+          "success-b/boiling-pot-2.png",
+          "success-b/boiling-pot-3.png"
+        ],
+        "fail-a": [
+          "fail-a/food-spill-1.png",
+          "fail-a/food-spill-2.png",
+          "fail-a/food-spill-3.png"
+        ],
+        "fail-b": [
+          "fail-b/burnt-smoke-1.png",
+          "fail-b/burnt-smoke-2.png",
+          "fail-b/burnt-smoke-3.png"
+        ]
+      },
+      "placement": {
+        "heroLeft": "39%",
+        "heroBottom": "5%",
+        "heroScale": 1.22,
+        "npcLeft": "73%",
+        "npcBottom": "5%",
+        "npcScale": 0.96,
+        "propLeft": "54%",
+        "propBottom": "7%"
+      }
+    },
+    "martial": {
+      "nameKo": "무예 수련",
+      "category": "교육",
+      "unlockAge": 13,
+      "unlockStats": null,
+      "existingHeroFrames": [
+        "../assets/characters/seonhwa/schedule-actions/manners-pixel-1.png",
+        "../assets/characters/seonhwa/schedule-actions/manners-pixel-2.png",
+        "../assets/characters/seonhwa/schedule-actions/manners-pixel-3.png"
+      ],
+      "existingBackground": "../assets/backgrounds/phase-scenes/martial.webp",
+      "backgroundOverlay": "background-overlay/martial-background-overlay.png",
+      "npc": [
+        "npc/martial-1.png",
+        "npc/martial-2.png",
+        "npc/martial-3.png"
+      ],
+      "patterns": {
+        "success-a": [
+          "success-a/dummy-hit-1.png",
+          "success-a/dummy-hit-2.png",
+          "success-a/dummy-hit-3.png"
+        ],
+        "success-b": [
+          "success-b/staff-sweep-1.png",
+          "success-b/staff-sweep-2.png",
+          "success-b/staff-sweep-3.png"
+        ],
+        "fail-a": [
+          "fail-a/fallen-staff-1.png",
+          "fail-a/fallen-staff-2.png",
+          "fail-a/fallen-staff-3.png"
+        ],
+        "fail-b": [
+          "fail-b/impact-dust-1.png",
+          "fail-b/impact-dust-2.png",
+          "fail-b/impact-dust-3.png"
+        ]
+      },
+      "placement": {
+        "heroLeft": "40%",
+        "heroBottom": "4%",
+        "heroScale": 1.15,
+        "npcLeft": "72%",
+        "npcBottom": "5%",
+        "npcScale": 0.96,
+        "propLeft": "52%",
+        "propBottom": "6%"
+      }
+    },
+    "classics": {
+      "nameKo": "경전 심화",
+      "category": "교육",
+      "unlockAge": 16,
+      "unlockStats": null,
+      "existingHeroFrames": [
+        "../assets/characters/seonhwa/schedule-actions/calligraphy-pixel-1.png",
+        "../assets/characters/seonhwa/schedule-actions/calligraphy-pixel-2.png",
+        "../assets/characters/seonhwa/schedule-actions/calligraphy-pixel-3.png"
+      ],
+      "existingBackground": "../assets/backgrounds/phase-scenes/study.webp",
+      "backgroundOverlay": "background-overlay/classics-background-overlay.png",
+      "npc": [
+        "npc/classics-1.png",
+        "npc/classics-2.png",
+        "npc/classics-3.png"
+      ],
+      "patterns": {
+        "success-a": [
+          "success-a/scroll-pages-1.png",
+          "success-a/scroll-pages-2.png",
+          "success-a/scroll-pages-3.png"
+        ],
+        "success-b": [
+          "success-b/calligraphy-1.png",
+          "success-b/calligraphy-2.png",
+          "success-b/calligraphy-3.png"
+        ],
+        "fail-a": [
+          "fail-a/ink-blot-1.png",
+          "fail-a/ink-blot-2.png",
+          "fail-a/ink-blot-3.png"
+        ],
+        "fail-b": [
+          "fail-b/scattered-pages-1.png",
+          "fail-b/scattered-pages-2.png",
+          "fail-b/scattered-pages-3.png"
+        ]
+      },
+      "placement": {
+        "heroLeft": "39%",
+        "heroBottom": "5%",
+        "heroScale": 1.22,
+        "npcLeft": "73%",
+        "npcBottom": "5%",
+        "npcScale": 0.96,
+        "propLeft": "54%",
+        "propBottom": "7%"
+      }
+    },
+    "farmwork": {
+      "nameKo": "농가 일손 돕기",
+      "category": "아르바이트",
+      "unlockAge": 10,
+      "unlockStats": null,
+      "existingHeroFrames": [
+        "../assets/characters/seonhwa/schedule-actions/farmwork-pixel-1.png",
+        "../assets/characters/seonhwa/schedule-actions/farmwork-pixel-2.png",
+        "../assets/characters/seonhwa/schedule-actions/farmwork-pixel-3.png"
+      ],
+      "existingBackground": "../assets/backgrounds/phase-scenes/farm.webp",
+      "backgroundOverlay": "background-overlay/farmwork-background-overlay.png",
+      "npc": [
+        "npc/farmer-1.png",
+        "npc/farmer-2.png",
+        "npc/farmer-3.png"
+      ],
+      "patterns": {
+        "success-a": [
+          "success-a/crop-basket-1.png",
+          "success-a/crop-basket-2.png",
+          "success-a/crop-basket-3.png"
+        ],
+        "success-b": [
+          "success-b/chicken-1.png",
+          "success-b/chicken-2.png",
+          "success-b/chicken-3.png"
+        ],
+        "fail-a": [
+          "fail-a/feed-spill-1.png",
+          "fail-a/feed-spill-2.png",
+          "fail-a/feed-spill-3.png"
+        ],
+        "fail-b": [
+          "fail-b/mud-scatter-1.png",
+          "fail-b/mud-scatter-2.png",
+          "fail-b/mud-scatter-3.png"
+        ]
+      },
+      "placement": {
+        "heroLeft": "40%",
+        "heroBottom": "4%",
+        "heroScale": 1.15,
+        "npcLeft": "72%",
+        "npcBottom": "5%",
+        "npcScale": 0.96,
+        "propLeft": "52%",
+        "propBottom": "6%"
+      }
+    },
+    "childcare": {
+      "nameKo": "아이 돌보기",
+      "category": "아르바이트",
+      "unlockAge": 10,
+      "unlockStats": null,
+      "existingHeroFrames": [
+        "../assets/characters/seonhwa/schedule-actions/childcare-pixel-1.png",
+        "../assets/characters/seonhwa/schedule-actions/childcare-pixel-2.png",
+        "../assets/characters/seonhwa/schedule-actions/childcare-pixel-3.png"
+      ],
+      "existingBackground": "../assets/backgrounds/phase-scenes/childcare.webp",
+      "backgroundOverlay": "background-overlay/childcare-background-overlay.png",
+      "npc": [
+        "npc/child-1.png",
+        "npc/child-2.png",
+        "npc/child-3.png"
+      ],
+      "patterns": {
+        "success-a": [
+          "success-a/toy-play-1.png",
+          "success-a/toy-play-2.png",
+          "success-a/toy-play-3.png"
+        ],
+        "success-b": [
+          "success-b/calm-blanket-1.png",
+          "success-b/calm-blanket-2.png",
+          "success-b/calm-blanket-3.png"
+        ],
+        "fail-a": [
+          "fail-a/tears-1.png",
+          "fail-a/tears-2.png",
+          "fail-a/tears-3.png"
+        ],
+        "fail-b": [
+          "fail-b/toy-drop-1.png",
+          "fail-b/toy-drop-2.png",
+          "fail-b/toy-drop-3.png"
+        ]
+      },
+      "placement": {
+        "heroLeft": "46%",
+        "heroBottom": "5%",
+        "heroScale": 1.3,
+        "npcLeft": "29%",
+        "npcBottom": "5%",
+        "npcScale": 0.92,
+        "propLeft": "63%",
+        "propBottom": "7%"
+      }
+    },
+    "kitchenhelp": {
+      "nameKo": "주방 보조",
+      "category": "아르바이트",
+      "unlockAge": 10,
+      "unlockStats": null,
+      "existingHeroFrames": [
+        "../assets/characters/seonhwa/schedule-actions/kitchenhelp-pixel-1.png",
+        "../assets/characters/seonhwa/schedule-actions/kitchenhelp-pixel-2.png",
+        "../assets/characters/seonhwa/schedule-actions/kitchenhelp-pixel-3.png"
+      ],
+      "existingBackground": "../assets/backgrounds/phase-scenes/kitchen.webp",
+      "backgroundOverlay": "background-overlay/kitchenhelp-background-overlay.png",
+      "npc": [
+        "npc/jumo-1.png",
+        "npc/jumo-2.png",
+        "npc/jumo-3.png"
+      ],
+      "patterns": {
+        "success-a": [
+          "success-a/vegetable-prep-1.png",
+          "success-a/vegetable-prep-2.png",
+          "success-a/vegetable-prep-3.png"
+        ],
+        "success-b": [
+          "success-b/cauldron-care-1.png",
+          "success-b/cauldron-care-2.png",
+          "success-b/cauldron-care-3.png"
+        ],
+        "fail-a": [
+          "fail-a/dropped-vegetables-1.png",
+          "fail-a/dropped-vegetables-2.png",
+          "fail-a/dropped-vegetables-3.png"
+        ],
+        "fail-b": [
+          "fail-b/boil-over-1.png",
+          "fail-b/boil-over-2.png",
+          "fail-b/boil-over-3.png"
+        ]
+      },
+      "placement": {
+        "heroLeft": "42%",
+        "heroBottom": "5%",
+        "heroScale": 1.22,
+        "npcLeft": "72%",
+        "npcBottom": "5%",
+        "npcScale": 0.96,
+        "propLeft": "52%",
+        "propBottom": "7%"
+      }
+    },
+    "woodwork": {
+      "nameKo": "목공소 심부름",
+      "category": "아르바이트",
+      "unlockAge": 11,
+      "unlockStats": null,
+      "existingHeroFrames": [
+        "../assets/characters/seonhwa/schedule-actions/woodwork-pixel-1.png",
+        "../assets/characters/seonhwa/schedule-actions/woodwork-pixel-2.png",
+        "../assets/characters/seonhwa/schedule-actions/woodwork-pixel-3.png"
+      ],
+      "existingBackground": "../assets/backgrounds/phase-scenes/woodwork.webp",
+      "backgroundOverlay": "background-overlay/woodwork-background-overlay.png",
+      "npc": [
+        "npc/woodwork-1.png",
+        "npc/woodwork-2.png",
+        "npc/woodwork-3.png"
+      ],
+      "patterns": {
+        "success-a": [
+          "success-a/saw-plank-1.png",
+          "success-a/saw-plank-2.png",
+          "success-a/saw-plank-3.png"
+        ],
+        "success-b": [
+          "success-b/hammer-joint-1.png",
+          "success-b/hammer-joint-2.png",
+          "success-b/hammer-joint-3.png"
+        ],
+        "fail-a": [
+          "fail-a/splinters-1.png",
+          "fail-a/splinters-2.png",
+          "fail-a/splinters-3.png"
+        ],
+        "fail-b": [
+          "fail-b/dropped-plank-1.png",
+          "fail-b/dropped-plank-2.png",
+          "fail-b/dropped-plank-3.png"
+        ]
+      },
+      "placement": {
+        "heroLeft": "40%",
+        "heroBottom": "4%",
+        "heroScale": 1.15,
+        "npcLeft": "72%",
+        "npcBottom": "5%",
+        "npcScale": 0.96,
+        "propLeft": "52%",
+        "propBottom": "6%"
+      }
+    },
+    "loomwork": {
+      "nameKo": "베틀방 돕기",
+      "category": "아르바이트",
+      "unlockAge": 11,
+      "unlockStats": null,
+      "existingHeroFrames": [
+        "../assets/characters/seonhwa/schedule-actions/loomwork-pixel-1.png",
+        "../assets/characters/seonhwa/schedule-actions/loomwork-pixel-2.png",
+        "../assets/characters/seonhwa/schedule-actions/loomwork-pixel-3.png"
+      ],
+      "existingBackground": "../assets/backgrounds/phase-scenes/loom.webp",
+      "backgroundOverlay": "background-overlay/loomwork-background-overlay.png",
+      "npc": [
+        "npc/loomwork-1.png",
+        "npc/loomwork-2.png",
+        "npc/loomwork-3.png"
+      ],
+      "patterns": {
+        "success-a": [
+          "success-a/loom-shuttle-1.png",
+          "success-a/loom-shuttle-2.png",
+          "success-a/loom-shuttle-3.png"
+        ],
+        "success-b": [
+          "success-b/woven-cloth-1.png",
+          "success-b/woven-cloth-2.png",
+          "success-b/woven-cloth-3.png"
+        ],
+        "fail-a": [
+          "fail-a/tangled-yarn-1.png",
+          "fail-a/tangled-yarn-2.png",
+          "fail-a/tangled-yarn-3.png"
+        ],
+        "fail-b": [
+          "fail-b/broken-thread-1.png",
+          "fail-b/broken-thread-2.png",
+          "fail-b/broken-thread-3.png"
+        ]
+      },
+      "placement": {
+        "heroLeft": "39%",
+        "heroBottom": "5%",
+        "heroScale": 1.22,
+        "npcLeft": "73%",
+        "npcBottom": "5%",
+        "npcScale": 0.96,
+        "propLeft": "54%",
+        "propBottom": "7%"
+      }
+    },
+    "masonry": {
+      "nameKo": "기와·흙벽 보조",
+      "category": "아르바이트",
+      "unlockAge": 12,
+      "unlockStats": null,
+      "existingHeroFrames": [
+        "../assets/characters/seonhwa/schedule-actions/masonry-pixel-1.png",
+        "../assets/characters/seonhwa/schedule-actions/masonry-pixel-2.png",
+        "../assets/characters/seonhwa/schedule-actions/masonry-pixel-3.png"
+      ],
+      "existingBackground": "../assets/backgrounds/phase-scenes/woodwork.webp",
+      "backgroundOverlay": "background-overlay/masonry-background-overlay.png",
+      "npc": [
+        "npc/masonry-1.png",
+        "npc/masonry-2.png",
+        "npc/masonry-3.png"
+      ],
+      "patterns": {
+        "success-a": [
+          "success-a/brick-stack-1.png",
+          "success-a/brick-stack-2.png",
+          "success-a/brick-stack-3.png"
+        ],
+        "success-b": [
+          "success-b/plaster-wall-1.png",
+          "success-b/plaster-wall-2.png",
+          "success-b/plaster-wall-3.png"
+        ],
+        "fail-a": [
+          "fail-a/fallen-bricks-1.png",
+          "fail-a/fallen-bricks-2.png",
+          "fail-a/fallen-bricks-3.png"
+        ],
+        "fail-b": [
+          "fail-b/mud-spill-1.png",
+          "fail-b/mud-spill-2.png",
+          "fail-b/mud-spill-3.png"
+        ]
+      },
+      "placement": {
+        "heroLeft": "40%",
+        "heroBottom": "4%",
+        "heroScale": 1.15,
+        "npcLeft": "72%",
+        "npcBottom": "5%",
+        "npcScale": 0.96,
+        "propLeft": "52%",
+        "propBottom": "6%"
+      }
+    },
+    "clinichelp": {
+      "nameKo": "약방 견습",
+      "category": "아르바이트",
+      "unlockAge": 12,
+      "unlockStats": {
+        "intelligence": 150,
+        "sense": 100
+      },
+      "existingHeroFrames": [
+        "../assets/characters/seonhwa/schedule-actions/clinichelp-pixel-1.png",
+        "../assets/characters/seonhwa/schedule-actions/clinichelp-pixel-2.png",
+        "../assets/characters/seonhwa/schedule-actions/clinichelp-pixel-3.png"
+      ],
+      "existingBackground": "../assets/backgrounds/phase-scenes/clinic.webp",
+      "backgroundOverlay": "background-overlay/clinichelp-background-overlay.png",
+      "npc": [
+        "npc/clinichelp-1.png",
+        "npc/clinichelp-2.png",
+        "npc/clinichelp-3.png"
+      ],
+      "patterns": {
+        "success-a": [
+          "success-a/herb-sort-1.png",
+          "success-a/herb-sort-2.png",
+          "success-a/herb-sort-3.png"
+        ],
+        "success-b": [
+          "success-b/medicine-pot-1.png",
+          "success-b/medicine-pot-2.png",
+          "success-b/medicine-pot-3.png"
+        ],
+        "fail-a": [
+          "fail-a/herb-spill-1.png",
+          "fail-a/herb-spill-2.png",
+          "fail-a/herb-spill-3.png"
+        ],
+        "fail-b": [
+          "fail-b/medicine-overflow-1.png",
+          "fail-b/medicine-overflow-2.png",
+          "fail-b/medicine-overflow-3.png"
+        ]
+      },
+      "placement": {
+        "heroLeft": "39%",
+        "heroBottom": "5%",
+        "heroScale": 1.22,
+        "npcLeft": "73%",
+        "npcBottom": "5%",
+        "npcScale": 0.96,
+        "propLeft": "54%",
+        "propBottom": "7%"
+      }
+    },
+    "innhelp": {
+      "nameKo": "주막 돕기",
+      "category": "아르바이트",
+      "unlockAge": 13,
+      "unlockStats": null,
+      "existingHeroFrames": [
+        "../assets/characters/seonhwa/schedule-actions/merchanthelp-pixel-1.png",
+        "../assets/characters/seonhwa/schedule-actions/merchanthelp-pixel-2.png",
+        "../assets/characters/seonhwa/schedule-actions/merchanthelp-pixel-3.png"
+      ],
+      "existingBackground": "../assets/backgrounds/pixel-activities/close/market-errand-v2.webp",
+      "backgroundOverlay": "background-overlay/innhelp-background-overlay.png",
+      "npc": [
+        "npc/innhelp-1.png",
+        "npc/innhelp-2.png",
+        "npc/innhelp-3.png"
+      ],
+      "patterns": {
+        "success-a": [
+          "success-a/serving-tray-1.png",
+          "success-a/serving-tray-2.png",
+          "success-a/serving-tray-3.png"
+        ],
+        "success-b": [
+          "success-b/clear-table-1.png",
+          "success-b/clear-table-2.png",
+          "success-b/clear-table-3.png"
+        ],
+        "fail-a": [
+          "fail-a/broken-dishes-1.png",
+          "fail-a/broken-dishes-2.png",
+          "fail-a/broken-dishes-3.png"
+        ],
+        "fail-b": [
+          "fail-b/soup-spill-1.png",
+          "fail-b/soup-spill-2.png",
+          "fail-b/soup-spill-3.png"
+        ]
+      },
+      "placement": {
+        "heroLeft": "39%",
+        "heroBottom": "5%",
+        "heroScale": 1.18,
+        "npcLeft": "72%",
+        "npcBottom": "5%",
+        "npcScale": 0.96,
+        "propLeft": "52%",
+        "propBottom": "7%"
+      }
+    },
+    "sewing": {
+      "nameKo": "바느질 돕기",
+      "category": "아르바이트",
+      "unlockAge": 13,
+      "unlockStats": null,
+      "existingHeroFrames": [
+        "../assets/characters/seonhwa/schedule-actions/loomwork-pixel-1.png",
+        "../assets/characters/seonhwa/schedule-actions/loomwork-pixel-2.png",
+        "../assets/characters/seonhwa/schedule-actions/loomwork-pixel-3.png"
+      ],
+      "existingBackground": "../assets/backgrounds/pixel-activities/close/rest-room.webp",
+      "backgroundOverlay": "background-overlay/sewing-background-overlay.png",
+      "npc": [
+        "npc/sewing-1.png",
+        "npc/sewing-2.png",
+        "npc/sewing-3.png"
+      ],
+      "patterns": {
+        "success-a": [
+          "success-a/embroidery-hoop-1.png",
+          "success-a/embroidery-hoop-2.png",
+          "success-a/embroidery-hoop-3.png"
+        ],
+        "success-b": [
+          "success-b/folded-cloth-1.png",
+          "success-b/folded-cloth-2.png",
+          "success-b/folded-cloth-3.png"
+        ],
+        "fail-a": [
+          "fail-a/tangled-thread-1.png",
+          "fail-a/tangled-thread-2.png",
+          "fail-a/tangled-thread-3.png"
+        ],
+        "fail-b": [
+          "fail-b/needle-prick-1.png",
+          "fail-b/needle-prick-2.png",
+          "fail-b/needle-prick-3.png"
+        ]
+      },
+      "placement": {
+        "heroLeft": "39%",
+        "heroBottom": "5%",
+        "heroScale": 1.22,
+        "npcLeft": "73%",
+        "npcBottom": "5%",
+        "npcScale": 0.96,
+        "propLeft": "54%",
+        "propBottom": "7%"
+      }
+    },
+    "copying": {
+      "nameKo": "서책 필사",
+      "category": "아르바이트",
+      "unlockAge": 13,
+      "unlockStats": null,
+      "existingHeroFrames": [
+        "../assets/characters/seonhwa/schedule-actions/calligraphy-pixel-1.png",
+        "../assets/characters/seonhwa/schedule-actions/calligraphy-pixel-2.png",
+        "../assets/characters/seonhwa/schedule-actions/calligraphy-pixel-3.png"
+      ],
+      "existingBackground": "../assets/backgrounds/pixel-activities/close/study-room-clear.webp",
+      "backgroundOverlay": "background-overlay/copying-background-overlay.png",
+      "npc": [
+        "npc/copying-1.png",
+        "npc/copying-2.png",
+        "npc/copying-3.png"
+      ],
+      "patterns": {
+        "success-a": [
+          "success-a/copy-scroll-1.png",
+          "success-a/copy-scroll-2.png",
+          "success-a/copy-scroll-3.png"
+        ],
+        "success-b": [
+          "success-b/dry-pages-1.png",
+          "success-b/dry-pages-2.png",
+          "success-b/dry-pages-3.png"
+        ],
+        "fail-a": [
+          "fail-a/ink-spill-1.png",
+          "fail-a/ink-spill-2.png",
+          "fail-a/ink-spill-3.png"
+        ],
+        "fail-b": [
+          "fail-b/crumpled-pages-1.png",
+          "fail-b/crumpled-pages-2.png",
+          "fail-b/crumpled-pages-3.png"
+        ]
+      },
+      "placement": {
+        "heroLeft": "39%",
+        "heroBottom": "5%",
+        "heroScale": 1.22,
+        "npcLeft": "73%",
+        "npcBottom": "5%",
+        "npcScale": 0.96,
+        "propLeft": "54%",
+        "propBottom": "7%"
+      }
+    },
+    "ferryhelp": {
+      "nameKo": "나루터 짐 정리",
+      "category": "아르바이트",
+      "unlockAge": 14,
+      "unlockStats": null,
+      "existingHeroFrames": [
+        "../assets/characters/seonhwa/schedule-actions/ferryhelp-pixel-1.png",
+        "../assets/characters/seonhwa/schedule-actions/ferryhelp-pixel-2.png",
+        "../assets/characters/seonhwa/schedule-actions/ferryhelp-pixel-3.png"
+      ],
+      "existingBackground": "../assets/backgrounds/phase-scenes/ferry.webp",
+      "backgroundOverlay": "background-overlay/ferryhelp-background-overlay.png",
+      "npc": [
+        "npc/ferryhelp-1.png",
+        "npc/ferryhelp-2.png",
+        "npc/ferryhelp-3.png"
+      ],
+      "patterns": {
+        "success-a": [
+          "success-a/crate-carry-1.png",
+          "success-a/crate-carry-2.png",
+          "success-a/crate-carry-3.png"
+        ],
+        "success-b": [
+          "success-b/rope-tie-1.png",
+          "success-b/rope-tie-2.png",
+          "success-b/rope-tie-3.png"
+        ],
+        "fail-a": [
+          "fail-a/dropped-crate-1.png",
+          "fail-a/dropped-crate-2.png",
+          "fail-a/dropped-crate-3.png"
+        ],
+        "fail-b": [
+          "fail-b/water-splash-1.png",
+          "fail-b/water-splash-2.png",
+          "fail-b/water-splash-3.png"
+        ]
+      },
+      "placement": {
+        "heroLeft": "40%",
+        "heroBottom": "4%",
+        "heroScale": 1.15,
+        "npcLeft": "72%",
+        "npcBottom": "5%",
+        "npcScale": 0.96,
+        "propLeft": "52%",
+        "propBottom": "6%"
+      }
+    },
+    "merchanthelp": {
+      "nameKo": "상점 판매 보조",
+      "category": "아르바이트",
+      "unlockAge": 14,
+      "unlockStats": {
+        "speech": 150,
+        "sense": 150
+      },
+      "existingHeroFrames": [
+        "../assets/characters/seonhwa/schedule-actions/merchanthelp-pixel-1.png",
+        "../assets/characters/seonhwa/schedule-actions/merchanthelp-pixel-2.png",
+        "../assets/characters/seonhwa/schedule-actions/merchanthelp-pixel-3.png"
+      ],
+      "existingBackground": "../assets/backgrounds/phase-scenes/merchant.webp",
+      "backgroundOverlay": "background-overlay/merchanthelp-background-overlay.png",
+      "npc": [
+        "npc/merchanthelp-1.png",
+        "npc/merchanthelp-2.png",
+        "npc/merchanthelp-3.png"
+      ],
+      "patterns": {
+        "success-a": [
+          "success-a/goods-display-1.png",
+          "success-a/goods-display-2.png",
+          "success-a/goods-display-3.png"
+        ],
+        "success-b": [
+          "success-b/coin-exchange-1.png",
+          "success-b/coin-exchange-2.png",
+          "success-b/coin-exchange-3.png"
+        ],
+        "fail-a": [
+          "fail-a/toppled-goods-1.png",
+          "fail-a/toppled-goods-2.png",
+          "fail-a/toppled-goods-3.png"
+        ],
+        "fail-b": [
+          "fail-b/wrong-change-1.png",
+          "fail-b/wrong-change-2.png",
+          "fail-b/wrong-change-3.png"
+        ]
+      },
+      "placement": {
+        "heroLeft": "39%",
+        "heroBottom": "5%",
+        "heroScale": 1.18,
+        "npcLeft": "72%",
+        "npcBottom": "5%",
+        "npcScale": 0.96,
+        "propLeft": "52%",
+        "propBottom": "7%"
+      }
+    },
+    "accounting": {
+      "nameKo": "상단 장부 정리",
+      "category": "아르바이트",
+      "unlockAge": 16,
+      "unlockStats": null,
+      "existingHeroFrames": [
+        "../assets/characters/seonhwa/schedule-actions/arithmetic-pixel-1.png",
+        "../assets/characters/seonhwa/schedule-actions/arithmetic-pixel-2.png",
+        "../assets/characters/seonhwa/schedule-actions/arithmetic-pixel-3.png"
+      ],
+      "existingBackground": "../assets/backgrounds/pixel-activities/close/arithmetic-room.webp",
+      "backgroundOverlay": "background-overlay/accounting-background-overlay.png",
+      "npc": [
+        "npc/accounting-1.png",
+        "npc/accounting-2.png",
+        "npc/accounting-3.png"
+      ],
+      "patterns": {
+        "success-a": [
+          "success-a/ledger-1.png",
+          "success-a/ledger-2.png",
+          "success-a/ledger-3.png"
+        ],
+        "success-b": [
+          "success-b/abacus-1.png",
+          "success-b/abacus-2.png",
+          "success-b/abacus-3.png"
+        ],
+        "fail-a": [
+          "fail-a/ink-blot-1.png",
+          "fail-a/ink-blot-2.png",
+          "fail-a/ink-blot-3.png"
+        ],
+        "fail-b": [
+          "fail-b/coin-scatter-1.png",
+          "fail-b/coin-scatter-2.png",
+          "fail-b/coin-scatter-3.png"
+        ]
+      },
+      "placement": {
+        "heroLeft": "39%",
+        "heroBottom": "5%",
+        "heroScale": 1.22,
+        "npcLeft": "73%",
+        "npcBottom": "5%",
+        "npcScale": 0.96,
+        "propLeft": "54%",
+        "propBottom": "7%"
+      }
+    },
+    "tutoring": {
+      "nameKo": "학동 가르치기",
+      "category": "아르바이트",
+      "unlockAge": 16,
+      "unlockStats": {
+        "intelligence": 350,
+        "manners": 220,
+        "speech": 180
+      },
+      "existingHeroFrames": [
+        "../assets/characters/seonhwa/schedule-actions/calligraphy-pixel-1.png",
+        "../assets/characters/seonhwa/schedule-actions/calligraphy-pixel-2.png",
+        "../assets/characters/seonhwa/schedule-actions/calligraphy-pixel-3.png"
+      ],
+      "existingBackground": "../assets/backgrounds/pixel-activities/close/study-room-clear.webp",
+      "backgroundOverlay": "background-overlay/tutoring-background-overlay.png",
+      "npc": [
+        "npc/tutoring-1.png",
+        "npc/tutoring-2.png",
+        "npc/tutoring-3.png"
+      ],
+      "patterns": {
+        "success-a": [
+          "success-a/books-child-1.png",
+          "success-a/books-child-2.png",
+          "success-a/books-child-3.png"
+        ],
+        "success-b": [
+          "success-b/correct-answer-1.png",
+          "success-b/correct-answer-2.png",
+          "success-b/correct-answer-3.png"
+        ],
+        "fail-a": [
+          "fail-a/confused-child-1.png",
+          "fail-a/confused-child-2.png",
+          "fail-a/confused-child-3.png"
+        ],
+        "fail-b": [
+          "fail-b/scattered-books-1.png",
+          "fail-b/scattered-books-2.png",
+          "fail-b/scattered-books-3.png"
+        ]
+      },
+      "placement": {
+        "heroLeft": "39%",
+        "heroBottom": "5%",
+        "heroScale": 1.22,
+        "npcLeft": "73%",
+        "npcBottom": "5%",
+        "npcScale": 0.96,
+        "propLeft": "54%",
+        "propBottom": "7%"
+      }
+    }
+  }
+}
