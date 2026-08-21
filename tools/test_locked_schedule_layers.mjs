@@ -16,7 +16,7 @@ for(const id of expected){
     if(!hero.includes('assets/characters/seonhwa/schedule-actions/')||!/-pixel-[123]\.png$/.test(hero))fail(`${id}: forbidden hero frame ${hero}`);
     if(!exists(hero))fail(`${id}: missing hero frame ${hero}`);
   }
-  const layerFiles=[spec.backgroundOverlay,...spec.npc,...Object.values(spec.patterns).flat()];
+  const layerFiles=[spec.backgroundOverlay,...spec.npc,...Object.values(spec.patterns).flat()].filter(Boolean);
   for(const file of layerFiles)if(!fs.existsSync(path.join(root,'assets','schedule-layers',id,file)))fail(`${id}: missing layer ${file}`);
 }
 

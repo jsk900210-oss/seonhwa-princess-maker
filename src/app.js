@@ -237,7 +237,7 @@ const vacationIllustrations=[
 function unifiedAgeFolder(){return '09';}
 function scheduleFramePath(file){return `../assets/characters/seonhwa/schedule-actions/${file}`;}
 function scheduleBasePath(file){return `../assets/characters/seonhwa/schedule-base/${file}`;}
-const scheduleAssetRevision='0.63.84-debug';
+const scheduleAssetRevision='0.63.85-debug';
 const scheduleQaParams=new URLSearchParams(location.search);
 const scheduleLayerStandaloneQa=scheduleQaParams.get('qa')==='1';
 const lockedScheduleQaMode=scheduleQaParams.has('qaSchedules')||scheduleLayerStandaloneQa;
@@ -766,6 +766,7 @@ async function playScheduleLayerScene(actionId,seonImage,rank,outcome,dayIndex){
     const delay=[360,300,250][rank]||300;
     for(let loop=0;loop<3;loop+=1){
       for(let frame=0;frame<3;frame+=1){
+        if(actionId==='farmwork'&&patternKey==='fail-b')stage.style.setProperty('--layer-hero-left',`${30+frame*6}%`);
         seonImage.src=v2Spec?`${base}/${heroFrames[frame]}${v}`:`${heroFrames[frame]}${v}`;
         npc.src=`${base}/${npcFrames[frame]}${v}`;
         pattern.src=`${base}/${patternFrames[frame]}${v}`;
@@ -921,7 +922,7 @@ const actions = [
   { id:'masonry',category:'아르바이트',name:'기와·흙벽 보조',cost:-165,unlockAge:13,unlockStats:{health:180,strength:180},mentor:'와공',icon:'sweeping',summary:'체력 +4 · 힘 +4 · 기품 -2 · 스트레스 +5 · 165냥 획득',change:{health:4,strength:4,dignity:-2,stress:5},retiredJob:true},
   { id:'clinichelp',category:'아르바이트',name:'약방 견습',cost:-170,unlockAge:11,unlockStats:{intelligence:100,sense:80},mentor:'의원',icon:'herbs',summary:'지능 +3 · 센스 +3 · 기품 +1 · 스트레스 +4 · 170냥 획득',change:{intelligence:3,sense:3,virtue:1,stress:4}},
   { id: 'innhelp', category:'아르바이트', name:'주막 운영 보조', cost:-155, unlockAge:12, unlockStats:{speech:100,health:90}, mentor:'주모', icon:'errand', intro:'이제 손님상과 계산까지 네가 살펴보렴.', summary:'화술 +3 · 체력 +2 · 센스 +1 · 스트레스 +4 · 155냥 획득', change:{speech:3,health:2,sense:1,stress:4}, retiredJob:true },
-  { id: 'sewing', category:'아르바이트', name:'바느질', cost:-145, unlockAge:12, mentor:'침선장', icon:'houseclean', intro:'베틀에서 고른 옷감을 작은 바늘땀으로 단정히 마무리하렴.', summary:'센스 +4 · 감수성 +2 · 스트레스 +3 · 145냥 획득', change:{sense:4,sensitivity:2,stress:3} },
+  { id: 'sewing', category:'아르바이트', name:'바느질', cost:-145, unlockAge:12, unlockStats:{sense:140,sensitivity:100}, mentor:'침선장', icon:'houseclean', intro:'베틀에서 고른 옷감을 작은 바늘땀으로 단정히 마무리하렴.', summary:'센스 +4 · 감수성 +2 · 스트레스 +3 · 145냥 획득', change:{sense:4,sensitivity:2,stress:3} },
   { id: 'copying', category:'아르바이트', name:'서책 필사', cost:-165, unlockAge:13, mentor:'서책방 주인', icon:'reading', intro:'원문을 옮겨 적고 장부의 숫자까지 꼼꼼히 살펴보거라.', summary:'지능 +3 · 센스 +3 · 화술 +1 · 스트레스 +4 · 165냥 획득', change:{intelligence:3,sense:3,speech:1,stress:4} },
   { id:'ferryhelp',category:'아르바이트',name:'나루터 운송 보조',cost:-190,unlockAge:14,unlockStats:{health:150,speech:100,agility:100},mentor:'나루지기',icon:'errand',summary:'체력 +3 · 화술 +3 · 민첩 +2 · 스트레스 +5 · 190냥 획득',change:{health:3,speech:3,agility:2,stress:5},retiredJob:true},
   { id:'merchanthelp',category:'아르바이트',name:'상점 판매 보조',cost:-205,unlockAge:14,unlockStats:{speech:150,sense:150},mentor:'잡화상',icon:'errand',summary:'화술 +5 · 센스 +3 · 스트레스 +5 · 205냥 획득',change:{speech:4,sense:3,reputation:1,stress:5}},
@@ -930,7 +931,7 @@ const actions = [
   { id: 'rest', category: '휴식', name: '집에서 휴식', cost: 0, summary: '스트레스 -12 · 체력 +2 · 정신력 +2', change: { health:2, mentality:2, stress:-12 } },
   { id: 'freeTime', category: '휴식', name: '자유행동', cost: 0, summary: '가벼운 외출·취미·산책 중 하나 · 스트레스 감소', change: { sense:1, stress:-8 }, special:'free-time' },
   { id: 'shopping', category: '휴식', name: '저잣거리', cost: 0, summary: '', change: {}, special:'market' },
-  { id: 'vacation', category: '휴식', name: '바캉스', cost: 180, summary: '감수성 +3 · 매력 +1 · 스트레스 -25 · 추억 일러스트 획득', change: {sensitivity:3,charm:1,stress:-25}, special:'vacation' },
+  { id: 'vacation', category: '휴식', name: '바캉스', cost: 180, summary: '감수성 +3 · 매력 +1 · 스트레스 -35 · 추억 일러스트 획득', change: {sensitivity:3,charm:1,stress:-105}, special:'vacation' },
   { id: 'dungeon', category: '휴식', name: '비경 탐사', cost: 50, unlockAge:13, unlockAnyStats:[{strength:120},{magic:120}], mentor:'수호신수', icon:'herbs', intro:'성 밖의 숨은 길에는 보물과 위험이 함께 있단다. 준비를 갖추고 나서자.', summary:'체력 +2 · 힘 +2 · 마력 +2 · 스트레스 +5 · 보물 은전 획득 가능', change:{health:2,strength:2,magic:2,stress:5}, special:'dungeon' },
   {id:'holiday-seollal',category:'명절',name:'설날 행사 참가',cost:0,icon:'manners',holidayOnly:'설날',summary:'설날 고정 이벤트',change:{dignity:2,manners:2,stress:-10},special:'holiday'},
   {id:'holiday-chuseok',category:'명절',name:'추석 행사 참가',cost:0,icon:'manners',holidayOnly:'추석',summary:'차례상·윷놀이·제기차기·송편만들기',change:{},special:'holiday'},
@@ -953,6 +954,12 @@ const jobUpgradeChains=[
 const jobChainFor=id=>jobUpgradeChains.find(chain=>chain.includes(id));
 function activeJobInChain(chain){return [...chain].reverse().map(id=>actions.find(action=>action.id===id)).find(action=>action&&actionUnlocked(action))||null;}
 function visibleJobActions(){return jobUpgradeChains.map(activeJobInChain).filter(Boolean);}
+function jobUpgradeHint(action){
+  const chain=jobChainFor(action.id),next=chain&&actions.find(item=>item.id===chain[chain.indexOf(action.id)+1]);
+  if(!chain||!next)return '최종 단계';
+  const requirements=[`${Number(next.unlockAge||9)}세`,...Object.entries(next.unlockStats||{}).map(([key,value])=>`${statLabels[key]||key} ${value}`)];
+  return `다음: ${next.name} · ${requirements.join(' · ')}`;
+}
 const activityRequirements={reading:['지능',50],arithmetic:['센스',50],manners:['예절',50],painting:['감수성',150],music:['기품',150],dance:['민첩',150],swordsmanship:['힘',120],spellcraft:['지능·정신력',150],cooking:['센스',130],martial:['체력',150],classics:['지능',300],errand:['화술',40],sweeping:['힘',50],herbs:['센스',50],houseclean:['체력',50],farmwork:['힘',80],childcare:['감수성',80],kitchenhelp:['센스',80],woodwork:['힘',120],loomwork:['센스',120],masonry:['체력',140],clinichelp:['지능·센스',150],innhelp:['화술',130],sewing:['센스',140],copying:['지능',160],ferryhelp:['체력',150],merchanthelp:['화술·센스',150],accounting:['센스',300],tutoring:['지능',350],dungeon:['힘 또는 마력',120]};
 const meetsStatSet=set=>Object.entries(set||{}).every(([stat,value])=>Number(game[stat]||0)>=value);
 const actionUnlocked=action=>(lockedScheduleQaMode&&scheduleLayerIds.has(action.id))||(game.age>=Number(action.unlockAge||9)&&meetsStatSet(action.unlockStats)&&(!action.unlockAnyStats||action.unlockAnyStats.some(meetsStatSet))&&(!action.relationId||Boolean(relationRecord(action.relationId).dateUnlocked))&&(!action.holidayOnly||currentPhaseHoliday()?.name===action.holidayOnly));
@@ -1925,9 +1932,9 @@ function renderSchedulePanel() {
   if(!scheduleCategories.includes(activeScheduleCategory))activeScheduleCategory='교육';
   const categoryTabs=scheduleCategories.map(category=>{const newCount=unseenUnlocked.filter(action=>action.category===category).length;return `<button data-schedule-category="${category}" class="${activeScheduleCategory===category?'on':''}">${category}${newCount?`<i>${newCount}</i>`:''}</button>`;}).join('');
   const availableActions=holiday?[actions.find(action=>action.id===holiday.id),actions.find(action=>action.id==='rest')]:activeScheduleCategory==='아르바이트'?visibleJobActions():actions.filter(action=>action.category===activeScheduleCategory&&actionUnlocked(action)&&action.id!=='shopping');
-  const actionCards=availableActions.map(action=>`<button class="action compact-action ${selectedScheduleAction===action.id?'selected':''}" data-action="${action.id}" ${holiday&&filled?'disabled':''}><img class="schedule-action-face" src="../assets/ui/activity-icons/activity-${scheduleActionIcon(action)}.png" alt=""><b>${action.name}</b><small class="schedule-action-money">${scheduleActionMoneyLabel(action)}</small></button>`).join('');
+  const actionCards=availableActions.map(action=>`<button class="action compact-action ${selectedScheduleAction===action.id?'selected':''}" data-action="${action.id}" ${holiday&&filled?'disabled':''}><img class="schedule-action-face" src="../assets/ui/activity-icons/activity-${scheduleActionIcon(action)}.png" alt=""><b>${action.name}</b><small class="schedule-action-money">${scheduleActionMoneyLabel(action)}</small>${activeScheduleCategory==='아르바이트'?`<small class="job-upgrade-hint">${jobUpgradeHint(action)}</small>`:''}</button>`).join('');
   const timelineMotion=scheduleTimelineMotion;scheduleTimelineMotion='';
-  panelBody.innerHTML = `<section class="phase-progress compact" aria-label="전체 성장 페이즈 진행률"><div><b>제${phase.index}페이즈</b><span>${phase.index} / ${phase.total}</span></div><div class="phase-progress-track"><i style="width:${phase.percent}%"></i></div></section><div class="phase-five-wrap"><button id="phasePrev" aria-label="이전 페이즈 기록" ${timelineStart>0?'':'disabled'}>◀</button><div class="phase-five-grid ${timelineMotion?`slide-${timelineMotion}`:''}">${phaseSlots}</div><button id="phaseNext" aria-label="다음 페이즈 기록" ${timelineStart<latestStart?'':'disabled'}>▶</button></div><small class="phase-slide-count">완료 이력은 회색으로 보존됩니다 · ${timelineStart+1}–${Math.min(timelineStart+5,timeline.length)} / ${timeline.length}</small>${holiday?`<p class="fixed-holiday-phase"><b>${holiday.name} 고정 페이즈</b><span>${holiday.date.getMonth()+1}월 ${holiday.date.getDate()}일 포함 · 참가하지 않으면 집에서 휴식</span></p>`:`<div class="schedule-tabs compact-tabs" role="tablist">${categoryTabs}</div>`}<section class="schedule-category compact-category"><div class="action-grid compact-schedule-grid">${actionCards}</div></section><div class="schedule-tools compact-tools"><button id="scheduleRunPhases" ${filled?'':'disabled'}>${filled}개 페이즈 실행</button><button id="scheduleClearAll" ${filled?'':'disabled'}>전체 비우기</button></div>`;
+  panelBody.innerHTML = `<section class="phase-progress compact" aria-label="전체 성장 페이즈 진행률"><div><b>제${phase.index}페이즈</b><span>${phase.index} / ${phase.total}</span></div><div class="phase-progress-track"><i style="width:${phase.percent}%"></i></div></section><div class="phase-five-wrap"><button id="phasePrev" aria-label="이전 페이즈 기록" ${timelineStart>0?'':'disabled'}>◀</button><div class="phase-five-grid ${timelineMotion?`slide-${timelineMotion}`:''}">${phaseSlots}</div><button id="phaseNext" aria-label="다음 페이즈 기록" ${timelineStart<latestStart?'':'disabled'}>▶</button></div><small class="phase-slide-count">완료 이력은 회색으로 보존됩니다 · ${timelineStart+1}–${Math.min(timelineStart+5,timeline.length)} / ${timeline.length}</small>${holiday?`<p class="fixed-holiday-phase"><b>${holiday.name} 고정 페이즈</b><span>${holiday.date.getMonth()+1}월 ${holiday.date.getDate()}일 포함 · 참가하지 않으면 집에서 휴식</span></p>`:`<div class="schedule-tabs compact-tabs" role="tablist">${categoryTabs}</div>`}<section class="schedule-category compact-category ${activeScheduleCategory==='아르바이트'?'job-upgrade-category':''}"><div class="action-grid compact-schedule-grid">${actionCards}</div></section><div class="schedule-tools compact-tools"><button id="scheduleRunPhases" ${filled?'':'disabled'}>${filled}개 페이즈 실행</button><button id="scheduleClearAll" ${filled?'':'disabled'}>전체 비우기</button></div>`;
   panelBody.querySelectorAll('[data-action]').forEach(button => button.addEventListener('click', () => addDailyAction(button.dataset.action,button)));
   panelBody.querySelectorAll('[data-phase-remove]').forEach(button=>button.addEventListener('click',()=>clearDailyAction(Number(button.dataset.phaseRemove))));
   document.querySelector('#phasePrev').addEventListener('click',()=>{scheduleTimelineOffset=Math.min(latestStart,scheduleTimelineOffset+1);scheduleTimelineMotion='older';renderSchedulePanel();});
@@ -2484,11 +2491,14 @@ async function playWeeklySchedule(selected) {
   const playbackWeek=document.querySelector('#playbackWeek');
   const playbackHolidayMark=document.querySelector('#playbackHolidayMark');
   if(playbackWeek)playbackWeek.innerHTML=Array.from({length:14},(_,day)=>`<span>${day+1}</span>`).join('');
+  let stressRestUntilPhaseEnd=false;
   for (let index = 0; index < selected.length; index += 1) {
+    if(index%14===0)stressRestUntilPhaseEnd=false;
     const activityDate=new Date(scheduleStart);activityDate.setDate(scheduleStart.getDate()+index);
     const weekdayLabels=['일','월','화','수','목','금','토'];
     const plannedAction = selected[index];
-    const action = actionForStressLimit(plannedAction,simulated.stress);
+    if(simulated.stress>=statMaximum('stress'))stressRestUntilPhaseEnd=true;
+    const action = stressRestUntilPhaseEnd&&plannedAction.id!=='rest'?actions.find(item=>item.id==='rest'):plannedAction;
     playScheduleMusic(action);
     renderStagePm3Hud(activityDate,{},action);
     const forcedRest = action.id!==plannedAction.id;
@@ -2660,8 +2670,8 @@ async function playWeeklySchedule(selected) {
     if(action.id==='vacation'&&index%14===0)index=Math.min(index+13,selected.length-1);
     if((index+1)%14===0||index===selected.length-1){
       const start=index-index%14,phaseRecords=dayRecords.slice(start,index+1);
-      const vacationContinuesToNextSchedule=phaseRecords.length>0&&phaseRecords.every(record=>record.action?.id==='vacation')&&index<selected.length-1;
-      if(!vacationContinuesToNextSchedule)await showPhaseReport(phaseRecords,{...playbackPhase,index:playbackPhase.index+Math.floor(index/14)});
+      const vacationPhase=phaseRecords.length>0&&phaseRecords.every(record=>record.action?.id==='vacation');
+      if(!vacationPhase)await showPhaseReport(phaseRecords,{...playbackPhase,index:playbackPhase.index+Math.floor(index/14)});
     }
   }
   playback.hidden = true;

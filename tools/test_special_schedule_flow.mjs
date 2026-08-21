@@ -4,6 +4,12 @@ import { readFileSync } from 'node:fs';
 const source = readFileSync(new URL('../src/app.js', import.meta.url), 'utf8').replace(/\r\n/g, '\n');
 const scheduleCss = readFileSync(new URL('../src/schedule.css', import.meta.url), 'utf8').replace(/\r\n/g, '\n');
 
+assert.match(source,/stressRestUntilPhaseEnd=false/,'페이즈 휴식 고정 상태가 필요합니다.');
+assert.match(source,/if\(simulated\.stress>=statMaximum\('stress'\)\)stressRestUntilPhaseEnd=true/,'스트레스 100부터 남은 페이즈를 휴식으로 고정해야 합니다.');
+assert.match(source,/const vacationPhase=phaseRecords\.length>0&&phaseRecords\.every/,'바캉스 전용 페이즈를 판별해야 합니다.');
+assert.match(source,/if\(!vacationPhase\)await showPhaseReport/,'바캉스 뒤 결과 대기 없이 다음 일정 또는 홈으로 가야 합니다.');
+assert.match(source,/stress:-105/,'바캉스 스트레스 회복은 페이즈 환산 후 -35여야 합니다.');
+
 const mustContain = [
   ["scheduleConfirmDismissed = false;\n    renderSchedulePanel();", '일정 화면을 다시 열면 실행 확인창을 다시 준비해야 합니다.'],
   ["renderSchedulePanel();\n    speakGuardian('schedule');\n    showScheduleConfirmation();", '이미 7일이 채워진 저장 일정도 실행 확인창을 보여야 합니다.'],
