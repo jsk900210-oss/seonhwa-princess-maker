@@ -155,6 +155,15 @@
       <div class="vacation-title" id="vacationTitle"></div>
       <button class="vacation-next" id="vacationNext" type="button">화면을 터치해 계속</button>
     </section>
+    <section class="relation-encounter-scene" id="relationEncounterScene" hidden aria-live="polite" aria-label="인연 대화 장면">
+      <div class="relation-encounter-vignette" aria-hidden="true"></div>
+      <span class="relation-encounter-person relation-encounter-male" id="relationEncounterMale" role="img"></span>
+      <img class="relation-encounter-person relation-encounter-female" id="relationEncounterFemale" alt="선화">
+      <section class="relation-encounter-dialogue">
+        <button id="relationEncounterNext" type="button"><b id="relationEncounterSpeaker"></b><span id="relationEncounterText"></span><small>터치하여 계속</small></button>
+        <div class="relation-encounter-choices" id="relationEncounterChoices" hidden></div>
+      </section>
+    </section>
     <section class="activity-stage" id="activityStage" hidden aria-label="일정 수행 장면">
       <div class="stage-roof" aria-hidden="true"></div>
       <div class="stage-inner">

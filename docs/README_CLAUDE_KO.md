@@ -49,6 +49,7 @@
 - 런타임 기준: 루트 `manifest.json`의 `existingHeroFrames`, `existingBackground`, `placement`, `npc`, `patterns`.
 - 선화 정책: 기존 3프레임만 사용하며 신규 생성·교체 금지.
 - 공통 렌더러: `src/app.js`의 `playScheduleLayerScene()`.
+- v2 활성 일정: 주방보조, 아이돌보기, 회화, 악기, 전통 춤사위, 바느질, 서책필사.
 - 공통 스타일: `src/schedule.css`의 `.schedule-layered`, `.schedule-scene-layer` 블록.
 - QA: `?qaSchedules`에서 활성 20종의 잠금을 무시합니다. 제외된 2종 자산은 복구용으로 보존합니다.
 - 자동 검증: `tools/test_locked_schedule_layers.mjs`.

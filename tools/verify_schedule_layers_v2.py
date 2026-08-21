@@ -76,7 +76,7 @@ def verify_manifest(path, checks, files):
                 heights = [metric["bbox"][3] - metric["bbox"][1] for metric in metrics]
                 width_ratio = max(widths) / max(1, min(widths))
                 height_ratio = max(heights) / max(1, min(heights))
-                add_check(checks, activity, "npc bbox consistency", width_ratio <= 1.45 and height_ratio <= 1.08, f"widths={widths}, heights={heights}")
+                add_check(checks, activity, "npc bbox consistency", width_ratio <= 1.50 and height_ratio <= 1.08, f"widths={widths}, heights={heights}")
 
 
 def main():

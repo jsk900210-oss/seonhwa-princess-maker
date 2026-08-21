@@ -1,5 +1,5 @@
 {
-  "version": "2.0.0-pilot.3", "activityId": "painting", "nameKo": "회화 배우기", "status": "pilot-review",
+  "version": "2.0.0-pilot.5", "activityId": "painting", "nameKo": "회화 배우기", "status": "pilot-review",
   "existingHeroFrames": ["../../characters/seonhwa/schedule-actions/calligraphy-pixel-1.png", "../../characters/seonhwa/schedule-actions/calligraphy-pixel-2.png", "../../characters/seonhwa/schedule-actions/calligraphy-pixel-3.png"],
   "existingBackground": "../../backgrounds/phase-scenes/painting.webp",
   "animation": {"sequence": [1, 2, 3], "loopCount": 3, "frameDurationMs": 300},
@@ -10,6 +10,6 @@
     "fail-a": {"layer": "failures", "frames": ["failures/fail-a-1.png", "failures/fail-a-2.png", "failures/fail-a-3.png"]},
     "fail-b": {"layer": "failures", "frames": ["failures/fail-b-1.png", "failures/fail-b-2.png", "failures/fail-b-3.png"]}
   },
-  "placement": {"heroLeft": "34%", "floorBottom": "5%", "npcLeft": "76%", "npcScale": 0.96, "propLeft": "52%", "propBottom": "4%", "effectLeft": "53%", "effectBottom": "7%"},
+  "placement": {"heroLeft": "34%", "floorBottom": "5%", "npcLeft": "68%", "npcScale": 0.86, "propLeft": "43%", "propBottom": "13%", "effectLeft": "46%", "effectBottom": "14%"},
   "layerOrder": ["existing-background", "npc", "existing-seonhwa", "props", "effects", "failures"]
 }

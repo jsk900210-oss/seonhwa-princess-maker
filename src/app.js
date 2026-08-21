@@ -237,14 +237,14 @@ const vacationIllustrations=[
 function unifiedAgeFolder(){return '09';}
 function scheduleFramePath(file){return `../assets/characters/seonhwa/schedule-actions/${file}`;}
 function scheduleBasePath(file){return `../assets/characters/seonhwa/schedule-base/${file}`;}
-const scheduleAssetRevision='0.63.78-v2-pilot.1';
+const scheduleAssetRevision='0.63.79-schedule-dialogue.1';
 const scheduleQaParams=new URLSearchParams(location.search);
 const scheduleLayerStandaloneQa=scheduleQaParams.get('qa')==='1';
 const lockedScheduleQaMode=scheduleQaParams.has('qaSchedules')||scheduleLayerStandaloneQa;
 let scheduleQaForcedPattern=scheduleQaParams.get('qaPattern');
 let scheduleLayerManifestPromise;
 const scheduleLayerIds=new Set(['painting','music','dance','swordsmanship','spellcraft','classics','farmwork','childcare','kitchenhelp','woodwork','loomwork','masonry','clinichelp','innhelp','sewing','copying','ferryhelp','merchanthelp','accounting','tutoring']);
-const scheduleLayerV2PilotIds=new Set(['kitchenhelp','childcare','painting']);
+const scheduleLayerV2PilotIds=new Set(['kitchenhelp','childcare','painting','music','dance','sewing','copying']);
 function scheduleLayerManifest(){
   scheduleLayerManifestPromise??=fetch(`../manifest.json?v=${scheduleAssetRevision}`,{cache:'no-store'}).then(response=>{
     if(!response.ok)throw new Error(`schedule manifest HTTP ${response.status}`);
@@ -1016,6 +1016,18 @@ function protagonistPortraitForAge(age=game.age){
 function relationAgePosition(){return game.age>=19?'100%':game.age>=16?'50%':'0%';}
 function relationPortraitMarkup(candidate,className=''){return `<span class="relation-sheet-portrait ${className}" role="img" aria-label="${candidate.name} ${game.age}세 모습" style="--relation-sheet:url('${candidate.baseSheet}');--relation-age-position:${relationAgePosition()}"></span>`;}
 function applyRelationPortrait(element,candidate){if(!element||!candidate)return;element.classList.add('relation-sheet-portrait');element.style.setProperty('--relation-sheet',`url('${candidate.baseSheet}')`);element.style.setProperty('--relation-age-position',relationAgePosition());const image=element.matches('img')?element:element.querySelector('img');if(image){image.alt=`${candidate.name} ${game.age}세 모습`;image.hidden=true;}}
+function relationReplyChoices(candidate){return [{line:`반가워요, ${candidate.name}님. 잠시 함께 이야기해요.`,reply:'나도 반가워. 오늘은 서두르지 않고 네 이야기를 듣고 싶어.'},{line:'이곳에는 무슨 일로 오셨어요?',reply:'해야 할 일이 있었는데, 너를 만나니 잠시 걸음을 멈추게 되는군.'}];}
+function playRelationEncounterScene(candidate,opening,resultLine=''){
+  const scene=document.querySelector('#relationEncounterScene'),male=document.querySelector('#relationEncounterMale'),female=document.querySelector('#relationEncounterFemale'),speaker=document.querySelector('#relationEncounterSpeaker'),text=document.querySelector('#relationEncounterText'),next=document.querySelector('#relationEncounterNext'),choices=document.querySelector('#relationEncounterChoices');
+  applyRelationPortrait(male,candidate);male.setAttribute('aria-label',`${candidate.name} ${game.age}세 모습`);female.src=protagonistPortraitForAge();female.alt=`${game.characterName||'선화'} ${game.age}세 모습`;
+  scene.hidden=false;scene.classList.remove('is-entered');requestAnimationFrame(()=>scene.classList.add('is-entered'));scene.dataset.speaker='male';speaker.textContent=candidate.name;text.textContent=opening||candidate.dialogues[0];choices.hidden=true;next.hidden=false;
+  return new Promise(resolve=>{
+    const finish=()=>{scene.hidden=true;scene.classList.remove('is-entered');scene.removeAttribute('data-speaker');resolve();};
+    const showResult=()=>{scene.dataset.speaker='result';speaker.textContent='인연';text.textContent=resultLine||'서로의 마음에 작은 기억이 남았습니다.';next.hidden=false;next.onclick=finish;};
+    const showChoices=()=>{next.hidden=true;choices.hidden=false;choices.replaceChildren(...relationReplyChoices(candidate).map(choice=>{const button=document.createElement('button');button.type='button';button.textContent=choice.line;button.addEventListener('click',()=>{choices.hidden=true;next.hidden=false;scene.dataset.speaker='female';speaker.textContent=game.characterName||'선화';text.textContent=choice.line;next.onclick=()=>{scene.dataset.speaker='male';speaker.textContent=candidate.name;text.textContent=choice.reply;next.onclick=showResult;};},{once:true});return button;}));};
+    next.onclick=showChoices;
+  });
+}
 const relationEpisodeCatalog={
   doyun:[
     {id:'doyun-1',title:'흩어진 화살',activities:['swordsmanship','martial'],scene:'활터',outfit:'젊은 무관 도포와 팔이 좁은 활동복',pose:'화살을 함께 줍고 몸을 살짝 숙인 자세',expression:'경계하다가 안심한 표정',camera:'반측면 허리샷',line:'활터에서 화살을 함께 주웠어요.'},
@@ -1167,9 +1179,8 @@ function evaluateChuseokFestival(){
 }
 function presentHolidayRelation(){
   if(!pendingHolidayRelation)return false;
-  const event=pendingHolidayRelation;pendingHolidayRelation=null;panel.hidden=false;panelTitle.textContent=`${event.holiday}의 인연`;
-  panelBody.innerHTML=`<section class="holiday-relation-event">${relationPortraitMarkup(event.candidate,'holiday-relation-portrait')}<div><small>${event.holiday}</small><h3>${event.candidate.name}</h3><p>${event.line}</p><b>호감 +8 · ${event.record.affinity}<br>${event.record.meetings}/5 · ${event.record.relationship}</b><button id="holidayRelationContinue" type="button">기억하기</button></div></section>`;
-  document.querySelector('#holidayRelationContinue').addEventListener('click',()=>{panel.hidden=true;if(!presentActivityUnlocks())openVisitingMerchant();queueAutoSave();});
+  const event=pendingHolidayRelation;pendingHolidayRelation=null;panel.hidden=true;
+  playRelationEncounterScene(event.candidate,event.line,`호감 +8 · ${event.record.affinity} · ${event.record.meetings}/5 · ${event.record.relationship}`).then(()=>{if(!presentActivityUnlocks())openVisitingMerchant();queueAutoSave();});
   return true;
 }
 function nextRelationEpisode(candidate,activityId){return (relationEpisodeCatalog[candidate.id]||[]).find(episode=>episode.activities.includes(activityId)&&!relationRecord(candidate.id).completedEpisodes.includes(episode.id))||null;}
@@ -2617,7 +2628,7 @@ async function playWeeklySchedule(selected) {
     const holidayResultText=holidayContestResult?`<br>${holidayContestResult.summary}`:'';
     const resultTitle=holidayContestResult?`추석 3종세트 · ${holidayContestResult.overallRank}`:`${action.name} · ${outcomeLabels[outcome]}`;
     dayResult.innerHTML = `<b>${resultTitle}</b><span>${resultSummary||'능력치 변화 없음'}${holidayResultText}<br>${moneyText} · 현재 ${game.money.toLocaleString()}냥${dateRelation?`<br>${dateRelation.candidate.name} +12 · ${dateRelation.record.affinity} · ${dateRelation.record.relationship}`:''}${relationEvent?`<br>${relationEvent.candidate.name} — ${relationEvent.episode.title}`:''}</span>`;
-    if(relationEvent)document.querySelector('#dialogueText').textContent=relationEvent.episode.line;
+    if(relationEvent){document.querySelector('#dialogueText').textContent=relationEvent.episode.line;await playRelationEncounterScene(relationEvent.candidate,relationEvent.episode.line,`호감 ${relationRecord(relationEvent.candidate.id).affinity} · ${relationRecord(relationEvent.candidate.id).relationship}`);}
     if(action.id!=='vacation'&&outcome!=='mistake'){
       dayResult.hidden = false;
       await schedulePlaybackDelay(900);

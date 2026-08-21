@@ -1,11 +1,11 @@
 {
   "generatedAt": "2026-08-21",
   "scope": "schedule-layers-v2 discovered manifests",
-  "manifests": 3,
+  "manifests": 7,
   "summary": {
-    "passed": 303,
+    "passed": 707,
     "failed": 0,
-    "total": 303
+    "total": 707
   },
   "checks": [
     {
@@ -610,6 +610,1218 @@
     },
     {
       "activity": "childcare",
+      "check": "fail-b floor tolerance",
+      "passed": true,
+      "detail": "[311, 311, 311]"
+    },
+    {
+      "activity": "copying",
+      "check": "manifest activity folder",
+      "passed": true,
+      "detail": "copying"
+    },
+    {
+      "activity": "copying",
+      "check": "hero frame count",
+      "passed": true,
+      "detail": "3"
+    },
+    {
+      "activity": "copying",
+      "check": "existing hero preserved",
+      "passed": true,
+      "detail": "assets\\characters\\seonhwa\\schedule-actions\\calligraphy-pixel-1.png"
+    },
+    {
+      "activity": "copying",
+      "check": "existing hero preserved",
+      "passed": true,
+      "detail": "assets\\characters\\seonhwa\\schedule-actions\\calligraphy-pixel-2.png"
+    },
+    {
+      "activity": "copying",
+      "check": "existing hero preserved",
+      "passed": true,
+      "detail": "assets\\characters\\seonhwa\\schedule-actions\\calligraphy-pixel-3.png"
+    },
+    {
+      "activity": "copying",
+      "check": "npc frame count",
+      "passed": true,
+      "detail": "3"
+    },
+    {
+      "activity": "copying",
+      "check": "path exists",
+      "passed": true,
+      "detail": "assets\\schedule-layers-v2\\copying\\npc\\master\\idle-1.png"
+    },
+    {
+      "activity": "copying",
+      "check": "PNG opens",
+      "passed": true,
+      "detail": "npc/master/idle-1.png"
+    },
+    {
+      "activity": "copying",
+      "check": "RGBA/transparency",
+      "passed": true,
+      "detail": "npc/master/idle-1.png: RGBA"
+    },
+    {
+      "activity": "copying",
+      "check": "not empty",
+      "passed": true,
+      "detail": "npc/master/idle-1.png"
+    },
+    {
+      "activity": "copying",
+      "check": "production filename",
+      "passed": true,
+      "detail": "npc/master/idle-1.png"
+    },
+    {
+      "activity": "copying",
+      "check": "path exists",
+      "passed": true,
+      "detail": "assets\\schedule-layers-v2\\copying\\npc\\master\\idle-2.png"
+    },
+    {
+      "activity": "copying",
+      "check": "PNG opens",
+      "passed": true,
+      "detail": "npc/master/idle-2.png"
+    },
+    {
+      "activity": "copying",
+      "check": "RGBA/transparency",
+      "passed": true,
+      "detail": "npc/master/idle-2.png: RGBA"
+    },
+    {
+      "activity": "copying",
+      "check": "not empty",
+      "passed": true,
+      "detail": "npc/master/idle-2.png"
+    },
+    {
+      "activity": "copying",
+      "check": "production filename",
+      "passed": true,
+      "detail": "npc/master/idle-2.png"
+    },
+    {
+      "activity": "copying",
+      "check": "path exists",
+      "passed": true,
+      "detail": "assets\\schedule-layers-v2\\copying\\npc\\master\\idle-3.png"
+    },
+    {
+      "activity": "copying",
+      "check": "PNG opens",
+      "passed": true,
+      "detail": "npc/master/idle-3.png"
+    },
+    {
+      "activity": "copying",
+      "check": "RGBA/transparency",
+      "passed": true,
+      "detail": "npc/master/idle-3.png: RGBA"
+    },
+    {
+      "activity": "copying",
+      "check": "not empty",
+      "passed": true,
+      "detail": "npc/master/idle-3.png"
+    },
+    {
+      "activity": "copying",
+      "check": "production filename",
+      "passed": true,
+      "detail": "npc/master/idle-3.png"
+    },
+    {
+      "activity": "copying",
+      "check": "npc canvas match",
+      "passed": true,
+      "detail": "[(320, 320)]"
+    },
+    {
+      "activity": "copying",
+      "check": "npc frames differ",
+      "passed": true,
+      "detail": "unique=3"
+    },
+    {
+      "activity": "copying",
+      "check": "npc floor tolerance",
+      "passed": true,
+      "detail": "[311, 311, 311]"
+    },
+    {
+      "activity": "copying",
+      "check": "npc bbox consistency",
+      "passed": true,
+      "detail": "widths=[111, 133, 109], heights=[304, 304, 304]"
+    },
+    {
+      "activity": "copying",
+      "check": "success-a frame count",
+      "passed": true,
+      "detail": "3"
+    },
+    {
+      "activity": "copying",
+      "check": "path exists",
+      "passed": true,
+      "detail": "assets\\schedule-layers-v2\\copying\\props\\copy-scroll-1.png"
+    },
+    {
+      "activity": "copying",
+      "check": "PNG opens",
+      "passed": true,
+      "detail": "props/copy-scroll-1.png"
+    },
+    {
+      "activity": "copying",
+      "check": "RGBA/transparency",
+      "passed": true,
+      "detail": "props/copy-scroll-1.png: RGBA"
+    },
+    {
+      "activity": "copying",
+      "check": "not empty",
+      "passed": true,
+      "detail": "props/copy-scroll-1.png"
+    },
+    {
+      "activity": "copying",
+      "check": "production filename",
+      "passed": true,
+      "detail": "props/copy-scroll-1.png"
+    },
+    {
+      "activity": "copying",
+      "check": "path exists",
+      "passed": true,
+      "detail": "assets\\schedule-layers-v2\\copying\\props\\copy-scroll-2.png"
+    },
+    {
+      "activity": "copying",
+      "check": "PNG opens",
+      "passed": true,
+      "detail": "props/copy-scroll-2.png"
+    },
+    {
+      "activity": "copying",
+      "check": "RGBA/transparency",
+      "passed": true,
+      "detail": "props/copy-scroll-2.png: RGBA"
+    },
+    {
+      "activity": "copying",
+      "check": "not empty",
+      "passed": true,
+      "detail": "props/copy-scroll-2.png"
+    },
+    {
+      "activity": "copying",
+      "check": "production filename",
+      "passed": true,
+      "detail": "props/copy-scroll-2.png"
+    },
+    {
+      "activity": "copying",
+      "check": "path exists",
+      "passed": true,
+      "detail": "assets\\schedule-layers-v2\\copying\\props\\copy-scroll-3.png"
+    },
+    {
+      "activity": "copying",
+      "check": "PNG opens",
+      "passed": true,
+      "detail": "props/copy-scroll-3.png"
+    },
+    {
+      "activity": "copying",
+      "check": "RGBA/transparency",
+      "passed": true,
+      "detail": "props/copy-scroll-3.png: RGBA"
+    },
+    {
+      "activity": "copying",
+      "check": "not empty",
+      "passed": true,
+      "detail": "props/copy-scroll-3.png"
+    },
+    {
+      "activity": "copying",
+      "check": "production filename",
+      "passed": true,
+      "detail": "props/copy-scroll-3.png"
+    },
+    {
+      "activity": "copying",
+      "check": "success-a canvas match",
+      "passed": true,
+      "detail": "[(320, 320)]"
+    },
+    {
+      "activity": "copying",
+      "check": "success-a frames differ",
+      "passed": true,
+      "detail": "unique=3"
+    },
+    {
+      "activity": "copying",
+      "check": "success-a floor tolerance",
+      "passed": true,
+      "detail": "[311, 311, 311]"
+    },
+    {
+      "activity": "copying",
+      "check": "success-b frame count",
+      "passed": true,
+      "detail": "3"
+    },
+    {
+      "activity": "copying",
+      "check": "path exists",
+      "passed": true,
+      "detail": "assets\\schedule-layers-v2\\copying\\effects\\dry-pages-1.png"
+    },
+    {
+      "activity": "copying",
+      "check": "PNG opens",
+      "passed": true,
+      "detail": "effects/dry-pages-1.png"
+    },
+    {
+      "activity": "copying",
+      "check": "RGBA/transparency",
+      "passed": true,
+      "detail": "effects/dry-pages-1.png: RGBA"
+    },
+    {
+      "activity": "copying",
+      "check": "not empty",
+      "passed": true,
+      "detail": "effects/dry-pages-1.png"
+    },
+    {
+      "activity": "copying",
+      "check": "production filename",
+      "passed": true,
+      "detail": "effects/dry-pages-1.png"
+    },
+    {
+      "activity": "copying",
+      "check": "path exists",
+      "passed": true,
+      "detail": "assets\\schedule-layers-v2\\copying\\effects\\dry-pages-2.png"
+    },
+    {
+      "activity": "copying",
+      "check": "PNG opens",
+      "passed": true,
+      "detail": "effects/dry-pages-2.png"
+    },
+    {
+      "activity": "copying",
+      "check": "RGBA/transparency",
+      "passed": true,
+      "detail": "effects/dry-pages-2.png: RGBA"
+    },
+    {
+      "activity": "copying",
+      "check": "not empty",
+      "passed": true,
+      "detail": "effects/dry-pages-2.png"
+    },
+    {
+      "activity": "copying",
+      "check": "production filename",
+      "passed": true,
+      "detail": "effects/dry-pages-2.png"
+    },
+    {
+      "activity": "copying",
+      "check": "path exists",
+      "passed": true,
+      "detail": "assets\\schedule-layers-v2\\copying\\effects\\dry-pages-3.png"
+    },
+    {
+      "activity": "copying",
+      "check": "PNG opens",
+      "passed": true,
+      "detail": "effects/dry-pages-3.png"
+    },
+    {
+      "activity": "copying",
+      "check": "RGBA/transparency",
+      "passed": true,
+      "detail": "effects/dry-pages-3.png: RGBA"
+    },
+    {
+      "activity": "copying",
+      "check": "not empty",
+      "passed": true,
+      "detail": "effects/dry-pages-3.png"
+    },
+    {
+      "activity": "copying",
+      "check": "production filename",
+      "passed": true,
+      "detail": "effects/dry-pages-3.png"
+    },
+    {
+      "activity": "copying",
+      "check": "success-b canvas match",
+      "passed": true,
+      "detail": "[(320, 305)]"
+    },
+    {
+      "activity": "copying",
+      "check": "success-b frames differ",
+      "passed": true,
+      "detail": "unique=3"
+    },
+    {
+      "activity": "copying",
+      "check": "success-b floor tolerance",
+      "passed": true,
+      "detail": "[296, 296, 296]"
+    },
+    {
+      "activity": "copying",
+      "check": "fail-a frame count",
+      "passed": true,
+      "detail": "3"
+    },
+    {
+      "activity": "copying",
+      "check": "path exists",
+      "passed": true,
+      "detail": "assets\\schedule-layers-v2\\copying\\failures\\fail-a-1.png"
+    },
+    {
+      "activity": "copying",
+      "check": "PNG opens",
+      "passed": true,
+      "detail": "failures/fail-a-1.png"
+    },
+    {
+      "activity": "copying",
+      "check": "RGBA/transparency",
+      "passed": true,
+      "detail": "failures/fail-a-1.png: RGBA"
+    },
+    {
+      "activity": "copying",
+      "check": "not empty",
+      "passed": true,
+      "detail": "failures/fail-a-1.png"
+    },
+    {
+      "activity": "copying",
+      "check": "production filename",
+      "passed": true,
+      "detail": "failures/fail-a-1.png"
+    },
+    {
+      "activity": "copying",
+      "check": "path exists",
+      "passed": true,
+      "detail": "assets\\schedule-layers-v2\\copying\\failures\\fail-a-2.png"
+    },
+    {
+      "activity": "copying",
+      "check": "PNG opens",
+      "passed": true,
+      "detail": "failures/fail-a-2.png"
+    },
+    {
+      "activity": "copying",
+      "check": "RGBA/transparency",
+      "passed": true,
+      "detail": "failures/fail-a-2.png: RGBA"
+    },
+    {
+      "activity": "copying",
+      "check": "not empty",
+      "passed": true,
+      "detail": "failures/fail-a-2.png"
+    },
+    {
+      "activity": "copying",
+      "check": "production filename",
+      "passed": true,
+      "detail": "failures/fail-a-2.png"
+    },
+    {
+      "activity": "copying",
+      "check": "path exists",
+      "passed": true,
+      "detail": "assets\\schedule-layers-v2\\copying\\failures\\fail-a-3.png"
+    },
+    {
+      "activity": "copying",
+      "check": "PNG opens",
+      "passed": true,
+      "detail": "failures/fail-a-3.png"
+    },
+    {
+      "activity": "copying",
+      "check": "RGBA/transparency",
+      "passed": true,
+      "detail": "failures/fail-a-3.png: RGBA"
+    },
+    {
+      "activity": "copying",
+      "check": "not empty",
+      "passed": true,
+      "detail": "failures/fail-a-3.png"
+    },
+    {
+      "activity": "copying",
+      "check": "production filename",
+      "passed": true,
+      "detail": "failures/fail-a-3.png"
+    },
+    {
+      "activity": "copying",
+      "check": "fail-a canvas match",
+      "passed": true,
+      "detail": "[(320, 320)]"
+    },
+    {
+      "activity": "copying",
+      "check": "fail-a frames differ",
+      "passed": true,
+      "detail": "unique=3"
+    },
+    {
+      "activity": "copying",
+      "check": "fail-a floor tolerance",
+      "passed": true,
+      "detail": "[311, 311, 311]"
+    },
+    {
+      "activity": "copying",
+      "check": "fail-b frame count",
+      "passed": true,
+      "detail": "3"
+    },
+    {
+      "activity": "copying",
+      "check": "path exists",
+      "passed": true,
+      "detail": "assets\\schedule-layers-v2\\copying\\failures\\fail-b-1.png"
+    },
+    {
+      "activity": "copying",
+      "check": "PNG opens",
+      "passed": true,
+      "detail": "failures/fail-b-1.png"
+    },
+    {
+      "activity": "copying",
+      "check": "RGBA/transparency",
+      "passed": true,
+      "detail": "failures/fail-b-1.png: RGBA"
+    },
+    {
+      "activity": "copying",
+      "check": "not empty",
+      "passed": true,
+      "detail": "failures/fail-b-1.png"
+    },
+    {
+      "activity": "copying",
+      "check": "production filename",
+      "passed": true,
+      "detail": "failures/fail-b-1.png"
+    },
+    {
+      "activity": "copying",
+      "check": "path exists",
+      "passed": true,
+      "detail": "assets\\schedule-layers-v2\\copying\\failures\\fail-b-2.png"
+    },
+    {
+      "activity": "copying",
+      "check": "PNG opens",
+      "passed": true,
+      "detail": "failures/fail-b-2.png"
+    },
+    {
+      "activity": "copying",
+      "check": "RGBA/transparency",
+      "passed": true,
+      "detail": "failures/fail-b-2.png: RGBA"
+    },
+    {
+      "activity": "copying",
+      "check": "not empty",
+      "passed": true,
+      "detail": "failures/fail-b-2.png"
+    },
+    {
+      "activity": "copying",
+      "check": "production filename",
+      "passed": true,
+      "detail": "failures/fail-b-2.png"
+    },
+    {
+      "activity": "copying",
+      "check": "path exists",
+      "passed": true,
+      "detail": "assets\\schedule-layers-v2\\copying\\failures\\fail-b-3.png"
+    },
+    {
+      "activity": "copying",
+      "check": "PNG opens",
+      "passed": true,
+      "detail": "failures/fail-b-3.png"
+    },
+    {
+      "activity": "copying",
+      "check": "RGBA/transparency",
+      "passed": true,
+      "detail": "failures/fail-b-3.png: RGBA"
+    },
+    {
+      "activity": "copying",
+      "check": "not empty",
+      "passed": true,
+      "detail": "failures/fail-b-3.png"
+    },
+    {
+      "activity": "copying",
+      "check": "production filename",
+      "passed": true,
+      "detail": "failures/fail-b-3.png"
+    },
+    {
+      "activity": "copying",
+      "check": "fail-b canvas match",
+      "passed": true,
+      "detail": "[(320, 320)]"
+    },
+    {
+      "activity": "copying",
+      "check": "fail-b frames differ",
+      "passed": true,
+      "detail": "unique=3"
+    },
+    {
+      "activity": "copying",
+      "check": "fail-b floor tolerance",
+      "passed": true,
+      "detail": "[311, 311, 311]"
+    },
+    {
+      "activity": "dance",
+      "check": "manifest activity folder",
+      "passed": true,
+      "detail": "dance"
+    },
+    {
+      "activity": "dance",
+      "check": "hero frame count",
+      "passed": true,
+      "detail": "3"
+    },
+    {
+      "activity": "dance",
+      "check": "existing hero preserved",
+      "passed": true,
+      "detail": "assets\\characters\\seonhwa\\schedule-actions\\dance-pixel-1.png"
+    },
+    {
+      "activity": "dance",
+      "check": "existing hero preserved",
+      "passed": true,
+      "detail": "assets\\characters\\seonhwa\\schedule-actions\\dance-pixel-2.png"
+    },
+    {
+      "activity": "dance",
+      "check": "existing hero preserved",
+      "passed": true,
+      "detail": "assets\\characters\\seonhwa\\schedule-actions\\dance-pixel-3.png"
+    },
+    {
+      "activity": "dance",
+      "check": "npc frame count",
+      "passed": true,
+      "detail": "3"
+    },
+    {
+      "activity": "dance",
+      "check": "path exists",
+      "passed": true,
+      "detail": "assets\\schedule-layers-v2\\dance\\npc\\master\\idle-1.png"
+    },
+    {
+      "activity": "dance",
+      "check": "PNG opens",
+      "passed": true,
+      "detail": "npc/master/idle-1.png"
+    },
+    {
+      "activity": "dance",
+      "check": "RGBA/transparency",
+      "passed": true,
+      "detail": "npc/master/idle-1.png: RGBA"
+    },
+    {
+      "activity": "dance",
+      "check": "not empty",
+      "passed": true,
+      "detail": "npc/master/idle-1.png"
+    },
+    {
+      "activity": "dance",
+      "check": "production filename",
+      "passed": true,
+      "detail": "npc/master/idle-1.png"
+    },
+    {
+      "activity": "dance",
+      "check": "path exists",
+      "passed": true,
+      "detail": "assets\\schedule-layers-v2\\dance\\npc\\master\\idle-2.png"
+    },
+    {
+      "activity": "dance",
+      "check": "PNG opens",
+      "passed": true,
+      "detail": "npc/master/idle-2.png"
+    },
+    {
+      "activity": "dance",
+      "check": "RGBA/transparency",
+      "passed": true,
+      "detail": "npc/master/idle-2.png: RGBA"
+    },
+    {
+      "activity": "dance",
+      "check": "not empty",
+      "passed": true,
+      "detail": "npc/master/idle-2.png"
+    },
+    {
+      "activity": "dance",
+      "check": "production filename",
+      "passed": true,
+      "detail": "npc/master/idle-2.png"
+    },
+    {
+      "activity": "dance",
+      "check": "path exists",
+      "passed": true,
+      "detail": "assets\\schedule-layers-v2\\dance\\npc\\master\\idle-3.png"
+    },
+    {
+      "activity": "dance",
+      "check": "PNG opens",
+      "passed": true,
+      "detail": "npc/master/idle-3.png"
+    },
+    {
+      "activity": "dance",
+      "check": "RGBA/transparency",
+      "passed": true,
+      "detail": "npc/master/idle-3.png: RGBA"
+    },
+    {
+      "activity": "dance",
+      "check": "not empty",
+      "passed": true,
+      "detail": "npc/master/idle-3.png"
+    },
+    {
+      "activity": "dance",
+      "check": "production filename",
+      "passed": true,
+      "detail": "npc/master/idle-3.png"
+    },
+    {
+      "activity": "dance",
+      "check": "npc canvas match",
+      "passed": true,
+      "detail": "[(320, 320)]"
+    },
+    {
+      "activity": "dance",
+      "check": "npc frames differ",
+      "passed": true,
+      "detail": "unique=3"
+    },
+    {
+      "activity": "dance",
+      "check": "npc floor tolerance",
+      "passed": true,
+      "detail": "[311, 311, 311]"
+    },
+    {
+      "activity": "dance",
+      "check": "npc bbox consistency",
+      "passed": true,
+      "detail": "widths=[107, 156, 106], heights=[304, 304, 304]"
+    },
+    {
+      "activity": "dance",
+      "check": "success-a frame count",
+      "passed": true,
+      "detail": "3"
+    },
+    {
+      "activity": "dance",
+      "check": "path exists",
+      "passed": true,
+      "detail": "assets\\schedule-layers-v2\\dance\\props\\ribbon-1.png"
+    },
+    {
+      "activity": "dance",
+      "check": "PNG opens",
+      "passed": true,
+      "detail": "props/ribbon-1.png"
+    },
+    {
+      "activity": "dance",
+      "check": "RGBA/transparency",
+      "passed": true,
+      "detail": "props/ribbon-1.png: RGBA"
+    },
+    {
+      "activity": "dance",
+      "check": "not empty",
+      "passed": true,
+      "detail": "props/ribbon-1.png"
+    },
+    {
+      "activity": "dance",
+      "check": "production filename",
+      "passed": true,
+      "detail": "props/ribbon-1.png"
+    },
+    {
+      "activity": "dance",
+      "check": "path exists",
+      "passed": true,
+      "detail": "assets\\schedule-layers-v2\\dance\\props\\ribbon-2.png"
+    },
+    {
+      "activity": "dance",
+      "check": "PNG opens",
+      "passed": true,
+      "detail": "props/ribbon-2.png"
+    },
+    {
+      "activity": "dance",
+      "check": "RGBA/transparency",
+      "passed": true,
+      "detail": "props/ribbon-2.png: RGBA"
+    },
+    {
+      "activity": "dance",
+      "check": "not empty",
+      "passed": true,
+      "detail": "props/ribbon-2.png"
+    },
+    {
+      "activity": "dance",
+      "check": "production filename",
+      "passed": true,
+      "detail": "props/ribbon-2.png"
+    },
+    {
+      "activity": "dance",
+      "check": "path exists",
+      "passed": true,
+      "detail": "assets\\schedule-layers-v2\\dance\\props\\ribbon-3.png"
+    },
+    {
+      "activity": "dance",
+      "check": "PNG opens",
+      "passed": true,
+      "detail": "props/ribbon-3.png"
+    },
+    {
+      "activity": "dance",
+      "check": "RGBA/transparency",
+      "passed": true,
+      "detail": "props/ribbon-3.png: RGBA"
+    },
+    {
+      "activity": "dance",
+      "check": "not empty",
+      "passed": true,
+      "detail": "props/ribbon-3.png"
+    },
+    {
+      "activity": "dance",
+      "check": "production filename",
+      "passed": true,
+      "detail": "props/ribbon-3.png"
+    },
+    {
+      "activity": "dance",
+      "check": "success-a canvas match",
+      "passed": true,
+      "detail": "[(320, 261)]"
+    },
+    {
+      "activity": "dance",
+      "check": "success-a frames differ",
+      "passed": true,
+      "detail": "unique=3"
+    },
+    {
+      "activity": "dance",
+      "check": "success-a floor tolerance",
+      "passed": true,
+      "detail": "[252, 252, 252]"
+    },
+    {
+      "activity": "dance",
+      "check": "success-b frame count",
+      "passed": true,
+      "detail": "3"
+    },
+    {
+      "activity": "dance",
+      "check": "path exists",
+      "passed": true,
+      "detail": "assets\\schedule-layers-v2\\dance\\effects\\fan-petals-1.png"
+    },
+    {
+      "activity": "dance",
+      "check": "PNG opens",
+      "passed": true,
+      "detail": "effects/fan-petals-1.png"
+    },
+    {
+      "activity": "dance",
+      "check": "RGBA/transparency",
+      "passed": true,
+      "detail": "effects/fan-petals-1.png: RGBA"
+    },
+    {
+      "activity": "dance",
+      "check": "not empty",
+      "passed": true,
+      "detail": "effects/fan-petals-1.png"
+    },
+    {
+      "activity": "dance",
+      "check": "production filename",
+      "passed": true,
+      "detail": "effects/fan-petals-1.png"
+    },
+    {
+      "activity": "dance",
+      "check": "path exists",
+      "passed": true,
+      "detail": "assets\\schedule-layers-v2\\dance\\effects\\fan-petals-2.png"
+    },
+    {
+      "activity": "dance",
+      "check": "PNG opens",
+      "passed": true,
+      "detail": "effects/fan-petals-2.png"
+    },
+    {
+      "activity": "dance",
+      "check": "RGBA/transparency",
+      "passed": true,
+      "detail": "effects/fan-petals-2.png: RGBA"
+    },
+    {
+      "activity": "dance",
+      "check": "not empty",
+      "passed": true,
+      "detail": "effects/fan-petals-2.png"
+    },
+    {
+      "activity": "dance",
+      "check": "production filename",
+      "passed": true,
+      "detail": "effects/fan-petals-2.png"
+    },
+    {
+      "activity": "dance",
+      "check": "path exists",
+      "passed": true,
+      "detail": "assets\\schedule-layers-v2\\dance\\effects\\fan-petals-3.png"
+    },
+    {
+      "activity": "dance",
+      "check": "PNG opens",
+      "passed": true,
+      "detail": "effects/fan-petals-3.png"
+    },
+    {
+      "activity": "dance",
+      "check": "RGBA/transparency",
+      "passed": true,
+      "detail": "effects/fan-petals-3.png: RGBA"
+    },
+    {
+      "activity": "dance",
+      "check": "not empty",
+      "passed": true,
+      "detail": "effects/fan-petals-3.png"
+    },
+    {
+      "activity": "dance",
+      "check": "production filename",
+      "passed": true,
+      "detail": "effects/fan-petals-3.png"
+    },
+    {
+      "activity": "dance",
+      "check": "success-b canvas match",
+      "passed": true,
+      "detail": "[(320, 320)]"
+    },
+    {
+      "activity": "dance",
+      "check": "success-b frames differ",
+      "passed": true,
+      "detail": "unique=3"
+    },
+    {
+      "activity": "dance",
+      "check": "success-b floor tolerance",
+      "passed": true,
+      "detail": "[311, 311, 311]"
+    },
+    {
+      "activity": "dance",
+      "check": "fail-a frame count",
+      "passed": true,
+      "detail": "3"
+    },
+    {
+      "activity": "dance",
+      "check": "path exists",
+      "passed": true,
+      "detail": "assets\\schedule-layers-v2\\dance\\failures\\fail-a-1.png"
+    },
+    {
+      "activity": "dance",
+      "check": "PNG opens",
+      "passed": true,
+      "detail": "failures/fail-a-1.png"
+    },
+    {
+      "activity": "dance",
+      "check": "RGBA/transparency",
+      "passed": true,
+      "detail": "failures/fail-a-1.png: RGBA"
+    },
+    {
+      "activity": "dance",
+      "check": "not empty",
+      "passed": true,
+      "detail": "failures/fail-a-1.png"
+    },
+    {
+      "activity": "dance",
+      "check": "production filename",
+      "passed": true,
+      "detail": "failures/fail-a-1.png"
+    },
+    {
+      "activity": "dance",
+      "check": "path exists",
+      "passed": true,
+      "detail": "assets\\schedule-layers-v2\\dance\\failures\\fail-a-2.png"
+    },
+    {
+      "activity": "dance",
+      "check": "PNG opens",
+      "passed": true,
+      "detail": "failures/fail-a-2.png"
+    },
+    {
+      "activity": "dance",
+      "check": "RGBA/transparency",
+      "passed": true,
+      "detail": "failures/fail-a-2.png: RGBA"
+    },
+    {
+      "activity": "dance",
+      "check": "not empty",
+      "passed": true,
+      "detail": "failures/fail-a-2.png"
+    },
+    {
+      "activity": "dance",
+      "check": "production filename",
+      "passed": true,
+      "detail": "failures/fail-a-2.png"
+    },
+    {
+      "activity": "dance",
+      "check": "path exists",
+      "passed": true,
+      "detail": "assets\\schedule-layers-v2\\dance\\failures\\fail-a-3.png"
+    },
+    {
+      "activity": "dance",
+      "check": "PNG opens",
+      "passed": true,
+      "detail": "failures/fail-a-3.png"
+    },
+    {
+      "activity": "dance",
+      "check": "RGBA/transparency",
+      "passed": true,
+      "detail": "failures/fail-a-3.png: RGBA"
+    },
+    {
+      "activity": "dance",
+      "check": "not empty",
+      "passed": true,
+      "detail": "failures/fail-a-3.png"
+    },
+    {
+      "activity": "dance",
+      "check": "production filename",
+      "passed": true,
+      "detail": "failures/fail-a-3.png"
+    },
+    {
+      "activity": "dance",
+      "check": "fail-a canvas match",
+      "passed": true,
+      "detail": "[(320, 320)]"
+    },
+    {
+      "activity": "dance",
+      "check": "fail-a frames differ",
+      "passed": true,
+      "detail": "unique=3"
+    },
+    {
+      "activity": "dance",
+      "check": "fail-a floor tolerance",
+      "passed": true,
+      "detail": "[311, 311, 311]"
+    },
+    {
+      "activity": "dance",
+      "check": "fail-b frame count",
+      "passed": true,
+      "detail": "3"
+    },
+    {
+      "activity": "dance",
+      "check": "path exists",
+      "passed": true,
+      "detail": "assets\\schedule-layers-v2\\dance\\failures\\fail-b-1.png"
+    },
+    {
+      "activity": "dance",
+      "check": "PNG opens",
+      "passed": true,
+      "detail": "failures/fail-b-1.png"
+    },
+    {
+      "activity": "dance",
+      "check": "RGBA/transparency",
+      "passed": true,
+      "detail": "failures/fail-b-1.png: RGBA"
+    },
+    {
+      "activity": "dance",
+      "check": "not empty",
+      "passed": true,
+      "detail": "failures/fail-b-1.png"
+    },
+    {
+      "activity": "dance",
+      "check": "production filename",
+      "passed": true,
+      "detail": "failures/fail-b-1.png"
+    },
+    {
+      "activity": "dance",
+      "check": "path exists",
+      "passed": true,
+      "detail": "assets\\schedule-layers-v2\\dance\\failures\\fail-b-2.png"
+    },
+    {
+      "activity": "dance",
+      "check": "PNG opens",
+      "passed": true,
+      "detail": "failures/fail-b-2.png"
+    },
+    {
+      "activity": "dance",
+      "check": "RGBA/transparency",
+      "passed": true,
+      "detail": "failures/fail-b-2.png: RGBA"
+    },
+    {
+      "activity": "dance",
+      "check": "not empty",
+      "passed": true,
+      "detail": "failures/fail-b-2.png"
+    },
+    {
+      "activity": "dance",
+      "check": "production filename",
+      "passed": true,
+      "detail": "failures/fail-b-2.png"
+    },
+    {
+      "activity": "dance",
+      "check": "path exists",
+      "passed": true,
+      "detail": "assets\\schedule-layers-v2\\dance\\failures\\fail-b-3.png"
+    },
+    {
+      "activity": "dance",
+      "check": "PNG opens",
+      "passed": true,
+      "detail": "failures/fail-b-3.png"
+    },
+    {
+      "activity": "dance",
+      "check": "RGBA/transparency",
+      "passed": true,
+      "detail": "failures/fail-b-3.png: RGBA"
+    },
+    {
+      "activity": "dance",
+      "check": "not empty",
+      "passed": true,
+      "detail": "failures/fail-b-3.png"
+    },
+    {
+      "activity": "dance",
+      "check": "production filename",
+      "passed": true,
+      "detail": "failures/fail-b-3.png"
+    },
+    {
+      "activity": "dance",
+      "check": "fail-b canvas match",
+      "passed": true,
+      "detail": "[(320, 320)]"
+    },
+    {
+      "activity": "dance",
+      "check": "fail-b frames differ",
+      "passed": true,
+      "detail": "unique=3"
+    },
+    {
+      "activity": "dance",
       "check": "fail-b floor tolerance",
       "passed": true,
       "detail": "[311, 311, 311]"
@@ -1221,6 +2433,612 @@
       "detail": "[184, 184, 184]"
     },
     {
+      "activity": "music",
+      "check": "manifest activity folder",
+      "passed": true,
+      "detail": "music"
+    },
+    {
+      "activity": "music",
+      "check": "hero frame count",
+      "passed": true,
+      "detail": "3"
+    },
+    {
+      "activity": "music",
+      "check": "existing hero preserved",
+      "passed": true,
+      "detail": "assets\\characters\\seonhwa\\schedule-actions\\manners-pixel-1.png"
+    },
+    {
+      "activity": "music",
+      "check": "existing hero preserved",
+      "passed": true,
+      "detail": "assets\\characters\\seonhwa\\schedule-actions\\manners-pixel-2.png"
+    },
+    {
+      "activity": "music",
+      "check": "existing hero preserved",
+      "passed": true,
+      "detail": "assets\\characters\\seonhwa\\schedule-actions\\manners-pixel-3.png"
+    },
+    {
+      "activity": "music",
+      "check": "npc frame count",
+      "passed": true,
+      "detail": "3"
+    },
+    {
+      "activity": "music",
+      "check": "path exists",
+      "passed": true,
+      "detail": "assets\\schedule-layers-v2\\music\\npc\\master\\idle-1.png"
+    },
+    {
+      "activity": "music",
+      "check": "PNG opens",
+      "passed": true,
+      "detail": "npc/master/idle-1.png"
+    },
+    {
+      "activity": "music",
+      "check": "RGBA/transparency",
+      "passed": true,
+      "detail": "npc/master/idle-1.png: RGBA"
+    },
+    {
+      "activity": "music",
+      "check": "not empty",
+      "passed": true,
+      "detail": "npc/master/idle-1.png"
+    },
+    {
+      "activity": "music",
+      "check": "production filename",
+      "passed": true,
+      "detail": "npc/master/idle-1.png"
+    },
+    {
+      "activity": "music",
+      "check": "path exists",
+      "passed": true,
+      "detail": "assets\\schedule-layers-v2\\music\\npc\\master\\idle-2.png"
+    },
+    {
+      "activity": "music",
+      "check": "PNG opens",
+      "passed": true,
+      "detail": "npc/master/idle-2.png"
+    },
+    {
+      "activity": "music",
+      "check": "RGBA/transparency",
+      "passed": true,
+      "detail": "npc/master/idle-2.png: RGBA"
+    },
+    {
+      "activity": "music",
+      "check": "not empty",
+      "passed": true,
+      "detail": "npc/master/idle-2.png"
+    },
+    {
+      "activity": "music",
+      "check": "production filename",
+      "passed": true,
+      "detail": "npc/master/idle-2.png"
+    },
+    {
+      "activity": "music",
+      "check": "path exists",
+      "passed": true,
+      "detail": "assets\\schedule-layers-v2\\music\\npc\\master\\idle-3.png"
+    },
+    {
+      "activity": "music",
+      "check": "PNG opens",
+      "passed": true,
+      "detail": "npc/master/idle-3.png"
+    },
+    {
+      "activity": "music",
+      "check": "RGBA/transparency",
+      "passed": true,
+      "detail": "npc/master/idle-3.png: RGBA"
+    },
+    {
+      "activity": "music",
+      "check": "not empty",
+      "passed": true,
+      "detail": "npc/master/idle-3.png"
+    },
+    {
+      "activity": "music",
+      "check": "production filename",
+      "passed": true,
+      "detail": "npc/master/idle-3.png"
+    },
+    {
+      "activity": "music",
+      "check": "npc canvas match",
+      "passed": true,
+      "detail": "[(320, 320)]"
+    },
+    {
+      "activity": "music",
+      "check": "npc frames differ",
+      "passed": true,
+      "detail": "unique=3"
+    },
+    {
+      "activity": "music",
+      "check": "npc floor tolerance",
+      "passed": true,
+      "detail": "[311, 311, 311]"
+    },
+    {
+      "activity": "music",
+      "check": "npc bbox consistency",
+      "passed": true,
+      "detail": "widths=[106, 138, 106], heights=[304, 304, 304]"
+    },
+    {
+      "activity": "music",
+      "check": "success-a frame count",
+      "passed": true,
+      "detail": "3"
+    },
+    {
+      "activity": "music",
+      "check": "path exists",
+      "passed": true,
+      "detail": "assets\\schedule-layers-v2\\music\\props\\instrument-1.png"
+    },
+    {
+      "activity": "music",
+      "check": "PNG opens",
+      "passed": true,
+      "detail": "props/instrument-1.png"
+    },
+    {
+      "activity": "music",
+      "check": "RGBA/transparency",
+      "passed": true,
+      "detail": "props/instrument-1.png: RGBA"
+    },
+    {
+      "activity": "music",
+      "check": "not empty",
+      "passed": true,
+      "detail": "props/instrument-1.png"
+    },
+    {
+      "activity": "music",
+      "check": "production filename",
+      "passed": true,
+      "detail": "props/instrument-1.png"
+    },
+    {
+      "activity": "music",
+      "check": "path exists",
+      "passed": true,
+      "detail": "assets\\schedule-layers-v2\\music\\props\\instrument-2.png"
+    },
+    {
+      "activity": "music",
+      "check": "PNG opens",
+      "passed": true,
+      "detail": "props/instrument-2.png"
+    },
+    {
+      "activity": "music",
+      "check": "RGBA/transparency",
+      "passed": true,
+      "detail": "props/instrument-2.png: RGBA"
+    },
+    {
+      "activity": "music",
+      "check": "not empty",
+      "passed": true,
+      "detail": "props/instrument-2.png"
+    },
+    {
+      "activity": "music",
+      "check": "production filename",
+      "passed": true,
+      "detail": "props/instrument-2.png"
+    },
+    {
+      "activity": "music",
+      "check": "path exists",
+      "passed": true,
+      "detail": "assets\\schedule-layers-v2\\music\\props\\instrument-3.png"
+    },
+    {
+      "activity": "music",
+      "check": "PNG opens",
+      "passed": true,
+      "detail": "props/instrument-3.png"
+    },
+    {
+      "activity": "music",
+      "check": "RGBA/transparency",
+      "passed": true,
+      "detail": "props/instrument-3.png: RGBA"
+    },
+    {
+      "activity": "music",
+      "check": "not empty",
+      "passed": true,
+      "detail": "props/instrument-3.png"
+    },
+    {
+      "activity": "music",
+      "check": "production filename",
+      "passed": true,
+      "detail": "props/instrument-3.png"
+    },
+    {
+      "activity": "music",
+      "check": "success-a canvas match",
+      "passed": true,
+      "detail": "[(320, 320)]"
+    },
+    {
+      "activity": "music",
+      "check": "success-a frames differ",
+      "passed": true,
+      "detail": "unique=3"
+    },
+    {
+      "activity": "music",
+      "check": "success-a floor tolerance",
+      "passed": true,
+      "detail": "[311, 311, 311]"
+    },
+    {
+      "activity": "music",
+      "check": "success-b frame count",
+      "passed": true,
+      "detail": "3"
+    },
+    {
+      "activity": "music",
+      "check": "path exists",
+      "passed": true,
+      "detail": "assets\\schedule-layers-v2\\music\\effects\\music-notes-1.png"
+    },
+    {
+      "activity": "music",
+      "check": "PNG opens",
+      "passed": true,
+      "detail": "effects/music-notes-1.png"
+    },
+    {
+      "activity": "music",
+      "check": "RGBA/transparency",
+      "passed": true,
+      "detail": "effects/music-notes-1.png: RGBA"
+    },
+    {
+      "activity": "music",
+      "check": "not empty",
+      "passed": true,
+      "detail": "effects/music-notes-1.png"
+    },
+    {
+      "activity": "music",
+      "check": "production filename",
+      "passed": true,
+      "detail": "effects/music-notes-1.png"
+    },
+    {
+      "activity": "music",
+      "check": "path exists",
+      "passed": true,
+      "detail": "assets\\schedule-layers-v2\\music\\effects\\music-notes-2.png"
+    },
+    {
+      "activity": "music",
+      "check": "PNG opens",
+      "passed": true,
+      "detail": "effects/music-notes-2.png"
+    },
+    {
+      "activity": "music",
+      "check": "RGBA/transparency",
+      "passed": true,
+      "detail": "effects/music-notes-2.png: RGBA"
+    },
+    {
+      "activity": "music",
+      "check": "not empty",
+      "passed": true,
+      "detail": "effects/music-notes-2.png"
+    },
+    {
+      "activity": "music",
+      "check": "production filename",
+      "passed": true,
+      "detail": "effects/music-notes-2.png"
+    },
+    {
+      "activity": "music",
+      "check": "path exists",
+      "passed": true,
+      "detail": "assets\\schedule-layers-v2\\music\\effects\\music-notes-3.png"
+    },
+    {
+      "activity": "music",
+      "check": "PNG opens",
+      "passed": true,
+      "detail": "effects/music-notes-3.png"
+    },
+    {
+      "activity": "music",
+      "check": "RGBA/transparency",
+      "passed": true,
+      "detail": "effects/music-notes-3.png: RGBA"
+    },
+    {
+      "activity": "music",
+      "check": "not empty",
+      "passed": true,
+      "detail": "effects/music-notes-3.png"
+    },
+    {
+      "activity": "music",
+      "check": "production filename",
+      "passed": true,
+      "detail": "effects/music-notes-3.png"
+    },
+    {
+      "activity": "music",
+      "check": "success-b canvas match",
+      "passed": true,
+      "detail": "[(320, 320)]"
+    },
+    {
+      "activity": "music",
+      "check": "success-b frames differ",
+      "passed": true,
+      "detail": "unique=3"
+    },
+    {
+      "activity": "music",
+      "check": "success-b floor tolerance",
+      "passed": true,
+      "detail": "[311, 311, 311]"
+    },
+    {
+      "activity": "music",
+      "check": "fail-a frame count",
+      "passed": true,
+      "detail": "3"
+    },
+    {
+      "activity": "music",
+      "check": "path exists",
+      "passed": true,
+      "detail": "assets\\schedule-layers-v2\\music\\failures\\fail-a-1.png"
+    },
+    {
+      "activity": "music",
+      "check": "PNG opens",
+      "passed": true,
+      "detail": "failures/fail-a-1.png"
+    },
+    {
+      "activity": "music",
+      "check": "RGBA/transparency",
+      "passed": true,
+      "detail": "failures/fail-a-1.png: RGBA"
+    },
+    {
+      "activity": "music",
+      "check": "not empty",
+      "passed": true,
+      "detail": "failures/fail-a-1.png"
+    },
+    {
+      "activity": "music",
+      "check": "production filename",
+      "passed": true,
+      "detail": "failures/fail-a-1.png"
+    },
+    {
+      "activity": "music",
+      "check": "path exists",
+      "passed": true,
+      "detail": "assets\\schedule-layers-v2\\music\\failures\\fail-a-2.png"
+    },
+    {
+      "activity": "music",
+      "check": "PNG opens",
+      "passed": true,
+      "detail": "failures/fail-a-2.png"
+    },
+    {
+      "activity": "music",
+      "check": "RGBA/transparency",
+      "passed": true,
+      "detail": "failures/fail-a-2.png: RGBA"
+    },
+    {
+      "activity": "music",
+      "check": "not empty",
+      "passed": true,
+      "detail": "failures/fail-a-2.png"
+    },
+    {
+      "activity": "music",
+      "check": "production filename",
+      "passed": true,
+      "detail": "failures/fail-a-2.png"
+    },
+    {
+      "activity": "music",
+      "check": "path exists",
+      "passed": true,
+      "detail": "assets\\schedule-layers-v2\\music\\failures\\fail-a-3.png"
+    },
+    {
+      "activity": "music",
+      "check": "PNG opens",
+      "passed": true,
+      "detail": "failures/fail-a-3.png"
+    },
+    {
+      "activity": "music",
+      "check": "RGBA/transparency",
+      "passed": true,
+      "detail": "failures/fail-a-3.png: RGBA"
+    },
+    {
+      "activity": "music",
+      "check": "not empty",
+      "passed": true,
+      "detail": "failures/fail-a-3.png"
+    },
+    {
+      "activity": "music",
+      "check": "production filename",
+      "passed": true,
+      "detail": "failures/fail-a-3.png"
+    },
+    {
+      "activity": "music",
+      "check": "fail-a canvas match",
+      "passed": true,
+      "detail": "[(320, 303)]"
+    },
+    {
+      "activity": "music",
+      "check": "fail-a frames differ",
+      "passed": true,
+      "detail": "unique=3"
+    },
+    {
+      "activity": "music",
+      "check": "fail-a floor tolerance",
+      "passed": true,
+      "detail": "[294, 294, 294]"
+    },
+    {
+      "activity": "music",
+      "check": "fail-b frame count",
+      "passed": true,
+      "detail": "3"
+    },
+    {
+      "activity": "music",
+      "check": "path exists",
+      "passed": true,
+      "detail": "assets\\schedule-layers-v2\\music\\failures\\fail-b-1.png"
+    },
+    {
+      "activity": "music",
+      "check": "PNG opens",
+      "passed": true,
+      "detail": "failures/fail-b-1.png"
+    },
+    {
+      "activity": "music",
+      "check": "RGBA/transparency",
+      "passed": true,
+      "detail": "failures/fail-b-1.png: RGBA"
+    },
+    {
+      "activity": "music",
+      "check": "not empty",
+      "passed": true,
+      "detail": "failures/fail-b-1.png"
+    },
+    {
+      "activity": "music",
+      "check": "production filename",
+      "passed": true,
+      "detail": "failures/fail-b-1.png"
+    },
+    {
+      "activity": "music",
+      "check": "path exists",
+      "passed": true,
+      "detail": "assets\\schedule-layers-v2\\music\\failures\\fail-b-2.png"
+    },
+    {
+      "activity": "music",
+      "check": "PNG opens",
+      "passed": true,
+      "detail": "failures/fail-b-2.png"
+    },
+    {
+      "activity": "music",
+      "check": "RGBA/transparency",
+      "passed": true,
+      "detail": "failures/fail-b-2.png: RGBA"
+    },
+    {
+      "activity": "music",
+      "check": "not empty",
+      "passed": true,
+      "detail": "failures/fail-b-2.png"
+    },
+    {
+      "activity": "music",
+      "check": "production filename",
+      "passed": true,
+      "detail": "failures/fail-b-2.png"
+    },
+    {
+      "activity": "music",
+      "check": "path exists",
+      "passed": true,
+      "detail": "assets\\schedule-layers-v2\\music\\failures\\fail-b-3.png"
+    },
+    {
+      "activity": "music",
+      "check": "PNG opens",
+      "passed": true,
+      "detail": "failures/fail-b-3.png"
+    },
+    {
+      "activity": "music",
+      "check": "RGBA/transparency",
+      "passed": true,
+      "detail": "failures/fail-b-3.png: RGBA"
+    },
+    {
+      "activity": "music",
+      "check": "not empty",
+      "passed": true,
+      "detail": "failures/fail-b-3.png"
+    },
+    {
+      "activity": "music",
+      "check": "production filename",
+      "passed": true,
+      "detail": "failures/fail-b-3.png"
+    },
+    {
+      "activity": "music",
+      "check": "fail-b canvas match",
+      "passed": true,
+      "detail": "[(320, 320)]"
+    },
+    {
+      "activity": "music",
+      "check": "fail-b frames differ",
+      "passed": true,
+      "detail": "unique=3"
+    },
+    {
+      "activity": "music",
+      "check": "fail-b floor tolerance",
+      "passed": true,
+      "detail": "[311, 311, 311]"
+    },
+    {
       "activity": "painting",
       "check": "manifest activity folder",
       "passed": true,
@@ -1825,6 +3643,612 @@
       "check": "fail-b floor tolerance",
       "passed": true,
       "detail": "[291, 291, 291]"
+    },
+    {
+      "activity": "sewing",
+      "check": "manifest activity folder",
+      "passed": true,
+      "detail": "sewing"
+    },
+    {
+      "activity": "sewing",
+      "check": "hero frame count",
+      "passed": true,
+      "detail": "3"
+    },
+    {
+      "activity": "sewing",
+      "check": "existing hero preserved",
+      "passed": true,
+      "detail": "assets\\characters\\seonhwa\\schedule-actions\\loomwork-pixel-1.png"
+    },
+    {
+      "activity": "sewing",
+      "check": "existing hero preserved",
+      "passed": true,
+      "detail": "assets\\characters\\seonhwa\\schedule-actions\\loomwork-pixel-2.png"
+    },
+    {
+      "activity": "sewing",
+      "check": "existing hero preserved",
+      "passed": true,
+      "detail": "assets\\characters\\seonhwa\\schedule-actions\\loomwork-pixel-3.png"
+    },
+    {
+      "activity": "sewing",
+      "check": "npc frame count",
+      "passed": true,
+      "detail": "3"
+    },
+    {
+      "activity": "sewing",
+      "check": "path exists",
+      "passed": true,
+      "detail": "assets\\schedule-layers-v2\\sewing\\npc\\master\\idle-1.png"
+    },
+    {
+      "activity": "sewing",
+      "check": "PNG opens",
+      "passed": true,
+      "detail": "npc/master/idle-1.png"
+    },
+    {
+      "activity": "sewing",
+      "check": "RGBA/transparency",
+      "passed": true,
+      "detail": "npc/master/idle-1.png: RGBA"
+    },
+    {
+      "activity": "sewing",
+      "check": "not empty",
+      "passed": true,
+      "detail": "npc/master/idle-1.png"
+    },
+    {
+      "activity": "sewing",
+      "check": "production filename",
+      "passed": true,
+      "detail": "npc/master/idle-1.png"
+    },
+    {
+      "activity": "sewing",
+      "check": "path exists",
+      "passed": true,
+      "detail": "assets\\schedule-layers-v2\\sewing\\npc\\master\\idle-2.png"
+    },
+    {
+      "activity": "sewing",
+      "check": "PNG opens",
+      "passed": true,
+      "detail": "npc/master/idle-2.png"
+    },
+    {
+      "activity": "sewing",
+      "check": "RGBA/transparency",
+      "passed": true,
+      "detail": "npc/master/idle-2.png: RGBA"
+    },
+    {
+      "activity": "sewing",
+      "check": "not empty",
+      "passed": true,
+      "detail": "npc/master/idle-2.png"
+    },
+    {
+      "activity": "sewing",
+      "check": "production filename",
+      "passed": true,
+      "detail": "npc/master/idle-2.png"
+    },
+    {
+      "activity": "sewing",
+      "check": "path exists",
+      "passed": true,
+      "detail": "assets\\schedule-layers-v2\\sewing\\npc\\master\\idle-3.png"
+    },
+    {
+      "activity": "sewing",
+      "check": "PNG opens",
+      "passed": true,
+      "detail": "npc/master/idle-3.png"
+    },
+    {
+      "activity": "sewing",
+      "check": "RGBA/transparency",
+      "passed": true,
+      "detail": "npc/master/idle-3.png: RGBA"
+    },
+    {
+      "activity": "sewing",
+      "check": "not empty",
+      "passed": true,
+      "detail": "npc/master/idle-3.png"
+    },
+    {
+      "activity": "sewing",
+      "check": "production filename",
+      "passed": true,
+      "detail": "npc/master/idle-3.png"
+    },
+    {
+      "activity": "sewing",
+      "check": "npc canvas match",
+      "passed": true,
+      "detail": "[(320, 320)]"
+    },
+    {
+      "activity": "sewing",
+      "check": "npc frames differ",
+      "passed": true,
+      "detail": "unique=3"
+    },
+    {
+      "activity": "sewing",
+      "check": "npc floor tolerance",
+      "passed": true,
+      "detail": "[311, 311, 311]"
+    },
+    {
+      "activity": "sewing",
+      "check": "npc bbox consistency",
+      "passed": true,
+      "detail": "widths=[137, 119, 138], heights=[304, 304, 304]"
+    },
+    {
+      "activity": "sewing",
+      "check": "success-a frame count",
+      "passed": true,
+      "detail": "3"
+    },
+    {
+      "activity": "sewing",
+      "check": "path exists",
+      "passed": true,
+      "detail": "assets\\schedule-layers-v2\\sewing\\props\\embroidery-1.png"
+    },
+    {
+      "activity": "sewing",
+      "check": "PNG opens",
+      "passed": true,
+      "detail": "props/embroidery-1.png"
+    },
+    {
+      "activity": "sewing",
+      "check": "RGBA/transparency",
+      "passed": true,
+      "detail": "props/embroidery-1.png: RGBA"
+    },
+    {
+      "activity": "sewing",
+      "check": "not empty",
+      "passed": true,
+      "detail": "props/embroidery-1.png"
+    },
+    {
+      "activity": "sewing",
+      "check": "production filename",
+      "passed": true,
+      "detail": "props/embroidery-1.png"
+    },
+    {
+      "activity": "sewing",
+      "check": "path exists",
+      "passed": true,
+      "detail": "assets\\schedule-layers-v2\\sewing\\props\\embroidery-2.png"
+    },
+    {
+      "activity": "sewing",
+      "check": "PNG opens",
+      "passed": true,
+      "detail": "props/embroidery-2.png"
+    },
+    {
+      "activity": "sewing",
+      "check": "RGBA/transparency",
+      "passed": true,
+      "detail": "props/embroidery-2.png: RGBA"
+    },
+    {
+      "activity": "sewing",
+      "check": "not empty",
+      "passed": true,
+      "detail": "props/embroidery-2.png"
+    },
+    {
+      "activity": "sewing",
+      "check": "production filename",
+      "passed": true,
+      "detail": "props/embroidery-2.png"
+    },
+    {
+      "activity": "sewing",
+      "check": "path exists",
+      "passed": true,
+      "detail": "assets\\schedule-layers-v2\\sewing\\props\\embroidery-3.png"
+    },
+    {
+      "activity": "sewing",
+      "check": "PNG opens",
+      "passed": true,
+      "detail": "props/embroidery-3.png"
+    },
+    {
+      "activity": "sewing",
+      "check": "RGBA/transparency",
+      "passed": true,
+      "detail": "props/embroidery-3.png: RGBA"
+    },
+    {
+      "activity": "sewing",
+      "check": "not empty",
+      "passed": true,
+      "detail": "props/embroidery-3.png"
+    },
+    {
+      "activity": "sewing",
+      "check": "production filename",
+      "passed": true,
+      "detail": "props/embroidery-3.png"
+    },
+    {
+      "activity": "sewing",
+      "check": "success-a canvas match",
+      "passed": true,
+      "detail": "[(320, 320)]"
+    },
+    {
+      "activity": "sewing",
+      "check": "success-a frames differ",
+      "passed": true,
+      "detail": "unique=3"
+    },
+    {
+      "activity": "sewing",
+      "check": "success-a floor tolerance",
+      "passed": true,
+      "detail": "[311, 311, 311]"
+    },
+    {
+      "activity": "sewing",
+      "check": "success-b frame count",
+      "passed": true,
+      "detail": "3"
+    },
+    {
+      "activity": "sewing",
+      "check": "path exists",
+      "passed": true,
+      "detail": "assets\\schedule-layers-v2\\sewing\\effects\\folded-cloth-1.png"
+    },
+    {
+      "activity": "sewing",
+      "check": "PNG opens",
+      "passed": true,
+      "detail": "effects/folded-cloth-1.png"
+    },
+    {
+      "activity": "sewing",
+      "check": "RGBA/transparency",
+      "passed": true,
+      "detail": "effects/folded-cloth-1.png: RGBA"
+    },
+    {
+      "activity": "sewing",
+      "check": "not empty",
+      "passed": true,
+      "detail": "effects/folded-cloth-1.png"
+    },
+    {
+      "activity": "sewing",
+      "check": "production filename",
+      "passed": true,
+      "detail": "effects/folded-cloth-1.png"
+    },
+    {
+      "activity": "sewing",
+      "check": "path exists",
+      "passed": true,
+      "detail": "assets\\schedule-layers-v2\\sewing\\effects\\folded-cloth-2.png"
+    },
+    {
+      "activity": "sewing",
+      "check": "PNG opens",
+      "passed": true,
+      "detail": "effects/folded-cloth-2.png"
+    },
+    {
+      "activity": "sewing",
+      "check": "RGBA/transparency",
+      "passed": true,
+      "detail": "effects/folded-cloth-2.png: RGBA"
+    },
+    {
+      "activity": "sewing",
+      "check": "not empty",
+      "passed": true,
+      "detail": "effects/folded-cloth-2.png"
+    },
+    {
+      "activity": "sewing",
+      "check": "production filename",
+      "passed": true,
+      "detail": "effects/folded-cloth-2.png"
+    },
+    {
+      "activity": "sewing",
+      "check": "path exists",
+      "passed": true,
+      "detail": "assets\\schedule-layers-v2\\sewing\\effects\\folded-cloth-3.png"
+    },
+    {
+      "activity": "sewing",
+      "check": "PNG opens",
+      "passed": true,
+      "detail": "effects/folded-cloth-3.png"
+    },
+    {
+      "activity": "sewing",
+      "check": "RGBA/transparency",
+      "passed": true,
+      "detail": "effects/folded-cloth-3.png: RGBA"
+    },
+    {
+      "activity": "sewing",
+      "check": "not empty",
+      "passed": true,
+      "detail": "effects/folded-cloth-3.png"
+    },
+    {
+      "activity": "sewing",
+      "check": "production filename",
+      "passed": true,
+      "detail": "effects/folded-cloth-3.png"
+    },
+    {
+      "activity": "sewing",
+      "check": "success-b canvas match",
+      "passed": true,
+      "detail": "[(320, 272)]"
+    },
+    {
+      "activity": "sewing",
+      "check": "success-b frames differ",
+      "passed": true,
+      "detail": "unique=3"
+    },
+    {
+      "activity": "sewing",
+      "check": "success-b floor tolerance",
+      "passed": true,
+      "detail": "[263, 263, 263]"
+    },
+    {
+      "activity": "sewing",
+      "check": "fail-a frame count",
+      "passed": true,
+      "detail": "3"
+    },
+    {
+      "activity": "sewing",
+      "check": "path exists",
+      "passed": true,
+      "detail": "assets\\schedule-layers-v2\\sewing\\failures\\fail-a-1.png"
+    },
+    {
+      "activity": "sewing",
+      "check": "PNG opens",
+      "passed": true,
+      "detail": "failures/fail-a-1.png"
+    },
+    {
+      "activity": "sewing",
+      "check": "RGBA/transparency",
+      "passed": true,
+      "detail": "failures/fail-a-1.png: RGBA"
+    },
+    {
+      "activity": "sewing",
+      "check": "not empty",
+      "passed": true,
+      "detail": "failures/fail-a-1.png"
+    },
+    {
+      "activity": "sewing",
+      "check": "production filename",
+      "passed": true,
+      "detail": "failures/fail-a-1.png"
+    },
+    {
+      "activity": "sewing",
+      "check": "path exists",
+      "passed": true,
+      "detail": "assets\\schedule-layers-v2\\sewing\\failures\\fail-a-2.png"
+    },
+    {
+      "activity": "sewing",
+      "check": "PNG opens",
+      "passed": true,
+      "detail": "failures/fail-a-2.png"
+    },
+    {
+      "activity": "sewing",
+      "check": "RGBA/transparency",
+      "passed": true,
+      "detail": "failures/fail-a-2.png: RGBA"
+    },
+    {
+      "activity": "sewing",
+      "check": "not empty",
+      "passed": true,
+      "detail": "failures/fail-a-2.png"
+    },
+    {
+      "activity": "sewing",
+      "check": "production filename",
+      "passed": true,
+      "detail": "failures/fail-a-2.png"
+    },
+    {
+      "activity": "sewing",
+      "check": "path exists",
+      "passed": true,
+      "detail": "assets\\schedule-layers-v2\\sewing\\failures\\fail-a-3.png"
+    },
+    {
+      "activity": "sewing",
+      "check": "PNG opens",
+      "passed": true,
+      "detail": "failures/fail-a-3.png"
+    },
+    {
+      "activity": "sewing",
+      "check": "RGBA/transparency",
+      "passed": true,
+      "detail": "failures/fail-a-3.png: RGBA"
+    },
+    {
+      "activity": "sewing",
+      "check": "not empty",
+      "passed": true,
+      "detail": "failures/fail-a-3.png"
+    },
+    {
+      "activity": "sewing",
+      "check": "production filename",
+      "passed": true,
+      "detail": "failures/fail-a-3.png"
+    },
+    {
+      "activity": "sewing",
+      "check": "fail-a canvas match",
+      "passed": true,
+      "detail": "[(320, 275)]"
+    },
+    {
+      "activity": "sewing",
+      "check": "fail-a frames differ",
+      "passed": true,
+      "detail": "unique=3"
+    },
+    {
+      "activity": "sewing",
+      "check": "fail-a floor tolerance",
+      "passed": true,
+      "detail": "[266, 266, 266]"
+    },
+    {
+      "activity": "sewing",
+      "check": "fail-b frame count",
+      "passed": true,
+      "detail": "3"
+    },
+    {
+      "activity": "sewing",
+      "check": "path exists",
+      "passed": true,
+      "detail": "assets\\schedule-layers-v2\\sewing\\failures\\fail-b-1.png"
+    },
+    {
+      "activity": "sewing",
+      "check": "PNG opens",
+      "passed": true,
+      "detail": "failures/fail-b-1.png"
+    },
+    {
+      "activity": "sewing",
+      "check": "RGBA/transparency",
+      "passed": true,
+      "detail": "failures/fail-b-1.png: RGBA"
+    },
+    {
+      "activity": "sewing",
+      "check": "not empty",
+      "passed": true,
+      "detail": "failures/fail-b-1.png"
+    },
+    {
+      "activity": "sewing",
+      "check": "production filename",
+      "passed": true,
+      "detail": "failures/fail-b-1.png"
+    },
+    {
+      "activity": "sewing",
+      "check": "path exists",
+      "passed": true,
+      "detail": "assets\\schedule-layers-v2\\sewing\\failures\\fail-b-2.png"
+    },
+    {
+      "activity": "sewing",
+      "check": "PNG opens",
+      "passed": true,
+      "detail": "failures/fail-b-2.png"
+    },
+    {
+      "activity": "sewing",
+      "check": "RGBA/transparency",
+      "passed": true,
+      "detail": "failures/fail-b-2.png: RGBA"
+    },
+    {
+      "activity": "sewing",
+      "check": "not empty",
+      "passed": true,
+      "detail": "failures/fail-b-2.png"
+    },
+    {
+      "activity": "sewing",
+      "check": "production filename",
+      "passed": true,
+      "detail": "failures/fail-b-2.png"
+    },
+    {
+      "activity": "sewing",
+      "check": "path exists",
+      "passed": true,
+      "detail": "assets\\schedule-layers-v2\\sewing\\failures\\fail-b-3.png"
+    },
+    {
+      "activity": "sewing",
+      "check": "PNG opens",
+      "passed": true,
+      "detail": "failures/fail-b-3.png"
+    },
+    {
+      "activity": "sewing",
+      "check": "RGBA/transparency",
+      "passed": true,
+      "detail": "failures/fail-b-3.png: RGBA"
+    },
+    {
+      "activity": "sewing",
+      "check": "not empty",
+      "passed": true,
+      "detail": "failures/fail-b-3.png"
+    },
+    {
+      "activity": "sewing",
+      "check": "production filename",
+      "passed": true,
+      "detail": "failures/fail-b-3.png"
+    },
+    {
+      "activity": "sewing",
+      "check": "fail-b canvas match",
+      "passed": true,
+      "detail": "[(320, 320)]"
+    },
+    {
+      "activity": "sewing",
+      "check": "fail-b frames differ",
+      "passed": true,
+      "detail": "unique=3"
+    },
+    {
+      "activity": "sewing",
+      "check": "fail-b floor tolerance",
+      "passed": true,
+      "detail": "[311, 311, 311]"
     }
   ],
   "files": {
@@ -2068,6 +4492,486 @@
       "floor": 311,
       "sha256": "616c4414944bf629395b40aafaff396b6c22dcfbcaaaaa4ef930ff7740c63c1c"
     },
+    "assets/schedule-layers-v2/copying/npc/master/idle-1.png": {
+      "size": [
+        320,
+        320
+      ],
+      "mode": "RGBA",
+      "hasTransparency": true,
+      "bbox": [
+        104,
+        8,
+        215,
+        312
+      ],
+      "floor": 311,
+      "sha256": "cad8225ab70fd5f72634bff70bc40b18aae82ee625f852ac8e282ed5856108bb"
+    },
+    "assets/schedule-layers-v2/copying/npc/master/idle-2.png": {
+      "size": [
+        320,
+        320
+      ],
+      "mode": "RGBA",
+      "hasTransparency": true,
+      "bbox": [
+        93,
+        8,
+        226,
+        312
+      ],
+      "floor": 311,
+      "sha256": "7fc41fe96fe8945fdc5b1e063d9577dc95927319ba97f44b2ce75c91335755fd"
+    },
+    "assets/schedule-layers-v2/copying/npc/master/idle-3.png": {
+      "size": [
+        320,
+        320
+      ],
+      "mode": "RGBA",
+      "hasTransparency": true,
+      "bbox": [
+        105,
+        8,
+        214,
+        312
+      ],
+      "floor": 311,
+      "sha256": "b6c4fecef0260eaa14f41b8dae93d2604aedbda70e97d65edcd3e463f69eb3fc"
+    },
+    "assets/schedule-layers-v2/copying/props/copy-scroll-1.png": {
+      "size": [
+        320,
+        320
+      ],
+      "mode": "RGBA",
+      "hasTransparency": true,
+      "bbox": [
+        8,
+        94,
+        311,
+        312
+      ],
+      "floor": 311,
+      "sha256": "ebd95e07c2ca85e4e7cef6eaef15c9acb4ced9e2df29679da267f8522becde65"
+    },
+    "assets/schedule-layers-v2/copying/props/copy-scroll-2.png": {
+      "size": [
+        320,
+        320
+      ],
+      "mode": "RGBA",
+      "hasTransparency": true,
+      "bbox": [
+        8,
+        94,
+        311,
+        312
+      ],
+      "floor": 311,
+      "sha256": "89867e309910eb7ef8abeb5345fdf5e3db3d8d8dfa084351cfc048d6c2027802"
+    },
+    "assets/schedule-layers-v2/copying/props/copy-scroll-3.png": {
+      "size": [
+        320,
+        320
+      ],
+      "mode": "RGBA",
+      "hasTransparency": true,
+      "bbox": [
+        8,
+        91,
+        312,
+        312
+      ],
+      "floor": 311,
+      "sha256": "d55e455ae4cf0fb85339e1d84716d7c8792563d89c537fb5390fe30ac1bb3ccd"
+    },
+    "assets/schedule-layers-v2/copying/effects/dry-pages-1.png": {
+      "size": [
+        320,
+        305
+      ],
+      "mode": "RGBA",
+      "hasTransparency": true,
+      "bbox": [
+        24,
+        139,
+        296,
+        297
+      ],
+      "floor": 296,
+      "sha256": "db88506841e5142ee492caa99fac42dd3334f0bd4a2461bb57071657dc5d470c"
+    },
+    "assets/schedule-layers-v2/copying/effects/dry-pages-2.png": {
+      "size": [
+        320,
+        305
+      ],
+      "mode": "RGBA",
+      "hasTransparency": true,
+      "bbox": [
+        8,
+        141,
+        311,
+        297
+      ],
+      "floor": 296,
+      "sha256": "10b1f5007a70401e85ad2c75bb4089beb60a8090852c3d2a09bf42975bc2f820"
+    },
+    "assets/schedule-layers-v2/copying/effects/dry-pages-3.png": {
+      "size": [
+        320,
+        305
+      ],
+      "mode": "RGBA",
+      "hasTransparency": true,
+      "bbox": [
+        30,
+        132,
+        290,
+        297
+      ],
+      "floor": 296,
+      "sha256": "36178de93f69ea62b89e952dc2e8155968e94d05dee48593bce1115725be4594"
+    },
+    "assets/schedule-layers-v2/copying/failures/fail-a-1.png": {
+      "size": [
+        320,
+        320
+      ],
+      "mode": "RGBA",
+      "hasTransparency": true,
+      "bbox": [
+        8,
+        97,
+        311,
+        312
+      ],
+      "floor": 311,
+      "sha256": "185000a31368f5ee7a3d951d1c290bb07aeaacb04af398f2b2a1d5b354f1e6f3"
+    },
+    "assets/schedule-layers-v2/copying/failures/fail-a-2.png": {
+      "size": [
+        320,
+        320
+      ],
+      "mode": "RGBA",
+      "hasTransparency": true,
+      "bbox": [
+        8,
+        97,
+        311,
+        312
+      ],
+      "floor": 311,
+      "sha256": "6ef921d08078270dc04d6ec919658d95e2c35fac831ff896867fc129aceddeea"
+    },
+    "assets/schedule-layers-v2/copying/failures/fail-a-3.png": {
+      "size": [
+        320,
+        320
+      ],
+      "mode": "RGBA",
+      "hasTransparency": true,
+      "bbox": [
+        8,
+        97,
+        312,
+        312
+      ],
+      "floor": 311,
+      "sha256": "32a47544df081eb056ec202c6fff34a34091792bcfac2bb24c602df0017d529c"
+    },
+    "assets/schedule-layers-v2/copying/failures/fail-b-1.png": {
+      "size": [
+        320,
+        320
+      ],
+      "mode": "RGBA",
+      "hasTransparency": true,
+      "bbox": [
+        40,
+        191,
+        280,
+        312
+      ],
+      "floor": 311,
+      "sha256": "a809854eeec2a7f377700d5bf68737fee6bcae09a213d6453948028f584f45b7"
+    },
+    "assets/schedule-layers-v2/copying/failures/fail-b-2.png": {
+      "size": [
+        320,
+        320
+      ],
+      "mode": "RGBA",
+      "hasTransparency": true,
+      "bbox": [
+        8,
+        155,
+        312,
+        312
+      ],
+      "floor": 311,
+      "sha256": "393d2afcb2ad755477aab0c33140435cbb26070b33885eba78d0d1e9a7bf387d"
+    },
+    "assets/schedule-layers-v2/copying/failures/fail-b-3.png": {
+      "size": [
+        320,
+        320
+      ],
+      "mode": "RGBA",
+      "hasTransparency": true,
+      "bbox": [
+        27,
+        66,
+        293,
+        312
+      ],
+      "floor": 311,
+      "sha256": "7dd2ca4ca4f20522e8eb6da8cca9149f7b8b38f13daf13b8d54435fec17d2714"
+    },
+    "assets/schedule-layers-v2/dance/npc/master/idle-1.png": {
+      "size": [
+        320,
+        320
+      ],
+      "mode": "RGBA",
+      "hasTransparency": true,
+      "bbox": [
+        106,
+        8,
+        213,
+        312
+      ],
+      "floor": 311,
+      "sha256": "68edc6c53e29851ceec258de268b5060364ba58d42b26fd818b02cdaec994c71"
+    },
+    "assets/schedule-layers-v2/dance/npc/master/idle-2.png": {
+      "size": [
+        320,
+        320
+      ],
+      "mode": "RGBA",
+      "hasTransparency": true,
+      "bbox": [
+        82,
+        8,
+        238,
+        312
+      ],
+      "floor": 311,
+      "sha256": "574445af0de5c2714da55289ceaaec2e301df69d3adfd0b5f955ce283fdd2edf"
+    },
+    "assets/schedule-layers-v2/dance/npc/master/idle-3.png": {
+      "size": [
+        320,
+        320
+      ],
+      "mode": "RGBA",
+      "hasTransparency": true,
+      "bbox": [
+        107,
+        8,
+        213,
+        312
+      ],
+      "floor": 311,
+      "sha256": "0e6497f61718c449ae9dbfd8447bc67ae09109b2b2cbabcafbddfbb330033249"
+    },
+    "assets/schedule-layers-v2/dance/props/ribbon-1.png": {
+      "size": [
+        320,
+        261
+      ],
+      "mode": "RGBA",
+      "hasTransparency": true,
+      "bbox": [
+        8,
+        160,
+        312,
+        253
+      ],
+      "floor": 252,
+      "sha256": "543582c17a4b56cabe838da908020521cbc0a503df2ebd4eaabb8be4517a5f75"
+    },
+    "assets/schedule-layers-v2/dance/props/ribbon-2.png": {
+      "size": [
+        320,
+        261
+      ],
+      "mode": "RGBA",
+      "hasTransparency": true,
+      "bbox": [
+        30,
+        102,
+        290,
+        253
+      ],
+      "floor": 252,
+      "sha256": "d4c9871b75b9b378b88c33ad181555fd3175150458daec9e6370653cdae04de4"
+    },
+    "assets/schedule-layers-v2/dance/props/ribbon-3.png": {
+      "size": [
+        320,
+        261
+      ],
+      "mode": "RGBA",
+      "hasTransparency": true,
+      "bbox": [
+        39,
+        91,
+        281,
+        253
+      ],
+      "floor": 252,
+      "sha256": "6ab50472aed34899db5b8a6916c409fc87ee41b4574229c3bedd3c6818e2b94a"
+    },
+    "assets/schedule-layers-v2/dance/effects/fan-petals-1.png": {
+      "size": [
+        320,
+        320
+      ],
+      "mode": "RGBA",
+      "hasTransparency": true,
+      "bbox": [
+        55,
+        176,
+        264,
+        312
+      ],
+      "floor": 311,
+      "sha256": "2d12a6ac5ffc269417aed4769e53e0120001e4eea3046068b2e8b251203b7368"
+    },
+    "assets/schedule-layers-v2/dance/effects/fan-petals-2.png": {
+      "size": [
+        320,
+        320
+      ],
+      "mode": "RGBA",
+      "hasTransparency": true,
+      "bbox": [
+        8,
+        116,
+        312,
+        312
+      ],
+      "floor": 311,
+      "sha256": "b0d67efcb326b65f470efb0d5aa42ea0eb17e8d5320a2aeff738af832e995047"
+    },
+    "assets/schedule-layers-v2/dance/effects/fan-petals-3.png": {
+      "size": [
+        320,
+        320
+      ],
+      "mode": "RGBA",
+      "hasTransparency": true,
+      "bbox": [
+        28,
+        76,
+        292,
+        312
+      ],
+      "floor": 311,
+      "sha256": "216ebf12ab9ce2bba22bcb567412adb2e6a2000e01fac53c4b1c3d608d078726"
+    },
+    "assets/schedule-layers-v2/dance/failures/fail-a-1.png": {
+      "size": [
+        320,
+        320
+      ],
+      "mode": "RGBA",
+      "hasTransparency": true,
+      "bbox": [
+        19,
+        8,
+        301,
+        312
+      ],
+      "floor": 311,
+      "sha256": "ab444c78068165596c97d06cec4ef2a5c110e64f6e2c8b0787f1648291572279"
+    },
+    "assets/schedule-layers-v2/dance/failures/fail-a-2.png": {
+      "size": [
+        320,
+        320
+      ],
+      "mode": "RGBA",
+      "hasTransparency": true,
+      "bbox": [
+        17,
+        8,
+        303,
+        312
+      ],
+      "floor": 311,
+      "sha256": "e4ab2d0f831d540ae703242dbd3f51e1f724f17c624bb4823b7ce63db8c5cb77"
+    },
+    "assets/schedule-layers-v2/dance/failures/fail-a-3.png": {
+      "size": [
+        320,
+        320
+      ],
+      "mode": "RGBA",
+      "hasTransparency": true,
+      "bbox": [
+        22,
+        42,
+        298,
+        312
+      ],
+      "floor": 311,
+      "sha256": "db6a1917836d2902a4f65271460df3e22dd5adb449bed15405a62ead9b5af45b"
+    },
+    "assets/schedule-layers-v2/dance/failures/fail-b-1.png": {
+      "size": [
+        320,
+        320
+      ],
+      "mode": "RGBA",
+      "hasTransparency": true,
+      "bbox": [
+        39,
+        18,
+        281,
+        312
+      ],
+      "floor": 311,
+      "sha256": "4f6074e8397df61c8e915bfda10310e88d9821add1a8563b107d23574cb88bb5"
+    },
+    "assets/schedule-layers-v2/dance/failures/fail-b-2.png": {
+      "size": [
+        320,
+        320
+      ],
+      "mode": "RGBA",
+      "hasTransparency": true,
+      "bbox": [
+        15,
+        18,
+        304,
+        312
+      ],
+      "floor": 311,
+      "sha256": "39de28c44c6817dd7a6ae84ec48d53cee4357fae8a15812804c168d9c639c512"
+    },
+    "assets/schedule-layers-v2/dance/failures/fail-b-3.png": {
+      "size": [
+        320,
+        320
+      ],
+      "mode": "RGBA",
+      "hasTransparency": true,
+      "bbox": [
+        51,
+        8,
+        269,
+        312
+      ],
+      "floor": 311,
+      "sha256": "d0f190a7f455c3e83f6a821851ab08e7e3410099502fea6499e5510897e27ae3"
+    },
     "assets/schedule-layers-v2/kitchenhelp/npc/jumo/idle-1.png": {
       "size": [
         320,
@@ -2308,6 +5212,246 @@
       "floor": 184,
       "sha256": "09e9e4f7b155613a8b97c8293e076aae32fa03bc45304ffa1e2ea363951334ff"
     },
+    "assets/schedule-layers-v2/music/npc/master/idle-1.png": {
+      "size": [
+        320,
+        320
+      ],
+      "mode": "RGBA",
+      "hasTransparency": true,
+      "bbox": [
+        107,
+        8,
+        213,
+        312
+      ],
+      "floor": 311,
+      "sha256": "2f3ac550137a996d02482849253500b7ba78700f2071e9422ee0704965460bd5"
+    },
+    "assets/schedule-layers-v2/music/npc/master/idle-2.png": {
+      "size": [
+        320,
+        320
+      ],
+      "mode": "RGBA",
+      "hasTransparency": true,
+      "bbox": [
+        91,
+        8,
+        229,
+        312
+      ],
+      "floor": 311,
+      "sha256": "cb561a7691fda66f88e909126d7fa2fdc9a1c55822b68ccaf031bcad97711fa3"
+    },
+    "assets/schedule-layers-v2/music/npc/master/idle-3.png": {
+      "size": [
+        320,
+        320
+      ],
+      "mode": "RGBA",
+      "hasTransparency": true,
+      "bbox": [
+        107,
+        8,
+        213,
+        312
+      ],
+      "floor": 311,
+      "sha256": "09f9491736ecc3570ad95e961bbfd6db53799becd8040c8ad9f21f03fef81ba9"
+    },
+    "assets/schedule-layers-v2/music/props/instrument-1.png": {
+      "size": [
+        320,
+        320
+      ],
+      "mode": "RGBA",
+      "hasTransparency": true,
+      "bbox": [
+        11,
+        174,
+        309,
+        312
+      ],
+      "floor": 311,
+      "sha256": "9ee997e781a2a7d763ae108621ccb8ac218aa30003c4dbf4559251cabcbe89a6"
+    },
+    "assets/schedule-layers-v2/music/props/instrument-2.png": {
+      "size": [
+        320,
+        320
+      ],
+      "mode": "RGBA",
+      "hasTransparency": true,
+      "bbox": [
+        8,
+        161,
+        312,
+        312
+      ],
+      "floor": 311,
+      "sha256": "d70effdceb6f41f09b445f5f2bb25e93992b4614f3a2bcd2fb59ee0e7aaca149"
+    },
+    "assets/schedule-layers-v2/music/props/instrument-3.png": {
+      "size": [
+        320,
+        320
+      ],
+      "mode": "RGBA",
+      "hasTransparency": true,
+      "bbox": [
+        8,
+        95,
+        312,
+        312
+      ],
+      "floor": 311,
+      "sha256": "2adea273bf98f84e84bc7ae5201e6b094495a0467ce4e10a6aad56dfec876c40"
+    },
+    "assets/schedule-layers-v2/music/effects/music-notes-1.png": {
+      "size": [
+        320,
+        320
+      ],
+      "mode": "RGBA",
+      "hasTransparency": true,
+      "bbox": [
+        28,
+        102,
+        292,
+        312
+      ],
+      "floor": 311,
+      "sha256": "c2d96de640cb64b2e7ba9762930b6f3d0f9d672c60b0f1f4fdba982a2fe77b0c"
+    },
+    "assets/schedule-layers-v2/music/effects/music-notes-2.png": {
+      "size": [
+        320,
+        320
+      ],
+      "mode": "RGBA",
+      "hasTransparency": true,
+      "bbox": [
+        31,
+        97,
+        289,
+        312
+      ],
+      "floor": 311,
+      "sha256": "30331818c51d5de823cb1ecf6a2ae4ca604454be3ec73230455ddd2c791179e6"
+    },
+    "assets/schedule-layers-v2/music/effects/music-notes-3.png": {
+      "size": [
+        320,
+        320
+      ],
+      "mode": "RGBA",
+      "hasTransparency": true,
+      "bbox": [
+        28,
+        8,
+        292,
+        312
+      ],
+      "floor": 311,
+      "sha256": "47c55c48519ac9549dc8d15f809368d63572d52ef01c6d09e28c18d3c94070ec"
+    },
+    "assets/schedule-layers-v2/music/failures/fail-a-1.png": {
+      "size": [
+        320,
+        303
+      ],
+      "mode": "RGBA",
+      "hasTransparency": true,
+      "bbox": [
+        8,
+        155,
+        312,
+        295
+      ],
+      "floor": 294,
+      "sha256": "990272ef63a81d8ef0f612dec14fdec40407239ba954a5c25ff83bded3f2526f"
+    },
+    "assets/schedule-layers-v2/music/failures/fail-a-2.png": {
+      "size": [
+        320,
+        303
+      ],
+      "mode": "RGBA",
+      "hasTransparency": true,
+      "bbox": [
+        9,
+        148,
+        311,
+        295
+      ],
+      "floor": 294,
+      "sha256": "9a3e6674be04520112184fde5ad3fbd145c93081e5cfca0e72f937dbe002ca2d"
+    },
+    "assets/schedule-layers-v2/music/failures/fail-a-3.png": {
+      "size": [
+        320,
+        303
+      ],
+      "mode": "RGBA",
+      "hasTransparency": true,
+      "bbox": [
+        8,
+        124,
+        311,
+        295
+      ],
+      "floor": 294,
+      "sha256": "566f4fe1ce03444bd2514049a8d818a2561a7b67821ab9955b77cd0e44864bfe"
+    },
+    "assets/schedule-layers-v2/music/failures/fail-b-1.png": {
+      "size": [
+        320,
+        320
+      ],
+      "mode": "RGBA",
+      "hasTransparency": true,
+      "bbox": [
+        93,
+        8,
+        226,
+        312
+      ],
+      "floor": 311,
+      "sha256": "c84a6d717e9a25705fd1e9712f3e95689df5694e9681e02b2c66e9c8cc680d95"
+    },
+    "assets/schedule-layers-v2/music/failures/fail-b-2.png": {
+      "size": [
+        320,
+        320
+      ],
+      "mode": "RGBA",
+      "hasTransparency": true,
+      "bbox": [
+        100,
+        61,
+        219,
+        312
+      ],
+      "floor": 311,
+      "sha256": "0d04c8a1793332ed7b6566d74f4dbc6e488cc71b42e431f43203cb418827f951"
+    },
+    "assets/schedule-layers-v2/music/failures/fail-b-3.png": {
+      "size": [
+        320,
+        320
+      ],
+      "mode": "RGBA",
+      "hasTransparency": true,
+      "bbox": [
+        34,
+        263,
+        285,
+        312
+      ],
+      "floor": 311,
+      "sha256": "780397dbe8b547757a065a2473503afe8d1efba71422acfecb78df6f29d2630d"
+    },
     "assets/schedule-layers-v2/painting/npc/master/idle-1.png": {
       "size": [
         320,
@@ -2547,6 +5691,246 @@
       ],
       "floor": 291,
       "sha256": "beb2097838719f6d8c752011e2d642c1c8867d4d557c07fcfebcd22588009a6e"
+    },
+    "assets/schedule-layers-v2/sewing/npc/master/idle-1.png": {
+      "size": [
+        320,
+        320
+      ],
+      "mode": "RGBA",
+      "hasTransparency": true,
+      "bbox": [
+        91,
+        8,
+        228,
+        312
+      ],
+      "floor": 311,
+      "sha256": "a43ff6f85a666c1ef0261aaef943fe95d04670962a2ff52daa67a887e1e0298c"
+    },
+    "assets/schedule-layers-v2/sewing/npc/master/idle-2.png": {
+      "size": [
+        320,
+        320
+      ],
+      "mode": "RGBA",
+      "hasTransparency": true,
+      "bbox": [
+        100,
+        8,
+        219,
+        312
+      ],
+      "floor": 311,
+      "sha256": "0d3d98cb95517b61be1e340585f561b51d9515d84548ff79149b17d441e17305"
+    },
+    "assets/schedule-layers-v2/sewing/npc/master/idle-3.png": {
+      "size": [
+        320,
+        320
+      ],
+      "mode": "RGBA",
+      "hasTransparency": true,
+      "bbox": [
+        91,
+        8,
+        229,
+        312
+      ],
+      "floor": 311,
+      "sha256": "85bb0911ea9f851ddb871930eec99e669d0c88d6e0ccf12e96d8d4bece023a96"
+    },
+    "assets/schedule-layers-v2/sewing/props/embroidery-1.png": {
+      "size": [
+        320,
+        320
+      ],
+      "mode": "RGBA",
+      "hasTransparency": true,
+      "bbox": [
+        8,
+        19,
+        312,
+        312
+      ],
+      "floor": 311,
+      "sha256": "6558dff5daf70c7c01b0da9ecd750ea1a328c53b03942cdf5ec0c988ce5c3ea8"
+    },
+    "assets/schedule-layers-v2/sewing/props/embroidery-2.png": {
+      "size": [
+        320,
+        320
+      ],
+      "mode": "RGBA",
+      "hasTransparency": true,
+      "bbox": [
+        26,
+        19,
+        294,
+        312
+      ],
+      "floor": 311,
+      "sha256": "be870fae7ccb98d8e8336dedad93c691bf814e3e9725580988b08a2a6b579772"
+    },
+    "assets/schedule-layers-v2/sewing/props/embroidery-3.png": {
+      "size": [
+        320,
+        320
+      ],
+      "mode": "RGBA",
+      "hasTransparency": true,
+      "bbox": [
+        26,
+        19,
+        294,
+        312
+      ],
+      "floor": 311,
+      "sha256": "5f4843283a8bd636955a317c930009a10882e1d14d18ceb24dc08cdb5b8d71b6"
+    },
+    "assets/schedule-layers-v2/sewing/effects/folded-cloth-1.png": {
+      "size": [
+        320,
+        272
+      ],
+      "mode": "RGBA",
+      "hasTransparency": true,
+      "bbox": [
+        8,
+        119,
+        312,
+        264
+      ],
+      "floor": 263,
+      "sha256": "20002fc95cebdde476592e3aefa300eca9b30dbfa17522d2480895dbbe556bc8"
+    },
+    "assets/schedule-layers-v2/sewing/effects/folded-cloth-2.png": {
+      "size": [
+        320,
+        272
+      ],
+      "mode": "RGBA",
+      "hasTransparency": true,
+      "bbox": [
+        10,
+        116,
+        310,
+        264
+      ],
+      "floor": 263,
+      "sha256": "b760a61ec6e50533cc5e0d13b2ee8dbf19c4f684a5d4860bde724de5a2979e17"
+    },
+    "assets/schedule-layers-v2/sewing/effects/folded-cloth-3.png": {
+      "size": [
+        320,
+        272
+      ],
+      "mode": "RGBA",
+      "hasTransparency": true,
+      "bbox": [
+        59,
+        149,
+        261,
+        264
+      ],
+      "floor": 263,
+      "sha256": "2ffc843176127122a529ba4d3efa1ece6fb068e772e771e05d3cffbc78ec49a2"
+    },
+    "assets/schedule-layers-v2/sewing/failures/fail-a-1.png": {
+      "size": [
+        320,
+        275
+      ],
+      "mode": "RGBA",
+      "hasTransparency": true,
+      "bbox": [
+        8,
+        69,
+        312,
+        267
+      ],
+      "floor": 266,
+      "sha256": "c23e9ecb6292d26f6be354228f1399f8b82762231fb8c00e55ead54d9ed983ce"
+    },
+    "assets/schedule-layers-v2/sewing/failures/fail-a-2.png": {
+      "size": [
+        320,
+        275
+      ],
+      "mode": "RGBA",
+      "hasTransparency": true,
+      "bbox": [
+        9,
+        64,
+        310,
+        267
+      ],
+      "floor": 266,
+      "sha256": "8de2f2c5b18619aa36f424995456c0811a2d2603ff5b4db17269abb2f2685390"
+    },
+    "assets/schedule-layers-v2/sewing/failures/fail-a-3.png": {
+      "size": [
+        320,
+        275
+      ],
+      "mode": "RGBA",
+      "hasTransparency": true,
+      "bbox": [
+        9,
+        74,
+        310,
+        267
+      ],
+      "floor": 266,
+      "sha256": "ac68019008ed6d78d1767b058534af30632fff8dbe34c89dacb1903ffffdfc25"
+    },
+    "assets/schedule-layers-v2/sewing/failures/fail-b-1.png": {
+      "size": [
+        320,
+        320
+      ],
+      "mode": "RGBA",
+      "hasTransparency": true,
+      "bbox": [
+        36,
+        31,
+        283,
+        312
+      ],
+      "floor": 311,
+      "sha256": "65a60999c03aebded17b390555c6ba162e586ca7d0ae3179b728426b51eaf143"
+    },
+    "assets/schedule-layers-v2/sewing/failures/fail-b-2.png": {
+      "size": [
+        320,
+        320
+      ],
+      "mode": "RGBA",
+      "hasTransparency": true,
+      "bbox": [
+        23,
+        8,
+        296,
+        312
+      ],
+      "floor": 311,
+      "sha256": "185a56704011913a6158eb6630c124a11d60693be1a2ee7fa947f013cc3ecdec"
+    },
+    "assets/schedule-layers-v2/sewing/failures/fail-b-3.png": {
+      "size": [
+        320,
+        320
+      ],
+      "mode": "RGBA",
+      "hasTransparency": true,
+      "bbox": [
+        12,
+        12,
+        307,
+        312
+      ],
+      "floor": 311,
+      "sha256": "3e737a6ccc38597b5afab02f2e3630b1193216e2b828c3b4c90eb890db2d44e1"
     }
   }
 }
