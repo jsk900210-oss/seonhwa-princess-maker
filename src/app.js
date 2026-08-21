@@ -237,7 +237,7 @@ const vacationIllustrations=[
 function unifiedAgeFolder(){return '09';}
 function scheduleFramePath(file){return `../assets/characters/seonhwa/schedule-actions/${file}`;}
 function scheduleBasePath(file){return `../assets/characters/seonhwa/schedule-base/${file}`;}
-const scheduleAssetRevision='0.63.77-schedule-layers.2';
+const scheduleAssetRevision='0.63.77-schedule-layers.3';
 const lockedScheduleQaMode=new URLSearchParams(location.search).has('qaSchedules');
 let scheduleLayerManifestPromise;
 const scheduleLayerIds=new Set(['painting','music','dance','swordsmanship','spellcraft','cooking','martial','classics','farmwork','childcare','kitchenhelp','woodwork','loomwork','masonry','clinichelp','innhelp','sewing','copying','ferryhelp','merchanthelp','accounting','tutoring']);
@@ -1295,7 +1295,8 @@ function renderHud() {
   normalizeStats();
   const date = game.currentDate ? new Date(`${game.currentDate}T00:00:00`) : null;
   const phase=phaseInfo();
-  document.querySelector('.phone').dataset.growthAge=String(growthVisualAge());
+  const phone=document.querySelector('.phone');
+  phone.dataset.growthAge=String(growthVisualAge());
   document.querySelector('#dateLabel').textContent = date ? `${game.age}세 · ${date.getFullYear()}년 ${date.getMonth()+1}월 ${date.getDate()}일 · 제${phase.index}페이즈 ${phase.week}주차` : '생일 설정 전';
   document.querySelector('#moneyLabel').textContent = `${game.money.toLocaleString()}냥`;
   document.querySelector('#cashLabel').textContent = `캐시 ${game.cash.toLocaleString()}원`;
@@ -1303,6 +1304,7 @@ function renderHud() {
   document.querySelector('#speakerName').textContent = game.guardianName || guardian?.name || '수호신수';
   const companion=document.querySelector('#guardianCompanion');
   if(companion){companion.hidden=true;document.querySelector('#guardianCompanionMark').textContent=guardian?.mark||'守';document.querySelector('#guardianCompanionName').textContent=game.guardianName||guardian?.name||'';if(guardian)document.querySelector('#guardianCompanionMark').style.background=guardian.theme;}
+  if(game.birthday&&!phone.classList.contains('playing')&&!phone.classList.contains('market-playing')&&!phone.classList.contains('vacation-playing'))playHomeMusic();
 }
 
 function resetTransientScenes(){
