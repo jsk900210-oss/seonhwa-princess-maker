@@ -1,13 +1,619 @@
 {
   "generatedAt": "2026-08-21",
   "scope": "schedule-layers-v2 discovered manifests",
-  "manifests": 1,
+  "manifests": 2,
   "summary": {
-    "passed": 101,
+    "passed": 202,
     "failed": 0,
-    "total": 101
+    "total": 202
   },
   "checks": [
+    {
+      "activity": "childcare",
+      "check": "manifest activity folder",
+      "passed": true,
+      "detail": "childcare"
+    },
+    {
+      "activity": "childcare",
+      "check": "hero frame count",
+      "passed": true,
+      "detail": "3"
+    },
+    {
+      "activity": "childcare",
+      "check": "existing hero preserved",
+      "passed": true,
+      "detail": "assets\\characters\\seonhwa\\schedule-actions\\childcare-pixel-1.png"
+    },
+    {
+      "activity": "childcare",
+      "check": "existing hero preserved",
+      "passed": true,
+      "detail": "assets\\characters\\seonhwa\\schedule-actions\\childcare-pixel-2.png"
+    },
+    {
+      "activity": "childcare",
+      "check": "existing hero preserved",
+      "passed": true,
+      "detail": "assets\\characters\\seonhwa\\schedule-actions\\childcare-pixel-3.png"
+    },
+    {
+      "activity": "childcare",
+      "check": "npc frame count",
+      "passed": true,
+      "detail": "3"
+    },
+    {
+      "activity": "childcare",
+      "check": "path exists",
+      "passed": true,
+      "detail": "assets\\schedule-layers-v2\\childcare\\npc\\child\\idle-1.png"
+    },
+    {
+      "activity": "childcare",
+      "check": "PNG opens",
+      "passed": true,
+      "detail": "npc/child/idle-1.png"
+    },
+    {
+      "activity": "childcare",
+      "check": "RGBA/transparency",
+      "passed": true,
+      "detail": "npc/child/idle-1.png: RGBA"
+    },
+    {
+      "activity": "childcare",
+      "check": "not empty",
+      "passed": true,
+      "detail": "npc/child/idle-1.png"
+    },
+    {
+      "activity": "childcare",
+      "check": "production filename",
+      "passed": true,
+      "detail": "npc/child/idle-1.png"
+    },
+    {
+      "activity": "childcare",
+      "check": "path exists",
+      "passed": true,
+      "detail": "assets\\schedule-layers-v2\\childcare\\npc\\child\\idle-2.png"
+    },
+    {
+      "activity": "childcare",
+      "check": "PNG opens",
+      "passed": true,
+      "detail": "npc/child/idle-2.png"
+    },
+    {
+      "activity": "childcare",
+      "check": "RGBA/transparency",
+      "passed": true,
+      "detail": "npc/child/idle-2.png: RGBA"
+    },
+    {
+      "activity": "childcare",
+      "check": "not empty",
+      "passed": true,
+      "detail": "npc/child/idle-2.png"
+    },
+    {
+      "activity": "childcare",
+      "check": "production filename",
+      "passed": true,
+      "detail": "npc/child/idle-2.png"
+    },
+    {
+      "activity": "childcare",
+      "check": "path exists",
+      "passed": true,
+      "detail": "assets\\schedule-layers-v2\\childcare\\npc\\child\\idle-3.png"
+    },
+    {
+      "activity": "childcare",
+      "check": "PNG opens",
+      "passed": true,
+      "detail": "npc/child/idle-3.png"
+    },
+    {
+      "activity": "childcare",
+      "check": "RGBA/transparency",
+      "passed": true,
+      "detail": "npc/child/idle-3.png: RGBA"
+    },
+    {
+      "activity": "childcare",
+      "check": "not empty",
+      "passed": true,
+      "detail": "npc/child/idle-3.png"
+    },
+    {
+      "activity": "childcare",
+      "check": "production filename",
+      "passed": true,
+      "detail": "npc/child/idle-3.png"
+    },
+    {
+      "activity": "childcare",
+      "check": "npc canvas match",
+      "passed": true,
+      "detail": "[(261, 320)]"
+    },
+    {
+      "activity": "childcare",
+      "check": "npc frames differ",
+      "passed": true,
+      "detail": "unique=3"
+    },
+    {
+      "activity": "childcare",
+      "check": "npc floor tolerance",
+      "passed": true,
+      "detail": "[311, 311, 311]"
+    },
+    {
+      "activity": "childcare",
+      "check": "npc bbox consistency",
+      "passed": true,
+      "detail": "widths=[186, 194, 175], heights=[303, 303, 304]"
+    },
+    {
+      "activity": "childcare",
+      "check": "success-a frame count",
+      "passed": true,
+      "detail": "3"
+    },
+    {
+      "activity": "childcare",
+      "check": "path exists",
+      "passed": true,
+      "detail": "assets\\schedule-layers-v2\\childcare\\props\\toy-play-1.png"
+    },
+    {
+      "activity": "childcare",
+      "check": "PNG opens",
+      "passed": true,
+      "detail": "props/toy-play-1.png"
+    },
+    {
+      "activity": "childcare",
+      "check": "RGBA/transparency",
+      "passed": true,
+      "detail": "props/toy-play-1.png: RGBA"
+    },
+    {
+      "activity": "childcare",
+      "check": "not empty",
+      "passed": true,
+      "detail": "props/toy-play-1.png"
+    },
+    {
+      "activity": "childcare",
+      "check": "production filename",
+      "passed": true,
+      "detail": "props/toy-play-1.png"
+    },
+    {
+      "activity": "childcare",
+      "check": "path exists",
+      "passed": true,
+      "detail": "assets\\schedule-layers-v2\\childcare\\props\\toy-play-2.png"
+    },
+    {
+      "activity": "childcare",
+      "check": "PNG opens",
+      "passed": true,
+      "detail": "props/toy-play-2.png"
+    },
+    {
+      "activity": "childcare",
+      "check": "RGBA/transparency",
+      "passed": true,
+      "detail": "props/toy-play-2.png: RGBA"
+    },
+    {
+      "activity": "childcare",
+      "check": "not empty",
+      "passed": true,
+      "detail": "props/toy-play-2.png"
+    },
+    {
+      "activity": "childcare",
+      "check": "production filename",
+      "passed": true,
+      "detail": "props/toy-play-2.png"
+    },
+    {
+      "activity": "childcare",
+      "check": "path exists",
+      "passed": true,
+      "detail": "assets\\schedule-layers-v2\\childcare\\props\\toy-play-3.png"
+    },
+    {
+      "activity": "childcare",
+      "check": "PNG opens",
+      "passed": true,
+      "detail": "props/toy-play-3.png"
+    },
+    {
+      "activity": "childcare",
+      "check": "RGBA/transparency",
+      "passed": true,
+      "detail": "props/toy-play-3.png: RGBA"
+    },
+    {
+      "activity": "childcare",
+      "check": "not empty",
+      "passed": true,
+      "detail": "props/toy-play-3.png"
+    },
+    {
+      "activity": "childcare",
+      "check": "production filename",
+      "passed": true,
+      "detail": "props/toy-play-3.png"
+    },
+    {
+      "activity": "childcare",
+      "check": "success-a canvas match",
+      "passed": true,
+      "detail": "[(320, 288)]"
+    },
+    {
+      "activity": "childcare",
+      "check": "success-a frames differ",
+      "passed": true,
+      "detail": "unique=3"
+    },
+    {
+      "activity": "childcare",
+      "check": "success-a floor tolerance",
+      "passed": true,
+      "detail": "[279, 279, 279]"
+    },
+    {
+      "activity": "childcare",
+      "check": "success-b frame count",
+      "passed": true,
+      "detail": "3"
+    },
+    {
+      "activity": "childcare",
+      "check": "path exists",
+      "passed": true,
+      "detail": "assets\\schedule-layers-v2\\childcare\\effects\\comfort-blanket-1.png"
+    },
+    {
+      "activity": "childcare",
+      "check": "PNG opens",
+      "passed": true,
+      "detail": "effects/comfort-blanket-1.png"
+    },
+    {
+      "activity": "childcare",
+      "check": "RGBA/transparency",
+      "passed": true,
+      "detail": "effects/comfort-blanket-1.png: RGBA"
+    },
+    {
+      "activity": "childcare",
+      "check": "not empty",
+      "passed": true,
+      "detail": "effects/comfort-blanket-1.png"
+    },
+    {
+      "activity": "childcare",
+      "check": "production filename",
+      "passed": true,
+      "detail": "effects/comfort-blanket-1.png"
+    },
+    {
+      "activity": "childcare",
+      "check": "path exists",
+      "passed": true,
+      "detail": "assets\\schedule-layers-v2\\childcare\\effects\\comfort-blanket-2.png"
+    },
+    {
+      "activity": "childcare",
+      "check": "PNG opens",
+      "passed": true,
+      "detail": "effects/comfort-blanket-2.png"
+    },
+    {
+      "activity": "childcare",
+      "check": "RGBA/transparency",
+      "passed": true,
+      "detail": "effects/comfort-blanket-2.png: RGBA"
+    },
+    {
+      "activity": "childcare",
+      "check": "not empty",
+      "passed": true,
+      "detail": "effects/comfort-blanket-2.png"
+    },
+    {
+      "activity": "childcare",
+      "check": "production filename",
+      "passed": true,
+      "detail": "effects/comfort-blanket-2.png"
+    },
+    {
+      "activity": "childcare",
+      "check": "path exists",
+      "passed": true,
+      "detail": "assets\\schedule-layers-v2\\childcare\\effects\\comfort-blanket-3.png"
+    },
+    {
+      "activity": "childcare",
+      "check": "PNG opens",
+      "passed": true,
+      "detail": "effects/comfort-blanket-3.png"
+    },
+    {
+      "activity": "childcare",
+      "check": "RGBA/transparency",
+      "passed": true,
+      "detail": "effects/comfort-blanket-3.png: RGBA"
+    },
+    {
+      "activity": "childcare",
+      "check": "not empty",
+      "passed": true,
+      "detail": "effects/comfort-blanket-3.png"
+    },
+    {
+      "activity": "childcare",
+      "check": "production filename",
+      "passed": true,
+      "detail": "effects/comfort-blanket-3.png"
+    },
+    {
+      "activity": "childcare",
+      "check": "success-b canvas match",
+      "passed": true,
+      "detail": "[(320, 263)]"
+    },
+    {
+      "activity": "childcare",
+      "check": "success-b frames differ",
+      "passed": true,
+      "detail": "unique=3"
+    },
+    {
+      "activity": "childcare",
+      "check": "success-b floor tolerance",
+      "passed": true,
+      "detail": "[254, 254, 254]"
+    },
+    {
+      "activity": "childcare",
+      "check": "fail-a frame count",
+      "passed": true,
+      "detail": "3"
+    },
+    {
+      "activity": "childcare",
+      "check": "path exists",
+      "passed": true,
+      "detail": "assets\\schedule-layers-v2\\childcare\\failures\\fail-a-1.png"
+    },
+    {
+      "activity": "childcare",
+      "check": "PNG opens",
+      "passed": true,
+      "detail": "failures/fail-a-1.png"
+    },
+    {
+      "activity": "childcare",
+      "check": "RGBA/transparency",
+      "passed": true,
+      "detail": "failures/fail-a-1.png: RGBA"
+    },
+    {
+      "activity": "childcare",
+      "check": "not empty",
+      "passed": true,
+      "detail": "failures/fail-a-1.png"
+    },
+    {
+      "activity": "childcare",
+      "check": "production filename",
+      "passed": true,
+      "detail": "failures/fail-a-1.png"
+    },
+    {
+      "activity": "childcare",
+      "check": "path exists",
+      "passed": true,
+      "detail": "assets\\schedule-layers-v2\\childcare\\failures\\fail-a-2.png"
+    },
+    {
+      "activity": "childcare",
+      "check": "PNG opens",
+      "passed": true,
+      "detail": "failures/fail-a-2.png"
+    },
+    {
+      "activity": "childcare",
+      "check": "RGBA/transparency",
+      "passed": true,
+      "detail": "failures/fail-a-2.png: RGBA"
+    },
+    {
+      "activity": "childcare",
+      "check": "not empty",
+      "passed": true,
+      "detail": "failures/fail-a-2.png"
+    },
+    {
+      "activity": "childcare",
+      "check": "production filename",
+      "passed": true,
+      "detail": "failures/fail-a-2.png"
+    },
+    {
+      "activity": "childcare",
+      "check": "path exists",
+      "passed": true,
+      "detail": "assets\\schedule-layers-v2\\childcare\\failures\\fail-a-3.png"
+    },
+    {
+      "activity": "childcare",
+      "check": "PNG opens",
+      "passed": true,
+      "detail": "failures/fail-a-3.png"
+    },
+    {
+      "activity": "childcare",
+      "check": "RGBA/transparency",
+      "passed": true,
+      "detail": "failures/fail-a-3.png: RGBA"
+    },
+    {
+      "activity": "childcare",
+      "check": "not empty",
+      "passed": true,
+      "detail": "failures/fail-a-3.png"
+    },
+    {
+      "activity": "childcare",
+      "check": "production filename",
+      "passed": true,
+      "detail": "failures/fail-a-3.png"
+    },
+    {
+      "activity": "childcare",
+      "check": "fail-a canvas match",
+      "passed": true,
+      "detail": "[(309, 255)]"
+    },
+    {
+      "activity": "childcare",
+      "check": "fail-a frames differ",
+      "passed": true,
+      "detail": "unique=3"
+    },
+    {
+      "activity": "childcare",
+      "check": "fail-a floor tolerance",
+      "passed": true,
+      "detail": "[246, 246, 246]"
+    },
+    {
+      "activity": "childcare",
+      "check": "fail-b frame count",
+      "passed": true,
+      "detail": "3"
+    },
+    {
+      "activity": "childcare",
+      "check": "path exists",
+      "passed": true,
+      "detail": "assets\\schedule-layers-v2\\childcare\\failures\\fail-b-1.png"
+    },
+    {
+      "activity": "childcare",
+      "check": "PNG opens",
+      "passed": true,
+      "detail": "failures/fail-b-1.png"
+    },
+    {
+      "activity": "childcare",
+      "check": "RGBA/transparency",
+      "passed": true,
+      "detail": "failures/fail-b-1.png: RGBA"
+    },
+    {
+      "activity": "childcare",
+      "check": "not empty",
+      "passed": true,
+      "detail": "failures/fail-b-1.png"
+    },
+    {
+      "activity": "childcare",
+      "check": "production filename",
+      "passed": true,
+      "detail": "failures/fail-b-1.png"
+    },
+    {
+      "activity": "childcare",
+      "check": "path exists",
+      "passed": true,
+      "detail": "assets\\schedule-layers-v2\\childcare\\failures\\fail-b-2.png"
+    },
+    {
+      "activity": "childcare",
+      "check": "PNG opens",
+      "passed": true,
+      "detail": "failures/fail-b-2.png"
+    },
+    {
+      "activity": "childcare",
+      "check": "RGBA/transparency",
+      "passed": true,
+      "detail": "failures/fail-b-2.png: RGBA"
+    },
+    {
+      "activity": "childcare",
+      "check": "not empty",
+      "passed": true,
+      "detail": "failures/fail-b-2.png"
+    },
+    {
+      "activity": "childcare",
+      "check": "production filename",
+      "passed": true,
+      "detail": "failures/fail-b-2.png"
+    },
+    {
+      "activity": "childcare",
+      "check": "path exists",
+      "passed": true,
+      "detail": "assets\\schedule-layers-v2\\childcare\\failures\\fail-b-3.png"
+    },
+    {
+      "activity": "childcare",
+      "check": "PNG opens",
+      "passed": true,
+      "detail": "failures/fail-b-3.png"
+    },
+    {
+      "activity": "childcare",
+      "check": "RGBA/transparency",
+      "passed": true,
+      "detail": "failures/fail-b-3.png: RGBA"
+    },
+    {
+      "activity": "childcare",
+      "check": "not empty",
+      "passed": true,
+      "detail": "failures/fail-b-3.png"
+    },
+    {
+      "activity": "childcare",
+      "check": "production filename",
+      "passed": true,
+      "detail": "failures/fail-b-3.png"
+    },
+    {
+      "activity": "childcare",
+      "check": "fail-b canvas match",
+      "passed": true,
+      "detail": "[(320, 320)]"
+    },
+    {
+      "activity": "childcare",
+      "check": "fail-b frames differ",
+      "passed": true,
+      "detail": "unique=3"
+    },
+    {
+      "activity": "childcare",
+      "check": "fail-b floor tolerance",
+      "passed": true,
+      "detail": "[311, 311, 311]"
+    },
     {
       "activity": "kitchenhelp",
       "check": "manifest activity folder",
@@ -616,6 +1222,246 @@
     }
   ],
   "files": {
+    "assets/schedule-layers-v2/childcare/npc/child/idle-1.png": {
+      "size": [
+        261,
+        320
+      ],
+      "mode": "RGBA",
+      "hasTransparency": true,
+      "bbox": [
+        37,
+        9,
+        223,
+        312
+      ],
+      "floor": 311,
+      "sha256": "c737bc6d3a674be639d0528053ea636ad0e420b6bf22b830f12f767b6099fcbc"
+    },
+    "assets/schedule-layers-v2/childcare/npc/child/idle-2.png": {
+      "size": [
+        261,
+        320
+      ],
+      "mode": "RGBA",
+      "hasTransparency": true,
+      "bbox": [
+        33,
+        9,
+        227,
+        312
+      ],
+      "floor": 311,
+      "sha256": "af363c05c806bfe9eaca000fd0927a399eb1361a076ed3c5edfc423281201ed5"
+    },
+    "assets/schedule-layers-v2/childcare/npc/child/idle-3.png": {
+      "size": [
+        261,
+        320
+      ],
+      "mode": "RGBA",
+      "hasTransparency": true,
+      "bbox": [
+        43,
+        8,
+        218,
+        312
+      ],
+      "floor": 311,
+      "sha256": "dfcb7535223027c4e765bdee1578323c897e30005f8310f3dc2f83b2ad5ce1ee"
+    },
+    "assets/schedule-layers-v2/childcare/props/toy-play-1.png": {
+      "size": [
+        320,
+        288
+      ],
+      "mode": "RGBA",
+      "hasTransparency": true,
+      "bbox": [
+        19,
+        117,
+        300,
+        280
+      ],
+      "floor": 279,
+      "sha256": "7cf8c91c096391efd1cf9b8d5526c18b206a98bf4c42b256ddc42f8fc0eef3c6"
+    },
+    "assets/schedule-layers-v2/childcare/props/toy-play-2.png": {
+      "size": [
+        320,
+        288
+      ],
+      "mode": "RGBA",
+      "hasTransparency": true,
+      "bbox": [
+        15,
+        106,
+        304,
+        280
+      ],
+      "floor": 279,
+      "sha256": "a52620715a04014c51bdfb5a9a6d02f85d2cf6af4b47b579c4a05beaaef97434"
+    },
+    "assets/schedule-layers-v2/childcare/props/toy-play-3.png": {
+      "size": [
+        320,
+        288
+      ],
+      "mode": "RGBA",
+      "hasTransparency": true,
+      "bbox": [
+        8,
+        125,
+        312,
+        280
+      ],
+      "floor": 279,
+      "sha256": "ab28072cc2f6a2bf3eb278c6662b96ce108e838df560583ff650457118e9ca4f"
+    },
+    "assets/schedule-layers-v2/childcare/effects/comfort-blanket-1.png": {
+      "size": [
+        320,
+        263
+      ],
+      "mode": "RGBA",
+      "hasTransparency": true,
+      "bbox": [
+        10,
+        81,
+        310,
+        255
+      ],
+      "floor": 254,
+      "sha256": "bee22974044412c1e7ea6ee9d1618db692d283359c52b7b951de60fec5c8240b"
+    },
+    "assets/schedule-layers-v2/childcare/effects/comfort-blanket-2.png": {
+      "size": [
+        320,
+        263
+      ],
+      "mode": "RGBA",
+      "hasTransparency": true,
+      "bbox": [
+        8,
+        81,
+        312,
+        255
+      ],
+      "floor": 254,
+      "sha256": "74b57383b3bdf601bbd7d625edd558fce8b58da9b930ff0be1222cec9f135778"
+    },
+    "assets/schedule-layers-v2/childcare/effects/comfort-blanket-3.png": {
+      "size": [
+        320,
+        263
+      ],
+      "mode": "RGBA",
+      "hasTransparency": true,
+      "bbox": [
+        13,
+        48,
+        307,
+        255
+      ],
+      "floor": 254,
+      "sha256": "86c55b8a3ddd97149edb9974ebcfbbfe65339c1ae5546bde28d0dd292c1038f9"
+    },
+    "assets/schedule-layers-v2/childcare/failures/fail-a-1.png": {
+      "size": [
+        309,
+        255
+      ],
+      "mode": "RGBA",
+      "hasTransparency": true,
+      "bbox": [
+        110,
+        24,
+        199,
+        247
+      ],
+      "floor": 246,
+      "sha256": "7dd028ea83d979ee69601d3b3d912943d1a34644f63b17f5976084c6a33b9906"
+    },
+    "assets/schedule-layers-v2/childcare/failures/fail-a-2.png": {
+      "size": [
+        309,
+        255
+      ],
+      "mode": "RGBA",
+      "hasTransparency": true,
+      "bbox": [
+        12,
+        17,
+        297,
+        247
+      ],
+      "floor": 246,
+      "sha256": "d742b2d99c096bcefe9f9f4781399d54ca4943c76facbad9997e6ba731be6719"
+    },
+    "assets/schedule-layers-v2/childcare/failures/fail-a-3.png": {
+      "size": [
+        309,
+        255
+      ],
+      "mode": "RGBA",
+      "hasTransparency": true,
+      "bbox": [
+        37,
+        16,
+        271,
+        247
+      ],
+      "floor": 246,
+      "sha256": "a7356c18a84287e054978a3347e98ee58c93de67b81c722fb2acf741e12adad2"
+    },
+    "assets/schedule-layers-v2/childcare/failures/fail-b-1.png": {
+      "size": [
+        320,
+        320
+      ],
+      "mode": "RGBA",
+      "hasTransparency": true,
+      "bbox": [
+        38,
+        141,
+        281,
+        312
+      ],
+      "floor": 311,
+      "sha256": "8ea47c851dc3521b48804858bd69de854bda92abdf547e981db8d9d34eaed97a"
+    },
+    "assets/schedule-layers-v2/childcare/failures/fail-b-2.png": {
+      "size": [
+        320,
+        320
+      ],
+      "mode": "RGBA",
+      "hasTransparency": true,
+      "bbox": [
+        13,
+        99,
+        307,
+        312
+      ],
+      "floor": 311,
+      "sha256": "619263f3e4c3582d123186fadaaf2695559d3f9ccea10154d690ec1c05603ad0"
+    },
+    "assets/schedule-layers-v2/childcare/failures/fail-b-3.png": {
+      "size": [
+        320,
+        320
+      ],
+      "mode": "RGBA",
+      "hasTransparency": true,
+      "bbox": [
+        8,
+        181,
+        312,
+        312
+      ],
+      "floor": 311,
+      "sha256": "616c4414944bf629395b40aafaff396b6c22dcfbcaaaaa4ef930ff7740c63c1c"
+    },
     "assets/schedule-layers-v2/kitchenhelp/npc/jumo/idle-1.png": {
       "size": [
         320,

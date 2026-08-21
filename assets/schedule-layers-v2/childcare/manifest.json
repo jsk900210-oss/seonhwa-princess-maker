@@ -1,0 +1,25 @@
+{
+  "version": "2.0.0-pilot.2",
+  "activityId": "childcare",
+  "nameKo": "아이 돌보기",
+  "status": "pilot-review",
+  "existingHeroFrames": [
+    "../../characters/seonhwa/schedule-actions/childcare-pixel-1.png",
+    "../../characters/seonhwa/schedule-actions/childcare-pixel-2.png",
+    "../../characters/seonhwa/schedule-actions/childcare-pixel-3.png"
+  ],
+  "existingBackground": "../../backgrounds/phase-scenes/childcare.webp",
+  "animation": {"sequence": [1, 2, 3], "loopCount": 3, "frameDurationMs": 300},
+  "npc": {"id": "child", "frames": ["npc/child/idle-1.png", "npc/child/idle-2.png", "npc/child/idle-3.png"]},
+  "patterns": {
+    "success-a": {"layer": "props", "frames": ["props/toy-play-1.png", "props/toy-play-2.png", "props/toy-play-3.png"]},
+    "success-b": {"layer": "effects", "frames": ["effects/comfort-blanket-1.png", "effects/comfort-blanket-2.png", "effects/comfort-blanket-3.png"]},
+    "fail-a": {"layer": "failures", "frames": ["failures/fail-a-1.png", "failures/fail-a-2.png", "failures/fail-a-3.png"]},
+    "fail-b": {"layer": "failures", "frames": ["failures/fail-b-1.png", "failures/fail-b-2.png", "failures/fail-b-3.png"]}
+  },
+  "placement": {
+    "heroLeft": "42%", "floorBottom": "5%", "npcLeft": "72%", "npcScale": 0.72,
+    "propLeft": "55%", "propBottom": "5%", "effectLeft": "57%", "effectBottom": "18%"
+  },
+  "layerOrder": ["existing-background", "npc", "existing-seonhwa", "props", "effects", "failures"]
+}
