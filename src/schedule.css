@@ -1945,9 +1945,9 @@
 /* v0.63.75-claude-debug.1: 아이돌보기 — 선화가 손 뻗는 쪽(왼쪽 아래)에 더 어린 아이를
    별도 NPC 레이어(.npc-child)로 배치. child-1..3.png는 임시 플레이스홀더이며 코덱스 픽셀
    아트로 교체 예정. 위치/크기는 이 블록에서만 조정한다. */
-.phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-childcare:not(.market-choice-stage) .stage-npc.npc-child{left:10%!important;right:auto!important;bottom:2%!important;width:70px!important;height:88px!important;transform:scaleX(-1)!important;transform-origin:50% 100%;z-index:5;animation:none!important;filter:drop-shadow(0 3px 2px #0006)}
+.phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-childcare:not(.market-choice-stage) .stage-npc.npc-child{left:15%!important;right:auto!important;bottom:max(14%,86px)!important;width:76px!important;height:96px!important;transform:scaleX(-1)!important;transform-origin:50% 100%;z-index:5;animation:none!important;filter:drop-shadow(0 3px 2px #0006)}
 .phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-childcare:not(.market-choice-stage) .stage-npc.npc-child>img{width:100%!important;height:100%!important;object-fit:contain!important;object-position:center bottom!important;image-rendering:auto!important}
-@media(max-width:430px){.phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-childcare:not(.market-choice-stage) .stage-npc.npc-child{width:64px!important;height:82px!important;left:8%!important}}
+@media(max-width:430px){.phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-childcare:not(.market-choice-stage) .stage-npc.npc-child{width:72px!important;height:90px!important;left:13%!important}}
 
 
 /* v0.63.75-claude-debug.3: 스트레스 최대 시 '자는' 휴식 장면(rest의 sleep 변형)에서만
@@ -1971,3 +1971,8 @@
 .activity-stage.action-kitchenhelp .kl-veg{z-index:5;left:50%;bottom:-5%;width:31%}
 .activity-stage.action-kitchenhelp .kl-fire{z-index:6;left:10%;bottom:8%;width:21%}
 @media(max-width:380px){.activity-stage.action-kitchenhelp .kl-jumo{width:44%}.activity-stage.action-kitchenhelp .kl-cauldron{width:35%}}
+
+
+/* v0.63.76-claude-debug.2: 요리 배우기(cooking) 캐릭터 좌표 — 전용 값이 없어 기본 46%로
+   부엌 한가운데 떠 있던 것을 화덕 쪽(좌)으로 배치. action-cooking 스코프. */
+.phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-cooking{--actor-left:34%}

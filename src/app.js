@@ -236,7 +236,7 @@ const vacationIllustrations=[
 function unifiedAgeFolder(){return '09';}
 function scheduleFramePath(file){return `../assets/characters/seonhwa/schedule-actions/${file}`;}
 function scheduleBasePath(file){return `../assets/characters/seonhwa/schedule-base/${file}`;}
-const scheduleAssetRevision='0.63.76-claude-debug.1';
+const scheduleAssetRevision='0.63.76-claude-debug.2';
 function versionedScheduleAsset(src){return `${src}?v=${scheduleAssetRevision}`;}
 function repeatedFrame(src){return [src,src,src];}
 function frameTriplet(prefix, folder='actions'){
@@ -1223,6 +1223,8 @@ async function playVacationScene(prize,index,companion=null,scheduleStart=null){
   const seasonalEffects={봄:new Set(['petals','wind','calm']),여름:new Set(['splash','wave','wind','calm']),가을:new Set(['leaves','moon','steam','calm']),겨울:new Set(['snow','steam','calm'])};
   const sceneEffect=seasonalEffects[sceneSeason]?.has(prize.effect)?prize.effect:'calm';
   playVacationMusic(sceneSeason);renderVacationMotion(sceneSeason);image.src=prize.image;document.querySelector('#vacationTitle').textContent=prize.name;scene.dataset.effect=sceneEffect;scene.dataset.season=sceneSeason;
+  try{if(image.getAttribute('src'))await image.decode();}catch(e){}
+  image.style.animation='none';void image.offsetWidth;image.style.animation='';
   scene.classList.remove('has-encounter');scene.classList.add('child-live');overlay.hidden=true;phone.classList.add('vacation-playing');scene.hidden=false;
   syncPlaybackSpeedToggle();
   for(let day=0;day<14;day+=1){const date=new Date(phaseStart);date.setDate(phaseStart.getDate()+day);dateFlow.classList.remove('date-tick');void dateFlow.offsetWidth;dateFlow.classList.add('date-tick');dateFlow.querySelector('b').textContent=`${date.getFullYear()}년 ${date.getMonth()+1}월 ${date.getDate()}일`;dateFlow.querySelector('span').textContent=`제${day+1}일 / 14일`;dateFlow.querySelector('em').style.width=`${Math.round((day+1)/14*100)}%`;await schedulePlaybackDelay(340);}
@@ -2088,7 +2090,10 @@ function showPhaseReport(dayRecords,phaseStart){
   const mastery=awardPhaseMastery(dayRecords);
   const result=document.querySelector('#dayResult');
   result.classList.add('phase-brief-result');
-  result.innerHTML=`<p class="phase-work-days"><span>착실히 일한 일수</span><strong>${dayRecords.length}일 중 ${diligent}일 (${rate}%)</strong></p><p class="phase-work-income"><span>수입${mastery?.rankUp?` · ${mastery.rankUp} 승급!`:''}</span><strong>+${income.toLocaleString()}냥</strong></p>`;
+  const vacationPhase=dayRecords.length>0&&dayRecords.every(record=>record.action?.id==='vacation');
+  const workDaysLine=vacationPhase?'':`<p class="phase-work-days"><span>착실히 일한 일수</span><strong>${dayRecords.length}일 중 ${diligent}일 (${rate}%)</strong></p>`;
+  const incomeLine=(vacationPhase&&income<=0)?'':`<p class="phase-work-income"><span>수입${mastery?.rankUp?` · ${mastery.rankUp} 승급!`:''}</span><strong>+${income.toLocaleString()}냥</strong></p>`;
+  result.innerHTML=workDaysLine+incomeLine||'<p class="phase-work-days"><span>바캉스를 마쳤어요.</span></p>';
   const closePhaseReport=()=>{result.hidden=true;result.classList.remove('phase-brief-result');};
   result.hidden=false;
   return new Promise(resolve=>setTimeout(()=>{closePhaseReport();resolve();},3000));
