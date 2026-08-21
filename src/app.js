@@ -243,7 +243,7 @@ const scheduleLayerStandaloneQa=scheduleQaParams.get('qa')==='1';
 const lockedScheduleQaMode=scheduleQaParams.has('qaSchedules')||scheduleLayerStandaloneQa;
 let scheduleQaForcedPattern=scheduleQaParams.get('qaPattern');
 let scheduleLayerManifestPromise;
-const scheduleLayerIds=new Set(['painting','music','dance','swordsmanship','spellcraft','cooking','martial','classics','farmwork','childcare','kitchenhelp','woodwork','loomwork','masonry','clinichelp','innhelp','sewing','copying','ferryhelp','merchanthelp','accounting','tutoring']);
+const scheduleLayerIds=new Set(['painting','music','dance','swordsmanship','spellcraft','classics','farmwork','childcare','kitchenhelp','woodwork','loomwork','masonry','clinichelp','innhelp','sewing','copying','ferryhelp','merchanthelp','accounting','tutoring']);
 const scheduleLayerV2PilotIds=new Set(['kitchenhelp','childcare','painting']);
 function scheduleLayerManifest(){
   scheduleLayerManifestPromise??=fetch(`../manifest.json?v=${scheduleAssetRevision}`,{cache:'no-store'}).then(response=>{
@@ -908,8 +908,6 @@ const actions = [
   { id: 'dance', category: '교육', name: '전통 춤사위', cost: 145, unlockAge:13, mentor:'춤 선생', icon:'manners', intro:'장단을 먼저 마음에 담고, 발디딤과 손끝을 이어 보렴.', summary:'민첩 +3 · 기품 +3 · 매력 +2 · 스트레스 +3', change:{agility:3,dignity:3,charm:2,stress:3} },
   { id:'swordsmanship',category:'교육',name:'검술 수련',cost:165,unlockAge:13,unlockStats:{strength:120},mentor:'검술 사범',icon:'sweeping',intro:'칼을 휘두르기 전에 발과 호흡부터 바로 세워라.',summary:'힘 +4 · 민첩 +3 · 체력 +2 · 스트레스 +4',change:{strength:4,agility:3,health:2,stress:4}},
   { id:'spellcraft',category:'교육',name:'술법 수련',cost:175,unlockAge:13,unlockStats:{intelligence:150,mentality:100},mentor:'수호신수',icon:'herbs',intro:'기운을 억지로 잡지 말고 숨결을 따라 흐르게 하렴.',summary:'마력 +5 · 지능 +2 · 정신력 +3 · 스트레스 +4',change:{magic:5,intelligence:2,mentality:3,stress:4}},
-  { id: 'cooking', category: '교육', name: '향토 음식 익히기', cost: 120, unlockAge:13, mentor:'찬모', icon:'arithmetic', intro:'제철 재료의 맛을 살리고 불과 간을 세심히 다루어야 한단다.', summary:'센스 +4 · 체력 +1 · 감수성 +2 · 스트레스 +3', change:{sense:4,health:1,sensitivity:2,stress:3} },
-  { id: 'martial', category: '교육', name: '무예 수련', cost: 150, unlockAge:13, mentor:'무예 사범', icon:'sweeping', intro:'힘만 앞세우지 말고 발과 마음을 함께 다스려라.', summary:'힘 +4 · 민첩 +3 · 스트레스 +4', change:{strength:4,agility:3,stress:4} },
   { id: 'classics', category: '교육', name: '경전 심화', cost: 190, unlockAge:16, mentor:'경학 스승', icon:'reading', intro:'이제 글자를 읽는 데서 그치지 말고 뜻을 논해 보자꾸나.', summary:'지능 +6 · 기품 +2 · 스트레스 +4', change:{intelligence:6,dignity:2,stress:4} },
   { id: 'errand', category: '아르바이트', name: '장터 심부름', cost: -90, unlockAge:9, mentor:'장터 상인', icon:'errand', summary: '민첩 +3 · 화술 +2 · 스트레스 +4 · 90냥 획득', change: { agility:3, speech:2, stress:4 } },
   { id: 'sweeping', category: '아르바이트', name: '마당 쓸기', cost: -70, unlockAge:9, mentor:'돌쇠', icon:'sweeping', summary: '힘 +3 · 체력 +2 · 스트레스 +3 · 70냥 획득', change: { strength:3, health:2, stress:3 } },
@@ -2596,6 +2594,7 @@ async function playWeeklySchedule(selected) {
       await animateConditionEvent(stageCharacter,conditionCue,condition);
     }
     setScheduleDialogue(action,outcome,index);
+    if(outcome==='mistake')document.querySelector('#dialogueText').textContent='';
     if(freeTimeVariant)document.querySelector('#dialogueText').textContent=freeTimeVariant.line;
     if(dateRelation)document.querySelector('#dialogueText').textContent=`${dateRelation.candidate.name}과 조금 더 가까워졌어요. ${dateRelation.record.relationship}예요.`;
     stageCharacter.className = `stage-character pixel-sprite ${presentation.motion}${restActivity==='tea'?' rest-tea':''}`;
@@ -2619,7 +2618,7 @@ async function playWeeklySchedule(selected) {
     const resultTitle=holidayContestResult?`추석 3종세트 · ${holidayContestResult.overallRank}`:`${action.name} · ${outcomeLabels[outcome]}`;
     dayResult.innerHTML = `<b>${resultTitle}</b><span>${resultSummary||'능력치 변화 없음'}${holidayResultText}<br>${moneyText} · 현재 ${game.money.toLocaleString()}냥${dateRelation?`<br>${dateRelation.candidate.name} +12 · ${dateRelation.record.affinity} · ${dateRelation.record.relationship}`:''}${relationEvent?`<br>${relationEvent.candidate.name} — ${relationEvent.episode.title}`:''}</span>`;
     if(relationEvent)document.querySelector('#dialogueText').textContent=relationEvent.episode.line;
-    if(action.id!=='vacation'){
+    if(action.id!=='vacation'&&outcome!=='mistake'){
       dayResult.hidden = false;
       await schedulePlaybackDelay(900);
       dayResult.hidden = true;

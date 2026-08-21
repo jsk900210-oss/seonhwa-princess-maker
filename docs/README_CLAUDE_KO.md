@@ -45,10 +45,10 @@
 - 검수 전에는 `main`에 병합하지 않습니다.
 # Codex 일정 레이어 구현 메모 · 2026-08-21
 
-- 범위: 잠금 교육 8종 + 잠금 아르바이트 14종.
+- 자산 팩 범위: 잠금 교육 8종 + 잠금 아르바이트 14종. 런타임 활성 범위는 무예 수련·향토 음식 제외 20종.
 - 런타임 기준: 루트 `manifest.json`의 `existingHeroFrames`, `existingBackground`, `placement`, `npc`, `patterns`.
 - 선화 정책: 기존 3프레임만 사용하며 신규 생성·교체 금지.
 - 공통 렌더러: `src/app.js`의 `playScheduleLayerScene()`.
 - 공통 스타일: `src/schedule.css`의 `.schedule-layered`, `.schedule-scene-layer` 블록.
-- QA: `?qaSchedules`에서 22종 잠금을 무시합니다.
+- QA: `?qaSchedules`에서 활성 20종의 잠금을 무시합니다. 제외된 2종 자산은 복구용으로 보존합니다.
 - 자동 검증: `tools/test_locked_schedule_layers.mjs`.

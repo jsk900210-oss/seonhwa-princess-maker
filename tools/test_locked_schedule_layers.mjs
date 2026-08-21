@@ -21,7 +21,11 @@ for(const id of expected){
 }
 
 const app=fs.readFileSync(path.join(root,'src','app.js'),'utf8');
+if(app.includes("id: 'martial'")||app.includes("id:'martial'"))fail('무예 수련은 일정에서 제외되어야 합니다.');
+if(app.match(/const scheduleLayerIds=new Set\([^\n]*'martial'/))fail('무예 수련이 QA 잠금 해제 대상에 남아 있습니다.');
+if(app.includes("id: 'cooking'")||app.includes("id:'cooking'"))fail('향토 음식은 일정에서 제외되어야 합니다.');
+if(app.match(/const scheduleLayerIds=new Set\([^\n]*'cooking'/))fail('향토 음식이 QA 잠금 해제 대상에 남아 있습니다.');
 if(!app.includes("for(let frame=0;frame<3;frame+=1)"))fail('common renderer does not enforce 1→2→3');
 if(!app.includes("has('qaSchedules')"))fail('QA unlock query mode missing');
 if(app.includes('playKitchenhelpScene'))fail('legacy kitchen-only renderer still present');
-console.log(`PASS: ${expected.length} locked schedules, manifest paths, 3-frame variants, common renderer, QA unlock mode`);
+console.log(`PASS: ${expected.length} schedule asset packs, 20 active schedules, manifest paths, 3-frame variants, common renderer, QA unlock mode`);
