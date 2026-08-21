@@ -1,5 +1,15 @@
 # 선화공주 만들기 — MVP 이미지 자산 패키지
 
+## v0.63.78-v2-pilot.1 · 주방 보조 레이어 재제작 파일럿
+
+- 품질 불합격 판정을 받은 `assets/schedule-layers/`는 보존하고, 신규 자산을 `assets/schedule-layers-v2/kitchenhelp/`에 별도로 제작했습니다.
+- 기존 선화 `kitchenhelp-pixel-1~3.png`는 수정·교체하지 않았습니다.
+- 주모 NPC, 채소 손질 소품, 화덕 불·김, 재료 낙하, 솥 넘침을 각각 투명 PNG 3프레임으로 분리했습니다.
+- 네 패턴 `success-a`, `success-b`, `fail-a`, `fail-b`를 1→2→3 반복으로 연결했습니다.
+- 일정별 `heroScale` 적용을 제거하고 레이어 일정의 선화 뷰포트를 데스크톱 146px, 모바일 132px로 고정했습니다.
+- `?qa=1&qaSchedule=kitchenhelp&qaPattern=success-a`에서 세이브와 분리된 즉시 QA가 실행됩니다.
+- `tools/verify_schedule_layers_v2.py` 검사 결과: 101/101 통과.
+
 ## v0.63.76-claude-debug.2 · 아이돌보기·요리 좌표 + 바캉스 2건 수정
 
 - 아이돌보기: 아이가 화면 왼쪽 아래 구석에 떨어져 있던 것을 선화 발치·손 앞으로 이동(left 15%, bottom max(14%,86px), 크기 소폭 확대). 선화와 바닥선 정렬.

@@ -237,16 +237,26 @@ const vacationIllustrations=[
 function unifiedAgeFolder(){return '09';}
 function scheduleFramePath(file){return `../assets/characters/seonhwa/schedule-actions/${file}`;}
 function scheduleBasePath(file){return `../assets/characters/seonhwa/schedule-base/${file}`;}
-const scheduleAssetRevision='0.63.77-schedule-layers.4';
-const lockedScheduleQaMode=new URLSearchParams(location.search).has('qaSchedules');
+const scheduleAssetRevision='0.63.78-v2-pilot.1';
+const scheduleQaParams=new URLSearchParams(location.search);
+const scheduleLayerStandaloneQa=scheduleQaParams.get('qa')==='1';
+const lockedScheduleQaMode=scheduleQaParams.has('qaSchedules')||scheduleLayerStandaloneQa;
+let scheduleQaForcedPattern=scheduleQaParams.get('qaPattern');
 let scheduleLayerManifestPromise;
 const scheduleLayerIds=new Set(['painting','music','dance','swordsmanship','spellcraft','cooking','martial','classics','farmwork','childcare','kitchenhelp','woodwork','loomwork','masonry','clinichelp','innhelp','sewing','copying','ferryhelp','merchanthelp','accounting','tutoring']);
+const scheduleLayerV2PilotIds=new Set(['kitchenhelp']);
 function scheduleLayerManifest(){
   scheduleLayerManifestPromise??=fetch(`../manifest.json?v=${scheduleAssetRevision}`,{cache:'no-store'}).then(response=>{
     if(!response.ok)throw new Error(`schedule manifest HTTP ${response.status}`);
     return response.json();
   });
   return scheduleLayerManifestPromise;
+}
+async function scheduleLayerV2Spec(actionId){
+  if(!scheduleLayerV2PilotIds.has(actionId))return null;
+  const response=await fetch(`../assets/schedule-layers-v2/${actionId}/manifest.json?v=${scheduleAssetRevision}`,{cache:'no-store'});
+  if(!response.ok)throw new Error(`schedule layer v2 manifest ${response.status}: ${actionId}`);
+  return response.json();
 }
 function versionedScheduleAsset(src){return `${src}?v=${scheduleAssetRevision}`;}
 function repeatedFrame(src){return [src,src,src];}
@@ -720,38 +730,43 @@ async function playScheduleLayerScene(actionId,seonImage,rank,outcome,dayIndex){
   const inner=document.querySelector('#activityStage .stage-inner');
   const stage=document.querySelector('#activityStage');
   if(!inner||!stage)return;
-  const manifest=await scheduleLayerManifest();
-  const spec=manifest.schedules?.[actionId];
+  const v2Spec=await scheduleLayerV2Spec(actionId);
+  const manifest=v2Spec?null:await scheduleLayerManifest();
+  const spec=v2Spec||manifest.schedules?.[actionId];
   if(!spec)throw new Error(`schedule layer missing: ${actionId}`);
   const stageMap=document.querySelector('#stageMap');
-  if(stageMap&&spec.existingBackground)stageMap.src=spec.existingBackground;
-  const base=`../assets/schedule-layers/${actionId}`,v=`?v=${scheduleAssetRevision}`;
+  const base=`../assets/${v2Spec?'schedule-layers-v2':'schedule-layers'}/${actionId}`,v=`?v=${scheduleAssetRevision}`;
+  if(stageMap&&spec.existingBackground)stageMap.src=v2Spec?`${base}/${spec.existingBackground}${v}`:spec.existingBackground;
   const make=(kind,file)=>{const img=document.createElement('img');img.className=`schedule-scene-layer layer-${kind}`;img.decoding='async';img.setAttribute('aria-hidden','true');img.src=`${base}/${file}${v}`;inner.appendChild(img);return img;};
-  const failed=outcome==='mistake'||outcome==='struggle';
-  const patternKey=`${failed?'fail':'success'}-${dayIndex%2===0?'a':'b'}`;
-  const patternFrames=spec.patterns?.[patternKey];
-  const npcFrames=spec.npc||[];
+  const failed=outcome==='mistake';
+  const forcedPattern=lockedScheduleQaMode&&scheduleQaParams.get('qaSchedule')===actionId&&['success-a','success-b','fail-a','fail-b'].includes(scheduleQaForcedPattern)?scheduleQaForcedPattern:null;
+  const patternKey=forcedPattern||`${failed?'fail':'success'}-${dayIndex%2===0?'a':'b'}`;
+  const patternSpec=spec.patterns?.[patternKey];
+  const patternFrames=v2Spec?patternSpec?.frames:patternSpec;
+  const npcFrames=v2Spec?spec.npc?.frames||[]:spec.npc||[];
   const heroFrames=spec.existingHeroFrames||[];
   if(heroFrames.length!==3||npcFrames.length!==3||patternFrames?.length!==3)throw new Error(`schedule layer frame count invalid: ${actionId}/${patternKey}`);
   const placement=spec.placement||{};
   const layers=[];
   stage.classList.add('schedule-layered');
   stage.style.setProperty('--layer-hero-left',placement.heroLeft||'40%');
-  stage.style.setProperty('--layer-floor',placement.heroBottom||'5%');
-  stage.style.setProperty('--layer-hero-scale',placement.heroScale||1);
+  stage.style.setProperty('--layer-floor',placement.floorBottom||placement.heroBottom||'5%');
   stage.style.setProperty('--layer-npc-left',placement.npcLeft||'72%');
   stage.style.setProperty('--layer-npc-scale',placement.npcScale||1);
   stage.style.setProperty('--layer-prop-left',placement.propLeft||'52%');
   stage.style.setProperty('--layer-prop-bottom',placement.propBottom||'7%');
+  stage.style.setProperty('--layer-effect-left',placement.effectLeft||placement.propLeft||'52%');
+  stage.style.setProperty('--layer-effect-bottom',placement.effectBottom||placement.propBottom||'7%');
   try{
     if(spec.backgroundOverlay)layers.push(make('background',spec.backgroundOverlay));
     const npc=make('npc',npcFrames[0]);
-    const pattern=make(`pattern ${failed?'dedicated-failure':''}`,patternFrames[0]);
+    const patternLayer=v2Spec&&patternSpec?.layer==='effects'?'effect':'pattern';
+    const pattern=make(`${patternLayer} ${patternKey.startsWith('fail-')?'dedicated-failure':''}`,patternFrames[0]);
     layers.push(npc,pattern);
     const delay=[360,300,250][rank]||300;
     for(let loop=0;loop<3;loop+=1){
       for(let frame=0;frame<3;frame+=1){
-        seonImage.src=`${heroFrames[frame]}${v}`;
+        seonImage.src=v2Spec?`${base}/${heroFrames[frame]}${v}`:`${heroFrames[frame]}${v}`;
         npc.src=`${base}/${npcFrames[frame]}${v}`;
         pattern.src=`${base}/${patternFrames[frame]}${v}`;
         await schedulePlaybackDelay(delay);
@@ -760,7 +775,7 @@ async function playScheduleLayerScene(actionId,seonImage,rank,outcome,dayIndex){
   }finally{
     layers.forEach(layer=>layer.remove());
     stage.classList.remove('schedule-layered');
-    ['--layer-hero-left','--layer-floor','--layer-hero-scale','--layer-npc-left','--layer-npc-scale','--layer-prop-left','--layer-prop-bottom'].forEach(name=>stage.style.removeProperty(name));
+    ['--layer-hero-left','--layer-floor','--layer-npc-left','--layer-npc-scale','--layer-prop-left','--layer-prop-bottom','--layer-effect-left','--layer-effect-bottom'].forEach(name=>stage.style.removeProperty(name));
   }
 }
 function conditionEvent(stress, dayIndex){
@@ -2683,6 +2698,37 @@ document.querySelector('#prologueSound').addEventListener('click',togglePrologue
 document.querySelector('#prologueSkip').addEventListener('click',closePrologue);
 document.querySelector('#storyReplay').addEventListener('click',replayPrologue);
 document.querySelector('#studioStartSound').addEventListener('click',finishStudioIntro);
+let scheduleQaLoopRunning=false;
+async function startScheduleLayerQaPattern(pattern){
+  scheduleQaForcedPattern=pattern;
+  document.querySelectorAll('[data-qa-pattern]').forEach(button=>button.classList.toggle('active',button.dataset.qaPattern===pattern));
+  if(scheduleQaLoopRunning)return;
+  scheduleQaLoopRunning=true;
+  const image=document.querySelector('#stageCharacterImage');
+  while(scheduleLayerStandaloneQa){
+    const activePattern=scheduleQaForcedPattern;
+    await playScheduleLayerScene('kitchenhelp',image,0,activePattern.startsWith('fail-')?'mistake':'success',activePattern.endsWith('-b')?1:0);
+  }
+}
+function initScheduleLayerQa(){
+  const actionId=scheduleQaParams.get('qaSchedule')||'kitchenhelp';
+  if(!scheduleLayerV2PilotIds.has(actionId))return;
+  ['studioLoading','prologue','birthdaySetup','recoveryPrompt','guardianStory','guardianChoice','guardianNaming'].forEach(id=>{const element=document.querySelector(`#${id}`);if(element)element.hidden=true;});
+  panel.hidden=true;
+  const phone=document.querySelector('.phone'),stage=document.querySelector('#activityStage');
+  phone.classList.add('playing','schedule-qa-playing');
+  stage.hidden=false;stage.className=`activity-stage pm3-phase-scene work-scene action-${actionId}`;
+  document.querySelector('#activityPlayback').hidden=true;
+  document.querySelector('#stagePm3Hud').hidden=true;
+  document.querySelector('#stageCaption').textContent='QA · 주방 보조 v2 파일럿';
+  const character=document.querySelector('#stageCharacter');character.hidden=false;character.className='stage-character pixel-sprite motion-job-kitchen';
+  document.querySelector('#stageNpc').hidden=true;document.querySelector('#stageProps').hidden=true;
+  const controls=document.createElement('aside');controls.className='schedule-layer-qa';controls.innerHTML=`<strong>kitchenhelp v2 QA</strong><div>${['success-a','success-b','fail-a','fail-b'].map(pattern=>`<button type="button" data-qa-pattern="${pattern}">${pattern}</button>`).join('')}</div><div><button type="button" data-qa-speed="1">1×</button><button type="button" data-qa-speed="2">2×</button></div><small>선화 고정 132px · 1→2→3 반복</small>`;phone.appendChild(controls);
+  controls.querySelectorAll('[data-qa-pattern]').forEach(button=>button.addEventListener('click',()=>startScheduleLayerQaPattern(button.dataset.qaPattern)));
+  controls.querySelectorAll('[data-qa-speed]').forEach(button=>button.addEventListener('click',()=>{schedulePlaybackSpeed=Number(button.dataset.qaSpeed);controls.querySelectorAll('[data-qa-speed]').forEach(item=>item.classList.toggle('active',Number(item.dataset.qaSpeed)===schedulePlaybackSpeed));}));
+  controls.querySelector('[data-qa-speed="1"]').classList.add('active');
+  startScheduleLayerQaPattern(['success-a','success-b','fail-a','fail-b'].includes(scheduleQaForcedPattern)?scheduleQaForcedPattern:'success-a');
+}
 prologueScenes.forEach(scene=>{const image=new Image();image.src=scene.image;});
 guardianStoryScenes.forEach(scene=>{const image=new Image();image.decoding='async';image.src=scene.image;});
 syncBirthdaySelectors(true);
@@ -2690,8 +2736,11 @@ syncSettingsUi();
 renderHud();
 updateHomeCharacter();
 updateImageState();
-migrateLegacySave();
-initializeRecoverySession();
-document.addEventListener('visibilitychange',()=>{if(document.hidden)writeLatestAutoSave();});
+if(scheduleLayerStandaloneQa)initScheduleLayerQa();
+else{
+  migrateLegacySave();
+  initializeRecoverySession();
+  document.addEventListener('visibilitychange',()=>{if(document.hidden)writeLatestAutoSave();});
+  window.addEventListener('pagehide',()=>{writeLatestAutoSave();localStorage.removeItem(SESSION_ACTIVE_KEY);});
+}
 window.addEventListener('keydown',event=>{if(event.key==='Escape'&&!document.querySelector('#settingsModal').hidden)closeSettings();});
-window.addEventListener('pagehide',()=>{writeLatestAutoSave();localStorage.removeItem(SESSION_ACTIVE_KEY);});

@@ -1981,15 +1981,41 @@
   width:clamp(126px,38%,166px)!important;
   height:clamp(126px,38%,166px)!important;
   z-index:4!important;
-  transform:translateX(-50%) scale(var(--layer-hero-scale))!important;
+  transform:translateX(-50%)!important;
   transform-origin:50% 100%;
   animation:none!important;
+}
+
+/* v0.63.78: 일정별 heroScale을 무시하고 모든 레이어 일정에서 동일한 선화 뷰포트를 유지한다. */
+.phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.schedule-layered .stage-character.pixel-sprite{
+  width:146px!important;
+  height:146px!important;
+}
+@media(max-width:430px){
+  .phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.schedule-layered .stage-character.pixel-sprite{
+    width:132px!important;
+    height:132px!important;
+  }
 }
 .schedule-scene-layer{position:absolute;display:block;height:auto;pointer-events:none;user-select:none;image-rendering:pixelated}
 .schedule-scene-layer.layer-background{inset:0;z-index:1;width:100%;height:100%;object-fit:cover;image-rendering:auto}
 .schedule-scene-layer.layer-npc{left:var(--layer-npc-left);bottom:var(--layer-floor);z-index:3;width:clamp(122px,37%,160px);transform:translateX(-50%) scale(var(--layer-npc-scale));transform-origin:50% 100%;object-fit:contain;filter:drop-shadow(0 3px 2px #0005)}
 .schedule-scene-layer.layer-pattern{left:var(--layer-prop-left);bottom:var(--layer-prop-bottom);z-index:5;width:clamp(94px,29%,126px);transform:translateX(-50%);object-fit:contain;filter:drop-shadow(0 2px 2px #0004)}
+.schedule-scene-layer.layer-effect{left:var(--layer-effect-left);bottom:var(--layer-effect-bottom);z-index:6;width:clamp(70px,22%,98px);transform:translateX(-50%);object-fit:contain;filter:drop-shadow(0 2px 2px #0004)}
 .schedule-scene-layer.layer-pattern.dedicated-failure{z-index:6}
+.schedule-layer-qa{position:absolute;z-index:40;left:3%;right:3%;bottom:1.5%;display:grid;gap:4px;padding:7px;border:1px solid #e1c583;border-radius:9px;background:#21150ee8;color:#fff4d6;font-size:9px}.schedule-layer-qa>strong{font-size:10px}.schedule-layer-qa>div{display:flex;gap:3px}.schedule-layer-qa button{min-width:0;padding:4px 6px;border:1px solid #9e7b4b;border-radius:5px;background:#f2e4c6;color:#50351e;font-size:8px}.schedule-layer-qa button.active{background:#7a4f29;color:#fff}.schedule-layer-qa small{opacity:.8}.phone.schedule-qa-playing>.dialogue,.phone.schedule-qa-playing>nav{display:none!important}
+.phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-kitchenhelp.schedule-layered .schedule-scene-layer.layer-npc{width:142px!important}
+.phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-kitchenhelp.schedule-layered .schedule-scene-layer.layer-pattern{width:96px!important}
+.phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-kitchenhelp.schedule-layered .schedule-scene-layer.layer-effect{width:74px!important}
+.phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-kitchenhelp.schedule-layered .schedule-scene-layer.layer-pattern.fail-a{width:76px!important}
+.phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-kitchenhelp.schedule-layered .schedule-scene-layer.layer-effect.fail-b{width:92px!important}
+@media(max-width:430px){
+  .phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-kitchenhelp.schedule-layered .schedule-scene-layer.layer-npc{width:136px!important}
+  .phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-kitchenhelp.schedule-layered .schedule-scene-layer.layer-pattern{width:90px!important}
+  .phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-kitchenhelp.schedule-layered .schedule-scene-layer.layer-effect{width:68px!important}
+  .phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-kitchenhelp.schedule-layered .schedule-scene-layer.layer-pattern.fail-a{width:70px!important}
+  .phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-kitchenhelp.schedule-layered .schedule-scene-layer.layer-effect.fail-b{width:86px!important}
+}
 @media(max-width:380px){
   .phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.schedule-layered .stage-character.pixel-sprite{width:132px!important;height:132px!important}
   .schedule-scene-layer.layer-npc{width:126px}

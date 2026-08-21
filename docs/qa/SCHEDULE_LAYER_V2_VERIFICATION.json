@@ -1,0 +1,860 @@
+{
+  "generatedAt": "2026-08-21",
+  "scope": "schedule-layers-v2 discovered manifests",
+  "manifests": 1,
+  "summary": {
+    "passed": 101,
+    "failed": 0,
+    "total": 101
+  },
+  "checks": [
+    {
+      "activity": "kitchenhelp",
+      "check": "manifest activity folder",
+      "passed": true,
+      "detail": "kitchenhelp"
+    },
+    {
+      "activity": "kitchenhelp",
+      "check": "hero frame count",
+      "passed": true,
+      "detail": "3"
+    },
+    {
+      "activity": "kitchenhelp",
+      "check": "existing hero preserved",
+      "passed": true,
+      "detail": "assets\\characters\\seonhwa\\schedule-actions\\kitchenhelp-pixel-1.png"
+    },
+    {
+      "activity": "kitchenhelp",
+      "check": "existing hero preserved",
+      "passed": true,
+      "detail": "assets\\characters\\seonhwa\\schedule-actions\\kitchenhelp-pixel-2.png"
+    },
+    {
+      "activity": "kitchenhelp",
+      "check": "existing hero preserved",
+      "passed": true,
+      "detail": "assets\\characters\\seonhwa\\schedule-actions\\kitchenhelp-pixel-3.png"
+    },
+    {
+      "activity": "kitchenhelp",
+      "check": "npc frame count",
+      "passed": true,
+      "detail": "3"
+    },
+    {
+      "activity": "kitchenhelp",
+      "check": "path exists",
+      "passed": true,
+      "detail": "assets\\schedule-layers-v2\\kitchenhelp\\npc\\jumo\\idle-1.png"
+    },
+    {
+      "activity": "kitchenhelp",
+      "check": "PNG opens",
+      "passed": true,
+      "detail": "npc/jumo/idle-1.png"
+    },
+    {
+      "activity": "kitchenhelp",
+      "check": "RGBA/transparency",
+      "passed": true,
+      "detail": "npc/jumo/idle-1.png: RGBA"
+    },
+    {
+      "activity": "kitchenhelp",
+      "check": "not empty",
+      "passed": true,
+      "detail": "npc/jumo/idle-1.png"
+    },
+    {
+      "activity": "kitchenhelp",
+      "check": "production filename",
+      "passed": true,
+      "detail": "npc/jumo/idle-1.png"
+    },
+    {
+      "activity": "kitchenhelp",
+      "check": "path exists",
+      "passed": true,
+      "detail": "assets\\schedule-layers-v2\\kitchenhelp\\npc\\jumo\\idle-2.png"
+    },
+    {
+      "activity": "kitchenhelp",
+      "check": "PNG opens",
+      "passed": true,
+      "detail": "npc/jumo/idle-2.png"
+    },
+    {
+      "activity": "kitchenhelp",
+      "check": "RGBA/transparency",
+      "passed": true,
+      "detail": "npc/jumo/idle-2.png: RGBA"
+    },
+    {
+      "activity": "kitchenhelp",
+      "check": "not empty",
+      "passed": true,
+      "detail": "npc/jumo/idle-2.png"
+    },
+    {
+      "activity": "kitchenhelp",
+      "check": "production filename",
+      "passed": true,
+      "detail": "npc/jumo/idle-2.png"
+    },
+    {
+      "activity": "kitchenhelp",
+      "check": "path exists",
+      "passed": true,
+      "detail": "assets\\schedule-layers-v2\\kitchenhelp\\npc\\jumo\\idle-3.png"
+    },
+    {
+      "activity": "kitchenhelp",
+      "check": "PNG opens",
+      "passed": true,
+      "detail": "npc/jumo/idle-3.png"
+    },
+    {
+      "activity": "kitchenhelp",
+      "check": "RGBA/transparency",
+      "passed": true,
+      "detail": "npc/jumo/idle-3.png: RGBA"
+    },
+    {
+      "activity": "kitchenhelp",
+      "check": "not empty",
+      "passed": true,
+      "detail": "npc/jumo/idle-3.png"
+    },
+    {
+      "activity": "kitchenhelp",
+      "check": "production filename",
+      "passed": true,
+      "detail": "npc/jumo/idle-3.png"
+    },
+    {
+      "activity": "kitchenhelp",
+      "check": "npc canvas match",
+      "passed": true,
+      "detail": "[(320, 320)]"
+    },
+    {
+      "activity": "kitchenhelp",
+      "check": "npc frames differ",
+      "passed": true,
+      "detail": "unique=3"
+    },
+    {
+      "activity": "kitchenhelp",
+      "check": "npc floor tolerance",
+      "passed": true,
+      "detail": "[303, 303, 303]"
+    },
+    {
+      "activity": "kitchenhelp",
+      "check": "npc bbox consistency",
+      "passed": true,
+      "detail": "widths=[136, 185, 135], heights=[280, 280, 280]"
+    },
+    {
+      "activity": "kitchenhelp",
+      "check": "success-a frame count",
+      "passed": true,
+      "detail": "3"
+    },
+    {
+      "activity": "kitchenhelp",
+      "check": "path exists",
+      "passed": true,
+      "detail": "assets\\schedule-layers-v2\\kitchenhelp\\props\\vegetable-prep-1.png"
+    },
+    {
+      "activity": "kitchenhelp",
+      "check": "PNG opens",
+      "passed": true,
+      "detail": "props/vegetable-prep-1.png"
+    },
+    {
+      "activity": "kitchenhelp",
+      "check": "RGBA/transparency",
+      "passed": true,
+      "detail": "props/vegetable-prep-1.png: RGBA"
+    },
+    {
+      "activity": "kitchenhelp",
+      "check": "not empty",
+      "passed": true,
+      "detail": "props/vegetable-prep-1.png"
+    },
+    {
+      "activity": "kitchenhelp",
+      "check": "production filename",
+      "passed": true,
+      "detail": "props/vegetable-prep-1.png"
+    },
+    {
+      "activity": "kitchenhelp",
+      "check": "path exists",
+      "passed": true,
+      "detail": "assets\\schedule-layers-v2\\kitchenhelp\\props\\vegetable-prep-2.png"
+    },
+    {
+      "activity": "kitchenhelp",
+      "check": "PNG opens",
+      "passed": true,
+      "detail": "props/vegetable-prep-2.png"
+    },
+    {
+      "activity": "kitchenhelp",
+      "check": "RGBA/transparency",
+      "passed": true,
+      "detail": "props/vegetable-prep-2.png: RGBA"
+    },
+    {
+      "activity": "kitchenhelp",
+      "check": "not empty",
+      "passed": true,
+      "detail": "props/vegetable-prep-2.png"
+    },
+    {
+      "activity": "kitchenhelp",
+      "check": "production filename",
+      "passed": true,
+      "detail": "props/vegetable-prep-2.png"
+    },
+    {
+      "activity": "kitchenhelp",
+      "check": "path exists",
+      "passed": true,
+      "detail": "assets\\schedule-layers-v2\\kitchenhelp\\props\\vegetable-prep-3.png"
+    },
+    {
+      "activity": "kitchenhelp",
+      "check": "PNG opens",
+      "passed": true,
+      "detail": "props/vegetable-prep-3.png"
+    },
+    {
+      "activity": "kitchenhelp",
+      "check": "RGBA/transparency",
+      "passed": true,
+      "detail": "props/vegetable-prep-3.png: RGBA"
+    },
+    {
+      "activity": "kitchenhelp",
+      "check": "not empty",
+      "passed": true,
+      "detail": "props/vegetable-prep-3.png"
+    },
+    {
+      "activity": "kitchenhelp",
+      "check": "production filename",
+      "passed": true,
+      "detail": "props/vegetable-prep-3.png"
+    },
+    {
+      "activity": "kitchenhelp",
+      "check": "success-a canvas match",
+      "passed": true,
+      "detail": "[(192, 192)]"
+    },
+    {
+      "activity": "kitchenhelp",
+      "check": "success-a frames differ",
+      "passed": true,
+      "detail": "unique=3"
+    },
+    {
+      "activity": "kitchenhelp",
+      "check": "success-a floor tolerance",
+      "passed": true,
+      "detail": "[180, 180, 180]"
+    },
+    {
+      "activity": "kitchenhelp",
+      "check": "success-b frame count",
+      "passed": true,
+      "detail": "3"
+    },
+    {
+      "activity": "kitchenhelp",
+      "check": "path exists",
+      "passed": true,
+      "detail": "assets\\schedule-layers-v2\\kitchenhelp\\effects\\stove-fire-steam-1.png"
+    },
+    {
+      "activity": "kitchenhelp",
+      "check": "PNG opens",
+      "passed": true,
+      "detail": "effects/stove-fire-steam-1.png"
+    },
+    {
+      "activity": "kitchenhelp",
+      "check": "RGBA/transparency",
+      "passed": true,
+      "detail": "effects/stove-fire-steam-1.png: RGBA"
+    },
+    {
+      "activity": "kitchenhelp",
+      "check": "not empty",
+      "passed": true,
+      "detail": "effects/stove-fire-steam-1.png"
+    },
+    {
+      "activity": "kitchenhelp",
+      "check": "production filename",
+      "passed": true,
+      "detail": "effects/stove-fire-steam-1.png"
+    },
+    {
+      "activity": "kitchenhelp",
+      "check": "path exists",
+      "passed": true,
+      "detail": "assets\\schedule-layers-v2\\kitchenhelp\\effects\\stove-fire-steam-2.png"
+    },
+    {
+      "activity": "kitchenhelp",
+      "check": "PNG opens",
+      "passed": true,
+      "detail": "effects/stove-fire-steam-2.png"
+    },
+    {
+      "activity": "kitchenhelp",
+      "check": "RGBA/transparency",
+      "passed": true,
+      "detail": "effects/stove-fire-steam-2.png: RGBA"
+    },
+    {
+      "activity": "kitchenhelp",
+      "check": "not empty",
+      "passed": true,
+      "detail": "effects/stove-fire-steam-2.png"
+    },
+    {
+      "activity": "kitchenhelp",
+      "check": "production filename",
+      "passed": true,
+      "detail": "effects/stove-fire-steam-2.png"
+    },
+    {
+      "activity": "kitchenhelp",
+      "check": "path exists",
+      "passed": true,
+      "detail": "assets\\schedule-layers-v2\\kitchenhelp\\effects\\stove-fire-steam-3.png"
+    },
+    {
+      "activity": "kitchenhelp",
+      "check": "PNG opens",
+      "passed": true,
+      "detail": "effects/stove-fire-steam-3.png"
+    },
+    {
+      "activity": "kitchenhelp",
+      "check": "RGBA/transparency",
+      "passed": true,
+      "detail": "effects/stove-fire-steam-3.png: RGBA"
+    },
+    {
+      "activity": "kitchenhelp",
+      "check": "not empty",
+      "passed": true,
+      "detail": "effects/stove-fire-steam-3.png"
+    },
+    {
+      "activity": "kitchenhelp",
+      "check": "production filename",
+      "passed": true,
+      "detail": "effects/stove-fire-steam-3.png"
+    },
+    {
+      "activity": "kitchenhelp",
+      "check": "success-b canvas match",
+      "passed": true,
+      "detail": "[(192, 192)]"
+    },
+    {
+      "activity": "kitchenhelp",
+      "check": "success-b frames differ",
+      "passed": true,
+      "detail": "unique=3"
+    },
+    {
+      "activity": "kitchenhelp",
+      "check": "success-b floor tolerance",
+      "passed": true,
+      "detail": "[184, 184, 184]"
+    },
+    {
+      "activity": "kitchenhelp",
+      "check": "fail-a frame count",
+      "passed": true,
+      "detail": "3"
+    },
+    {
+      "activity": "kitchenhelp",
+      "check": "path exists",
+      "passed": true,
+      "detail": "assets\\schedule-layers-v2\\kitchenhelp\\failures\\fail-a-1.png"
+    },
+    {
+      "activity": "kitchenhelp",
+      "check": "PNG opens",
+      "passed": true,
+      "detail": "failures/fail-a-1.png"
+    },
+    {
+      "activity": "kitchenhelp",
+      "check": "RGBA/transparency",
+      "passed": true,
+      "detail": "failures/fail-a-1.png: RGBA"
+    },
+    {
+      "activity": "kitchenhelp",
+      "check": "not empty",
+      "passed": true,
+      "detail": "failures/fail-a-1.png"
+    },
+    {
+      "activity": "kitchenhelp",
+      "check": "production filename",
+      "passed": true,
+      "detail": "failures/fail-a-1.png"
+    },
+    {
+      "activity": "kitchenhelp",
+      "check": "path exists",
+      "passed": true,
+      "detail": "assets\\schedule-layers-v2\\kitchenhelp\\failures\\fail-a-2.png"
+    },
+    {
+      "activity": "kitchenhelp",
+      "check": "PNG opens",
+      "passed": true,
+      "detail": "failures/fail-a-2.png"
+    },
+    {
+      "activity": "kitchenhelp",
+      "check": "RGBA/transparency",
+      "passed": true,
+      "detail": "failures/fail-a-2.png: RGBA"
+    },
+    {
+      "activity": "kitchenhelp",
+      "check": "not empty",
+      "passed": true,
+      "detail": "failures/fail-a-2.png"
+    },
+    {
+      "activity": "kitchenhelp",
+      "check": "production filename",
+      "passed": true,
+      "detail": "failures/fail-a-2.png"
+    },
+    {
+      "activity": "kitchenhelp",
+      "check": "path exists",
+      "passed": true,
+      "detail": "assets\\schedule-layers-v2\\kitchenhelp\\failures\\fail-a-3.png"
+    },
+    {
+      "activity": "kitchenhelp",
+      "check": "PNG opens",
+      "passed": true,
+      "detail": "failures/fail-a-3.png"
+    },
+    {
+      "activity": "kitchenhelp",
+      "check": "RGBA/transparency",
+      "passed": true,
+      "detail": "failures/fail-a-3.png: RGBA"
+    },
+    {
+      "activity": "kitchenhelp",
+      "check": "not empty",
+      "passed": true,
+      "detail": "failures/fail-a-3.png"
+    },
+    {
+      "activity": "kitchenhelp",
+      "check": "production filename",
+      "passed": true,
+      "detail": "failures/fail-a-3.png"
+    },
+    {
+      "activity": "kitchenhelp",
+      "check": "fail-a canvas match",
+      "passed": true,
+      "detail": "[(192, 192)]"
+    },
+    {
+      "activity": "kitchenhelp",
+      "check": "fail-a frames differ",
+      "passed": true,
+      "detail": "unique=3"
+    },
+    {
+      "activity": "kitchenhelp",
+      "check": "fail-a floor tolerance",
+      "passed": true,
+      "detail": "[184, 184, 184]"
+    },
+    {
+      "activity": "kitchenhelp",
+      "check": "fail-b frame count",
+      "passed": true,
+      "detail": "3"
+    },
+    {
+      "activity": "kitchenhelp",
+      "check": "path exists",
+      "passed": true,
+      "detail": "assets\\schedule-layers-v2\\kitchenhelp\\failures\\fail-b-1.png"
+    },
+    {
+      "activity": "kitchenhelp",
+      "check": "PNG opens",
+      "passed": true,
+      "detail": "failures/fail-b-1.png"
+    },
+    {
+      "activity": "kitchenhelp",
+      "check": "RGBA/transparency",
+      "passed": true,
+      "detail": "failures/fail-b-1.png: RGBA"
+    },
+    {
+      "activity": "kitchenhelp",
+      "check": "not empty",
+      "passed": true,
+      "detail": "failures/fail-b-1.png"
+    },
+    {
+      "activity": "kitchenhelp",
+      "check": "production filename",
+      "passed": true,
+      "detail": "failures/fail-b-1.png"
+    },
+    {
+      "activity": "kitchenhelp",
+      "check": "path exists",
+      "passed": true,
+      "detail": "assets\\schedule-layers-v2\\kitchenhelp\\failures\\fail-b-2.png"
+    },
+    {
+      "activity": "kitchenhelp",
+      "check": "PNG opens",
+      "passed": true,
+      "detail": "failures/fail-b-2.png"
+    },
+    {
+      "activity": "kitchenhelp",
+      "check": "RGBA/transparency",
+      "passed": true,
+      "detail": "failures/fail-b-2.png: RGBA"
+    },
+    {
+      "activity": "kitchenhelp",
+      "check": "not empty",
+      "passed": true,
+      "detail": "failures/fail-b-2.png"
+    },
+    {
+      "activity": "kitchenhelp",
+      "check": "production filename",
+      "passed": true,
+      "detail": "failures/fail-b-2.png"
+    },
+    {
+      "activity": "kitchenhelp",
+      "check": "path exists",
+      "passed": true,
+      "detail": "assets\\schedule-layers-v2\\kitchenhelp\\failures\\fail-b-3.png"
+    },
+    {
+      "activity": "kitchenhelp",
+      "check": "PNG opens",
+      "passed": true,
+      "detail": "failures/fail-b-3.png"
+    },
+    {
+      "activity": "kitchenhelp",
+      "check": "RGBA/transparency",
+      "passed": true,
+      "detail": "failures/fail-b-3.png: RGBA"
+    },
+    {
+      "activity": "kitchenhelp",
+      "check": "not empty",
+      "passed": true,
+      "detail": "failures/fail-b-3.png"
+    },
+    {
+      "activity": "kitchenhelp",
+      "check": "production filename",
+      "passed": true,
+      "detail": "failures/fail-b-3.png"
+    },
+    {
+      "activity": "kitchenhelp",
+      "check": "fail-b canvas match",
+      "passed": true,
+      "detail": "[(192, 192)]"
+    },
+    {
+      "activity": "kitchenhelp",
+      "check": "fail-b frames differ",
+      "passed": true,
+      "detail": "unique=3"
+    },
+    {
+      "activity": "kitchenhelp",
+      "check": "fail-b floor tolerance",
+      "passed": true,
+      "detail": "[184, 184, 184]"
+    }
+  ],
+  "files": {
+    "assets/schedule-layers-v2/kitchenhelp/npc/jumo/idle-1.png": {
+      "size": [
+        320,
+        320
+      ],
+      "mode": "RGBA",
+      "hasTransparency": true,
+      "bbox": [
+        92,
+        24,
+        228,
+        304
+      ],
+      "floor": 303,
+      "sha256": "fc5f43934b8ed091fa5425eb650d9cf6fa4af0617f9cbec071e4c79b84aadec7"
+    },
+    "assets/schedule-layers-v2/kitchenhelp/npc/jumo/idle-2.png": {
+      "size": [
+        320,
+        320
+      ],
+      "mode": "RGBA",
+      "hasTransparency": true,
+      "bbox": [
+        67,
+        24,
+        252,
+        304
+      ],
+      "floor": 303,
+      "sha256": "1a81e1c03594d2d7ee79e8cad88f3212ba0fd1d93417c3a3b5ac2a8edb0cd27d"
+    },
+    "assets/schedule-layers-v2/kitchenhelp/npc/jumo/idle-3.png": {
+      "size": [
+        320,
+        320
+      ],
+      "mode": "RGBA",
+      "hasTransparency": true,
+      "bbox": [
+        92,
+        24,
+        227,
+        304
+      ],
+      "floor": 303,
+      "sha256": "b795902dd5ea8ee196664d930ad2c55f0759711dd03209e3562ca0a1b3ca9f61"
+    },
+    "assets/schedule-layers-v2/kitchenhelp/props/vegetable-prep-1.png": {
+      "size": [
+        192,
+        192
+      ],
+      "mode": "RGBA",
+      "hasTransparency": true,
+      "bbox": [
+        6,
+        92,
+        186,
+        181
+      ],
+      "floor": 180,
+      "sha256": "be49b515ec7e6943ffb011ffc7ac0c565060665eb3e093a35f6abb8726ae5449"
+    },
+    "assets/schedule-layers-v2/kitchenhelp/props/vegetable-prep-2.png": {
+      "size": [
+        192,
+        192
+      ],
+      "mode": "RGBA",
+      "hasTransparency": true,
+      "bbox": [
+        6,
+        93,
+        186,
+        181
+      ],
+      "floor": 180,
+      "sha256": "089cc66d73571758256d155c6894602487575cac4115f6890888a181881ca215"
+    },
+    "assets/schedule-layers-v2/kitchenhelp/props/vegetable-prep-3.png": {
+      "size": [
+        192,
+        192
+      ],
+      "mode": "RGBA",
+      "hasTransparency": true,
+      "bbox": [
+        6,
+        92,
+        186,
+        181
+      ],
+      "floor": 180,
+      "sha256": "481671fbf2eccd05cb650f54a806eafbe879679b0c9b9499682b20ac7f25e14d"
+    },
+    "assets/schedule-layers-v2/kitchenhelp/effects/stove-fire-steam-1.png": {
+      "size": [
+        192,
+        192
+      ],
+      "mode": "RGBA",
+      "hasTransparency": true,
+      "bbox": [
+        77,
+        163,
+        115,
+        185
+      ],
+      "floor": 184,
+      "sha256": "9f7a6658d680dbd5779dd23d6665c808dd65fe854e4e9194ef387586723adf1e"
+    },
+    "assets/schedule-layers-v2/kitchenhelp/effects/stove-fire-steam-2.png": {
+      "size": [
+        192,
+        192
+      ],
+      "mode": "RGBA",
+      "hasTransparency": true,
+      "bbox": [
+        74,
+        141,
+        117,
+        185
+      ],
+      "floor": 184,
+      "sha256": "6939436ede7fef7edfc2902c1dc45c2a01823a057c296985eb9980b96102fa39"
+    },
+    "assets/schedule-layers-v2/kitchenhelp/effects/stove-fire-steam-3.png": {
+      "size": [
+        192,
+        192
+      ],
+      "mode": "RGBA",
+      "hasTransparency": true,
+      "bbox": [
+        82,
+        141,
+        110,
+        185
+      ],
+      "floor": 184,
+      "sha256": "045fc9842e0f2809c0a7e5fb78bb1bc526ad7a8ba51d6d4ebb344c0e148aee4a"
+    },
+    "assets/schedule-layers-v2/kitchenhelp/failures/fail-a-1.png": {
+      "size": [
+        192,
+        192
+      ],
+      "mode": "RGBA",
+      "hasTransparency": true,
+      "bbox": [
+        33,
+        73,
+        159,
+        185
+      ],
+      "floor": 184,
+      "sha256": "3e97a42406da73d0f40da874658702b701dad43f11afe493dbf2f853d60c11dd"
+    },
+    "assets/schedule-layers-v2/kitchenhelp/failures/fail-a-2.png": {
+      "size": [
+        192,
+        192
+      ],
+      "mode": "RGBA",
+      "hasTransparency": true,
+      "bbox": [
+        30,
+        73,
+        161,
+        185
+      ],
+      "floor": 184,
+      "sha256": "a740e6501eff4ccffca191c97b2fc89b07b522e39276f15032711c21e06298ad"
+    },
+    "assets/schedule-layers-v2/kitchenhelp/failures/fail-a-3.png": {
+      "size": [
+        192,
+        192
+      ],
+      "mode": "RGBA",
+      "hasTransparency": true,
+      "bbox": [
+        17,
+        73,
+        175,
+        185
+      ],
+      "floor": 184,
+      "sha256": "293afebcbdc0b1cdb98830219d83aa34841fb3894ff021fe6222884ccf650205"
+    },
+    "assets/schedule-layers-v2/kitchenhelp/failures/fail-b-1.png": {
+      "size": [
+        192,
+        192
+      ],
+      "mode": "RGBA",
+      "hasTransparency": true,
+      "bbox": [
+        8,
+        73,
+        183,
+        185
+      ],
+      "floor": 184,
+      "sha256": "e831ce7b9db6edc3743cd8027cf971a4e2cb6b73c132c77546cf8e555bb670f8"
+    },
+    "assets/schedule-layers-v2/kitchenhelp/failures/fail-b-2.png": {
+      "size": [
+        192,
+        192
+      ],
+      "mode": "RGBA",
+      "hasTransparency": true,
+      "bbox": [
+        8,
+        73,
+        183,
+        185
+      ],
+      "floor": 184,
+      "sha256": "7986adb25585656a909e907a5709e87a7e7b0c4f61951e8d9330e3ab5f21a607"
+    },
+    "assets/schedule-layers-v2/kitchenhelp/failures/fail-b-3.png": {
+      "size": [
+        192,
+        192
+      ],
+      "mode": "RGBA",
+      "hasTransparency": true,
+      "bbox": [
+        37,
+        73,
+        154,
+        185
+      ],
+      "floor": 184,
+      "sha256": "09e9e4f7b155613a8b97c8293e076aae32fa03bc45304ffa1e2ea363951334ff"
+    }
+  }
+}
