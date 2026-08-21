@@ -1,11 +1,11 @@
 {
   "generatedAt": "2026-08-21",
   "scope": "schedule-layers-v2 discovered manifests",
-  "manifests": 2,
+  "manifests": 3,
   "summary": {
-    "passed": 202,
+    "passed": 303,
     "failed": 0,
-    "total": 202
+    "total": 303
   },
   "checks": [
     {
@@ -1219,6 +1219,612 @@
       "check": "fail-b floor tolerance",
       "passed": true,
       "detail": "[184, 184, 184]"
+    },
+    {
+      "activity": "painting",
+      "check": "manifest activity folder",
+      "passed": true,
+      "detail": "painting"
+    },
+    {
+      "activity": "painting",
+      "check": "hero frame count",
+      "passed": true,
+      "detail": "3"
+    },
+    {
+      "activity": "painting",
+      "check": "existing hero preserved",
+      "passed": true,
+      "detail": "assets\\characters\\seonhwa\\schedule-actions\\calligraphy-pixel-1.png"
+    },
+    {
+      "activity": "painting",
+      "check": "existing hero preserved",
+      "passed": true,
+      "detail": "assets\\characters\\seonhwa\\schedule-actions\\calligraphy-pixel-2.png"
+    },
+    {
+      "activity": "painting",
+      "check": "existing hero preserved",
+      "passed": true,
+      "detail": "assets\\characters\\seonhwa\\schedule-actions\\calligraphy-pixel-3.png"
+    },
+    {
+      "activity": "painting",
+      "check": "npc frame count",
+      "passed": true,
+      "detail": "3"
+    },
+    {
+      "activity": "painting",
+      "check": "path exists",
+      "passed": true,
+      "detail": "assets\\schedule-layers-v2\\painting\\npc\\master\\idle-1.png"
+    },
+    {
+      "activity": "painting",
+      "check": "PNG opens",
+      "passed": true,
+      "detail": "npc/master/idle-1.png"
+    },
+    {
+      "activity": "painting",
+      "check": "RGBA/transparency",
+      "passed": true,
+      "detail": "npc/master/idle-1.png: RGBA"
+    },
+    {
+      "activity": "painting",
+      "check": "not empty",
+      "passed": true,
+      "detail": "npc/master/idle-1.png"
+    },
+    {
+      "activity": "painting",
+      "check": "production filename",
+      "passed": true,
+      "detail": "npc/master/idle-1.png"
+    },
+    {
+      "activity": "painting",
+      "check": "path exists",
+      "passed": true,
+      "detail": "assets\\schedule-layers-v2\\painting\\npc\\master\\idle-2.png"
+    },
+    {
+      "activity": "painting",
+      "check": "PNG opens",
+      "passed": true,
+      "detail": "npc/master/idle-2.png"
+    },
+    {
+      "activity": "painting",
+      "check": "RGBA/transparency",
+      "passed": true,
+      "detail": "npc/master/idle-2.png: RGBA"
+    },
+    {
+      "activity": "painting",
+      "check": "not empty",
+      "passed": true,
+      "detail": "npc/master/idle-2.png"
+    },
+    {
+      "activity": "painting",
+      "check": "production filename",
+      "passed": true,
+      "detail": "npc/master/idle-2.png"
+    },
+    {
+      "activity": "painting",
+      "check": "path exists",
+      "passed": true,
+      "detail": "assets\\schedule-layers-v2\\painting\\npc\\master\\idle-3.png"
+    },
+    {
+      "activity": "painting",
+      "check": "PNG opens",
+      "passed": true,
+      "detail": "npc/master/idle-3.png"
+    },
+    {
+      "activity": "painting",
+      "check": "RGBA/transparency",
+      "passed": true,
+      "detail": "npc/master/idle-3.png: RGBA"
+    },
+    {
+      "activity": "painting",
+      "check": "not empty",
+      "passed": true,
+      "detail": "npc/master/idle-3.png"
+    },
+    {
+      "activity": "painting",
+      "check": "production filename",
+      "passed": true,
+      "detail": "npc/master/idle-3.png"
+    },
+    {
+      "activity": "painting",
+      "check": "npc canvas match",
+      "passed": true,
+      "detail": "[(320, 320)]"
+    },
+    {
+      "activity": "painting",
+      "check": "npc frames differ",
+      "passed": true,
+      "detail": "unique=3"
+    },
+    {
+      "activity": "painting",
+      "check": "npc floor tolerance",
+      "passed": true,
+      "detail": "[311, 311, 311]"
+    },
+    {
+      "activity": "painting",
+      "check": "npc bbox consistency",
+      "passed": true,
+      "detail": "widths=[125, 140, 122], heights=[304, 304, 304]"
+    },
+    {
+      "activity": "painting",
+      "check": "success-a frame count",
+      "passed": true,
+      "detail": "3"
+    },
+    {
+      "activity": "painting",
+      "check": "path exists",
+      "passed": true,
+      "detail": "assets\\schedule-layers-v2\\painting\\props\\ink-brush-1.png"
+    },
+    {
+      "activity": "painting",
+      "check": "PNG opens",
+      "passed": true,
+      "detail": "props/ink-brush-1.png"
+    },
+    {
+      "activity": "painting",
+      "check": "RGBA/transparency",
+      "passed": true,
+      "detail": "props/ink-brush-1.png: RGBA"
+    },
+    {
+      "activity": "painting",
+      "check": "not empty",
+      "passed": true,
+      "detail": "props/ink-brush-1.png"
+    },
+    {
+      "activity": "painting",
+      "check": "production filename",
+      "passed": true,
+      "detail": "props/ink-brush-1.png"
+    },
+    {
+      "activity": "painting",
+      "check": "path exists",
+      "passed": true,
+      "detail": "assets\\schedule-layers-v2\\painting\\props\\ink-brush-2.png"
+    },
+    {
+      "activity": "painting",
+      "check": "PNG opens",
+      "passed": true,
+      "detail": "props/ink-brush-2.png"
+    },
+    {
+      "activity": "painting",
+      "check": "RGBA/transparency",
+      "passed": true,
+      "detail": "props/ink-brush-2.png: RGBA"
+    },
+    {
+      "activity": "painting",
+      "check": "not empty",
+      "passed": true,
+      "detail": "props/ink-brush-2.png"
+    },
+    {
+      "activity": "painting",
+      "check": "production filename",
+      "passed": true,
+      "detail": "props/ink-brush-2.png"
+    },
+    {
+      "activity": "painting",
+      "check": "path exists",
+      "passed": true,
+      "detail": "assets\\schedule-layers-v2\\painting\\props\\ink-brush-3.png"
+    },
+    {
+      "activity": "painting",
+      "check": "PNG opens",
+      "passed": true,
+      "detail": "props/ink-brush-3.png"
+    },
+    {
+      "activity": "painting",
+      "check": "RGBA/transparency",
+      "passed": true,
+      "detail": "props/ink-brush-3.png: RGBA"
+    },
+    {
+      "activity": "painting",
+      "check": "not empty",
+      "passed": true,
+      "detail": "props/ink-brush-3.png"
+    },
+    {
+      "activity": "painting",
+      "check": "production filename",
+      "passed": true,
+      "detail": "props/ink-brush-3.png"
+    },
+    {
+      "activity": "painting",
+      "check": "success-a canvas match",
+      "passed": true,
+      "detail": "[(320, 320)]"
+    },
+    {
+      "activity": "painting",
+      "check": "success-a frames differ",
+      "passed": true,
+      "detail": "unique=3"
+    },
+    {
+      "activity": "painting",
+      "check": "success-a floor tolerance",
+      "passed": true,
+      "detail": "[311, 311, 311]"
+    },
+    {
+      "activity": "painting",
+      "check": "success-b frame count",
+      "passed": true,
+      "detail": "3"
+    },
+    {
+      "activity": "painting",
+      "check": "path exists",
+      "passed": true,
+      "detail": "assets\\schedule-layers-v2\\painting\\effects\\painting-approval-1.png"
+    },
+    {
+      "activity": "painting",
+      "check": "PNG opens",
+      "passed": true,
+      "detail": "effects/painting-approval-1.png"
+    },
+    {
+      "activity": "painting",
+      "check": "RGBA/transparency",
+      "passed": true,
+      "detail": "effects/painting-approval-1.png: RGBA"
+    },
+    {
+      "activity": "painting",
+      "check": "not empty",
+      "passed": true,
+      "detail": "effects/painting-approval-1.png"
+    },
+    {
+      "activity": "painting",
+      "check": "production filename",
+      "passed": true,
+      "detail": "effects/painting-approval-1.png"
+    },
+    {
+      "activity": "painting",
+      "check": "path exists",
+      "passed": true,
+      "detail": "assets\\schedule-layers-v2\\painting\\effects\\painting-approval-2.png"
+    },
+    {
+      "activity": "painting",
+      "check": "PNG opens",
+      "passed": true,
+      "detail": "effects/painting-approval-2.png"
+    },
+    {
+      "activity": "painting",
+      "check": "RGBA/transparency",
+      "passed": true,
+      "detail": "effects/painting-approval-2.png: RGBA"
+    },
+    {
+      "activity": "painting",
+      "check": "not empty",
+      "passed": true,
+      "detail": "effects/painting-approval-2.png"
+    },
+    {
+      "activity": "painting",
+      "check": "production filename",
+      "passed": true,
+      "detail": "effects/painting-approval-2.png"
+    },
+    {
+      "activity": "painting",
+      "check": "path exists",
+      "passed": true,
+      "detail": "assets\\schedule-layers-v2\\painting\\effects\\painting-approval-3.png"
+    },
+    {
+      "activity": "painting",
+      "check": "PNG opens",
+      "passed": true,
+      "detail": "effects/painting-approval-3.png"
+    },
+    {
+      "activity": "painting",
+      "check": "RGBA/transparency",
+      "passed": true,
+      "detail": "effects/painting-approval-3.png: RGBA"
+    },
+    {
+      "activity": "painting",
+      "check": "not empty",
+      "passed": true,
+      "detail": "effects/painting-approval-3.png"
+    },
+    {
+      "activity": "painting",
+      "check": "production filename",
+      "passed": true,
+      "detail": "effects/painting-approval-3.png"
+    },
+    {
+      "activity": "painting",
+      "check": "success-b canvas match",
+      "passed": true,
+      "detail": "[(320, 320)]"
+    },
+    {
+      "activity": "painting",
+      "check": "success-b frames differ",
+      "passed": true,
+      "detail": "unique=3"
+    },
+    {
+      "activity": "painting",
+      "check": "success-b floor tolerance",
+      "passed": true,
+      "detail": "[311, 311, 311]"
+    },
+    {
+      "activity": "painting",
+      "check": "fail-a frame count",
+      "passed": true,
+      "detail": "3"
+    },
+    {
+      "activity": "painting",
+      "check": "path exists",
+      "passed": true,
+      "detail": "assets\\schedule-layers-v2\\painting\\failures\\fail-a-1.png"
+    },
+    {
+      "activity": "painting",
+      "check": "PNG opens",
+      "passed": true,
+      "detail": "failures/fail-a-1.png"
+    },
+    {
+      "activity": "painting",
+      "check": "RGBA/transparency",
+      "passed": true,
+      "detail": "failures/fail-a-1.png: RGBA"
+    },
+    {
+      "activity": "painting",
+      "check": "not empty",
+      "passed": true,
+      "detail": "failures/fail-a-1.png"
+    },
+    {
+      "activity": "painting",
+      "check": "production filename",
+      "passed": true,
+      "detail": "failures/fail-a-1.png"
+    },
+    {
+      "activity": "painting",
+      "check": "path exists",
+      "passed": true,
+      "detail": "assets\\schedule-layers-v2\\painting\\failures\\fail-a-2.png"
+    },
+    {
+      "activity": "painting",
+      "check": "PNG opens",
+      "passed": true,
+      "detail": "failures/fail-a-2.png"
+    },
+    {
+      "activity": "painting",
+      "check": "RGBA/transparency",
+      "passed": true,
+      "detail": "failures/fail-a-2.png: RGBA"
+    },
+    {
+      "activity": "painting",
+      "check": "not empty",
+      "passed": true,
+      "detail": "failures/fail-a-2.png"
+    },
+    {
+      "activity": "painting",
+      "check": "production filename",
+      "passed": true,
+      "detail": "failures/fail-a-2.png"
+    },
+    {
+      "activity": "painting",
+      "check": "path exists",
+      "passed": true,
+      "detail": "assets\\schedule-layers-v2\\painting\\failures\\fail-a-3.png"
+    },
+    {
+      "activity": "painting",
+      "check": "PNG opens",
+      "passed": true,
+      "detail": "failures/fail-a-3.png"
+    },
+    {
+      "activity": "painting",
+      "check": "RGBA/transparency",
+      "passed": true,
+      "detail": "failures/fail-a-3.png: RGBA"
+    },
+    {
+      "activity": "painting",
+      "check": "not empty",
+      "passed": true,
+      "detail": "failures/fail-a-3.png"
+    },
+    {
+      "activity": "painting",
+      "check": "production filename",
+      "passed": true,
+      "detail": "failures/fail-a-3.png"
+    },
+    {
+      "activity": "painting",
+      "check": "fail-a canvas match",
+      "passed": true,
+      "detail": "[(320, 283)]"
+    },
+    {
+      "activity": "painting",
+      "check": "fail-a frames differ",
+      "passed": true,
+      "detail": "unique=3"
+    },
+    {
+      "activity": "painting",
+      "check": "fail-a floor tolerance",
+      "passed": true,
+      "detail": "[274, 274, 274]"
+    },
+    {
+      "activity": "painting",
+      "check": "fail-b frame count",
+      "passed": true,
+      "detail": "3"
+    },
+    {
+      "activity": "painting",
+      "check": "path exists",
+      "passed": true,
+      "detail": "assets\\schedule-layers-v2\\painting\\failures\\fail-b-1.png"
+    },
+    {
+      "activity": "painting",
+      "check": "PNG opens",
+      "passed": true,
+      "detail": "failures/fail-b-1.png"
+    },
+    {
+      "activity": "painting",
+      "check": "RGBA/transparency",
+      "passed": true,
+      "detail": "failures/fail-b-1.png: RGBA"
+    },
+    {
+      "activity": "painting",
+      "check": "not empty",
+      "passed": true,
+      "detail": "failures/fail-b-1.png"
+    },
+    {
+      "activity": "painting",
+      "check": "production filename",
+      "passed": true,
+      "detail": "failures/fail-b-1.png"
+    },
+    {
+      "activity": "painting",
+      "check": "path exists",
+      "passed": true,
+      "detail": "assets\\schedule-layers-v2\\painting\\failures\\fail-b-2.png"
+    },
+    {
+      "activity": "painting",
+      "check": "PNG opens",
+      "passed": true,
+      "detail": "failures/fail-b-2.png"
+    },
+    {
+      "activity": "painting",
+      "check": "RGBA/transparency",
+      "passed": true,
+      "detail": "failures/fail-b-2.png: RGBA"
+    },
+    {
+      "activity": "painting",
+      "check": "not empty",
+      "passed": true,
+      "detail": "failures/fail-b-2.png"
+    },
+    {
+      "activity": "painting",
+      "check": "production filename",
+      "passed": true,
+      "detail": "failures/fail-b-2.png"
+    },
+    {
+      "activity": "painting",
+      "check": "path exists",
+      "passed": true,
+      "detail": "assets\\schedule-layers-v2\\painting\\failures\\fail-b-3.png"
+    },
+    {
+      "activity": "painting",
+      "check": "PNG opens",
+      "passed": true,
+      "detail": "failures/fail-b-3.png"
+    },
+    {
+      "activity": "painting",
+      "check": "RGBA/transparency",
+      "passed": true,
+      "detail": "failures/fail-b-3.png: RGBA"
+    },
+    {
+      "activity": "painting",
+      "check": "not empty",
+      "passed": true,
+      "detail": "failures/fail-b-3.png"
+    },
+    {
+      "activity": "painting",
+      "check": "production filename",
+      "passed": true,
+      "detail": "failures/fail-b-3.png"
+    },
+    {
+      "activity": "painting",
+      "check": "fail-b canvas match",
+      "passed": true,
+      "detail": "[(320, 300)]"
+    },
+    {
+      "activity": "painting",
+      "check": "fail-b frames differ",
+      "passed": true,
+      "detail": "unique=3"
+    },
+    {
+      "activity": "painting",
+      "check": "fail-b floor tolerance",
+      "passed": true,
+      "detail": "[291, 291, 291]"
     }
   ],
   "files": {
@@ -1701,6 +2307,246 @@
       ],
       "floor": 184,
       "sha256": "09e9e4f7b155613a8b97c8293e076aae32fa03bc45304ffa1e2ea363951334ff"
+    },
+    "assets/schedule-layers-v2/painting/npc/master/idle-1.png": {
+      "size": [
+        320,
+        320
+      ],
+      "mode": "RGBA",
+      "hasTransparency": true,
+      "bbox": [
+        97,
+        8,
+        222,
+        312
+      ],
+      "floor": 311,
+      "sha256": "bf0fa6259b107ea472e61a54c7db108a8048f2d174a8f83cfcb20cb6d6fda398"
+    },
+    "assets/schedule-layers-v2/painting/npc/master/idle-2.png": {
+      "size": [
+        320,
+        320
+      ],
+      "mode": "RGBA",
+      "hasTransparency": true,
+      "bbox": [
+        90,
+        8,
+        230,
+        312
+      ],
+      "floor": 311,
+      "sha256": "86d473442ae979bc2f5c86d0d12a0ff56f50db93df3a7fb39ca81e115bec122a"
+    },
+    "assets/schedule-layers-v2/painting/npc/master/idle-3.png": {
+      "size": [
+        320,
+        320
+      ],
+      "mode": "RGBA",
+      "hasTransparency": true,
+      "bbox": [
+        99,
+        8,
+        221,
+        312
+      ],
+      "floor": 311,
+      "sha256": "0d594f20d07d4ef33f4dd698e7fd58db55836a110a41664e6cd701fd254e94a7"
+    },
+    "assets/schedule-layers-v2/painting/props/ink-brush-1.png": {
+      "size": [
+        320,
+        320
+      ],
+      "mode": "RGBA",
+      "hasTransparency": true,
+      "bbox": [
+        41,
+        8,
+        278,
+        312
+      ],
+      "floor": 311,
+      "sha256": "a23c6bf47ef2e649c106ea0c87e82b84d3d288e200fd48bc85449cc4756becff"
+    },
+    "assets/schedule-layers-v2/painting/props/ink-brush-2.png": {
+      "size": [
+        320,
+        320
+      ],
+      "mode": "RGBA",
+      "hasTransparency": true,
+      "bbox": [
+        25,
+        8,
+        294,
+        312
+      ],
+      "floor": 311,
+      "sha256": "326236a97b8f75f1bc465a142fe367b530cf4e0562462e2d8a38e9d66e9cf4d3"
+    },
+    "assets/schedule-layers-v2/painting/props/ink-brush-3.png": {
+      "size": [
+        320,
+        320
+      ],
+      "mode": "RGBA",
+      "hasTransparency": true,
+      "bbox": [
+        22,
+        8,
+        297,
+        312
+      ],
+      "floor": 311,
+      "sha256": "26203b63e6c348975ef2beb0683b3df037138ee55255cd49b41e45e5a7b00ac8"
+    },
+    "assets/schedule-layers-v2/painting/effects/painting-approval-1.png": {
+      "size": [
+        320,
+        320
+      ],
+      "mode": "RGBA",
+      "hasTransparency": true,
+      "bbox": [
+        20,
+        158,
+        300,
+        312
+      ],
+      "floor": 311,
+      "sha256": "db63a1c385478f6bef86881222c6443340973d68408a1e3049dd91292d039d1b"
+    },
+    "assets/schedule-layers-v2/painting/effects/painting-approval-2.png": {
+      "size": [
+        320,
+        320
+      ],
+      "mode": "RGBA",
+      "hasTransparency": true,
+      "bbox": [
+        8,
+        126,
+        312,
+        312
+      ],
+      "floor": 311,
+      "sha256": "7bdf5602db480ea9b6e8fb80a14cda014ad441095b95354b7dae63f72d49ea38"
+    },
+    "assets/schedule-layers-v2/painting/effects/painting-approval-3.png": {
+      "size": [
+        320,
+        320
+      ],
+      "mode": "RGBA",
+      "hasTransparency": true,
+      "bbox": [
+        20,
+        158,
+        299,
+        312
+      ],
+      "floor": 311,
+      "sha256": "495f948a0737abe8267b08bdf227ae0a5624587654762682418c72dbcea5047f"
+    },
+    "assets/schedule-layers-v2/painting/failures/fail-a-1.png": {
+      "size": [
+        320,
+        283
+      ],
+      "mode": "RGBA",
+      "hasTransparency": true,
+      "bbox": [
+        8,
+        68,
+        312,
+        275
+      ],
+      "floor": 274,
+      "sha256": "05844e8ee0721ad46b696d3906a99b7b25e130972dde82470a16eaa01070c11e"
+    },
+    "assets/schedule-layers-v2/painting/failures/fail-a-2.png": {
+      "size": [
+        320,
+        283
+      ],
+      "mode": "RGBA",
+      "hasTransparency": true,
+      "bbox": [
+        9,
+        68,
+        311,
+        275
+      ],
+      "floor": 274,
+      "sha256": "c8e7a8df5800d6aac929a353d704d1ef36cbc33ffd1a4a3c931e00614067b0da"
+    },
+    "assets/schedule-layers-v2/painting/failures/fail-a-3.png": {
+      "size": [
+        320,
+        283
+      ],
+      "mode": "RGBA",
+      "hasTransparency": true,
+      "bbox": [
+        9,
+        68,
+        311,
+        275
+      ],
+      "floor": 274,
+      "sha256": "9964088a5fa3459705f532835fd0a42ac23018c8e4fa555c0bdccc1100dabbcf"
+    },
+    "assets/schedule-layers-v2/painting/failures/fail-b-1.png": {
+      "size": [
+        320,
+        300
+      ],
+      "mode": "RGBA",
+      "hasTransparency": true,
+      "bbox": [
+        9,
+        74,
+        311,
+        292
+      ],
+      "floor": 291,
+      "sha256": "93a7200466e8aefbf93f43ec78929b3b3d13e95fed2d56e7469a1b8c704e664b"
+    },
+    "assets/schedule-layers-v2/painting/failures/fail-b-2.png": {
+      "size": [
+        320,
+        300
+      ],
+      "mode": "RGBA",
+      "hasTransparency": true,
+      "bbox": [
+        11,
+        63,
+        309,
+        292
+      ],
+      "floor": 291,
+      "sha256": "e1785a0b9eaade9c5f91720e56cc8573f7010464d116456375495e5752de3a28"
+    },
+    "assets/schedule-layers-v2/painting/failures/fail-b-3.png": {
+      "size": [
+        320,
+        300
+      ],
+      "mode": "RGBA",
+      "hasTransparency": true,
+      "bbox": [
+        8,
+        68,
+        312,
+        292
+      ],
+      "floor": 291,
+      "sha256": "beb2097838719f6d8c752011e2d642c1c8867d4d557c07fcfebcd22588009a6e"
     }
   }
 }

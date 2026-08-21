@@ -18,8 +18,8 @@
     "fail-b": {"layer": "failures", "frames": ["failures/fail-b-1.png", "failures/fail-b-2.png", "failures/fail-b-3.png"]}
   },
   "placement": {
-    "heroLeft": "42%", "floorBottom": "5%", "npcLeft": "72%", "npcScale": 0.72,
-    "propLeft": "55%", "propBottom": "5%", "effectLeft": "57%", "effectBottom": "18%"
+    "heroLeft": "35%", "floorBottom": "5%", "npcLeft": "73%", "npcScale": 0.58,
+    "propLeft": "53%", "propBottom": "4%", "effectLeft": "70%", "effectBottom": "17%"
   },
   "layerOrder": ["existing-background", "npc", "existing-seonhwa", "props", "effects", "failures"]
 }

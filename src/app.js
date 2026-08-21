@@ -244,7 +244,7 @@ const lockedScheduleQaMode=scheduleQaParams.has('qaSchedules')||scheduleLayerSta
 let scheduleQaForcedPattern=scheduleQaParams.get('qaPattern');
 let scheduleLayerManifestPromise;
 const scheduleLayerIds=new Set(['painting','music','dance','swordsmanship','spellcraft','cooking','martial','classics','farmwork','childcare','kitchenhelp','woodwork','loomwork','masonry','clinichelp','innhelp','sewing','copying','ferryhelp','merchanthelp','accounting','tutoring']);
-const scheduleLayerV2PilotIds=new Set(['kitchenhelp','childcare']);
+const scheduleLayerV2PilotIds=new Set(['kitchenhelp','childcare','painting']);
 function scheduleLayerManifest(){
   scheduleLayerManifestPromise??=fetch(`../manifest.json?v=${scheduleAssetRevision}`,{cache:'no-store'}).then(response=>{
     if(!response.ok)throw new Error(`schedule manifest HTTP ${response.status}`);
@@ -827,7 +827,12 @@ function resolvedActivityChange(action,outcome){
   return change;
 }
 function phaseDailyChange(change){
-  const scaled={...change},stress=Number(scaled.stress)||0;
+  const scaled={};
+  Object.entries(change||{}).forEach(([key,value])=>{
+    const numeric=Number(value)||0;
+    scaled[key]=key==='stress'||numeric===0?numeric:Math.sign(numeric)*Math.max(1,Math.round(Math.abs(numeric)*.5));
+  });
+  const stress=Number(scaled.stress)||0;
   if(stress>0)scaled.stress=Math.max(1,Math.ceil(stress/3));
   else if(stress<0)scaled.stress=Math.min(-1,Math.round(stress/3));
   return scaled;
@@ -1445,7 +1450,7 @@ statLabels.nannyAffinity='신수 유대감';
 statLabels.fatherAffinity='아버지 친밀도';
 statLabels.guardianTrust='신수 신뢰';
 function showLiveChanges(action){
-  const items=orderedChangeEntries(action.change).map(([key,value])=>{const positive=key==='stress'?value<0:value>=0;const current=clampStat(key,game[key]);return `<span class="${positive?'up':'down'}">${statLabels[key]||key} <b>${current}</b> <small>(${value>0?'+':''}${value})</small></span>`;});
+  const items=orderedChangeEntries(phaseDailyChange(action.change)).map(([key,value])=>{const positive=key==='stress'?value<0:value>=0;const current=clampStat(key,game[key]);return `<span class="${positive?'up':'down'}">${statLabels[key]||key} <b>${current}</b> <small>(${value>0?'+':''}${value})</small></span>`;});
   if(action.cost!==0)items.push(`<span class="money">은전 ${action.cost>0?'-':'+'}${Math.abs(action.cost)}냥</span>`);
   document.querySelector('#liveChanges').innerHTML=items.join('');
   if(Object.values(action.change||{}).some(value=>Math.abs(value)>=8))game.homeReaction='shocked';
@@ -1454,7 +1459,7 @@ function showLiveChanges(action){
 }
 function renderActivityGauges(action){
   const box=document.querySelector('#activityGauges');
-  const entries=orderedChangeEntries(action.change).filter(([,value])=>value!==0);
+  const entries=orderedChangeEntries(phaseDailyChange(action.change)).filter(([,value])=>value!==0);
   if(!entries.length||['shopping','vacation'].includes(action.id)){box.hidden=true;box.innerHTML='';return;}
   box.innerHTML=entries.map(([key,value])=>{
     const max=statMaximum(key),next=clampStat(key,game[key]),current=clampStat(key,next-value);

@@ -7,7 +7,9 @@ from PIL import Image
 
 def is_background(pixel):
     r, g, b = pixel[:3]
-    return min(r, g, b) >= 226 and max(r, g, b) - min(r, g, b) <= 15
+    checker = min(r, g, b) >= 226 and max(r, g, b) - min(r, g, b) <= 15
+    chroma_green = g >= 80 and g >= r * 1.5 and g >= b * 1.5
+    return checker or chroma_green
 
 
 def extract(cell):
