@@ -8,8 +8,6 @@ const mustContain = [
   ["scheduleConfirmDismissed = false;\n    renderSchedulePanel();", '일정 화면을 다시 열면 실행 확인창을 다시 준비해야 합니다.'],
   ["renderSchedulePanel();\n    speakGuardian('schedule');\n    showScheduleConfirmation();", '이미 7일이 채워진 저장 일정도 실행 확인창을 보여야 합니다.'],
   ['await exploreMarket();', '저잣거리 일정은 사용자가 나갈 때까지 다음 날로 넘어가면 안 됩니다.'],
-  ['async function playMarketRoamingScene()', '장보기 중 선화가 매대를 두리번거리며 걸어야 합니다.'],
-  ["Math.random()<.28", '장보기 이동 중 낮은 확률의 넘어짐 변주가 필요합니다.'],
   ['marketShoppingActive=false;\n        closeMarketUiForTransition();', '저잣거리 종료 후 일정 재생 상태와 화면을 복구해야 합니다.'],
   ['stage.hidden=false;stageCharacter.hidden=false;stageProps.hidden=false;\n        playHomeMusic();', '저잣거리 종료 후 활동 화면과 기본 음악을 복구해야 합니다.'],
   ['closeMarketUiForTransition();\n      if(index%14===0){', '바캉스 전환 전에 저잣거리 주문창을 닫아야 합니다.'],

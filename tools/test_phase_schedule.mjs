@@ -34,10 +34,8 @@ assert.ok(css.includes('@keyframes schedule-icon-motion'),'세부 일정 얼굴 
 assert.ok(app.includes('animateScheduleAssignment'),'일정 선택 카드는 중앙 편성칸으로 이동하는 연출이 필요합니다.');
 assert.ok(css.includes('@keyframes phase-slot-shift'),'기존 일정은 새 일정 편성 시 왼쪽으로 밀려야 합니다.');
 assert.ok(app.includes('제${phase.index+item.index}페이즈'),'편성된 각 일정에 페이즈 번호가 표시되어야 합니다.');
-assert.ok(app.includes("function phaseDailyChange(change,actionId='',dayInPhase=0)"),'14일 페이즈용 능력치 변화량 보정이 필요합니다.');
-assert.ok(app.includes('function phaseTotalChange(change,actionId=')&&app.includes('target*(day+1)/14'),'능력치 변화는 14일 페이즈 총량을 일별로 분산해야 합니다.');
-assert.ok(app.includes("actionId==='vacation')return 1")&&app.includes('stress:-45'),'바캉스는 일일 축소 없이 스트레스 45를 회복해야 합니다.');
-assert.ok(app.includes('let forcedRestPhase=-1')&&app.includes('forcedRestPhase===currentSchedulePhase')&&app.includes('if(simulated.stress>=100)forcedRestPhase=currentSchedulePhase'),'스트레스 100 도달 뒤 현재 페이즈의 남은 일정은 모두 휴식으로 고정해야 합니다.');
+assert.ok(app.includes('function phaseDailyChange(change)'),'14일 페이즈용 스트레스 변화량 보정이 필요합니다.');
+assert.ok(app.includes('Math.ceil(stress/3)'),'일일 스트레스 증가는 기존 수치의 약 1/3로 낮춰야 합니다.');
 assert.ok(app.includes('playbackDailyStats'),'각 날짜마다 능력치 전후 수치를 표시해야 합니다.');
 assert.ok(css.includes('.playback-daily-stats'),'일별 능력치 변화 표시 UI가 필요합니다.');
 assert.ok(css.includes('.activity-gauges{display:none!important}')&&css.includes('#stageHudDate{font-size:14px'),'일정 실행 중 중복 스테이터스창을 없애고 날짜를 크게 보여야 합니다.');

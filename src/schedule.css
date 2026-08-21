@@ -2009,13 +2009,8 @@
 .phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-kitchenhelp.schedule-layered .schedule-scene-layer.layer-effect{width:74px!important}
 .phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-kitchenhelp.schedule-layered .schedule-scene-layer.layer-pattern.fail-a{width:76px!important}
 .phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-kitchenhelp.schedule-layered .schedule-scene-layer.layer-effect.fail-b{width:92px!important}
-.phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-kitchenhelp.schedule-layered .schedule-scene-layer.success-a{left:42%!important;bottom:4%!important;z-index:3!important;width:94px!important}
 .phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-childcare.schedule-layered .schedule-scene-layer.layer-npc{width:118px!important}
 .phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-childcare.schedule-layered .schedule-scene-layer.layer-pattern,.phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-childcare.schedule-layered .schedule-scene-layer.layer-effect{width:64px!important}
-.phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-childcare.schedule-layered .schedule-scene-layer.success-a{left:52%!important;bottom:8%!important;width:86px!important}
-.phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-childcare.schedule-layered .schedule-scene-layer.success-b{left:55%!important;bottom:5%!important;width:96px!important}
-.phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-childcare.schedule-layered .schedule-scene-layer.fail-a{left:73%!important;bottom:22%!important;width:58px!important}
-.phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-childcare.schedule-layered .schedule-scene-layer.fail-b{left:57%!important;bottom:6%!important;width:82px!important}
 .phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-painting.schedule-layered .schedule-scene-layer.layer-npc{bottom:var(--layer-floor)!important;width:132px!important}
 .phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-painting.schedule-layered .schedule-scene-layer.layer-pattern{left:44%!important;bottom:12%!important;width:38px!important}
 .phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-painting.schedule-layered .schedule-scene-layer.layer-effect{width:62px!important}
@@ -2069,4 +2064,3 @@
 /* 차 마시기에서도 일반 일정과 같은 선화 실루엣 크기를 유지한다. */
 .phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-rest:not(.market-choice-stage) .stage-character.pixel-sprite.motion-resting.rest-tea{width:146px!important;height:146px!important;bottom:3%!important;padding:0!important}
 @media(max-width:430px){.phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-rest:not(.market-choice-stage) .stage-character.pixel-sprite.motion-resting.rest-tea{width:132px!important;height:132px!important;bottom:3%!important}}
-.market-explore .market-roaming-seonhwa{position:absolute;z-index:4;left:14%;bottom:12%;width:92px;height:112px;object-fit:contain;object-position:center bottom;image-rendering:pixelated;transform:translateX(-50%);transition:left .22s linear,transform .18s ease;filter:drop-shadow(0 3px 2px #0006);pointer-events:none}.market-explore .market-roaming-seonhwa.is-looking{transform:translateX(-50%) rotate(-2deg)}.market-explore .market-roaming-seonhwa.is-stumbling{transform:translateX(-50%) translateY(7px) rotate(8deg)}

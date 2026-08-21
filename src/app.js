@@ -745,7 +745,6 @@ async function playScheduleLayerScene(actionId,seonImage,rank,outcome,dayIndex){
   const patternFrames=v2Spec?patternSpec?.frames:patternSpec;
   const npcFrames=v2Spec?spec.npc?.frames||[]:spec.npc||[];
   const heroFrames=spec.existingHeroFrames||[];
-  const activeHeroFrames=failed&&Array.isArray(spec.failureHeroFrames)&&spec.failureHeroFrames.length===3?spec.failureHeroFrames:heroFrames;
   if(heroFrames.length!==3||npcFrames.length!==3||patternFrames?.length!==3)throw new Error(`schedule layer frame count invalid: ${actionId}/${patternKey}`);
   const placement=spec.placement||{};
   const layers=[];
@@ -761,15 +760,13 @@ async function playScheduleLayerScene(actionId,seonImage,rank,outcome,dayIndex){
   try{
     if(spec.backgroundOverlay)layers.push(make('background',spec.backgroundOverlay));
     const npc=make('npc',npcFrames[0]);
-    if(actionId==='farmwork'&&failed)npc.hidden=true;
     const patternLayer=v2Spec&&patternSpec?.layer==='effects'?'effect':'pattern';
-    const pattern=make(`${patternLayer} ${patternKey} ${patternKey.startsWith('fail-')?'dedicated-failure':''}`,patternFrames[0]);
+    const pattern=make(`${patternLayer} ${patternKey.startsWith('fail-')?'dedicated-failure':''}`,patternFrames[0]);
     layers.push(npc,pattern);
     const delay=[360,300,250][rank]||300;
     for(let loop=0;loop<3;loop+=1){
       for(let frame=0;frame<3;frame+=1){
-        if(actionId==='farmwork'&&failed){stage.style.setProperty('--layer-hero-left',`${31+frame*8}%`);pattern.style.left=`${57+frame*10}%`;}
-        seonImage.src=v2Spec?`${base}/${activeHeroFrames[frame]}${v}`:`${activeHeroFrames[frame]}${v}`;
+        seonImage.src=v2Spec?`${base}/${heroFrames[frame]}${v}`:`${heroFrames[frame]}${v}`;
         npc.src=`${base}/${npcFrames[frame]}${v}`;
         pattern.src=`${base}/${patternFrames[frame]}${v}`;
         await schedulePlaybackDelay(delay);
@@ -829,24 +826,15 @@ function resolvedActivityChange(action,outcome){
   }
   return change;
 }
-function phaseChangeFactor(key,value,actionId=''){
-  if(actionId==='vacation')return 1;
-  if(key!=='stress')return 2;
-  if(value>0)return 4;
-  return actionId==='rest'?3:2;
-}
-function phaseTotalChange(change,actionId=''){
-  const total={};Object.entries(change||{}).forEach(([key,value])=>{const numeric=Number(value)||0;total[key]=Math.round(numeric*phaseChangeFactor(key,numeric,actionId));});return total;
-}
-function phaseDailyChange(change,actionId='',dayInPhase=0){
+function phaseDailyChange(change){
   const scaled={};
   Object.entries(change||{}).forEach(([key,value])=>{
     const numeric=Number(value)||0;
-    if(actionId==='vacation'){scaled[key]=numeric;return;}
-    const target=Math.round(numeric*phaseChangeFactor(key,numeric,actionId));
-    const day=Math.max(0,Math.min(13,Number(dayInPhase)||0));
-    scaled[key]=Math.trunc(target*(day+1)/14)-Math.trunc(target*day/14);
+    scaled[key]=key==='stress'||numeric===0?numeric:Math.sign(numeric)*Math.max(1,Math.round(Math.abs(numeric)*.5));
   });
+  const stress=Number(scaled.stress)||0;
+  if(stress>0)scaled.stress=Math.max(1,Math.ceil(stress/3));
+  else if(stress<0)scaled.stress=Math.min(-1,Math.round(stress/3));
   return scaled;
 }
 const scheduleDialogue={
@@ -921,28 +909,28 @@ const actions = [
   { id:'swordsmanship',category:'교육',name:'검술 수련',cost:165,unlockAge:13,unlockStats:{strength:120},mentor:'검술 사범',icon:'sweeping',intro:'칼을 휘두르기 전에 발과 호흡부터 바로 세워라.',summary:'힘 +4 · 민첩 +3 · 체력 +2 · 스트레스 +4',change:{strength:4,agility:3,health:2,stress:4}},
   { id:'spellcraft',category:'교육',name:'술법 수련',cost:175,unlockAge:13,unlockStats:{intelligence:150,mentality:100},mentor:'수호신수',icon:'herbs',intro:'기운을 억지로 잡지 말고 숨결을 따라 흐르게 하렴.',summary:'마력 +5 · 지능 +2 · 정신력 +3 · 스트레스 +4',change:{magic:5,intelligence:2,mentality:3,stress:4}},
   { id: 'classics', category: '교육', name: '경전 심화', cost: 190, unlockAge:16, mentor:'경학 스승', icon:'reading', intro:'이제 글자를 읽는 데서 그치지 말고 뜻을 논해 보자꾸나.', summary:'지능 +6 · 기품 +2 · 스트레스 +4', change:{intelligence:6,dignity:2,stress:4} },
-  { id: 'errand', category: '아르바이트', name: '장터 심부름', cost: -90, unlockAge:9, mentor:'장터 상인', icon:'errand', summary: '민첩 +3 · 화술 +2 · 스트레스 +4 · 90냥 획득', change: { agility:3, speech:2, stress:4 } },
-  { id: 'sweeping', category: '아르바이트', name: '마당 쓸기', cost: -70, unlockAge:9, mentor:'돌쇠', icon:'sweeping', summary: '힘 +3 · 체력 +2 · 스트레스 +3 · 70냥 획득', change: { strength:3, health:2, stress:3 } },
-  { id: 'herbs', category: '아르바이트', name: '약초 줍기', cost: -80, unlockAge:9, mentor:'약초꾼', icon:'herbs', summary: '센스 +2 · 지능 +1 · 체력 +1 · 스트레스 +4 · 80냥 획득', change: { sense:2, intelligence:1, health:1, stress:4 } },
-  { id: 'houseclean', category: '아르바이트', name: '집 청소', cost: -60, unlockAge:9, mentor:'신수', icon:'houseclean', summary: '힘 +2 · 센스 +2 · 체력 +1 · 스트레스 +3 · 60냥 획득', change: { strength:2, sense:2, health:1, stress:3 } },
-  { id:'farmwork',category:'아르바이트',name:'농가 일손 돕기',cost:-100,unlockAge:10,mentor:'농가 어른',icon:'herbs',summary:'체력 +3 · 힘 +3 · 기품 -1 · 스트레스 +4 · 100냥 획득',change:{health:3,strength:3,dignity:-1,stress:4}},
-  { id:'childcare',category:'아르바이트',name:'아이 돌보기',cost:-85,unlockAge:10,mentor:'마을 어른',icon:'houseclean',summary:'감수성 +3 · 기품 +2 · 스트레스 +4 · 85냥 획득',change:{sensitivity:3,virtue:2,stress:4}},
-  { id:'kitchenhelp',category:'아르바이트',name:'주방 보조',cost:-115,unlockAge:10,mentor:'찬모',icon:'arithmetic',summary:'센스 +3 · 체력 +2 · 스트레스 +4 · 115냥 획득',change:{sense:3,health:2,stress:4}},
-  { id:'woodwork',category:'아르바이트',name:'목공소 심부름',cost:-135,unlockAge:11,mentor:'목수',icon:'sweeping',summary:'힘 +4 · 센스 +2 · 스트레스 +5 · 135냥 획득',change:{strength:4,sense:2,stress:5}},
-  { id:'loomwork',category:'아르바이트',name:'베틀방 돕기',cost:-140,unlockAge:11,mentor:'직조 장인',icon:'houseclean',summary:'센스 +4 · 감수성 +2 · 스트레스 +4 · 140냥 획득',change:{sense:4,sensitivity:2,stress:4}},
-  { id:'masonry',category:'아르바이트',name:'기와·흙벽 보조',cost:-165,unlockAge:12,mentor:'와공',icon:'sweeping',summary:'체력 +4 · 힘 +4 · 기품 -2 · 스트레스 +5 · 165냥 획득',change:{health:4,strength:4,dignity:-2,stress:5}},
-  { id:'clinichelp',category:'아르바이트',name:'약방 견습',cost:-170,unlockAge:12,unlockStats:{intelligence:150,sense:100},mentor:'의원',icon:'herbs',summary:'지능 +3 · 센스 +3 · 기품 +1 · 스트레스 +4 · 170냥 획득',change:{intelligence:3,sense:3,virtue:1,stress:4}},
-  { id: 'innhelp', category:'아르바이트', name:'주막 돕기', cost:-110, unlockAge:13, mentor:'주모', icon:'errand', intro:'손님상은 빠르게, 말씨는 상냥하게 부탁하마.', summary:'화술 +3 · 체력 +2 · 스트레스 +4 · 110냥 획득', change:{speech:3,health:2,stress:4} },
-  { id: 'sewing', category:'아르바이트', name:'바느질 돕기', cost:-120, unlockAge:13, mentor:'침선장', icon:'houseclean', intro:'작은 바늘땀 하나가 옷의 맵시를 정하는 법이란다.', summary:'센스 +4 · 감수성 +1 · 스트레스 +3 · 120냥 획득', change:{sense:4,sensitivity:1,stress:3} },
-  { id: 'copying', category:'아르바이트', name:'서책 필사', cost:-130, unlockAge:13, mentor:'서책방 주인', icon:'reading', intro:'또박또박 옮겨 적되 원문의 한 자도 빠뜨리지 말거라.', summary:'지능 +3 · 센스 +2 · 스트레스 +4 · 130냥 획득', change:{intelligence:3,sense:2,stress:4} },
-  { id:'ferryhelp',category:'아르바이트',name:'나루터 짐 정리',cost:-190,unlockAge:14,mentor:'나루지기',icon:'errand',summary:'체력 +3 · 화술 +3 · 민첩 +2 · 스트레스 +5 · 190냥 획득',change:{health:3,speech:3,agility:2,stress:5}},
+  { id: 'errand', category: '아르바이트', name: '장터 심부름', cost: -90, unlockAge:9, mentor:'장터 상인', icon:'errand', summary: '민첩 +3 · 화술 +2 · 스트레스 +4 · 90냥 획득', change: { agility:3, speech:2, stress:4 }, retiredJob:true },
+  { id: 'sweeping', category: '아르바이트', name: '마당 쓸기', cost: -70, unlockAge:9, mentor:'돌쇠', icon:'sweeping', summary: '힘 +3 · 체력 +2 · 스트레스 +3 · 70냥 획득', change: { strength:3, health:2, stress:3 }, retiredJob:true },
+  { id: 'herbs', category: '아르바이트', name: '약초 줍기', cost: -80, unlockAge:9, mentor:'약초꾼', icon:'herbs', summary: '센스 +2 · 지능 +1 · 체력 +1 · 스트레스 +4 · 80냥 획득', change: { sense:2, intelligence:1, health:1, stress:4 }, retiredJob:true },
+  { id: 'houseclean', category: '아르바이트', name: '집 청소', cost: -60, unlockAge:9, mentor:'신수', icon:'houseclean', summary: '힘 +2 · 센스 +2 · 체력 +1 · 스트레스 +3 · 60냥 획득', change: { strength:2, sense:2, health:1, stress:3 }, retiredJob:true },
+  { id:'farmwork',category:'아르바이트',name:'농가 일손 돕기',cost:-110,unlockAge:9,mentor:'농가 어른',icon:'herbs',summary:'체력 +3 · 힘 +3 · 기품 -1 · 스트레스 +4 · 110냥 획득',change:{health:3,strength:3,dignity:-1,stress:4}},
+  { id:'childcare',category:'아르바이트',name:'아이 돌보기',cost:-90,unlockAge:9,mentor:'마을 어른',icon:'houseclean',summary:'감수성 +3 · 기품 +2 · 스트레스 +4 · 90냥 획득',change:{sensitivity:3,virtue:2,stress:4}},
+  { id:'kitchenhelp',category:'아르바이트',name:'주막 보조',cost:-120,unlockAge:10,mentor:'주모',icon:'arithmetic',intro:'재료 손질부터 손님상까지 주막일을 차근차근 익혀 보자.',summary:'센스 +3 · 체력 +2 · 화술 +1 · 스트레스 +4 · 120냥 획득',change:{sense:3,health:2,speech:1,stress:4}},
+  { id:'woodwork',category:'아르바이트',name:'목공소 심부름',cost:-135,unlockAge:11,mentor:'목수',icon:'sweeping',summary:'힘 +4 · 센스 +2 · 스트레스 +5 · 135냥 획득',change:{strength:4,sense:2,stress:5},retiredJob:true},
+  { id:'loomwork',category:'아르바이트',name:'베틀방 돕기',cost:-140,unlockAge:11,mentor:'직조 장인',icon:'houseclean',summary:'센스 +4 · 감수성 +2 · 스트레스 +4 · 140냥 획득',change:{sense:4,sensitivity:2,stress:4},retiredJob:true},
+  { id:'masonry',category:'아르바이트',name:'기와·흙벽 보조',cost:-165,unlockAge:12,mentor:'와공',icon:'sweeping',summary:'체력 +4 · 힘 +4 · 기품 -2 · 스트레스 +5 · 165냥 획득',change:{health:4,strength:4,dignity:-2,stress:5},retiredJob:true},
+  { id:'clinichelp',category:'아르바이트',name:'약방 견습',cost:-170,unlockAge:11,unlockStats:{intelligence:100,sense:80},mentor:'의원',icon:'herbs',summary:'지능 +3 · 센스 +3 · 기품 +1 · 스트레스 +4 · 170냥 획득',change:{intelligence:3,sense:3,virtue:1,stress:4}},
+  { id: 'innhelp', category:'아르바이트', name:'주막 돕기', cost:-110, unlockAge:13, mentor:'주모', icon:'errand', intro:'손님상은 빠르게, 말씨는 상냥하게 부탁하마.', summary:'화술 +3 · 체력 +2 · 스트레스 +4 · 110냥 획득', change:{speech:3,health:2,stress:4}, retiredJob:true },
+  { id: 'sewing', category:'아르바이트', name:'바느질', cost:-145, unlockAge:12, mentor:'침선장', icon:'houseclean', intro:'베틀에서 고른 옷감을 작은 바늘땀으로 단정히 마무리하렴.', summary:'센스 +4 · 감수성 +2 · 스트레스 +3 · 145냥 획득', change:{sense:4,sensitivity:2,stress:3} },
+  { id: 'copying', category:'아르바이트', name:'서책 필사', cost:-165, unlockAge:13, mentor:'서책방 주인', icon:'reading', intro:'원문을 옮겨 적고 장부의 숫자까지 꼼꼼히 살펴보거라.', summary:'지능 +3 · 센스 +3 · 화술 +1 · 스트레스 +4 · 165냥 획득', change:{intelligence:3,sense:3,speech:1,stress:4} },
+  { id:'ferryhelp',category:'아르바이트',name:'나루터 짐 정리',cost:-190,unlockAge:14,mentor:'나루지기',icon:'errand',summary:'체력 +3 · 화술 +3 · 민첩 +2 · 스트레스 +5 · 190냥 획득',change:{health:3,speech:3,agility:2,stress:5},retiredJob:true},
   { id:'merchanthelp',category:'아르바이트',name:'상점 판매 보조',cost:-205,unlockAge:14,unlockStats:{speech:150,sense:150},mentor:'잡화상',icon:'errand',summary:'화술 +5 · 센스 +3 · 스트레스 +5 · 205냥 획득',change:{speech:4,sense:3,reputation:1,stress:5}},
-  { id: 'accounting', category:'아르바이트', name:'상단 장부 정리', cost:-180, unlockAge:16, mentor:'상단 행수', icon:'arithmetic', intro:'숫자 하나가 상단의 신뢰를 좌우하니 꼼꼼히 살펴보거라.', summary:'센스 +4 · 화술 +2 · 스트레스 +4 · 180냥 획득', change:{sense:4,speech:2,stress:4} },
+  { id: 'accounting', category:'아르바이트', name:'상단 장부 정리', cost:-180, unlockAge:16, mentor:'상단 행수', icon:'arithmetic', intro:'숫자 하나가 상단의 신뢰를 좌우하니 꼼꼼히 살펴보거라.', summary:'센스 +4 · 화술 +2 · 스트레스 +4 · 180냥 획득', change:{sense:4,speech:2,stress:4}, retiredJob:true },
   { id: 'tutoring', category:'아르바이트', name:'학동 가르치기', cost:-230, unlockAge:16, unlockStats:{intelligence:350,manners:220,speech:180}, mentor:'서당 훈장', icon:'reading', intro:'배운 바가 충분하니 이제 어린 학동에게 글과 셈, 예절을 일러 주거라.', summary:'지능 +2 · 화술 +4 · 기품 +2 · 스트레스 +5 · 230냥 획득', change:{intelligence:2,speech:4,dignity:2,stress:5} },
   { id: 'rest', category: '휴식', name: '집에서 휴식', cost: 0, summary: '스트레스 -12 · 체력 +2 · 정신력 +2', change: { health:2, mentality:2, stress:-12 } },
   { id: 'freeTime', category: '휴식', name: '자유행동', cost: 0, summary: '가벼운 외출·취미·산책 중 하나 · 스트레스 감소', change: { sense:1, stress:-8 }, special:'free-time' },
   { id: 'shopping', category: '휴식', name: '저잣거리', cost: 0, summary: '', change: {}, special:'market' },
-  { id: 'vacation', category: '휴식', name: '바캉스', cost: 180, summary: '감수성 +3 · 매력 +1 · 스트레스 -45 · 추억 일러스트 획득', change: {sensitivity:3,charm:1,stress:-45}, special:'vacation' },
+  { id: 'vacation', category: '휴식', name: '바캉스', cost: 180, summary: '감수성 +3 · 매력 +1 · 스트레스 -25 · 추억 일러스트 획득', change: {sensitivity:3,charm:1,stress:-25}, special:'vacation' },
   { id: 'dungeon', category: '휴식', name: '비경 탐사', cost: 50, unlockAge:13, unlockAnyStats:[{strength:120},{magic:120}], mentor:'수호신수', icon:'herbs', intro:'성 밖의 숨은 길에는 보물과 위험이 함께 있단다. 준비를 갖추고 나서자.', summary:'체력 +2 · 힘 +2 · 마력 +2 · 스트레스 +5 · 보물 은전 획득 가능', change:{health:2,strength:2,magic:2,stress:5}, special:'dungeon' },
   {id:'holiday-seollal',category:'명절',name:'설날 행사 참가',cost:0,icon:'manners',holidayOnly:'설날',summary:'설날 고정 이벤트',change:{dignity:2,manners:2,stress:-10},special:'holiday'},
   {id:'holiday-chuseok',category:'명절',name:'추석 행사 참가',cost:0,icon:'manners',holidayOnly:'추석',summary:'차례상·윷놀이·제기차기·송편만들기',change:{},special:'holiday'},
@@ -1471,7 +1459,7 @@ statLabels.nannyAffinity='신수 유대감';
 statLabels.fatherAffinity='아버지 친밀도';
 statLabels.guardianTrust='신수 신뢰';
 function showLiveChanges(action){
-  const items=orderedChangeEntries(phaseTotalChange(action.change,action.id)).map(([key,value])=>{const positive=key==='stress'?value<0:value>=0;const current=clampStat(key,game[key]);return `<span class="${positive?'up':'down'}">${statLabels[key]||key} <b>${current}</b> <small>(${value>0?'+':''}${value})</small></span>`;});
+  const items=orderedChangeEntries(phaseDailyChange(action.change)).map(([key,value])=>{const positive=key==='stress'?value<0:value>=0;const current=clampStat(key,game[key]);return `<span class="${positive?'up':'down'}">${statLabels[key]||key} <b>${current}</b> <small>(${value>0?'+':''}${value})</small></span>`;});
   if(action.cost!==0)items.push(`<span class="money">은전 ${action.cost>0?'-':'+'}${Math.abs(action.cost)}냥</span>`);
   document.querySelector('#liveChanges').innerHTML=items.join('');
   if(Object.values(action.change||{}).some(value=>Math.abs(value)>=8))game.homeReaction='shocked';
@@ -1480,7 +1468,7 @@ function showLiveChanges(action){
 }
 function renderActivityGauges(action){
   const box=document.querySelector('#activityGauges');
-  const entries=orderedChangeEntries(phaseTotalChange(action.change,action.id)).filter(([,value])=>value!==0);
+  const entries=orderedChangeEntries(phaseDailyChange(action.change)).filter(([,value])=>value!==0);
   if(!entries.length||['shopping','vacation'].includes(action.id)){box.hidden=true;box.innerHTML='';return;}
   box.innerHTML=entries.map(([key,value])=>{
     const max=statMaximum(key),next=clampStat(key,game[key]),current=clampStat(key,next-value);
@@ -1884,7 +1872,7 @@ function normalizePhaseSchedule(){
 }
 function scheduleProjection(){
   let money=game.money,stress=game.stress;
-  game.dailySchedule.forEach(id=>{const action=actions.find(item=>item.id===id);if(!action)return;for(let day=0;day<14;day+=1){const dailyStress=phaseDailyChange(action.change,action.id,day).stress||0;money=Math.max(0,money-action.cost);stress=clampStat('stress',stress+dailyStress);}});
+  game.dailySchedule.forEach(id=>{const action=actions.find(item=>item.id===id);if(!action)return;const dailyStress=phaseDailyChange(action.change).stress||0;for(let day=0;day<14;day+=1){money=Math.max(0,money-action.cost);stress=clampStat('stress',stress+dailyStress);}});
   return {money,stress};
 }
 function masteryMeter(points){
@@ -2026,26 +2014,9 @@ const marketPlaces=[
   {id:'outfit',side:1,label:'한복점'}
   // 추후 {id:'pub',side:-2,label:'주점'}, {id:'gift',side:2,label:'선물가게'} 추가 가능
 ];
-let marketSelection=null,marketResolve=null,marketRoamToken=0;
-const marketRoamFrames=frameTriplet('errand-pixel');
-const marketStumbleFrames=frameTriplet('fail-pixel');
-async function playMarketRoamingScene(){
-  const explore=document.querySelector('#marketExplore'),token=++marketRoamToken;
-  let actor=explore.querySelector('.market-roaming-seonhwa');
-  if(!actor){actor=document.createElement('img');actor.className='market-roaming-seonhwa';actor.alt='매대를 둘러보는 선화';explore.appendChild(actor);}
-  actor.hidden=false;actor.classList.remove('is-looking','is-stumbling');
-  const route=[14,22,31,39,47,55,63,70];
-  for(let step=0;step<route.length&&token===marketRoamToken&&!explore.hidden;step+=1){
-    actor.style.left=`${route[step]}%`;actor.src=marketRoamFrames[step%3];
-    actor.classList.toggle('is-looking',step===2||step===5);
-    await new Promise(resolve=>setTimeout(resolve,step===2||step===5?520:230));
-    if(step===4&&Math.random()<.28){actor.classList.add('is-stumbling');for(const frame of marketStumbleFrames){actor.src=frame;await new Promise(resolve=>setTimeout(resolve,210));}actor.classList.remove('is-stumbling');}
-  }
-  if(token===marketRoamToken&&!explore.hidden){actor.classList.add('is-looking');actor.src=marketRoamFrames[1];}
-}
+let marketSelection=null,marketResolve=null;
 function finishMarket(){
   if(typeof marketResolve!=='function')return;
-  marketRoamToken+=1;
   const resolve=marketResolve;
   marketResolve=null;
   closeMarketUiForTransition();
@@ -2071,7 +2042,6 @@ function askMarketShop(type){
 function closeMarketConfirm(){document.querySelector('#marketConfirm').hidden=true;selectMarketShop(null);}
 function exploreMarket(){
   const explore=document.querySelector('#marketExplore'),stage=document.querySelector('#activityStage');document.querySelector('.phone').classList.add('market-playing');stage.classList.add('market-choice-stage');explore.hidden=false;document.querySelector('#marketConfirm').hidden=true;document.querySelector('#stageCharacter').hidden=true;document.querySelector('#stageNpc').hidden=true;document.querySelector('#stageProps').hidden=true;marketMealConsumed=false;marketSelection=null;selectMarketShop(null);
-  playMarketRoamingScene();
   return new Promise(resolve=>{marketResolve=()=>{document.querySelector('.phone').classList.remove('market-playing');explore.hidden=true;document.querySelector('#stageCharacter').hidden=false;document.querySelector('#stageProps').hidden=false;resolve();};});
 }
 function enterMarketShop(type){if(!type)return;const place=marketPlaces.find(item=>item.id===type);document.querySelector('#dialogueText').textContent=`${place?.label||'가게'} 주인이 “어서 오세요.” 하고 반겨요.`;document.querySelector('#marketExplore').hidden=true;document.querySelector('#activityStage').hidden=true;document.querySelector('.phone').classList.add('market-shop-open');panel.hidden=false;renderShopPanel(type,true);}
@@ -2474,7 +2444,6 @@ async function playWeeklySchedule(selected) {
   const dayResult = document.querySelector('#dayResult');
   const conditionCue = document.querySelector('#conditionCue');
   const simulated={stress:game.stress};
-  let forcedRestPhase=-1;
   const weeklyChange={};
   const dayRecords=[];
   const scheduleStart=new Date(`${game.currentDate}T00:00:00`);
@@ -2499,9 +2468,7 @@ async function playWeeklySchedule(selected) {
     const activityDate=new Date(scheduleStart);activityDate.setDate(scheduleStart.getDate()+index);
     const weekdayLabels=['일','월','화','수','목','금','토'];
     const plannedAction = selected[index];
-    const currentSchedulePhase=Math.floor(index/14);
-    if(simulated.stress>=100)forcedRestPhase=currentSchedulePhase;
-    const action = forcedRestPhase===currentSchedulePhase?(actions.find(item=>item.id==='rest')||plannedAction):actionForStressLimit(plannedAction,simulated.stress);
+    const action = actionForStressLimit(plannedAction,simulated.stress);
     playScheduleMusic(action);
     renderStagePm3Hud(activityDate,{},action);
     const forcedRest = action.id!==plannedAction.id;
@@ -2621,9 +2588,9 @@ async function playWeeklySchedule(selected) {
     if(!guaranteedSuccess&&(outcome==='mistake'||outcome==='struggle')&&action.id!=='shopping'&&!scheduleLayerIds.has(action.id)){
       await animateActionStumble(stageCharacterImage,outcome);
     }
-    const resolvedChange=phaseDailyChange(freeTimeVariant?{...freeTimeVariant.change}:resolvedActivityChange(action,outcome),action.id,index%14);
+    const resolvedChange=phaseDailyChange(freeTimeVariant?{...freeTimeVariant.change}:resolvedActivityChange(action,outcome));
     if(holidayContestResult){
-      const contestChange=phaseDailyChange(holidayContestResult.change,action.id,index%14);
+      const contestChange=phaseDailyChange(holidayContestResult.change);
       Object.entries(contestChange).forEach(([key,value])=>{resolvedChange[key]=(resolvedChange[key]||0)+value;});
     }
     const isWork=action.category==='아르바이트',basePay=isWork?activityPay(action):0;
@@ -2670,7 +2637,6 @@ async function playWeeklySchedule(selected) {
     Object.entries(actualChange).forEach(([key,value])=>weeklyChange[key]=(weeklyChange[key]||0)+value);
     dayRecords.push({date:isoDate(activityDate),action:{...action,cost:-moneyChange},actualChange,outcome,moneyChange});
     simulated.stress=clampStat('stress',simulated.stress+(resolvedChange.stress||0));
-    if(simulated.stress>=100)forcedRestPhase=currentSchedulePhase;
     if(action.id==='vacation'&&index%14===0)index=Math.min(index+13,selected.length-1);
     if((index+1)%14===0||index===selected.length-1){
       const start=index-index%14,phaseRecords=dayRecords.slice(start,index+1);
