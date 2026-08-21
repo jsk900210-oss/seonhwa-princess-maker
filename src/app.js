@@ -237,7 +237,7 @@ const vacationIllustrations=[
 function unifiedAgeFolder(){return '09';}
 function scheduleFramePath(file){return `../assets/characters/seonhwa/schedule-actions/${file}`;}
 function scheduleBasePath(file){return `../assets/characters/seonhwa/schedule-base/${file}`;}
-const scheduleAssetRevision='0.63.79-schedule-dialogue.1';
+const scheduleAssetRevision='0.63.84-debug';
 const scheduleQaParams=new URLSearchParams(location.search);
 const scheduleLayerStandaloneQa=scheduleQaParams.get('qa')==='1';
 const lockedScheduleQaMode=scheduleQaParams.has('qaSchedules')||scheduleLayerStandaloneQa;
@@ -916,16 +916,16 @@ const actions = [
   { id:'farmwork',category:'아르바이트',name:'농가 일손 돕기',cost:-110,unlockAge:9,mentor:'농가 어른',icon:'herbs',summary:'체력 +3 · 힘 +3 · 기품 -1 · 스트레스 +4 · 110냥 획득',change:{health:3,strength:3,dignity:-1,stress:4}},
   { id:'childcare',category:'아르바이트',name:'아이 돌보기',cost:-90,unlockAge:9,mentor:'마을 어른',icon:'houseclean',summary:'감수성 +3 · 기품 +2 · 스트레스 +4 · 90냥 획득',change:{sensitivity:3,virtue:2,stress:4}},
   { id:'kitchenhelp',category:'아르바이트',name:'주막 보조',cost:-120,unlockAge:10,mentor:'주모',icon:'arithmetic',intro:'재료 손질부터 손님상까지 주막일을 차근차근 익혀 보자.',summary:'센스 +3 · 체력 +2 · 화술 +1 · 스트레스 +4 · 120냥 획득',change:{sense:3,health:2,speech:1,stress:4}},
-  { id:'woodwork',category:'아르바이트',name:'목공소 심부름',cost:-135,unlockAge:11,mentor:'목수',icon:'sweeping',summary:'힘 +4 · 센스 +2 · 스트레스 +5 · 135냥 획득',change:{strength:4,sense:2,stress:5},retiredJob:true},
+  { id:'woodwork',category:'아르바이트',name:'목공소 심부름',cost:-135,unlockAge:11,unlockStats:{strength:120,sense:80},mentor:'목수',icon:'sweeping',summary:'힘 +4 · 센스 +2 · 스트레스 +5 · 135냥 획득',change:{strength:4,sense:2,stress:5},retiredJob:true},
   { id:'loomwork',category:'아르바이트',name:'베틀방 돕기',cost:-140,unlockAge:11,mentor:'직조 장인',icon:'houseclean',summary:'센스 +4 · 감수성 +2 · 스트레스 +4 · 140냥 획득',change:{sense:4,sensitivity:2,stress:4},retiredJob:true},
-  { id:'masonry',category:'아르바이트',name:'기와·흙벽 보조',cost:-165,unlockAge:12,mentor:'와공',icon:'sweeping',summary:'체력 +4 · 힘 +4 · 기품 -2 · 스트레스 +5 · 165냥 획득',change:{health:4,strength:4,dignity:-2,stress:5},retiredJob:true},
+  { id:'masonry',category:'아르바이트',name:'기와·흙벽 보조',cost:-165,unlockAge:13,unlockStats:{health:180,strength:180},mentor:'와공',icon:'sweeping',summary:'체력 +4 · 힘 +4 · 기품 -2 · 스트레스 +5 · 165냥 획득',change:{health:4,strength:4,dignity:-2,stress:5},retiredJob:true},
   { id:'clinichelp',category:'아르바이트',name:'약방 견습',cost:-170,unlockAge:11,unlockStats:{intelligence:100,sense:80},mentor:'의원',icon:'herbs',summary:'지능 +3 · 센스 +3 · 기품 +1 · 스트레스 +4 · 170냥 획득',change:{intelligence:3,sense:3,virtue:1,stress:4}},
-  { id: 'innhelp', category:'아르바이트', name:'주막 돕기', cost:-110, unlockAge:13, mentor:'주모', icon:'errand', intro:'손님상은 빠르게, 말씨는 상냥하게 부탁하마.', summary:'화술 +3 · 체력 +2 · 스트레스 +4 · 110냥 획득', change:{speech:3,health:2,stress:4}, retiredJob:true },
+  { id: 'innhelp', category:'아르바이트', name:'주막 운영 보조', cost:-155, unlockAge:12, unlockStats:{speech:100,health:90}, mentor:'주모', icon:'errand', intro:'이제 손님상과 계산까지 네가 살펴보렴.', summary:'화술 +3 · 체력 +2 · 센스 +1 · 스트레스 +4 · 155냥 획득', change:{speech:3,health:2,sense:1,stress:4}, retiredJob:true },
   { id: 'sewing', category:'아르바이트', name:'바느질', cost:-145, unlockAge:12, mentor:'침선장', icon:'houseclean', intro:'베틀에서 고른 옷감을 작은 바늘땀으로 단정히 마무리하렴.', summary:'센스 +4 · 감수성 +2 · 스트레스 +3 · 145냥 획득', change:{sense:4,sensitivity:2,stress:3} },
   { id: 'copying', category:'아르바이트', name:'서책 필사', cost:-165, unlockAge:13, mentor:'서책방 주인', icon:'reading', intro:'원문을 옮겨 적고 장부의 숫자까지 꼼꼼히 살펴보거라.', summary:'지능 +3 · 센스 +3 · 화술 +1 · 스트레스 +4 · 165냥 획득', change:{intelligence:3,sense:3,speech:1,stress:4} },
-  { id:'ferryhelp',category:'아르바이트',name:'나루터 짐 정리',cost:-190,unlockAge:14,mentor:'나루지기',icon:'errand',summary:'체력 +3 · 화술 +3 · 민첩 +2 · 스트레스 +5 · 190냥 획득',change:{health:3,speech:3,agility:2,stress:5},retiredJob:true},
+  { id:'ferryhelp',category:'아르바이트',name:'나루터 운송 보조',cost:-190,unlockAge:14,unlockStats:{health:150,speech:100,agility:100},mentor:'나루지기',icon:'errand',summary:'체력 +3 · 화술 +3 · 민첩 +2 · 스트레스 +5 · 190냥 획득',change:{health:3,speech:3,agility:2,stress:5},retiredJob:true},
   { id:'merchanthelp',category:'아르바이트',name:'상점 판매 보조',cost:-205,unlockAge:14,unlockStats:{speech:150,sense:150},mentor:'잡화상',icon:'errand',summary:'화술 +5 · 센스 +3 · 스트레스 +5 · 205냥 획득',change:{speech:4,sense:3,reputation:1,stress:5}},
-  { id: 'accounting', category:'아르바이트', name:'상단 장부 정리', cost:-180, unlockAge:16, mentor:'상단 행수', icon:'arithmetic', intro:'숫자 하나가 상단의 신뢰를 좌우하니 꼼꼼히 살펴보거라.', summary:'센스 +4 · 화술 +2 · 스트레스 +4 · 180냥 획득', change:{sense:4,speech:2,stress:4}, retiredJob:true },
+  { id: 'accounting', category:'아르바이트', name:'상단 장부 정리', cost:-210, unlockAge:16, unlockStats:{sense:300,intelligence:250}, mentor:'상단 행수', icon:'arithmetic', intro:'숫자 하나가 상단의 신뢰를 좌우하니 꼼꼼히 살펴보거라.', summary:'센스 +4 · 지능 +2 · 화술 +2 · 스트레스 +4 · 210냥 획득', change:{sense:4,intelligence:2,speech:2,stress:4}, retiredJob:true },
   { id: 'tutoring', category:'아르바이트', name:'학동 가르치기', cost:-230, unlockAge:16, unlockStats:{intelligence:350,manners:220,speech:180}, mentor:'서당 훈장', icon:'reading', intro:'배운 바가 충분하니 이제 어린 학동에게 글과 셈, 예절을 일러 주거라.', summary:'지능 +2 · 화술 +4 · 기품 +2 · 스트레스 +5 · 230냥 획득', change:{intelligence:2,speech:4,dignity:2,stress:5} },
   { id: 'rest', category: '휴식', name: '집에서 휴식', cost: 0, summary: '스트레스 -12 · 체력 +2 · 정신력 +2', change: { health:2, mentality:2, stress:-12 } },
   { id: 'freeTime', category: '휴식', name: '자유행동', cost: 0, summary: '가벼운 외출·취미·산책 중 하나 · 스트레스 감소', change: { sense:1, stress:-8 }, special:'free-time' },
@@ -941,16 +941,34 @@ const actions = [
   {id:'date-hyeon',category:'인연',name:'현과 데이트',cost:100,unlockAge:16,relationId:'hyeon',mentor:'현',icon:'manners',summary:'호감도 +12 · 기품 +2 · 스트레스 -8',change:{dignity:2,stress:-8},special:'date'}
 ];
 actions.forEach(item=>{if(item.change)item.change=canonicalizeChange(item.change);});
+const jobUpgradeChains=[
+  ['sweeping','houseclean','farmwork','woodwork','masonry'],
+  ['childcare','tutoring'],
+  ['kitchenhelp','innhelp'],
+  ['herbs','clinichelp'],
+  ['loomwork','sewing'],
+  ['errand','ferryhelp','merchanthelp'],
+  ['copying','accounting']
+];
+const jobChainFor=id=>jobUpgradeChains.find(chain=>chain.includes(id));
+function activeJobInChain(chain){return [...chain].reverse().map(id=>actions.find(action=>action.id===id)).find(action=>action&&actionUnlocked(action))||null;}
+function visibleJobActions(){return jobUpgradeChains.map(activeJobInChain).filter(Boolean);}
 const activityRequirements={reading:['지능',50],arithmetic:['센스',50],manners:['예절',50],painting:['감수성',150],music:['기품',150],dance:['민첩',150],swordsmanship:['힘',120],spellcraft:['지능·정신력',150],cooking:['센스',130],martial:['체력',150],classics:['지능',300],errand:['화술',40],sweeping:['힘',50],herbs:['센스',50],houseclean:['체력',50],farmwork:['힘',80],childcare:['감수성',80],kitchenhelp:['센스',80],woodwork:['힘',120],loomwork:['센스',120],masonry:['체력',140],clinichelp:['지능·센스',150],innhelp:['화술',130],sewing:['센스',140],copying:['지능',160],ferryhelp:['체력',150],merchanthelp:['화술·센스',150],accounting:['센스',300],tutoring:['지능',350],dungeon:['힘 또는 마력',120]};
 const meetsStatSet=set=>Object.entries(set||{}).every(([stat,value])=>Number(game[stat]||0)>=value);
 const actionUnlocked=action=>(lockedScheduleQaMode&&scheduleLayerIds.has(action.id))||(game.age>=Number(action.unlockAge||9)&&meetsStatSet(action.unlockStats)&&(!action.unlockAnyStats||action.unlockAnyStats.some(meetsStatSet))&&(!action.relationId||Boolean(relationRecord(action.relationId).dateUnlocked))&&(!action.holidayOnly||currentPhaseHoliday()?.name===action.holidayOnly));
-const newlyUnlockedActions=(previousAge,nextAge)=>actions.filter(action=>Number(action.unlockAge||9)>previousAge&&Number(action.unlockAge||9)<=nextAge&&meetsStatSet(action.unlockStats)&&(!action.unlockAnyStats||action.unlockAnyStats.some(meetsStatSet)));
+const newlyUnlockedActions=(previousAge,nextAge)=>actions.filter(action=>!action.retiredJob&&Number(action.unlockAge||9)>previousAge&&Number(action.unlockAge||9)<=nextAge&&meetsStatSet(action.unlockStats)&&(!action.unlockAnyStats||action.unlockAnyStats.some(meetsStatSet)));
 const activityRankNames=['견습','숙련','달인'];
 const activityRankThresholds=[0,10,30];
 const dedicatedJobIds=new Set(['farmwork','childcare','kitchenhelp','woodwork','loomwork','masonry','clinichelp','ferryhelp','merchanthelp']);
 const jobRewardNames={farmwork:'튼튼한 곡식 자루',childcare:'아이의 종이꽃',kitchenhelp:'찬모의 조리 수첩',woodwork:'목수의 작은 자',loomwork:'명주실 타래',masonry:'와공의 기와패',clinichelp:'약방의 향약 꾸러미',ferryhelp:'나루터 통행패',merchanthelp:'상인의 행운 엽전'};
 function normalizeActivityProgress(){
   if(!game.activityProgress||typeof game.activityProgress!=='object')game.activityProgress={};
+  jobUpgradeChains.forEach(chain=>{
+    const active=activeJobInChain(chain);if(!active)return;
+    const merged={attempts:0,successes:0,phasePoints:0,completedPhases:0,streak:0,perfectStreak:0,bestStreak:0};
+    chain.slice(0,chain.indexOf(active.id)).forEach(id=>{const progress=game.activityProgress[id];if(!progress)return;merged.attempts+=Number(progress.attempts)||0;merged.successes+=Number(progress.successes)||0;merged.phasePoints+=Number(progress.phasePoints)||0;merged.completedPhases+=Number(progress.completedPhases)||0;merged.streak=Math.max(merged.streak,Number(progress.streak)||0);merged.perfectStreak=Math.max(merged.perfectStreak,Number(progress.perfectStreak)||0);merged.bestStreak=Math.max(merged.bestStreak,Number(progress.bestStreak)||0);delete game.activityProgress[id];});
+    const current=game.activityProgress[active.id]||{};Object.keys(merged).forEach(key=>{current[key]=key.endsWith('Streak')||key==='streak'?Math.max(Number(current[key])||0,merged[key]):(Number(current[key])||0)+merged[key];});game.activityProgress[active.id]=current;
+  });
   actions.forEach(action=>{const current=game.activityProgress[action.id]||{},successes=Math.max(0,Number(current.successes)||0),legacyPoints=current.phasePoints===undefined?Math.min(30,Math.floor(successes/14)):Number(current.phasePoints);game.activityProgress[action.id]={attempts:Math.max(0,Number(current.attempts)||0),successes,phasePoints:Math.max(0,legacyPoints||0),completedPhases:Math.max(0,Number(current.completedPhases)||0),streak:Math.max(0,Number(current.streak)||0),perfectStreak:Math.max(0,Number(current.perfectStreak)||0),bestStreak:Math.max(0,Number(current.bestStreak)||0)};});
 }
 function activityProgressFor(id){normalizeActivityProgress();return game.activityProgress[id];}
@@ -1863,7 +1881,7 @@ function normalizePhaseSchedule(){
     legacy.forEach(id=>{if(compressed.at(-1)!==id)compressed.push(id);});
     game.dailySchedule=compressed;game.scheduleFormat='phase-v1';
   }
-  game.dailySchedule=game.dailySchedule.filter(id=>{const action=actions.find(item=>item.id===id);return action&&actionUnlocked(action);});
+  game.dailySchedule=game.dailySchedule.map(id=>{const chain=jobChainFor(id),active=chain&&activeJobInChain(chain);return active?.id||id;}).filter(id=>{const action=actions.find(item=>item.id===id);return action&&actionUnlocked(action);});
   const holiday=currentPhaseHoliday();
   if(holiday){
     game.dailySchedule=game.dailySchedule.filter(id=>id===holiday.id||id==='rest').slice(0,1);
@@ -1901,11 +1919,12 @@ function renderSchedulePanel() {
   const timeline=[...openingPaperSlots,...game.completedPhases.map(record=>({kind:'completed',record})),...scheduledEntries,...nextEntries];
   const latestStart=Math.max(0,timeline.length-5);scheduleTimelineOffset=Math.max(0,Math.min(scheduleTimelineOffset,latestStart));const timelineStart=Math.max(0,latestStart-scheduleTimelineOffset);
   const visibleTimeline=timeline.slice(timelineStart,timelineStart+5),phaseSlots=visibleTimeline.map(item=>{if(item.kind==='paper')return '<div class="phase-mini-slot opening-paper" aria-label="시작 불가"><b>시작 불가</b></div>';if(item.kind==='completed')return `<div class="phase-mini-slot completed"><small>제${item.record.index}페이즈</small><b>${item.record.name}</b></div>`;if(item.action)return `<button class="phase-mini-slot filled" data-phase-remove="${item.index}" aria-label="제${phase.index+item.index}페이즈 ${item.action.name} 일정 삭제"><small>제${phase.index+item.index}페이즈</small><b>${item.action.name}</b></button>`;const current=item.index===filled;return `<div class="phase-mini-slot ${current?'current':'empty'}" aria-hidden="true"><small>제${phase.index+item.index}페이즈</small>${current?'<b>편성 전</b>':''}</div>`;}).join(''),holiday=currentPhaseHoliday();
-  const unseenUnlocked=actions.filter(action=>actionUnlocked(action)&&Number(action.unlockAge||9)>9&&!game.activityUnlocksSeen.includes(action.id));
+  const visibleJobIds=new Set(visibleJobActions().map(action=>action.id));
+  const unseenUnlocked=actions.filter(action=>actionUnlocked(action)&&(!action.retiredJob||visibleJobIds.has(action.id))&&Number(action.unlockAge||9)>9&&!game.activityUnlocksSeen.includes(action.id));
   const scheduleCategories=['교육','아르바이트','휴식',...(actions.some(action=>action.category==='인연'&&actionUnlocked(action))?['인연']:[])];
   if(!scheduleCategories.includes(activeScheduleCategory))activeScheduleCategory='교육';
   const categoryTabs=scheduleCategories.map(category=>{const newCount=unseenUnlocked.filter(action=>action.category===category).length;return `<button data-schedule-category="${category}" class="${activeScheduleCategory===category?'on':''}">${category}${newCount?`<i>${newCount}</i>`:''}</button>`;}).join('');
-  const availableActions=holiday?[actions.find(action=>action.id===holiday.id),actions.find(action=>action.id==='rest')]:actions.filter(action=>action.category===activeScheduleCategory&&actionUnlocked(action)&&action.id!=='shopping');
+  const availableActions=holiday?[actions.find(action=>action.id===holiday.id),actions.find(action=>action.id==='rest')]:activeScheduleCategory==='아르바이트'?visibleJobActions():actions.filter(action=>action.category===activeScheduleCategory&&actionUnlocked(action)&&action.id!=='shopping');
   const actionCards=availableActions.map(action=>`<button class="action compact-action ${selectedScheduleAction===action.id?'selected':''}" data-action="${action.id}" ${holiday&&filled?'disabled':''}><img class="schedule-action-face" src="../assets/ui/activity-icons/activity-${scheduleActionIcon(action)}.png" alt=""><b>${action.name}</b><small class="schedule-action-money">${scheduleActionMoneyLabel(action)}</small></button>`).join('');
   const timelineMotion=scheduleTimelineMotion;scheduleTimelineMotion='';
   panelBody.innerHTML = `<section class="phase-progress compact" aria-label="전체 성장 페이즈 진행률"><div><b>제${phase.index}페이즈</b><span>${phase.index} / ${phase.total}</span></div><div class="phase-progress-track"><i style="width:${phase.percent}%"></i></div></section><div class="phase-five-wrap"><button id="phasePrev" aria-label="이전 페이즈 기록" ${timelineStart>0?'':'disabled'}>◀</button><div class="phase-five-grid ${timelineMotion?`slide-${timelineMotion}`:''}">${phaseSlots}</div><button id="phaseNext" aria-label="다음 페이즈 기록" ${timelineStart<latestStart?'':'disabled'}>▶</button></div><small class="phase-slide-count">완료 이력은 회색으로 보존됩니다 · ${timelineStart+1}–${Math.min(timelineStart+5,timeline.length)} / ${timeline.length}</small>${holiday?`<p class="fixed-holiday-phase"><b>${holiday.name} 고정 페이즈</b><span>${holiday.date.getMonth()+1}월 ${holiday.date.getDate()}일 포함 · 참가하지 않으면 집에서 휴식</span></p>`:`<div class="schedule-tabs compact-tabs" role="tablist">${categoryTabs}</div>`}<section class="schedule-category compact-category"><div class="action-grid compact-schedule-grid">${actionCards}</div></section><div class="schedule-tools compact-tools"><button id="scheduleRunPhases" ${filled?'':'disabled'}>${filled}개 페이즈 실행</button><button id="scheduleClearAll" ${filled?'':'disabled'}>전체 비우기</button></div>`;
@@ -2183,7 +2202,8 @@ async function runWeek() {
   const birthdayEvents=advanceGameDate(selected.length);
   const phaseAfter=phaseInfo(),phaseAdvanced=phaseAfter.index>phaseBefore.index;
   pendingHolidayRelation=rollHolidayRelationEvent();
-  pendingActivityUnlocks=actions.filter(action=>actionUnlocked(action)&&!unlockedBefore.has(action.id));
+  const visibleJobIdsAfter=new Set(visibleJobActions().map(action=>action.id));
+  pendingActivityUnlocks=actions.filter(action=>actionUnlocked(action)&&!unlockedBefore.has(action.id)&&(!action.retiredJob||visibleJobIdsAfter.has(action.id)));
   const completedLedger=completedLedgers[0]||null;
   const counts = selected.reduce((map, action) => (map[action.name]=(map[action.name]||0)+1,map),{});
   const summary = Object.entries(counts).map(([name,count]) => count > 1 ? `${name} ${count}일` : name).join(' · ');
