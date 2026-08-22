@@ -1,0 +1,5282 @@
+[
+  {
+    "path": "assets/schedule-layers/accounting/background-overlay/accounting-background-overlay.png",
+    "size": [
+      384,
+      256
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      31,
+      170,
+      351,
+      226
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/accounting/fail-a/ink-blot-1.png",
+    "size": [
+      192,
+      192
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      44,
+      72,
+      152,
+      148
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/accounting/fail-a/ink-blot-2.png",
+    "size": [
+      192,
+      192
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      44,
+      72,
+      152,
+      148
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/accounting/fail-a/ink-blot-3.png",
+    "size": [
+      192,
+      192
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      36,
+      72,
+      152,
+      156
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/accounting/fail-b/coin-scatter-1.png",
+    "size": [
+      192,
+      192
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      20,
+      60,
+      136,
+      144
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/accounting/fail-b/coin-scatter-2.png",
+    "size": [
+      192,
+      192
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      20,
+      60,
+      180,
+      172
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/accounting/fail-b/coin-scatter-3.png",
+    "size": [
+      192,
+      192
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      20,
+      60,
+      180,
+      172
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/accounting/npc/accounting-1.png",
+    "size": [
+      320,
+      320
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      80,
+      20,
+      248,
+      288
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/accounting/npc/accounting-2.png",
+    "size": [
+      320,
+      320
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      68,
+      16,
+      244,
+      288
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/accounting/npc/accounting-3.png",
+    "size": [
+      320,
+      320
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      88,
+      20,
+      236,
+      288
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/accounting/success-a/ledger-1.png",
+    "size": [
+      192,
+      192
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      32,
+      68,
+      164,
+      164
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/accounting/success-a/ledger-2.png",
+    "size": [
+      192,
+      192
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      32,
+      64,
+      172,
+      164
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/accounting/success-a/ledger-3.png",
+    "size": [
+      192,
+      192
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      32,
+      60,
+      180,
+      164
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/accounting/success-b/abacus-1.png",
+    "size": [
+      192,
+      192
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      40,
+      88,
+      156,
+      164
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/accounting/success-b/abacus-2.png",
+    "size": [
+      192,
+      192
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      40,
+      88,
+      156,
+      164
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/accounting/success-b/abacus-3.png",
+    "size": [
+      192,
+      192
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      40,
+      88,
+      156,
+      164
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/childcare/background-overlay/childcare-background-overlay.png",
+    "size": [
+      384,
+      256
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      46,
+      193,
+      352,
+      237
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/childcare/fail-a/tears-1.png",
+    "size": [
+      128,
+      128
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      54,
+      96,
+      74,
+      120
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/childcare/fail-a/tears-2.png",
+    "size": [
+      128,
+      128
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      30,
+      60,
+      98,
+      120
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/childcare/fail-a/tears-3.png",
+    "size": [
+      128,
+      128
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      18,
+      60,
+      110,
+      120
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/childcare/fail-b/toy-drop-1.png",
+    "size": [
+      192,
+      192
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      66,
+      124,
+      126,
+      184
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/childcare/fail-b/toy-drop-2.png",
+    "size": [
+      192,
+      192
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      34,
+      92,
+      158,
+      184
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/childcare/fail-b/toy-drop-3.png",
+    "size": [
+      192,
+      192
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      22,
+      100,
+      170,
+      184
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/childcare/npc/child-1.png",
+    "size": [
+      320,
+      320
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      102,
+      126,
+      218,
+      306
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/childcare/npc/child-2.png",
+    "size": [
+      320,
+      320
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      94,
+      126,
+      226,
+      306
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/childcare/npc/child-3.png",
+    "size": [
+      320,
+      320
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      106,
+      126,
+      214,
+      306
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/childcare/success-a/toy-play-1.png",
+    "size": [
+      192,
+      192
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      58,
+      108,
+      134,
+      184
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/childcare/success-a/toy-play-2.png",
+    "size": [
+      192,
+      192
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      42,
+      92,
+      150,
+      184
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/childcare/success-a/toy-play-3.png",
+    "size": [
+      192,
+      192
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      58,
+      108,
+      134,
+      184
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/childcare/success-b/calm-blanket-1.png",
+    "size": [
+      192,
+      192
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      34,
+      128,
+      158,
+      184
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/childcare/success-b/calm-blanket-2.png",
+    "size": [
+      192,
+      192
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      26,
+      80,
+      166,
+      184
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/childcare/success-b/calm-blanket-3.png",
+    "size": [
+      192,
+      192
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      26,
+      68,
+      166,
+      184
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/classics/background-overlay/classics-background-overlay.png",
+    "size": [
+      384,
+      256
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      26,
+      163,
+      351,
+      223
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/classics/fail-a/ink-blot-1.png",
+    "size": [
+      192,
+      192
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      44,
+      72,
+      152,
+      148
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/classics/fail-a/ink-blot-2.png",
+    "size": [
+      192,
+      192
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      44,
+      72,
+      152,
+      148
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/classics/fail-a/ink-blot-3.png",
+    "size": [
+      192,
+      192
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      36,
+      72,
+      152,
+      156
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/classics/fail-b/scattered-pages-1.png",
+    "size": [
+      192,
+      192
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      16,
+      48,
+      156,
+      156
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/classics/fail-b/scattered-pages-2.png",
+    "size": [
+      192,
+      192
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      16,
+      48,
+      192,
+      156
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/classics/fail-b/scattered-pages-3.png",
+    "size": [
+      192,
+      192
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      16,
+      48,
+      192,
+      156
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/classics/npc/classics-1.png",
+    "size": [
+      320,
+      320
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      80,
+      20,
+      248,
+      288
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/classics/npc/classics-2.png",
+    "size": [
+      320,
+      320
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      68,
+      16,
+      244,
+      288
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/classics/npc/classics-3.png",
+    "size": [
+      320,
+      320
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      88,
+      20,
+      236,
+      288
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/classics/success-a/scroll-pages-1.png",
+    "size": [
+      192,
+      192
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      24,
+      56,
+      164,
+      152
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/classics/success-a/scroll-pages-2.png",
+    "size": [
+      192,
+      192
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      24,
+      48,
+      172,
+      152
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/classics/success-a/scroll-pages-3.png",
+    "size": [
+      192,
+      192
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      24,
+      40,
+      180,
+      156
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/classics/success-b/calligraphy-1.png",
+    "size": [
+      192,
+      192
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      40,
+      72,
+      156,
+      160
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/classics/success-b/calligraphy-2.png",
+    "size": [
+      192,
+      192
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      40,
+      68,
+      156,
+      160
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/classics/success-b/calligraphy-3.png",
+    "size": [
+      192,
+      192
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      40,
+      64,
+      156,
+      160
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/clinichelp/background-overlay/clinichelp-background-overlay.png",
+    "size": [
+      384,
+      256
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      31,
+      160,
+      344,
+      226
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/clinichelp/fail-a/herb-spill-1.png",
+    "size": [
+      192,
+      192
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      36,
+      68,
+      136,
+      132
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/clinichelp/fail-a/herb-spill-2.png",
+    "size": [
+      192,
+      192
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      24,
+      100,
+      148,
+      192
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/clinichelp/fail-a/herb-spill-3.png",
+    "size": [
+      192,
+      192
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      24,
+      116,
+      160,
+      192
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/clinichelp/fail-b/medicine-overflow-1.png",
+    "size": [
+      192,
+      192
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      52,
+      56,
+      144,
+      164
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/clinichelp/fail-b/medicine-overflow-2.png",
+    "size": [
+      192,
+      192
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      52,
+      56,
+      144,
+      180
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/clinichelp/fail-b/medicine-overflow-3.png",
+    "size": [
+      192,
+      192
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      52,
+      56,
+      152,
+      180
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/clinichelp/npc/clinichelp-1.png",
+    "size": [
+      320,
+      320
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      80,
+      36,
+      248,
+      288
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/clinichelp/npc/clinichelp-2.png",
+    "size": [
+      320,
+      320
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      68,
+      32,
+      244,
+      288
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/clinichelp/npc/clinichelp-3.png",
+    "size": [
+      320,
+      320
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      84,
+      36,
+      240,
+      288
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/clinichelp/success-a/herb-sort-1.png",
+    "size": [
+      192,
+      192
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      32,
+      56,
+      152,
+      164
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/clinichelp/success-a/herb-sort-2.png",
+    "size": [
+      192,
+      192
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      32,
+      56,
+      152,
+      164
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/clinichelp/success-a/herb-sort-3.png",
+    "size": [
+      192,
+      192
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      32,
+      56,
+      152,
+      164
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/clinichelp/success-b/medicine-pot-1.png",
+    "size": [
+      192,
+      192
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      52,
+      52,
+      144,
+      164
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/clinichelp/success-b/medicine-pot-2.png",
+    "size": [
+      192,
+      192
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      52,
+      52,
+      144,
+      164
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/clinichelp/success-b/medicine-pot-3.png",
+    "size": [
+      192,
+      192
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      52,
+      48,
+      172,
+      164
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/cooking/background-overlay/cooking-background-overlay.png",
+    "size": [
+      384,
+      256
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      31,
+      160,
+      344,
+      228
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/cooking/fail-a/food-spill-1.png",
+    "size": [
+      192,
+      192
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      40,
+      68,
+      156,
+      116
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/cooking/fail-a/food-spill-2.png",
+    "size": [
+      192,
+      192
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      40,
+      88,
+      148,
+      140
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/cooking/fail-a/food-spill-3.png",
+    "size": [
+      192,
+      192
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      40,
+      88,
+      148,
+      172
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/cooking/fail-b/burnt-smoke-1.png",
+    "size": [
+      192,
+      192
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      52,
+      32,
+      144,
+      164
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/cooking/fail-b/burnt-smoke-2.png",
+    "size": [
+      192,
+      192
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      52,
+      32,
+      144,
+      180
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/cooking/fail-b/burnt-smoke-3.png",
+    "size": [
+      192,
+      192
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      52,
+      32,
+      160,
+      180
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/cooking/npc/cooking-1.png",
+    "size": [
+      320,
+      320
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      80,
+      44,
+      248,
+      288
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/cooking/npc/cooking-2.png",
+    "size": [
+      320,
+      320
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      68,
+      40,
+      244,
+      288
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/cooking/npc/cooking-3.png",
+    "size": [
+      320,
+      320
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      84,
+      44,
+      244,
+      288
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/cooking/success-a/chop-board-1.png",
+    "size": [
+      192,
+      192
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      32,
+      76,
+      176,
+      168
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/cooking/success-a/chop-board-2.png",
+    "size": [
+      192,
+      192
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      32,
+      72,
+      176,
+      168
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/cooking/success-a/chop-board-3.png",
+    "size": [
+      192,
+      192
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      32,
+      64,
+      176,
+      168
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/cooking/success-b/boiling-pot-1.png",
+    "size": [
+      192,
+      192
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      52,
+      52,
+      144,
+      164
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/cooking/success-b/boiling-pot-2.png",
+    "size": [
+      192,
+      192
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      52,
+      52,
+      144,
+      164
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/cooking/success-b/boiling-pot-3.png",
+    "size": [
+      192,
+      192
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      52,
+      48,
+      172,
+      164
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/copying/background-overlay/copying-background-overlay.png",
+    "size": [
+      384,
+      256
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      26,
+      163,
+      351,
+      223
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/copying/fail-a/ink-spill-1.png",
+    "size": [
+      192,
+      192
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      44,
+      72,
+      152,
+      148
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/copying/fail-a/ink-spill-2.png",
+    "size": [
+      192,
+      192
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      44,
+      72,
+      152,
+      148
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/copying/fail-a/ink-spill-3.png",
+    "size": [
+      192,
+      192
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      36,
+      72,
+      152,
+      156
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/copying/fail-b/crumpled-pages-1.png",
+    "size": [
+      192,
+      192
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      40,
+      72,
+      148,
+      148
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/copying/fail-b/crumpled-pages-2.png",
+    "size": [
+      192,
+      192
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      48,
+      84,
+      156,
+      160
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/copying/fail-b/crumpled-pages-3.png",
+    "size": [
+      192,
+      192
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      56,
+      96,
+      164,
+      172
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/copying/npc/copying-1.png",
+    "size": [
+      320,
+      320
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      80,
+      20,
+      248,
+      288
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/copying/npc/copying-2.png",
+    "size": [
+      320,
+      320
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      68,
+      16,
+      244,
+      288
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/copying/npc/copying-3.png",
+    "size": [
+      320,
+      320
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      88,
+      20,
+      236,
+      288
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/copying/success-a/copy-scroll-1.png",
+    "size": [
+      192,
+      192
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      24,
+      56,
+      164,
+      152
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/copying/success-a/copy-scroll-2.png",
+    "size": [
+      192,
+      192
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      24,
+      48,
+      172,
+      152
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/copying/success-a/copy-scroll-3.png",
+    "size": [
+      192,
+      192
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      24,
+      40,
+      180,
+      156
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/copying/success-b/dry-pages-1.png",
+    "size": [
+      192,
+      192
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      40,
+      72,
+      156,
+      160
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/copying/success-b/dry-pages-2.png",
+    "size": [
+      192,
+      192
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      36,
+      68,
+      164,
+      176
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/copying/success-b/dry-pages-3.png",
+    "size": [
+      192,
+      192
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      36,
+      64,
+      164,
+      176
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/dance/background-overlay/dance-background-overlay.png",
+    "size": [
+      384,
+      256
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      28,
+      153,
+      344,
+      214
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/dance/fail-a/tangled-ribbon-1.png",
+    "size": [
+      192,
+      192
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      32,
+      44,
+      160,
+      164
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/dance/fail-a/tangled-ribbon-2.png",
+    "size": [
+      192,
+      192
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      32,
+      44,
+      160,
+      164
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/dance/fail-a/tangled-ribbon-3.png",
+    "size": [
+      192,
+      192
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      32,
+      44,
+      160,
+      164
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/dance/fail-b/stumble-dust-1.png",
+    "size": [
+      192,
+      192
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      44,
+      104,
+      112,
+      148
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/dance/fail-b/stumble-dust-2.png",
+    "size": [
+      192,
+      192
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      44,
+      56,
+      140,
+      148
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/dance/fail-b/stumble-dust-3.png",
+    "size": [
+      192,
+      192
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      44,
+      56,
+      140,
+      148
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/dance/npc/dance-1.png",
+    "size": [
+      320,
+      320
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      80,
+      24,
+      248,
+      288
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/dance/npc/dance-2.png",
+    "size": [
+      320,
+      320
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      68,
+      20,
+      244,
+      288
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/dance/npc/dance-3.png",
+    "size": [
+      320,
+      320
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      84,
+      24,
+      240,
+      288
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/dance/success-a/ribbon-swirl-1.png",
+    "size": [
+      192,
+      192
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      28,
+      40,
+      156,
+      144
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/dance/success-a/ribbon-swirl-2.png",
+    "size": [
+      192,
+      192
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      28,
+      40,
+      156,
+      144
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/dance/success-a/ribbon-swirl-3.png",
+    "size": [
+      192,
+      192
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      28,
+      40,
+      156,
+      144
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/dance/success-b/fan-petals-1.png",
+    "size": [
+      192,
+      192
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      52,
+      52,
+      144,
+      132
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/dance/success-b/fan-petals-2.png",
+    "size": [
+      192,
+      192
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      52,
+      44,
+      144,
+      132
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/dance/success-b/fan-petals-3.png",
+    "size": [
+      192,
+      192
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      52,
+      36,
+      180,
+      132
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/farmwork/background-overlay/farmwork-background-overlay.png",
+    "size": [
+      384,
+      256
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      36,
+      177,
+      355,
+      237
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/farmwork/fail-a/feed-spill-1.png",
+    "size": [
+      192,
+      192
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      48,
+      132,
+      144,
+      184
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/farmwork/fail-a/feed-spill-2.png",
+    "size": [
+      192,
+      192
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      24,
+      52,
+      168,
+      184
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/farmwork/fail-a/feed-spill-3.png",
+    "size": [
+      192,
+      192
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      24,
+      52,
+      168,
+      184
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/farmwork/fail-b/mud-scatter-1.png",
+    "size": [
+      192,
+      192
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      34,
+      76,
+      158,
+      184
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/farmwork/fail-b/mud-scatter-2.png",
+    "size": [
+      192,
+      192
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      18,
+      52,
+      174,
+      184
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/farmwork/fail-b/mud-scatter-3.png",
+    "size": [
+      192,
+      192
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      14,
+      52,
+      178,
+      184
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/farmwork/npc/farmer-1.png",
+    "size": [
+      320,
+      320
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      82,
+      58,
+      238,
+      306
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/farmwork/npc/farmer-2.png",
+    "size": [
+      320,
+      320
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      80,
+      58,
+      240,
+      306
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/farmwork/npc/farmer-3.png",
+    "size": [
+      320,
+      320
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      78,
+      58,
+      242,
+      306
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/farmwork/success-a/crop-basket-1.png",
+    "size": [
+      192,
+      192
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      42,
+      88,
+      150,
+      184
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/farmwork/success-a/crop-basket-2.png",
+    "size": [
+      192,
+      192
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      42,
+      88,
+      150,
+      184
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/farmwork/success-a/crop-basket-3.png",
+    "size": [
+      192,
+      192
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      42,
+      88,
+      150,
+      184
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/farmwork/success-b/chicken-1.png",
+    "size": [
+      192,
+      192
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      30,
+      80,
+      162,
+      184
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/farmwork/success-b/chicken-2.png",
+    "size": [
+      192,
+      192
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      30,
+      80,
+      162,
+      184
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/farmwork/success-b/chicken-3.png",
+    "size": [
+      192,
+      192
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      30,
+      80,
+      162,
+      184
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/ferryhelp/background-overlay/ferryhelp-background-overlay.png",
+    "size": [
+      384,
+      256
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      42,
+      170,
+      346,
+      228
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/ferryhelp/fail-a/dropped-crate-1.png",
+    "size": [
+      192,
+      192
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      44,
+      52,
+      136,
+      128
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/ferryhelp/fail-a/dropped-crate-2.png",
+    "size": [
+      192,
+      192
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      60,
+      88,
+      152,
+      164
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/ferryhelp/fail-a/dropped-crate-3.png",
+    "size": [
+      192,
+      192
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      76,
+      124,
+      168,
+      192
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/ferryhelp/fail-b/water-splash-1.png",
+    "size": [
+      192,
+      192
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      40,
+      92,
+      156,
+      176
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/ferryhelp/fail-b/water-splash-2.png",
+    "size": [
+      192,
+      192
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      40,
+      72,
+      156,
+      176
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/ferryhelp/fail-b/water-splash-3.png",
+    "size": [
+      192,
+      192
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      40,
+      52,
+      160,
+      176
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/ferryhelp/npc/ferryhelp-1.png",
+    "size": [
+      320,
+      320
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      80,
+      48,
+      248,
+      288
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/ferryhelp/npc/ferryhelp-2.png",
+    "size": [
+      320,
+      320
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      68,
+      44,
+      244,
+      288
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/ferryhelp/npc/ferryhelp-3.png",
+    "size": [
+      320,
+      320
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      100,
+      48,
+      224,
+      288
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/ferryhelp/success-a/crate-carry-1.png",
+    "size": [
+      192,
+      192
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      52,
+      92,
+      144,
+      168
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/ferryhelp/success-a/crate-carry-2.png",
+    "size": [
+      192,
+      192
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      60,
+      84,
+      152,
+      160
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/ferryhelp/success-a/crate-carry-3.png",
+    "size": [
+      192,
+      192
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      68,
+      76,
+      160,
+      152
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/ferryhelp/success-b/rope-tie-1.png",
+    "size": [
+      192,
+      192
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      48,
+      68,
+      148,
+      160
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/ferryhelp/success-b/rope-tie-2.png",
+    "size": [
+      192,
+      192
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      52,
+      68,
+      144,
+      160
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/ferryhelp/success-b/rope-tie-3.png",
+    "size": [
+      192,
+      192
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      52,
+      68,
+      144,
+      160
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/innhelp/background-overlay/innhelp-background-overlay.png",
+    "size": [
+      384,
+      256
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      33,
+      181,
+      356,
+      226
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/innhelp/fail-a/broken-dishes-1.png",
+    "size": [
+      192,
+      192
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      32,
+      120,
+      124,
+      164
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/innhelp/fail-a/broken-dishes-2.png",
+    "size": [
+      192,
+      192
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      32,
+      120,
+      156,
+      180
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/innhelp/fail-a/broken-dishes-3.png",
+    "size": [
+      192,
+      192
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      32,
+      52,
+      188,
+      192
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/innhelp/fail-b/soup-spill-1.png",
+    "size": [
+      192,
+      192
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      40,
+      68,
+      156,
+      116
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/innhelp/fail-b/soup-spill-2.png",
+    "size": [
+      192,
+      192
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      40,
+      88,
+      148,
+      140
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/innhelp/fail-b/soup-spill-3.png",
+    "size": [
+      192,
+      192
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      40,
+      88,
+      148,
+      172
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/innhelp/npc/innhelp-1.png",
+    "size": [
+      320,
+      320
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      80,
+      44,
+      248,
+      288
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/innhelp/npc/innhelp-2.png",
+    "size": [
+      320,
+      320
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      68,
+      40,
+      244,
+      288
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/innhelp/npc/innhelp-3.png",
+    "size": [
+      320,
+      320
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      84,
+      44,
+      244,
+      288
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/innhelp/success-a/serving-tray-1.png",
+    "size": [
+      192,
+      192
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      36,
+      88,
+      152,
+      136
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/innhelp/success-a/serving-tray-2.png",
+    "size": [
+      192,
+      192
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      44,
+      80,
+      160,
+      128
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/innhelp/success-a/serving-tray-3.png",
+    "size": [
+      192,
+      192
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      52,
+      72,
+      168,
+      120
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/innhelp/success-b/clear-table-1.png",
+    "size": [
+      192,
+      192
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      32,
+      96,
+      164,
+      164
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/innhelp/success-b/clear-table-2.png",
+    "size": [
+      192,
+      192
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      32,
+      96,
+      164,
+      164
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/innhelp/success-b/clear-table-3.png",
+    "size": [
+      192,
+      192
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      32,
+      56,
+      168,
+      164
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/kitchenhelp/background-overlay/kitchenhelp-background-overlay.png",
+    "size": [
+      384,
+      256
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      38,
+      148,
+      349,
+      234
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/kitchenhelp/fail-a/dropped-vegetables-1.png",
+    "size": [
+      192,
+      192
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      36,
+      60,
+      132,
+      124
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/kitchenhelp/fail-a/dropped-vegetables-2.png",
+    "size": [
+      192,
+      192
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      28,
+      96,
+      152,
+      192
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/kitchenhelp/fail-a/dropped-vegetables-3.png",
+    "size": [
+      192,
+      192
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      28,
+      120,
+      160,
+      192
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/kitchenhelp/fail-b/boil-over-1.png",
+    "size": [
+      192,
+      192
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      48,
+      48,
+      148,
+      164
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/kitchenhelp/fail-b/boil-over-2.png",
+    "size": [
+      192,
+      192
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      48,
+      48,
+      148,
+      180
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/kitchenhelp/fail-b/boil-over-3.png",
+    "size": [
+      192,
+      192
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      48,
+      48,
+      148,
+      180
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/kitchenhelp/npc/jumo-1.png",
+    "size": [
+      320,
+      320
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      34,
+      47,
+      238,
+      290
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/kitchenhelp/npc/jumo-2.png",
+    "size": [
+      320,
+      320
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      35,
+      39,
+      279,
+      294
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/kitchenhelp/npc/jumo-3.png",
+    "size": [
+      320,
+      320
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      32,
+      51,
+      233,
+      298
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/kitchenhelp/success-a/vegetable-prep-1.png",
+    "size": [
+      192,
+      128
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      53,
+      4,
+      139,
+      68
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/kitchenhelp/success-a/vegetable-prep-2.png",
+    "size": [
+      192,
+      128
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      31,
+      3,
+      153,
+      80
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/kitchenhelp/success-a/vegetable-prep-3.png",
+    "size": [
+      192,
+      128
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      55,
+      4,
+      142,
+      72
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/kitchenhelp/success-b/cauldron-care-1.png",
+    "size": [
+      192,
+      192
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      52,
+      52,
+      144,
+      164
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/kitchenhelp/success-b/cauldron-care-2.png",
+    "size": [
+      192,
+      192
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      52,
+      52,
+      144,
+      164
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/kitchenhelp/success-b/cauldron-care-3.png",
+    "size": [
+      192,
+      192
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      52,
+      48,
+      172,
+      164
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/loomwork/background-overlay/loomwork-background-overlay.png",
+    "size": [
+      384,
+      256
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      31,
+      165,
+      346,
+      230
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/loomwork/fail-a/tangled-yarn-1.png",
+    "size": [
+      192,
+      192
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      40,
+      80,
+      152,
+      160
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/loomwork/fail-a/tangled-yarn-2.png",
+    "size": [
+      192,
+      192
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      40,
+      80,
+      152,
+      160
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/loomwork/fail-a/tangled-yarn-3.png",
+    "size": [
+      192,
+      192
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      40,
+      80,
+      152,
+      160
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/loomwork/fail-b/broken-thread-1.png",
+    "size": [
+      192,
+      192
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      28,
+      100,
+      168,
+      108
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/loomwork/fail-b/broken-thread-2.png",
+    "size": [
+      192,
+      192
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      28,
+      80,
+      168,
+      108
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/loomwork/fail-b/broken-thread-3.png",
+    "size": [
+      192,
+      192
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      28,
+      80,
+      168,
+      192
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/loomwork/npc/loomwork-1.png",
+    "size": [
+      320,
+      320
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      80,
+      24,
+      248,
+      288
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/loomwork/npc/loomwork-2.png",
+    "size": [
+      320,
+      320
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      68,
+      20,
+      244,
+      288
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/loomwork/npc/loomwork-3.png",
+    "size": [
+      320,
+      320
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      84,
+      24,
+      240,
+      288
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/loomwork/success-a/loom-shuttle-1.png",
+    "size": [
+      192,
+      192
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      32,
+      64,
+      148,
+      156
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/loomwork/success-a/loom-shuttle-2.png",
+    "size": [
+      192,
+      192
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      32,
+      64,
+      148,
+      156
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/loomwork/success-a/loom-shuttle-3.png",
+    "size": [
+      192,
+      192
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      32,
+      64,
+      148,
+      156
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/loomwork/success-b/woven-cloth-1.png",
+    "size": [
+      192,
+      192
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      32,
+      60,
+      148,
+      172
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/loomwork/success-b/woven-cloth-2.png",
+    "size": [
+      192,
+      192
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      32,
+      60,
+      148,
+      172
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/loomwork/success-b/woven-cloth-3.png",
+    "size": [
+      192,
+      192
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      32,
+      60,
+      148,
+      172
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/martial/background-overlay/martial-background-overlay.png",
+    "size": [
+      384,
+      256
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      40,
+      153,
+      356,
+      226
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/martial/fail-a/fallen-staff-1.png",
+    "size": [
+      192,
+      192
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      32,
+      56,
+      160,
+      84
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/martial/fail-a/fallen-staff-2.png",
+    "size": [
+      192,
+      192
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      32,
+      88,
+      160,
+      116
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/martial/fail-a/fallen-staff-3.png",
+    "size": [
+      192,
+      192
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      32,
+      120,
+      160,
+      172
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/martial/fail-b/impact-dust-1.png",
+    "size": [
+      192,
+      192
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      44,
+      44,
+      136,
+      148
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/martial/fail-b/impact-dust-2.png",
+    "size": [
+      192,
+      192
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      44,
+      44,
+      136,
+      148
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/martial/fail-b/impact-dust-3.png",
+    "size": [
+      192,
+      192
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      44,
+      44,
+      160,
+      148
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/martial/npc/martial-1.png",
+    "size": [
+      320,
+      320
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      80,
+      48,
+      248,
+      288
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/martial/npc/martial-2.png",
+    "size": [
+      320,
+      320
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      68,
+      44,
+      244,
+      288
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/martial/npc/martial-3.png",
+    "size": [
+      320,
+      320
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      96,
+      48,
+      228,
+      288
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/martial/success-a/dummy-hit-1.png",
+    "size": [
+      192,
+      192
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      48,
+      48,
+      152,
+      164
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/martial/success-a/dummy-hit-2.png",
+    "size": [
+      192,
+      192
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      24,
+      48,
+      152,
+      164
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/martial/success-a/dummy-hit-3.png",
+    "size": [
+      192,
+      192
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      24,
+      32,
+      152,
+      164
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/martial/success-b/staff-sweep-1.png",
+    "size": [
+      192,
+      192
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      28,
+      40,
+      164,
+      156
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/martial/success-b/staff-sweep-2.png",
+    "size": [
+      192,
+      192
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      28,
+      40,
+      156,
+      148
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/martial/success-b/staff-sweep-3.png",
+    "size": [
+      192,
+      192
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      28,
+      40,
+      148,
+      140
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/masonry/background-overlay/masonry-background-overlay.png",
+    "size": [
+      384,
+      256
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      35,
+      165,
+      353,
+      228
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/masonry/fail-a/fallen-bricks-1.png",
+    "size": [
+      192,
+      192
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      28,
+      48,
+      112,
+      144
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/masonry/fail-a/fallen-bricks-2.png",
+    "size": [
+      192,
+      192
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      28,
+      48,
+      124,
+      160
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/masonry/fail-a/fallen-bricks-3.png",
+    "size": [
+      192,
+      192
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      28,
+      48,
+      148,
+      184
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/masonry/fail-b/mud-spill-1.png",
+    "size": [
+      192,
+      192
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      48,
+      120,
+      140,
+      164
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/masonry/fail-b/mud-spill-2.png",
+    "size": [
+      192,
+      192
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      40,
+      76,
+      152,
+      168
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/masonry/fail-b/mud-spill-3.png",
+    "size": [
+      192,
+      192
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      32,
+      76,
+      168,
+      172
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/masonry/npc/masonry-1.png",
+    "size": [
+      320,
+      320
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      80,
+      28,
+      248,
+      288
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/masonry/npc/masonry-2.png",
+    "size": [
+      320,
+      320
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      68,
+      24,
+      244,
+      288
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/masonry/npc/masonry-3.png",
+    "size": [
+      320,
+      320
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      88,
+      28,
+      236,
+      288
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/masonry/success-a/brick-stack-1.png",
+    "size": [
+      192,
+      192
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      40,
+      88,
+      124,
+      152
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/masonry/success-a/brick-stack-2.png",
+    "size": [
+      192,
+      192
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      40,
+      88,
+      124,
+      152
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/masonry/success-a/brick-stack-3.png",
+    "size": [
+      192,
+      192
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      40,
+      88,
+      124,
+      184
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/masonry/success-b/plaster-wall-1.png",
+    "size": [
+      192,
+      192
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      36,
+      60,
+      160,
+      168
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/masonry/success-b/plaster-wall-2.png",
+    "size": [
+      192,
+      192
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      36,
+      60,
+      160,
+      168
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/masonry/success-b/plaster-wall-3.png",
+    "size": [
+      192,
+      192
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      36,
+      60,
+      160,
+      168
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/merchanthelp/background-overlay/merchanthelp-background-overlay.png",
+    "size": [
+      384,
+      256
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      33,
+      177,
+      351,
+      221
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/merchanthelp/fail-a/toppled-goods-1.png",
+    "size": [
+      192,
+      192
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      32,
+      64,
+      176,
+      132
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/merchanthelp/fail-a/toppled-goods-2.png",
+    "size": [
+      192,
+      192
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      32,
+      64,
+      176,
+      152
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/merchanthelp/fail-a/toppled-goods-3.png",
+    "size": [
+      192,
+      192
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      32,
+      64,
+      176,
+      172
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/merchanthelp/fail-b/wrong-change-1.png",
+    "size": [
+      192,
+      192
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      32,
+      52,
+      140,
+      140
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/merchanthelp/fail-b/wrong-change-2.png",
+    "size": [
+      192,
+      192
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      32,
+      52,
+      140,
+      140
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/merchanthelp/fail-b/wrong-change-3.png",
+    "size": [
+      192,
+      192
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      32,
+      52,
+      180,
+      140
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/merchanthelp/npc/merchanthelp-1.png",
+    "size": [
+      320,
+      320
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      80,
+      36,
+      248,
+      288
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/merchanthelp/npc/merchanthelp-2.png",
+    "size": [
+      320,
+      320
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      68,
+      32,
+      244,
+      288
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/merchanthelp/npc/merchanthelp-3.png",
+    "size": [
+      320,
+      320
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      100,
+      36,
+      224,
+      288
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/merchanthelp/success-a/goods-display-1.png",
+    "size": [
+      192,
+      192
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      36,
+      80,
+      156,
+      156
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/merchanthelp/success-a/goods-display-2.png",
+    "size": [
+      192,
+      192
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      36,
+      80,
+      156,
+      156
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/merchanthelp/success-a/goods-display-3.png",
+    "size": [
+      192,
+      192
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      36,
+      44,
+      168,
+      156
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/merchanthelp/success-b/coin-exchange-1.png",
+    "size": [
+      192,
+      192
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      44,
+      84,
+      156,
+      140
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/merchanthelp/success-b/coin-exchange-2.png",
+    "size": [
+      192,
+      192
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      56,
+      84,
+      148,
+      140
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/merchanthelp/success-b/coin-exchange-3.png",
+    "size": [
+      192,
+      192
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      68,
+      84,
+      140,
+      140
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/music/background-overlay/music-background-overlay.png",
+    "size": [
+      384,
+      256
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      31,
+      149,
+      349,
+      223
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/music/fail-a/broken-string-1.png",
+    "size": [
+      192,
+      192
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      32,
+      100,
+      164,
+      156
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/music/fail-a/broken-string-2.png",
+    "size": [
+      192,
+      192
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      32,
+      92,
+      164,
+      156
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/music/fail-a/broken-string-3.png",
+    "size": [
+      192,
+      192
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      32,
+      84,
+      164,
+      156
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/music/fail-b/dropped-pick-1.png",
+    "size": [
+      192,
+      192
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      72,
+      52,
+      112,
+      92
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/music/fail-b/dropped-pick-2.png",
+    "size": [
+      192,
+      192
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      88,
+      84,
+      128,
+      124
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/music/fail-b/dropped-pick-3.png",
+    "size": [
+      192,
+      192
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      92,
+      116,
+      144,
+      168
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/music/npc/music-1.png",
+    "size": [
+      320,
+      320
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      80,
+      24,
+      248,
+      288
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/music/npc/music-2.png",
+    "size": [
+      320,
+      320
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      68,
+      20,
+      244,
+      288
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/music/npc/music-3.png",
+    "size": [
+      320,
+      320
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      84,
+      24,
+      240,
+      288
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/music/success-a/instrument-string-1.png",
+    "size": [
+      192,
+      192
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      32,
+      52,
+      164,
+      156
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/music/success-a/instrument-string-2.png",
+    "size": [
+      192,
+      192
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      32,
+      44,
+      168,
+      156
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/music/success-a/instrument-string-3.png",
+    "size": [
+      192,
+      192
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      32,
+      36,
+      188,
+      156
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/music/success-b/drum-note-1.png",
+    "size": [
+      192,
+      192
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      36,
+      32,
+      152,
+      160
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/music/success-b/drum-note-2.png",
+    "size": [
+      192,
+      192
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      48,
+      32,
+      168,
+      160
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/music/success-b/drum-note-3.png",
+    "size": [
+      192,
+      192
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      52,
+      32,
+      184,
+      160
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/painting/background-overlay/painting-background-overlay.png",
+    "size": [
+      384,
+      256
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      38,
+      165,
+      337,
+      221
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/painting/fail-a/ink-spill-1.png",
+    "size": [
+      192,
+      192
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      44,
+      72,
+      152,
+      148
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/painting/fail-a/ink-spill-2.png",
+    "size": [
+      192,
+      192
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      44,
+      72,
+      152,
+      148
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/painting/fail-a/ink-spill-3.png",
+    "size": [
+      192,
+      192
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      36,
+      72,
+      152,
+      156
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/painting/fail-b/smudged-paper-1.png",
+    "size": [
+      192,
+      192
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      40,
+      72,
+      148,
+      148
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/painting/fail-b/smudged-paper-2.png",
+    "size": [
+      192,
+      192
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      48,
+      84,
+      156,
+      160
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/painting/fail-b/smudged-paper-3.png",
+    "size": [
+      192,
+      192
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      56,
+      96,
+      164,
+      172
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/painting/npc/painting-1.png",
+    "size": [
+      320,
+      320
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      80,
+      20,
+      248,
+      288
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/painting/npc/painting-2.png",
+    "size": [
+      320,
+      320
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      68,
+      16,
+      244,
+      288
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/painting/npc/painting-3.png",
+    "size": [
+      320,
+      320
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      100,
+      20,
+      224,
+      288
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/painting/success-a/painting-brush-1.png",
+    "size": [
+      192,
+      192
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      44,
+      60,
+      148,
+      156
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/painting/success-a/painting-brush-2.png",
+    "size": [
+      192,
+      192
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      48,
+      52,
+      148,
+      156
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/painting/success-a/painting-brush-3.png",
+    "size": [
+      192,
+      192
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      48,
+      36,
+      168,
+      156
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/painting/success-b/painting-spark-1.png",
+    "size": [
+      192,
+      192
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      36,
+      64,
+      132,
+      152
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/painting/success-b/painting-spark-2.png",
+    "size": [
+      192,
+      192
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      36,
+      48,
+      152,
+      152
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/painting/success-b/painting-spark-3.png",
+    "size": [
+      192,
+      192
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      36,
+      32,
+      176,
+      152
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/sewing/background-overlay/sewing-background-overlay.png",
+    "size": [
+      384,
+      256
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      45,
+      170,
+      356,
+      223
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/sewing/fail-a/tangled-thread-1.png",
+    "size": [
+      192,
+      192
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      36,
+      80,
+      148,
+      160
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/sewing/fail-a/tangled-thread-2.png",
+    "size": [
+      192,
+      192
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      36,
+      80,
+      148,
+      160
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/sewing/fail-a/tangled-thread-3.png",
+    "size": [
+      192,
+      192
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      36,
+      80,
+      148,
+      160
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/sewing/fail-b/needle-prick-1.png",
+    "size": [
+      192,
+      192
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      40,
+      80,
+      148,
+      136
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/sewing/fail-b/needle-prick-2.png",
+    "size": [
+      192,
+      192
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      48,
+      80,
+      148,
+      132
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/sewing/fail-b/needle-prick-3.png",
+    "size": [
+      192,
+      192
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      48,
+      36,
+      168,
+      132
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/sewing/npc/sewing-1.png",
+    "size": [
+      320,
+      320
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      80,
+      24,
+      248,
+      288
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/sewing/npc/sewing-2.png",
+    "size": [
+      320,
+      320
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      68,
+      20,
+      244,
+      288
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/sewing/npc/sewing-3.png",
+    "size": [
+      320,
+      320
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      84,
+      24,
+      240,
+      288
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/sewing/success-a/embroidery-hoop-1.png",
+    "size": [
+      192,
+      192
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      56,
+      68,
+      144,
+      156
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/sewing/success-a/embroidery-hoop-2.png",
+    "size": [
+      192,
+      192
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      56,
+      68,
+      144,
+      156
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/sewing/success-a/embroidery-hoop-3.png",
+    "size": [
+      192,
+      192
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      56,
+      68,
+      144,
+      156
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/sewing/success-b/folded-cloth-1.png",
+    "size": [
+      192,
+      192
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      36,
+      76,
+      164,
+      160
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/sewing/success-b/folded-cloth-2.png",
+    "size": [
+      192,
+      192
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      36,
+      76,
+      164,
+      160
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/sewing/success-b/folded-cloth-3.png",
+    "size": [
+      192,
+      192
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      36,
+      40,
+      168,
+      160
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/spellcraft/background-overlay/spellcraft-background-overlay.png",
+    "size": [
+      384,
+      256
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      40,
+      149,
+      337,
+      226
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/spellcraft/fail-a/smoke-puff-1.png",
+    "size": [
+      192,
+      192
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      68,
+      80,
+      116,
+      112
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/spellcraft/fail-a/smoke-puff-2.png",
+    "size": [
+      192,
+      192
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      68,
+      80,
+      136,
+      124
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/spellcraft/fail-a/smoke-puff-3.png",
+    "size": [
+      192,
+      192
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      68,
+      80,
+      136,
+      124
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/spellcraft/fail-b/magic-backlash-1.png",
+    "size": [
+      192,
+      192
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      28,
+      28,
+      164,
+      184
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/spellcraft/fail-b/magic-backlash-2.png",
+    "size": [
+      192,
+      192
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      28,
+      28,
+      164,
+      184
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/spellcraft/fail-b/magic-backlash-3.png",
+    "size": [
+      192,
+      192
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      28,
+      28,
+      164,
+      184
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/spellcraft/npc/spellcraft-1.png",
+    "size": [
+      320,
+      320
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      72,
+      56,
+      204,
+      252
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/spellcraft/npc/spellcraft-2.png",
+    "size": [
+      320,
+      320
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      72,
+      56,
+      248,
+      252
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/spellcraft/npc/spellcraft-3.png",
+    "size": [
+      320,
+      320
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      72,
+      56,
+      300,
+      252
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/spellcraft/success-a/magic-seal-1.png",
+    "size": [
+      192,
+      192
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      48,
+      56,
+      164,
+      164
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/spellcraft/success-a/magic-seal-2.png",
+    "size": [
+      192,
+      192
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      48,
+      56,
+      164,
+      164
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/spellcraft/success-a/magic-seal-3.png",
+    "size": [
+      192,
+      192
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      48,
+      56,
+      164,
+      164
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/spellcraft/success-b/magic-orb-1.png",
+    "size": [
+      192,
+      192
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      32,
+      32,
+      132,
+      132
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/spellcraft/success-b/magic-orb-2.png",
+    "size": [
+      192,
+      192
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      32,
+      32,
+      136,
+      136
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/spellcraft/success-b/magic-orb-3.png",
+    "size": [
+      192,
+      192
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      32,
+      32,
+      156,
+      140
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/swordsmanship/background-overlay/swordsmanship-background-overlay.png",
+    "size": [
+      384,
+      256
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      26,
+      146,
+      337,
+      230
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/swordsmanship/fail-a/dropped-sword-1.png",
+    "size": [
+      192,
+      192
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      24,
+      52,
+      120,
+      132
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/swordsmanship/fail-a/dropped-sword-2.png",
+    "size": [
+      192,
+      192
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      36,
+      104,
+      132,
+      184
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/swordsmanship/fail-a/dropped-sword-3.png",
+    "size": [
+      192,
+      192
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      56,
+      128,
+      144,
+      192
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/swordsmanship/fail-b/broken-target-1.png",
+    "size": [
+      192,
+      192
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      52,
+      56,
+      140,
+      144
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/swordsmanship/fail-b/broken-target-2.png",
+    "size": [
+      192,
+      192
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      48,
+      56,
+      156,
+      172
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/swordsmanship/fail-b/broken-target-3.png",
+    "size": [
+      192,
+      192
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      48,
+      56,
+      156,
+      180
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/swordsmanship/npc/swordsmanship-1.png",
+    "size": [
+      320,
+      320
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      80,
+      48,
+      248,
+      288
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/swordsmanship/npc/swordsmanship-2.png",
+    "size": [
+      320,
+      320
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      68,
+      44,
+      244,
+      288
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/swordsmanship/npc/swordsmanship-3.png",
+    "size": [
+      320,
+      320
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      96,
+      48,
+      224,
+      288
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/swordsmanship/success-a/sword-slash-1.png",
+    "size": [
+      192,
+      192
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      24,
+      28,
+      156,
+      172
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/swordsmanship/success-a/sword-slash-2.png",
+    "size": [
+      192,
+      192
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      32,
+      28,
+      156,
+      164
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/swordsmanship/success-a/sword-slash-3.png",
+    "size": [
+      192,
+      192
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      40,
+      28,
+      156,
+      156
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/swordsmanship/success-b/target-hit-1.png",
+    "size": [
+      192,
+      192
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      56,
+      76,
+      132,
+      152
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/swordsmanship/success-b/target-hit-2.png",
+    "size": [
+      192,
+      192
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      56,
+      64,
+      144,
+      152
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/swordsmanship/success-b/target-hit-3.png",
+    "size": [
+      192,
+      192
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      56,
+      36,
+      168,
+      152
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/tutoring/background-overlay/tutoring-background-overlay.png",
+    "size": [
+      384,
+      256
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      28,
+      160,
+      342,
+      226
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/tutoring/fail-a/confused-child-1.png",
+    "size": [
+      192,
+      192
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      72,
+      56,
+      148,
+      168
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/tutoring/fail-a/confused-child-2.png",
+    "size": [
+      192,
+      192
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      68,
+      56,
+      148,
+      168
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/tutoring/fail-a/confused-child-3.png",
+    "size": [
+      192,
+      192
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      68,
+      56,
+      148,
+      168
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/tutoring/fail-b/scattered-books-1.png",
+    "size": [
+      192,
+      192
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      16,
+      64,
+      120,
+      136
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/tutoring/fail-b/scattered-books-2.png",
+    "size": [
+      192,
+      192
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      16,
+      64,
+      168,
+      172
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/tutoring/fail-b/scattered-books-3.png",
+    "size": [
+      192,
+      192
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      16,
+      64,
+      168,
+      172
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/tutoring/npc/tutoring-1.png",
+    "size": [
+      320,
+      320
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      80,
+      20,
+      248,
+      288
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/tutoring/npc/tutoring-2.png",
+    "size": [
+      320,
+      320
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      68,
+      16,
+      244,
+      288
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/tutoring/npc/tutoring-3.png",
+    "size": [
+      320,
+      320
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      100,
+      20,
+      224,
+      288
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/tutoring/success-a/books-child-1.png",
+    "size": [
+      192,
+      192
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      28,
+      60,
+      164,
+      164
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/tutoring/success-a/books-child-2.png",
+    "size": [
+      192,
+      192
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      28,
+      60,
+      164,
+      164
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/tutoring/success-a/books-child-3.png",
+    "size": [
+      192,
+      192
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      28,
+      44,
+      164,
+      164
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/tutoring/success-b/correct-answer-1.png",
+    "size": [
+      192,
+      192
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      32,
+      52,
+      140,
+      164
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/tutoring/success-b/correct-answer-2.png",
+    "size": [
+      192,
+      192
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      32,
+      52,
+      160,
+      164
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/tutoring/success-b/correct-answer-3.png",
+    "size": [
+      192,
+      192
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      32,
+      52,
+      180,
+      164
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/woodwork/background-overlay/woodwork-background-overlay.png",
+    "size": [
+      384,
+      256
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      31,
+      158,
+      356,
+      226
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/woodwork/fail-a/splinters-1.png",
+    "size": [
+      192,
+      192
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      32,
+      64,
+      164,
+      160
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/woodwork/fail-a/splinters-2.png",
+    "size": [
+      192,
+      192
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      32,
+      60,
+      164,
+      160
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/woodwork/fail-a/splinters-3.png",
+    "size": [
+      192,
+      192
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      32,
+      56,
+      164,
+      160
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/woodwork/fail-b/dropped-plank-1.png",
+    "size": [
+      192,
+      192
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      32,
+      56,
+      164,
+      156
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/woodwork/fail-b/dropped-plank-2.png",
+    "size": [
+      192,
+      192
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      32,
+      56,
+      164,
+      168
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/woodwork/fail-b/dropped-plank-3.png",
+    "size": [
+      192,
+      192
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      32,
+      56,
+      164,
+      180
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/woodwork/npc/woodwork-1.png",
+    "size": [
+      320,
+      320
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      80,
+      48,
+      248,
+      288
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/woodwork/npc/woodwork-2.png",
+    "size": [
+      320,
+      320
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      68,
+      44,
+      244,
+      288
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/woodwork/npc/woodwork-3.png",
+    "size": [
+      320,
+      320
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      100,
+      48,
+      224,
+      288
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/woodwork/success-a/saw-plank-1.png",
+    "size": [
+      192,
+      192
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      32,
+      60,
+      164,
+      160
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/woodwork/success-a/saw-plank-2.png",
+    "size": [
+      192,
+      192
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      32,
+      60,
+      164,
+      160
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/woodwork/success-a/saw-plank-3.png",
+    "size": [
+      192,
+      192
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      32,
+      60,
+      164,
+      160
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/woodwork/success-b/hammer-joint-1.png",
+    "size": [
+      192,
+      192
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      40,
+      48,
+      164,
+      164
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/woodwork/success-b/hammer-joint-2.png",
+    "size": [
+      192,
+      192
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      40,
+      32,
+      172,
+      164
+    ]
+  },
+  {
+    "path": "assets/schedule-layers/woodwork/success-b/hammer-joint-3.png",
+    "size": [
+      192,
+      192
+    ],
+    "mode": "RGBA",
+    "hasTransparentPixels": true,
+    "visibleBBox": [
+      40,
+      16,
+      180,
+      164
+    ]
+  }
+]

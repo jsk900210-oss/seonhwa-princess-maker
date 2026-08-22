@@ -1,0 +1,15 @@
+{
+  "version": "2.0.0-pilot.5", "activityId": "painting", "nameKo": "회화 배우기", "status": "pilot-review",
+  "existingHeroFrames": ["../../characters/seonhwa/schedule-actions/calligraphy-pixel-1.png", "../../characters/seonhwa/schedule-actions/calligraphy-pixel-2.png", "../../characters/seonhwa/schedule-actions/calligraphy-pixel-3.png"],
+  "existingBackground": "../../backgrounds/phase-scenes/painting.webp",
+  "animation": {"sequence": [1, 2, 3], "loopCount": 3, "frameDurationMs": 300},
+  "npc": {"id": "master", "frames": ["npc/master/idle-1.png", "npc/master/idle-2.png", "npc/master/idle-3.png"]},
+  "patterns": {
+    "success-a": {"layer": "props", "frames": ["props/ink-brush-1.png", "props/ink-brush-2.png", "props/ink-brush-3.png"]},
+    "success-b": {"layer": "effects", "frames": ["effects/painting-approval-1.png", "effects/painting-approval-2.png", "effects/painting-approval-3.png"]},
+    "fail-a": {"layer": "failures", "frames": ["failures/fail-a-1.png", "failures/fail-a-2.png", "failures/fail-a-3.png"]},
+    "fail-b": {"layer": "failures", "frames": ["failures/fail-b-1.png", "failures/fail-b-2.png", "failures/fail-b-3.png"]}
+  },
+  "placement": {"heroLeft": "34%", "floorBottom": "5%", "npcLeft": "68%", "npcScale": 0.86, "propLeft": "43%", "propBottom": "13%", "effectLeft": "46%", "effectBottom": "14%"},
+  "layerOrder": ["existing-background", "npc", "existing-seonhwa", "props", "effects", "failures"]
+}

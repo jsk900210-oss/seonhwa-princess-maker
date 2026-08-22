@@ -2,7 +2,7 @@ import fs from 'node:fs';
 import assert from 'node:assert/strict';
 
 const app=fs.readFileSync(new URL('../src/app.js',import.meta.url),'utf8');
-const catalog=app.match(/const relationEpisodeCatalog=\{([\s\S]*?)\n\};\nconst careerEndingCandidates=/)?.[1]||'';
+const catalog=app.slice(app.indexOf('const relationEpisodeCatalog='),app.indexOf('function relationRecord'));
 for(const id of ['doyun','seojin','yeonwoo','taegyeom','hyeon']){
   assert.equal((catalog.match(new RegExp(`id:'${id}-[1-5]'`,'g'))||[]).length,5,`${id} needs five unique episodes`);
 }

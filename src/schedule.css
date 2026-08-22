@@ -789,13 +789,14 @@
 .phase-slider{display:grid;grid-template-columns:34px minmax(0,1fr) 34px;align-items:center;gap:6px;margin:9px 0 2px}.phase-slider>button{min-width:34px;padding:10px 2px}.phase-plan-list{margin:0;padding:0;list-style:none}.phase-plan-item{display:none;grid-template-columns:86px 1fr 30px;align-items:center;gap:8px;min-height:58px;padding:8px 9px;border:1px solid #9b7449;border-radius:9px;background:linear-gradient(#fff7e7,#ead6b3);box-shadow:inset 0 0 0 2px #fff}.phase-plan-item.active{display:grid}.phase-plan-item>span{display:grid}.phase-plan-item small{font-size:9px;color:#80684b}.phase-plan-item>strong{font-size:12px;text-align:center}.phase-plan-item>button{min-width:30px;padding:4px;background:#ead8b8}.phase-plan-empty{padding:16px;border:1px dashed #baa17d;border-radius:9px;text-align:center;color:#80684b;font-size:11px}.phase-slide-count{display:block;text-align:center;color:#786148;font-size:9px}.phase-action-slider{display:flex!important;gap:7px;overflow-x:auto;scroll-snap-type:x mandatory;padding:2px 1px 8px}.phase-action-slider>.action{flex:0 0 78%;scroll-snap-align:center}
 .phase-progress.compact{padding:6px 8px;margin-bottom:5px}.phase-progress.compact>div:first-child{margin-bottom:3px}.phase-five-wrap{display:grid;grid-template-columns:28px minmax(0,1fr) 28px;align-items:center;gap:4px;margin:5px 0 2px}.phase-five-wrap>button{min-width:28px;height:50px;padding:0;font-size:11px}.phase-five-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:3px}.phase-mini-slot{display:grid;place-items:center;align-content:center;min-width:0;height:50px;padding:3px;border:1px solid #b99262;border-radius:8px;background:linear-gradient(#fff8e9,#ead7b7);color:#4c301a;text-align:center;overflow:hidden}.phase-mini-slot small{display:block;color:#8a6b49;font-size:7px;line-height:1.15;white-space:nowrap}.phase-mini-slot b{font-size:9px;line-height:1.2;word-break:keep-all}.phase-mini-slot.current{border-style:dashed;background:#fffdf6;color:#8c7456}.phase-mini-slot.empty{border-style:dashed;background:#f8f1e4;opacity:.55}.phase-mini-slot.filled{cursor:pointer}.phase-mini-slot.moved-left{animation:phase-slot-shift .42s cubic-bezier(.2,.75,.25,1)}.phase-mini-slot.just-filled{animation:phase-slot-arrive .42s ease-out}.schedule-flying-card{position:fixed;z-index:9999;display:grid;grid-template-columns:28px 1fr;align-items:center;padding:3px 5px;border:2px solid #76502e;border-radius:8px;background:#fff7df;color:#4b321d;box-shadow:0 8px 18px #2a180b73;pointer-events:none}.schedule-flying-card img{width:26px!important;height:26px!important;border-radius:50%;object-fit:cover}.schedule-flying-card b{overflow:hidden;font-size:9px;text-overflow:ellipsis;white-space:nowrap}@keyframes phase-slot-shift{from{transform:translateX(14px);opacity:.65}to{transform:translateX(0);opacity:1}}@keyframes phase-slot-arrive{0%{transform:scale(.8);filter:brightness(1.3)}65%{transform:scale(1.08)}100%{transform:scale(1);filter:none}}
 /* Main categories are broad, dark tabs; schedule choices are smaller light buttons. */
-.compact-tabs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px;margin:7px 0 6px;padding-bottom:6px;border-bottom:2px solid #8a623b}.compact-tabs button{min-height:40px;padding:6px 5px;border:2px solid #76502e;border-radius:10px;background:linear-gradient(#ead4a9,#d6b57c);color:#422b18;font-size:12px;box-shadow:inset 0 1px #fff9,0 2px 3px #4b2d1726}.compact-tabs button.on{background:linear-gradient(#79522f,#5f3d24);border-color:#4d2f19;color:#fff8e8;box-shadow:inset 0 0 0 1px #b88b56,0 2px 4px #3c25164d}.compact-category{margin:0;padding:4px;border-radius:9px;background:#f7eedc}.compact-schedule-grid{display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr));gap:4px;max-height:224px;overflow-y:auto;padding:1px}.compact-schedule-grid>.compact-action{display:grid;grid-template-columns:28px minmax(0,1fr);grid-template-rows:auto auto;align-items:start;justify-items:start;min-width:0;min-height:48px;padding:4px;border:1px solid #b99568;border-radius:6px;background:#fffaf0;color:#5b432b;box-shadow:none;text-align:left}.compact-schedule-grid>.compact-action.selected{border-color:#61764d;background:#dfe9cc;color:#314224;box-shadow:inset 0 0 0 1px #8da16b}.schedule-action-face{display:block!important;width:26px!important;height:26px!important;margin:0!important;border:1px solid #9c7448!important;border-radius:50%!important;background:#f8ead0;object-fit:cover!important;object-position:center 18%!important;transform-origin:50% 80%;animation:schedule-icon-motion 2.2s ease-in-out infinite}.compact-action:nth-child(3n+2) .schedule-action-face{animation-delay:.16s}.compact-action:nth-child(3n) .schedule-action-face{animation-delay:.32s}.compact-action b{grid-column:2;align-self:end;min-width:0;display:-webkit-box;overflow:hidden;-webkit-line-clamp:2;-webkit-box-orient:vertical;white-space:normal;font-size:9px;line-height:1.15;word-break:keep-all}.compact-tools{margin-top:6px;gap:6px}.compact-tools button{min-height:36px;padding:6px;font-size:10px}@keyframes schedule-icon-motion{0%,68%,100%{transform:translateY(0) rotate(0)}76%{transform:translateY(-1.5px) rotate(-2deg)}84%{transform:translateY(0) rotate(2deg)}}@media(prefers-reduced-motion:reduce){.schedule-action-face{animation:none}.phase-mini-slot.moved-left,.phase-mini-slot.just-filled{animation:none}}
+.compact-tabs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px;margin:7px 0 6px;padding-bottom:6px;border-bottom:2px solid #8a623b}.compact-tabs button{min-height:40px;padding:6px 5px;border:2px solid #76502e;border-radius:10px;background:linear-gradient(#ead4a9,#d6b57c);color:#422b18;font-size:12px;box-shadow:inset 0 1px #fff9,0 2px 3px #4b2d1726}.compact-tabs button.on{background:linear-gradient(#79522f,#5f3d24);border-color:#4d2f19;color:#fff8e8;box-shadow:inset 0 0 0 1px #b88b56,0 2px 4px #3c25164d}.compact-category{margin:0;padding:4px;border-radius:9px;background:#f7eedc;overflow:hidden}.compact-schedule-grid{display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr));gap:3px;max-height:224px;overflow-y:auto;overflow-x:hidden;padding:1px;width:100%;box-sizing:border-box}.compact-schedule-grid>.compact-action{display:grid;grid-template-columns:24px minmax(0,1fr);grid-template-rows:auto auto auto;align-items:start;justify-items:start;min-width:0;min-height:46px;padding:4px 3px;border:1px solid #b99568;border-radius:6px;background:#fffaf0;color:#5b432b;box-shadow:none;text-align:left;box-sizing:border-box}.compact-schedule-grid>.compact-action.selected{border-color:#61764d;background:#dfe9cc;color:#314224;box-shadow:inset 0 0 0 1px #8da16b}.schedule-action-face{display:block!important;width:22px!important;height:22px!important;margin:0!important;border:1px solid #9c7448!important;border-radius:50%!important;background:#f8ead0;object-fit:cover!important;object-position:center 18%!important;transform-origin:50% 80%;animation:schedule-icon-motion 2.2s ease-in-out infinite}.compact-action:nth-child(3n+2) .schedule-action-face{animation-delay:.16s}.compact-action:nth-child(3n) .schedule-action-face{animation-delay:.32s}.compact-action b{grid-column:2;align-self:end;min-width:0;display:-webkit-box;overflow:hidden;-webkit-line-clamp:2;-webkit-box-orient:vertical;white-space:normal;font-size:8px;line-height:1.12;word-break:keep-all}.compact-action small{grid-column:2;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:7px;line-height:1.08}.compact-tools{margin-top:6px;gap:6px}.compact-tools button{min-height:36px;padding:6px;font-size:10px}@keyframes schedule-icon-motion{0%,68%,100%{transform:translateY(0) rotate(0)}76%{transform:translateY(-1.5px) rotate(-2deg)}84%{transform:translateY(0) rotate(2deg)}}@media(prefers-reduced-motion:reduce){.schedule-action-face{animation:none}.phase-mini-slot.moved-left,.phase-mini-slot.just-filled{animation:none}}
 .activity-stage.pm3-phase-scene:after{display:none!important}
 .activity-playback{display:grid!important;grid-template-columns:auto 1fr;align-items:center;gap:4px 9px;padding:7px 10px}.activity-playback>b{font-size:11px;white-space:nowrap}.activity-playback>#playbackDay{grid-column:1/-1;display:block;font-size:12px;font-weight:900;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.activity-playback>span{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:11px}.activity-playback>div{grid-column:1/-1}
 .activity-playback[hidden]{display:none!important}
 .playback-daily-stats{display:flex!important;gap:4px;overflow-x:auto;padding:2px 0 0;scrollbar-width:none}.playback-daily-stats::-webkit-scrollbar{display:none}.playback-daily-stats>span{flex:0 0 auto;padding:3px 6px;border-radius:999px;background:#f4ead5;color:#5e4933;font-size:8px;white-space:nowrap}.playback-daily-stats>span.up{background:#dfead0;color:#38502c}.playback-daily-stats>span.down{background:#f0d7cb;color:#793d31}.playback-daily-stats small{font-weight:900}
 .activity-playback{position:absolute}.activity-playback>span{padding-right:68px}.playback-speed{position:absolute;z-index:2;top:6px;right:7px;display:block!important}.playback-speed button{min-width:56px;padding:4px 7px;border:1px solid #ad8c60;border-radius:999px;background:#efe3cc;color:#685039;font-size:9px;font-weight:800}.playback-speed button.active{background:#76502f;color:#fff9e8;box-shadow:0 0 0 1px #d6bd84}
 .compact-action .schedule-action-money{display:block;grid-column:2;color:#775f43;font-size:8px;font-weight:800;line-height:1.1;white-space:normal;word-break:keep-all}
+.job-upgrade-category .compact-schedule-grid{grid-template-columns:repeat(2,minmax(0,1fr));max-height:270px;gap:5px}.job-upgrade-category .compact-action{grid-template-rows:auto auto auto auto;min-height:68px;padding:6px 5px}.compact-action .job-upgrade-hint{grid-column:1/-1;margin-top:3px;padding-top:3px;border-top:1px dashed #c9ad82;color:#6d4a2c;font-size:7px;line-height:1.25;white-space:normal;word-break:keep-all}.compact-action .job-upgrade-hint::first-line{font-weight:800}
 .activity-stage.free-time-market .stage-map{object-fit:cover;object-position:center 58%;transform:scale(1.04)}.activity-stage.free-time-market .stage-character{bottom:13%;transition:left .16s linear}.activity-stage.free-time-market .stage-props{opacity:.8}
 .stage-character.motion-market-roam{animation:market-roam 3.2s ease-in-out infinite}.stage-character.motion-market-roam img{animation:walk-motion .42s ease-in-out infinite}@keyframes market-roam{0%{transform:translateX(-72%)}45%{transform:translateX(72%)}50%{transform:translateX(72%) scaleX(-1)}95%{transform:translateX(-72%) scaleX(-1)}100%{transform:translateX(-72%)}}
 .phase-result{display:grid;gap:11px}.phase-result>header{position:static;display:flex;justify-content:space-between;padding:12px;border-radius:10px;background:#5b412a;color:#fff4d8}.phase-result-counts{display:grid;grid-template-columns:1fr 1fr;gap:6px}.phase-result-counts span,.phase-result-money span,.phase-result-money strong{display:flex;justify-content:space-between;padding:9px;border:1px solid #c4a577;border-radius:8px;background:#f8edd7}.phase-result-money{display:grid;gap:6px}.phase-result-money strong{background:#e8d3a9}.phase-result h3{margin:2px 0 0;font-size:13px}.phase-result ul{display:grid;grid-template-columns:1fr 1fr;gap:5px;margin:0;padding:0;list-style:none}.phase-result li{display:flex;justify-content:space-between;padding:7px;background:#f4ead7;border-radius:7px;font-size:11px}.phase-result>button{background:#6d4c2d;color:#fff}
@@ -990,8 +991,7 @@
 .phone.playing:not(.market-playing):not(.vacation-playing) #stageHudDate{color:#201b16!important;text-shadow:none!important}.phone.playing:not(.market-playing):not(.vacation-playing) #stageHudDate small{border-bottom-color:#554c40!important;color:#3d352c!important;font-size:9px!important}.phone.playing:not(.market-playing):not(.vacation-playing) #stageHudDate span{color:#3c342b!important;font-size:12px!important}.phone.playing:not(.market-playing):not(.vacation-playing) #stageHudDate b{color:#17130f!important;font-size:38px!important;font-weight:900!important;line-height:.95!important;text-shadow:0 1px #fff!important}.phone.playing:not(.market-playing):not(.vacation-playing) #stageHudDate em{color:#9e2722!important;font-size:11px!important;font-weight:900!important}
 
 /* v0.63.57: market scenes should not use the framed tsukuru box. */
-.phone.playing:not(.vacation-playing) .activity-stage.map-marketErrand:not(.market-choice-stage),
-.phone.playing:not(.vacation-playing) .activity-stage.free-time-market:not(.market-choice-stage){
+.phone.playing:not(.vacation-playing) .activity-stage.map-marketErrand:not(.market-choice-stage){
   inset:0!important;
   left:0!important;
   right:0!important;
@@ -1008,15 +1008,10 @@
 .phone.playing:not(.vacation-playing) .activity-stage.map-marketErrand:not(.market-choice-stage):before,
 .phone.playing:not(.vacation-playing) .activity-stage.map-marketErrand:not(.market-choice-stage):after,
 .phone.playing:not(.vacation-playing) .activity-stage.map-marketErrand:not(.market-choice-stage)>.stage-roof,
-.phone.playing:not(.vacation-playing) .activity-stage.free-time-market:not(.market-choice-stage):before,
-.phone.playing:not(.vacation-playing) .activity-stage.free-time-market:not(.market-choice-stage):after,
-.phone.playing:not(.vacation-playing) .activity-stage.free-time-market:not(.market-choice-stage)>.stage-roof,
-.phone.playing:not(.vacation-playing) .activity-stage.map-marketErrand:not(.market-choice-stage)>.stage-caption,
-.phone.playing:not(.vacation-playing) .activity-stage.free-time-market:not(.market-choice-stage)>.stage-caption{
+.phone.playing:not(.vacation-playing) .activity-stage.map-marketErrand:not(.market-choice-stage)>.stage-caption{
   display:none!important;
 }
-.phone.playing:not(.vacation-playing) .activity-stage.map-marketErrand:not(.market-choice-stage)>.stage-inner,
-.phone.playing:not(.vacation-playing) .activity-stage.free-time-market:not(.market-choice-stage)>.stage-inner{
+.phone.playing:not(.vacation-playing) .activity-stage.map-marketErrand:not(.market-choice-stage)>.stage-inner{
   position:absolute!important;
   inset:0!important;
   width:100%!important;
@@ -1028,28 +1023,84 @@
   overflow:hidden!important;
 }
 
-/* v0.63.57: resting/sleep sprite should stay intact and not look clipped. */
+/* v0.63.57: sleeping sprite is a horizontal pose, so keep a wide box and
+   anchor it lower to avoid pillow/blanket clipping. */
 .activity-stage.action-rest .stage-character.pixel-sprite.motion-resting{
-  width:150px!important;
-  height:150px!important;
-  bottom:2%!important;
-  padding:4px 0 0!important;
+  left:50%!important;
+  width:168px!important;
+  height:116px!important;
+  bottom:1.5%!important;
+  padding:0!important;
   overflow:visible!important;
+  transform:translateX(-50%)!important;
 }
 .activity-stage.action-rest .stage-character.pixel-sprite.motion-resting img{
   width:100%!important;
   height:100%!important;
   object-fit:contain!important;
-  object-position:center center!important;
+  object-position:center bottom!important;
   image-rendering:auto!important;
   transform:none!important;
   clip-path:none!important;
 }
+.activity-stage.action-rest .stage-character.pixel-sprite.motion-resting.rest-tea{
+  width:124px!important;
+  height:124px!important;
+  bottom:3%!important;
+}
+.activity-stage.action-rest .stage-character.pixel-sprite.motion-resting.rest-tea img{
+  object-position:center bottom!important;
+}
 @media(max-width:430px){
   .activity-stage.action-rest .stage-character.pixel-sprite.motion-resting{
-    width:138px!important;
-    height:138px!important;
-    bottom:2%!important;
+    width:154px!important;
+    height:108px!important;
+    bottom:1%!important;
+  }
+  .activity-stage.action-rest .stage-character.pixel-sprite.motion-resting.rest-tea{
+    width:116px!important;
+    height:116px!important;
+    bottom:3%!important;
+  }
+}
+
+/* Final lock for rest scene: keep sleeping/tea sprites transparent and stop any
+   older square-box overrides from reintroducing clipping. */
+.phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-rest:not(.market-choice-stage) .stage-character.pixel-sprite.motion-resting{
+  left:50%!important;
+  width:168px!important;
+  height:116px!important;
+  bottom:1.5%!important;
+  padding:0!important;
+  overflow:visible!important;
+  transform:translateX(-50%)!important;
+  background:transparent!important;
+  box-shadow:none!important;
+}
+.phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-rest:not(.market-choice-stage) .stage-character.pixel-sprite.motion-resting>img{
+  width:100%!important;
+  height:100%!important;
+  object-fit:contain!important;
+  object-position:center bottom!important;
+  background:transparent!important;
+  clip-path:none!important;
+  transform:none!important;
+}
+.phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-rest:not(.market-choice-stage) .stage-character.pixel-sprite.motion-resting.rest-tea{
+  width:124px!important;
+  height:124px!important;
+  bottom:3%!important;
+}
+@media(max-width:430px){
+  .phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-rest:not(.market-choice-stage) .stage-character.pixel-sprite.motion-resting{
+    width:154px!important;
+    height:108px!important;
+    bottom:1%!important;
+  }
+  .phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-rest:not(.market-choice-stage) .stage-character.pixel-sprite.motion-resting.rest-tea{
+    width:116px!important;
+    height:116px!important;
+    bottom:3%!important;
   }
 }
 
@@ -1476,3 +1527,545 @@
   25%,75%{opacity:1;transform:translateX(-50%) translateY(0) scale(1)}
   100%{opacity:0;transform:translateX(-50%) translateY(-10px) scale(.92)}
 }
+
+/* v0.63.56 final lock: rely on frame-by-frame sprite swaps for schedule acting,
+   not stacked legacy wobble animations. This keeps each activity readable and
+   prevents transparent sprites from looking like they carry a boxed backdrop. */
+.activity-stage:not(.market-choice-stage) .stage-character.pixel-sprite.motion-calligraphy,
+.activity-stage:not(.market-choice-stage) .stage-character.pixel-sprite.motion-arithmetic,
+.activity-stage:not(.market-choice-stage) .stage-character.pixel-sprite.motion-manners,
+.activity-stage:not(.market-choice-stage) .stage-character.pixel-sprite.motion-sweeping,
+.activity-stage:not(.market-choice-stage) .stage-character.pixel-sprite.motion-herbs,
+.activity-stage:not(.market-choice-stage) .stage-character.pixel-sprite.motion-houseclean,
+.activity-stage:not(.market-choice-stage) .stage-character.pixel-sprite.motion-resting,
+.activity-stage:not(.market-choice-stage) .stage-character.pixel-sprite.motion-job-farm,
+.activity-stage:not(.market-choice-stage) .stage-character.pixel-sprite.motion-job-childcare,
+.activity-stage:not(.market-choice-stage) .stage-character.pixel-sprite.motion-job-kitchen,
+.activity-stage:not(.market-choice-stage) .stage-character.pixel-sprite.motion-job-woodwork,
+.activity-stage:not(.market-choice-stage) .stage-character.pixel-sprite.motion-job-loom,
+.activity-stage:not(.market-choice-stage) .stage-character.pixel-sprite.motion-job-masonry,
+.activity-stage:not(.market-choice-stage) .stage-character.pixel-sprite.motion-job-clinic,
+.activity-stage:not(.market-choice-stage) .stage-character.pixel-sprite.motion-job-ferry,
+.activity-stage:not(.market-choice-stage) .stage-character.pixel-sprite.motion-job-merchant{
+  animation:none!important;
+}
+
+.activity-stage.action-reading .stage-character.pixel-sprite,
+.activity-stage.action-arithmetic .stage-character.pixel-sprite,
+.activity-stage.action-manners .stage-character.pixel-sprite{
+  left:30%!important;
+  bottom:4%!important;
+}
+.activity-stage.action-houseclean .stage-character.pixel-sprite.motion-houseclean{
+  left:68%!important;
+  bottom:3%!important;
+}
+.activity-stage.action-sweeping .stage-character.pixel-sprite.motion-sweeping{
+  left:14%!important;
+  bottom:3%!important;
+}
+.activity-stage.action-herbs .stage-character.pixel-sprite.motion-herbs{
+  left:30%!important;
+  bottom:3%!important;
+}
+.activity-stage.action-farmwork .stage-character.pixel-sprite.motion-job-farm{
+  left:28%!important;
+  bottom:2%!important;
+}
+.activity-stage.action-childcare .stage-character.pixel-sprite.motion-job-childcare{
+  left:34%!important;
+  bottom:3%!important;
+}
+.activity-stage.action-kitchenhelp .stage-character.pixel-sprite.motion-job-kitchen{
+  left:51%!important;
+  bottom:2%!important;
+}
+.activity-stage.action-woodwork .stage-character.pixel-sprite.motion-job-woodwork{
+  left:48%!important;
+  bottom:2%!important;
+}
+.activity-stage.action-loomwork .stage-character.pixel-sprite.motion-job-loom{
+  left:50%!important;
+  bottom:1%!important;
+}
+.activity-stage.action-masonry .stage-character.pixel-sprite.motion-job-masonry{
+  left:46%!important;
+  bottom:2%!important;
+}
+.activity-stage.action-clinichelp .stage-character.pixel-sprite.motion-job-clinic{
+  left:50%!important;
+  bottom:2%!important;
+}
+.activity-stage.action-ferryhelp .stage-character.pixel-sprite.motion-job-ferry{
+  left:48%!important;
+  bottom:2%!important;
+}
+.activity-stage.action-merchanthelp .stage-character.pixel-sprite.motion-job-merchant{
+  left:50%!important;
+  bottom:2%!important;
+}
+
+/* v0.63.57 final holiday cleanup:
+   holiday scenes must show only the room background and actors.
+   Remove every remaining floor tint, oval shade, and decorative overlay. */
+.phone.playing.schedule-holiday:not(.market-playing):not(.vacation-playing)
+  .activity-stage:not(.market-choice-stage),
+.phone.playing.schedule-holiday:not(.market-playing):not(.vacation-playing)
+  .activity-stage:not(.market-choice-stage)>.stage-inner{
+  background:transparent!important;
+}
+.phone.playing.schedule-holiday:not(.market-playing):not(.vacation-playing)
+  .activity-stage:not(.market-choice-stage) .stage-map-shade,
+.phone.playing.schedule-holiday:not(.market-playing):not(.vacation-playing)
+  .activity-stage:not(.market-choice-stage)::before,
+.phone.playing.schedule-holiday:not(.market-playing):not(.vacation-playing)
+  .activity-stage:not(.market-choice-stage)::after,
+.phone.playing.schedule-holiday:not(.market-playing):not(.vacation-playing)
+  .activity-stage:not(.market-choice-stage)>.stage-inner::before,
+.phone.playing.schedule-holiday:not(.market-playing):not(.vacation-playing)
+  .activity-stage:not(.market-choice-stage)>.stage-inner::after,
+.phone.playing.schedule-holiday:not(.market-playing):not(.vacation-playing)
+  .activity-stage:not(.market-choice-stage) .stage-character.pixel-sprite::before,
+.phone.playing.schedule-holiday:not(.market-playing):not(.vacation-playing)
+  .activity-stage:not(.market-choice-stage) .stage-character.pixel-sprite::after{
+  content:none!important;
+  display:none!important;
+  background:none!important;
+  box-shadow:none!important;
+  filter:none!important;
+}
+
+/* v0.63.58 activity acting map.
+   Most schedule work is performed in place through three dedicated hand/body
+   frames. Only yard sweeping changes the actor's stage position in JavaScript. */
+.phone.playing:not(.market-playing):not(.vacation-playing)
+  .activity-stage:not(.market-choice-stage) .stage-character.pixel-sprite{
+  transition:left .24s ease-in-out!important;
+}
+.phone.playing:not(.market-playing):not(.vacation-playing)
+  .activity-stage.action-reading .stage-character.pixel-sprite,
+.phone.playing:not(.market-playing):not(.vacation-playing)
+  .activity-stage.action-arithmetic .stage-character.pixel-sprite,
+.phone.playing:not(.market-playing):not(.vacation-playing)
+  .activity-stage.action-painting .stage-character.pixel-sprite,
+.phone.playing:not(.market-playing):not(.vacation-playing)
+  .activity-stage.action-spellcraft .stage-character.pixel-sprite,
+.phone.playing:not(.market-playing):not(.vacation-playing)
+  .activity-stage.action-classics .stage-character.pixel-sprite,
+.phone.playing:not(.market-playing):not(.vacation-playing)
+  .activity-stage.action-copying .stage-character.pixel-sprite,
+.phone.playing:not(.market-playing):not(.vacation-playing)
+  .activity-stage.action-accounting .stage-character.pixel-sprite,
+.phone.playing:not(.market-playing):not(.vacation-playing)
+  .activity-stage.action-tutoring .stage-character.pixel-sprite{
+  left:30%!important;
+  bottom:3%!important;
+}
+.phone.playing:not(.market-playing):not(.vacation-playing)
+  .activity-stage.action-music .stage-character.pixel-sprite,
+.phone.playing:not(.market-playing):not(.vacation-playing)
+  .activity-stage.action-dance .stage-character.pixel-sprite,
+.phone.playing:not(.market-playing):not(.vacation-playing)
+  .activity-stage.action-manners .stage-character.pixel-sprite{
+  left:31%!important;
+  bottom:3%!important;
+}
+.phone.playing:not(.market-playing):not(.vacation-playing)
+  .activity-stage.action-swordsmanship .stage-character.pixel-sprite,
+.phone.playing:not(.market-playing):not(.vacation-playing)
+  .activity-stage.action-martial .stage-character.pixel-sprite{
+  left:29%!important;
+  bottom:3%!important;
+}
+.phone.playing:not(.market-playing):not(.vacation-playing)
+  .activity-stage.action-cooking .stage-character.pixel-sprite,
+.phone.playing:not(.market-playing):not(.vacation-playing)
+  .activity-stage.action-kitchenhelp .stage-character.pixel-sprite{
+  left:47%!important;
+  bottom:2%!important;
+}
+
+/* v0.63.60: market errand is an open marketplace scene, not a framed
+   tsukuru room. Keep the calendar/status overlay, but remove the stage box. */
+.phone.playing:not(.vacation-playing)
+  .activity-stage.map-marketErrand:not(.market-choice-stage){
+  inset:0!important;
+  width:100%!important;
+  height:100%!important;
+  padding:0!important;
+  border:0!important;
+  border-radius:0!important;
+  background:transparent!important;
+  box-shadow:none!important;
+  overflow:hidden!important;
+}
+.phone.playing:not(.vacation-playing)
+  .activity-stage.map-marketErrand:not(.market-choice-stage)::before,
+.phone.playing:not(.vacation-playing)
+  .activity-stage.map-marketErrand:not(.market-choice-stage)::after,
+.phone.playing:not(.vacation-playing)
+  .activity-stage.map-marketErrand:not(.market-choice-stage)>.stage-roof,
+.phone.playing:not(.vacation-playing)
+  .activity-stage.map-marketErrand:not(.market-choice-stage)>.stage-caption{
+  content:none!important;
+  display:none!important;
+}
+.phone.playing:not(.vacation-playing)
+  .activity-stage.map-marketErrand:not(.market-choice-stage)>.stage-inner{
+  position:absolute!important;
+  inset:0!important;
+  width:100%!important;
+  height:100%!important;
+  border:0!important;
+  border-radius:0!important;
+  background:transparent!important;
+  box-shadow:none!important;
+  overflow:hidden!important;
+}
+.phone.playing:not(.vacation-playing)
+  .activity-stage.map-marketErrand:not(.market-choice-stage) .stage-map-shade{
+  display:none!important;
+}
+.phone.playing:not(.vacation-playing)
+  .activity-stage.map-marketErrand:not(.market-choice-stage) .stage-character.pixel-sprite{
+  left:42%!important;
+  bottom:14%!important;
+}
+
+/* v0.63.61: this selector deliberately matches and exceeds the old framed
+   schedule selector.  Market errands fill the phone instead of inheriting
+   the generic 7% side margins and 48% stage height. */
+.phone.playing:not(.market-playing):not(.vacation-playing)
+  .activity-stage.map-marketErrand:not(.market-choice-stage){
+  inset:0!important;
+  left:0!important;
+  right:0!important;
+  top:0!important;
+  bottom:0!important;
+  width:100%!important;
+  height:100%!important;
+  padding:0!important;
+  border:0!important;
+  border-radius:0!important;
+  background:transparent!important;
+  box-shadow:none!important;
+  overflow:hidden!important;
+}
+.phone.playing:not(.market-playing):not(.vacation-playing)
+  .activity-stage.map-marketErrand:not(.market-choice-stage)::before,
+.phone.playing:not(.market-playing):not(.vacation-playing)
+  .activity-stage.map-marketErrand:not(.market-choice-stage)::after,
+.phone.playing:not(.market-playing):not(.vacation-playing)
+  .activity-stage.map-marketErrand:not(.market-choice-stage)>.stage-roof,
+.phone.playing:not(.market-playing):not(.vacation-playing)
+  .activity-stage.map-marketErrand:not(.market-choice-stage)>.stage-caption{
+  content:none!important;
+  display:none!important;
+}
+.phone.playing:not(.market-playing):not(.vacation-playing)
+  .activity-stage.map-marketErrand:not(.market-choice-stage)>.stage-inner{
+  position:absolute!important;
+  inset:0!important;
+  width:100%!important;
+  height:100%!important;
+  border:0!important;
+  border-radius:0!important;
+  background:transparent!important;
+  box-shadow:none!important;
+  overflow:hidden!important;
+}
+.phone.playing:not(.market-playing):not(.vacation-playing)
+  .activity-stage.map-marketErrand:not(.market-choice-stage) .stage-map{
+  position:absolute!important;
+  inset:0!important;
+  display:block!important;
+  width:100%!important;
+  height:100%!important;
+  max-width:none!important;
+  max-height:none!important;
+  object-fit:cover!important;
+  object-position:center!important;
+}
+.phone.playing:not(.market-playing):not(.vacation-playing)
+  .activity-stage.map-marketErrand.action-errand:not(.market-choice-stage)
+  .stage-character.pixel-sprite.motion-errand{
+  inset:auto!important;
+  left:50%!important;
+  bottom:13%!important;
+  width:190px!important;
+  height:190px!important;
+  padding:0!important;
+  transform:translateX(-50%)!important;
+  overflow:visible!important;
+}
+@media(max-width:430px){
+  .phone.playing:not(.market-playing):not(.vacation-playing)
+    .activity-stage.map-marketErrand.action-errand:not(.market-choice-stage)
+    .stage-character.pixel-sprite.motion-errand{
+    width:176px!important;
+    height:176px!important;
+  }
+}
+
+/* v0.63.63: market ERRAND is a scheduled tsukuru scene and therefore uses
+   the same framed stage as education/jobs. Free market visits remain open. */
+.phone.playing:not(.market-playing):not(.vacation-playing)
+  .activity-stage.map-marketErrand.action-errand:not(.market-choice-stage){
+  inset:auto!important;
+  left:7%!important;
+  right:7%!important;
+  top:23%!important;
+  bottom:auto!important;
+  width:auto!important;
+  height:48%!important;
+  padding:9px!important;
+  border:1px solid #c8a86b!important;
+  border-radius:16px!important;
+  background:linear-gradient(145deg,#503927,#241914 48%,#4a3223)!important;
+  box-shadow:0 18px 38px #120c09b8,inset 0 0 0 1px #f0d59b55,inset 0 0 0 7px #211610!important;
+  overflow:visible!important;
+}
+.phone.playing:not(.market-playing):not(.vacation-playing)
+  .activity-stage.map-marketErrand.action-errand:not(.market-choice-stage)::before{
+  content:""!important;
+  display:block!important;
+}
+.phone.playing:not(.market-playing):not(.vacation-playing)
+  .activity-stage.map-marketErrand.action-errand:not(.market-choice-stage)>.stage-roof{
+  display:block!important;
+}
+.phone.playing:not(.market-playing):not(.vacation-playing)
+  .activity-stage.map-marketErrand.action-errand:not(.market-choice-stage)>.stage-inner{
+  position:relative!important;
+  inset:auto!important;
+  width:100%!important;
+  height:100%!important;
+  border:1px solid #a98b5d!important;
+  border-radius:9px!important;
+  background:#21160f!important;
+  box-shadow:inset 0 0 24px #644b2b38,inset 0 0 0 5px #f7edda,0 0 0 1px #17100d!important;
+  overflow:hidden!important;
+}
+.phone.playing:not(.market-playing):not(.vacation-playing)
+  .activity-stage.map-marketErrand.action-errand:not(.market-choice-stage) .stage-map{
+  position:absolute!important;
+  inset:0!important;
+  width:100%!important;
+  height:100%!important;
+  object-fit:cover!important;
+  object-position:center!important;
+}
+.phone.playing:not(.market-playing):not(.vacation-playing)
+  .activity-stage.map-marketErrand.action-errand:not(.market-choice-stage)
+  .stage-character.pixel-sprite.motion-errand{
+  inset:auto!important;
+  left:50%!important;
+  bottom:3%!important;
+  width:136px!important;
+  height:136px!important;
+  padding:0!important;
+  transform:translateX(-50%)!important;
+}
+
+/* v0.63.64: final yard-sweeping sprite lock. Keep the whole broom visible,
+   use smooth downscaling, and match the actor/NPC floor line. */
+.phone.playing:not(.market-playing):not(.vacation-playing)
+  .activity-stage.action-sweeping:not(.market-choice-stage)
+  .stage-character.pixel-sprite.motion-sweeping{
+  inset:auto!important;
+  left:14%!important;
+  bottom:3%!important;
+  width:128px!important;
+  height:128px!important;
+  padding:0!important;
+  overflow:visible!important;
+  transform:translateX(-50%)!important;
+  transition:left .22s linear!important;
+  animation:none!important;
+}
+.phone.playing:not(.market-playing):not(.vacation-playing)
+  .activity-stage.action-sweeping:not(.market-choice-stage)
+  .stage-character.pixel-sprite.motion-sweeping>img{
+  display:block!important;
+  width:100%!important;
+  height:100%!important;
+  max-width:none!important;
+  max-height:none!important;
+  object-fit:contain!important;
+  object-position:center bottom!important;
+  image-rendering:auto!important;
+  clip-path:none!important;
+  filter:drop-shadow(0 3px 2px #0005)!important;
+}
+.phone.playing:not(.market-playing):not(.vacation-playing)
+  .activity-stage.action-sweeping:not(.market-choice-stage)
+  .stage-npc.npc-dolsoe{
+  right:2%!important;
+  bottom:3%!important;
+  width:108px!important;
+  height:108px!important;
+}
+
+/* v0.63.65: market errand walks left-to-right inside its framed stage. */
+.phone.playing:not(.market-playing):not(.vacation-playing)
+  .activity-stage.map-marketErrand.action-errand:not(.market-choice-stage)
+  .stage-character.pixel-sprite.motion-errand{
+  transition:left .28s linear!important;
+}
+
+/* v0.63.67: clean high-resolution schedule actors without the fuzzy scaling
+   left by the old low-resolution normalized canvas. */
+.phone.playing:not(.market-playing):not(.vacation-playing)
+  .activity-stage:not(.market-choice-stage) .stage-character.pixel-sprite>img{
+  image-rendering:auto!important;
+  backface-visibility:hidden;
+  filter:drop-shadow(0 3px 2px #0005) contrast(1.035) saturate(1.025)!important;
+}
+
+
+/* =========================================================
+   v0.63.73 · PM3 스케줄 시네마틱 연출 (Claude)
+   프메3식 일정 진행 영상효과: 장면 카메라 무빙(켄번즈) · 날짜/달력 전환 ·
+   활동 시작 비트 · 결과 비트. 전부 "추가" 애니메이션이며 레이아웃 계약값은
+   건드리지 않는다. 파일 끝에 유지(순서상 마지막에 적용되어야 승리).
+   ========================================================= */
+/* (1) 장면 카메라 무빙 — 켄번즈(느린 줌+드리프트). 좌우 이동 있는 저잣거리·자유행동·데이트/선택 장면 제외 */
+@keyframes pm3-ken-burns{0%{transform:scale(1.045)}100%{transform:scale(1.11) translate3d(-1.4%,-1%,0)}}
+.phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.pm3-phase-scene:not(.map-market):not(.free-time-market):not(.market-choice-stage):not(.action-shopping):not(.action-freeTime):not(.action-vacation) .stage-map{animation:pm3-ken-burns 15s ease-in-out infinite alternate;will-change:transform}
+/* (2) 날짜·달력 전환 — HUD 달력 카드가 위에서 넘어오듯 플립 인 (기존 date-tick 재트리거 재사용, JS 불필요) */
+@keyframes pm3-calendar-flip{0%{opacity:0;transform:perspective(420px) rotateX(-78deg)}58%{opacity:1;transform:perspective(420px) rotateX(7deg)}100%{opacity:1;transform:perspective(420px) rotateX(0)}}
+.stage-pm3-hud>.stage-hud-calendar.date-tick{animation:pm3-calendar-flip .5s ease-out both;transform-origin:top center}
+/* (3) 활동 시작 비트 — 새 하루 장면 진입 시 살짝 밀려 들어오며 페이드 (JS: scene-enter 재트리거) */
+@keyframes pm3-scene-enter{0%{opacity:.4;transform:translateY(9px) scale(.986)}100%{opacity:1;transform:translateY(0) scale(1)}}
+.phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.pm3-phase-scene.scene-enter{animation:pm3-scene-enter .44s cubic-bezier(.2,.8,.3,1) both}
+/* (4) 결과 비트 — 하루 결과 카드가 탄력 있게 팝인 (기존 result-pop 재트리거 재사용, JS 불필요) */
+@keyframes pm3-result-beat{0%{opacity:0;transform:translateY(13px) scale(.9)}62%{transform:translateY(-2px) scale(1.02)}100%{opacity:1;transform:translateY(0) scale(1)}}
+.phone.playing:not(.market-playing):not(.vacation-playing) .day-result:not(.phase-brief-result){animation:pm3-result-beat .46s cubic-bezier(.22,.9,.3,1.15) both}
+
+
+/* v0.63.75-claude-debug.1: 아이돌보기 — 선화가 손 뻗는 쪽(왼쪽 아래)에 더 어린 아이를
+   별도 NPC 레이어(.npc-child)로 배치. child-1..3.png는 임시 플레이스홀더이며 코덱스 픽셀
+   아트로 교체 예정. 위치/크기는 이 블록에서만 조정한다. */
+.phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-childcare:not(.market-choice-stage) .stage-npc.npc-child{left:15%!important;right:auto!important;bottom:max(14%,86px)!important;width:76px!important;height:96px!important;transform:scaleX(-1)!important;transform-origin:50% 100%;z-index:5;animation:none!important;filter:drop-shadow(0 3px 2px #0006)}
+.phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-childcare:not(.market-choice-stage) .stage-npc.npc-child>img{width:100%!important;height:100%!important;object-fit:contain!important;object-position:center bottom!important;image-rendering:auto!important}
+@media(max-width:430px){.phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-childcare:not(.market-choice-stage) .stage-npc.npc-child{width:72px!important;height:90px!important;left:13%!important}}
+
+
+/* v0.63.75-claude-debug.3: 스트레스 최대 시 '자는' 휴식 장면(rest의 sleep 변형)에서만
+   선화를 약 140% 확대하고 침구에 자연스럽게 겹치도록 바닥선을 낮춘다.
+   rest-tea(차 마시기)·교육·아르바이트 등 다른 캐릭터 크기는 불변. 선택자는
+   일반 --actor-box(128px)!important 규칙을 이기도록 .phone.playing… 최고 특이도로 작성. */
+.phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-rest:not(.market-choice-stage) .stage-character.pixel-sprite.motion-resting:not(.rest-tea){width:186px!important;height:172px!important;bottom:5%!important;padding:4px!important}
+.phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-rest:not(.market-choice-stage) .stage-character.pixel-sprite.motion-resting:not(.rest-tea) img{object-fit:contain!important;object-position:center bottom!important}
+@media(max-width:430px){.phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-rest:not(.market-choice-stage) .stage-character.pixel-sprite.motion-resting:not(.rest-tea){width:178px!important;height:164px!important;bottom:5%!important}}
+
+
+/* v0.63.76-claude-debug.1: 주방보조 6레이어 (배경>가마솥>주모>선화>채소>불꽃).
+   .action-kitchenhelp에만 스코프 — 아이돌보기·농가 등 다른 일정 CSS엔 영향 없음.
+   좌표는 선화 128px 기준 합성 미리보기에서 산출. 라이브 검수 후 미세조정 가능. */
+.activity-stage.action-kitchenhelp .kitchen-layer{position:absolute;height:auto;image-rendering:pixelated;pointer-events:none;filter:drop-shadow(0 2px 2px #0004)}
+.activity-stage.action-kitchenhelp .stage-props,.activity-stage.action-kitchenhelp .stage-npc{display:none!important}
+.phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-kitchenhelp{--actor-left:48%}
+.phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-kitchenhelp:not(.market-choice-stage) .stage-character.pixel-sprite{z-index:4!important;bottom:10%!important}
+.activity-stage.action-kitchenhelp .kl-cauldron{z-index:2;left:0%;bottom:5%;width:33%}
+.activity-stage.action-kitchenhelp .kl-jumo{z-index:3;left:9%;bottom:8%;width:42%}
+.activity-stage.action-kitchenhelp .kl-veg{z-index:5;left:50%;bottom:-5%;width:31%}
+.activity-stage.action-kitchenhelp .kl-fire{z-index:6;left:10%;bottom:8%;width:21%}
+@media(max-width:380px){.activity-stage.action-kitchenhelp .kl-jumo{width:44%}.activity-stage.action-kitchenhelp .kl-cauldron{width:35%}}
+
+/* v0.63.77: manifest-driven locked education/job scene layers. */
+.activity-stage.schedule-layered .stage-inner{overflow:hidden}
+.activity-stage.schedule-layered .stage-npc,.activity-stage.schedule-layered .stage-props{display:none!important}
+.phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.schedule-layered .stage-character.pixel-sprite{
+  left:var(--layer-hero-left)!important;
+  bottom:var(--layer-floor)!important;
+  width:clamp(126px,38%,166px)!important;
+  height:clamp(126px,38%,166px)!important;
+  z-index:4!important;
+  transform:translateX(-50%)!important;
+  transform-origin:50% 100%;
+  animation:none!important;
+}
+
+/* v0.63.78: 일정별 heroScale을 무시하고 모든 레이어 일정에서 동일한 선화 뷰포트를 유지한다. */
+.phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.schedule-layered .stage-character.pixel-sprite{
+  width:146px!important;
+  height:146px!important;
+}
+@media(max-width:430px){
+  .phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.schedule-layered .stage-character.pixel-sprite{
+    width:132px!important;
+    height:132px!important;
+  }
+}
+.schedule-scene-layer{position:absolute;display:block;height:auto;pointer-events:none;user-select:none;image-rendering:pixelated}
+.schedule-scene-layer.layer-background{inset:0;z-index:1;width:100%;height:100%;object-fit:cover;image-rendering:auto}
+.schedule-scene-layer.layer-npc{left:var(--layer-npc-left);bottom:var(--layer-floor);z-index:3;width:clamp(122px,37%,160px);transform:translateX(-50%) scale(var(--layer-npc-scale));transform-origin:50% 100%;object-fit:contain;filter:drop-shadow(0 3px 2px #0005)}
+.schedule-scene-layer.layer-pattern{left:var(--layer-prop-left);bottom:var(--layer-prop-bottom);z-index:5;width:clamp(94px,29%,126px);transform:translateX(-50%);object-fit:contain;filter:drop-shadow(0 2px 2px #0004)}
+.schedule-scene-layer.layer-effect{left:var(--layer-effect-left);bottom:var(--layer-effect-bottom);z-index:6;width:clamp(70px,22%,98px);transform:translateX(-50%);object-fit:contain;filter:drop-shadow(0 2px 2px #0004)}
+.schedule-scene-layer.layer-pattern.dedicated-failure{z-index:6}
+.schedule-layer-qa{position:absolute;z-index:40;left:3%;right:3%;bottom:1.5%;display:grid;gap:4px;padding:7px;border:1px solid #e1c583;border-radius:9px;background:#21150ee8;color:#fff4d6;font-size:9px}.schedule-layer-qa>strong{font-size:10px}.schedule-layer-qa>div{display:flex;gap:3px}.schedule-layer-qa button{min-width:0;padding:4px 6px;border:1px solid #9e7b4b;border-radius:5px;background:#f2e4c6;color:#50351e;font-size:8px}.schedule-layer-qa button.active{background:#7a4f29;color:#fff}.schedule-layer-qa small{opacity:.8}.phone.schedule-qa-playing>.dialogue,.phone.schedule-qa-playing>nav,.phone.schedule-qa-playing>.home-header,.phone.schedule-qa-playing>#settingsButton{display:none!important}
+.phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-kitchenhelp.schedule-layered .schedule-scene-layer.layer-npc{width:146px!important}
+.phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-kitchenhelp.schedule-layered .schedule-scene-layer.layer-pattern{width:82px!important;filter:saturate(.82) brightness(.96) drop-shadow(0 2px 2px #0003)}
+.phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-kitchenhelp.schedule-layered .schedule-scene-layer.layer-effect{width:74px!important}
+.phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-kitchenhelp.schedule-layered .schedule-scene-layer.layer-pattern.fail-a{width:76px!important}
+.phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-kitchenhelp.schedule-layered .schedule-scene-layer.layer-effect.fail-b{width:92px!important}
+.phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-childcare.schedule-layered .schedule-scene-layer.layer-npc{width:118px!important}
+.phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-childcare.schedule-layered .schedule-scene-layer.layer-pattern,.phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-childcare.schedule-layered .schedule-scene-layer.layer-effect{width:64px!important}
+.phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-painting.schedule-layered .schedule-scene-layer.layer-npc{bottom:var(--layer-floor)!important;width:132px!important}
+.phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-painting.schedule-layered .schedule-scene-layer.layer-pattern{left:44%!important;bottom:12%!important;width:38px!important}
+.phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-painting.schedule-layered .schedule-scene-layer.layer-effect{width:62px!important}
+.phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-sewing.schedule-layered .schedule-scene-layer.layer-npc{width:156px!important}
+.phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-copying.schedule-layered .schedule-scene-layer.layer-npc{width:132px!important}
+.phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-sewing.schedule-layered .schedule-scene-layer.layer-pattern,.phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-sewing.schedule-layered .schedule-scene-layer.layer-effect,.phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-copying.schedule-layered .schedule-scene-layer.layer-pattern,.phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-copying.schedule-layered .schedule-scene-layer.layer-effect{width:76px!important}
+.phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-sewing.schedule-layered .schedule-scene-layer.layer-pattern{left:38%!important;bottom:11%!important;width:58px!important}
+.phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-copying.schedule-layered .schedule-scene-layer.layer-pattern{left:39%!important;bottom:12%!important;width:50px!important}
+.phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-music.schedule-layered .schedule-scene-layer.layer-npc{width:150px!important}
+.phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-music.schedule-layered .schedule-scene-layer.layer-pattern{width:112px!important}
+.phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-music.schedule-layered .schedule-scene-layer.layer-effect{width:70px!important}
+.phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-music.schedule-layered .schedule-scene-layer.layer-pattern{left:35%!important;bottom:6%!important}
+.phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-music.schedule-layered .schedule-scene-layer.layer-effect{left:38%!important;bottom:19%!important}
+.phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-dance.schedule-layered .schedule-scene-layer.layer-npc{width:148px!important}
+.phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-dance.schedule-layered .schedule-scene-layer.layer-pattern,.phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-dance.schedule-layered .schedule-scene-layer.layer-effect{width:70px!important}
+.phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-farmwork.schedule-layered .schedule-scene-layer.layer-npc{width:120px!important}
+.phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-farmwork.schedule-layered .schedule-scene-layer.layer-pattern{width:70px!important}
+.phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-farmwork.schedule-layered .schedule-scene-layer.layer-pattern.fail-b{left:var(--layer-prop-left)!important;width:64px!important}
+.phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-farmwork.schedule-layered:has(.schedule-scene-layer.fail-b) .schedule-scene-layer.layer-npc{width:92px!important}
+@media(max-width:430px){
+  .phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-kitchenhelp.schedule-layered .schedule-scene-layer.layer-npc{width:140px!important}
+  .phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-kitchenhelp.schedule-layered .schedule-scene-layer.layer-pattern{width:78px!important}
+  .phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-kitchenhelp.schedule-layered .schedule-scene-layer.layer-effect{width:68px!important}
+  .phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-kitchenhelp.schedule-layered .schedule-scene-layer.layer-pattern.fail-a{width:70px!important}
+  .phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-kitchenhelp.schedule-layered .schedule-scene-layer.layer-effect.fail-b{width:86px!important}
+}
+@media(max-width:380px){
+  .phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.schedule-layered .stage-character.pixel-sprite{width:132px!important;height:132px!important}
+  .schedule-scene-layer.layer-npc{width:126px}
+  .schedule-scene-layer.layer-pattern{width:100px}
+}
+
+
+/* v0.63.76-claude-debug.2: 요리 배우기(cooking) 캐릭터 좌표 — 전용 값이 없어 기본 46%로
+   부엌 한가운데 떠 있던 것을 화덕 쪽(좌)으로 배치. action-cooking 스코프. */
+.phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-cooking{--actor-left:34%}
+
+/* v0.63.79: 저잣거리는 실내 카드가 아니라 길가의 독립 노점처럼 보이게 한다. */
+.phone.market-playing .activity-stage.market-choice-stage{inset:15% 2% 20%;overflow:visible!important}
+.phone.market-playing .market-choice-stage .market-explore{overflow:visible!important;background:linear-gradient(to bottom,transparent 0 68%,#72543766 69% 72%,#4b382666 73% 100%)!important}
+.phone.market-playing .market-choice-stage .market-shop{top:8%!important;bottom:8%!important;width:46%!important;border:0!important;border-radius:8px 8px 2px 2px!important;background:linear-gradient(90deg,#4a2d19 0 5%,#b98751dd 6% 94%,#4a2d19 95%)!important;box-shadow:0 9px 9px #20130988!important;overflow:visible!important}
+.phone.market-playing .market-choice-stage .market-shop.tavern{left:2%!important}
+.phone.market-playing .market-choice-stage .market-shop.hanbok{left:52%!important}
+.phone.market-playing .market-choice-stage .market-shop:before{content:"";position:absolute;z-index:3;left:-5%;right:-5%;top:-7%;height:22%;border:2px solid #5c371d;border-radius:7px 7px 2px 2px;background:repeating-linear-gradient(90deg,#b44937 0 18%,#ead2a1 18% 36%);box-shadow:0 5px 5px #0005}
+.phone.market-playing .market-choice-stage .market-shop.hanbok:before{background:repeating-linear-gradient(90deg,#315f59 0 18%,#ead2a1 18% 36%)}
+.phone.market-playing .market-choice-stage .market-shop:after{display:grid!important;place-items:center;left:18%!important;right:18%!important;bottom:-7%!important;height:12%!important;border:1px solid #382315!important;border-radius:3px!important;background:#684126!important;color:#fff2cf;font-size:10px;font-weight:900;box-shadow:0 3px 5px #0007}
+.phone.market-playing .market-choice-stage .market-shop.tavern:after{content:"주막 노점"}
+.phone.market-playing .market-choice-stage .market-shop.hanbok:after{content:"한복 노점"}
+.phone.market-playing .market-choice-stage .market-shop>img{top:56%!important;left:50%!important;width:100%!important;height:76%!important;transform:translate(-50%,-50%) scale(1.12)!important;object-fit:contain!important;filter:drop-shadow(0 5px 4px #0007)!important}
+.phone.market-playing .market-choice-stage .market-shop.tavern>img{transform:translate(-50%,-50%) scale(1.12) scaleX(-1)!important}
+.phone.market-playing .market-choice-stage .market-shop.selected{outline:3px solid #f3d579!important;transform:translateY(-3px)!important}
+.phone.market-playing .market-choice-stage .market-shop.selected>img{transform:translate(-50%,-50%) scale(1.2)!important}
+.phone.market-playing .market-choice-stage .market-shop.selected.tavern>img{transform:translate(-50%,-50%) scale(1.2) scaleX(-1)!important}
+
+/* 차 마시기에서도 일반 일정과 같은 선화 실루엣 크기를 유지한다. */
+.phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-rest:not(.market-choice-stage) .stage-character.pixel-sprite.motion-resting.rest-tea{width:146px!important;height:146px!important;bottom:3%!important;padding:0!important}
+@media(max-width:430px){.phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-rest:not(.market-choice-stage) .stage-character.pixel-sprite.motion-resting.rest-tea{width:132px!important;height:132px!important;bottom:3%!important}}
