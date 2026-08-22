@@ -237,7 +237,7 @@ const vacationIllustrations=[
 function unifiedAgeFolder(){return '09';}
 function scheduleFramePath(file){return `../assets/characters/seonhwa/schedule-actions/${file}`;}
 function scheduleBasePath(file){return `../assets/characters/seonhwa/schedule-base/${file}`;}
-const scheduleAssetRevision='0.63.87-debug';
+const scheduleAssetRevision='0.63.88-debug';
 const scheduleQaParams=new URLSearchParams(location.search);
 const scheduleLayerStandaloneQa=scheduleQaParams.get('qa')==='1';
 const lockedScheduleQaMode=scheduleQaParams.has('qaSchedules')||scheduleLayerStandaloneQa;
@@ -744,7 +744,7 @@ async function playScheduleLayerScene(actionId,seonImage,rank,outcome,dayIndex){
   const patternSpec=spec.patterns?.[patternKey];
   const patternFrames=v2Spec?patternSpec?.frames:patternSpec;
   const npcFrames=v2Spec?spec.npc?.frames||[]:spec.npc||[];
-  const heroFrames=spec.existingHeroFrames||[];
+  const heroFrames=actionId==='farmwork'&&patternKey==='fail-b'&&spec.failureHeroFrames?.length===3?spec.failureHeroFrames:spec.existingHeroFrames||[];
   if(heroFrames.length!==3||npcFrames.length!==3||patternFrames?.length!==3)throw new Error(`schedule layer frame count invalid: ${actionId}/${patternKey}`);
   const placement=spec.placement||{};
   const layers=[];
@@ -766,9 +766,13 @@ async function playScheduleLayerScene(actionId,seonImage,rank,outcome,dayIndex){
     const delay=[360,300,250][rank]||300;
     for(let loop=0;loop<3;loop+=1){
       for(let frame=0;frame<3;frame+=1){
-        if(actionId==='farmwork'&&patternKey==='fail-b')stage.style.setProperty('--layer-hero-left',`${24+frame*2}%`);
+        if(actionId==='farmwork'&&patternKey==='fail-b'){
+          stage.style.setProperty('--layer-npc-left','12%');
+          stage.style.setProperty('--layer-hero-left',`${30+frame*12}%`);
+          stage.style.setProperty('--layer-prop-left',`${58+frame*10}%`);
+        }
         seonImage.src=v2Spec?`${base}/${heroFrames[frame]}${v}`:`${heroFrames[frame]}${v}`;
-        npc.src=`${base}/${npcFrames[frame]}${v}`;
+        npc.src=`${base}/${npcFrames[actionId==='farmwork'&&patternKey==='fail-b'?0:frame]}${v}`;
         pattern.src=`${base}/${patternFrames[frame]}${v}`;
         await schedulePlaybackDelay(delay);
       }

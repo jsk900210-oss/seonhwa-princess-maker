@@ -2029,7 +2029,8 @@
 .phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-dance.schedule-layered .schedule-scene-layer.layer-pattern,.phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-dance.schedule-layered .schedule-scene-layer.layer-effect{width:70px!important}
 .phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-farmwork.schedule-layered .schedule-scene-layer.layer-npc{width:120px!important}
 .phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-farmwork.schedule-layered .schedule-scene-layer.layer-pattern{width:70px!important}
-.phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-farmwork.schedule-layered .schedule-scene-layer.layer-pattern.fail-b{left:57%!important;width:64px!important}
+.phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-farmwork.schedule-layered .schedule-scene-layer.layer-pattern.fail-b{left:var(--layer-prop-left)!important;width:64px!important}
+.phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-farmwork.schedule-layered:has(.schedule-scene-layer.fail-b) .schedule-scene-layer.layer-npc{width:92px!important}
 @media(max-width:430px){
   .phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-kitchenhelp.schedule-layered .schedule-scene-layer.layer-npc{width:140px!important}
   .phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-kitchenhelp.schedule-layered .schedule-scene-layer.layer-pattern{width:78px!important}

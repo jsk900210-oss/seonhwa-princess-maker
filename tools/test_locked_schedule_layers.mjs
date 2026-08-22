@@ -16,6 +16,10 @@ for(const id of expected){
     if(!hero.includes('assets/characters/seonhwa/schedule-actions/')||!/-pixel-[123]\.png$/.test(hero))fail(`${id}: forbidden hero frame ${hero}`);
     if(!exists(hero))fail(`${id}: missing hero frame ${hero}`);
   }
+  if(id==='farmwork'){
+    if(spec.failureHeroFrames?.length!==3)fail('farmwork: 닭 추격용 기존 선화 3프레임이 필요합니다.');
+    for(const hero of spec.failureHeroFrames)if(!exists(hero))fail(`farmwork: missing failure hero frame ${hero}`);
+  }
   const layerFiles=[spec.backgroundOverlay,...spec.npc,...Object.values(spec.patterns).flat()].filter(Boolean);
   for(const file of layerFiles)if(!fs.existsSync(path.join(root,'assets','schedule-layers',id,file)))fail(`${id}: missing layer ${file}`);
 }

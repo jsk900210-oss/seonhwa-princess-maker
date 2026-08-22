@@ -450,6 +450,11 @@
         "../assets/characters/seonhwa/schedule-actions/farmwork-pixel-2.png",
         "../assets/characters/seonhwa/schedule-actions/farmwork-pixel-3.png"
       ],
+      "failureHeroFrames": [
+        "../assets/characters/seonhwa/base-actions/carry-walk-right/carry-walk-right-1.png",
+        "../assets/characters/seonhwa/base-actions/carry-walk-right/carry-walk-right-2.png",
+        "../assets/characters/seonhwa/base-actions/carry-walk-right/carry-walk-right-3.png"
+      ],
       "existingBackground": "../assets/backgrounds/phase-scenes/farm.webp",
       "backgroundOverlay": null,
       "npc": [
