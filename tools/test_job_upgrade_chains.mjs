@@ -35,6 +35,6 @@ assert.match(app,/id: 'copying'.*unlockStats:\{intelligence:160\}/s);
 assert.ok(!app.includes('function jobUpgradeHint(action)'),'잠긴 다음 단계 안내 함수는 화면에서 제거해야 합니다.');
 assert.ok(!app.includes('class="job-upgrade-hint"'),'아르바이트 카드에 승급 조건을 표시하지 않아야 합니다.');
 assert.ok(css.includes('.job-upgrade-category .compact-schedule-grid{grid-template-columns:repeat(3'),'아르바이트 카드는 교육과 같은 3열 소형 배치여야 합니다.');
-assert.ok(css.includes('.job-upgrade-category .compact-action b{display:block;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:8px'),'아르바이트 제목은 모두 같은 한 줄 글씨 크기여야 합니다.');
+assert.ok(css.includes('.compact-category .compact-action b{display:-webkit-box;max-width:100%;overflow:hidden;-webkit-box-orient:vertical;-webkit-line-clamp:2;white-space:normal;text-overflow:clip;font-size:9px'),'교육·아르바이트 제목은 같은 크기로 최대 두 줄이어야 합니다.');
 
 console.log('PASS: 아르바이트 7계보·스탯 해금·숙련도 승계');
