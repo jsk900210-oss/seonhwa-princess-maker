@@ -29,6 +29,8 @@
   "patterns": {
     "success-a": {
       "layer": "props",
+      "heroIncludesProp": true,
+      "heroFrames": ["hero-actions/sawing-1.png", "hero-actions/sawing-2.png", "hero-actions/sawing-3.png"],
       "frames": [
         "props/saw-bench-1.png",
         "props/saw-bench-2.png",
@@ -37,6 +39,8 @@
     },
     "success-b": {
       "layer": "effects",
+      "heroIncludesProp": true,
+      "heroFrames": ["hero-actions/hammering-1.png", "hero-actions/hammering-2.png", "hero-actions/hammering-3.png"],
       "frames": [
         "effects/hammer-joint-1.png",
         "effects/hammer-joint-2.png",
@@ -61,7 +65,7 @@
     }
   },
   "placement": {
-    "heroLeft": "30%",
+    "heroLeft": "40%",
     "floorBottom": "4%",
     "npcLeft": "78%",
     "npcScale": 1,

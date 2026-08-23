@@ -237,7 +237,7 @@ const vacationIllustrations=[
 function unifiedAgeFolder(){return '09';}
 function scheduleFramePath(file){return `../assets/characters/seonhwa/schedule-actions/${file}`;}
 function scheduleBasePath(file){return `../assets/characters/seonhwa/schedule-base/${file}`;}
-const scheduleAssetRevision='0.64.01-debug';
+const scheduleAssetRevision='0.64.02-debug';
 const scheduleQaParams=new URLSearchParams(location.search);
 const moonlightStandaloneQa=scheduleQaParams.get('qaHoliday')==='chuseok';
 const scheduleLayerStandaloneQa=scheduleQaParams.get('qa')==='1';
@@ -747,7 +747,7 @@ async function playScheduleLayerScene(actionId,seonImage,rank,outcome,dayIndex){
   const patternSpec=spec.patterns?.[patternKey];
   const patternFrames=v2Spec?patternSpec?.frames:patternSpec;
   const npcFrames=v2Spec?spec.npc?.frames||[]:spec.npc||[];
-  const heroFrames=actionId==='farmwork'&&patternKey==='fail-b'&&spec.failureHeroFrames?.length===3?spec.failureHeroFrames:spec.existingHeroFrames||[];
+  const heroFrames=patternSpec?.heroFrames?.length===3?patternSpec.heroFrames:actionId==='farmwork'&&patternKey==='fail-b'&&spec.failureHeroFrames?.length===3?spec.failureHeroFrames:spec.existingHeroFrames||[];
   if(heroFrames.length!==3||npcFrames.length!==3||patternFrames?.length!==3)throw new Error(`schedule layer frame count invalid: ${actionId}/${patternKey}`);
   const placement=spec.placement||{};
   const layers=[];
@@ -765,6 +765,7 @@ async function playScheduleLayerScene(actionId,seonImage,rank,outcome,dayIndex){
     const npc=make('npc',npcFrames[0]);
     const patternLayer=v2Spec&&patternSpec?.layer==='effects'?'effect':'pattern';
     const pattern=make(`${patternLayer} ${patternKey} ${patternKey.startsWith('fail-')?'dedicated-failure':''}`,patternFrames[0]);
+    if(patternSpec?.heroIncludesProp)pattern.hidden=true;
     layers.push(npc,pattern);
     const delay=[360,300,250][rank]||300;
     for(let loop=0;loop<3;loop+=1){

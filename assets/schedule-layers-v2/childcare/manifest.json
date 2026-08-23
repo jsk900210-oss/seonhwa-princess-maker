@@ -19,7 +19,7 @@
   },
   "placement": {
     "heroLeft": "35%", "floorBottom": "5%", "npcLeft": "73%", "npcScale": 0.58,
-    "propLeft": "53%", "propBottom": "4%", "effectLeft": "70%", "effectBottom": "17%"
+    "propLeft": "59%", "propBottom": "5%", "effectLeft": "61%", "effectBottom": "5%"
   },
   "layerOrder": ["existing-background", "npc", "existing-seonhwa", "props", "effects", "failures"]
 }
