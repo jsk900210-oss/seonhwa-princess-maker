@@ -4,9 +4,9 @@
   "nameKo": "의원 보조",
   "status": "review",
   "existingHeroFrames": [
-    "../../characters/seonhwa/schedule-actions/clinichelp-pixel-1.png",
-    "../../characters/seonhwa/schedule-actions/clinichelp-pixel-2.png",
-    "../../characters/seonhwa/schedule-actions/clinichelp-pixel-3.png"
+    "../../characters/seonhwa/schedule-actions/clinic-pack-pixel-1.png",
+    "../../characters/seonhwa/schedule-actions/clinic-pack-pixel-2.png",
+    "../../characters/seonhwa/schedule-actions/clinic-pack-pixel-3.png"
   ],
   "existingBackground": "../../backgrounds/phase-scenes/clinic.webp",
   "animation": {
@@ -64,7 +64,7 @@
     "heroLeft": "30%",
     "floorBottom": "4%",
     "npcLeft": "77%",
-    "npcScale": 0.82,
+    "npcScale": 1,
     "propLeft": "51%",
     "propBottom": "3%",
     "effectLeft": "53%",

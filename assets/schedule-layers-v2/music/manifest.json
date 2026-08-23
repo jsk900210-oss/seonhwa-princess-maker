@@ -1,1 +1,81 @@
-{"version":"2.0.0-review.2","activityId":"music","nameKo":"악기 배우기","status":"pilot-review","existingHeroFrames":["../../characters/seonhwa/schedule-actions/sit-pixel-1.png","../../characters/seonhwa/schedule-actions/sit-pixel-2.png","../../characters/seonhwa/schedule-actions/sit-pixel-3.png"],"existingBackground":"../../backgrounds/phase-scenes/music.webp","animation":{"sequence":[1,2,3],"loopCount":3,"frameDurationMs":300},"npc":{"id":"master","frames":["npc/master/idle-1.png","npc/master/idle-2.png","npc/master/idle-3.png"]},"patterns":{"success-a":{"layer":"props","frames":["props/instrument-1.png","props/instrument-2.png","props/instrument-3.png"]},"success-b":{"layer":"effects","frames":["effects/music-notes-1.png","effects/music-notes-2.png","effects/music-notes-3.png"]},"fail-a":{"layer":"failures","frames":["failures/fail-a-1.png","failures/fail-a-2.png","failures/fail-a-3.png"]},"fail-b":{"layer":"failures","frames":["failures/fail-b-1.png","failures/fail-b-2.png","failures/fail-b-3.png"]}},"placement":{"heroLeft":"35%","floorBottom":"5%","npcLeft":"72%","npcScale":0.94,"propLeft":"35%","propBottom":"6%","effectLeft":"38%","effectBottom":"19%"},"layerOrder":["existing-background","npc","existing-seonhwa","props","effects","failures"]}
+{
+  "version": "2.0.0-review.2",
+  "activityId": "music",
+  "nameKo": "악기 배우기",
+  "status": "pilot-review",
+  "existingHeroFrames": [
+    "../../characters/seonhwa/schedule-actions/sit-pixel-1.png",
+    "../../characters/seonhwa/schedule-actions/sit-pixel-2.png",
+    "../../characters/seonhwa/schedule-actions/sit-pixel-3.png"
+  ],
+  "existingBackground": "../../backgrounds/phase-scenes/music.webp",
+  "animation": {
+    "sequence": [
+      1,
+      2,
+      3
+    ],
+    "loopCount": 3,
+    "frameDurationMs": 300
+  },
+  "npc": {
+    "id": "master",
+    "frames": [
+      "npc/master/idle-1.png",
+      "npc/master/idle-2.png",
+      "npc/master/idle-3.png"
+    ]
+  },
+  "patterns": {
+    "success-a": {
+      "layer": "props",
+      "frames": [
+        "props/instrument-1.png",
+        "props/instrument-2.png",
+        "props/instrument-3.png"
+      ]
+    },
+    "success-b": {
+      "layer": "effects",
+      "frames": [
+        "effects/music-notes-1.png",
+        "effects/music-notes-2.png",
+        "effects/music-notes-3.png"
+      ]
+    },
+    "fail-a": {
+      "layer": "failures",
+      "frames": [
+        "failures/fail-a-1.png",
+        "failures/fail-a-2.png",
+        "failures/fail-a-3.png"
+      ]
+    },
+    "fail-b": {
+      "layer": "failures",
+      "frames": [
+        "failures/fail-b-1.png",
+        "failures/fail-b-2.png",
+        "failures/fail-b-3.png"
+      ]
+    }
+  },
+  "placement": {
+    "heroLeft": "35%",
+    "floorBottom": "5%",
+    "npcLeft": "72%",
+    "npcScale": 1,
+    "propLeft": "35%",
+    "propBottom": "6%",
+    "effectLeft": "38%",
+    "effectBottom": "19%"
+  },
+  "layerOrder": [
+    "existing-background",
+    "npc",
+    "existing-seonhwa",
+    "props",
+    "effects",
+    "failures"
+  ]
+}

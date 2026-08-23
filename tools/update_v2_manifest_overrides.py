@@ -12,4 +12,13 @@ loom_path=ROOT/"loomwork"/"manifest.json"
 loom=json.loads(loom_path.read_text(encoding="utf-8"))
 loom["placement"]["npcScale"]=1
 loom_path.write_text(json.dumps(loom,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
-print("updated farmwork and loomwork manifest overrides")
+
+# Adult schedule NPCs share one visual scale. Childcare intentionally keeps
+# its smaller child ratio.
+adult_ids=["kitchenhelp","painting","music","dance","sewing","copying","woodwork","loomwork","farmwork","swordsmanship","spellcraft","classics","masonry","clinichelp","innhelp","ferryhelp","merchanthelp","accounting","tutoring"]
+for activity_id in adult_ids:
+    path=ROOT/activity_id/"manifest.json"
+    data=json.loads(path.read_text(encoding="utf-8"))
+    data["placement"]["npcScale"]=1
+    path.write_text(json.dumps(data,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
+print("updated farmwork hero override and active adult NPC scales")

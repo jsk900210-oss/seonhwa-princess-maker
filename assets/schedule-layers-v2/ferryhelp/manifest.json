@@ -64,7 +64,7 @@
     "heroLeft": "30%",
     "floorBottom": "4%",
     "npcLeft": "77%",
-    "npcScale": 0.82,
+    "npcScale": 1,
     "propLeft": "51%",
     "propBottom": "3%",
     "effectLeft": "53%",

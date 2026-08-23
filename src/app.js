@@ -237,7 +237,7 @@ const vacationIllustrations=[
 function unifiedAgeFolder(){return '09';}
 function scheduleFramePath(file){return `../assets/characters/seonhwa/schedule-actions/${file}`;}
 function scheduleBasePath(file){return `../assets/characters/seonhwa/schedule-base/${file}`;}
-const scheduleAssetRevision='0.63.95-debug';
+const scheduleAssetRevision='0.63.96-debug';
 const scheduleQaParams=new URLSearchParams(location.search);
 const scheduleLayerStandaloneQa=scheduleQaParams.get('qa')==='1';
 const lockedScheduleQaMode=scheduleQaParams.has('qaSchedules')||scheduleLayerStandaloneQa;
@@ -2572,10 +2572,10 @@ async function playWeeklySchedule(selected) {
       stage.className=`activity-stage ${phaseSceneType} map-market action-freeTime free-time-market`;
       stageProps.className=`stage-props prop-stall purchase-${freeTimeVariant?.purchaseLayer||'goods'}`;
       stageNpc.hidden=false;stageNpc.className='stage-npc npc-purchase-merchant';
-      stageNpcImage.src='../assets/schedule-layers/merchanthelp/npc/merchanthelp-1.png';
+      stageNpcImage.src='../assets/schedule-layers-v2/merchanthelp/npc/merchant/idle-1.png';
       stageCharacter.style.left='12%';
       try{
-        for(const position of [18,27,37,48,freeTimeVariant?.stop??56]){stageCharacter.style.left=`${position}%`;await animateActivitySprite(stageCharacterImage,'motion-walk',null,stageNpcImage,null,dailyOutfit,currentMasteryRank);}
+        for(const position of [30,freeTimeVariant?.stop??56]){stageCharacter.style.left=`${position}%`;await animateActivitySprite(stageCharacterImage,'motion-walk',null,stageNpcImage,null,dailyOutfit,currentMasteryRank);}
         stageCharacter.classList.add('is-purchasing');
         await animateActivitySprite(stageCharacterImage,presentation.motion,freeTimeVariant?.activity||'errand',stageNpcImage,null,dailyOutfit,currentMasteryRank);
       }finally{

@@ -8,12 +8,16 @@ for(const activityId of ['kitchenhelp','childcare','painting','music','dance','s
   const manifest=JSON.parse(fs.readFileSync(new URL(`../assets/schedule-layers-v2/${activityId}/manifest.json`,import.meta.url),'utf8'));
   assert.deepEqual(manifest.animation.sequence,[1,2,3],`${activityId}는 1→2→3 순환이어야 합니다.`);
   assert.equal(manifest.existingHeroFrames.length,3,'기존 선화 3프레임을 참조해야 합니다.');
-  const heroFrameId=['painting','copying','spellcraft','classics','tutoring'].includes(activityId)?'calligraphy':activityId==='swordsmanship'?'manners':activityId==='accounting'?'arithmetic':activityId==='innhelp'?'merchanthelp':activityId==='sewing'?'loomwork':activityId==='music'?'sit':activityId;
-  assert.ok(manifest.existingHeroFrames.every(path=>path.includes(`characters/seonhwa/schedule-actions/${heroFrameId}-pixel-`)),'신규 선화로 교체하면 안 됩니다.');
+  const heroFrameId=['painting','copying','spellcraft','classics','tutoring'].includes(activityId)?'calligraphy':activityId==='swordsmanship'?'manners':activityId==='accounting'?'arithmetic':activityId==='innhelp'?'merchanthelp':activityId==='sewing'?'loomwork':activityId==='music'?'sit':activityId==='clinichelp'?'clinic-pack':activityId;
+  assert.ok(manifest.existingHeroFrames.every(path=>path.includes(`characters/seonhwa/schedule-actions/${heroFrameId}-pixel-`)),'일정별 승인된 선화 3프레임을 참조해야 합니다.');
   for(const key of ['success-a','success-b','fail-a','fail-b'])assert.equal(manifest.patterns[key].frames.length,3,`${activityId} ${key}는 3프레임이어야 합니다.`);
 }
 const paintingManifest=JSON.parse(fs.readFileSync(new URL('../assets/schedule-layers-v2/painting/manifest.json',import.meta.url),'utf8'));
-assert.deepEqual(paintingManifest.placement,{heroLeft:'34%',floorBottom:'5%',npcLeft:'68%',npcScale:.86,propLeft:'43%',propBottom:'13%',effectLeft:'46%',effectBottom:'14%'},'회화 소품과 스승은 책상 원근에 맞는 좌표를 사용해야 합니다.');
+assert.deepEqual(paintingManifest.placement,{heroLeft:'34%',floorBottom:'5%',npcLeft:'68%',npcScale:1,propLeft:'43%',propBottom:'13%',effectLeft:'46%',effectBottom:'14%'},'회화 소품과 스승은 책상 원근에 맞는 좌표를 사용해야 합니다.');
+for(const activityId of ['kitchenhelp','painting','music','dance','sewing','copying','woodwork','loomwork','farmwork','swordsmanship','spellcraft','classics','masonry','clinichelp','innhelp','ferryhelp','merchanthelp','accounting','tutoring']){
+  const manifest=JSON.parse(fs.readFileSync(new URL(`../assets/schedule-layers-v2/${activityId}/manifest.json`,import.meta.url),'utf8'));
+  assert.equal(manifest.placement.npcScale,1,`${activityId} 성인 NPC 배율은 1이어야 합니다.`);
+}
 assert.ok(app.includes("const scheduleLayerV2PilotIds=new Set(['kitchenhelp','childcare','painting','music','dance','sewing','copying','woodwork','loomwork','farmwork','swordsmanship','spellcraft','classics','masonry','clinichelp','innhelp','ferryhelp','merchanthelp','accounting','tutoring'])"),'활성 일정 v2 20종이 모두 필요합니다.');
 assert.ok(app.includes('window.SCHEDULE_LAYER_V2_SPECS?.[actionId]')&&html.includes('schedule-layer-manifests.js'),'file 실행에서도 v2 명세 번들을 사용해야 합니다.');
 assert.ok(app.includes("if(actionId==='farmwork'&&patternKey==='fail-b'){")&&app.includes('npc.hidden=true;'),'농가 실패 B는 선화의 닭 추격만 보여야 합니다.');

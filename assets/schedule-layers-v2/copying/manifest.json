@@ -1,1 +1,81 @@
-{"version":"2.0.0-review.1","activityId":"copying","nameKo":"서책 필사","status":"pilot-review","existingHeroFrames":["../../characters/seonhwa/schedule-actions/calligraphy-pixel-1.png","../../characters/seonhwa/schedule-actions/calligraphy-pixel-2.png","../../characters/seonhwa/schedule-actions/calligraphy-pixel-3.png"],"existingBackground":"../../backgrounds/pixel-activities/close/study-room-clear.webp","animation":{"sequence":[1,2,3],"loopCount":3,"frameDurationMs":300},"npc":{"id":"master","frames":["npc/master/idle-1.png","npc/master/idle-2.png","npc/master/idle-3.png"]},"patterns":{"success-a":{"layer":"props","frames":["props/copy-scroll-1.png","props/copy-scroll-2.png","props/copy-scroll-3.png"]},"success-b":{"layer":"effects","frames":["effects/dry-pages-1.png","effects/dry-pages-2.png","effects/dry-pages-3.png"]},"fail-a":{"layer":"failures","frames":["failures/fail-a-1.png","failures/fail-a-2.png","failures/fail-a-3.png"]},"fail-b":{"layer":"failures","frames":["failures/fail-b-1.png","failures/fail-b-2.png","failures/fail-b-3.png"]}},"placement":{"heroLeft":"34%","floorBottom":"5%","npcLeft":"70%","npcScale":0.86,"propLeft":"46%","propBottom":"10%","effectLeft":"49%","effectBottom":"12%"},"layerOrder":["existing-background","npc","existing-seonhwa","props","effects","failures"]}
+{
+  "version": "2.0.0-review.1",
+  "activityId": "copying",
+  "nameKo": "서책 필사",
+  "status": "pilot-review",
+  "existingHeroFrames": [
+    "../../characters/seonhwa/schedule-actions/calligraphy-pixel-1.png",
+    "../../characters/seonhwa/schedule-actions/calligraphy-pixel-2.png",
+    "../../characters/seonhwa/schedule-actions/calligraphy-pixel-3.png"
+  ],
+  "existingBackground": "../../backgrounds/pixel-activities/close/study-room-clear.webp",
+  "animation": {
+    "sequence": [
+      1,
+      2,
+      3
+    ],
+    "loopCount": 3,
+    "frameDurationMs": 300
+  },
+  "npc": {
+    "id": "master",
+    "frames": [
+      "npc/master/idle-1.png",
+      "npc/master/idle-2.png",
+      "npc/master/idle-3.png"
+    ]
+  },
+  "patterns": {
+    "success-a": {
+      "layer": "props",
+      "frames": [
+        "props/copy-scroll-1.png",
+        "props/copy-scroll-2.png",
+        "props/copy-scroll-3.png"
+      ]
+    },
+    "success-b": {
+      "layer": "effects",
+      "frames": [
+        "effects/dry-pages-1.png",
+        "effects/dry-pages-2.png",
+        "effects/dry-pages-3.png"
+      ]
+    },
+    "fail-a": {
+      "layer": "failures",
+      "frames": [
+        "failures/fail-a-1.png",
+        "failures/fail-a-2.png",
+        "failures/fail-a-3.png"
+      ]
+    },
+    "fail-b": {
+      "layer": "failures",
+      "frames": [
+        "failures/fail-b-1.png",
+        "failures/fail-b-2.png",
+        "failures/fail-b-3.png"
+      ]
+    }
+  },
+  "placement": {
+    "heroLeft": "34%",
+    "floorBottom": "5%",
+    "npcLeft": "70%",
+    "npcScale": 1,
+    "propLeft": "46%",
+    "propBottom": "10%",
+    "effectLeft": "49%",
+    "effectBottom": "12%"
+  },
+  "layerOrder": [
+    "existing-background",
+    "npc",
+    "existing-seonhwa",
+    "props",
+    "effects",
+    "failures"
+  ]
+}

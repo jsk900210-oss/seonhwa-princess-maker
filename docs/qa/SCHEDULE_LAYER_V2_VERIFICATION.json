@@ -1842,19 +1842,19 @@
       "activity": "clinichelp",
       "check": "existing hero preserved",
       "passed": true,
-      "detail": "assets\\characters\\seonhwa\\schedule-actions\\clinichelp-pixel-1.png"
+      "detail": "assets\\characters\\seonhwa\\schedule-actions\\clinic-pack-pixel-1.png"
     },
     {
       "activity": "clinichelp",
       "check": "existing hero preserved",
       "passed": true,
-      "detail": "assets\\characters\\seonhwa\\schedule-actions\\clinichelp-pixel-2.png"
+      "detail": "assets\\characters\\seonhwa\\schedule-actions\\clinic-pack-pixel-2.png"
     },
     {
       "activity": "clinichelp",
       "check": "existing hero preserved",
       "passed": true,
-      "detail": "assets\\characters\\seonhwa\\schedule-actions\\clinichelp-pixel-3.png"
+      "detail": "assets\\characters\\seonhwa\\schedule-actions\\clinic-pack-pixel-3.png"
     },
     {
       "activity": "clinichelp",
@@ -1974,7 +1974,7 @@
       "activity": "clinichelp",
       "check": "npc bbox consistency",
       "passed": true,
-      "detail": "widths=[280, 280, 280], heights=[230, 230, 230]"
+      "detail": "widths=[280, 287, 280], heights=[230, 230, 230]"
     },
     {
       "activity": "clinichelp",
@@ -12864,7 +12864,7 @@
         310
       ],
       "floor": 309,
-      "sha256": "6bb1b1d67808bbab9ed0c22ca80119d9a084cd419c06ecfc500b9e4658f354b6"
+      "sha256": "d5be68b7dc61670aaf9bb23a5b69b6f66106e92a6204e8d9528eefaef5762f52"
     },
     "assets/schedule-layers-v2/clinichelp/npc/physician/idle-2.png": {
       "size": [
@@ -12874,13 +12874,13 @@
       "mode": "RGBA",
       "hasTransparency": true,
       "bbox": [
-        20,
+        16,
         80,
-        300,
+        303,
         310
       ],
       "floor": 309,
-      "sha256": "4d355ddfa801877bf6aa17931049ec3f9862bc8790cc04ecca011b4227e998a9"
+      "sha256": "3fc745580ada74a383eec1e1b180e021fdb2c5f2d483cbc666d58d9c30b0b5b8"
     },
     "assets/schedule-layers-v2/clinichelp/npc/physician/idle-3.png": {
       "size": [
@@ -12896,7 +12896,7 @@
         310
       ],
       "floor": 309,
-      "sha256": "6e202dc80d7df68d1d67488e09f0e40248c407d4a857618812a261ec5a6a889a"
+      "sha256": "8bb52a26fd9053934b1e62a5e6d9a37ba0f295cc007da2675bf6b173a9973618"
     },
     "assets/schedule-layers-v2/clinichelp/props/herb-mortar-1.png": {
       "size": [
@@ -12906,13 +12906,13 @@
       "mode": "RGBA",
       "hasTransparency": true,
       "bbox": [
-        65,
-        100,
-        254,
+        10,
+        199,
+        310,
         310
       ],
       "floor": 309,
-      "sha256": "033ae4fe8c3233bf972935b459a6335db24b1804dba9501b61995dd217f3ebb3"
+      "sha256": "d9a79a60373f7ba5538a905ac0158a50052b7bfe92639ad7250ca2f95ee6afe6"
     },
     "assets/schedule-layers-v2/clinichelp/props/herb-mortar-2.png": {
       "size": [
@@ -12922,13 +12922,13 @@
       "mode": "RGBA",
       "hasTransparency": true,
       "bbox": [
-        55,
-        100,
-        264,
+        10,
+        214,
+        310,
         310
       ],
       "floor": 309,
-      "sha256": "a2e8de04d6e1e23c52479c97e9a48d7cfe6fde41c28bb47f38c14b23d2358189"
+      "sha256": "a27ce38d2bf2563c04bb586a2d10a2fdb6e28ef30c455f7ad6e148c0fc3be6a4"
     },
     "assets/schedule-layers-v2/clinichelp/props/herb-mortar-3.png": {
       "size": [
@@ -12938,13 +12938,13 @@
       "mode": "RGBA",
       "hasTransparency": true,
       "bbox": [
-        78,
-        100,
-        242,
+        10,
+        189,
+        310,
         310
       ],
       "floor": 309,
-      "sha256": "94f65fd9981ba944c472e1e7b1a12edb0ebf841c0795a13c9a9f02d6f1ceb33d"
+      "sha256": "472be9dd82a716ab1a8660316ffcc7e90f46cf4f88f45f0b0932af6a4af17ffe"
     },
     "assets/schedule-layers-v2/clinichelp/effects/medicine-packets-1.png": {
       "size": [
@@ -12954,13 +12954,13 @@
       "mode": "RGBA",
       "hasTransparency": true,
       "bbox": [
-        67,
-        100,
-        252,
+        10,
+        119,
+        310,
         310
       ],
       "floor": 309,
-      "sha256": "3dab5821bfe3342301ea2cbf36ca1dd82564cc2b9899caa73337c3f7c427ece2"
+      "sha256": "ebe2ab75004468d518dd6e0ce279ab4540d3a7fc736191056002c9b61b662187"
     },
     "assets/schedule-layers-v2/clinichelp/effects/medicine-packets-2.png": {
       "size": [
@@ -12970,13 +12970,13 @@
       "mode": "RGBA",
       "hasTransparency": true,
       "bbox": [
-        66,
-        100,
-        253,
+        10,
+        186,
+        310,
         310
       ],
       "floor": 309,
-      "sha256": "ec4797ef5ef88716588fabdb8132566864d2a75e515bdd78c854fe104fc61685"
+      "sha256": "e1c9e6d6bb985e0cc10e5c8dbeb68ab84c3e129c7aedc5c5bed0ff56679e96a5"
     },
     "assets/schedule-layers-v2/clinichelp/effects/medicine-packets-3.png": {
       "size": [
@@ -12986,13 +12986,13 @@
       "mode": "RGBA",
       "hasTransparency": true,
       "bbox": [
-        93,
-        100,
-        227,
+        10,
+        185,
+        310,
         310
       ],
       "floor": 309,
-      "sha256": "3ea585ab105c04a2dbf046491e52fb396be4c8ef0b269b88b56ed211e84a3e8c"
+      "sha256": "a0ae1ab4d56113a9f934294914ced557e8e5f729c9a1794f40121fb93e06d16e"
     },
     "assets/schedule-layers-v2/clinichelp/failures/spilled-herbs-1.png": {
       "size": [
@@ -13002,13 +13002,13 @@
       "mode": "RGBA",
       "hasTransparency": true,
       "bbox": [
-        66,
-        100,
-        254,
+        10,
+        225,
+        310,
         310
       ],
       "floor": 309,
-      "sha256": "e8a47a7ffe3830a84412a1e64369502785cfe6586629cafc9043ea1914336cda"
+      "sha256": "0d71937c0c9e55237739408ad496c5eb94ef0b6fcdbf20a9bb29ef46158b687f"
     },
     "assets/schedule-layers-v2/clinichelp/failures/spilled-herbs-2.png": {
       "size": [
@@ -13018,13 +13018,13 @@
       "mode": "RGBA",
       "hasTransparency": true,
       "bbox": [
-        52,
-        100,
-        267,
+        10,
+        240,
+        310,
         310
       ],
       "floor": 309,
-      "sha256": "18d913cd2f4f380357a30eee0b60581bb849c6ca1d061115f960b67dbbcea818"
+      "sha256": "114892eb76fb0e14ee34e0e652e86a1d9bbc7d181397c22a5f18f70980b2d53b"
     },
     "assets/schedule-layers-v2/clinichelp/failures/spilled-herbs-3.png": {
       "size": [
@@ -13034,13 +13034,13 @@
       "mode": "RGBA",
       "hasTransparency": true,
       "bbox": [
-        56,
-        100,
-        264,
+        10,
+        229,
+        310,
         310
       ],
       "floor": 309,
-      "sha256": "0aa8c5859b1fe3f5fef952c4d4ecf0f7de2f7256cffab0cb17fd727054f68963"
+      "sha256": "b3ac4e4c919d9abed044d74aa6aeb55d64ddffdd7031c1cae945148ab3b7a6dc"
     },
     "assets/schedule-layers-v2/clinichelp/failures/wrong-medicine-1.png": {
       "size": [
@@ -13050,13 +13050,13 @@
       "mode": "RGBA",
       "hasTransparency": true,
       "bbox": [
-        84,
-        100,
-        235,
+        10,
+        257,
+        310,
         310
       ],
       "floor": 309,
-      "sha256": "659737db43a8331600b3b33155df7a4c526c0b9750ebd5bb6cdf85a98645684d"
+      "sha256": "76d6e56378eca61e2abaede42e40334aa7ceffe190392a0b9d28c2c97e13f05f"
     },
     "assets/schedule-layers-v2/clinichelp/failures/wrong-medicine-2.png": {
       "size": [
@@ -13066,13 +13066,13 @@
       "mode": "RGBA",
       "hasTransparency": true,
       "bbox": [
-        55,
-        100,
-        265,
+        10,
+        242,
+        310,
         310
       ],
       "floor": 309,
-      "sha256": "41c9c5c2d6469835a225f51e215f850133265f1284068da2eabd93d8d1480832"
+      "sha256": "170a9eb93a2fee275f7fd2d48467b4b118c9589398cc3808bc8aad64d65feaf9"
     },
     "assets/schedule-layers-v2/clinichelp/failures/wrong-medicine-3.png": {
       "size": [
@@ -13082,13 +13082,13 @@
       "mode": "RGBA",
       "hasTransparency": true,
       "bbox": [
-        60,
-        100,
-        259,
+        10,
+        227,
+        310,
         310
       ],
       "floor": 309,
-      "sha256": "5755307464ab4936c304650fe49773aed49c6e6b29205a708e6515a05d56de09"
+      "sha256": "1f4d99b22335b38f1fe1e64a98783bfc6494c48fd96cad08fd401a9dc81024ec"
     },
     "assets/schedule-layers-v2/copying/npc/master/idle-1.png": {
       "size": [

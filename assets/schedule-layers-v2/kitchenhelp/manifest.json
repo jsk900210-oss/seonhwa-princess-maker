@@ -10,7 +10,11 @@
   ],
   "existingBackground": "../../backgrounds/phase-scenes/kitchen.webp",
   "animation": {
-    "sequence": [1, 2, 3],
+    "sequence": [
+      1,
+      2,
+      3
+    ],
     "loopCount": 3,
     "frameDurationMs": 300
   },
@@ -25,30 +29,53 @@
   "patterns": {
     "success-a": {
       "layer": "props",
-      "frames": ["props/vegetable-prep-1.png", "props/vegetable-prep-2.png", "props/vegetable-prep-3.png"]
+      "frames": [
+        "props/vegetable-prep-1.png",
+        "props/vegetable-prep-2.png",
+        "props/vegetable-prep-3.png"
+      ]
     },
     "success-b": {
       "layer": "effects",
-      "frames": ["effects/stove-fire-steam-1.png", "effects/stove-fire-steam-2.png", "effects/stove-fire-steam-3.png"]
+      "frames": [
+        "effects/stove-fire-steam-1.png",
+        "effects/stove-fire-steam-2.png",
+        "effects/stove-fire-steam-3.png"
+      ]
     },
     "fail-a": {
       "layer": "failures",
-      "frames": ["failures/fail-a-1.png", "failures/fail-a-2.png", "failures/fail-a-3.png"]
+      "frames": [
+        "failures/fail-a-1.png",
+        "failures/fail-a-2.png",
+        "failures/fail-a-3.png"
+      ]
     },
     "fail-b": {
       "layer": "effects",
-      "frames": ["failures/fail-b-1.png", "failures/fail-b-2.png", "failures/fail-b-3.png"]
+      "frames": [
+        "failures/fail-b-1.png",
+        "failures/fail-b-2.png",
+        "failures/fail-b-3.png"
+      ]
     }
   },
   "placement": {
     "heroLeft": "42%",
     "floorBottom": "5%",
     "npcLeft": "72%",
-    "npcScale": 1.1,
+    "npcScale": 1,
     "propLeft": "52%",
     "propBottom": "3%",
     "effectLeft": "8%",
     "effectBottom": "54%"
   },
-  "layerOrder": ["existing-background", "npc", "existing-seonhwa", "props", "effects", "failures"]
+  "layerOrder": [
+    "existing-background",
+    "npc",
+    "existing-seonhwa",
+    "props",
+    "effects",
+    "failures"
+  ]
 }

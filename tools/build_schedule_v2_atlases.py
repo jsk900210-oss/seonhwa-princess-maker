@@ -10,7 +10,7 @@ CONFIGS = {
     "spellcraft": ("exec-15b5c856-bd8f-44af-bf76-2ed03900ec1c.png", [("npc/mage","idle"),("props","magic-wand"),("effects","beast-target-hit"),("failures","backfire-sparks"),("failures","scorched-target")]),
     "classics": ("exec-3dddd0a2-2c78-4d75-8832-a8db04af9ad6.png", [("npc/tutor","idle"),("props","book-stack"),("effects","open-manuscript"),("failures","scattered-books"),("failures","ink-spill")]),
     "masonry": ("exec-8e305b35-92cc-4299-b6b0-54f9e7fdc248.png", [("npc/mason","idle"),("props","chisel-block"),("effects","fitted-wall"),("failures","cracked-stone"),("failures","wobbling-stack")]),
-    "clinichelp": ("exec-5700489c-9862-429b-aa46-2f164e4a8e48.png", [("npc/physician","idle"),("props","herb-mortar"),("effects","medicine-packets"),("failures","spilled-herbs"),("failures","wrong-medicine")]),
+    "clinichelp": ("exec-022d4942-a537-414c-a38d-65133e282020.png", [("npc/physician","idle"),("props","herb-mortar"),("effects","medicine-packets"),("failures","spilled-herbs"),("failures","wrong-medicine")]),
     "innhelp": ("exec-b7971756-6f3c-4694-abb3-5dfc2f10ad26.png", [("npc/hostess","idle"),("props","meal-tray"),("effects","payment"),("failures","spilled-tray"),("failures","mixed-orders")]),
     "ferryhelp": ("exec-04f7c942-e9c6-4de3-a91f-df9d386cf008.png", [("npc/ferryman","idle"),("props","boat-cargo"),("effects","stacked-parcels"),("failures","loose-parcel"),("failures","wet-crate")]),
     "merchanthelp": ("exec-602fc731-fd59-4f4d-ad90-55e4813f2267.png", [("npc/merchant","idle"),("props","goods-display"),("effects","coin-exchange"),("failures","toppled-goods"),("failures","wrong-change")]),
@@ -56,7 +56,17 @@ for activity,(source_name,rows) in CONFIGS.items():
     sheet=remove_checker(Image.open(GENERATED/source_name)); xs=[round(i*sheet.width/3) for i in range(4)]; ys=[round(i*sheet.height/5) for i in range(6)]
     for row,(folder,stem) in enumerate(rows):
         target=ROOT/"assets"/"schedule-layers-v2"/activity/folder; target.mkdir(parents=True,exist_ok=True)
-        for column in range(3): fit(sheet.crop((xs[column],ys[row],xs[column+1],ys[row+1])),row==0).save(target/f"{stem}-{column+1}.png")
+        for column in range(3):
+            cell=sheet.crop((xs[column],ys[row],xs[column+1],ys[row+1]))
+            if activity=="clinichelp" and row>0:
+                # The generated physician extends slightly into the next atlas
+                # row. Clear that upper band so prop layers never contain body
+                # fragments; the actual row subjects sit below this boundary.
+                cell.paste((0,0,0,0),(0,0,cell.width,round(cell.height*.55)))
+                edge=round(cell.width*.04)
+                cell.paste((0,0,0,0),(0,0,edge,cell.height))
+                cell.paste((0,0,0,0),(cell.width-edge,0,cell.width,cell.height))
+            fit(cell,row==0).save(target/f"{stem}-{column+1}.png")
     print("wrote",activity)
 
 # The merchant atlas's payment row contains a person; reuse the clean accounting
