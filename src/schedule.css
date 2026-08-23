@@ -2112,7 +2112,24 @@
 .phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-tutoring.schedule-layered .schedule-scene-layer.layer-npc{width:146px!important}
 .phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-childcare.schedule-layered .stage-character.pixel-sprite>img{transform:scaleX(-1)!important;transform-origin:center bottom!important}
 .phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-reading .stage-character.pixel-sprite{left:23%!important}
-.phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-reading .stage-npc.npc-teacher{left:72%!important;right:auto!important;width:142px!important;height:142px!important}
+.phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-reading .stage-npc.npc-teacher{left:67%!important;right:auto!important;width:146px!important;height:146px!important}
+
+/* v0.63.97 — held weapons are part of Seonhwa's dedicated action frames. */
+.phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-swordsmanship.schedule-layered .schedule-scene-layer.layer-pattern.success-a,
+.phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-spellcraft.schedule-layered .schedule-scene-layer.layer-pattern.success-a{display:none!important}
+/* Legacy adult sheets occupy only ~230px of a 320px canvas; compensate their
+   display box so their visible body height matches the 146px full-body sheets. */
+.phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-accounting.schedule-layered .schedule-scene-layer.layer-npc,
+.phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-classics.schedule-layered .schedule-scene-layer.layer-npc,
+.phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-clinichelp.schedule-layered .schedule-scene-layer.layer-npc,
+.phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-farmwork.schedule-layered .schedule-scene-layer.layer-npc,
+.phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-ferryhelp.schedule-layered .schedule-scene-layer.layer-npc,
+.phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-innhelp.schedule-layered .schedule-scene-layer.layer-npc,
+.phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-masonry.schedule-layered .schedule-scene-layer.layer-npc,
+.phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-merchanthelp.schedule-layered .schedule-scene-layer.layer-npc,
+.phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-spellcraft.schedule-layered .schedule-scene-layer.layer-npc,
+.phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-swordsmanship.schedule-layered .schedule-scene-layer.layer-npc,
+.phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-tutoring.schedule-layered .schedule-scene-layer.layer-npc{width:178px!important}
 .phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-clinichelp.schedule-layered .stage-character.pixel-sprite{left:36%!important}
 .phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-clinichelp.schedule-layered .schedule-scene-layer.layer-pattern,
 .phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-clinichelp.schedule-layered .schedule-scene-layer.layer-effect{left:52%!important;bottom:2%!important;width:174px!important}

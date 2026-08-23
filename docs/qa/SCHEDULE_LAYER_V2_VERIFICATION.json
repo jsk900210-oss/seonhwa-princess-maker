@@ -9720,19 +9720,19 @@
       "activity": "spellcraft",
       "check": "existing hero preserved",
       "passed": true,
-      "detail": "assets\\characters\\seonhwa\\schedule-actions\\calligraphy-pixel-1.png"
+      "detail": "assets\\characters\\seonhwa\\schedule-actions\\spell-cast-pixel-1.png"
     },
     {
       "activity": "spellcraft",
       "check": "existing hero preserved",
       "passed": true,
-      "detail": "assets\\characters\\seonhwa\\schedule-actions\\calligraphy-pixel-2.png"
+      "detail": "assets\\characters\\seonhwa\\schedule-actions\\spell-cast-pixel-2.png"
     },
     {
       "activity": "spellcraft",
       "check": "existing hero preserved",
       "passed": true,
-      "detail": "assets\\characters\\seonhwa\\schedule-actions\\calligraphy-pixel-3.png"
+      "detail": "assets\\characters\\seonhwa\\schedule-actions\\spell-cast-pixel-3.png"
     },
     {
       "activity": "spellcraft",
@@ -10326,19 +10326,19 @@
       "activity": "swordsmanship",
       "check": "existing hero preserved",
       "passed": true,
-      "detail": "assets\\characters\\seonhwa\\schedule-actions\\manners-pixel-1.png"
+      "detail": "assets\\characters\\seonhwa\\schedule-actions\\sword-strike-pixel-1.png"
     },
     {
       "activity": "swordsmanship",
       "check": "existing hero preserved",
       "passed": true,
-      "detail": "assets\\characters\\seonhwa\\schedule-actions\\manners-pixel-2.png"
+      "detail": "assets\\characters\\seonhwa\\schedule-actions\\sword-strike-pixel-2.png"
     },
     {
       "activity": "swordsmanship",
       "check": "existing hero preserved",
       "passed": true,
-      "detail": "assets\\characters\\seonhwa\\schedule-actions\\manners-pixel-3.png"
+      "detail": "assets\\characters\\seonhwa\\schedule-actions\\sword-strike-pixel-3.png"
     },
     {
       "activity": "swordsmanship",

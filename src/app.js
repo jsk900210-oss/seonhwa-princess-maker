@@ -237,7 +237,7 @@ const vacationIllustrations=[
 function unifiedAgeFolder(){return '09';}
 function scheduleFramePath(file){return `../assets/characters/seonhwa/schedule-actions/${file}`;}
 function scheduleBasePath(file){return `../assets/characters/seonhwa/schedule-base/${file}`;}
-const scheduleAssetRevision='0.63.96-debug';
+const scheduleAssetRevision='0.63.97-debug';
 const scheduleQaParams=new URLSearchParams(location.search);
 const scheduleLayerStandaloneQa=scheduleQaParams.get('qa')==='1';
 const lockedScheduleQaMode=scheduleQaParams.has('qaSchedules')||scheduleLayerStandaloneQa;
@@ -302,8 +302,8 @@ const scheduleActionFrames={
 // 잠자기도 연령별 기준 시트에서 불러와 얼굴·체형·기본 의상이 섞이지 않게 한다.
 const canonicalActivityAliases={
   calligraphy:'calligraphy',reading:'calligraphy',study:'calligraphy',painting:'calligraphy',music:'calligraphy',classics:'calligraphy',copying:'calligraphy',tutoring:'calligraphy',
-  dance:'manners',koreanDance:'manners',magic:'calligraphy',spellcraft:'calligraphy',
-  arithmetic:'arithmetic',accounting:'arithmetic',cooking:'arithmetic',swordsmanship:'manners',martial:'manners',dungeon:'manners',manners:'manners',sit:'sit',
+  dance:'manners',koreanDance:'manners',magic:'spell-cast',spellcraft:'spell-cast',
+  arithmetic:'arithmetic',accounting:'arithmetic',cooking:'arithmetic',swordsmanship:'sword-strike',martial:'manners',dungeon:'manners',manners:'manners',sit:'sit',
   errand:'errand',farmwork:'farmwork',eating:'errand',
   herbs:'herbs',
   houseclean:'houseclean',
