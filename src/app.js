@@ -237,7 +237,7 @@ const vacationIllustrations=[
 function unifiedAgeFolder(){return '09';}
 function scheduleFramePath(file){return `../assets/characters/seonhwa/schedule-actions/${file}`;}
 function scheduleBasePath(file){return `../assets/characters/seonhwa/schedule-base/${file}`;}
-const scheduleAssetRevision='0.64.00-debug';
+const scheduleAssetRevision='0.64.01-debug';
 const scheduleQaParams=new URLSearchParams(location.search);
 const moonlightStandaloneQa=scheduleQaParams.get('qaHoliday')==='chuseok';
 const scheduleLayerStandaloneQa=scheduleQaParams.get('qa')==='1';
@@ -1174,17 +1174,18 @@ function rollHolidayRelationEvent(){
 }
 const chuseokContestRanks=['예선탈락','장려상','우수상','대상'];
 const moonlightContestants=[
-  {id:'yeonhwa',name:'연화',scores:[58,166,310,476]},
-  {id:'daon',name:'다온',scores:[66,184,338,512]},
-  {id:'sodam',name:'소담',scores:[49,152,292,448]},
-  {id:'gaeun',name:'가은',scores:[72,196,364,548]},
-  {id:'chaeryeong',name:'채령',scores:[78,212,392,584]},
-  {id:'bora',name:'보라',scores:[61,174,326,494]},
-  {id:'eunseo',name:'은서',scores:[69,190,352,530]}
+  {id:'yeonhwa',name:'연화',scores:[95,220,360,500]},
+  {id:'daon',name:'다온',scores:[115,255,410,560]},
+  {id:'sodam',name:'소담',scores:[82,205,340,470]},
+  {id:'gaeun',name:'가은',scores:[128,285,465,630]},
+  {id:'chaeryeong',name:'채령',scores:[148,325,520,700]},
+  {id:'bora',name:'보라',scores:[105,240,390,535]},
+  {id:'eunseo',name:'은서',scores:[136,300,490,660]}
 ];
 const moonlightStoryBeats=[
   '궁에서 한가위 달빛 아씨 경연의 초청장이 도착했어요.','예복과 머리 장식을 고르며 마음을 가다듬었어요.','신수가 곁에서 힘껏 응원해 주었어요.','달이 뜨기 전 궁중 경연장에 도착했어요.','여덟 참가자가 차례로 이름을 올렸어요.','서로 인사를 나누며 첫인상 심사를 받았어요.','바른 절과 말씨로 예절을 선보였어요.','달빛 장식에 어울리는 감각을 표현했어요.','천천히 무대를 걸으며 기품을 보여 주었어요.','보름달 아래에서 마지막 자세를 마쳤어요.','왕이 심사석에 나와 여덟 사람을 살폈어요.','최종 네 사람이 달빛 단상 앞에 섰어요.','예선탈락·장려상·우수상에 이어 대상이 호명되었어요.','왕이 대상 수상자에게 월백 옥패 노리개를 하사했어요.'
 ];
+const moonlightMotionNames=['invitation','prepare','guardian-cheer','palace-enter','registration','greeting','manners-bow','sense-display','dignity-walk','moon-finish','royal-judging','final-lineup','result','award'];
 function moonlightAgeIndex(){return game.age>=18?3:game.age>=16?2:game.age>=13?1:0;}
 function moonlightAssetAge(){return game.age>=18?'18':game.age>=16?'16':game.age>=13?'13':'09';}
 function moonlightSeonhwaImage(){const age=moonlightAssetAge();return `../assets/events/holidays/moonlight-pageant/seonhwa/age-${age}/seonhwa-winner-v1.png?v=${scheduleAssetRevision}`;}
@@ -1207,12 +1208,15 @@ function moonlightEntrantImage(entry){
 }
 function renderMoonlightPageant(session,dayIndex){
   const overlay=document.querySelector('#moonlightPageant');if(!overlay)return;
-  const beat=Math.min(13,dayIndex%14),showLineup=beat>=4&&beat<=11,showKing=beat>=10,showWinner=beat>=12;
-  overlay.hidden=false;overlay.className=`moonlight-pageant beat-${beat+1} reaction-${session.reaction.replaceAll(' ','-')}`;
-  const lineup=showLineup?`<div class="pageant-lineup">${session.entrants.map(entry=>`<figure class="${entry.player?'is-player':''}"><img src="${moonlightEntrantImage(entry)}" alt="${entry.name}"><figcaption>${entry.name}</figcaption></figure>`).join('')}</div>`:'';
+  const beat=Math.min(13,dayIndex%14),showHero=beat<11,showLineup=[4,5,11].includes(beat),showKing=beat>=10,showWinner=beat>=12;
+  const lineupEntries=beat===11?session.ranked.slice(0,4):session.entrants.filter(entry=>!entry.player);
+  overlay.hidden=false;overlay.className=`moonlight-pageant beat-${beat+1} motion-${moonlightMotionNames[beat]} reaction-${session.reaction.replaceAll(' ','-')} ${showLineup?'with-lineup':''}`;
+  const hero=showHero?`<img class="pageant-hero-action" src="${moonlightSeonhwaImage()}" alt="${moonlightStoryBeats[beat]}">`:'';
+  const lineup=showLineup?`<div class="pageant-lineup">${lineupEntries.map(entry=>`<figure class="${entry.player?'is-player':''}"><img src="${moonlightEntrantImage(entry)}" alt="${entry.name}"><figcaption>${entry.name}</figcaption></figure>`).join('')}</div>`:'';
+  const guardian=beat===2&&game.guardianType?`<img class="pageant-guardian-cheer" src="../assets/cinematics/guardian/humanized/poses/${game.guardianType}-happy-transparent-v3.png?v=${scheduleAssetRevision}" alt="응원하는 신수">`:'';
   const king=showKing?`<img class="pageant-king" src="../assets/events/holidays/moonlight-pageant/king/${beat>=13?'king-presenting-v1.png':beat>=12?'king-award-box-v1.png':'king-seated-v1.png'}?v=${scheduleAssetRevision}" alt="경연을 심사하고 시상하는 왕">`:'';
   const winner=showWinner?`<figure class="pageant-winner"><img src="${moonlightEntrantImage(session.winner)}" alt="대상 수상자 ${session.winner.name}"><figcaption>대상 · ${session.winner.name}</figcaption></figure>`:'';
-  overlay.innerHTML=`${lineup}${king}${winner}<p class="pageant-beat">${beat+1}/14 · ${moonlightStoryBeats[beat]}</p>`;
+  overlay.innerHTML=`${lineup}${hero}${guardian}${king}${winner}<p class="pageant-beat">${beat+1}/14 · ${moonlightStoryBeats[beat]}</p>`;
 }
 function clearMoonlightPageant(){const overlay=document.querySelector('#moonlightPageant');if(overlay){overlay.hidden=true;overlay.innerHTML='';overlay.className='moonlight-pageant';}}
 function presentHolidayRelation(){
@@ -2804,7 +2808,7 @@ function initMoonlightPageantQa(){
   const requestedQaScore=scheduleQaParams.get('qaScore');
   const qaScore=Math.min(999,Math.max(0,requestedQaScore===null?210:Number(requestedQaScore)));
   const qaDay=Math.min(14,Math.max(1,Number(scheduleQaParams.get('qaDay'))||14));
-  game.age=qaAge;game.sense=qaScore;game.manners=qaScore;game.dignity=qaScore;
+  game.age=qaAge;game.sense=qaScore;game.manners=qaScore;game.dignity=qaScore;game.guardianType=game.guardianType||'cheongryong';
   const session=evaluateChuseokFestival(),phone=document.querySelector('.phone'),stage=document.querySelector('#activityStage');
   phone.classList.add('playing','schedule-qa-playing');stage.hidden=false;stage.className='activity-stage pm3-phase-scene daily-scene action-holiday-chuseok';
   document.querySelector('#activityPlayback').hidden=true;document.querySelector('#stagePm3Hud').hidden=true;
