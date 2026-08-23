@@ -4,22 +4,22 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
   <title>선화공주 만들기 — 자산 로딩 테스트</title>
-  <link rel="stylesheet" href="style.css?v=0.63.97-debug">
-  <link rel="stylesheet" href="schedule.css?v=0.63.97-debug">
-  <link rel="stylesheet" href="schedule-pm2.css?v=0.63.97-debug">
-  <link rel="stylesheet" href="birthday.css?v=0.63.97-debug">
-  <link rel="stylesheet" href="prologue.css?v=0.63.97-debug">
+  <link rel="stylesheet" href="style.css?v=0.64.00-debug">
+  <link rel="stylesheet" href="schedule.css?v=0.64.00-debug">
+  <link rel="stylesheet" href="schedule-pm2.css?v=0.64.00-debug">
+  <link rel="stylesheet" href="birthday.css?v=0.64.00-debug">
+  <link rel="stylesheet" href="prologue.css?v=0.64.00-debug">
   <link rel="stylesheet" href="rain-v2.css">
-  <link rel="stylesheet" href="naming.css?v=0.63.97-debug">
-  <link rel="stylesheet" href="guardian.css?v=0.63.97-debug">
-  <link rel="stylesheet" href="guardian-anime.css?v=0.63.97-debug">
-  <link rel="stylesheet" href="naming-stable.css?v=0.63.97-debug">
-  <link rel="stylesheet" href="live-changes.css?v=0.63.97-debug">
-  <link rel="stylesheet" href="dungeon.css?v=0.63.97-debug">
-  <link rel="stylesheet" href="collection.css?v=0.63.97-debug">
-  <link rel="stylesheet" href="loading.css?v=0.63.97-debug">
-  <link rel="stylesheet" href="record.css?v=0.63.97-debug">
-  <link rel="stylesheet" href="item-art.css?v=0.63.97-debug">
+  <link rel="stylesheet" href="naming.css?v=0.64.00-debug">
+  <link rel="stylesheet" href="guardian.css?v=0.64.00-debug">
+  <link rel="stylesheet" href="guardian-anime.css?v=0.64.00-debug">
+  <link rel="stylesheet" href="naming-stable.css?v=0.64.00-debug">
+  <link rel="stylesheet" href="live-changes.css?v=0.64.00-debug">
+  <link rel="stylesheet" href="dungeon.css?v=0.64.00-debug">
+  <link rel="stylesheet" href="collection.css?v=0.64.00-debug">
+  <link rel="stylesheet" href="loading.css?v=0.64.00-debug">
+  <link rel="stylesheet" href="record.css?v=0.64.00-debug">
+  <link rel="stylesheet" href="item-art.css?v=0.64.00-debug">
   <style>.prologue:not(.outdoor-rain) .rain{display:none}</style>
 </head>
 <body>
@@ -48,7 +48,7 @@
       </div>
       <span class="loading-caption">이야기를 열 준비가 되었어요</span>
       <button class="studio-start-sound" id="studioStartSound" type="button">인연의 문을 열기</button>
-      <small class="loading-version" aria-label="현재 게임 버전">v0.63.97-debug</small>
+      <small class="loading-version" aria-label="현재 게임 버전">v0.64.00-debug</small>
     </section>
     <section class="prologue" id="prologue" aria-label="이야기 시작 영상" hidden>
       <audio id="prologueMusic" src="../assets/audio/music/prologue-lantern-and-dawn.mp3" preload="auto" loop></audio>
@@ -191,6 +191,7 @@
         <div class="stage-props" id="stageProps" aria-hidden="true"></div>
         <div class="stage-npc" id="stageNpc"><img id="stageNpcImage" alt="활동을 함께하는 마을 사람"></div>
         <div class="stage-character pixel-sprite" id="stageCharacter"><img id="stageCharacterImage" src="../assets/characters/seonhwa/age-09/base/seonhwa-age09-base.png" alt="일정을 수행하는 선화"></div>
+        <div class="moonlight-pageant" id="moonlightPageant" hidden aria-live="polite"></div>
       </div>
       <div class="stage-caption" id="stageCaption"></div>
       <div class="stage-pm3-hud" id="stagePm3Hud" hidden><div class="stage-hud-calendar"><div id="stageHudDate"></div><span id="stageHudMoney"></span></div><div class="stage-hud-phase"><strong id="stageHudPhase"></strong><i><em id="stageHudPhaseProgress"></em></i></div><div id="stageHudStats"></div></div>
@@ -242,6 +243,6 @@
       </div>
     </section>
   </main>
-  <script src="schedule-layer-manifests.js?v=0.63.97-debug"></script><script src="story-data.js?v=0.63.97-debug"></script><script src="app.js?v=0.63.97-debug"></script>
+  <script src="schedule-layer-manifests.js?v=0.64.00-debug"></script><script src="story-data.js?v=0.64.00-debug"></script><script src="app.js?v=0.64.00-debug"></script>
 </body>
 </html>

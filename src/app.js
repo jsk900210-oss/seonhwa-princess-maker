@@ -1,4 +1,4 @@
-﻿const bg = document.querySelector('.background');
+const bg = document.querySelector('.background');
 const stableAppHeight=window.innerHeight;document.documentElement.style.setProperty('--stable-app-height',`${stableAppHeight}px`);
 window.addEventListener('orientationchange',()=>setTimeout(()=>document.documentElement.style.setProperty('--stable-app-height',`${window.innerHeight}px`),250));
 const character = document.querySelector('#character');
@@ -237,8 +237,9 @@ const vacationIllustrations=[
 function unifiedAgeFolder(){return '09';}
 function scheduleFramePath(file){return `../assets/characters/seonhwa/schedule-actions/${file}`;}
 function scheduleBasePath(file){return `../assets/characters/seonhwa/schedule-base/${file}`;}
-const scheduleAssetRevision='0.63.97-debug';
+const scheduleAssetRevision='0.64.00-debug';
 const scheduleQaParams=new URLSearchParams(location.search);
+const moonlightStandaloneQa=scheduleQaParams.get('qaHoliday')==='chuseok';
 const scheduleLayerStandaloneQa=scheduleQaParams.get('qa')==='1';
 const lockedScheduleQaMode=scheduleQaParams.has('qaSchedules')||scheduleLayerStandaloneQa;
 let scheduleQaForcedPattern=scheduleQaParams.get('qaPattern');
@@ -944,7 +945,7 @@ const actions = [
   { id: 'vacation', category: '휴식', name: '바캉스', cost: 180, summary: '감수성 +3 · 매력 +1 · 스트레스 -35 · 추억 일러스트 획득', change: {sensitivity:3,charm:1,stress:-105}, special:'vacation' },
   { id: 'dungeon', category: '휴식', name: '비경 탐사', cost: 50, unlockAge:13, unlockAnyStats:[{strength:120},{magic:120}], mentor:'수호신수', icon:'herbs', intro:'성 밖의 숨은 길에는 보물과 위험이 함께 있단다. 준비를 갖추고 나서자.', summary:'체력 +2 · 힘 +2 · 마력 +2 · 스트레스 +5 · 보물 은전 획득 가능', change:{health:2,strength:2,magic:2,stress:5}, special:'dungeon' },
   {id:'holiday-seollal',category:'명절',name:'설날 행사 참가',cost:0,icon:'manners',holidayOnly:'설날',summary:'설날 고정 이벤트',change:{dignity:2,manners:2,stress:-10},special:'holiday'},
-  {id:'holiday-chuseok',category:'명절',name:'추석 행사 참가',cost:0,icon:'manners',holidayOnly:'추석',summary:'차례상·윷놀이·제기차기·송편만들기',change:{},special:'holiday'},
+  {id:'holiday-chuseok',category:'명절',name:'한가위 달빛 아씨 경연',cost:0,icon:'manners',holidayOnly:'추석',summary:'센스·예절·기품을 겨루는 8인 궁중 경연',change:{},special:'holiday'},
   {id:'date-doyun',category:'인연',name:'도윤과 데이트',cost:100,unlockAge:16,relationId:'doyun',mentor:'도윤',icon:'manners',summary:'호감도 +12 · 감수성 +2 · 스트레스 -8',change:{sensitivity:2,stress:-8},special:'date'},
   {id:'date-seojin',category:'인연',name:'서진과 데이트',cost:100,unlockAge:16,relationId:'seojin',mentor:'서진',icon:'reading',summary:'호감도 +12 · 지능 +2 · 스트레스 -8',change:{intelligence:2,stress:-8},special:'date'},
   {id:'date-yeonwoo',category:'인연',name:'연우와 데이트',cost:100,unlockAge:16,relationId:'yeonwoo',mentor:'연우',icon:'manners',summary:'호감도 +12 · 감수성 +2 · 스트레스 -8',change:{sensitivity:2,stress:-8},special:'date'},
@@ -1171,41 +1172,49 @@ function rollHolidayRelationEvent(){
   const lines={설날:{doyun:'도윤과 새해 인사를 했어요.',seojin:'서진과 덕담을 나눴어요.',yeonwoo:'연우와 복주머니를 바꿨어요.',taegyeom:'태겸과 떡국을 먹었어요.',hyeon:'현과 윷놀이를 했어요.'},추석:{doyun:'도윤과 달을 봤어요.',seojin:'서진과 시를 읊었어요.',yeonwoo:'연우와 달빛을 그렸어요.',taegyeom:'태겸과 송편을 나눴어요.',hyeon:'현과 등불길을 걸었어요.'}};
   return {holiday,candidate,record,line:lines[holiday][candidate.id],flag};
 }
-const chuseokContestRules=[
-  {id:'yut',name:'윷놀이',stat:'intelligence',base:58,growth:5},
-  {id:'jegi',name:'제기차기',stat:'agility',base:54,growth:5},
-  {id:'songpyeon',name:'송편만들기',stat:'sense',base:56,growth:5}
-];
 const chuseokContestRanks=['예선탈락','장려상','우수상','대상'];
-function chuseokContestYearIndex(){return Math.max(0,game.age-9);}
-function chuseokContestRank(score,threshold){
-  if(score>=threshold)return '대상';
-  if(score>=threshold-8)return '우수상';
-  if(score>=threshold-16)return '장려상';
-  return '예선탈락';
-}
+const moonlightContestants=[
+  {id:'yeonhwa',name:'연화',scores:[58,166,310,476]},
+  {id:'daon',name:'다온',scores:[66,184,338,512]},
+  {id:'sodam',name:'소담',scores:[49,152,292,448]},
+  {id:'gaeun',name:'가은',scores:[72,196,364,548]},
+  {id:'chaeryeong',name:'채령',scores:[78,212,392,584]},
+  {id:'bora',name:'보라',scores:[61,174,326,494]},
+  {id:'eunseo',name:'은서',scores:[69,190,352,530]}
+];
+const moonlightStoryBeats=[
+  '궁에서 한가위 달빛 아씨 경연의 초청장이 도착했어요.','예복과 머리 장식을 고르며 마음을 가다듬었어요.','신수가 곁에서 힘껏 응원해 주었어요.','달이 뜨기 전 궁중 경연장에 도착했어요.','여덟 참가자가 차례로 이름을 올렸어요.','서로 인사를 나누며 첫인상 심사를 받았어요.','바른 절과 말씨로 예절을 선보였어요.','달빛 장식에 어울리는 감각을 표현했어요.','천천히 무대를 걸으며 기품을 보여 주었어요.','보름달 아래에서 마지막 자세를 마쳤어요.','왕이 심사석에 나와 여덟 사람을 살폈어요.','최종 네 사람이 달빛 단상 앞에 섰어요.','예선탈락·장려상·우수상에 이어 대상이 호명되었어요.','왕이 대상 수상자에게 월백 옥패 노리개를 하사했어요.'
+];
+function moonlightAgeIndex(){return game.age>=18?3:game.age>=16?2:game.age>=13?1:0;}
+function moonlightAssetAge(){return game.age>=18?'18':game.age>=16?'16':game.age>=13?'13':'09';}
+function moonlightSeonhwaImage(){const age=moonlightAssetAge();return `../assets/events/holidays/moonlight-pageant/seonhwa/age-${age}/seonhwa-winner-v1.png?v=${scheduleAssetRevision}`;}
+function shuffled(items){return items.map(value=>({value,sort:Math.random()})).sort((a,b)=>a.sort-b.sort).map(item=>item.value);}
 function evaluateChuseokFestival(){
-  const yearIndex=chuseokContestYearIndex(),ceremonyChange={dignity:1,manners:2,stress:-3};
-  const contests=chuseokContestRules.map(rule=>{
-    const threshold=rule.base+(yearIndex*rule.growth),score=Math.round(Number(game[rule.stat])||0),rank=chuseokContestRank(score,threshold);
-    const reward={
-      대상:{[rule.stat]:4,stress:-4},
-      우수상:{[rule.stat]:3,stress:-3},
-      장려상:{[rule.stat]:2,stress:-2},
-      예선탈락:{[rule.stat]:1,stress:-1}
-    }[rank];
-    Object.entries(canonicalizeChange(reward)).forEach(([key,value])=>{ceremonyChange[key]=(ceremonyChange[key]||0)+value;});
-    return { ...rule, threshold, score, rank };
-  });
-  const overallRank=contests.reduce((best,entry)=>chuseokContestRanks.indexOf(entry.rank)>chuseokContestRanks.indexOf(best.rank)?entry:best,contests[0])?.rank||'예선탈락';
-  return {
-    opening:'차례상을 차리고 절한 뒤, 추석 3종세트를 시작했어요.',
-    contests,
-    overallRank,
-    summary:contests.map(item=>`${item.name} ${item.rank} (${item.score}/${item.threshold})`).join(' · '),
-    change:canonicalizeChange(ceremonyChange)
-  };
+  const ageIndex=moonlightAgeIndex();
+  const playerStats={sense:Number(game.sense)||0,manners:Number(game.manners)||0,dignity:Number(game.dignity)||0};
+  const playerScore=Math.round((playerStats.sense+playerStats.manners+playerStats.dignity)/3)+(Math.floor(Math.random()*9)-4);
+  const entrants=[{id:'seonhwa',name:game.name||'선화',player:true,score:playerScore},...moonlightContestants.map((entry,index)=>({...entry,index,score:entry.scores[ageIndex]}))];
+  const ranked=[...entrants].sort((a,b)=>b.score-a.score||a.name.localeCompare(b.name));
+  ranked.forEach((entry,index)=>entry.rank=index===0?'대상':index===1?'우수상':index<=3?'장려상':'예선탈락');
+  const player=ranked.find(entry=>entry.player),winner=ranked[0];
+  const average=(playerStats.sense+playerStats.manners+playerStats.dignity)/3;
+  const reaction=average>=moonlightContestants[4].scores[ageIndex]?'자신감 넘침':average>=moonlightContestants[3].scores[ageIndex]?'차분한 자신감':average>=moonlightContestants[1].scores[ageIndex]?'긴장하지만 씩씩함':average>=moonlightContestants[2].scores[ageIndex]?'자신 없음':'부끄러움';
+  return {entrants:shuffled(entrants),ranked,player,winner,overallRank:player.rank,reaction,change:canonicalizeChange({sense:2,manners:2,dignity:2,stress:-4}),opening:moonlightStoryBeats[0],summary:`한가위 달빛 아씨 경연 ${player.rank} · 종합 ${player.score}점`,prize:winner.player?'월백 옥패 노리개':null};
 }
+function moonlightEntrantImage(entry){
+  if(entry.player)return moonlightSeonhwaImage();
+  return `../assets/events/holidays/moonlight-pageant/contestants/age-${moonlightAssetAge()}/contestant-${entry.index+1}-winner-v1.png?v=${scheduleAssetRevision}`;
+}
+function renderMoonlightPageant(session,dayIndex){
+  const overlay=document.querySelector('#moonlightPageant');if(!overlay)return;
+  const beat=Math.min(13,dayIndex%14),showLineup=beat>=4&&beat<=11,showKing=beat>=10,showWinner=beat>=12;
+  overlay.hidden=false;overlay.className=`moonlight-pageant beat-${beat+1} reaction-${session.reaction.replaceAll(' ','-')}`;
+  const lineup=showLineup?`<div class="pageant-lineup">${session.entrants.map(entry=>`<figure class="${entry.player?'is-player':''}"><img src="${moonlightEntrantImage(entry)}" alt="${entry.name}"><figcaption>${entry.name}</figcaption></figure>`).join('')}</div>`:'';
+  const king=showKing?`<img class="pageant-king" src="../assets/events/holidays/moonlight-pageant/king/${beat>=13?'king-presenting-v1.png':beat>=12?'king-award-box-v1.png':'king-seated-v1.png'}?v=${scheduleAssetRevision}" alt="경연을 심사하고 시상하는 왕">`:'';
+  const winner=showWinner?`<figure class="pageant-winner"><img src="${moonlightEntrantImage(session.winner)}" alt="대상 수상자 ${session.winner.name}"><figcaption>대상 · ${session.winner.name}</figcaption></figure>`:'';
+  overlay.innerHTML=`${lineup}${king}${winner}<p class="pageant-beat">${beat+1}/14 · ${moonlightStoryBeats[beat]}</p>`;
+}
+function clearMoonlightPageant(){const overlay=document.querySelector('#moonlightPageant');if(overlay){overlay.hidden=true;overlay.innerHTML='';overlay.className='moonlight-pageant';}}
 function presentHolidayRelation(){
   if(!pendingHolidayRelation)return false;
   const event=pendingHolidayRelation;pendingHolidayRelation=null;panel.hidden=true;
@@ -2485,6 +2494,7 @@ async function playWeeklySchedule(selected) {
     {name:'작은 장신구 구매',activity:'errand',purchaseLayer:'coins',cost:110,stop:48,change:{sense:2,charm:1,stress:-7},line:'장터 좌판을 살펴보고 마음에 드는 작은 장신구를 골라 값을 치렀어요.'},
     {name:'문방 소품 구매',activity:'errand',purchaseLayer:'goods',cost:90,stop:53,change:{speech:1,sensitivity:1,stress:-8},line:'상인에게 물어본 뒤 마음에 드는 문방 소품을 하나 샀어요.'}
   ];
+  const moonlightSession=selected.some(action=>action.id==='holiday-chuseok')?evaluateChuseokFestival():null;
   document.querySelector('#homeGreeting').hidden=true;
   phone.classList.remove('greeting-active');
   phone.classList.add('playing');
@@ -2510,6 +2520,7 @@ async function playWeeklySchedule(selected) {
       selected[index]=action;
     }
     const presentation = actionPresentation[action.id]||actionPresentation.rest;
+    clearMoonlightPageant();
     const freeTimeVariant=action.id==='freeTime'?freeTimeVariants[Math.floor(Math.random()*freeTimeVariants.length)]:null;
     const currentMasteryRank=activityRank(action.id);
     stage.hidden=false;stageCharacter.hidden=false;stageProps.hidden=false;
@@ -2593,15 +2604,15 @@ async function playWeeklySchedule(selected) {
         document.querySelector('#dialogueText').textContent=metSomeone?`바캉스에서 「${prize.name}」 일러스트와 ${metSomeone.name}의 인연 추억을 얻었어요.`:`바캉스에서 「${prize.name}」 일러스트를 획득했어요.`;
       }else document.querySelector('#dialogueText').textContent='같은 여행지에서 느긋하게 휴식을 이어 갔어요.';
     }else if(action.id==='holiday-chuseok'){
-      stageMap.src=backgrounds.restRoom;
-      stageMap.alt='추석 차례상과 전통놀이';
+      stageMap.src=`../assets/events/holidays/moonlight-pageant/background/moonlight-courtyard-v1.webp?v=${scheduleAssetRevision}`;
+      stageMap.alt='보름달이 뜬 궁중 한가위 달빛 아씨 경연장';
       stage.className=`activity-stage ${phaseSceneType} map-restRoom action-holiday-chuseok`;
       stageProps.className='stage-props prop-none';
-      stageNpc.hidden=true;
-      holidayContestResult=evaluateChuseokFestival();
-      document.querySelector('#dialogueText').textContent=holidayContestResult.opening;
-      await schedulePlaybackDelay(900);
-      document.querySelector('#dialogueText').textContent=holidayContestResult.summary;
+      stageNpc.hidden=true;stageCharacter.hidden=true;
+      holidayContestResult=moonlightSession;
+      renderMoonlightPageant(holidayContestResult,index%14);
+      document.querySelector('#dialogueText').textContent=moonlightStoryBeats[index%14];
+      await schedulePlaybackDelay(1100);
     }else if(action.id==='dungeon'){
       stageCharacter.hidden=true;stageNpc.hidden=true;stageProps.hidden=true;dungeonReward=await exploreDungeon();stageCharacter.hidden=false;stageProps.hidden=false;
     }else if(action.special==='date'){
@@ -2664,7 +2675,7 @@ async function playWeeklySchedule(selected) {
     const resultSummary=orderedChangeEntries(actualChange).filter(([,value])=>value!==0).map(([key,value])=>`${statLabels[key]||key} ${value>0?'+':''}${value}`).join(' · ');
     const relationEvent=maybeScheduleRelationEncounter(action);
     const holidayResultText=holidayContestResult?`<br>${holidayContestResult.summary}`:'';
-    const resultTitle=holidayContestResult?`추석 3종세트 · ${holidayContestResult.overallRank}`:`${action.name} · ${outcomeLabels[outcome]}`;
+    const resultTitle=holidayContestResult?`한가위 달빛 아씨 경연 · ${holidayContestResult.overallRank}`:`${action.name} · ${outcomeLabels[outcome]}`;
     dayResult.innerHTML = `<b>${resultTitle}</b><span>${resultSummary||'능력치 변화 없음'}${holidayResultText}<br>${moneyText} · 현재 ${game.money.toLocaleString()}냥${dateRelation?`<br>${dateRelation.candidate.name} +12 · ${dateRelation.record.affinity} · ${dateRelation.record.relationship}`:''}${relationEvent?`<br>${relationEvent.candidate.name} — ${relationEvent.episode.title}`:''}</span>`;
     if(relationEvent){document.querySelector('#dialogueText').textContent=relationEvent.episode.line;await playRelationEncounterScene(relationEvent.candidate,relationEvent.episode.line,`호감 ${relationRecord(relationEvent.candidate.id).affinity} · ${relationRecord(relationEvent.candidate.id).relationship}`);}
     if(action.id!=='vacation'&&outcome!=='mistake'){
@@ -2687,6 +2698,7 @@ async function playWeeklySchedule(selected) {
   stageCharacter.className = 'stage-character pixel-sprite';
   stageNpc.hidden = true;
   stageProps.className = 'stage-props prop-none';
+  clearMoonlightPageant();
   document.querySelector('#activityGauges').hidden = true;
   document.querySelector('#stagePm3Hud').hidden = true;
   conditionCue.hidden = true;
@@ -2785,6 +2797,23 @@ function initScheduleLayerQa(){
   controls.querySelector('[data-qa-speed="1"]').classList.add('active');
   startScheduleLayerQaPattern(['success-a','success-b','fail-a','fail-b'].includes(scheduleQaForcedPattern)?scheduleQaForcedPattern:'success-a');
 }
+function initMoonlightPageantQa(){
+  ['studioLoading','prologue','birthdaySetup','recoveryPrompt','guardianStory','guardianChoice','guardianNaming'].forEach(id=>{const element=document.querySelector(`#${id}`);if(element)element.hidden=true;});
+  panel.hidden=true;
+  const qaAge=Math.min(18,Math.max(9,Number(scheduleQaParams.get('qaAge'))||13));
+  const requestedQaScore=scheduleQaParams.get('qaScore');
+  const qaScore=Math.min(999,Math.max(0,requestedQaScore===null?210:Number(requestedQaScore)));
+  const qaDay=Math.min(14,Math.max(1,Number(scheduleQaParams.get('qaDay'))||14));
+  game.age=qaAge;game.sense=qaScore;game.manners=qaScore;game.dignity=qaScore;
+  const session=evaluateChuseokFestival(),phone=document.querySelector('.phone'),stage=document.querySelector('#activityStage');
+  phone.classList.add('playing','schedule-qa-playing');stage.hidden=false;stage.className='activity-stage pm3-phase-scene daily-scene action-holiday-chuseok';
+  document.querySelector('#activityPlayback').hidden=true;document.querySelector('#stagePm3Hud').hidden=true;
+  document.querySelector('#stageMap').src=`../assets/events/holidays/moonlight-pageant/background/moonlight-courtyard-v1.webp?v=${scheduleAssetRevision}`;
+  document.querySelector('#stageCharacter').hidden=true;document.querySelector('#stageNpc').hidden=true;document.querySelector('#stageProps').hidden=true;
+  document.querySelector('#stageCaption').textContent=`한가위 달빛 아씨 경연 QA · ${qaDay}일차 · 선화 ${session.overallRank}`;
+  document.querySelector('#dialogueText').textContent=moonlightStoryBeats[qaDay-1];
+  renderMoonlightPageant(session,qaDay-1);
+}
 prologueScenes.forEach(scene=>{const image=new Image();image.src=scene.image;});
 guardianStoryScenes.forEach(scene=>{const image=new Image();image.decoding='async';image.src=scene.image;});
 syncBirthdaySelectors(true);
@@ -2792,7 +2821,8 @@ syncSettingsUi();
 renderHud();
 updateHomeCharacter();
 updateImageState();
-if(scheduleLayerStandaloneQa)initScheduleLayerQa();
+if(moonlightStandaloneQa)initMoonlightPageantQa();
+else if(scheduleLayerStandaloneQa)initScheduleLayerQa();
 else{
   migrateLegacySave();
   initializeRecoverySession();

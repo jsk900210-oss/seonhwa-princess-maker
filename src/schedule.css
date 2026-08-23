@@ -2135,3 +2135,23 @@
 .phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-clinichelp.schedule-layered .schedule-scene-layer.layer-effect{left:52%!important;bottom:2%!important;width:174px!important}
 .phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-clinichelp.schedule-layered .schedule-scene-layer.layer-pattern.fail-a,
 .phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-clinichelp.schedule-layered .schedule-scene-layer.layer-effect.fail-b{left:52%!important;width:164px!important}
+
+/* v0.63.98 — 한가위 달빛 아씨 경연: 8인 대열과 왕의 대상 단독 시상. */
+.activity-stage.action-holiday-chuseok .stage-map{object-position:center 58%}
+.activity-stage.action-holiday-chuseok>.stage-inner>.stage-character{display:none!important}
+.moonlight-pageant{position:absolute;inset:0;z-index:9;overflow:hidden;pointer-events:none;font-family:inherit}
+.moonlight-pageant[hidden]{display:none!important}
+.pageant-lineup{position:absolute;left:3%;right:3%;bottom:14%;display:grid;grid-template-columns:repeat(4,1fr);gap:2px 4px;align-items:end}
+.pageant-lineup figure{margin:0;display:grid;justify-items:center;min-width:0;filter:drop-shadow(0 2px 2px #180d08aa)}
+.pageant-lineup img{width:58px;height:78px;object-fit:contain;object-position:center bottom}
+.pageant-lineup figcaption{margin-top:-4px;padding:1px 4px;border-radius:8px;background:#21140dcc;color:#fff2ce;font-size:7px;line-height:1.2}
+.pageant-lineup .is-player img{width:64px;height:84px;filter:drop-shadow(0 0 5px #ffe98c)}
+.pageant-king{position:absolute;right:4%;bottom:13%;width:142px;height:190px;object-fit:contain;object-position:center bottom;filter:drop-shadow(0 5px 5px #160b08aa);animation:pageant-king-enter .75s ease-out both}
+.pageant-winner{position:absolute;left:6%;bottom:12%;width:54%;height:72%;margin:0;display:grid;justify-items:center;align-content:end;animation:pageant-winner-enter .75s ease-out both}
+.pageant-winner img{width:100%;height:100%;object-fit:contain;object-position:center bottom;filter:drop-shadow(0 5px 7px #160b08bb)}
+.pageant-winner figcaption{position:absolute;bottom:0;padding:4px 12px;border:1px solid #e5c476;border-radius:14px;background:#301b10e8;color:#ffeebd;font-size:10px;font-weight:900}
+.pageant-beat{position:absolute;left:4%;right:4%;bottom:2%;margin:0;padding:5px 8px;border:1px solid #d8b56c;border-radius:9px;background:#24140ddd;color:#fff3d3;font-size:9px;line-height:1.35;text-align:center;box-shadow:0 2px 7px #0008}
+.moonlight-pageant.beat-13 .pageant-lineup,.moonlight-pageant.beat-14 .pageant-lineup{display:none}
+@keyframes pageant-king-enter{from{opacity:0;transform:translateX(35px)}to{opacity:1;transform:translateX(0)}}
+@keyframes pageant-winner-enter{from{opacity:0;transform:translateX(-30px) scale(.9)}to{opacity:1;transform:translateX(0) scale(1)}}
+@media(max-width:380px){.pageant-lineup img{width:52px;height:70px}.pageant-lineup .is-player img{width:57px;height:76px}.pageant-king{width:128px;height:174px}.pageant-winner{width:51%}}

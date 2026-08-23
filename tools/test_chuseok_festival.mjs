@@ -3,15 +3,20 @@ import assert from 'node:assert/strict';
 
 const app=fs.readFileSync(new URL('../src/app.js',import.meta.url),'utf8');
 const css=fs.readFileSync(new URL('../src/schedule.css',import.meta.url),'utf8');
+const html=fs.readFileSync(new URL('../src/index.html',import.meta.url),'utf8');
 
-assert.match(app,/const chuseokContestRules=\[/,'추석 3종세트 규칙이 필요합니다.');
-assert.match(app,/윷놀이'.*base:58.*growth:5/s,'윷놀이 기준과 연간 상승치가 필요합니다.');
-assert.match(app,/제기차기'.*base:54.*growth:5/s,'제기차기 기준과 연간 상승치가 필요합니다.');
-assert.match(app,/송편만들기'.*base:56.*growth:5/s,'송편만들기 기준과 연간 상승치가 필요합니다.');
-assert.match(app,/function evaluateChuseokFestival\(\)/,'추석 3종세트 결과 계산 함수가 필요합니다.');
-assert.match(app,/예선탈락[\s\S]*장려상[\s\S]*우수상[\s\S]*대상/,'추석 결과 등급이 4단계로 있어야 합니다.');
-assert.match(app,/holidayContestResult\?`<br>\$\{holidayContestResult\.summary\}`:''/,'추석 결과가 하단 리포트에 노출되어야 합니다.');
-assert.match(css,/top:35%!important/,'상태창에 가려지지 않도록 경고 문구 위치를 내려야 합니다.');
-assert.match(css,/max-width:min\(72vw,240px\)!important/,'짧은 경고 문구는 충분히 넓고 중앙에 보여야 합니다.');
+assert.match(app,/const moonlightContestants=\[/,'고정 더미 참가자 명세가 필요합니다.');
+const contestantBlock=app.match(/const moonlightContestants=\[([\s\S]*?)\n\];/)?.[1]||'';
+assert.equal((contestantBlock.match(/scores:\[/g)||[]).length,7,'더미 참가자는 정확히 7명이어야 합니다.');
+assert.match(app,/playerStats\.sense\+playerStats\.manners\+playerStats\.dignity/,'센스·예절·기품을 모두 평가해야 합니다.');
+assert.match(app,/index===0\?'대상':index===1\?'우수상':index<=3\?'장려상':'예선탈락'/,'결과는 4단계여야 합니다.');
+assert.match(app,/prize:winner\.player\?'월백 옥패 노리개':null/,'선화는 대상일 때만 상품을 얻어야 합니다.');
+assert.match(app,/const moonlightStoryBeats=\[/,'14일 이야기 명세가 필요합니다.');
+const beats=app.match(/const moonlightStoryBeats=\[([\s\S]*?)\n\];/)?.[1]||'';
+assert.equal((beats.match(/'[^']+'/g)||[]).length,14,'경연은 정확히 14개 이야기 비트여야 합니다.');
+assert.match(app,/king-presenting-v1\.png/,'왕의 대상 시상 포즈가 필요합니다.');
+assert.match(html,/id="moonlightPageant"/,'경연 전용 레이어 컨테이너가 필요합니다.');
+assert.match(css,/\.pageant-winner/,'우승자 확대 레이어 규격이 필요합니다.');
+assert.match(app,/qaHoliday'\)==='chuseok'/,'경연 즉시 검수 모드가 필요합니다.');
 
-console.log('PASS: 추석 3종세트 판정과 경고문 위치');
+console.log('PASS: 한가위 달빛 아씨 경연 8인·14일·대상 단독 상품 규정');
