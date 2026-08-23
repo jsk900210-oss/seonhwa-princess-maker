@@ -2116,6 +2116,7 @@
 .phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-woodwork.schedule-layered:has(.schedule-scene-layer.success-b) .stage-character.pixel-sprite{left:40%!important;width:210px!important;height:174px!important;bottom:3%!important}
 .phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-woodwork.schedule-layered:has(.schedule-scene-layer.success-a) .stage-character.pixel-sprite>img,
 .phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-woodwork.schedule-layered:has(.schedule-scene-layer.success-b) .stage-character.pixel-sprite>img{transform:none!important;object-fit:contain!important;object-position:center bottom!important}
+.phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-woodwork.schedule-layered .schedule-scene-layer.layer-npc{width:172px!important;bottom:var(--layer-floor)!important}
 .phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-reading .stage-character.pixel-sprite{left:23%!important}
 .phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-reading .stage-npc.npc-teacher{left:67%!important;right:auto!important;width:146px!important;height:146px!important}
 
