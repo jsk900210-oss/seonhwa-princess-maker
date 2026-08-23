@@ -34,7 +34,9 @@ assert.ok(css.includes('@keyframes schedule-icon-motion'),'세부 일정 얼굴 
 assert.ok(app.includes('animateScheduleAssignment'),'일정 선택 카드는 중앙 편성칸으로 이동하는 연출이 필요합니다.');
 assert.ok(css.includes('@keyframes phase-slot-shift'),'기존 일정은 새 일정 편성 시 왼쪽으로 밀려야 합니다.');
 assert.ok(app.includes('제${phase.index+item.index}페이즈'),'편성된 각 일정에 페이즈 번호가 표시되어야 합니다.');
-assert.ok(app.includes('function phaseDailyChange(change)'),'14일 페이즈용 스트레스 변화량 보정이 필요합니다.');
+assert.ok(app.includes('function phaseDailyChange(change,phaseDay=0)'),'14일 페이즈용 능력치·스트레스 변화량 보정이 필요합니다.');
+assert.ok(app.includes('const totalGrowthPhases=261'),'전체 성장 기간 261페이즈 기준이 필요합니다.');
+assert.ok(app.includes('const phaseStatTickDays=new Set([0,5,10])'),'일반 능력치는 14일 중 세 번만 반영해야 합니다.');
 assert.ok(app.includes('Math.ceil(stress/3)'),'일일 스트레스 증가는 기존 수치의 약 1/3로 낮춰야 합니다.');
 assert.ok(app.includes('playbackDailyStats'),'각 날짜마다 능력치 전후 수치를 표시해야 합니다.');
 assert.ok(css.includes('.playback-daily-stats'),'일별 능력치 변화 표시 UI가 필요합니다.');

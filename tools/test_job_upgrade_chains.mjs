@@ -29,8 +29,11 @@ assert.match(app,/id: 'innhelp'.*unlockStats:\{speech:100,health:90\}/s);
 assert.match(app,/id:'ferryhelp'.*unlockStats:\{health:150,speech:100,agility:100\}/s);
 assert.match(app,/id: 'accounting'.*unlockStats:\{sense:300,intelligence:250\}/s);
 assert.match(app,/id: 'sewing'.*unlockStats:\{sense:140,sensitivity:100\}/s);
-assert.ok(app.includes('function jobUpgradeHint(action)'),'다음 단계와 해금 조건을 계산해야 합니다.');
-assert.ok(app.includes('class="job-upgrade-hint"'),'아르바이트 카드에 다음 단계 조건을 표시해야 합니다.');
-assert.ok(css.includes('.job-upgrade-category .compact-schedule-grid{grid-template-columns:repeat(2'),'모바일에서 해금 조건을 읽을 수 있도록 두 열로 배치해야 합니다.');
+assert.match(app,/id:'kitchenhelp'.*unlockStats:\{sense:80\}/s);
+assert.match(app,/id:'loomwork'.*unlockStats:\{sense:120\}/s);
+assert.match(app,/id: 'copying'.*unlockStats:\{intelligence:160\}/s);
+assert.ok(!app.includes('function jobUpgradeHint(action)'),'잠긴 다음 단계 안내 함수는 화면에서 제거해야 합니다.');
+assert.ok(!app.includes('class="job-upgrade-hint"'),'아르바이트 카드에 승급 조건을 표시하지 않아야 합니다.');
+assert.ok(css.includes('.job-upgrade-category .compact-schedule-grid{grid-template-columns:repeat(3'),'아르바이트 카드는 교육과 같은 3열 소형 배치여야 합니다.');
 
 console.log('PASS: 아르바이트 7계보·스탯 해금·숙련도 승계');
