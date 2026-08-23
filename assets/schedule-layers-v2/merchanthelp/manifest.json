@@ -1,0 +1,81 @@
+{
+  "version": "2.0.0",
+  "activityId": "merchanthelp",
+  "nameKo": "상점 판매 보조",
+  "status": "review",
+  "existingHeroFrames": [
+    "../../characters/seonhwa/schedule-actions/merchanthelp-pixel-1.png",
+    "../../characters/seonhwa/schedule-actions/merchanthelp-pixel-2.png",
+    "../../characters/seonhwa/schedule-actions/merchanthelp-pixel-3.png"
+  ],
+  "existingBackground": "../../backgrounds/phase-scenes/merchant.webp",
+  "animation": {
+    "sequence": [
+      1,
+      2,
+      3
+    ],
+    "loopCount": 3,
+    "frameDurationMs": 300
+  },
+  "npc": {
+    "id": "merchant",
+    "frames": [
+      "npc/merchant/idle-1.png",
+      "npc/merchant/idle-2.png",
+      "npc/merchant/idle-3.png"
+    ]
+  },
+  "patterns": {
+    "success-a": {
+      "layer": "props",
+      "frames": [
+        "props/goods-display-1.png",
+        "props/goods-display-2.png",
+        "props/goods-display-3.png"
+      ]
+    },
+    "success-b": {
+      "layer": "effects",
+      "frames": [
+        "effects/coin-exchange-1.png",
+        "effects/coin-exchange-2.png",
+        "effects/coin-exchange-3.png"
+      ]
+    },
+    "fail-a": {
+      "layer": "failures",
+      "frames": [
+        "failures/toppled-goods-1.png",
+        "failures/toppled-goods-2.png",
+        "failures/toppled-goods-3.png"
+      ]
+    },
+    "fail-b": {
+      "layer": "failures",
+      "frames": [
+        "failures/wrong-change-1.png",
+        "failures/wrong-change-2.png",
+        "failures/wrong-change-3.png"
+      ]
+    }
+  },
+  "placement": {
+    "heroLeft": "30%",
+    "floorBottom": "4%",
+    "npcLeft": "77%",
+    "npcScale": 0.82,
+    "propLeft": "51%",
+    "propBottom": "3%",
+    "effectLeft": "53%",
+    "effectBottom": "3%"
+  },
+  "layerOrder": [
+    "existing-background",
+    "npc",
+    "existing-seonhwa",
+    "props",
+    "effects",
+    "failures"
+  ]
+}

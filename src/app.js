@@ -237,14 +237,14 @@ const vacationIllustrations=[
 function unifiedAgeFolder(){return '09';}
 function scheduleFramePath(file){return `../assets/characters/seonhwa/schedule-actions/${file}`;}
 function scheduleBasePath(file){return `../assets/characters/seonhwa/schedule-base/${file}`;}
-const scheduleAssetRevision='0.63.94-debug';
+const scheduleAssetRevision='0.63.95-debug';
 const scheduleQaParams=new URLSearchParams(location.search);
 const scheduleLayerStandaloneQa=scheduleQaParams.get('qa')==='1';
 const lockedScheduleQaMode=scheduleQaParams.has('qaSchedules')||scheduleLayerStandaloneQa;
 let scheduleQaForcedPattern=scheduleQaParams.get('qaPattern');
 let scheduleLayerManifestPromise;
 const scheduleLayerIds=new Set(['painting','music','dance','swordsmanship','spellcraft','classics','farmwork','childcare','kitchenhelp','woodwork','loomwork','masonry','clinichelp','innhelp','sewing','copying','ferryhelp','merchanthelp','accounting','tutoring']);
-const scheduleLayerV2PilotIds=new Set(['kitchenhelp','childcare','painting','music','dance','sewing','copying','woodwork']);
+const scheduleLayerV2PilotIds=new Set(['kitchenhelp','childcare','painting','music','dance','sewing','copying','woodwork','loomwork','farmwork','swordsmanship','spellcraft','classics','masonry','clinichelp','innhelp','ferryhelp','merchanthelp','accounting','tutoring']);
 function scheduleLayerManifest(){
   scheduleLayerManifestPromise??=fetch(`../manifest.json?v=${scheduleAssetRevision}`,{cache:'no-store'}).then(response=>{
     if(!response.ok)throw new Error(`schedule manifest HTTP ${response.status}`);
@@ -254,6 +254,8 @@ function scheduleLayerManifest(){
 }
 async function scheduleLayerV2Spec(actionId){
   if(!scheduleLayerV2PilotIds.has(actionId))return null;
+  const bundledSpec=window.SCHEDULE_LAYER_V2_SPECS?.[actionId];
+  if(bundledSpec)return bundledSpec;
   const response=await fetch(`../assets/schedule-layers-v2/${actionId}/manifest.json?v=${scheduleAssetRevision}`,{cache:'no-store'});
   if(!response.ok)throw new Error(`schedule layer v2 manifest ${response.status}: ${actionId}`);
   return response.json();
@@ -767,6 +769,7 @@ async function playScheduleLayerScene(actionId,seonImage,rank,outcome,dayIndex){
     for(let loop=0;loop<3;loop+=1){
       for(let frame=0;frame<3;frame+=1){
         if(actionId==='farmwork'&&patternKey==='fail-b'){
+          npc.hidden=true;
           stage.style.setProperty('--layer-npc-left','12%');
           stage.style.setProperty('--layer-hero-left',`${30+frame*12}%`);
           stage.style.setProperty('--layer-prop-left',`${58+frame*10}%`);
@@ -2478,9 +2481,9 @@ async function playWeeklySchedule(selected) {
   const playbackPhase=phaseInfo();
   const dayNames = ['월요일','화요일','수요일','목요일','금요일','토요일','일요일'];
   const freeTimeVariants=[
-    {name:'주막 간식',activity:'eating',cost:70,stop:67,change:{health:1,sensitivity:1,stress:-9},line:'저잣거리를 둘러보다 주막에 앉아 따뜻한 간식을 먹었어요.'},
-    {name:'작은 장신구',activity:'errand',cost:110,stop:43,change:{sense:2,charm:1,stress:-7},line:'장터 좌판을 살펴보고 마음에 드는 작은 장신구 하나를 골랐어요.'},
-    {name:'노점 먹거리',activity:'eating',cost:90,stop:56,change:{speech:1,sensitivity:1,stress:-8},line:'노점 주인과 이야기를 나눈 뒤 갓 만든 먹거리를 맛보았어요.'}
+    {name:'비단 리본 구매',activity:'errand',purchaseLayer:'goods',cost:70,stop:43,change:{sense:1,charm:1,stress:-9},line:'저잣거리 매대에서 옷에 어울리는 비단 리본을 골라 샀어요.'},
+    {name:'작은 장신구 구매',activity:'errand',purchaseLayer:'coins',cost:110,stop:48,change:{sense:2,charm:1,stress:-7},line:'장터 좌판을 살펴보고 마음에 드는 작은 장신구를 골라 값을 치렀어요.'},
+    {name:'문방 소품 구매',activity:'errand',purchaseLayer:'goods',cost:90,stop:53,change:{speech:1,sensitivity:1,stress:-8},line:'상인에게 물어본 뒤 마음에 드는 문방 소품을 하나 샀어요.'}
   ];
   document.querySelector('#homeGreeting').hidden=true;
   phone.classList.remove('greeting-active');
@@ -2567,14 +2570,18 @@ async function playWeeklySchedule(selected) {
     }else if(action.id==='freeTime'){
       stageMap.src=backgrounds.market;stageMap.alt='자유행동으로 둘러보는 가로형 저잣거리';
       stage.className=`activity-stage ${phaseSceneType} map-market action-freeTime free-time-market`;
-      stageProps.className='stage-props prop-stall';stageNpc.hidden=true;
+      stageProps.className=`stage-props prop-stall purchase-${freeTimeVariant?.purchaseLayer||'goods'}`;
+      stageNpc.hidden=false;stageNpc.className='stage-npc npc-purchase-merchant';
+      stageNpcImage.src='../assets/schedule-layers/merchanthelp/npc/merchanthelp-1.png';
       stageCharacter.style.left='12%';
       try{
         for(const position of [18,27,37,48,freeTimeVariant?.stop??56]){stageCharacter.style.left=`${position}%`;await animateActivitySprite(stageCharacterImage,'motion-walk',null,stageNpcImage,null,dailyOutfit,currentMasteryRank);}
+        stageCharacter.classList.add('is-purchasing');
         await animateActivitySprite(stageCharacterImage,presentation.motion,freeTimeVariant?.activity||'errand',stageNpcImage,null,dailyOutfit,currentMasteryRank);
       }finally{
+        stageCharacter.classList.remove('is-purchasing');
         stageCharacter.style.removeProperty('left');
-        stageCharacter.hidden=false;stageProps.hidden=false;
+        stageCharacter.hidden=false;stageProps.hidden=false;stageNpc.hidden=true;
       }
     }else if(action.id==='vacation'){
       closeMarketUiForTransition();

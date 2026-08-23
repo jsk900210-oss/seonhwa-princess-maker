@@ -2006,7 +2006,7 @@
 .schedule-scene-layer.layer-pattern.dedicated-failure{z-index:6}
 .schedule-layer-qa{position:absolute;z-index:40;left:3%;right:3%;bottom:1.5%;display:grid;gap:4px;padding:7px;border:1px solid #e1c583;border-radius:9px;background:#21150ee8;color:#fff4d6;font-size:9px}.schedule-layer-qa>strong{font-size:10px}.schedule-layer-qa>div{display:flex;gap:3px}.schedule-layer-qa button{min-width:0;padding:4px 6px;border:1px solid #9e7b4b;border-radius:5px;background:#f2e4c6;color:#50351e;font-size:8px}.schedule-layer-qa button.active{background:#7a4f29;color:#fff}.schedule-layer-qa small{opacity:.8}.phone.schedule-qa-playing>.dialogue,.phone.schedule-qa-playing>nav,.phone.schedule-qa-playing>.home-header,.phone.schedule-qa-playing>#settingsButton{display:none!important}
 .phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-kitchenhelp.schedule-layered .schedule-scene-layer.layer-npc{width:146px!important}
-.phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-kitchenhelp.schedule-layered .schedule-scene-layer.layer-pattern{width:82px!important;filter:saturate(.82) brightness(.96) drop-shadow(0 2px 2px #0003)}
+.phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-kitchenhelp.schedule-layered .schedule-scene-layer.layer-pattern{width:104px!important;filter:saturate(.82) brightness(.96) drop-shadow(0 2px 2px #0003)}
 .phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-kitchenhelp.schedule-layered .schedule-scene-layer.layer-effect{width:74px!important}
 .phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-kitchenhelp.schedule-layered .schedule-scene-layer.layer-pattern.fail-a{width:76px!important}
 .phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-kitchenhelp.schedule-layered .schedule-scene-layer.layer-effect.fail-b{width:92px!important}
@@ -2015,10 +2015,11 @@
 /* v0.63.89: 아이돌보기에서 선화가 오른쪽의 아이를 바라보고, 실패 식은땀은 얼굴 옆에 표시한다. */
 .phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-childcare.schedule-layered .stage-character.pixel-sprite>img{transform:scaleX(-1)!important}
 .phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-childcare.schedule-layered .schedule-scene-layer.layer-pattern.fail-a{left:44%!important;bottom:31%!important;width:50px!important}
+.phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-childcare.schedule-layered .schedule-scene-layer.layer-pattern.fail-b{left:70%!important;bottom:18%!important;width:44px!important}
 /* v0.63.91: 목공소 v2 레이어 — 선화가 작업대를 향하고 목수·작업대의 성인 비율을 유지한다. */
 .phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-woodwork.schedule-layered .stage-character.pixel-sprite>img{transform:scaleX(-1)!important}
 .phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-woodwork.schedule-layered .schedule-scene-layer.layer-npc{width:150px!important}
-.phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-woodwork.schedule-layered .schedule-scene-layer.layer-pattern,.phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-woodwork.schedule-layered .schedule-scene-layer.layer-effect{width:156px!important}
+.phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-woodwork.schedule-layered .schedule-scene-layer.layer-pattern,.phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-woodwork.schedule-layered .schedule-scene-layer.layer-effect{width:126px!important}
 .phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-painting.schedule-layered .schedule-scene-layer.layer-npc{bottom:var(--layer-floor)!important;width:132px!important}
 .phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-painting.schedule-layered .schedule-scene-layer.layer-pattern{left:44%!important;bottom:12%!important;width:38px!important}
 .phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-painting.schedule-layered .schedule-scene-layer.layer-effect{width:62px!important}
@@ -2080,3 +2081,16 @@
 /* 교육·아르바이트 이름은 같은 크기로 표시하고 긴 이름만 두 줄로 접는다. */
 .compact-category .compact-action b{display:-webkit-box!important;max-width:100%;overflow:hidden;-webkit-box-orient:vertical;-webkit-line-clamp:2;white-space:normal!important;text-overflow:clip;font-size:11px!important;line-height:1.15!important;word-break:keep-all}
 .compact-category .compact-action .schedule-action-money{font-size:9px!important;line-height:1.1!important}
+
+/* 자유여행은 식사 대신 매대에서 물건을 고르고 값을 치르는 장면으로 표시한다. */
+.activity-stage.free-time-market .stage-character.is-purchasing{z-index:5;animation:free-time-purchase .72s ease-in-out 3}
+.activity-stage.free-time-market .stage-props.prop-stall{display:block;left:34%;bottom:4%;width:168px;height:168px;background-position:center bottom;background-repeat:no-repeat;background-size:contain;opacity:1;z-index:3;image-rendering:pixelated;animation:free-time-goods 1.08s steps(1) infinite}
+.activity-stage.free-time-market .stage-props.prop-stall.purchase-goods{--purchase-1:url('../assets/schedule-layers/merchanthelp/success-a/goods-display-1.png');--purchase-2:url('../assets/schedule-layers/merchanthelp/success-a/goods-display-2.png');--purchase-3:url('../assets/schedule-layers/merchanthelp/success-a/goods-display-3.png')}
+.activity-stage.free-time-market .stage-props.prop-stall.purchase-coins{--purchase-1:url('../assets/schedule-layers/merchanthelp/success-b/coin-exchange-1.png');--purchase-2:url('../assets/schedule-layers/merchanthelp/success-b/coin-exchange-2.png');--purchase-3:url('../assets/schedule-layers/merchanthelp/success-b/coin-exchange-3.png')}
+.activity-stage.free-time-market .stage-npc.npc-purchase-merchant{display:block;left:73%;bottom:5%;width:126px;height:126px;z-index:4}
+.activity-stage.free-time-market .stage-npc.npc-purchase-merchant img{width:100%;height:100%;object-fit:contain;object-position:center bottom;image-rendering:pixelated}
+@keyframes free-time-purchase{0%,100%{transform:translateX(0) rotate(0)}45%{transform:translateX(8px) rotate(2deg)}70%{transform:translateX(5px) rotate(-1deg)}}
+@keyframes free-time-goods{0%{background-image:var(--purchase-1)}34%{background-image:var(--purchase-2)}67%{background-image:var(--purchase-3)}}
+
+.phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-loomwork.schedule-layered .schedule-scene-layer.layer-npc{width:190px!important}
+.phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-loomwork.schedule-layered .schedule-scene-layer.layer-pattern,.phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-loomwork.schedule-layered .schedule-scene-layer.layer-effect{width:150px!important}

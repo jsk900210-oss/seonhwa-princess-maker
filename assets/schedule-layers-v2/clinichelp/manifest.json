@@ -1,0 +1,81 @@
+{
+  "version": "2.0.0",
+  "activityId": "clinichelp",
+  "nameKo": "의원 보조",
+  "status": "review",
+  "existingHeroFrames": [
+    "../../characters/seonhwa/schedule-actions/clinichelp-pixel-1.png",
+    "../../characters/seonhwa/schedule-actions/clinichelp-pixel-2.png",
+    "../../characters/seonhwa/schedule-actions/clinichelp-pixel-3.png"
+  ],
+  "existingBackground": "../../backgrounds/phase-scenes/clinic.webp",
+  "animation": {
+    "sequence": [
+      1,
+      2,
+      3
+    ],
+    "loopCount": 3,
+    "frameDurationMs": 300
+  },
+  "npc": {
+    "id": "physician",
+    "frames": [
+      "npc/physician/idle-1.png",
+      "npc/physician/idle-2.png",
+      "npc/physician/idle-3.png"
+    ]
+  },
+  "patterns": {
+    "success-a": {
+      "layer": "props",
+      "frames": [
+        "props/herb-mortar-1.png",
+        "props/herb-mortar-2.png",
+        "props/herb-mortar-3.png"
+      ]
+    },
+    "success-b": {
+      "layer": "effects",
+      "frames": [
+        "effects/medicine-packets-1.png",
+        "effects/medicine-packets-2.png",
+        "effects/medicine-packets-3.png"
+      ]
+    },
+    "fail-a": {
+      "layer": "failures",
+      "frames": [
+        "failures/spilled-herbs-1.png",
+        "failures/spilled-herbs-2.png",
+        "failures/spilled-herbs-3.png"
+      ]
+    },
+    "fail-b": {
+      "layer": "failures",
+      "frames": [
+        "failures/wrong-medicine-1.png",
+        "failures/wrong-medicine-2.png",
+        "failures/wrong-medicine-3.png"
+      ]
+    }
+  },
+  "placement": {
+    "heroLeft": "30%",
+    "floorBottom": "4%",
+    "npcLeft": "77%",
+    "npcScale": 0.82,
+    "propLeft": "51%",
+    "propBottom": "3%",
+    "effectLeft": "53%",
+    "effectBottom": "3%"
+  },
+  "layerOrder": [
+    "existing-background",
+    "npc",
+    "existing-seonhwa",
+    "props",
+    "effects",
+    "failures"
+  ]
+}

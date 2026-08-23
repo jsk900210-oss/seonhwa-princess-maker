@@ -1,0 +1,81 @@
+{
+  "version": "2.0.0",
+  "activityId": "classics",
+  "nameKo": "고전 수업",
+  "status": "review",
+  "existingHeroFrames": [
+    "../../characters/seonhwa/schedule-actions/calligraphy-pixel-1.png",
+    "../../characters/seonhwa/schedule-actions/calligraphy-pixel-2.png",
+    "../../characters/seonhwa/schedule-actions/calligraphy-pixel-3.png"
+  ],
+  "existingBackground": "../../backgrounds/phase-scenes/study.webp",
+  "animation": {
+    "sequence": [
+      1,
+      2,
+      3
+    ],
+    "loopCount": 3,
+    "frameDurationMs": 300
+  },
+  "npc": {
+    "id": "tutor",
+    "frames": [
+      "npc/tutor/idle-1.png",
+      "npc/tutor/idle-2.png",
+      "npc/tutor/idle-3.png"
+    ]
+  },
+  "patterns": {
+    "success-a": {
+      "layer": "props",
+      "frames": [
+        "props/book-stack-1.png",
+        "props/book-stack-2.png",
+        "props/book-stack-3.png"
+      ]
+    },
+    "success-b": {
+      "layer": "effects",
+      "frames": [
+        "effects/open-manuscript-1.png",
+        "effects/open-manuscript-2.png",
+        "effects/open-manuscript-3.png"
+      ]
+    },
+    "fail-a": {
+      "layer": "failures",
+      "frames": [
+        "failures/scattered-books-1.png",
+        "failures/scattered-books-2.png",
+        "failures/scattered-books-3.png"
+      ]
+    },
+    "fail-b": {
+      "layer": "failures",
+      "frames": [
+        "failures/ink-spill-1.png",
+        "failures/ink-spill-2.png",
+        "failures/ink-spill-3.png"
+      ]
+    }
+  },
+  "placement": {
+    "heroLeft": "30%",
+    "floorBottom": "4%",
+    "npcLeft": "77%",
+    "npcScale": 0.82,
+    "propLeft": "51%",
+    "propBottom": "3%",
+    "effectLeft": "53%",
+    "effectBottom": "3%"
+  },
+  "layerOrder": [
+    "existing-background",
+    "npc",
+    "existing-seonhwa",
+    "props",
+    "effects",
+    "failures"
+  ]
+}

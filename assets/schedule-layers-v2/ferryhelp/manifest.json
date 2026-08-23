@@ -1,0 +1,81 @@
+{
+  "version": "2.0.0",
+  "activityId": "ferryhelp",
+  "nameKo": "나루터 운송 보조",
+  "status": "review",
+  "existingHeroFrames": [
+    "../../characters/seonhwa/schedule-actions/ferryhelp-pixel-1.png",
+    "../../characters/seonhwa/schedule-actions/ferryhelp-pixel-2.png",
+    "../../characters/seonhwa/schedule-actions/ferryhelp-pixel-3.png"
+  ],
+  "existingBackground": "../../backgrounds/phase-scenes/ferry.webp",
+  "animation": {
+    "sequence": [
+      1,
+      2,
+      3
+    ],
+    "loopCount": 3,
+    "frameDurationMs": 300
+  },
+  "npc": {
+    "id": "ferryman",
+    "frames": [
+      "npc/ferryman/idle-1.png",
+      "npc/ferryman/idle-2.png",
+      "npc/ferryman/idle-3.png"
+    ]
+  },
+  "patterns": {
+    "success-a": {
+      "layer": "props",
+      "frames": [
+        "props/boat-cargo-1.png",
+        "props/boat-cargo-2.png",
+        "props/boat-cargo-3.png"
+      ]
+    },
+    "success-b": {
+      "layer": "effects",
+      "frames": [
+        "effects/stacked-parcels-1.png",
+        "effects/stacked-parcels-2.png",
+        "effects/stacked-parcels-3.png"
+      ]
+    },
+    "fail-a": {
+      "layer": "failures",
+      "frames": [
+        "failures/loose-parcel-1.png",
+        "failures/loose-parcel-2.png",
+        "failures/loose-parcel-3.png"
+      ]
+    },
+    "fail-b": {
+      "layer": "failures",
+      "frames": [
+        "failures/wet-crate-1.png",
+        "failures/wet-crate-2.png",
+        "failures/wet-crate-3.png"
+      ]
+    }
+  },
+  "placement": {
+    "heroLeft": "30%",
+    "floorBottom": "4%",
+    "npcLeft": "77%",
+    "npcScale": 0.82,
+    "propLeft": "51%",
+    "propBottom": "3%",
+    "effectLeft": "53%",
+    "effectBottom": "3%"
+  },
+  "layerOrder": [
+    "existing-background",
+    "npc",
+    "existing-seonhwa",
+    "props",
+    "effects",
+    "failures"
+  ]
+}

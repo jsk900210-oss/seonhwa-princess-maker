@@ -1,0 +1,81 @@
+{
+  "version": "2.0.0",
+  "activityId": "loomwork",
+  "nameKo": "베틀 돕기",
+  "status": "review",
+  "existingHeroFrames": [
+    "../../characters/seonhwa/schedule-actions/loomwork-pixel-1.png",
+    "../../characters/seonhwa/schedule-actions/loomwork-pixel-2.png",
+    "../../characters/seonhwa/schedule-actions/loomwork-pixel-3.png"
+  ],
+  "existingBackground": "../../backgrounds/phase-scenes/loom.webp",
+  "animation": {
+    "sequence": [
+      1,
+      2,
+      3
+    ],
+    "loopCount": 3,
+    "frameDurationMs": 300
+  },
+  "npc": {
+    "id": "loom-artisan",
+    "frames": [
+      "npc/artisan/idle-1.png",
+      "npc/artisan/idle-2.png",
+      "npc/artisan/idle-3.png"
+    ]
+  },
+  "patterns": {
+    "success-a": {
+      "layer": "props",
+      "frames": [
+        "props/loom-shuttle-1.png",
+        "props/loom-shuttle-2.png",
+        "props/loom-shuttle-3.png"
+      ]
+    },
+    "success-b": {
+      "layer": "effects",
+      "frames": [
+        "effects/woven-cloth-1.png",
+        "effects/woven-cloth-2.png",
+        "effects/woven-cloth-3.png"
+      ]
+    },
+    "fail-a": {
+      "layer": "failures",
+      "frames": [
+        "failures/tangled-yarn-1.png",
+        "failures/tangled-yarn-2.png",
+        "failures/tangled-yarn-3.png"
+      ]
+    },
+    "fail-b": {
+      "layer": "failures",
+      "frames": [
+        "failures/broken-thread-1.png",
+        "failures/broken-thread-2.png",
+        "failures/broken-thread-3.png"
+      ]
+    }
+  },
+  "placement": {
+    "heroLeft": "30%",
+    "floorBottom": "4%",
+    "npcLeft": "76%",
+    "npcScale": 1,
+    "propLeft": "51%",
+    "propBottom": "3%",
+    "effectLeft": "52%",
+    "effectBottom": "3%"
+  },
+  "layerOrder": [
+    "existing-background",
+    "npc",
+    "existing-seonhwa",
+    "props",
+    "effects",
+    "failures"
+  ]
+}

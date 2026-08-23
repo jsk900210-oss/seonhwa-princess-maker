@@ -1,0 +1,81 @@
+{
+  "version": "2.0.0",
+  "activityId": "masonry",
+  "nameKo": "석공 보조",
+  "status": "review",
+  "existingHeroFrames": [
+    "../../characters/seonhwa/schedule-actions/masonry-pixel-1.png",
+    "../../characters/seonhwa/schedule-actions/masonry-pixel-2.png",
+    "../../characters/seonhwa/schedule-actions/masonry-pixel-3.png"
+  ],
+  "existingBackground": "../../backgrounds/phase-scenes/woodwork.webp",
+  "animation": {
+    "sequence": [
+      1,
+      2,
+      3
+    ],
+    "loopCount": 3,
+    "frameDurationMs": 300
+  },
+  "npc": {
+    "id": "mason",
+    "frames": [
+      "npc/mason/idle-1.png",
+      "npc/mason/idle-2.png",
+      "npc/mason/idle-3.png"
+    ]
+  },
+  "patterns": {
+    "success-a": {
+      "layer": "props",
+      "frames": [
+        "props/chisel-block-1.png",
+        "props/chisel-block-2.png",
+        "props/chisel-block-3.png"
+      ]
+    },
+    "success-b": {
+      "layer": "effects",
+      "frames": [
+        "effects/fitted-wall-1.png",
+        "effects/fitted-wall-2.png",
+        "effects/fitted-wall-3.png"
+      ]
+    },
+    "fail-a": {
+      "layer": "failures",
+      "frames": [
+        "failures/cracked-stone-1.png",
+        "failures/cracked-stone-2.png",
+        "failures/cracked-stone-3.png"
+      ]
+    },
+    "fail-b": {
+      "layer": "failures",
+      "frames": [
+        "failures/wobbling-stack-1.png",
+        "failures/wobbling-stack-2.png",
+        "failures/wobbling-stack-3.png"
+      ]
+    }
+  },
+  "placement": {
+    "heroLeft": "30%",
+    "floorBottom": "4%",
+    "npcLeft": "77%",
+    "npcScale": 0.82,
+    "propLeft": "51%",
+    "propBottom": "3%",
+    "effectLeft": "53%",
+    "effectBottom": "3%"
+  },
+  "layerOrder": [
+    "existing-background",
+    "npc",
+    "existing-seonhwa",
+    "props",
+    "effects",
+    "failures"
+  ]
+}

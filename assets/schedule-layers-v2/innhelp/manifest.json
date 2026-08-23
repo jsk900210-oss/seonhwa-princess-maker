@@ -1,0 +1,81 @@
+{
+  "version": "2.0.0",
+  "activityId": "innhelp",
+  "nameKo": "주막 운영 보조",
+  "status": "review",
+  "existingHeroFrames": [
+    "../../characters/seonhwa/schedule-actions/merchanthelp-pixel-1.png",
+    "../../characters/seonhwa/schedule-actions/merchanthelp-pixel-2.png",
+    "../../characters/seonhwa/schedule-actions/merchanthelp-pixel-3.png"
+  ],
+  "existingBackground": "../../backgrounds/pixel-activities/close/market-errand-v2.webp",
+  "animation": {
+    "sequence": [
+      1,
+      2,
+      3
+    ],
+    "loopCount": 3,
+    "frameDurationMs": 300
+  },
+  "npc": {
+    "id": "hostess",
+    "frames": [
+      "npc/hostess/idle-1.png",
+      "npc/hostess/idle-2.png",
+      "npc/hostess/idle-3.png"
+    ]
+  },
+  "patterns": {
+    "success-a": {
+      "layer": "props",
+      "frames": [
+        "props/meal-tray-1.png",
+        "props/meal-tray-2.png",
+        "props/meal-tray-3.png"
+      ]
+    },
+    "success-b": {
+      "layer": "effects",
+      "frames": [
+        "effects/payment-1.png",
+        "effects/payment-2.png",
+        "effects/payment-3.png"
+      ]
+    },
+    "fail-a": {
+      "layer": "failures",
+      "frames": [
+        "failures/spilled-tray-1.png",
+        "failures/spilled-tray-2.png",
+        "failures/spilled-tray-3.png"
+      ]
+    },
+    "fail-b": {
+      "layer": "failures",
+      "frames": [
+        "failures/mixed-orders-1.png",
+        "failures/mixed-orders-2.png",
+        "failures/mixed-orders-3.png"
+      ]
+    }
+  },
+  "placement": {
+    "heroLeft": "30%",
+    "floorBottom": "4%",
+    "npcLeft": "77%",
+    "npcScale": 0.82,
+    "propLeft": "51%",
+    "propBottom": "3%",
+    "effectLeft": "53%",
+    "effectBottom": "3%"
+  },
+  "layerOrder": [
+    "existing-background",
+    "npc",
+    "existing-seonhwa",
+    "props",
+    "effects",
+    "failures"
+  ]
+}
