@@ -237,7 +237,7 @@ const vacationIllustrations=[
 function unifiedAgeFolder(){return '09';}
 function scheduleFramePath(file){return `../assets/characters/seonhwa/schedule-actions/${file}`;}
 function scheduleBasePath(file){return `../assets/characters/seonhwa/schedule-base/${file}`;}
-const scheduleAssetRevision='0.64.09-debug';
+const scheduleAssetRevision='0.64.10-debug';
 const scheduleQaParams=new URLSearchParams(location.search);
 const moonlightStandaloneQa=scheduleQaParams.get('qaHoliday')==='chuseok';
 const sehwaStandaloneQa=scheduleQaParams.get('qaHoliday')==='seollal';
@@ -1215,6 +1215,14 @@ function festivalScoreboard(session,title){
   return `<section class="festival-scoreboard" aria-label="${title} 8인 심사표"><h3>${title}</h3>${session.ranked.map((entry,index)=>`<div class="festival-score-row ${entry.player?'is-player':''}"><b>${index+1}</b><span>${entry.name}</span><i><em style="width:${Math.max(4,Math.round(entry.score/best*100))}%"></em></i><strong>${entry.score}</strong></div>`).join('')}</section>`;
 }
 function festivalTitleCard(title,subtitle){return `<section class="festival-title-card"><small>왕실 명절 경연</small><h2>${title}</h2><p>${subtitle}</p></section>`;}
+function festivalKingCut(line,alt){return `<section class="festival-character-cut king-cut"><img src="../assets/events/holidays/moonlight-pageant/king/king-seated-v1.png?v=${scheduleAssetRevision}" alt="${alt}"><p><b>황</b>${line}</p></section>`;}
+function festivalGuardianCut(session){
+  if(!game.guardianType)return '';
+  const name=game.guardianName||guardianDefs[game.guardianType]?.name||'신수';
+  const line=session.overallRank==='대상'?`${game.name||'선화'}, 네 빛이 모두에게 닿았어. 대상이야!`:`${game.name||'선화'}, 여덟 명 가운데 ${session.player.rank}이야. 끝까지 잘 해냈어.`;
+  return `<section class="festival-character-cut guardian-cut"><img src="../assets/cinematics/guardian/humanized/poses/${game.guardianType}-happy-transparent-v3.png?v=${scheduleAssetRevision}" alt="결과를 알려 주는 ${name}"><p><b>${name}</b>${line}</p></section>`;
+}
+function festivalCrowd(){return '<div class="festival-crowd" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>';}
 function renderMoonlightPageant(session,dayIndex){
   const overlay=document.querySelector('#moonlightPageant');if(!overlay)return;
   const beat=Math.min(13,dayIndex%14),title=beat===4,intro=beat===5,vote=beat===10,result=beat===11,guardianResult=beat===12,award=beat===13;
@@ -1222,11 +1230,11 @@ function renderMoonlightPageant(session,dayIndex){
   const frameMotion=beat===7?'dance':beat===8?'walk':null;
   const hero=(!title&&!intro&&!vote&&!result&&!guardianResult&&!award)?(frameMotion?`<span class="pageant-hero-frames is-${frameMotion}" role="img" aria-label="${moonlightStoryBeats[beat]}">${moonlightMotionFrames(frameMotion).map((src,index)=>`<img src="${src}" alt="" style="--pageant-frame:${index}">`).join('')}</span>`:`<img class="pageant-hero-action" src="${moonlightSeonhwaImage()}" alt="${moonlightStoryBeats[beat]}">`):'';
   const titleCard=title?festivalTitleCard('한가위 달빛 아씨 경연','센스·예절·기품으로 빛나는 한가위 무대'):'';
-  const king=intro?`<img class="pageant-king is-announcer" src="../assets/events/holidays/moonlight-pageant/king/king-seated-v1.png?v=${scheduleAssetRevision}" alt="경연을 알리는 황">`:'';
+  const king=intro?festivalKingCut('보름달 아래에서 예절과 감각, 기품을 마음껏 펼쳐 보이거라.','한가위 경연을 알리는 황'):'';
   const board=vote?festivalScoreboard(session,'8인 심사 집계'):result?`<section class="festival-result-card"><small>최종 결과</small><strong>${session.overallRank}</strong><p>${session.player.score}점 · ${session.reaction}</p></section>`:'';
-  const guardian=(beat===2||guardianResult)&&game.guardianType?`<img class="pageant-guardian-cheer ${guardianResult?'is-result':''}" src="../assets/cinematics/guardian/humanized/poses/${game.guardianType}-happy-transparent-v3.png?v=${scheduleAssetRevision}" alt="결과에 반응하는 신수">`:'';
+  const guardian=guardianResult?festivalGuardianCut(session):(beat===2&&game.guardianType?`<img class="pageant-guardian-cheer" src="../assets/cinematics/guardian/humanized/poses/${game.guardianType}-happy-transparent-v3.png?v=${scheduleAssetRevision}" alt="선화를 응원하는 신수">`:'');
   const winner=award?`<figure class="pageant-winner"><img src="${moonlightEntrantImage(session.winner)}" alt="대상 수상자 ${session.winner.name}"><figcaption>대상 · ${session.winner.name}</figcaption></figure><img class="pageant-king" src="../assets/events/holidays/moonlight-pageant/king/king-presenting-v1.png?v=${scheduleAssetRevision}" alt="대상을 시상하는 황">`:'';
-  overlay.innerHTML=`${titleCard}${hero}${guardian}${king}${board}${winner}<p class="pageant-beat">${beat+1}/14 · ${moonlightStoryBeats[beat]}</p>`;
+  overlay.innerHTML=`${festivalCrowd()}${titleCard}${hero}${guardian}${king}${board}${winner}<p class="pageant-beat">${beat+1}/14 · ${moonlightStoryBeats[beat]}</p>`;
 }
 function clearMoonlightPageant(){const overlay=document.querySelector('#moonlightPageant');if(overlay){overlay.hidden=true;overlay.innerHTML='';overlay.className='moonlight-pageant';}}
 const sehwaContestants=[
@@ -1263,12 +1271,12 @@ function renderSehwaContest(session,beatIndex){
   const frameUrls=[1,2,3].map(frame=>award?sehwaAwardSceneFrame(frame):sehwaFrame(frameKind,frame));
   const hero=award?`<span class="sehwa-award-sequence" role="img" aria-label="${sehwaStoryBeats[beat]}">${frameUrls.map((src,index)=>`<img src="${src}" alt="" style="--award-index:${index}">`).join('')}</span>`:(drawing||beat<5)?`<span class="sehwa-hero is-drawing" style="--sehwa-f1:url('${frameUrls[0]}');--sehwa-f2:url('${frameUrls[1]}');--sehwa-f3:url('${frameUrls[2]}')" role="img" aria-label="${sehwaStoryBeats[beat]}"></span>`:'';
   const titleCard=title?festivalTitleCard('복을 그리는 왕실 세화 경연','새해의 복을 한 폭의 세화에 담는 설날 행사'):'';
-  const guardian=(beat>=2&&beat<=3||guardianResult)&&game.guardianType?`<img class="pageant-guardian-cheer ${guardianResult?'is-result':''}" src="../assets/cinematics/guardian/humanized/poses/${game.guardianType}-happy-transparent-v3.png?v=${scheduleAssetRevision}" alt="선화를 응원하는 신수">`:'';
+  const guardian=guardianResult?festivalGuardianCut(session):(beat>=2&&beat<=3&&game.guardianType?`<img class="pageant-guardian-cheer" src="../assets/cinematics/guardian/humanized/poses/${game.guardianType}-happy-transparent-v3.png?v=${scheduleAssetRevision}" alt="선화를 응원하는 신수">`:'');
   const board=vote?festivalScoreboard(session,'8인 세화 심사'):result?`<section class="festival-result-card"><small>최종 결과</small><strong>${session.overallRank}</strong><p>${session.player.score}점 · ${session.reaction}</p></section>`:'';
-  const king=intro?`<img class="pageant-king is-announcer" src="../assets/events/holidays/moonlight-pageant/king/king-seated-v1.png?v=${scheduleAssetRevision}" alt="세화 경연을 알리는 황">`:'';
+  const king=intro?festivalKingCut('새해의 복을 담아 까치와 매화, 첫 해를 한 폭에 그려 보이거라.','세화 경연의 주제를 알리는 황'):'';
   const winner=beat===15&&!session.winner.player?`<figure class="pageant-winner"><img src="${moonlightEntrantImage(session.winner)}" alt="대상 수상자 ${session.winner.name}"><figcaption>대상 · ${session.winner.name}</figcaption></figure><img class="pageant-king" src="../assets/events/holidays/moonlight-pageant/king/king-presenting-v1.png?v=${scheduleAssetRevision}" alt="대상을 시상하는 황">`:'';
   overlay.hidden=false;overlay.className=`moonlight-pageant sehwa-contest festival-pm3 beat-${beat+1} reaction-${session.reaction.replaceAll(' ','-')}`;
-  overlay.innerHTML=`${titleCard}${hero}${guardian}${king}${board}${winner}<p class="pageant-beat">${beat+1}/16 · ${sehwaStoryBeats[beat]}</p>`;
+  overlay.innerHTML=`${festivalCrowd()}${titleCard}${hero}${guardian}${king}${board}${winner}<p class="pageant-beat">${beat+1}/16 · ${sehwaStoryBeats[beat]}</p>`;
 }
 function presentHolidayRelation(){
   if(!pendingHolidayRelation)return false;
