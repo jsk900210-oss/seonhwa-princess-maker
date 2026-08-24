@@ -2189,3 +2189,23 @@
 @keyframes pageant-judged{0%,100%{transform:translateX(-50%)}50%{transform:translateX(-50%) translateY(-3px)}}
 @keyframes pageant-guardian-bounce{from{transform:translateY(0) rotate(-2deg)}to{transform:translateY(-8px) rotate(2deg)}}
 @media(max-width:380px){.pageant-lineup img{width:52px;height:70px}.pageant-lineup .is-player img{width:57px;height:76px}.pageant-king{width:128px;height:174px}.pageant-winner{width:51%}}
+
+/* v0.64.04 — 설날 세화 경연: 실제 1→2→3 프레임, 신수 응원, 황의 직접 시상. */
+.activity-stage.action-holiday-seollal .stage-map{object-position:center 58%}
+.activity-stage.action-holiday-seollal>.stage-inner>.stage-character{display:none!important}
+.activity-stage.action-holiday-seollal .sehwa-contest{z-index:30!important;isolation:isolate}
+.activity-stage.action-holiday-seollal .sehwa-contest .sehwa-hero,.activity-stage.action-holiday-seollal .sehwa-contest .pageant-king,.activity-stage.action-holiday-seollal .sehwa-contest .pageant-winner{z-index:32!important}
+.sehwa-contest .sehwa-hero{position:absolute;z-index:4;left:22%;bottom:10%;width:180px;height:235px;background-repeat:no-repeat;background-position:center bottom;background-size:contain;filter:drop-shadow(0 5px 6px #160b08aa);animation:sehwa-frame-loop .9s steps(1,end) infinite}
+.sehwa-contest.beat-1 .sehwa-hero,.sehwa-contest.beat-2 .sehwa-hero,.sehwa-contest.beat-3 .sehwa-hero,.sehwa-contest.beat-4 .sehwa-hero{left:5%;width:150px;height:215px}
+.sehwa-contest .sehwa-hero.is-award{left:8%;width:128px;height:184px}
+.sehwa-contest .pageant-guardian-cheer{right:4%;bottom:16%;width:112px;height:146px}
+.sehwa-lineup{position:absolute;left:2%;right:2%;bottom:39%;display:grid;grid-template-columns:repeat(7,1fr);gap:1px;align-items:end}
+.sehwa-lineup figure{margin:0;display:grid;justify-items:center;min-width:0}
+.sehwa-lineup img{width:41px;height:57px;object-fit:contain;object-position:center bottom;filter:drop-shadow(0 2px 2px #180d08aa)}
+.sehwa-lineup figcaption{margin-top:-4px;padding:1px 3px;border-radius:7px;background:#21140dcc;color:#fff2ce;font-size:6px}
+.sehwa-artist{position:absolute;z-index:3;left:7%;bottom:12%;width:145px;height:190px;background-image:url('../assets/events/holidays/sehwa-contest/artist/process-1.png?v=0.64.04-debug');background-repeat:no-repeat;background-position:center bottom;background-size:contain;filter:drop-shadow(0 4px 5px #160b08aa)}
+.sehwa-contest.beat-12 .pageant-king{right:3%;width:130px;height:178px}
+.sehwa-contest.beat-14 .pageant-king{right:5%;bottom:12%;width:170px;height:220px;transform:scaleX(-1)}
+.sehwa-contest.beat-14 .pageant-winner{left:5%;width:48%;height:66%}
+@keyframes sehwa-frame-loop{0%,32.99%{background-image:var(--sehwa-f1)}33%,65.99%{background-image:var(--sehwa-f2)}66%,100%{background-image:var(--sehwa-f3)}}
+@media(max-width:380px){.sehwa-contest .sehwa-hero{width:164px;height:218px}.sehwa-contest .pageant-guardian-cheer{width:98px;height:132px}.sehwa-lineup img{width:36px;height:51px}}

@@ -74,3 +74,9 @@
 - 목공소 `success-a`는 톱질, `success-b`는 망치질 전용 선화+작업대 결합 프레임을 사용한다.
 - 손과 도구의 접촉이 중요한 작업은 캐릭터와 핵심 도구를 같은 프레임에 포함해 이탈을 막는다.
 - 아이돌보기 선화는 아이 쪽을 바라보고, 이불은 아이 몸 앞의 동일 바닥선에 둔다.
+# 설날 세화 경연 QA
+
+- 주소: `src/?qaHoliday=seollal&qaDay=2&qaAge=12&qaScore=155`
+- `qaDay`: 1~14, `qaAge`: 9~18, `qaScore`: 0~999
+- 초반 신수 응원과 긴장 대화 뒤 경연이 시작되고, 14일차에는 대상 수상자에게 황이 직접 `왕실 화원의 세화첩`을 하사합니다.
+- 선화 프레임은 `assets/events/holidays/sehwa-contest/seonhwa/` 아래에서 연령별 `opening`, `drawing`, `award` 3프레임을 사용합니다.
