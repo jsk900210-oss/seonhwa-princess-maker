@@ -76,7 +76,8 @@
 - 아이돌보기 선화는 아이 쪽을 바라보고, 이불은 아이 몸 앞의 동일 바닥선에 둔다.
 # 설날 세화 경연 QA
 
-- 주소: `src/?qaHoliday=seollal&qaDay=2&qaAge=12&qaScore=155`
-- `qaDay`: 1~14, `qaAge`: 9~18, `qaScore`: 0~999
-- 초반 신수 응원과 긴장 대화 뒤 경연이 시작되고, 14일차에는 대상 수상자에게 황이 직접 `왕실 화원의 세화첩`을 하사합니다.
+- 주소: `src/?qaHoliday=seollal&qaBeat=16&qaAge=12&qaScore=999`
+- `qaBeat`: 1~16, `qaAge`: 9~18, `qaScore`: 0~999 (`qaDay` 구형 주소도 호환)
+- 한 페이즈 안에서 신수 응원과 긴장 대화 뒤 경연이 시작되고, 16번째 장면에는 대상 수상자에게 황이 직접 `왕실 화원의 세화첩`을 하사합니다.
+- 선화는 전경의 중심 크기, 경쟁자는 원근별 보조 크기, 황은 선화보다 큰 성인 비율을 사용합니다.
 - 선화 프레임은 `assets/events/holidays/sehwa-contest/seonhwa/` 아래에서 연령별 `opening`, `drawing`, `award` 3프레임을 사용합니다.

@@ -50,6 +50,7 @@ def main() -> None:
     split_grid(GENERATED / "exec-efe39af4-de5b-4846-8af8-f1236fc2f23f.png", 4, 3, DEST / "seonhwa" / "drawing", "drawing")
     split_grid(GENERATED / "exec-fc00eac5-fff7-4cf0-ba02-3bceb79affc1.png", 4, 3, DEST / "seonhwa" / "award", "award")
     split_grid(GENERATED / "exec-e4e198fa-b419-49dd-a3e5-b2df1ea5898f.png", 4, 3, DEST / "seonhwa" / "opening", "opening")
+    split_grid(GENERATED / "exec-e5af5003-9080-4a14-a956-530d18d69c7c.png", 4, 3, DEST / "award-scene", "award-scene")
     split_grid(GENERATED / "exec-3bde41ce-0d29-4d95-a123-bf98825e3d3b.png", 1, 3, DEST / "artist", "process")
     background = Image.open(GENERATED / "exec-82979813-66c5-40cf-90cc-7902779cffa8.png").convert("RGB")
     background.thumbnail((768, 1152), Image.Resampling.LANCZOS)
