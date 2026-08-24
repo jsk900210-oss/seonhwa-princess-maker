@@ -237,7 +237,7 @@ const vacationIllustrations=[
 function unifiedAgeFolder(){return '09';}
 function scheduleFramePath(file){return `../assets/characters/seonhwa/schedule-actions/${file}`;}
 function scheduleBasePath(file){return `../assets/characters/seonhwa/schedule-base/${file}`;}
-const scheduleAssetRevision='0.64.07-debug';
+const scheduleAssetRevision='0.64.08-debug';
 const scheduleQaParams=new URLSearchParams(location.search);
 const moonlightStandaloneQa=scheduleQaParams.get('qaHoliday')==='chuseok';
 const sehwaStandaloneQa=scheduleQaParams.get('qaHoliday')==='seollal';
@@ -1195,7 +1195,8 @@ function shuffled(items){return items.map(value=>({value,sort:Math.random()})).s
 function evaluateChuseokFestival(){
   const ageIndex=moonlightAgeIndex();
   const playerStats={sense:Number(game.sense)||0,manners:Number(game.manners)||0,dignity:Number(game.dignity)||0};
-  const playerScore=Math.round((playerStats.sense+playerStats.manners+playerStats.dignity)/3)+(Math.floor(Math.random()*9)-4);
+  const qaOverride=moonlightStandaloneQa&&scheduleQaParams.has('qaScore')?Math.max(0,Math.min(999,Number(scheduleQaParams.get('qaScore'))||0)):null;
+  const playerScore=qaOverride??Math.round((playerStats.sense+playerStats.manners+playerStats.dignity)/3)+(Math.floor(Math.random()*9)-4);
   const entrants=[{id:'seonhwa',name:game.name||'선화',player:true,score:playerScore},...moonlightContestants.map((entry,index)=>({...entry,index,score:entry.scores[ageIndex]}))];
   const ranked=[...entrants].sort((a,b)=>b.score-a.score||a.name.localeCompare(b.name));
   ranked.forEach((entry,index)=>entry.rank=index===0?'대상':index===1?'우수상':index<=3?'장려상':'예선탈락');
@@ -2663,9 +2664,11 @@ async function playWeeklySchedule(selected) {
       stageProps.className='stage-props prop-none';
       stageNpc.hidden=true;stageCharacter.hidden=true;
       holidayContestResult=moonlightSession;
-      renderMoonlightPageant(holidayContestResult,index%14);
-      document.querySelector('#dialogueText').textContent=moonlightStoryBeats[index%14];
-      await schedulePlaybackDelay(1100);
+      for(let beat=0;beat<moonlightStoryBeats.length;beat+=1){
+        renderMoonlightPageant(holidayContestResult,beat);
+        document.querySelector('#dialogueText').textContent=moonlightStoryBeats[beat];
+        await schedulePlaybackDelay(620);
+      }
     }else if(action.id==='holiday-seollal'){
       stageMap.src=`../assets/events/holidays/sehwa-contest/background/royal-atelier-v1.webp?v=${scheduleAssetRevision}`;
       stageMap.alt='왕실 화원의 설날 세화 경연장';
@@ -2703,9 +2706,10 @@ async function playWeeklySchedule(selected) {
     if(!guaranteedSuccess&&(outcome==='mistake'||outcome==='struggle')&&action.id!=='shopping'&&!scheduleLayerIds.has(action.id)){
       await animateActionStumble(stageCharacterImage,outcome);
     }
-    const resolvedChange=action.id==='holiday-seollal'?{...resolvedActivityChange(action,outcome)}:phaseDailyChange(freeTimeVariant?{...freeTimeVariant.change}:resolvedActivityChange(action,outcome),index%14);
+    const fullPhaseHoliday=action.id==='holiday-seollal'||action.id==='holiday-chuseok';
+    const resolvedChange=fullPhaseHoliday?{...resolvedActivityChange(action,outcome)}:phaseDailyChange(freeTimeVariant?{...freeTimeVariant.change}:resolvedActivityChange(action,outcome),index%14);
     if(holidayContestResult){
-      const contestChange=action.id==='holiday-seollal'?holidayContestResult.change:phaseDailyChange(holidayContestResult.change,index%14);
+      const contestChange=fullPhaseHoliday?holidayContestResult.change:phaseDailyChange(holidayContestResult.change,index%14);
       Object.entries(contestChange).forEach(([key,value])=>{resolvedChange[key]=(resolvedChange[key]||0)+value;});
     }
     const isWork=action.category==='아르바이트',basePay=isWork?activityPay(action):0;
@@ -2752,7 +2756,7 @@ async function playWeeklySchedule(selected) {
     Object.entries(actualChange).forEach(([key,value])=>weeklyChange[key]=(weeklyChange[key]||0)+value);
     dayRecords.push({date:isoDate(activityDate),action:{...action,cost:-moneyChange},actualChange,outcome,moneyChange});
     simulated.stress=clampStat('stress',simulated.stress+(resolvedChange.stress||0));
-    if((action.id==='vacation'||action.id==='holiday-seollal')&&index%14===0)index=Math.min(index+13,selected.length-1);
+    if((action.id==='vacation'||action.id==='holiday-seollal'||action.id==='holiday-chuseok')&&index%14===0)index=Math.min(index+13,selected.length-1);
     if((index+1)%14===0||index===selected.length-1){
       const start=index-index%14,phaseRecords=dayRecords.slice(start,index+1);
       const vacationPhase=phaseRecords.length>0&&phaseRecords.every(record=>record.action?.id==='vacation');
