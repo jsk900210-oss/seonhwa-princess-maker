@@ -2219,3 +2219,23 @@
 @keyframes sehwa-frame-loop{0%,32.99%{background-image:var(--sehwa-f1)}33%,65.99%{background-image:var(--sehwa-f2)}66%,100%{background-image:var(--sehwa-f3)}}
 @keyframes sehwa-award-frame{0%,32.99%{opacity:1}33%,100%{opacity:0}}
 @media(max-width:380px){.sehwa-contest{--contestant-w:74px;--contestant-h:102px;--adult-w:104px;--adult-h:146px}.sehwa-contest .sehwa-hero{width:164px;height:218px}.sehwa-contest .pageant-guardian-cheer{width:98px;height:132px}}
+
+/* v0.64.07 — PM3식 명절 진행: 타이틀→황 안내→단독 경연→8인 집계→결과→신수→시상. */
+.festival-pm3 .pageant-hero-action{left:50%;bottom:10%;width:150px;height:205px}
+.festival-title-card{position:absolute;z-index:35;inset:20% 7% auto;padding:22px 14px;border:2px solid #e5c47d;border-radius:10px;background:linear-gradient(145deg,#25150eec,#5a2e19ed);color:#fff2cf;text-align:center;box-shadow:0 8px 24px #000a,inset 0 0 0 3px #7c4b2a}
+.festival-title-card small{display:block;margin-bottom:7px;color:#eacb83;font-size:9px;font-weight:800;letter-spacing:.14em}
+.festival-title-card h2{margin:0;font-family:serif;font-size:21px;line-height:1.25}
+.festival-title-card p{margin:8px 0 0;font-size:9px;line-height:1.45}
+.festival-scoreboard{position:absolute;z-index:35;left:7%;right:7%;top:11%;padding:10px 11px 12px;border:2px solid #dcb971;border-radius:10px;background:#20130eef;color:#f9e9c6;box-shadow:0 8px 22px #000b,inset 0 0 0 2px #76502e}
+.festival-scoreboard h3{margin:0 0 7px;text-align:center;font-family:serif;font-size:14px}
+.festival-score-row{display:grid;grid-template-columns:13px 42px 1fr 29px;gap:4px;align-items:center;min-height:20px;font-size:8px}
+.festival-score-row>b{color:#dcb971;text-align:center}.festival-score-row>span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.festival-score-row>i{height:6px;overflow:hidden;border-radius:4px;background:#705f4b66}.festival-score-row>i>em{display:block;height:100%;border-radius:4px;background:#c99a43}.festival-score-row>strong{text-align:right;font-size:8px}
+.festival-score-row.is-player{margin:1px -4px;padding:2px 4px;border-radius:5px;background:#f1ce7150;color:#fff8d7}.festival-score-row.is-player>i>em{background:#ffd86a}
+.festival-result-card{position:absolute;z-index:35;left:13%;right:13%;top:24%;padding:18px 12px;border:2px solid #e3c078;border-radius:11px;background:#26160ff0;color:#fff0c9;text-align:center;box-shadow:0 9px 25px #000b,inset 0 0 0 2px #75472b}
+.festival-result-card small{display:block;color:#dcb977;font-size:9px}.festival-result-card strong{display:block;margin:7px 0 4px;font-family:serif;font-size:28px}.festival-result-card p{margin:0;font-size:10px}
+.pageant-king.is-announcer{right:50%;bottom:9%;width:146px;height:194px;transform:translateX(50%);animation:pageant-king-enter-centered .75s ease-out both}
+.pageant-guardian-cheer.is-result{right:50%;bottom:11%;width:135px;height:180px;transform:translateX(50%);animation:pageant-guardian-result .7s ease-in-out infinite alternate}
+.sehwa-contest.festival-pm3 .sehwa-lineup,.sehwa-contest.festival-pm3 .sehwa-focus-player,.festival-pm3 .pageant-lineup{display:none!important}
+@keyframes pageant-king-enter-centered{from{opacity:0;transform:translateX(80%)}to{opacity:1;transform:translateX(50%)}}
+@keyframes pageant-guardian-result{from{transform:translateX(50%) translateY(0) rotate(-2deg)}to{transform:translateX(50%) translateY(-8px) rotate(2deg)}}
+@media(max-width:380px){.festival-title-card h2{font-size:19px}.festival-scoreboard{left:5%;right:5%}.pageant-king.is-announcer{width:134px;height:180px}.pageant-guardian-cheer.is-result{width:122px;height:164px}}
