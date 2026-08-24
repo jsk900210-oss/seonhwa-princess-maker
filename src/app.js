@@ -237,10 +237,11 @@ const vacationIllustrations=[
 function unifiedAgeFolder(){return '09';}
 function scheduleFramePath(file){return `../assets/characters/seonhwa/schedule-actions/${file}`;}
 function scheduleBasePath(file){return `../assets/characters/seonhwa/schedule-base/${file}`;}
-const scheduleAssetRevision='0.64.10-debug';
+const scheduleAssetRevision='0.64.11-debug';
 const scheduleQaParams=new URLSearchParams(location.search);
 const moonlightStandaloneQa=scheduleQaParams.get('qaHoliday')==='chuseok';
 const sehwaStandaloneQa=scheduleQaParams.get('qaHoliday')==='seollal';
+const relationStandaloneQa=scheduleQaParams.has('qaRelation');
 const scheduleLayerStandaloneQa=scheduleQaParams.get('qa')==='1';
 const lockedScheduleQaMode=scheduleQaParams.has('qaSchedules')||scheduleLayerStandaloneQa;
 let scheduleQaForcedPattern=scheduleQaParams.get('qaPattern');
@@ -1041,20 +1042,23 @@ const endingRelationCandidates=[
   {id:'taegyeom',name:'태겸',role:'상단 후계자',motif:'최현욱',image:'../assets/characters/romance/taegyeom/vacation.png',baseSheet:'../assets/characters/romance/identity/fullbody/taegyeom-age-13-16-19-fullbody-v1.png',assetReady:true,minAge:13,ending:'대상인의 동반자',dialogues:['“좋은 물건보다 좋은 인연을 만나는 일이 더 귀하다고 하더군.”','“이 길 끝에 재미있는 장이 선다는데, 함께 가겠어?”']},
   {id:'hyeon',name:'현',role:'정체를 숨긴 왕자',motif:'차은우',image:'../assets/characters/romance/hyeon/vacation.png',baseSheet:'../assets/characters/romance/identity/fullbody/hyeon-age-13-16-19-fullbody-v1.png',assetReady:true,minAge:15,ending:'왕자의 연인',dialogues:['“내가 누구인지는 잠시 잊고, 오늘만 평범하게 걸어도 될까?”','“또 만났네. 이쯤 되면 우연이라고만 하기는 어렵겠어.”']}
 ];
+function protagonistFullbodyForAge(age=game.age){
+  const actualAge=age>=19?18:age>=16?16:age>=13?13:9;
+  return `../assets/characters/dialogue-fullbody/seonhwa/age-${String(actualAge).padStart(2,'0')}.png?v=${scheduleAssetRevision}`;
+}
 function protagonistPortraitForAge(age=game.age){
   const actualAge=age>=19?18:age>=16?16:age>=13?13:9;
   return `../assets/characters/seonhwa/identity/seonhwa-face-age-${String(actualAge).padStart(2,'0')}-neutral.png`;
 }
-function relationAgePosition(){return game.age>=19?'100%':game.age>=16?'50%':'0%';}
-function relationPortraitMarkup(candidate,className=''){return `<span class="relation-sheet-portrait ${className}" role="img" aria-label="${candidate.name} ${game.age}세 모습" style="--relation-sheet:url('${candidate.baseSheet}');--relation-age-position:${relationAgePosition()}"></span>`;}
-function applyRelationPortrait(element,candidate){if(!element||!candidate)return;element.classList.add('relation-sheet-portrait');element.style.setProperty('--relation-sheet',`url('${candidate.baseSheet}')`);element.style.setProperty('--relation-age-position',relationAgePosition());const image=element.matches('img')?element:element.querySelector('img');if(image){image.alt=`${candidate.name} ${game.age}세 모습`;image.hidden=true;}}
+function relationPortraitMarkup(candidate,className=''){return `<img class="relation-dialogue-cutout ${className}" src="../assets/characters/dialogue-fullbody/romance/${candidate.id}.png?v=${scheduleAssetRevision}" alt="${candidate.name}">`;}
+function applyRelationPortrait(element,candidate){if(!element||!candidate)return;element.src=`../assets/characters/dialogue-fullbody/romance/${candidate.id}.png?v=${scheduleAssetRevision}`;element.alt=`${candidate.name} 전신`;}
 function relationReplyChoices(candidate){return [{line:`반가워요, ${candidate.name}님. 잠시 함께 이야기해요.`,reply:'나도 반가워. 오늘은 서두르지 않고 네 이야기를 듣고 싶어.'},{line:'이곳에는 무슨 일로 오셨어요?',reply:'해야 할 일이 있었는데, 너를 만나니 잠시 걸음을 멈추게 되는군.'}];}
 function playRelationEncounterScene(candidate,opening,resultLine=''){
   const scene=document.querySelector('#relationEncounterScene'),male=document.querySelector('#relationEncounterMale'),female=document.querySelector('#relationEncounterFemale'),speaker=document.querySelector('#relationEncounterSpeaker'),text=document.querySelector('#relationEncounterText'),next=document.querySelector('#relationEncounterNext'),choices=document.querySelector('#relationEncounterChoices');
-  applyRelationPortrait(male,candidate);male.setAttribute('aria-label',`${candidate.name} ${game.age}세 모습`);female.src=protagonistPortraitForAge();female.alt=`${game.characterName||'선화'} ${game.age}세 모습`;
+  applyRelationPortrait(male,candidate);female.src=protagonistFullbodyForAge();female.alt=`${game.characterName||'선화'} ${game.age}세 전신`;
   scene.hidden=false;scene.classList.remove('is-entered');requestAnimationFrame(()=>scene.classList.add('is-entered'));scene.dataset.speaker='male';speaker.textContent=candidate.name;text.textContent=opening||candidate.dialogues[0];choices.hidden=true;next.hidden=false;
   return new Promise(resolve=>{
-    const finish=()=>{scene.hidden=true;scene.classList.remove('is-entered');scene.removeAttribute('data-speaker');resolve();};
+    const finish=()=>{scene.hidden=true;scene.classList.remove('is-entered');scene.removeAttribute('data-speaker');male.removeAttribute('src');female.removeAttribute('src');resolve();};
     const showResult=()=>{scene.dataset.speaker='result';speaker.textContent='인연';text.textContent=resultLine||'서로의 마음에 작은 기억이 남았습니다.';next.hidden=false;next.onclick=finish;};
     const showChoices=()=>{next.hidden=true;choices.hidden=false;choices.replaceChildren(...relationReplyChoices(candidate).map(choice=>{const button=document.createElement('button');button.type='button';button.textContent=choice.line;button.addEventListener('click',()=>{choices.hidden=true;next.hidden=false;scene.dataset.speaker='female';speaker.textContent=game.characterName||'선화';text.textContent=choice.line;next.onclick=()=>{scene.dataset.speaker='male';speaker.textContent=candidate.name;text.textContent=choice.reply;next.onclick=showResult;};},{once:true});return button;}));};
     next.onclick=showChoices;
@@ -2920,6 +2924,16 @@ function initSehwaContestQa(){
   document.querySelector('#dialogueText').textContent=sehwaStoryBeats[qaBeat-1];
   renderSehwaContest(session,qaBeat-1);
 }
+function initRelationEncounterQa(){
+  ['studioLoading','prologue','birthdaySetup','recoveryPrompt','guardianStory','guardianChoice','guardianNaming'].forEach(id=>{const element=document.querySelector(`#${id}`);if(element)element.hidden=true;});
+  panel.hidden=true;
+  const requestedId=scheduleQaParams.get('qaRelation')||'seojin';
+  const candidate=endingRelationCandidates.find(item=>item.id===requestedId)||endingRelationCandidates[1];
+  game.age=Math.min(18,Math.max(9,Number(scheduleQaParams.get('qaAge'))||13));
+  game.characterName=game.characterName||'선화';
+  document.querySelector('.phone').classList.add('playing','relation-qa-playing');
+  playRelationEncounterScene(candidate,`${candidate.role} ${candidate.name}과 마주쳤어요.`,`QA · ${game.age}세 전신과 화자 교대 확인`);
+}
 prologueScenes.forEach(scene=>{const image=new Image();image.src=scene.image;});
 guardianStoryScenes.forEach(scene=>{const image=new Image();image.decoding='async';image.src=scene.image;});
 syncBirthdaySelectors(true);
@@ -2927,7 +2941,8 @@ syncSettingsUi();
 renderHud();
 updateHomeCharacter();
 updateImageState();
-if(sehwaStandaloneQa)initSehwaContestQa();
+if(relationStandaloneQa)initRelationEncounterQa();
+else if(sehwaStandaloneQa)initSehwaContestQa();
 else if(moonlightStandaloneQa)initMoonlightPageantQa();
 else if(scheduleLayerStandaloneQa)initScheduleLayerQa();
 else{
