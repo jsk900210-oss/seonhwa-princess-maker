@@ -237,7 +237,7 @@ const vacationIllustrations=[
 function unifiedAgeFolder(){return '09';}
 function scheduleFramePath(file){return `../assets/characters/seonhwa/schedule-actions/${file}`;}
 function scheduleBasePath(file){return `../assets/characters/seonhwa/schedule-base/${file}`;}
-const scheduleAssetRevision='0.64.08-debug';
+const scheduleAssetRevision='0.64.09-debug';
 const scheduleQaParams=new URLSearchParams(location.search);
 const moonlightStandaloneQa=scheduleQaParams.get('qaHoliday')==='chuseok';
 const sehwaStandaloneQa=scheduleQaParams.get('qaHoliday')==='seollal';
@@ -1185,12 +1185,13 @@ const moonlightContestants=[
   {id:'eunseo',name:'은서',scores:[136,300,490,660]}
 ];
 const moonlightStoryBeats=[
-  '궁에서 한가위 달빛 아씨 경연의 초청장이 도착했어요.','예복과 머리 장식을 고르며 마음을 가다듬었어요.','신수가 곁에서 힘껏 응원해 주었어요.','달이 뜨기 전 궁중 경연장에 도착했어요.','「한가위 달빛 아씨 경연」의 막이 올랐어요.','황이 경연의 취지와 심사 기준을 알렸어요.','바른 절과 말씨로 예절을 선보였어요.','달빛 장식에 어울리는 감각을 표현했어요.','천천히 무대를 걸으며 기품을 보여 주었어요.','보름달 아래에서 마지막 자세를 마쳤어요.','여덟 참가자의 심사 점수가 차례로 집계됐어요.','선화의 최종 등급과 점수가 발표됐어요.','신수가 결과를 듣고 선화 곁으로 달려왔어요.','황이 대상 수상자에게 월백 옥패 노리개를 하사했어요.'
+  '궁에서 한가위 달빛 아씨 경연의 초청장이 도착했어요.','예복과 머리 장식을 고르며 마음을 가다듬었어요.','신수가 곁에서 힘껏 응원해 주었어요.','달이 뜨기 전 궁중 경연장에 도착했어요.','「한가위 달빛 아씨 경연」의 막이 올랐어요.','황이 경연의 취지와 심사 기준을 알렸어요.','바른 절과 말씨로 예절을 선보였어요.','한국무용 춤사위로 감각과 매력을 표현했어요.','천천히 모델 워킹을 하며 기품을 보여 주었어요.','보름달 아래에서 마지막 자세를 마쳤어요.','여덟 참가자의 심사 점수가 차례로 집계됐어요.','선화의 최종 등급과 점수가 발표됐어요.','신수가 결과를 듣고 선화 곁으로 달려왔어요.','황이 대상 수상자에게 월백 옥패 노리개를 하사했어요.'
 ];
 const moonlightMotionNames=['invitation','prepare','guardian-cheer','palace-enter','registration','greeting','manners-bow','sense-display','dignity-walk','moon-finish','royal-judging','final-lineup','result','award'];
 function moonlightAgeIndex(){return game.age>=18?3:game.age>=16?2:game.age>=13?1:0;}
 function moonlightAssetAge(){return game.age>=18?'18':game.age>=16?'16':game.age>=13?'13':'09';}
 function moonlightSeonhwaImage(){const age=moonlightAssetAge();return `../assets/events/holidays/moonlight-pageant/seonhwa/age-${age}/seonhwa-winner-v1.png?v=${scheduleAssetRevision}`;}
+function moonlightMotionFrames(motion){const age=moonlightAssetAge();return [1,2,3].map(frame=>`../assets/events/holidays/moonlight-pageant/seonhwa/age-${age}/seonhwa-${motion}-${frame}-v2.png?v=${scheduleAssetRevision}`);}
 function shuffled(items){return items.map(value=>({value,sort:Math.random()})).sort((a,b)=>a.sort-b.sort).map(item=>item.value);}
 function evaluateChuseokFestival(){
   const ageIndex=moonlightAgeIndex();
@@ -1218,7 +1219,8 @@ function renderMoonlightPageant(session,dayIndex){
   const overlay=document.querySelector('#moonlightPageant');if(!overlay)return;
   const beat=Math.min(13,dayIndex%14),title=beat===4,intro=beat===5,vote=beat===10,result=beat===11,guardianResult=beat===12,award=beat===13;
   overlay.hidden=false;overlay.className=`moonlight-pageant festival-pm3 beat-${beat+1} motion-${moonlightMotionNames[beat]} reaction-${session.reaction.replaceAll(' ','-')}`;
-  const hero=(!title&&!intro&&!vote&&!result&&!guardianResult&&!award)?`<img class="pageant-hero-action" src="${moonlightSeonhwaImage()}" alt="${moonlightStoryBeats[beat]}">`:'';
+  const frameMotion=beat===7?'dance':beat===8?'walk':null;
+  const hero=(!title&&!intro&&!vote&&!result&&!guardianResult&&!award)?(frameMotion?`<span class="pageant-hero-frames is-${frameMotion}" role="img" aria-label="${moonlightStoryBeats[beat]}">${moonlightMotionFrames(frameMotion).map((src,index)=>`<img src="${src}" alt="" style="--pageant-frame:${index}">`).join('')}</span>`:`<img class="pageant-hero-action" src="${moonlightSeonhwaImage()}" alt="${moonlightStoryBeats[beat]}">`):'';
   const titleCard=title?festivalTitleCard('한가위 달빛 아씨 경연','센스·예절·기품으로 빛나는 한가위 무대'):'';
   const king=intro?`<img class="pageant-king is-announcer" src="../assets/events/holidays/moonlight-pageant/king/king-seated-v1.png?v=${scheduleAssetRevision}" alt="경연을 알리는 황">`:'';
   const board=vote?festivalScoreboard(session,'8인 심사 집계'):result?`<section class="festival-result-card"><small>최종 결과</small><strong>${session.overallRank}</strong><p>${session.player.score}점 · ${session.reaction}</p></section>`:'';
@@ -1731,14 +1733,18 @@ function renderSavePanel() {
     const label = saved ? `${saved.game.characterName||'아이'} · ${saved.game.age}세 ${saved.game.month}월 ${saved.game.week}주` : '새로운 인연을 기다리는 빈 기록';
     const savedAt = saved ? new Date(saved.savedAt).toLocaleString('ko-KR') : '';
     const current=saved&&game.profileSlot===slot;
-    return `<div class="save-slot ${saved ? 'filled' : 'empty'}"><div><b>인연 ${slot}${current?' · 현재 키우는 중':''}</b><small>${label}${savedAt ? ` · ${savedAt}` : ''}</small></div>${saved?`<div class="save-slot-actions"><button data-load-slot="${slot}" ${current?'disabled':''}>${current?'현재 기록':'이어하기'}</button><button data-delete-slot="${slot}" ${current?'disabled':''}>기록 삭제</button></div>`:''}</div>`;
+    const loadButton=saved&&!current?`<button data-load-slot="${slot}">불러오기</button>`:'';
+    const deleteButton=saved&&!current?`<button class="delete-save" data-delete-slot="${slot}">삭제</button>`:'';
+    const saveLabel=current?'현재 시점 저장':saved?'이 시점에 덮어쓰기':'여기에 저장';
+    return `<div class="save-slot ${saved ? 'filled' : 'empty'} ${current?'current':''}"><div><b>저장 슬롯 ${slot}${current?' · 현재 자동저장':''}</b><small>${label}${savedAt ? ` · ${savedAt}` : ''}</small></div><div class="save-slot-actions"><button class="write-save" data-save-slot="${slot}">${saveLabel}</button>${loadButton}${deleteButton}</div></div>`;
   }).join('');
   panelBody.innerHTML = `
-    <div class="save-info"><b>인연 기록 ${slots.filter(Boolean).length}/5</b><small>최대 다섯 명까지 동시에 키울 수 있어요.</small></div>
+    <div class="save-info"><b>저장 기록 ${slots.filter(Boolean).length}/5</b><small>같은 게임도 여러 슬롯에 나누어 저장할 수 있어요. 다른 슬롯에 저장한 기록은 분기 시점으로 보존됩니다.</small></div>
     <div class="save-grid">${slotCards}</div>
     <div class="save-actions">
       <button class="new-growth" id="startNewGrowth">새롭게 시작하기</button>
     </div>`;
+  panelBody.querySelectorAll('[data-save-slot]').forEach(button => button.addEventListener('click', () => saveGameToSlot(Number(button.dataset.saveSlot))));
   panelBody.querySelectorAll('[data-load-slot]').forEach(button => button.addEventListener('click', () => loadGame(Number(button.dataset.loadSlot))));
   panelBody.querySelectorAll('[data-delete-slot]').forEach(button => button.addEventListener('click', () => deleteCharacterRecord(Number(button.dataset.deleteSlot))));
   document.querySelector('#startNewGrowth').addEventListener('click',beginNewGrowth);
@@ -2866,6 +2872,13 @@ function initScheduleLayerQa(){
   controls.querySelectorAll('[data-qa-speed]').forEach(button=>button.addEventListener('click',()=>{schedulePlaybackSpeed=Number(button.dataset.qaSpeed);controls.querySelectorAll('[data-qa-speed]').forEach(item=>item.classList.toggle('active',Number(item.dataset.qaSpeed)===schedulePlaybackSpeed));}));
   controls.querySelector('[data-qa-speed="1"]').classList.add('active');
   startScheduleLayerQaPattern(['success-a','success-b','fail-a','fail-b'].includes(scheduleQaForcedPattern)?scheduleQaForcedPattern:'success-a');
+}
+
+function saveGameToSlot(slot){
+  if(!SAVE_SLOTS.includes(slot)||!game.birthday)return;
+  const existing=readSave(slot),current=game.profileSlot===slot;
+  if(existing&&!current&&!window.confirm(`${slot}번 슬롯의 기존 기록을 현재 시점으로 덮어쓸까요?`))return;
+  saveGame(slot,false);
 }
 function initMoonlightPageantQa(){
   ['studioLoading','prologue','birthdaySetup','recoveryPrompt','guardianStory','guardianChoice','guardianNaming'].forEach(id=>{const element=document.querySelector(`#${id}`);if(element)element.hidden=true;});

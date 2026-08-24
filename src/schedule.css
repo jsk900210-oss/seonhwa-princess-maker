@@ -2153,6 +2153,9 @@
 .pageant-lineup figcaption{margin-top:-4px;padding:1px 4px;border-radius:8px;background:#21140dcc;color:#fff2ce;font-size:7px;line-height:1.2}
 .pageant-lineup .is-player img{width:64px;height:84px;filter:drop-shadow(0 0 5px #ffe98c)}
 .pageant-hero-action{position:absolute;z-index:4;left:50%;bottom:12%;width:154px;height:205px;object-fit:contain;object-position:center bottom;transform-origin:center bottom;filter:drop-shadow(0 5px 6px #160b08aa)}
+.pageant-hero-frames{position:absolute;z-index:4;left:50%;bottom:9%;width:190px;height:235px;display:block;transform:translateX(-50%);filter:drop-shadow(0 5px 6px #160b08aa)}
+.pageant-hero-frames img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;object-position:center bottom;opacity:0;animation:pageant-frame-123 .9s steps(1,end) infinite;animation-delay:calc(var(--pageant-frame) * .3s)}
+.pageant-hero-frames.is-walk{animation:pageant-frame-travel 2.7s linear infinite}
 .moonlight-pageant.beat-5 .pageant-lineup,.moonlight-pageant.beat-6 .pageant-lineup{left:2%;right:2%;bottom:48%;grid-template-columns:repeat(7,1fr);gap:1px}
 .moonlight-pageant.beat-5 .pageant-lineup img,.moonlight-pageant.beat-6 .pageant-lineup img{width:40px;height:54px}
 .moonlight-pageant.beat-5 .pageant-lineup figcaption,.moonlight-pageant.beat-6 .pageant-lineup figcaption{font-size:6px;padding:1px 2px}
@@ -2187,6 +2190,8 @@
 @keyframes pageant-walk{0%,100%{transform:translateX(-68%) translateY(0)}50%{transform:translateX(-32%) translateY(-5px)}}
 @keyframes pageant-finish{0%,100%{transform:translateX(-50%) scale(1)}50%{transform:translateX(-50%) scale(1.06);filter:drop-shadow(0 0 12px #ffe7a8)}}
 @keyframes pageant-judged{0%,100%{transform:translateX(-50%)}50%{transform:translateX(-50%) translateY(-3px)}}
+@keyframes pageant-frame-123{0%,32.99%{opacity:1}33%,100%{opacity:0}}
+@keyframes pageant-frame-travel{0%{left:30%}100%{left:70%}}
 @keyframes pageant-guardian-bounce{from{transform:translateY(0) rotate(-2deg)}to{transform:translateY(-8px) rotate(2deg)}}
 @media(max-width:380px){.pageant-lineup img{width:52px;height:70px}.pageant-lineup .is-player img{width:57px;height:76px}.pageant-king{width:128px;height:174px}.pageant-winner{width:51%}}
 
