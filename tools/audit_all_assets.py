@@ -68,10 +68,17 @@ def main() -> int:
     hashes: defaultdict[str, list[str]] = defaultdict(list)
     alpha_count = 0
     runtime_sequences: list[list[Path]] = []
+    active_runtime_files: set[Path] = set()
+    binary_alpha_files: set[Path] = set()
 
     for manifest_path in sorted((ASSET_ROOT / "schedule-layers-v2").glob("*/manifest.json")):
         manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
         runtime_sequences.extend(declared_frame_sequences(manifest, manifest_path.parent))
+    for sequence in runtime_sequences:
+        active_runtime_files.update(path for path in sequence if path.suffix.lower() == ".png")
+    herb_startle = (ASSET_ROOT / "characters/seonhwa/schedule-actions/herbs-startle-arms-up-v1.png").resolve()
+    active_runtime_files.add(herb_startle)
+    binary_alpha_files.add(herb_startle)
 
     for path in files:
         relative = path.relative_to(ROOT).as_posix()
@@ -95,6 +102,24 @@ def main() -> int:
                     warnings.append(f"very large raster: {relative} ({width}x{height})")
                 if expects_alpha(path) and not has_alpha:
                     errors.append(f"transparent layer expected: {relative} ({image.mode})")
+                if path.resolve() in active_runtime_files and path.suffix.lower() == ".png":
+                    rgba = image.convert("RGBA")
+                    alpha = rgba.getchannel("A")
+                    border = (
+                        list(alpha.crop((0, 0, width, 1)).get_flattened_data())
+                        + list(alpha.crop((0, height - 1, width, height)).get_flattened_data())
+                        + list(alpha.crop((0, 0, 1, height)).get_flattened_data())
+                        + list(alpha.crop((width - 1, 0, width, height)).get_flattened_data())
+                    )
+                    if max(border, default=0) > 20:
+                        errors.append(f"active layer touches canvas edge: {relative}")
+                    if path.resolve() in binary_alpha_files:
+                        translucent = sum(
+                            0 < alpha_value < 255
+                            for _, _, _, alpha_value in rgba.get_flattened_data()
+                        )
+                        if translucent:
+                            errors.append(f"hard-edge layer has translucent matte: {relative} ({translucent} pixels)")
         except Exception as exc:
             errors.append(f"unreadable image: {relative}: {exc}")
 
