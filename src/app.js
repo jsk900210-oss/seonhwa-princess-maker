@@ -237,7 +237,7 @@ const vacationIllustrations=[
 function unifiedAgeFolder(){return '09';}
 function scheduleFramePath(file){return `../assets/characters/seonhwa/schedule-actions/${file}`;}
 function scheduleBasePath(file){return `../assets/characters/seonhwa/schedule-base/${file}`;}
-const scheduleAssetRevision='0.64.21-debug';
+const scheduleAssetRevision='0.64.22-debug';
 const scheduleQaParams=new URLSearchParams(location.search);
 const moonlightStandaloneQa=scheduleQaParams.get('qaHoliday')==='chuseok';
 const sehwaStandaloneQa=scheduleQaParams.get('qaHoliday')==='seollal';
@@ -748,7 +748,8 @@ async function playScheduleLayerScene(actionId,seonImage,rank,outcome,dayIndex){
   const patternKey=forcedPattern||`${failed?'fail':'success'}-${dayIndex%2===0?'a':'b'}`;
   const patternSpec=spec.patterns?.[patternKey];
   const patternFrames=v2Spec?patternSpec?.frames:patternSpec;
-  const npcFrames=patternSpec?.npcFrames?.length===3?patternSpec.npcFrames:v2Spec?spec.npc?.frames||[]:spec.npc||[];
+  const farmTillingFrames=['npc/farmer-tilling-v1/farmer-tilling-v1-1.png','npc/farmer-tilling-v1/farmer-tilling-v1-2.png','npc/farmer-tilling-v1/farmer-tilling-v1-3.png'];
+  const npcFrames=actionId==='farmwork'?farmTillingFrames:(patternSpec?.npcFrames?.length===3?patternSpec.npcFrames:v2Spec?spec.npc?.frames||[]:spec.npc||[]);
   const heroFrames=patternSpec?.heroFrames?.length===3?patternSpec.heroFrames:actionId==='farmwork'&&patternKey==='fail-b'&&spec.failureHeroFrames?.length===3?spec.failureHeroFrames:spec.existingHeroFrames||[];
   if(heroFrames.length!==3||npcFrames.length!==3||patternFrames?.length!==3)throw new Error(`schedule layer frame count invalid: ${actionId}/${patternKey}`);
   const placement=spec.placement||{};
@@ -769,16 +770,17 @@ async function playScheduleLayerScene(actionId,seonImage,rank,outcome,dayIndex){
     const pattern=make(`${patternLayer} ${patternKey} ${patternKey.startsWith('fail-')?'dedicated-failure':''}`,patternFrames[0]);
     if(patternSpec?.heroIncludesProp)pattern.hidden=true;
     layers.push(npc,pattern);
-    const delay=[360,300,250][rank]||300;
+    const delay=actionId==='farmwork'&&patternKey==='fail-b'?190:([360,300,250][rank]||300);
     for(let loop=0;loop<3;loop+=1){
       for(let frame=0;frame<3;frame+=1){
         if(actionId==='farmwork'&&patternKey==='fail-b'){
           npc.hidden=true;
           const travelStep=loop*3+frame;
           const travelProgress=travelStep/8;
-          const travelsRight=dayIndex%2===0;
-          const heroLeft=travelsRight?-18+travelProgress*100:82-travelProgress*100;
-          const chickenLeft=travelsRight?0+travelProgress*100:100-travelProgress*100;
+          const qaDirection=scheduleQaParams.get('qaDirection');
+          const travelsRight=lockedScheduleQaMode&&qaDirection?qaDirection==='right':dayIndex%4===3;
+          const heroLeft=travelsRight?-16+travelProgress*102:86-travelProgress*102;
+          const chickenLeft=travelsRight?heroLeft+18:heroLeft-18;
           stage.style.setProperty('--layer-hero-left',`${heroLeft}%`,'important');
           stage.style.setProperty('--layer-prop-left',`${chickenLeft}%`,'important');
           seonImage.style.setProperty('transform',travelsRight?'none':'scaleX(-1)','important');
@@ -786,7 +788,7 @@ async function playScheduleLayerScene(actionId,seonImage,rank,outcome,dayIndex){
           pattern.style.transform=travelsRight?'translateX(-50%)':'translateX(-50%) scaleX(-1)';
         }
         seonImage.src=v2Spec?`${base}/${heroFrames[frame]}${v}`:`${heroFrames[frame]}${v}`;
-        const npcFrame=actionId==='farmwork'&&!patternSpec?.npcFrames?0:frame;
+        const npcFrame=frame;
         npc.src=`${base}/${npcFrames[npcFrame]}${v}`;
         pattern.src=`${base}/${patternFrames[frame]}${v}`;
         await schedulePlaybackDelay(delay);

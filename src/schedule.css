@@ -2317,6 +2317,22 @@
 }
 @keyframes farm-guide-bob{0%,100%{translate:0 0}50%{translate:0 -4px}}
 
+/* v0.64.22: fixed adult farmer scale and consistent tilling motion. */
+.phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-farmwork.schedule-layered .schedule-scene-layer.layer-npc{
+  width:158px!important;
+  height:158px!important;
+  max-width:none!important;
+  object-fit:contain!important;
+  object-position:center bottom!important;
+  transform:translateX(-50%) scaleX(-1)!important;
+  transform-origin:center bottom!important;
+}
+.phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-farmwork.schedule-layered .schedule-scene-layer.layer-pattern.fail-b{
+  bottom:3%!important;
+  width:58px!important;
+  transform-origin:center bottom!important;
+}
+
 /* v0.64.17: face the child, scale the child by visible body height, and isolate sweat. */
 .phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-childcare.schedule-layered .stage-character.pixel-sprite>img{
   transform:scaleX(-1)!important;
