@@ -2303,15 +2303,16 @@
 
 /* v0.64.14: compose farmwork as one shared task instead of three unrelated cutouts. */
 .phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-farmwork.schedule-layered{
-  --layer-hero-left:26%!important;
-  --layer-npc-left:79%!important;
+  --layer-hero-left:22%!important;
+  --layer-npc-left:82%!important;
   --layer-prop-left:53%!important;
   --layer-effect-left:54%!important;
   --layer-floor:3%!important;
 }
 .phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-farmwork.schedule-layered .schedule-scene-layer.layer-npc{
   left:var(--layer-npc-left)!important;
-  width:158px!important;
+  width:148px!important;
+  height:148px!important;
   transform:translateX(-50%) scaleX(-1)!important;
   transform-origin:center bottom!important;
   animation:none!important;
@@ -2393,8 +2394,8 @@ body .phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage:
 
 /* v0.64.22: fixed adult farmer scale and consistent tilling motion. */
 .phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-farmwork.schedule-layered .schedule-scene-layer.layer-npc{
-  width:158px!important;
-  height:158px!important;
+  width:148px!important;
+  height:148px!important;
   max-width:none!important;
   object-fit:contain!important;
   object-position:center bottom!important;

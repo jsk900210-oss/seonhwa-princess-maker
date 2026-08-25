@@ -164,6 +164,27 @@
   .home-greeting.guardian-overlay>.guardian-talk-result span{padding:4px 5px}
 }
 
+/* v0.64.39: empty reward rows must not survive as a blank speech bar, and
+   guardian cutouts keep a calm buoyant motion after their entrance. */
+.home-greeting.guardian-overlay>.guardian-talk-result[hidden],
+.home-greeting.guardian-overlay>.guardian-talk-result:empty{
+  display:none!important;
+  min-height:0!important;
+  padding:0!important;
+  border:0!important;
+  background:transparent!important;
+  box-shadow:none!important;
+}
+.home-greeting.guardian-overlay:not(.is-dissolving) .home-greeting-head img,
+.phone.intro-guardian-active .home-greeting.guardian-overlay:not(.is-dissolving) .home-greeting-head img{
+  animation:guardian-overlay-enter-slow 1.15s cubic-bezier(.18,.72,.28,1) both,guardian-gentle-float 3.8s ease-in-out 1.15s infinite!important;
+  will-change:transform;
+}
+@keyframes guardian-gentle-float{
+  0%,100%{transform:translate3d(0,0,0) rotate(-.25deg)}
+  50%{transform:translate3d(2px,-9px,0) rotate(.4deg)}
+}
+
 /* v0.64.21: the guardian dissolves into faint light before the home UI returns. */
 .home-greeting.guardian-overlay.is-dissolving{pointer-events:none}
 .home-greeting.guardian-overlay.is-dissolving .home-greeting-head img{

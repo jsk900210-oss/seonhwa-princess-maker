@@ -237,7 +237,7 @@ const vacationIllustrations=[
 function unifiedAgeFolder(){return '09';}
 function scheduleFramePath(file){return `../assets/characters/seonhwa/schedule-actions/${file}`;}
 function scheduleBasePath(file){return `../assets/characters/seonhwa/schedule-base/${file}`;}
-const scheduleAssetRevision='0.64.38-debug';
+const scheduleAssetRevision='0.64.40-debug';
 const scheduleQaParams=new URLSearchParams(location.search);
 const moonlightStandaloneQa=scheduleQaParams.get('qaHoliday')==='chuseok';
 const sehwaStandaloneQa=scheduleQaParams.get('qaHoliday')==='seollal';
@@ -706,6 +706,18 @@ async function animateErrandFall(image){
   }
   await schedulePlaybackDelay(260);
 }
+async function animateErrandNearFall(image){
+  if(!image)return;
+  const original=image.src;
+  const stumble=[1,2,1].map(frame=>versionedScheduleAsset(`../assets/schedule-layers-v2/childcare/hero-actions/trip-forward-v1/seonhwa-trip-forward-${frame}.png`));
+  image.style.transform='';
+  for(const frame of stumble){
+    image.src=frame;
+    await schedulePlaybackDelay(150);
+  }
+  image.src=original;
+  await schedulePlaybackDelay(170);
+}
 async function animateStudyPropDrop(activity,image){
   const props=document.querySelector('#stageProps');
   if(!props||!image)return;
@@ -823,7 +835,7 @@ async function playScheduleLayerScene(actionId,seonImage,rank,outcome,dayIndex){
   const placement=spec.placement||{};
   const positionPercent=value=>Number.parseFloat(String(value??'').replace('%',''));
   let heroPosition=positionPercent(placement.heroLeft||'40%'),npcPosition=positionPercent(placement.npcLeft||'72%');
-  const minimumActorGap=42;
+  const minimumActorGap=46;
   if(Number.isFinite(heroPosition)&&Number.isFinite(npcPosition)&&Math.abs(npcPosition-heroPosition)<minimumActorGap){
     if(npcPosition>=heroPosition)npcPosition=Math.min(90,heroPosition+minimumActorGap);else npcPosition=Math.max(10,heroPosition-minimumActorGap);
     if(Math.abs(npcPosition-heroPosition)<minimumActorGap)heroPosition=npcPosition>=heroPosition?npcPosition-minimumActorGap:npcPosition+minimumActorGap;
@@ -841,11 +853,15 @@ async function playScheduleLayerScene(actionId,seonImage,rank,outcome,dayIndex){
   try{
     if(spec.backgroundOverlay)layers.push(make('background',spec.backgroundOverlay));
     const npc=make('npc',npcFrames[0]);
+    if(actionId==='farmwork'){
+      npc.style.setProperty('width','148px','important');
+      npc.style.setProperty('height','148px','important');
+    }
     const patternLayer=v2Spec&&patternSpec?.layer==='effects'?'effect':'pattern';
     const pattern=make(`${patternLayer} ${patternKey} ${patternKey.startsWith('fail-')?'dedicated-failure':''}`,patternFrames[0]);
     if(patternSpec?.heroIncludesProp||(actionId==='farmwork'&&patternKey!=='fail-b'))pattern.hidden=true;
     layers.push(npc,pattern);
-    const delay=actionId==='farmwork'&&patternKey==='fail-b'?130:actionId==='childcare'?220:([360,300,250][rank]||300);
+    const delay=actionId==='farmwork'&&patternKey==='fail-b'?165:actionId==='childcare'?280:([360,300,250][rank]||300);
     for(let loop=0;loop<3;loop+=1){
       for(let frame=0;frame<3;frame+=1){
         let activeHeroFrame=heroFrames[frame],activeNpcFrame=npcFrames[frame];
@@ -855,8 +871,8 @@ async function playScheduleLayerScene(actionId,seonImage,rank,outcome,dayIndex){
           const travelProgress=travelStep/8;
           const qaDirection=scheduleQaParams.get('qaDirection');
           const travelsRight=lockedScheduleQaMode&&qaDirection?qaDirection==='right':dayIndex%4===3;
-          const heroLeft=travelsRight?-16+travelProgress*102:86-travelProgress*102;
-          const chaseGap=27-travelProgress*5;
+          const heroLeft=travelsRight?2+travelProgress*76:98-travelProgress*76;
+          const chaseGap=26;
           const chickenLeft=travelsRight?heroLeft+chaseGap:heroLeft-chaseGap;
           stage.style.setProperty('--layer-hero-left',`${heroLeft}%`,'important');
           stage.style.setProperty('--layer-prop-left',`${chickenLeft}%`,'important');
@@ -865,9 +881,9 @@ async function playScheduleLayerScene(actionId,seonImage,rank,outcome,dayIndex){
           pattern.style.transform=travelsRight?'translateX(-50%)':'translateX(-50%) scaleX(-1)';
         }
         if(actionId==='childcare'){
-          const travelStep=loop*3+frame,travelsRight=dayIndex%2===0,rawProgress=Math.min(1,travelStep/7),progress=failed?Math.min(.62,rawProgress):rawProgress;
-          const childLeft=travelsRight?-5+progress*110:105-progress*110;
-          const heroLeft=travelsRight?childLeft-30:childLeft+30;
+          const travelStep=loop*3+frame,travelsRight=dayIndex%2===0,rawProgress=Math.min(1,travelStep/8),progress=failed?Math.min(.62,rawProgress):rawProgress;
+          const childLeft=travelsRight?30+progress*64:70-progress*64;
+          const heroLeft=travelsRight?childLeft-28:childLeft+28;
           const fallen=failed&&travelStep>=6;
           const childLooksBack=fallen&&patternKey==='fail-b';
           const forcedFall=scheduleQaParams.get('qaFall');
@@ -2929,7 +2945,8 @@ async function playWeeklySchedule(selected) {
     if(!guaranteedSuccess&&condition==='mistake')outcome='mistake';
     else if(!guaranteedSuccess&&condition==='drowsy'&&outcome!=='mistake')outcome='struggle';
     if(!guaranteedSuccess&&(outcome==='mistake'||outcome==='struggle')&&action.id!=='shopping'&&!scheduleLayerIds.has(action.id)){
-      if(outcome==='mistake'&&action.id==='errand')await animateErrandFall(stageCharacterImage);
+      if(action.id==='errand'&&outcome==='mistake')await animateErrandFall(stageCharacterImage);
+      else if(action.id==='errand'&&outcome==='struggle')await animateErrandNearFall(stageCharacterImage);
       else if(outcome==='mistake'&&(action.id==='reading'||action.id==='arithmetic'))await animateStudyPropDrop(action.id,stageCharacterImage);
       else await animateActionStumble(stageCharacterImage,outcome);
     }
