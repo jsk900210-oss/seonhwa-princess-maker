@@ -130,8 +130,11 @@
 .phone.intro-guardian-active .home-greeting.guardian-overlay .home-greeting-head img{
   animation-duration:1.35s!important;
 }
-.phone.intro-guardian-active .home-greeting.guardian-overlay>p{animation:intro-guardian-dialogue-in .35s 1.05s ease-out both}
+.phone.intro-guardian-active .home-greeting.guardian-overlay .home-greeting-head b{bottom:25.5%!important}
+.phone.intro-guardian-active .home-greeting.guardian-overlay>p{bottom:13%!important;min-height:72px;max-height:98px;animation:intro-guardian-dialogue-in .35s 1.05s ease-out both}
 .phone.intro-guardian-active .home-greeting.guardian-overlay .greeting-answer-dock{animation:intro-guardian-dialogue-in .35s 1.18s ease-out both}
+.phone.intro-guardian-active #introGuardianContinue{border-color:#d4a044;background:linear-gradient(180deg,#fffdf4,#f3d89b);color:#4a2b12;text-align:center;font-size:14px;font-weight:900;box-shadow:0 0 0 2px #fff7d8,0 4px 10px #0007;animation:intro-next-pulse 1.25s ease-in-out infinite}
+@keyframes intro-next-pulse{0%,100%{transform:translateY(0);filter:brightness(1)}50%{transform:translateY(-2px);filter:brightness(1.08)}}
 @keyframes intro-guardian-dialogue-in{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
 @media(prefers-reduced-motion:reduce){
   .home-greeting.guardian-overlay .home-greeting-head img,

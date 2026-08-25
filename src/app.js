@@ -237,7 +237,7 @@ const vacationIllustrations=[
 function unifiedAgeFolder(){return '09';}
 function scheduleFramePath(file){return `../assets/characters/seonhwa/schedule-actions/${file}`;}
 function scheduleBasePath(file){return `../assets/characters/seonhwa/schedule-base/${file}`;}
-const scheduleAssetRevision='0.64.35-debug';
+const scheduleAssetRevision='0.64.36-debug';
 const scheduleQaParams=new URLSearchParams(location.search);
 const moonlightStandaloneQa=scheduleQaParams.get('qaHoliday')==='chuseok';
 const sehwaStandaloneQa=scheduleQaParams.get('qaHoliday')==='seollal';
@@ -695,6 +695,16 @@ async function animateActionStumble(image,level='mistake'){
     await schedulePlaybackDelay(level==='mistake'?95:120);
   }
   image.style.transform='';
+}
+async function animateErrandFall(image){
+  if(!image)return;
+  const frames=[1,2,3].map(frame=>versionedScheduleAsset(`../assets/schedule-layers-v2/childcare/hero-actions/trip-forward-v1/seonhwa-trip-forward-${frame}.png`));
+  image.style.transform='';
+  for(const frame of frames){
+    image.src=frame;
+    await schedulePlaybackDelay(175);
+  }
+  await schedulePlaybackDelay(260);
 }
 async function animateStudyPropDrop(activity,image){
   const props=document.querySelector('#stageProps');
@@ -2603,9 +2613,9 @@ function renderIntroDialogue(){
   const scene=introDialogueQueue[introDialogueIndex];if(!scene)return;
   document.querySelector('#homeGreetingSpeaker').textContent=scene.speaker;
   document.querySelector('#homeGreetingLine').textContent=scene.line;
-  document.querySelector('#homeGreetingPrompt').textContent=`${introDialogueIndex+1} / ${introDialogueQueue.length}`;
+  document.querySelector('#homeGreetingPrompt').textContent=`${introDialogueIndex+1} / ${introDialogueQueue.length} · 아래의 다음을 눌러 계속`;
   const choices=document.querySelector('#homeGreetingChoices');
-  choices.innerHTML=`<button id="introGuardianContinue" type="button">${introDialogueIndex===introDialogueQueue.length-1?'첫 일주일 시작하기':'계속 듣기'}</button>`;
+  choices.innerHTML=`<button id="introGuardianContinue" type="button">${introDialogueIndex===introDialogueQueue.length-1?'첫 일주일 시작하기 ›':'다음 ›'}</button>`;
   document.querySelector('#introGuardianContinue').addEventListener('click',advanceIntroDialogue,{once:true});
 }
 function advanceIntroDialogue(){
@@ -2919,7 +2929,8 @@ async function playWeeklySchedule(selected) {
     if(!guaranteedSuccess&&condition==='mistake')outcome='mistake';
     else if(!guaranteedSuccess&&condition==='drowsy'&&outcome!=='mistake')outcome='struggle';
     if(!guaranteedSuccess&&(outcome==='mistake'||outcome==='struggle')&&action.id!=='shopping'&&!scheduleLayerIds.has(action.id)){
-      if(outcome==='mistake'&&(action.id==='reading'||action.id==='arithmetic'))await animateStudyPropDrop(action.id,stageCharacterImage);
+      if(outcome==='mistake'&&action.id==='errand')await animateErrandFall(stageCharacterImage);
+      else if(outcome==='mistake'&&(action.id==='reading'||action.id==='arithmetic'))await animateStudyPropDrop(action.id,stageCharacterImage);
       else await animateActionStumble(stageCharacterImage,outcome);
     }
     const fullPhaseHoliday=action.id==='holiday-seollal'||action.id==='holiday-chuseok';

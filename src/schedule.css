@@ -2384,7 +2384,7 @@ body .phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage:
   left:var(--layer-hero-left)!important;bottom:5%!important;width:132px!important;height:132px!important;
 }
 .phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-childcare.schedule-layered .schedule-scene-layer.layer-npc{
-  left:var(--layer-npc-left)!important;bottom:5%!important;width:96px!important;height:96px!important;object-fit:contain!important;object-position:center bottom!important;
+  left:var(--layer-npc-left)!important;bottom:5%!important;width:84px!important;height:84px!important;object-fit:contain!important;object-position:center bottom!important;
   transition:transform .12s linear;
 }
 .phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-childcare.schedule-layered .schedule-scene-layer.layer-pattern.dedicated-failure{
