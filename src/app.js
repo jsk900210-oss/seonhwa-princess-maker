@@ -237,7 +237,7 @@ const vacationIllustrations=[
 function unifiedAgeFolder(){return '09';}
 function scheduleFramePath(file){return `../assets/characters/seonhwa/schedule-actions/${file}`;}
 function scheduleBasePath(file){return `../assets/characters/seonhwa/schedule-base/${file}`;}
-const scheduleAssetRevision='0.64.18-debug';
+const scheduleAssetRevision='0.64.19-debug';
 const scheduleQaParams=new URLSearchParams(location.search);
 const moonlightStandaloneQa=scheduleQaParams.get('qaHoliday')==='chuseok';
 const sehwaStandaloneQa=scheduleQaParams.get('qaHoliday')==='seollal';
@@ -2431,9 +2431,35 @@ function finishGuardianNaming(){
   queueAutoSave();
 }
 function reselectGuardian(){document.querySelector('#guardianNameSetup').hidden=true;document.querySelector('#guardianChoice').hidden=false;document.querySelector('#guardianNameInput').value='';}
-function startIntroDialogue(lines){introDialogueQueue=lines;introDialogueIndex=0;document.querySelector('.dialogue').classList.add('tap-continue');renderIntroDialogue();}
-function renderIntroDialogue(){const scene=introDialogueQueue[introDialogueIndex];if(!scene){document.querySelector('.dialogue').classList.remove('tap-continue');return;}document.querySelector('#speakerName').textContent=scene.speaker;document.querySelector('#dialogueText').textContent=scene.line;}
-function advanceIntroDialogue(){if(!introDialogueQueue.length)return;introDialogueIndex+=1;if(introDialogueIndex>=introDialogueQueue.length){introDialogueQueue=[];introDialogueIndex=0;document.querySelector('.dialogue').classList.remove('tap-continue');document.querySelector('#speakerName').textContent=game.guardianName;document.querySelector('#dialogueText').textContent='아래의 일정 버튼을 눌러 첫 주를 계획해 보자.';return;}renderIntroDialogue();}
+function startIntroDialogue(lines){
+  introDialogueQueue=lines;introDialogueIndex=0;
+  const phone=document.querySelector('.phone'),greeting=document.querySelector('#homeGreeting'),portrait=document.querySelector('#homeGreetingPortrait');
+  phone.classList.add('intro-guardian-active');
+  greeting.hidden=false;portrait.classList.remove('is-listening');
+  document.querySelector('#guardianTalkResult').hidden=true;
+  openGuardianDialogueOverlay('neutral');
+  renderIntroDialogue();
+}
+function renderIntroDialogue(){
+  const scene=introDialogueQueue[introDialogueIndex];if(!scene)return;
+  document.querySelector('#homeGreetingSpeaker').textContent=scene.speaker;
+  document.querySelector('#homeGreetingLine').textContent=scene.line;
+  document.querySelector('#homeGreetingPrompt').textContent=`${introDialogueIndex+1} / ${introDialogueQueue.length}`;
+  const choices=document.querySelector('#homeGreetingChoices');
+  choices.innerHTML=`<button id="introGuardianContinue" type="button">${introDialogueIndex===introDialogueQueue.length-1?'첫 일주일 시작하기':'계속 듣기'}</button>`;
+  document.querySelector('#introGuardianContinue').addEventListener('click',advanceIntroDialogue,{once:true});
+}
+function advanceIntroDialogue(){
+  if(!introDialogueQueue.length)return;introDialogueIndex+=1;
+  if(introDialogueIndex>=introDialogueQueue.length){
+    introDialogueQueue=[];introDialogueIndex=0;
+    closeGuardianDialogueOverlay();document.querySelector('.phone').classList.remove('intro-guardian-active');
+    document.querySelector('#speakerName').textContent=game.guardianName;
+    document.querySelector('#dialogueText').textContent='아래의 일정 버튼을 눌러 첫 주를 계획해 보자.';
+    return;
+  }
+  renderIntroDialogue();
+}
 function advanceGameDate(days){
   if(!game.currentDate)return [];
   const previousAge=game.age;
