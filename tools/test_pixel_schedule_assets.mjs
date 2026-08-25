@@ -20,4 +20,11 @@ for (const activity of activities) for (let frame = 1; frame <= 3; frame += 1) {
   if (right < left || left < 8 || top < 8 || right > 311 || bottom > 311) throw new Error(`unsafe crop: ${activity}-${frame} (${left},${top})-(${right},${bottom})`);
 }
 
-console.log(`PASS: ${activities.length} activities × 3 pixel frames, 320px canvas, transparent safety margins`);
+const herbStartle = path.join(directory, "herbs-startle-arms-up-v1.png");
+const {data:herbStartleData,info:herbStartleInfo}=await sharp(herbStartle).ensureAlpha().raw().toBuffer({resolveWithObject:true});
+if(herbStartleInfo.width!==320||herbStartleInfo.height!==320||herbStartleInfo.channels!==4)throw new Error('invalid canvas: herbs-startle-arms-up-v1');
+for(let offset=3;offset<herbStartleData.length;offset+=4){
+  if(herbStartleData[offset]!==0&&herbStartleData[offset]!==255)throw new Error('white-matte risk: herb startle alpha must be binary');
+}
+
+console.log(`PASS: ${activities.length} activities × 3 pixel frames + herb startle, transparent safety margins`);
