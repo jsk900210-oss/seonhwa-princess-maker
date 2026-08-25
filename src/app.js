@@ -237,7 +237,7 @@ const vacationIllustrations=[
 function unifiedAgeFolder(){return '09';}
 function scheduleFramePath(file){return `../assets/characters/seonhwa/schedule-actions/${file}`;}
 function scheduleBasePath(file){return `../assets/characters/seonhwa/schedule-base/${file}`;}
-const scheduleAssetRevision='0.64.48-debug';
+const scheduleAssetRevision='0.64.49-debug';
 const scheduleQaParams=new URLSearchParams(location.search);
 const moonlightStandaloneQa=scheduleQaParams.get('qaHoliday')==='chuseok';
 const sehwaStandaloneQa=scheduleQaParams.get('qaHoliday')==='seollal';
@@ -841,6 +841,7 @@ async function playScheduleLayerScene(actionId,seonImage,rank,outcome,dayIndex){
   const heroFrames=actionId==='childcare'?childcareChaseFrames:actionId==='farmwork'&&patternKey==='fail-b'?farmChickenChaseFrames:patternSpec?.heroFrames?.length===3?patternSpec.heroFrames:spec.existingHeroFrames||[];
   const farmQaDirection=scheduleQaParams.get('qaDirection');
   const farmChaseTravelsRight=actionId==='farmwork'&&patternKey==='fail-b'?(lockedScheduleQaMode&&farmQaDirection?farmQaDirection==='right':Math.floor(dayIndex/14)%2===0):null;
+  const childcareTravelsRight=actionId==='childcare'?(lockedScheduleQaMode&&farmQaDirection?farmQaDirection==='right':dayIndex%2===0):null;
   if(heroFrames.length!==3||npcFrames.length!==3||patternFrames?.length!==3)throw new Error(`schedule layer frame count invalid: ${actionId}/${patternKey}`);
   const placement=spec.placement||{};
   const positionPercent=value=>Number.parseFloat(String(value??'').replace('%',''));
@@ -861,6 +862,7 @@ async function playScheduleLayerScene(actionId,seonImage,rank,outcome,dayIndex){
   stage.style.setProperty('--layer-effect-left',placement.effectLeft||placement.propLeft||'52%');
   stage.style.setProperty('--layer-effect-bottom',placement.effectBottom||placement.propBottom||'7%');
   if(farmChaseTravelsRight!==null)stage.dataset.chaseDirection=farmChaseTravelsRight?'right':'left';
+  if(childcareTravelsRight!==null)stage.dataset.childcareDirection=childcareTravelsRight?'right':'left';
   try{
     if(spec.backgroundOverlay)layers.push(make('background',spec.backgroundOverlay));
     const npc=make('npc',npcFrames[0]);
@@ -892,13 +894,13 @@ async function playScheduleLayerScene(actionId,seonImage,rank,outcome,dayIndex){
           stage.style.setProperty('--layer-prop-left',`${chickenLeft}%`,'important');
         }
         if(actionId==='childcare'){
-          const travelStep=loop*3+frame,travelsRight=dayIndex%2===0,rawProgress=Math.min(1,travelStep/8),progress=failed?Math.min(.62,rawProgress):rawProgress;
+          const travelStep=loop*3+frame,travelsRight=childcareTravelsRight,rawProgress=Math.min(1,travelStep/8),progress=failed?Math.min(.62,rawProgress):rawProgress;
           const chaseCycle=[0,1,2,1,0,1,2,1,0];
           activeHeroFrame=childcareChaseFrames[chaseCycle[travelStep]];
           activeNpcFrame=childcareRunningFrames[chaseCycle[travelStep]];
           const childLeft=travelsRight?30+progress*64:70-progress*64;
-          const strideGap=[30,28,29,28,30,28,29,28,30][travelStep];
-          const heroLeft=travelsRight?childLeft-strideGap:childLeft+strideGap;
+          const childcareMinimumGap=38;
+          const heroLeft=travelsRight?childLeft-childcareMinimumGap:childLeft+childcareMinimumGap;
           const fallen=failed&&travelStep>=6;
           const childLooksBack=fallen&&patternKey==='fail-b';
           const forcedFall=scheduleQaParams.get('qaFall');
@@ -910,10 +912,6 @@ async function playScheduleLayerScene(actionId,seonImage,rank,outcome,dayIndex){
           }
           stage.style.setProperty('--layer-npc-left',`${childLeft}%`,'important');
           stage.style.setProperty('--layer-hero-left',`${heroLeft}%`,'important');
-          seonImage.style.setProperty('transform',travelsRight?'none':'scaleX(-1)','important');
-          seonImage.style.setProperty('transform-origin','center bottom','important');
-          npc.style.setProperty('transform',`translateX(-50%) ${(childLooksBack?!travelsRight:travelsRight)?'':'scaleX(-1)'}`,'important');
-          npc.style.setProperty('transform-origin','center bottom','important');
           pattern.hidden=!fallen;
           if(fallen){stage.style.setProperty('--layer-prop-left',`${patternKey==='fail-a'?childLeft:heroLeft}%`,'important');pattern.style.transform='translateX(-50%)';}
         }
@@ -927,6 +925,7 @@ async function playScheduleLayerScene(actionId,seonImage,rank,outcome,dayIndex){
     layers.forEach(layer=>layer.remove());
     stage.classList.remove('schedule-layered');
     delete stage.dataset.chaseDirection;
+    delete stage.dataset.childcareDirection;
     seonImage.style.removeProperty('transform');
     seonImage.style.removeProperty('transform-origin');
     ['--layer-hero-left','--layer-floor','--layer-npc-left','--layer-npc-scale','--layer-prop-left','--layer-prop-bottom','--layer-effect-left','--layer-effect-bottom'].forEach(name=>stage.style.removeProperty(name));

@@ -2390,11 +2390,15 @@ body .phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage:
 }
 .phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-childcare.schedule-layered .schedule-scene-layer.layer-npc{
   left:var(--layer-npc-left)!important;bottom:5%!important;width:84px!important;height:84px!important;object-fit:contain!important;object-position:center bottom!important;
-  transition:left .28s linear,transform .12s linear!important;
+  transition:left .28s linear!important;
   animation:childcare-child-step .56s steps(2,end) infinite!important;
 }
 @keyframes childcare-chase-step{0%,100%{translate:0 0}50%{translate:0 -3px}}
 @keyframes childcare-child-step{0%,100%{translate:0 -2px}50%{translate:0 1px}}
+.phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-childcare.schedule-layered[data-childcare-direction="right"] .stage-character.pixel-sprite>img,
+.phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-childcare.schedule-layered[data-childcare-direction="right"] .schedule-scene-layer.layer-npc{transform:none!important;transform-origin:center bottom!important}
+.phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-childcare.schedule-layered[data-childcare-direction="left"] .stage-character.pixel-sprite>img,
+.phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-childcare.schedule-layered[data-childcare-direction="left"] .schedule-scene-layer.layer-npc{transform:scaleX(-1)!important;transform-origin:center bottom!important}
 
 /* v0.64.43: free action follows the schedule actor/layer contract. */
 .phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-freeTime.free-time-market .stage-character.pixel-sprite{
@@ -2467,10 +2471,7 @@ body .phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage:
 .phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-farmwork.schedule-layered[data-chase-direction="right"] .schedule-scene-layer.layer-pattern.fail-b{transform:translateX(-50%)!important}
 .phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-farmwork.schedule-layered[data-chase-direction="left"] .schedule-scene-layer.layer-pattern.fail-b{transform:translateX(-50%) scaleX(-1)!important}
 
-/* v0.64.17: face the child, scale the child by visible body height, and isolate sweat. */
-.phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-childcare.schedule-layered .stage-character.pixel-sprite>img{
-  transform:scaleX(-1)!important;
-}
+/* v0.64.17: scale the child by visible body height and isolate sweat. */
 .phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-childcare.schedule-layered .schedule-scene-layer.layer-pattern.fail-a{
   left:39%!important;
   bottom:34%!important;
