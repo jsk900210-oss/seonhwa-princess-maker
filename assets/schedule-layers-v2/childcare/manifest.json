@@ -18,7 +18,7 @@
     "fail-b": {"layer": "failures", "frames": ["failures/fail-b-1.png", "failures/fail-b-2.png", "failures/fail-b-3.png"]}
   },
   "placement": {
-    "heroLeft": "35%", "floorBottom": "5%", "npcLeft": "73%", "npcScale": 0.58,
+    "heroLeft": "29%", "floorBottom": "5%", "npcLeft": "76%", "npcScale": 0.78,
     "propLeft": "59%", "propBottom": "5%", "effectLeft": "61%", "effectBottom": "5%"
   },
   "layerOrder": ["existing-background", "npc", "existing-seonhwa", "props", "effects", "failures"]

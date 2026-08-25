@@ -2014,7 +2014,7 @@
 .phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-childcare.schedule-layered .schedule-scene-layer.layer-npc{width:118px!important}
 .phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-childcare.schedule-layered .schedule-scene-layer.layer-pattern,.phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-childcare.schedule-layered .schedule-scene-layer.layer-effect{width:64px!important}
 /* v0.63.89: 아이돌보기에서 선화가 오른쪽의 아이를 바라보고, 실패 식은땀은 얼굴 옆에 표시한다. */
-.phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-childcare.schedule-layered .stage-character.pixel-sprite>img{transform:none!important}
+.phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-childcare.schedule-layered .stage-character.pixel-sprite>img{transform:scaleX(-1)!important}
 .phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-childcare.schedule-layered .schedule-scene-layer.layer-pattern.fail-a{left:44%!important;bottom:31%!important;width:50px!important}
 .phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-childcare.schedule-layered .schedule-scene-layer.layer-pattern.fail-b{left:70%!important;bottom:18%!important;width:44px!important}
 /* v0.63.91: 목공소 v2 레이어 — 선화가 작업대를 향하고 목수·작업대의 성인 비율을 유지한다. */
@@ -2111,7 +2111,7 @@
 .phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-merchanthelp.schedule-layered .schedule-scene-layer.layer-npc,
 .phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-accounting.schedule-layered .schedule-scene-layer.layer-npc,
 .phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-tutoring.schedule-layered .schedule-scene-layer.layer-npc{width:146px!important}
-.phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-childcare.schedule-layered .stage-character.pixel-sprite>img{transform:none!important;transform-origin:center bottom!important}
+.phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-childcare.schedule-layered .stage-character.pixel-sprite>img{transform:scaleX(-1)!important;transform-origin:center bottom!important}
 .phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-childcare.schedule-layered .schedule-scene-layer.layer-effect.success-b{left:61%!important;bottom:5%!important;width:104px!important}
 .phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-woodwork.schedule-layered:has(.schedule-scene-layer.success-a) .stage-character.pixel-sprite,
 .phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-woodwork.schedule-layered:has(.schedule-scene-layer.success-b) .stage-character.pixel-sprite{left:40%!important;width:210px!important;height:174px!important;bottom:3%!important}
@@ -2276,7 +2276,7 @@
 }
 .phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-childcare.schedule-layered .schedule-scene-layer.layer-npc{
   left:var(--layer-npc-left)!important;
-  width:86px!important;
+  width:96px!important;
 }
 .phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-childcare.schedule-layered .schedule-scene-layer.layer-pattern,
 .phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-childcare.schedule-layered .schedule-scene-layer.layer-effect{
@@ -2300,6 +2300,7 @@
   width:158px!important;
   transform:translateX(-50%) scaleX(-1)!important;
   transform-origin:center bottom!important;
+  animation:farm-guide-bob .9s ease-in-out infinite!important;
 }
 .phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-farmwork.schedule-layered .schedule-scene-layer.layer-npc[hidden]{
   display:none!important;
@@ -2313,6 +2314,25 @@
   bottom:1%!important;
   width:112px!important;
   clip-path:inset(42% 0 0 0);
+}
+@keyframes farm-guide-bob{0%,100%{translate:0 0}50%{translate:0 -4px}}
+
+/* v0.64.17: face the child, scale the child by visible body height, and isolate sweat. */
+.phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-childcare.schedule-layered .stage-character.pixel-sprite>img{
+  transform:scaleX(-1)!important;
+}
+.phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-childcare.schedule-layered .schedule-scene-layer.layer-pattern.fail-a{
+  left:39%!important;
+  bottom:34%!important;
+  width:46px!important;
+  clip-path:inset(44% 0 0 0);
+  filter:none!important;
+}
+.phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-childcare.schedule-layered .schedule-scene-layer.layer-npc,
+.phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-childcare.schedule-layered .schedule-scene-layer.layer-pattern,
+.phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-childcare.schedule-layered .schedule-scene-layer.layer-effect{
+  background:transparent!important;
+  box-shadow:none!important;
 }
 .sehwa-contest.festival-pm3 .sehwa-award-sequence{
   left:4%!important;

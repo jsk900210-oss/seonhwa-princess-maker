@@ -1,5 +1,12 @@
 # 선화공주 만들기 — MVP 이미지 자산 패키지
 
+## v0.64.17-debug · 농가·아이 돌보기 모션 정밀화
+
+- 농가: 전용 밭갈기 3프레임, 농부 반응 모션, 방향 대응 닭 추격을 적용했습니다.
+- 아이 돌보기: 선화 방향, 아이 NPC 비율, 식은땀 위치와 투명 레이어 경계를 교정했습니다.
+- QA: `src/?qaSchedule=farmwork&qaPattern=success-a&qa=1&v=0.64.17-debug`
+- QA: `src/?qaSchedule=childcare&qaPattern=fail-a&qa=1&v=0.64.17-debug`
+
 ## v0.64.16-debug · 농가 밭갈기 장면 통일
 
 - 성공 A는 선화가 호미삽으로 밭흙을 고르는 자세로 고정하고 양배추 소품을 제거했습니다.

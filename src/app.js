@@ -237,7 +237,7 @@ const vacationIllustrations=[
 function unifiedAgeFolder(){return '09';}
 function scheduleFramePath(file){return `../assets/characters/seonhwa/schedule-actions/${file}`;}
 function scheduleBasePath(file){return `../assets/characters/seonhwa/schedule-base/${file}`;}
-const scheduleAssetRevision='0.64.16-debug';
+const scheduleAssetRevision='0.64.17-debug';
 const scheduleQaParams=new URLSearchParams(location.search);
 const moonlightStandaloneQa=scheduleQaParams.get('qaHoliday')==='chuseok';
 const sehwaStandaloneQa=scheduleQaParams.get('qaHoliday')==='seollal';
@@ -774,9 +774,16 @@ async function playScheduleLayerScene(actionId,seonImage,rank,outcome,dayIndex){
       for(let frame=0;frame<3;frame+=1){
         if(actionId==='farmwork'&&patternKey==='fail-b'){
           npc.hidden=true;
-          stage.style.setProperty('--layer-npc-left','12%');
-          stage.style.setProperty('--layer-hero-left',`${30+frame*12}%`);
-          stage.style.setProperty('--layer-prop-left',`${58+frame*10}%`);
+          const travelStep=loop*3+frame;
+          const travelProgress=travelStep/8;
+          const travelsRight=dayIndex%2===0;
+          const heroLeft=travelsRight?-18+travelProgress*100:82-travelProgress*100;
+          const chickenLeft=travelsRight?0+travelProgress*100:100-travelProgress*100;
+          stage.style.setProperty('--layer-hero-left',`${heroLeft}%`,'important');
+          stage.style.setProperty('--layer-prop-left',`${chickenLeft}%`,'important');
+          seonImage.style.setProperty('transform',travelsRight?'none':'scaleX(-1)','important');
+          seonImage.style.setProperty('transform-origin','center bottom','important');
+          pattern.style.transform=travelsRight?'translateX(-50%)':'translateX(-50%) scaleX(-1)';
         }
         seonImage.src=v2Spec?`${base}/${heroFrames[frame]}${v}`:`${heroFrames[frame]}${v}`;
         const npcFrame=actionId==='farmwork'?0:frame;
@@ -788,6 +795,8 @@ async function playScheduleLayerScene(actionId,seonImage,rank,outcome,dayIndex){
   }finally{
     layers.forEach(layer=>layer.remove());
     stage.classList.remove('schedule-layered');
+    seonImage.style.removeProperty('transform');
+    seonImage.style.removeProperty('transform-origin');
     ['--layer-hero-left','--layer-floor','--layer-npc-left','--layer-npc-scale','--layer-prop-left','--layer-prop-bottom','--layer-effect-left','--layer-effect-bottom'].forEach(name=>stage.style.removeProperty(name));
   }
 }
