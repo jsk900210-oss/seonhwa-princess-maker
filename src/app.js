@@ -237,7 +237,7 @@ const vacationIllustrations=[
 function unifiedAgeFolder(){return '09';}
 function scheduleFramePath(file){return `../assets/characters/seonhwa/schedule-actions/${file}`;}
 function scheduleBasePath(file){return `../assets/characters/seonhwa/schedule-base/${file}`;}
-const scheduleAssetRevision='0.64.22-debug';
+const scheduleAssetRevision='0.64.23-debug';
 const scheduleQaParams=new URLSearchParams(location.search);
 const moonlightStandaloneQa=scheduleQaParams.get('qaHoliday')==='chuseok';
 const sehwaStandaloneQa=scheduleQaParams.get('qaHoliday')==='seollal';
@@ -392,6 +392,23 @@ const generalGoods = [
   {id:'recipe-book',name:'조리 비방서',price:680,type:'event',detail:'계절 음식의 손맛을 적은 조리서',change:{sense:8,health:4}},
   {id:'medical-compendium',name:'향약 집성초',price:1320,type:'event',detail:'약초와 치료법을 정리한 의서',change:{intelligence:11,sense:7},wealth:1000}
 ];
+const sundryGoods=[
+  {id:'shop-silk-hairpin',name:'진주 비녀',price:680,type:'accessory',detail:'작은 진주를 단 단정한 비녀',change:{charm:6,manners:3}},
+  {id:'shop-jade-hairpin',name:'옥꽃 비녀',price:1280,type:'accessory',detail:'옥으로 꽃잎을 다듬은 비녀',change:{charm:10,dignity:6}},
+  {id:'shop-coral-norigae',name:'산호 노리개',price:1450,type:'accessory',detail:'붉은 산호알을 엮은 노리개',change:{charm:12,dignity:7}},
+  {id:'shop-silk-bolt',name:'연분홍 비단',price:920,type:'event',detail:'옷과 소품을 지을 수 있는 고운 비단',change:{sense:6,charm:5}},
+  {id:'shop-hand-mirror',name:'자개 손거울',price:760,type:'accessory',detail:'나전 문양을 입힌 작은 손거울',change:{charm:7,manners:4}},
+  {id:'shop-boxwood-comb',name:'회양목 빗',price:360,type:'accessory',detail:'머릿결을 단정하게 다듬는 빗',change:{charm:4,dignity:3}},
+  {id:'shop-plum-perfume',name:'매화 향수',price:880,type:'accessory',detail:'은은한 매화 향을 담은 향병',change:{charm:8,reputation:3}},
+  {id:'shop-face-powder',name:'쌀분 백분',price:520,type:'accessory',detail:'곱게 간 쌀가루로 만든 백분',change:{charm:6}},
+  {id:'shop-rouge',name:'홍화 연지',price:610,type:'accessory',detail:'홍화빛을 담은 작은 연지합',change:{charm:7,sensitivity:2}},
+  {id:'shop-makeup-set',name:'단장 화장품 세트',price:1680,type:'accessory',detail:'백분·연지·눈썹먹을 갖춘 단장함',change:{charm:14,manners:5,reputation:3}},
+  {id:'shop-flower-shoes',name:'수놓은 꽃신',price:740,type:'accessory',detail:'발끝에 꽃 자수를 놓은 신',change:{charm:7,dignity:4}},
+  {id:'shop-silk-pouch',name:'비단 향낭',price:470,type:'accessory',detail:'좋은 향을 머금은 비단 주머니',change:{charm:5,manners:4}},
+  {id:'shop-dance-fan',name:'매화 춤부채',price:590,type:'accessory',detail:'춤사위를 돋보이게 하는 부채',change:{agility:4,arts:5,charm:3}},
+  {id:'shop-silver-ring',name:'은가락지',price:1080,type:'accessory',detail:'단아한 광택의 은 장신구',change:{charm:8,dignity:6}},
+  {id:'shop-embroidery-kit',name:'자수 단장 꾸러미',price:640,type:'event',detail:'색실과 장식 매듭을 담은 꾸러미',change:{sense:6,arts:5,charm:2}}
+];
 let visitShopStock=[];
 let visitShopPurchaseMade=false;
 let pendingVisitShop=false;
@@ -456,6 +473,7 @@ const outfits = [
 ];
 foods.forEach(item=>{item.change=canonicalizeChange(item.change);});
 generalGoods.forEach(item=>{item.change=canonicalizeChange(item.change);});
+sundryGoods.forEach(item=>{item.change=canonicalizeChange(item.change);});
 outfits.forEach(item=>{item.change=canonicalizeChange(item.change);});
 const outfitAgeLabel=outfit=>outfit.age===outfit.ageEnd?`${outfit.age}세`:`${outfit.age}–${outfit.ageEnd}세`;
 const outfitAvailable=outfit=>game.age>=outfit.age&&game.age<=outfit.ageEnd;
@@ -786,6 +804,20 @@ async function playScheduleLayerScene(actionId,seonImage,rank,outcome,dayIndex){
           seonImage.style.setProperty('transform',travelsRight?'none':'scaleX(-1)','important');
           seonImage.style.setProperty('transform-origin','center bottom','important');
           pattern.style.transform=travelsRight?'translateX(-50%)':'translateX(-50%) scaleX(-1)';
+        }
+        if(actionId==='childcare'){
+          const travelStep=loop*3+frame,travelsRight=dayIndex%2===0,rawProgress=Math.min(1,travelStep/7),progress=failed?Math.min(.72,rawProgress):rawProgress;
+          const childLeft=travelsRight?-5+progress*110:105-progress*110;
+          const heroLeft=travelsRight?childLeft-18:childLeft+18;
+          const fallen=failed&&travelStep>=6;
+          stage.style.setProperty('--layer-npc-left',`${childLeft}%`,'important');
+          stage.style.setProperty('--layer-hero-left',`${heroLeft}%`,'important');
+          seonImage.style.setProperty('transform',`${travelsRight?'none':'scaleX(-1)'}${fallen&&patternKey==='fail-b'?' rotate(72deg) translateY(8px)':''}`,'important');
+          seonImage.style.setProperty('transform-origin','center bottom','important');
+          npc.style.setProperty('transform',`translateX(-50%) ${travelsRight?'':'scaleX(-1)'}${fallen&&patternKey==='fail-a'?' rotate(78deg) translateY(7px)':''}`,'important');
+          npc.style.setProperty('transform-origin','center bottom','important');
+          pattern.hidden=!fallen;
+          if(fallen){stage.style.setProperty('--layer-prop-left',`${patternKey==='fail-a'?childLeft:heroLeft}%`,'important');pattern.style.transform='translateX(-50%)';}
         }
         seonImage.src=v2Spec?`${base}/${heroFrames[frame]}${v}`:`${heroFrames[frame]}${v}`;
         const npcFrame=frame;
@@ -1702,6 +1734,10 @@ function awardDungeonGear(){normalizeInventory();const owned=new Set(game.items.
 function normalizeInventory(){
   if(!Array.isArray(game.items))game.items=[];
   game.items=game.items.map((item,index)=>typeof item==='string'?{id:`legacy-${index}`,type:'event',name:item,qty:1}:({...item,type:item.type||'event',qty:Math.max(1,item.qty||1)}));
+  game.items.forEach(item=>{
+    if(item.source==='guardian-birthday'&&!item.statChange){const base=guardianDefs[game.guardianType]?.gift||startingBirthdayGifts[0];item.statChange=canonicalizeChange({...base.change});item.giftValue=480+Object.values(item.statChange).reduce((sum,value)=>sum+Math.max(0,value),0)*55;item.sellable=true;}
+    if(item.source==='father-birthday'&&!item.statChange){const age=Number(String(item.id).match(/(\d+)$/)?.[1])||9;item.statChange=canonicalizeChange({stress:-7,fatherAffinity:3});item.giftValue=360+age*25+450;item.sellable=true;}
+  });
   const vacationIds=new Set(vacationIllustrations.map(item=>item.id)),seenVacation=new Set();
   game.items=game.items.filter(item=>{if(!vacationIds.has(item.id))return true;item.qty=1;if(seenVacation.has(item.id))return false;seenVacation.add(item.id);return true;});
   const seenOutfits=new Set();
@@ -1724,9 +1760,10 @@ function renderInventory(category='all'){
 }
 function showInventoryItem(id,category){
   const item=game.items.find(entry=>entry.id===id),detail=document.querySelector('#inventoryDetail');if(!item)return;
-  const action=item.type==='outfit'?`<button data-inventory-action="wear">${game.equippedOutfit===item.id?'벗기':'갈아입기'}</button>`:item.type==='food'?'<button data-inventory-action="use">먹기</button>':item.type==='dungeonGear'?`<button data-inventory-action="equip-dungeon">${item.equipped?'장착 해제':'비경 장착'}</button>`:'';
+  const action=item.type==='outfit'?`<button data-inventory-action="wear">${game.equippedOutfit===item.id?'벗기':'갈아입기'}</button>`:item.type==='food'?'<button data-inventory-action="use">먹기</button>':item.type==='dungeonGear'?`<button data-inventory-action="equip-dungeon">${item.equipped?'장착 해제':'비경 장착'}</button>`:(item.sellable||String(item.source||'').includes('birthday'))?`<button data-inventory-sell="${item.id}">${itemSalePrice(item).toLocaleString()}냥에 판매</button>`:'';
   detail.innerHTML=`${item.type==='event'&&item.image?`<img class="event-collectible-preview" src="${item.image}" alt="${item.name}">`:''}<b>${item.name}</b><span>${inventoryTypeLabels[item.type]||'기타'} · ${item.qty||1}개</span>${item.description?`<p>${item.description}</p>`:''}${action}`;
   detail.querySelector('[data-inventory-action]')?.addEventListener('click',()=>{if(item.type==='outfit'){game.autoOutfit=false;game.equippedOutfit=game.equippedOutfit===item.id?null:item.id;applyEquippedOutfit();renderInventory(category);}else if(item.type==='food'){const food=foods.find(entry=>entry.id===item.id);if(food)applyShopChanges(food.change);item.qty-=1;if(item.qty<=0)game.items.splice(game.items.indexOf(item),1);document.querySelector('#dialogueText').textContent=`${item.name}을(를) 먹었어요.`;renderInventory(category);}else if(item.type==='dungeonGear'){if(!item.equipped)game.items.filter(entry=>entry.type==='dungeonGear'&&entry.slot===item.slot).forEach(entry=>entry.equipped=false);item.equipped=!item.equipped;queueAutoSave();renderInventory(category);}});
+  detail.querySelector('[data-inventory-sell]')?.addEventListener('click',()=>sellInventoryItem(item.id,false));
 }
 const collectionAgeTabs=[['all','전체'],['9','9세'],['13','13세'],['16','16세'],['19','19세']];
 function closeCollectionToHome(){panel.hidden=true;panelTitle.textContent='';panelBody.innerHTML='';playHomeMusic();}
@@ -2097,23 +2134,49 @@ function returnToMarketSelection(){
 const isCashOutfit=outfit=>outfit.category==='cash'||outfit.tone==='캐시';
 const isPremiumOutfit=outfit=>!isCashOutfit(outfit)&&(outfit.id.startsWith('premium-')||outfit.tone==='고급');
 const outfitShopCategory=outfit=>isCashOutfit(outfit)?'cash':isPremiumOutfit(outfit)?'premium':'general';
+function itemSalePrice(item){
+  const base=Number(item.purchasePrice||item.giftValue||0),bonus=Object.values(item.statChange||{}).reduce((sum,value)=>sum+Math.max(0,value),0);
+  return Math.max(20,Math.round(base*(.36+Math.min(.18,(game.sense||0)/1000))+bonus*6));
+}
+function buySundryGood(id){
+  normalizeInventory();const good=sundryGoods.find(entry=>entry.id===id);if(!good||game.money<good.price||game.items.some(item=>item.id===id))return;
+  game.money-=good.price;const actual=applyStatChange(good.change);
+  game.items.push({id:good.id,type:good.type,name:good.name,description:good.detail,qty:1,source:'sundry-shop',purchasePrice:good.price,statChange:actual,sellable:true});
+  document.querySelector('#dialogueText').textContent=`잡화점에서 ${good.name}${objectParticle(good.name)} 구입했어요.`;showLiveChanges({change:actual,cost:good.price});renderHud();renderShopPanel('sundry',true);queueAutoSave();
+}
+function sellInventoryItem(id,returnToShop=false){
+  normalizeInventory();const index=game.items.findIndex(item=>item.id===id),item=game.items[index];if(!item||(!item.sellable&&!String(item.source||'').includes('birthday')))return;
+  const reversed={};Object.entries(item.statChange||{}).forEach(([key,value])=>reversed[key]=-value);
+  if(item.source==='guardian-birthday')reversed.guardianTrust=(reversed.guardianTrust||0)-8;
+  if(item.source==='father-birthday')reversed.fatherAffinity=(reversed.fatherAffinity||0)-8;
+  const actual=applyStatChange(reversed),price=itemSalePrice(item);game.money+=price;game.items.splice(index,1);
+  document.querySelector('#dialogueText').textContent=`${item.name}${objectParticle(item.name)} ${price.toLocaleString()}냥에 팔았어요. 선물에 깃든 능력도 함께 사라졌습니다.`;
+  showLiveChanges({change:actual,cost:-price});renderHud();queueAutoSave();if(returnToShop)renderShopPanel('sundry',true);else renderInventory();
+}
 function renderShopPanel(tab='food',marketMode=marketShoppingActive,outfitCategory='general'){
   normalizeInventory();
   activeShopMarketMode=marketMode;
   activeOutfitShopCategory=outfitCategory;
-  panelTitle.textContent=tab==='food'?'저잣거리 · 주막':'저잣거리 · 한복점';
-  const keeper=tab==='food'?{name:'주모',image:'../assets/characters/npcs/shops/tavern-hostess.png',greeting:'어서 오세요. 따뜻한 음식이 준비되어 있답니다.'}:{name:'한복점 주인',image:'../assets/characters/npcs/shops/hanbok-owner.png',greeting:'어서 오세요. 곱게 지은 한복을 천천히 살펴보세요.'};
+  panelTitle.textContent=tab==='food'?'저잣거리 · 주막':tab==='outfit'?'저잣거리 · 한복점':'저잣거리 · 잡화점';
+  const keeper=tab==='food'?{name:'주모',image:'../assets/characters/npcs/shops/tavern-hostess.png',greeting:'어서 오세요. 따뜻한 음식이 준비되어 있답니다.'}:tab==='outfit'?{name:'한복점 주인',image:'../assets/characters/npcs/shops/hanbok-owner.png',greeting:'어서 오세요. 곱게 지은 한복을 천천히 살펴보세요.'}:{name:'잡화점 주인',image:'../assets/characters/companions/portraits/merchant.png',greeting:'비녀부터 단장품까지 두루 살펴보세요. 가져온 물건도 값을 쳐 드리지요.'};
   const owned=new Set(game.items.filter(item=>typeof item==='object').map(item=>item.id));
   const foodCards=foods.map(food=>`<button class="shop-card visual-card" data-food="${food.id}" ${game.money<food.price?'disabled':''}><img src="../assets/items/food/${food.id}.png" alt="${food.name}"><b>${food.name}</b><span>${food.price}냥</span><small>${food.detail}<br>${formatChanges(food.change)}</small></button>`).join('');
   const visibleOutfits=outfits.filter(outfit=>outfitShopCategory(outfit)===outfitCategory);
   const outfitCards=visibleOutfits.map(outfit=>{const premium=isPremiumOutfit(outfit),cash=isCashOutfit(outfit),available=outfitAvailable(outfit),insufficient=cash?game.cash<outfit.cashPrice:game.money<outfit.price,locked=!available||owned.has(outfit.id)||insufficient,displayAge=available?growthVisualAge():outfit.age;return `<button class="shop-card outfit-card visual-card ${available?'available':''} ${premium?'premium':''} ${cash?'cash':''} ${locked?'locked':''}" data-outfit-preview="${outfit.id}" aria-label="${outfit.name} 미리보기"><img src="${outfitImageForAge(outfit.id,displayAge)}" alt="${outfit.name}"><b>${outfit.name}</b><span>${cash?`${outfit.cashPrice.toLocaleString()}원`:`${outfit.price}냥`}</span><small>${cash?'캐시 의상 · ':premium?'고급 의상 · ':''}${outfitAgeLabel(outfit)} · ${outfit.seasons.join('·')}<br>${formatChanges(outfit.change)}${owned.has(outfit.id)?'<br>보유 중':''}</small></button>`;}).join('');
+  const sundryCards=sundryGoods.map(good=>`<button class="shop-card goods-card" data-sundry-buy="${good.id}" ${owned.has(good.id)||game.money<good.price?'disabled':''}><i class="item-glyph type-${good.type}"></i><b>${good.name}</b><span>${good.price.toLocaleString()}냥</span><small>${good.detail}<br>${formatChanges(good.change)}${owned.has(good.id)?'<br>보유 중':''}</small></button>`).join('');
+  const sellable=game.items.filter(item=>item.sellable||String(item.source||'').includes('birthday'));
+  const sellCards=sellable.map(item=>`<button class="shop-card goods-card sell-card" data-sundry-sell="${item.id}"><i class="item-glyph type-${item.type}"></i><b>${item.name}</b><span>${itemSalePrice(item).toLocaleString()}냥에 판매</span><small>${formatChanges(item.statChange||{})}<br>판매 시 능력 감소${item.source==='guardian-birthday'?' · 신수 신뢰도 감소':item.source==='father-birthday'?' · 아버지 친밀도 감소':''}</small></button>`).join('');
   const outfitCategoryTabs=tab==='outfit'?`<div class="outfit-shop-tabs" role="tablist" aria-label="의상 등급"><button data-outfit-category="general" class="${outfitCategory==='general'?'on':''}">일반 의상</button><button data-outfit-category="premium" class="${outfitCategory==='premium'?'on':''}">고급 의상</button><button data-outfit-category="cash" class="${outfitCategory==='cash'?'on':''}">캐시 의상</button></div>`:'';
   const categoryName={general:'일반',premium:'고급',cash:'캐시'}[outfitCategory]||'일반';
-  panelBody.innerHTML=`<div class="shop-greeting"><img src="${keeper.image}" alt="${keeper.name}"><div><b>${keeper.name}</b><p>${keeper.greeting}</p></div></div><div class="shop-money"><span>보유 은전 <b>${game.money.toLocaleString()}냥</b></span><span>테스트 캐시 <b>${game.cash.toLocaleString()}원</b></span></div>${marketMode?'':`<div class="shop-tabs"><button data-shop-tab="food" class="${tab==='food'?'on':''}">주막</button><button data-shop-tab="outfit" class="${tab==='outfit'?'on':''}">한복점</button></div>`}${outfitCategoryTabs}<h3 class="shop-list-title">${tab==='food'?`음식 메뉴 · ${foods.length}종`:`${categoryName} 의상 · ${visibleOutfits.length}벌`}</h3><div class="shop-grid">${tab==='food'?foodCards:outfitCards}</div><button id="shopBack">${marketMode?'저잣거리로 나가기':'일정으로 돌아가기'}</button>`;
+  const listTitle=tab==='food'?`음식 메뉴 · ${foods.length}종`:tab==='outfit'?`${categoryName} 의상 · ${visibleOutfits.length}벌`:`단장 잡화 · ${sundryGoods.length}종`;
+  const cards=tab==='food'?foodCards:tab==='outfit'?outfitCards:sundryCards;
+  panelBody.innerHTML=`<div class="shop-greeting"><img src="${keeper.image}" alt="${keeper.name}"><div><b>${keeper.name}</b><p>${keeper.greeting}</p></div></div><div class="shop-money"><span>보유 은전 <b>${game.money.toLocaleString()}냥</b></span><span>테스트 캐시 <b>${game.cash.toLocaleString()}원</b></span></div>${marketMode?'':`<div class="shop-tabs"><button data-shop-tab="food" class="${tab==='food'?'on':''}">주막</button><button data-shop-tab="outfit" class="${tab==='outfit'?'on':''}">한복점</button><button data-shop-tab="sundry" class="${tab==='sundry'?'on':''}">잡화점</button></div>`}${outfitCategoryTabs}<h3 class="shop-list-title">${listTitle}</h3><div class="shop-grid">${cards}</div>${tab==='sundry'?`<h3 class="shop-list-title">내 물건 판매</h3><div class="shop-grid">${sellCards||'<p class="empty-shop">판매할 수 있는 물건이 없습니다.</p>'}</div>`:''}<button id="shopBack">${marketMode?'저잣거리로 나가기':'일정으로 돌아가기'}</button>`;
   if(!marketMode)panelBody.querySelectorAll('[data-shop-tab]').forEach(button=>button.addEventListener('click',()=>renderShopPanel(button.dataset.shopTab,marketMode)));
   panelBody.querySelectorAll('[data-outfit-category]').forEach(button=>button.addEventListener('click',()=>renderShopPanel('outfit',marketMode,button.dataset.outfitCategory)));
   panelBody.querySelectorAll('[data-food]').forEach(button=>button.addEventListener('click',()=>buyFood(button.dataset.food)));
   panelBody.querySelectorAll('[data-outfit-preview]').forEach(button=>button.addEventListener('click',()=>showOutfitPreview(button.dataset.outfitPreview)));
+  panelBody.querySelectorAll('[data-sundry-buy]').forEach(button=>button.addEventListener('click',()=>buySundryGood(button.dataset.sundryBuy)));
+  panelBody.querySelectorAll('[data-sundry-sell]').forEach(button=>button.addEventListener('click',()=>sellInventoryItem(button.dataset.sundrySell,true)));
   document.querySelector('#shopBack').addEventListener('click',()=>{if(marketMode)returnToMarketSelection();else renderSchedulePanel();});
 }
 function formatChanges(change){return orderedChangeEntries(change).map(([key,value])=>`${statLabels[key]||key} ${value>0?'+':''}${value}`).join(' · ');}
@@ -2141,7 +2204,8 @@ function buyOutfit(id){normalizeInventory();const outfit=outfits.find(item=>item
 
 const marketPlaces=[
   {id:'food',side:-1,label:'주막'},
-  {id:'outfit',side:1,label:'한복점'}
+  {id:'outfit',side:0,label:'한복점'},
+  {id:'sundry',side:1,label:'잡화점'}
   // 추후 {id:'pub',side:-2,label:'주점'}, {id:'gift',side:2,label:'선물가게'} 추가 가능
 ];
 let marketSelection=null,marketResolve=null;
@@ -2166,12 +2230,12 @@ function askMarketShop(type){
   const place=marketPlaces.find(item=>item.id===type);
   if(!place)return;
   selectMarketShop(type);
-  document.querySelector('#marketConfirmText').textContent=type==='food'?'주모를 선택하시겠습니까?':'한복점 주인을 선택하시겠습니까?';
+  document.querySelector('#marketConfirmText').textContent=type==='food'?'주모를 선택하시겠습니까?':type==='outfit'?'한복점 주인을 선택하시겠습니까?':'잡화점 주인을 선택하시겠습니까?';
   document.querySelector('#marketConfirm').hidden=false;
 }
 function closeMarketConfirm(){document.querySelector('#marketConfirm').hidden=true;selectMarketShop(null);}
 function exploreMarket(){
-  const explore=document.querySelector('#marketExplore'),stage=document.querySelector('#activityStage');document.querySelector('.phone').classList.add('market-playing');stage.classList.add('market-choice-stage');explore.hidden=false;document.querySelector('#marketConfirm').hidden=true;document.querySelector('#stageCharacter').hidden=true;document.querySelector('#stageNpc').hidden=true;document.querySelector('#stageProps').hidden=true;marketMealConsumed=false;marketSelection=null;selectMarketShop(null);
+  const explore=document.querySelector('#marketExplore'),stage=document.querySelector('#activityStage');document.querySelector('.phone').classList.add('market-playing');stage.hidden=false;stage.classList.add('market-choice-stage');explore.hidden=false;document.querySelector('#marketConfirm').hidden=true;document.querySelector('#stageCharacter').hidden=true;document.querySelector('#stageNpc').hidden=true;document.querySelector('#stageProps').hidden=true;marketMealConsumed=false;marketSelection=null;selectMarketShop(null);
   return new Promise(resolve=>{marketResolve=()=>{document.querySelector('.phone').classList.remove('market-playing');explore.hidden=true;document.querySelector('#stageCharacter').hidden=false;document.querySelector('#stageProps').hidden=false;resolve();};});
 }
 function enterMarketShop(type){if(!type)return;const place=marketPlaces.find(item=>item.id===type);document.querySelector('#dialogueText').textContent=`${place?.label||'가게'} 주인이 “어서 오세요.” 하고 반겨요.`;document.querySelector('#marketExplore').hidden=true;document.querySelector('#activityStage').hidden=true;document.querySelector('.phone').classList.add('market-shop-open');panel.hidden=false;renderShopPanel(type,true);}
@@ -2362,7 +2426,8 @@ function awardStartingBirthdayGift(){
   const guardian=guardianDefs[game.guardianType],base=guardian?.gift||startingBirthdayGifts[Math.floor(Math.random()*startingBirthdayGifts.length)];
   const gift={id:`guardian-${game.guardianType||'gift'}-age09`,name:base.name,change:{...base.change}};
   gift.actualChange=applyStatChange(gift.change);game.startingGiftId=gift.id;
-  game.items.push({id:gift.id,type:'event',name:gift.name,description:'아홉 번째 생일에 수호신수와 인연을 맺으며 받은 첫 축복',qty:1,source:'guardian-birthday'});
+  const giftValue=480+Object.values(gift.actualChange).reduce((sum,value)=>sum+Math.max(0,value),0)*55;
+  game.items.push({id:gift.id,type:'event',name:gift.name,description:'아홉 번째 생일에 수호신수와 인연을 맺으며 받은 첫 축복. 판매하면 축복 능력과 신수 신뢰도가 감소합니다.',qty:1,source:'guardian-birthday',statChange:{...gift.actualChange},giftValue,sellable:true});
   return gift;
 }
 function awardFatherBirthdayGift(age){
@@ -2370,7 +2435,8 @@ function awardFatherBirthdayGift(age){
   if(game.fatherBirthdayYears.includes(age))return null;
   const stressDrop=4+Math.floor(Math.random()*7),affinityGain=2+Math.floor(Math.random()*4),change=applyStatChange({stress:-stressDrop,fatherAffinity:affinityGain});
   game.fatherBirthdayYears.push(age);game.birthdayCount=game.fatherBirthdayYears.length;
-  game.items.push({id:`father-birthday-letter-${age}`,type:'event',name:`아버지의 ${age}세 생일 선물`,description:'멀리 있는 아버지가 보낸 편지와 작은 선물',qty:1,source:'father-birthday'});
+  const giftValue=360+age*25+Object.values(change).reduce((sum,value)=>sum+Math.max(0,value),0)*45;
+  game.items.push({id:`father-birthday-letter-${age}`,type:'event',name:`아버지의 ${age}세 생일 선물`,description:'멀리 있는 아버지가 보낸 편지와 작은 선물. 판매하면 받은 능력과 아버지 친밀도가 감소합니다.',qty:1,source:'father-birthday',statChange:{...change},giftValue,sellable:true});
   return {age,change,message:`${age}세 생일을 맞아 아버지의 편지와 선물이 도착했어요. ${formatChanges(change)}`};
 }
 function syncBirthdaySelectors(reset=false){

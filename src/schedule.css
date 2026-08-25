@@ -2317,6 +2317,33 @@
 }
 @keyframes farm-guide-bob{0%,100%{translate:0 0}50%{translate:0 -4px}}
 
+/* v0.64.23: three market storefronts including the permanent sundry shop. */
+.phone.market-playing .market-choice-stage .market-shop{width:32%!important}
+.phone.market-playing .market-choice-stage .market-shop.tavern{left:1%!important}
+.phone.market-playing .market-choice-stage .market-shop.hanbok{left:34%!important}
+.phone.market-playing .market-choice-stage .market-shop.sundry{left:67%!important}
+.phone.market-playing .market-choice-stage .market-shop.sundry:before{background:repeating-linear-gradient(90deg,#8b642f 0 18%,#ead2a1 18% 36%)}
+.phone.market-playing .market-choice-stage .market-shop.sundry:after{content:"잡화점"}
+.phone.market-playing .market-choice-stage .market-shop.sundry>img{top:56%!important;left:50%!important;width:100%!important;height:76%!important;transform:translate(-50%,-50%) scale(1.12)!important;object-fit:contain!important;filter:drop-shadow(0 5px 4px #0007)!important}
+.phone.market-playing .market-choice-stage .market-shop.selected.sundry>img{transform:translate(-50%,-50%) scale(1.2)!important}
+.shop-tabs:has([data-shop-tab="sundry"]){grid-template-columns:repeat(3,1fr)}
+.sell-card{border-color:#8a653e!important;background:#f3e2c4!important}
+body .phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-childcare.schedule-layered .schedule-scene-layer.layer-pattern.dedicated-failure{
+  left:var(--layer-prop-left)!important;bottom:24%!important;width:54px!important;clip-path:none!important;filter:none!important;
+}
+
+/* v0.64.23: the child runs ahead while Seonhwa follows; failure ends in a fall. */
+.phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-childcare.schedule-layered .stage-character.pixel-sprite{
+  left:var(--layer-hero-left)!important;bottom:5%!important;width:132px!important;height:132px!important;
+}
+.phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-childcare.schedule-layered .schedule-scene-layer.layer-npc{
+  left:var(--layer-npc-left)!important;bottom:5%!important;width:96px!important;height:96px!important;object-fit:contain!important;object-position:center bottom!important;
+  transition:transform .12s linear;
+}
+.phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-childcare.schedule-layered .schedule-scene-layer.layer-pattern.dedicated-failure{
+  left:var(--layer-prop-left)!important;bottom:17%!important;width:54px!important;clip-path:none!important;
+}
+
 /* v0.64.22: fixed adult farmer scale and consistent tilling motion. */
 .phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-farmwork.schedule-layered .schedule-scene-layer.layer-npc{
   width:158px!important;
