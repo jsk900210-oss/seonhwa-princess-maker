@@ -237,7 +237,7 @@ const vacationIllustrations=[
 function unifiedAgeFolder(){return '09';}
 function scheduleFramePath(file){return `../assets/characters/seonhwa/schedule-actions/${file}`;}
 function scheduleBasePath(file){return `../assets/characters/seonhwa/schedule-base/${file}`;}
-const scheduleAssetRevision='0.64.50-debug';
+const scheduleAssetRevision='0.64.51-debug';
 const scheduleQaParams=new URLSearchParams(location.search);
 const moonlightStandaloneQa=scheduleQaParams.get('qaHoliday')==='chuseok';
 const sehwaStandaloneQa=scheduleQaParams.get('qaHoliday')==='seollal';
@@ -850,16 +850,22 @@ async function playScheduleLayerScene(actionId,seonImage,rank,outcome,dayIndex){
   const placement=spec.placement||{};
   const positionPercent=value=>Number.parseFloat(String(value??'').replace('%',''));
   let heroPosition=positionPercent(placement.heroLeft||'40%'),npcPosition=positionPercent(placement.npcLeft||'72%');
-  const minimumActorGap=46;
+  // 146px 선화와 최대 178px 성인 NPC의 불투명 영역이 320px 무대에서
+  // 맞닿지 않도록 중심 간격을 고정한다. 도구·작업대는 상호작용을 위해 제외한다.
+  const minimumActorGap=58;
   if(Number.isFinite(heroPosition)&&Number.isFinite(npcPosition)&&Math.abs(npcPosition-heroPosition)<minimumActorGap){
-    if(npcPosition>=heroPosition)npcPosition=Math.min(90,heroPosition+minimumActorGap);else npcPosition=Math.max(10,heroPosition-minimumActorGap);
-    if(Math.abs(npcPosition-heroPosition)<minimumActorGap)heroPosition=npcPosition>=heroPosition?npcPosition-minimumActorGap:npcPosition+minimumActorGap;
+    const actorsFaceRight=npcPosition>=heroPosition;
+    const midpoint=(heroPosition+npcPosition)/2;
+    heroPosition=Math.max(8,Math.min(92,midpoint+(actorsFaceRight?-minimumActorGap/2:minimumActorGap/2)));
+    npcPosition=Math.max(8,Math.min(92,heroPosition+(actorsFaceRight?minimumActorGap:-minimumActorGap)));
+    if(Math.abs(npcPosition-heroPosition)<minimumActorGap)heroPosition=npcPosition+(actorsFaceRight?-minimumActorGap:minimumActorGap);
   }
   const layers=[];
   stage.classList.add('schedule-layered');
-  stage.style.setProperty('--layer-hero-left',`${heroPosition}%`);
+  stage.dataset.actorSafeGap=String(minimumActorGap);
+  stage.style.setProperty('--layer-hero-left',`${heroPosition}%`,'important');
   stage.style.setProperty('--layer-floor',placement.floorBottom||placement.heroBottom||'5%');
-  stage.style.setProperty('--layer-npc-left',`${npcPosition}%`);
+  stage.style.setProperty('--layer-npc-left',`${npcPosition}%`,'important');
   stage.style.setProperty('--layer-npc-scale',placement.npcScale||1);
   stage.style.setProperty('--layer-prop-left',placement.propLeft||'52%');
   stage.style.setProperty('--layer-prop-bottom',placement.propBottom||'7%');
@@ -892,7 +898,7 @@ async function playScheduleLayerScene(actionId,seonImage,rank,outcome,dayIndex){
           const travelProgress=travelStep/8;
           const travelsRight=farmChaseTravelsRight;
           const heroLeft=travelsRight?2+travelProgress*76:98-travelProgress*76;
-          const chaseGap=26;
+          const chaseGap=32;
           const chickenLeft=travelsRight?heroLeft+chaseGap:heroLeft-chaseGap;
           stage.style.setProperty('--layer-hero-left',`${heroLeft}%`,'important');
           stage.style.setProperty('--layer-prop-left',`${chickenLeft}%`,'important');
@@ -903,7 +909,7 @@ async function playScheduleLayerScene(actionId,seonImage,rank,outcome,dayIndex){
           activeHeroFrame=childcareChaseFrames[chaseCycle[travelStep]];
           activeNpcFrame=childcareRunningFrames[chaseCycle[travelStep]];
           const childLeft=travelsRight?30+progress*64:70-progress*64;
-          const childcareMinimumGap=38;
+          const childcareMinimumGap=40;
           const heroLeft=travelsRight?childLeft-childcareMinimumGap:childLeft+childcareMinimumGap;
           const fallen=failed&&travelStep>=6;
           const childLooksBack=fallen&&patternKey==='fail-b';
@@ -930,6 +936,7 @@ async function playScheduleLayerScene(actionId,seonImage,rank,outcome,dayIndex){
     stage.classList.remove('schedule-layered');
     delete stage.dataset.chaseDirection;
     delete stage.dataset.childcareDirection;
+    delete stage.dataset.actorSafeGap;
     seonImage.style.removeProperty('transform');
     seonImage.style.removeProperty('transform-origin');
     ['--layer-hero-left','--layer-floor','--layer-npc-left','--layer-npc-scale','--layer-prop-left','--layer-prop-bottom','--layer-effect-left','--layer-effect-bottom'].forEach(name=>stage.style.removeProperty(name));
