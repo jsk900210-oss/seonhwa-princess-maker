@@ -265,7 +265,6 @@
 .stage-character.pixel-sprite.motion-errand img{clip-path:inset(7%);transform:scale(1.14)}
 .stage-character.pixel-sprite.motion-herbs{left:50%;bottom:3%;animation:herb-pull .9s ease-in-out 2}
 .stage-character.pixel-sprite.condition-drowsy{animation:condition-nod .82s ease-in-out 2}
-.stage-character.pixel-sprite.condition-mistake{animation:condition-mistake .52s ease-out 1}
 .condition-cue{position:absolute;z-index:7;left:51%;top:18%;min-width:54px;padding:5px 9px;border:2px solid #6e4b2d;border-radius:50%;background:#fffbe9;color:#4b321f;font-weight:900;text-align:center;box-shadow:2px 3px 0 #3d281d66;animation:condition-cue .9s ease-out both}.condition-cue[hidden]{display:none}
 .stage-character.pixel-sprite.motion-houseclean,.stage-character.pixel-sprite.motion-sleep{left:50%;width:112px;height:112px;bottom:4%;animation:activity-work .72s ease-in-out 2}
 .stage-character.pixel-sprite.motion-sleep{width:128px;height:128px;bottom:2%}
@@ -281,7 +280,6 @@
 @keyframes wide-sweep{0%{left:28%;transform:translateX(-50%)}45%{left:67%;transform:translateX(-50%)}55%{left:67%;transform:translateX(-50%) scaleX(-1)}100%{left:28%;transform:translateX(-50%) scaleX(-1)}}
 @keyframes herb-pull{0%,100%{transform:translateX(-50%) translateY(0)}45%,70%{transform:translateX(-50%) translateY(11px) scaleY(.91)}}
 @keyframes condition-nod{0%,100%{transform:translateX(-50%) rotate(0)}45%,70%{transform:translateX(-50%) translateY(5px) rotate(7deg)}}
-@keyframes condition-mistake{0%,100%{transform:translateX(-50%)}20%{transform:translateX(-58%) rotate(-5deg)}45%{transform:translateX(-42%) rotate(5deg)}70%{transform:translateX(-54%) rotate(-3deg)}}
 @keyframes condition-cue{0%{opacity:0;transform:translateY(8px) scale(.75)}25%,75%{opacity:1;transform:translateY(0) scale(1)}100%{opacity:0;transform:translateY(-12px) scale(.9)}}
 .shop-money{position:sticky;top:38px;z-index:2;padding:9px;border-radius:9px;background:#efe0bf;text-align:right}.shop-tabs{display:flex;gap:7px;margin:10px 0}.shop-tabs button.on{background:#6d4c2d;color:#fff}.shop-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.shop-card{position:relative;display:grid;grid-template-columns:1fr auto;gap:3px;min-height:92px;padding:10px;text-align:left}.shop-card small{grid-column:1/-1;color:#695744;line-height:1.45}.shop-card.available{border-color:#557440;background:#e5edcf}.shop-card:disabled{opacity:.48}
 .market-explore{--market-view:0;position:absolute;z-index:8;inset:0;overflow:hidden;background:linear-gradient(90deg,#1c120a55,transparent 18% 82%,#1c120a55),linear-gradient(transparent 68%,#4d3118aa);perspective:500px}.market-explore[hidden]{display:none}.market-shop{position:absolute;top:8%;width:35%;height:54%;padding:8px;border:4px solid #6b4127;border-radius:4px 4px 10px 10px;background:linear-gradient(#b54436 0 18%,#f0d39a 19% 100%);box-shadow:inset 0 0 0 3px #fff0bd,0 7px 12px #0008;color:#4d301d;transition:transform .35s ease,filter .35s ease,opacity .35s}.market-shop:after{content:"";position:absolute;left:10%;right:10%;bottom:9%;height:35%;background:repeating-linear-gradient(90deg,#6f452a 0 8px,#d2a260 9px 18px)}.market-shop.tavern{left:2%;transform:perspective(300px) rotateY(13deg) translateX(calc(var(--market-view) * -22px))}.market-shop.hanbok{right:2%;background:linear-gradient(#426c66 0 18%,#ead0ad 19% 100%);transform:perspective(300px) rotateY(-13deg) translateX(calc(var(--market-view) * -22px))}.market-shop.near{outline:4px solid #f6d55b;filter:brightness(1.12);z-index:2}.market-shop b,.market-shop span{position:relative;z-index:2;display:block}.market-shop b{font-size:14px}.market-shop span{font-size:9px}.market-first-person{position:absolute;z-index:4;inset:0;pointer-events:none}.market-first-person i{position:absolute;left:50%;top:53%;width:18px;height:18px;border:2px solid #fff9;border-radius:50%;transform:translate(-50%,-50%);box-shadow:0 0 0 1px #35200dcc}.market-first-person i:before,.market-first-person i:after{content:"";position:absolute;background:#fff9}.market-first-person i:before{left:7px;top:-7px;width:2px;height:28px}.market-first-person i:after{left:-7px;top:7px;width:28px;height:2px}.market-first-person span{position:absolute;left:50%;bottom:25%;width:max-content;max-width:78%;padding:4px 8px;border-radius:9px;background:#24180dbb;color:#fff4d8;font-size:9px;transform:translateX(-50%)}.market-controls{position:absolute;z-index:5;left:4%;right:4%;bottom:2%;display:grid;grid-template-columns:45px 1fr 45px;gap:5px}.market-controls button{padding:7px 3px}.market-controls #marketFinish{grid-column:1/-1;padding:6px;background:#6d4c2d;color:#fff;font-size:10px}
@@ -2164,7 +2162,16 @@
 .pageant-hero-action{position:absolute;z-index:4;left:50%;bottom:12%;width:154px;height:205px;object-fit:contain;object-position:center bottom;transform-origin:center bottom;filter:drop-shadow(0 5px 6px #160b08aa)}
 .pageant-hero-frames{position:absolute;z-index:4;left:50%;bottom:9%;width:190px;height:235px;display:block;transform:translateX(-50%);filter:drop-shadow(0 5px 6px #160b08aa)}
 .pageant-hero-frames img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;object-position:center bottom;opacity:0;animation:pageant-frame-123 .9s steps(1,end) infinite;animation-delay:calc(var(--pageant-frame) * .3s)}
+.pageant-hero-frames.is-dance img{animation-name:pageant-frame-6;animation-duration:1.44s;animation-delay:calc(var(--pageant-frame) * .24s)}
 .pageant-hero-frames.is-walk{animation:pageant-frame-travel 2.7s linear infinite}
+.pageant-interview{position:absolute;z-index:8;inset:10% 6% 16%;display:grid;grid-template-columns:42% 1fr;align-items:end;gap:10px;padding:12px;border:2px solid #bd883a;border-radius:16px;background:linear-gradient(145deg,#fffaf0f2,#ead9b8f2);box-shadow:0 8px 24px #140a06aa;color:#402716}
+.pageant-interview figure{margin:0;display:grid;align-content:end;height:100%;text-align:center}
+.pageant-interview figure img{width:100%;height:210px;object-fit:contain;object-position:center bottom;filter:drop-shadow(0 5px 5px #3a1c0d66)}
+.pageant-interview figcaption{margin-top:-2px;padding:4px;border-radius:999px;background:#5c351c;color:#fff6dc;font-weight:800;font-size:11px}
+.pageant-interview>div{align-self:center;display:grid;gap:8px}
+.pageant-interview p{margin:0;padding:9px;border-radius:11px;background:#fffdf7;border:1px solid #cda66c;font-size:11px;line-height:1.45}
+.pageant-interview-answer b{display:block;margin-bottom:4px;color:#8b4f1d}
+.pageant-interview-mark{position:absolute;right:10px;top:8px;display:grid;place-items:center;width:27px;height:27px;border-radius:50%;background:#7a4421;color:#fff1c8;font-weight:900}
 .moonlight-pageant.beat-5 .pageant-lineup,.moonlight-pageant.beat-6 .pageant-lineup{left:2%;right:2%;bottom:48%;grid-template-columns:repeat(7,1fr);gap:1px}
 .moonlight-pageant.beat-5 .pageant-lineup img,.moonlight-pageant.beat-6 .pageant-lineup img{width:40px;height:54px}
 .moonlight-pageant.beat-5 .pageant-lineup figcaption,.moonlight-pageant.beat-6 .pageant-lineup figcaption{font-size:6px;padding:1px 2px}
@@ -2206,6 +2213,7 @@
 @keyframes pageant-finish{0%,100%{transform:translateX(-50%) scale(1)}50%{transform:translateX(-50%) scale(1.06);filter:drop-shadow(0 0 12px #ffe7a8)}}
 @keyframes pageant-judged{0%,100%{transform:translateX(-50%)}50%{transform:translateX(-50%) translateY(-3px)}}
 @keyframes pageant-frame-123{0%,32.99%{opacity:1}33%,100%{opacity:0}}
+@keyframes pageant-frame-6{0%,16.64%{opacity:1}16.67%,100%{opacity:0}}
 @keyframes pageant-frame-travel{0%{left:30%}100%{left:70%}}
 @keyframes pageant-guardian-bounce{from{transform:translateY(0) rotate(-2deg)}to{transform:translateY(-8px) rotate(2deg)}}
 @media(max-width:380px){.pageant-lineup img{width:52px;height:70px}.pageant-lineup .is-player img{width:57px;height:76px}.pageant-king{width:128px;height:174px}.pageant-winner{width:51%}}
@@ -2362,22 +2370,12 @@ body .phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage:
 .phone.playing:not(.market-playing):not(.vacation-playing) .stage-character.pixel-sprite.condition-drowsy{
   animation:condition-body-nod 1.35s cubic-bezier(.42,0,.58,1) 1!important;transform-origin:50% 100%!important;
 }
-.phone.playing:not(.market-playing):not(.vacation-playing) .stage-character.pixel-sprite.condition-mistake{
-  animation:condition-body-stumble .78s cubic-bezier(.22,.7,.3,1) 1!important;transform-origin:50% 100%!important;
-}
 @keyframes condition-body-nod{
   0%,12%,100%{translate:0 0;rotate:0deg;filter:brightness(1)}
   32%{translate:0 5px;rotate:4deg;filter:brightness(.88)}
   48%{translate:0 8px;rotate:7deg;filter:brightness(.8)}
   64%{translate:0 2px;rotate:-2deg;filter:brightness(.96)}
   78%{translate:0 6px;rotate:4deg;filter:brightness(.86)}
-}
-@keyframes condition-body-stumble{
-  0%,100%{translate:0 0;rotate:0deg}
-  18%{translate:-9px -2px;rotate:-7deg}
-  38%{translate:8px 3px;rotate:6deg}
-  58%{translate:-5px 5px;rotate:-4deg}
-  76%{translate:3px 2px;rotate:2deg}
 }
 
 /* v0.64.23: the child runs ahead while Seonhwa follows; failure ends in a fall. */

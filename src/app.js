@@ -237,7 +237,7 @@ const vacationIllustrations=[
 function unifiedAgeFolder(){return '09';}
 function scheduleFramePath(file){return `../assets/characters/seonhwa/schedule-actions/${file}`;}
 function scheduleBasePath(file){return `../assets/characters/seonhwa/schedule-base/${file}`;}
-const scheduleAssetRevision='0.64.44-debug';
+const scheduleAssetRevision='0.64.46-debug';
 const scheduleQaParams=new URLSearchParams(location.search);
 const moonlightStandaloneQa=scheduleQaParams.get('qaHoliday')==='chuseok';
 const sehwaStandaloneQa=scheduleQaParams.get('qaHoliday')==='seollal';
@@ -685,16 +685,22 @@ function clearFallbackSpriteMotion(image){
   if(!image)return;
   image.style.transform='';
 }
-async function animateActionStumble(image,level='mistake'){
+async function animateNaturalFailure(actionId,image,level='mistake'){
   if(!image)return;
-  const frames=level==='mistake'
-    ? ['translateY(0px) rotate(0deg)','translateY(1px) rotate(-7deg)','translateY(3px) rotate(6deg)','translateY(1px) rotate(-4deg)','translateY(0px) rotate(0deg)']
-    : ['translateY(0px) rotate(0deg)','translateY(1px) rotate(-3deg)','translateY(0px) rotate(2deg)','translateY(0px) rotate(0deg)'];
-  for(const transform of frames){
-    image.style.transform=transform;
-    await schedulePlaybackDelay(level==='mistake'?95:120);
-  }
+  const original=image.src;
+  const forwardFallActivities=new Set(['sweeping','herbs','houseclean','martial']);
+  const folder=forwardFallActivities.has(actionId)?'trip-forward-v1':'stumble-sit-v1';
+  const prefix=forwardFallActivities.has(actionId)?'seonhwa-trip-forward':'seonhwa-stumble';
+  const order=level==='mistake'?[1,2,3]:[1,2,1];
   image.style.transform='';
+  for(const frame of order){
+    image.src=versionedScheduleAsset(`../assets/schedule-layers-v2/childcare/hero-actions/${folder}/${prefix}-${frame}.png`);
+    await schedulePlaybackDelay(level==='mistake'?180:150);
+  }
+  if(level!=='mistake'){
+    image.src=original;
+    await schedulePlaybackDelay(180);
+  }else await schedulePlaybackDelay(260);
 }
 async function animateErrandFall(image){
   if(!image)return;
@@ -1044,9 +1050,13 @@ function setScheduleDialogue(action,state,index){
 }
 async function animateConditionEvent(stageCharacter,cue,type){
   cue.hidden=true;cue.textContent='';
-  stageCharacter.classList.add(type==='mistake'?'condition-mistake':'condition-drowsy');
-  await new Promise(resolve=>setTimeout(resolve,type==='mistake'?850:1450));
-  stageCharacter.classList.remove('condition-mistake','condition-drowsy');
+  if(type==='mistake'){
+    await new Promise(resolve=>setTimeout(resolve,180));
+    return;
+  }
+  stageCharacter.classList.add('condition-drowsy');
+  await new Promise(resolve=>setTimeout(resolve,1450));
+  stageCharacter.classList.remove('condition-drowsy');
   cue.hidden=true;
 }
 const actions = [
@@ -1341,13 +1351,17 @@ const moonlightStoryBeats=[
   '여덟 참가자의 세 항목 점수가 하나씩 집계됐어요.',
   '선화의 최종 등급과 종합 점수가 발표됐어요.',
   '신수가 결과를 듣고 달려와 끝까지 해낸 선화를 안아 주었어요.',
-  '황이 대상 수상자에게 월백 옥패 노리개를 직접 하사했어요.'
+  '황이 대상 수상자에게 월백 옥패 노리개를 직접 하사했어요.',
+  '대상 수상자가 무대 곁에서 오늘의 마음과 춤을 이야기했어요.'
 ];
-const moonlightMotionNames=['invitation','prepare','guardian-cheer','palace-enter','registration','final-lineup','greeting','manners-bow','royal-judging','sense-display','royal-judging','dignity-walk','royal-judging','moon-finish','royal-judging','result','result','award'];
+const moonlightMotionNames=['invitation','prepare','guardian-cheer','palace-enter','registration','final-lineup','greeting','manners-bow','royal-judging','sense-display','royal-judging','dignity-walk','royal-judging','moon-finish','royal-judging','result','result','award','winner-interview'];
 function moonlightAgeIndex(){return game.age>=18?3:game.age>=16?2:game.age>=13?1:0;}
 function moonlightAssetAge(){return game.age>=18?'18':game.age>=16?'16':game.age>=13?'13':'09';}
 function moonlightSeonhwaImage(){const age=moonlightAssetAge();return `../assets/events/holidays/moonlight-pageant/seonhwa/age-${age}/seonhwa-winner-v1.png?v=${scheduleAssetRevision}`;}
-function moonlightMotionFrames(motion){const age=moonlightAssetAge();return [1,2,3].map(frame=>`../assets/events/holidays/moonlight-pageant/seonhwa/age-${age}/seonhwa-${motion}-${frame}-v2.png?v=${scheduleAssetRevision}`);}
+function moonlightMotionFrames(motion){
+  const age=moonlightAssetAge(),count=motion==='dance'?6:3,version=motion==='dance'?'v3':'v2';
+  return Array.from({length:count},(_,index)=>`../assets/events/holidays/moonlight-pageant/seonhwa/age-${age}/seonhwa-${motion}-${index+1}-${version}.png?v=${scheduleAssetRevision}`);
+}
 function shuffled(items){return items.map(value=>({value,sort:Math.random()})).sort((a,b)=>a.sort-b.sort).map(item=>item.value);}
 function evaluateChuseokFestival(){
   const ageIndex=moonlightAgeIndex();
@@ -1380,20 +1394,26 @@ function festivalGuardianCut(session){
 }
 function festivalCrowd(){return '<div class="festival-crowd" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>';}
 function festivalLineup(session){return `<section class="pageant-lineup pageant-intro-lineup" aria-label="달빛 아씨 경연 참가자 8명">${session.entrants.map(entry=>`<figure class="${entry.player?'is-player':''}"><img src="${moonlightEntrantImage(entry)}" alt="${entry.name}"><figcaption>${entry.name}</figcaption></figure>`).join('')}</section>`;}
+function festivalWinnerInterview(session){
+  const winner=session.winner,playerWinner=winner.player;
+  const answer=playerWinner?'긴장했지만 장단을 놓치지 않으려 했어요. 함께 응원해 주신 분들께 감사드려요.':'마지막까지 제 호흡을 지킨 것이 좋은 결과로 이어진 것 같아요.';
+  return `<section class="pageant-interview" aria-label="대상 수상자 ${winner.name} 인터뷰"><span class="pageant-interview-mark" aria-hidden="true">記</span><figure><img src="${moonlightEntrantImage(winner)}" alt="인터뷰하는 대상 수상자 ${winner.name}"><figcaption>대상 · ${winner.name}</figcaption></figure><div><p class="pageant-interview-question">“오늘 무대에서 가장 마음에 남은 순간은 무엇인가요?”</p><p class="pageant-interview-answer"><b>${winner.name}</b>${answer}</p></div></section>`;
+}
 function renderMoonlightPageant(session,dayIndex){
   const overlay=document.querySelector('#moonlightPageant');if(!overlay)return;
-  const beat=Math.min(moonlightStoryBeats.length-1,dayIndex%moonlightStoryBeats.length),title=beat===4,lineup=beat===5,intro=beat===6,vote=beat===14,result=beat===15,guardianResult=beat===16,award=beat===17;
+  const beat=Math.min(moonlightStoryBeats.length-1,dayIndex%moonlightStoryBeats.length),title=beat===4,lineup=beat===5,intro=beat===6,vote=beat===14,result=beat===15,guardianResult=beat===16,award=beat===17,interview=beat===18;
   overlay.hidden=false;overlay.className=`moonlight-pageant festival-pm3 beat-${beat+1} motion-${moonlightMotionNames[beat]} reaction-${session.reaction.replaceAll(' ','-')}`;
   const frameMotion=beat===9?'dance':beat===11?'walk':null;
-  const hero=(!title&&!lineup&&!intro&&!vote&&!result&&!guardianResult&&!award)?(frameMotion?`<span class="pageant-hero-frames is-${frameMotion}" role="img" aria-label="${moonlightStoryBeats[beat]}">${moonlightMotionFrames(frameMotion).map((src,index)=>`<img src="${src}" alt="" style="--pageant-frame:${index}">`).join('')}</span>`:`<img class="pageant-hero-action" src="${moonlightSeonhwaImage()}" alt="${moonlightStoryBeats[beat]}">`):'';
+  const hero=(!title&&!lineup&&!intro&&!vote&&!result&&!guardianResult&&!award&&!interview)?(frameMotion?`<span class="pageant-hero-frames is-${frameMotion}" role="img" aria-label="${moonlightStoryBeats[beat]}">${moonlightMotionFrames(frameMotion).map((src,index)=>`<img src="${src}" alt="" style="--pageant-frame:${index}">`).join('')}</span>`:`<img class="pageant-hero-action" src="${moonlightSeonhwaImage()}" alt="${moonlightStoryBeats[beat]}">`):'';
   const titleCard=title?festivalTitleCard('한가위 달빛 아씨 경연','센스·예절·기품으로 빛나는 한가위 무대'):'';
   const entrantLineup=lineup?festivalLineup(session):'';
   const king=intro?festivalKingCut('보름달 아래에서 예절과 감각, 기품을 마음껏 펼쳐 보이거라.','한가위 경연을 알리는 황'):'';
   const board=vote?festivalScoreboard(session,'8인 심사 집계'):result?`<section class="festival-result-card"><small>최종 결과</small><strong>${session.overallRank}</strong><p>${session.player.score}점 · ${session.reaction}</p></section>`:'';
   const guardian=guardianResult?festivalGuardianCut(session):(beat===2&&game.guardianType?`<img class="pageant-guardian-cheer" src="../assets/cinematics/guardian/humanized/poses/${game.guardianType}-happy-transparent-v3.png?v=${scheduleAssetRevision}" alt="선화를 응원하는 신수">`:'');
   const winner=award?`<figure class="pageant-winner"><img src="${moonlightEntrantImage(session.winner)}" alt="대상 수상자 ${session.winner.name}"><figcaption>대상 · ${session.winner.name}</figcaption></figure><img class="pageant-king" src="../assets/events/holidays/moonlight-pageant/king/king-presenting-v1.png?v=${scheduleAssetRevision}" alt="대상을 시상하는 황">`:'';
-  const nextLabel=award?'경연 마치기':beat===13?'심사 결과 보기':'다음';
-  overlay.innerHTML=`${festivalCrowd()}${titleCard}${entrantLineup}${hero}${guardian}${king}${board}${winner}<p class="pageant-beat">${beat+1}/${moonlightStoryBeats.length} · ${moonlightStoryBeats[beat]}</p><button class="pageant-next" type="button">${nextLabel}</button>`;
+  const winnerInterview=interview?festivalWinnerInterview(session):'';
+  const nextLabel=interview?'경연 마치기':beat===13?'심사 결과 보기':'다음';
+  overlay.innerHTML=`${festivalCrowd()}${titleCard}${entrantLineup}${hero}${guardian}${king}${board}${winner}${winnerInterview}<p class="pageant-beat">${beat+1}/${moonlightStoryBeats.length} · ${moonlightStoryBeats[beat]}</p><button class="pageant-next" type="button">${nextLabel}</button>`;
 }
 function waitForMoonlightAdvance(){
   const button=document.querySelector('#moonlightPageant .pageant-next');
@@ -2962,7 +2982,7 @@ async function playWeeklySchedule(selected) {
       if(action.id==='errand'&&outcome==='mistake')await animateErrandFall(stageCharacterImage);
       else if(action.id==='errand'&&outcome==='struggle')await animateErrandNearFall(stageCharacterImage);
       else if(outcome==='mistake'&&(action.id==='reading'||action.id==='arithmetic'))await animateStudyPropDrop(action.id,stageCharacterImage);
-      else await animateActionStumble(stageCharacterImage,outcome);
+      else await animateNaturalFailure(action.id,stageCharacterImage,outcome);
     }
     const fullPhaseHoliday=action.id==='holiday-seollal'||action.id==='holiday-chuseok';
     const resolvedChange=fullPhaseHoliday?{...resolvedActivityChange(action,outcome)}:phaseDailyChange(freeTimeVariant?{...freeTimeVariant.change}:resolvedActivityChange(action,outcome),index%14);
