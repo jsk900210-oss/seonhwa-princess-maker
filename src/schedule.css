@@ -2383,11 +2383,16 @@ body .phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage:
 /* v0.64.23: the child runs ahead while Seonhwa follows; failure ends in a fall. */
 .phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-childcare.schedule-layered .stage-character.pixel-sprite{
   left:var(--layer-hero-left)!important;bottom:5%!important;width:132px!important;height:132px!important;
+  transition:left .28s linear!important;
+  animation:childcare-chase-step .56s steps(2,end) infinite!important;
 }
 .phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-childcare.schedule-layered .schedule-scene-layer.layer-npc{
   left:var(--layer-npc-left)!important;bottom:5%!important;width:84px!important;height:84px!important;object-fit:contain!important;object-position:center bottom!important;
-  transition:transform .12s linear;
+  transition:left .28s linear,transform .12s linear!important;
+  animation:childcare-child-step .56s steps(2,end) infinite!important;
 }
+@keyframes childcare-chase-step{0%,100%{translate:0 0}50%{translate:0 -3px}}
+@keyframes childcare-child-step{0%,100%{translate:0 -2px}50%{translate:0 1px}}
 .phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-childcare.schedule-layered .schedule-scene-layer.layer-pattern.dedicated-failure{
   left:var(--layer-prop-left)!important;bottom:17%!important;width:54px!important;clip-path:none!important;
 }

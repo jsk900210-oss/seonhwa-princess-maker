@@ -237,7 +237,7 @@ const vacationIllustrations=[
 function unifiedAgeFolder(){return '09';}
 function scheduleFramePath(file){return `../assets/characters/seonhwa/schedule-actions/${file}`;}
 function scheduleBasePath(file){return `../assets/characters/seonhwa/schedule-base/${file}`;}
-const scheduleAssetRevision='0.64.41-debug';
+const scheduleAssetRevision='0.64.42-debug';
 const scheduleQaParams=new URLSearchParams(location.search);
 const moonlightStandaloneQa=scheduleQaParams.get('qaHoliday')==='chuseok';
 const sehwaStandaloneQa=scheduleQaParams.get('qaHoliday')==='seollal';
@@ -886,8 +886,12 @@ async function playScheduleLayerScene(actionId,seonImage,rank,outcome,dayIndex){
         }
         if(actionId==='childcare'){
           const travelStep=loop*3+frame,travelsRight=dayIndex%2===0,rawProgress=Math.min(1,travelStep/8),progress=failed?Math.min(.62,rawProgress):rawProgress;
+          const chaseCycle=[0,1,2,1,0,1,2,1,0];
+          activeHeroFrame=childcareChaseFrames[chaseCycle[travelStep]];
+          activeNpcFrame=childcareRunningFrames[chaseCycle[travelStep]];
           const childLeft=travelsRight?30+progress*64:70-progress*64;
-          const heroLeft=travelsRight?childLeft-28:childLeft+28;
+          const strideGap=[30,28,29,28,30,28,29,28,30][travelStep];
+          const heroLeft=travelsRight?childLeft-strideGap:childLeft+strideGap;
           const fallen=failed&&travelStep>=6;
           const childLooksBack=fallen&&patternKey==='fail-b';
           const forcedFall=scheduleQaParams.get('qaFall');
