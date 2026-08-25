@@ -176,7 +176,7 @@
 .stage-character.pixel-sprite.motion-resting img{width:100%;height:100%;max-width:100%;max-height:100%;object-fit:contain;transform:none!important;clip-path:none!important}
 .activity-stage.action-rest .stage-character.pixel-sprite.motion-resting{width:160px;height:132px;padding:8px;transform:translateX(-50%)}
 .activity-stage.action-rest .stage-character.pixel-sprite.motion-resting img{image-rendering:auto;filter:drop-shadow(0 3px 2px #0005)}
-.stage-character.pixel-sprite.motion-resting:after{content:"Zzz";position:absolute;right:9%;top:5%;color:#fff8df;font-size:16px;font-weight:900;letter-spacing:2px;text-shadow:0 2px 2px #382313,0 0 5px #6b4a2f;animation:sleep-zzz 1.8s ease-in-out infinite}
+.stage-character.pixel-sprite.motion-resting:after{content:none;display:none}
 @keyframes sleep-zzz{0%,100%{opacity:.35;transform:translateY(5px) scale(.9)}50%{opacity:1;transform:translateY(-5px) scale(1.06)}}
 .activity-stage.eating-stage .stage-inner{overflow:hidden}
 .activity-stage.eating-stage .stage-character.pixel-sprite.motion-eating{left:50%;bottom:4%;width:150px;height:150px;padding:5px;box-sizing:border-box;transform:translateX(-50%);animation:none}
@@ -2340,6 +2340,30 @@ body .phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage:
   left:auto!important;right:2%!important;max-width:42%!important;transform-origin:center bottom!important;
 }
 .activity-stage.schedule-layered .stage-character.pixel-sprite,.activity-stage.schedule-layered .schedule-scene-layer.layer-npc{will-change:left,transform}
+
+/* v0.64.25: condition is communicated only by body motion, never floating text. */
+.phone.playing:not(.market-playing):not(.vacation-playing) .condition-cue{display:none!important}
+.phone.playing:not(.market-playing):not(.vacation-playing) .stage-character.pixel-sprite.motion-resting:after{content:none!important;display:none!important}
+.phone.playing:not(.market-playing):not(.vacation-playing) .stage-character.pixel-sprite.condition-drowsy{
+  animation:condition-body-nod 1.35s cubic-bezier(.42,0,.58,1) 1!important;transform-origin:50% 100%!important;
+}
+.phone.playing:not(.market-playing):not(.vacation-playing) .stage-character.pixel-sprite.condition-mistake{
+  animation:condition-body-stumble .78s cubic-bezier(.22,.7,.3,1) 1!important;transform-origin:50% 100%!important;
+}
+@keyframes condition-body-nod{
+  0%,12%,100%{translate:0 0;rotate:0deg;filter:brightness(1)}
+  32%{translate:0 5px;rotate:4deg;filter:brightness(.88)}
+  48%{translate:0 8px;rotate:7deg;filter:brightness(.8)}
+  64%{translate:0 2px;rotate:-2deg;filter:brightness(.96)}
+  78%{translate:0 6px;rotate:4deg;filter:brightness(.86)}
+}
+@keyframes condition-body-stumble{
+  0%,100%{translate:0 0;rotate:0deg}
+  18%{translate:-9px -2px;rotate:-7deg}
+  38%{translate:8px 3px;rotate:6deg}
+  58%{translate:-5px 5px;rotate:-4deg}
+  76%{translate:3px 2px;rotate:2deg}
+}
 
 /* v0.64.23: the child runs ahead while Seonhwa follows; failure ends in a fall. */
 .phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-childcare.schedule-layered .stage-character.pixel-sprite{
