@@ -3,8 +3,8 @@
 작성일: 2026-08-25  
 저장소: `https://github.com/jsk900210-oss/seonhwa-princess-maker.git`  
 작업 브랜치: `agent/pixel-schedule-handoff`  
-기능 기준 커밋: `f423a15`  
-게임 버전: `v0.64.11-debug`
+기능 기준 커밋: `9a15bd5`
+게임 버전: `v0.64.50-debug`
 
 ## 다른 PC에서 처음 받기
 
@@ -33,12 +33,12 @@ git pull --ff-only origin agent/pixel-schedule-handoff
 저장소 루트에서 실행합니다.
 
 ```powershell
-python -m http.server 8000
+python -m http.server 5173
 ```
 
-- 게임: `http://127.0.0.1:8000/src/`
-- 인연 대화 QA: `http://127.0.0.1:8000/src/?qaRelation=seojin&qaAge=13&v=0.64.11-debug`
-- 잠금 일정 QA 예시: `http://127.0.0.1:8000/src/?qa=1&qaSchedule=farmwork&qaPattern=success-a`
+- 게임: `http://127.0.0.1:5173/src/?v=0.64.50-debug`
+- 인연 대화 QA: `http://127.0.0.1:5173/src/?qaRelation=seojin&qaAge=13&v=0.64.50-debug`
+- 일정 QA 예시: `http://127.0.0.1:5173/src/?qa=1&qaSchedule=farmwork&qaPattern=success-a&v=0.64.50-debug`
 
 ## 현재 확정 상태
 
@@ -47,6 +47,10 @@ python -m http.server 8000
 - 선화 9·13·16·18세와 남자 인연 5명의 대화 전신은 `640×960` RGBA 공통 규격입니다.
 - 같은 게임의 진행 시점을 최대 5개 슬롯으로 나누어 저장할 수 있습니다.
 - 잠금 일정 레이어는 QA URL에서 성공 A/B·실패 A/B를 즉시 실행할 수 있습니다.
+- 약초 실패는 손을 머리 위로 드는 놀람 프레임 뒤에 앞으로 넘어집니다.
+- 농가 닭 추격과 아이 돌보기 추격은 한 장면 안에서 방향·안전 간격을 유지합니다.
+- 활성 일정의 125개 프레임 묶음은 정지 이미지 중복 방지 검사를 통과해야 합니다.
+- 전체 Node 회귀 테스트는 39개이며 자산 감사 결과는 0 errors, 0 warnings입니다.
 - `main`에는 자동 병합하지 않으며 검수는 `agent/pixel-schedule-handoff`에서 계속합니다.
 
 ## 이어 작업 전 필수 확인
@@ -73,9 +77,8 @@ git diff --check
 
 ## 공개 확인 주소
 
-- 라이브 게임: `https://jsk900210-oss.github.io/seonhwa-princess-maker/src/?v=f423a15`
-- 인연 대화 QA: `https://jsk900210-oss.github.io/seonhwa-princess-maker/src/?qaRelation=seojin&qaAge=13&v=f423a15`
-- GitHub Pages 배포 기록: `https://github.com/jsk900210-oss/seonhwa-princess-maker/actions/runs/32788988286`
+- 로컬 최신 게임: `http://127.0.0.1:5173/src/?v=0.64.50-debug`
+- 공개 게임은 작업 브랜치를 GitHub에 푸시하고 Pages 배포가 완료된 뒤 새 커밋 주소로 갱신합니다.
 
 ## 작업 완료 시 기록 순서
 
