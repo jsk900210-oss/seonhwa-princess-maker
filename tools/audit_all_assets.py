@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import hashlib
+import json
 import sys
 from collections import Counter, defaultdict
 from pathlib import Path
@@ -11,8 +12,24 @@ from PIL import Image
 ROOT = Path(__file__).resolve().parents[1]
 ASSET_ROOT = ROOT / "assets"
 RASTER_EXTENSIONS = {".png", ".webp", ".jpg", ".jpeg"}
-ALPHA_HINTS = ("characters", "sprites", "fullbody-expressions", "activity-icons")
-ALPHA_EXCEPTIONS = ("source-sheets", "reference", "photoreal", "backgrounds", "cinematics")
+ALPHA_HINTS = (
+    "sprites",
+    "fullbody-expressions",
+    "dialogue-fullbody",
+    "activity-icons",
+    "schedule-actions",
+    "schedule-layers",
+)
+ALPHA_EXCEPTIONS = (
+    "source-sheets",
+    "source-pixel",
+    "reference",
+    "photoreal",
+    "background",
+    "cinematics",
+    "chroma",
+    "-sheet",
+)
 
 
 def expects_alpha(path: Path) -> bool:
@@ -20,6 +37,26 @@ def expects_alpha(path: Path) -> bool:
     return path.suffix.lower() == ".png" and any(hint in normalized for hint in ALPHA_HINTS) and not any(
         exception in normalized for exception in ALPHA_EXCEPTIONS
     )
+
+
+def declared_frame_sequences(value: object, base: Path):
+    """Yield runtime frame lists declared by a v2 schedule manifest."""
+    if isinstance(value, dict):
+        for key, child in value.items():
+            if key in {
+                "frames",
+                "heroFrames",
+                "npcFrames",
+                "failureHeroFrames",
+                "npcFailureFallFrames",
+                "existingHeroFrames",
+            } and isinstance(child, list) and len(child) >= 2 and all(isinstance(item, str) for item in child):
+                yield [((base / item).resolve()) for item in child]
+            else:
+                yield from declared_frame_sequences(child, base)
+    elif isinstance(value, list):
+        for child in value:
+            yield from declared_frame_sequences(child, base)
 
 
 def main() -> int:
@@ -30,6 +67,11 @@ def main() -> int:
     dimensions: Counter[tuple[int, int]] = Counter()
     hashes: defaultdict[str, list[str]] = defaultdict(list)
     alpha_count = 0
+    runtime_sequences: list[list[Path]] = []
+
+    for manifest_path in sorted((ASSET_ROOT / "schedule-layers-v2").glob("*/manifest.json")):
+        manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+        runtime_sequences.extend(declared_frame_sequences(manifest, manifest_path.parent))
 
     for path in files:
         relative = path.relative_to(ROOT).as_posix()
@@ -55,6 +97,15 @@ def main() -> int:
                     errors.append(f"transparent layer expected: {relative} ({image.mode})")
         except Exception as exc:
             errors.append(f"unreadable image: {relative}: {exc}")
+
+    for sequence in runtime_sequences:
+        existing = [path for path in sequence if path.exists()]
+        if len(existing) != len(sequence):
+            continue
+        sequence_hashes = [hashlib.sha256(path.read_bytes()).hexdigest() for path in existing]
+        if len(set(sequence_hashes)) == 1:
+            relative = [path.relative_to(ROOT).as_posix() for path in existing]
+            errors.append(f"static runtime frame sequence: {' | '.join(relative)}")
 
     duplicate_groups = [paths for paths in hashes.values() if len(paths) > 1]
     print("FULL ASSET AUDIT")
