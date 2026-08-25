@@ -138,3 +138,28 @@
   .phone.intro-guardian-active .home-greeting.guardian-overlay>p,
   .phone.intro-guardian-active .home-greeting.guardian-overlay .greeting-answer-dock{animation-duration:.01ms!important;animation-delay:0s!important}
 }
+
+/* v0.64.21: the guardian dissolves into faint light before the home UI returns. */
+.home-greeting.guardian-overlay.is-dissolving{pointer-events:none}
+.home-greeting.guardian-overlay.is-dissolving .home-greeting-head img{
+  animation:guardian-dissolve 1s cubic-bezier(.4,0,.7,1) both!important;
+}
+.home-greeting.guardian-overlay.is-dissolving .home-greeting-head b,
+.home-greeting.guardian-overlay.is-dissolving>p,
+.home-greeting.guardian-overlay.is-dissolving>.guardian-talk-result,
+.home-greeting.guardian-overlay.is-dissolving>.greeting-answer-dock{
+  animation:guardian-dialogue-dissolve .55s ease both!important;
+}
+@keyframes guardian-dissolve{
+  0%{opacity:1;filter:blur(0) brightness(1);transform:translateY(0) scale(1)}
+  45%{opacity:.72;filter:blur(1px) brightness(1.16);transform:translateY(-2px) scale(1.006)}
+  100%{opacity:0;filter:blur(8px) brightness(1.5);transform:translateY(-14px) scale(1.025)}
+}
+@keyframes guardian-dialogue-dissolve{to{opacity:0;filter:blur(3px);transform:translateY(8px)}}
+@media(prefers-reduced-motion:reduce){
+  .home-greeting.guardian-overlay.is-dissolving .home-greeting-head img,
+  .home-greeting.guardian-overlay.is-dissolving .home-greeting-head b,
+  .home-greeting.guardian-overlay.is-dissolving>p,
+  .home-greeting.guardian-overlay.is-dissolving>.guardian-talk-result,
+  .home-greeting.guardian-overlay.is-dissolving>.greeting-answer-dock{animation-duration:.01ms!important}
+}

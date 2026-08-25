@@ -237,7 +237,7 @@ const vacationIllustrations=[
 function unifiedAgeFolder(){return '09';}
 function scheduleFramePath(file){return `../assets/characters/seonhwa/schedule-actions/${file}`;}
 function scheduleBasePath(file){return `../assets/characters/seonhwa/schedule-base/${file}`;}
-const scheduleAssetRevision='0.64.20-debug';
+const scheduleAssetRevision='0.64.21-debug';
 const scheduleQaParams=new URLSearchParams(location.search);
 const moonlightStandaloneQa=scheduleQaParams.get('qaHoliday')==='chuseok';
 const sehwaStandaloneQa=scheduleQaParams.get('qaHoliday')==='seollal';
@@ -1506,11 +1506,19 @@ function openGuardianDialogueOverlay(mood='neutral'){
 function closeGuardianDialogueOverlay(){
   const greeting=document.querySelector('#homeGreeting');
   greeting.hidden=true;greeting.classList.remove('guardian-overlay','mood-neutral','mood-happy','mood-concerned','mood-surprised');
+  greeting.classList.remove('is-dissolving');
   delete greeting.dataset.guardian;
   document.querySelector('.phone').classList.remove('greeting-active','guardian-dialogue-active');
 }
+function dissolveGuardianDialogueOverlay(onComplete){
+  const greeting=document.querySelector('#homeGreeting'),choices=document.querySelector('#homeGreetingChoices');
+  if(greeting.classList.contains('is-dissolving'))return;
+  greeting.classList.add('is-dissolving');
+  choices.querySelectorAll('button').forEach(button=>button.disabled=true);
+  window.setTimeout(()=>{closeGuardianDialogueOverlay();if(onComplete)onComplete();},1050);
+}
 function closeGuardianConversation(change){
-  closeGuardianDialogueOverlay();showLiveChanges({change,cost:0});renderHud();queueAutoSave();
+  dissolveGuardianDialogueOverlay(()=>{showLiveChanges({change,cost:0});renderHud();queueAutoSave();});
 }
 function renderGuardianTalkResult(change){
   const result=document.querySelector('#guardianTalkResult');
@@ -2453,9 +2461,11 @@ function advanceIntroDialogue(){
   if(!introDialogueQueue.length)return;introDialogueIndex+=1;
   if(introDialogueIndex>=introDialogueQueue.length){
     introDialogueQueue=[];introDialogueIndex=0;
-    closeGuardianDialogueOverlay();document.querySelector('.phone').classList.remove('intro-guardian-active');
-    document.querySelector('#speakerName').textContent=game.guardianName;
-    document.querySelector('#dialogueText').textContent='아래의 일정 버튼을 눌러 첫 주를 계획해 보자.';
+    dissolveGuardianDialogueOverlay(()=>{
+      document.querySelector('.phone').classList.remove('intro-guardian-active');
+      document.querySelector('#speakerName').textContent=game.guardianName;
+      document.querySelector('#dialogueText').textContent='아래의 일정 버튼을 눌러 첫 주를 계획해 보자.';
+    });
     return;
   }
   renderIntroDialogue();
