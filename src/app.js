@@ -237,7 +237,7 @@ const vacationIllustrations=[
 function unifiedAgeFolder(){return '09';}
 function scheduleFramePath(file){return `../assets/characters/seonhwa/schedule-actions/${file}`;}
 function scheduleBasePath(file){return `../assets/characters/seonhwa/schedule-base/${file}`;}
-const scheduleAssetRevision='0.64.25-debug';
+const scheduleAssetRevision='0.64.26-debug';
 const scheduleQaParams=new URLSearchParams(location.search);
 const moonlightStandaloneQa=scheduleQaParams.get('qaHoliday')==='chuseok';
 const sehwaStandaloneQa=scheduleQaParams.get('qaHoliday')==='seollal';
@@ -767,8 +767,10 @@ async function playScheduleLayerScene(actionId,seonImage,rank,outcome,dayIndex){
   const patternSpec=spec.patterns?.[patternKey];
   const patternFrames=v2Spec?patternSpec?.frames:patternSpec;
   const farmTillingFrames=['npc/farmer-tilling-v1/farmer-tilling-v1-1.png','npc/farmer-tilling-v1/farmer-tilling-v1-2.png','npc/farmer-tilling-v1/farmer-tilling-v1-3.png'];
-  const npcFrames=actionId==='farmwork'?farmTillingFrames:(patternSpec?.npcFrames?.length===3?patternSpec.npcFrames:v2Spec?spec.npc?.frames||[]:spec.npc||[]);
-  const heroFrames=patternSpec?.heroFrames?.length===3?patternSpec.heroFrames:actionId==='farmwork'&&patternKey==='fail-b'&&spec.failureHeroFrames?.length===3?spec.failureHeroFrames:spec.existingHeroFrames||[];
+  const childcareRunningFrames=['npc/child-running-v1/child-run-1.png','npc/child-running-v1/child-run-2.png','npc/child-running-v1/child-run-3.png'];
+  const childcareChaseFrames=['hero-actions/chase-running-v1/seonhwa-chase-1.png','hero-actions/chase-running-v1/seonhwa-chase-2.png','hero-actions/chase-running-v1/seonhwa-chase-3.png'];
+  const npcFrames=actionId==='farmwork'?farmTillingFrames:actionId==='childcare'?childcareRunningFrames:(patternSpec?.npcFrames?.length===3?patternSpec.npcFrames:v2Spec?spec.npc?.frames||[]:spec.npc||[]);
+  const heroFrames=actionId==='childcare'?childcareChaseFrames:patternSpec?.heroFrames?.length===3?patternSpec.heroFrames:actionId==='farmwork'&&patternKey==='fail-b'&&spec.failureHeroFrames?.length===3?spec.failureHeroFrames:spec.existingHeroFrames||[];
   if(heroFrames.length!==3||npcFrames.length!==3||patternFrames?.length!==3)throw new Error(`schedule layer frame count invalid: ${actionId}/${patternKey}`);
   const placement=spec.placement||{};
   const positionPercent=value=>Number.parseFloat(String(value??'').replace('%',''));
@@ -795,7 +797,7 @@ async function playScheduleLayerScene(actionId,seonImage,rank,outcome,dayIndex){
     const pattern=make(`${patternLayer} ${patternKey} ${patternKey.startsWith('fail-')?'dedicated-failure':''}`,patternFrames[0]);
     if(patternSpec?.heroIncludesProp)pattern.hidden=true;
     layers.push(npc,pattern);
-    const delay=actionId==='farmwork'&&patternKey==='fail-b'?190:([360,300,250][rank]||300);
+    const delay=actionId==='farmwork'&&patternKey==='fail-b'?190:actionId==='childcare'?220:([360,300,250][rank]||300);
     for(let loop=0;loop<3;loop+=1){
       for(let frame=0;frame<3;frame+=1){
         if(actionId==='farmwork'&&patternKey==='fail-b'){
