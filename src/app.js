@@ -237,7 +237,7 @@ const vacationIllustrations=[
 function unifiedAgeFolder(){return '09';}
 function scheduleFramePath(file){return `../assets/characters/seonhwa/schedule-actions/${file}`;}
 function scheduleBasePath(file){return `../assets/characters/seonhwa/schedule-base/${file}`;}
-const scheduleAssetRevision='0.64.27-debug';
+const scheduleAssetRevision='0.64.28-debug';
 const scheduleQaParams=new URLSearchParams(location.search);
 const moonlightStandaloneQa=scheduleQaParams.get('qaHoliday')==='chuseok';
 const sehwaStandaloneQa=scheduleQaParams.get('qaHoliday')==='seollal';
@@ -770,6 +770,7 @@ async function playScheduleLayerScene(actionId,seonImage,rank,outcome,dayIndex){
   const childcareRunningFrames=['npc/child-running-v1/child-run-1.png','npc/child-running-v1/child-run-2.png','npc/child-running-v1/child-run-3.png'];
   const childcareChaseFrames=['hero-actions/chase-running-v1/seonhwa-chase-1.png','hero-actions/chase-running-v1/seonhwa-chase-2.png','hero-actions/chase-running-v1/seonhwa-chase-3.png'];
   const childcareStumbleFrames=['hero-actions/stumble-sit-v1/seonhwa-stumble-1.png','hero-actions/stumble-sit-v1/seonhwa-stumble-2.png','hero-actions/stumble-sit-v1/seonhwa-stumble-3.png'];
+  const childcareForwardFallFrames=['hero-actions/trip-forward-v1/seonhwa-trip-forward-1.png','hero-actions/trip-forward-v1/seonhwa-trip-forward-2.png','hero-actions/trip-forward-v1/seonhwa-trip-forward-3.png'];
   const childcareIdleFrames=['npc/child/idle-1.png','npc/child/idle-2.png','npc/child/idle-3.png'];
   const npcFrames=actionId==='farmwork'?farmTillingFrames:actionId==='childcare'?childcareRunningFrames:(patternSpec?.npcFrames?.length===3?patternSpec.npcFrames:v2Spec?spec.npc?.frames||[]:spec.npc||[]);
   const heroFrames=actionId==='childcare'?childcareChaseFrames:patternSpec?.heroFrames?.length===3?patternSpec.heroFrames:actionId==='farmwork'&&patternKey==='fail-b'&&spec.failureHeroFrames?.length===3?spec.failureHeroFrames:spec.existingHeroFrames||[];
@@ -823,7 +824,9 @@ async function playScheduleLayerScene(actionId,seonImage,rank,outcome,dayIndex){
           const heroLeft=travelsRight?childLeft-30:childLeft+30;
           const fallen=failed&&travelStep>=6;
           const childLooksBack=fallen&&patternKey==='fail-b';
-          if(childLooksBack){activeHeroFrame=childcareStumbleFrames[frame];activeNpcFrame=childcareIdleFrames[frame];}
+          const forcedFall=scheduleQaParams.get('qaFall');
+          const fallsForward=patternKey==='fail-b'&&(forcedFall==='forward'||(forcedFall!=='seated'&&dayIndex%4===3));
+          if(childLooksBack){activeHeroFrame=(fallsForward?childcareForwardFallFrames:childcareStumbleFrames)[frame];activeNpcFrame=childcareIdleFrames[frame];}
           stage.style.setProperty('--layer-npc-left',`${childLeft}%`,'important');
           stage.style.setProperty('--layer-hero-left',`${heroLeft}%`,'important');
           seonImage.style.setProperty('transform',travelsRight?'none':'scaleX(-1)','important');
