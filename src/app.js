@@ -237,7 +237,7 @@ const vacationIllustrations=[
 function unifiedAgeFolder(){return '09';}
 function scheduleFramePath(file){return `../assets/characters/seonhwa/schedule-actions/${file}`;}
 function scheduleBasePath(file){return `../assets/characters/seonhwa/schedule-base/${file}`;}
-const scheduleAssetRevision='0.64.11-debug';
+const scheduleAssetRevision='0.64.12-debug';
 const scheduleQaParams=new URLSearchParams(location.search);
 const moonlightStandaloneQa=scheduleQaParams.get('qaHoliday')==='chuseok';
 const sehwaStandaloneQa=scheduleQaParams.get('qaHoliday')==='seollal';
@@ -1202,7 +1202,7 @@ function evaluateChuseokFestival(){
   const playerStats={sense:Number(game.sense)||0,manners:Number(game.manners)||0,dignity:Number(game.dignity)||0};
   const qaOverride=moonlightStandaloneQa&&scheduleQaParams.has('qaScore')?Math.max(0,Math.min(999,Number(scheduleQaParams.get('qaScore'))||0)):null;
   const playerScore=qaOverride??Math.round((playerStats.sense+playerStats.manners+playerStats.dignity)/3)+(Math.floor(Math.random()*9)-4);
-  const entrants=[{id:'seonhwa',name:game.name||'선화',player:true,score:playerScore},...moonlightContestants.map((entry,index)=>({...entry,index,score:entry.scores[ageIndex]}))];
+  const entrants=[{id:'seonhwa',name:game.characterName||'선화',player:true,score:playerScore},...moonlightContestants.map((entry,index)=>({...entry,index,score:entry.scores[ageIndex]}))];
   const ranked=[...entrants].sort((a,b)=>b.score-a.score||a.name.localeCompare(b.name));
   ranked.forEach((entry,index)=>entry.rank=index===0?'대상':index===1?'우수상':index<=3?'장려상':'예선탈락');
   const player=ranked.find(entry=>entry.player),winner=ranked[0];
@@ -1223,7 +1223,7 @@ function festivalKingCut(line,alt){return `<section class="festival-character-cu
 function festivalGuardianCut(session){
   if(!game.guardianType)return '';
   const name=game.guardianName||guardianDefs[game.guardianType]?.name||'신수';
-  const line=session.overallRank==='대상'?`${game.name||'선화'}, 네 빛이 모두에게 닿았어. 대상이야!`:`${game.name||'선화'}, 여덟 명 가운데 ${session.player.rank}이야. 끝까지 잘 해냈어.`;
+  const line=session.overallRank==='대상'?`${game.characterName||'선화'}, 네 빛이 모두에게 닿았어. 대상이야!`:`${game.characterName||'선화'}, 여덟 명 가운데 ${session.player.rank}이야. 끝까지 잘 해냈어.`;
   return `<section class="festival-character-cut guardian-cut"><img src="../assets/cinematics/guardian/humanized/poses/${game.guardianType}-happy-transparent-v3.png?v=${scheduleAssetRevision}" alt="결과를 알려 주는 ${name}"><p><b>${name}</b>${line}</p></section>`;
 }
 function festivalCrowd(){return '<div class="festival-crowd" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>';}
@@ -1256,11 +1256,11 @@ function sehwaFrame(kind,frame){return `../assets/events/holidays/sehwa-contest/
 function sehwaAwardSceneFrame(frame){return `../assets/events/holidays/sehwa-contest/award-scene/age-${sehwaAssetAge()}/award-scene-${frame}.png?v=${scheduleAssetRevision}`;}
 function evaluateSeollalFestival(){
   const ageIndex=sehwaAgeIndex();
-  const stats={charm:Number(game.charm)||0,arts:Number(game.arts)||0,sensitivity:Number(game.sensitivity)||0,sense:Number(game.sense)||0,dignity:Number(game.dignity)||0};
-  const weighted=Math.round(stats.charm*.35+stats.arts*.30+stats.sensitivity*.20+stats.sense*.10+stats.dignity*.05);
+  const stats={charm:Number(game.charm)||0,sensitivity:Number(game.sensitivity)||0,sense:Number(game.sense)||0,dignity:Number(game.dignity)||0};
+  const weighted=Math.round(stats.charm*.35+stats.sensitivity*.50+stats.sense*.10+stats.dignity*.05);
   const qaOverride=sehwaStandaloneQa&&scheduleQaParams.has('qaScore')?Math.max(0,Math.min(999,Number(scheduleQaParams.get('qaScore'))||0)):null;
   const playerScore=qaOverride??Math.max(0,weighted+(Math.floor(Math.random()*9)-4));
-  const entrants=[{id:'seonhwa',name:game.name||'선화',player:true,score:playerScore},...sehwaContestants.map((entry,index)=>({...entry,index,score:entry.scores[ageIndex]}))];
+  const entrants=[{id:'seonhwa',name:game.characterName||'선화',player:true,score:playerScore},...sehwaContestants.map((entry,index)=>({...entry,index,score:entry.scores[ageIndex]}))];
   const ranked=[...entrants].sort((a,b)=>b.score-a.score||a.name.localeCompare(b.name));
   ranked.forEach((entry,index)=>entry.rank=index===0?'대상':index<=2?'우수상':index<=4?'장려상':'예선탈락');
   const player=ranked.find(entry=>entry.player),winner=ranked[0],median=sehwaContestants[3].scores[ageIndex];
