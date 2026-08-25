@@ -2013,7 +2013,7 @@
 .phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-childcare.schedule-layered .schedule-scene-layer.layer-npc{width:118px!important}
 .phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-childcare.schedule-layered .schedule-scene-layer.layer-pattern,.phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-childcare.schedule-layered .schedule-scene-layer.layer-effect{width:64px!important}
 /* v0.63.89: 아이돌보기에서 선화가 오른쪽의 아이를 바라보고, 실패 식은땀은 얼굴 옆에 표시한다. */
-.phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-childcare.schedule-layered .stage-character.pixel-sprite>img{transform:scaleX(-1)!important}
+.phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-childcare.schedule-layered .stage-character.pixel-sprite>img{transform:none!important}
 .phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-childcare.schedule-layered .schedule-scene-layer.layer-pattern.fail-a{left:44%!important;bottom:31%!important;width:50px!important}
 .phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-childcare.schedule-layered .schedule-scene-layer.layer-pattern.fail-b{left:70%!important;bottom:18%!important;width:44px!important}
 /* v0.63.91: 목공소 v2 레이어 — 선화가 작업대를 향하고 목수·작업대의 성인 비율을 유지한다. */
@@ -2110,7 +2110,7 @@
 .phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-merchanthelp.schedule-layered .schedule-scene-layer.layer-npc,
 .phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-accounting.schedule-layered .schedule-scene-layer.layer-npc,
 .phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-tutoring.schedule-layered .schedule-scene-layer.layer-npc{width:146px!important}
-.phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-childcare.schedule-layered .stage-character.pixel-sprite>img{transform:scaleX(-1)!important;transform-origin:center bottom!important}
+.phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-childcare.schedule-layered .stage-character.pixel-sprite>img{transform:none!important;transform-origin:center bottom!important}
 .phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-childcare.schedule-layered .schedule-scene-layer.layer-effect.success-b{left:61%!important;bottom:5%!important;width:104px!important}
 .phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-woodwork.schedule-layered:has(.schedule-scene-layer.success-a) .stage-character.pixel-sprite,
 .phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-woodwork.schedule-layered:has(.schedule-scene-layer.success-b) .stage-character.pixel-sprite{left:40%!important;width:210px!important;height:174px!important;bottom:3%!important}
@@ -2247,3 +2247,56 @@
 @keyframes pageant-guardian-result{from{transform:translateX(50%) translateY(0) rotate(-2deg)}to{transform:translateX(50%) translateY(-8px) rotate(2deg)}}
 @keyframes festival-cut-enter{from{opacity:0;transform:translateX(-35px)}to{opacity:1;transform:translateX(0)}}
 @media(max-width:380px){.festival-title-card h2{font-size:19px}.festival-scoreboard{left:5%;right:5%}.pageant-king.is-announcer{width:134px;height:180px}.pageant-guardian-cheer.is-result{width:122px;height:164px}}
+
+/* v0.64.13: keep holiday actors stable and reserve a clear dialogue lane. */
+.moonlight-pageant.festival-pm3 .pageant-beat{
+  z-index:60!important;
+  bottom:2%!important;
+  min-height:34px;
+  box-sizing:border-box;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:#24140df2!important;
+  box-shadow:0 2px 8px #000b!important;
+}
+
+/* v0.64.13: childcare keeps Seonhwa's authored facing and separates actor layers. */
+.phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-childcare.schedule-layered{
+  --layer-hero-left:29%!important;
+  --layer-npc-left:76%!important;
+  --layer-prop-left:55%!important;
+  --layer-effect-left:58%!important;
+}
+.phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-childcare.schedule-layered .stage-character.pixel-sprite{
+  left:var(--layer-hero-left)!important;
+  width:132px!important;
+  height:132px!important;
+}
+.phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-childcare.schedule-layered .schedule-scene-layer.layer-npc{
+  left:var(--layer-npc-left)!important;
+  width:86px!important;
+}
+.phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-childcare.schedule-layered .schedule-scene-layer.layer-pattern,
+.phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-childcare.schedule-layered .schedule-scene-layer.layer-effect{
+  max-width:76px!important;
+}
+.phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-farmwork.schedule-layered .schedule-scene-layer.layer-pattern.success-a{
+  width:86px!important;
+  clip-path:inset(42% 0 0 0);
+}
+.sehwa-contest.festival-pm3 .sehwa-award-sequence{
+  left:4%!important;
+  right:4%!important;
+  bottom:14%!important;
+  height:72%!important;
+}
+.sehwa-contest.festival-pm3.beat-16 .pageant-winner,
+.moonlight-pageant.festival-pm3.beat-14 .pageant-winner{
+  bottom:16%!important;
+  height:62%!important;
+}
+.sehwa-contest.festival-pm3.beat-16 .pageant-king,
+.moonlight-pageant.festival-pm3.beat-14 .pageant-king{
+  bottom:16%!important;
+}

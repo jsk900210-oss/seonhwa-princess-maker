@@ -21,9 +21,9 @@
   "npc": {
     "id": "farmer",
     "frames": [
-      "npc/farmer/idle-1.png",
-      "npc/farmer/idle-2.png",
-      "npc/farmer/idle-3.png"
+      "../../schedule-layers/farmwork/npc/farmer-v3-1.png",
+      "../../schedule-layers/farmwork/npc/farmer-v3-2.png",
+      "../../schedule-layers/farmwork/npc/farmer-v3-3.png"
     ]
   },
   "patterns": {
@@ -63,7 +63,7 @@
   "placement": {
     "heroLeft": "30%",
     "floorBottom": "4%",
-    "npcLeft": "76%",
+    "npcLeft": "75%",
     "npcScale": 1,
     "propLeft": "52%",
     "propBottom": "3%",
