@@ -2300,7 +2300,7 @@
   width:158px!important;
   transform:translateX(-50%) scaleX(-1)!important;
   transform-origin:center bottom!important;
-  animation:farm-guide-bob .9s ease-in-out infinite!important;
+  animation:none!important;
 }
 .phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-farmwork.schedule-layered .schedule-scene-layer.layer-npc[hidden]{
   display:none!important;

@@ -237,7 +237,7 @@ const vacationIllustrations=[
 function unifiedAgeFolder(){return '09';}
 function scheduleFramePath(file){return `../assets/characters/seonhwa/schedule-actions/${file}`;}
 function scheduleBasePath(file){return `../assets/characters/seonhwa/schedule-base/${file}`;}
-const scheduleAssetRevision='0.64.17-debug';
+const scheduleAssetRevision='0.64.18-debug';
 const scheduleQaParams=new URLSearchParams(location.search);
 const moonlightStandaloneQa=scheduleQaParams.get('qaHoliday')==='chuseok';
 const sehwaStandaloneQa=scheduleQaParams.get('qaHoliday')==='seollal';
@@ -748,7 +748,7 @@ async function playScheduleLayerScene(actionId,seonImage,rank,outcome,dayIndex){
   const patternKey=forcedPattern||`${failed?'fail':'success'}-${dayIndex%2===0?'a':'b'}`;
   const patternSpec=spec.patterns?.[patternKey];
   const patternFrames=v2Spec?patternSpec?.frames:patternSpec;
-  const npcFrames=v2Spec?spec.npc?.frames||[]:spec.npc||[];
+  const npcFrames=patternSpec?.npcFrames?.length===3?patternSpec.npcFrames:v2Spec?spec.npc?.frames||[]:spec.npc||[];
   const heroFrames=patternSpec?.heroFrames?.length===3?patternSpec.heroFrames:actionId==='farmwork'&&patternKey==='fail-b'&&spec.failureHeroFrames?.length===3?spec.failureHeroFrames:spec.existingHeroFrames||[];
   if(heroFrames.length!==3||npcFrames.length!==3||patternFrames?.length!==3)throw new Error(`schedule layer frame count invalid: ${actionId}/${patternKey}`);
   const placement=spec.placement||{};
@@ -786,7 +786,7 @@ async function playScheduleLayerScene(actionId,seonImage,rank,outcome,dayIndex){
           pattern.style.transform=travelsRight?'translateX(-50%)':'translateX(-50%) scaleX(-1)';
         }
         seonImage.src=v2Spec?`${base}/${heroFrames[frame]}${v}`:`${heroFrames[frame]}${v}`;
-        const npcFrame=actionId==='farmwork'?0:frame;
+        const npcFrame=actionId==='farmwork'&&!patternSpec?.npcFrames?0:frame;
         npc.src=`${base}/${npcFrames[npcFrame]}${v}`;
         pattern.src=`${base}/${patternFrames[frame]}${v}`;
         await schedulePlaybackDelay(delay);

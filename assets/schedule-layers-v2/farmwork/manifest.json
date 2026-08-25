@@ -30,10 +30,10 @@
     "success-a": {
       "layer": "props",
       "heroIncludesProp": true,
-      "heroFrames": [
-        "../../characters/seonhwa/schedule-actions/farm-tilling-v1/farm-tilling-v1-1.png",
-        "../../characters/seonhwa/schedule-actions/farm-tilling-v1/farm-tilling-v1-2.png",
-        "../../characters/seonhwa/schedule-actions/farm-tilling-v1/farm-tilling-v1-3.png"
+      "npcFrames": [
+        "npc/farmer-tilling-v1/farmer-tilling-v1-1.png",
+        "npc/farmer-tilling-v1/farmer-tilling-v1-2.png",
+        "npc/farmer-tilling-v1/farmer-tilling-v1-3.png"
       ],
       "frames": [
         "props/cabbage-basket-1.png",
