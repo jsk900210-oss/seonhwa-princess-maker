@@ -237,7 +237,7 @@ const vacationIllustrations=[
 function unifiedAgeFolder(){return '09';}
 function scheduleFramePath(file){return `../assets/characters/seonhwa/schedule-actions/${file}`;}
 function scheduleBasePath(file){return `../assets/characters/seonhwa/schedule-base/${file}`;}
-const scheduleAssetRevision='0.64.37-debug';
+const scheduleAssetRevision='0.64.38-debug';
 const scheduleQaParams=new URLSearchParams(location.search);
 const moonlightStandaloneQa=scheduleQaParams.get('qaHoliday')==='chuseok';
 const sehwaStandaloneQa=scheduleQaParams.get('qaHoliday')==='seollal';
@@ -809,7 +809,7 @@ async function playScheduleLayerScene(actionId,seonImage,rank,outcome,dayIndex){
   const patternKey=forcedPattern||`${failed?'fail':'success'}-${dayIndex%2===0?'a':'b'}`;
   const patternSpec=spec.patterns?.[patternKey];
   const patternFrames=v2Spec?patternSpec?.frames:patternSpec;
-  const farmTillingFrames=['npc/farmer-tilling-v2/farmer-tilling-v2-1.png','npc/farmer-tilling-v2/farmer-tilling-v2-2.png','npc/farmer-tilling-v2/farmer-tilling-v2-3.png'];
+  const farmTillingFrames=['npc/farmer-tilling-v3/farmer-tilling-v3-1.png','npc/farmer-tilling-v3/farmer-tilling-v3-2.png','npc/farmer-tilling-v3/farmer-tilling-v3-3.png'];
   const farmChickenChaseFrames=['hero-actions/chicken-chase-v2/seonhwa-chicken-chase-1.png','hero-actions/chicken-chase-v2/seonhwa-chicken-chase-2.png','hero-actions/chicken-chase-v2/seonhwa-chicken-chase-3.png'];
   const childcareRunningFrames=['npc/child-running-v1/child-run-1.png','npc/child-running-v1/child-run-2.png','npc/child-running-v1/child-run-3.png'];
   const childcareFallFrames=['npc/child-fall-v1/child-fall-1.png','npc/child-fall-v1/child-fall-2.png','npc/child-fall-v1/child-fall-3.png'];
