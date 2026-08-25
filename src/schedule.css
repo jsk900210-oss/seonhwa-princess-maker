@@ -2462,6 +2462,10 @@ body .phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage:
   width:58px!important;
   transform-origin:center bottom!important;
 }
+.phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-farmwork.schedule-layered[data-chase-direction="right"] .stage-character.pixel-sprite>img{transform:none!important;transform-origin:center bottom!important}
+.phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-farmwork.schedule-layered[data-chase-direction="left"] .stage-character.pixel-sprite>img{transform:scaleX(-1)!important;transform-origin:center bottom!important}
+.phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-farmwork.schedule-layered[data-chase-direction="right"] .schedule-scene-layer.layer-pattern.fail-b{transform:translateX(-50%)!important}
+.phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-farmwork.schedule-layered[data-chase-direction="left"] .schedule-scene-layer.layer-pattern.fail-b{transform:translateX(-50%) scaleX(-1)!important}
 
 /* v0.64.17: face the child, scale the child by visible body height, and isolate sweat. */
 .phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-childcare.schedule-layered .stage-character.pixel-sprite>img{

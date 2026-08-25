@@ -22,6 +22,9 @@ for(const activityId of ['kitchenhelp','painting','music','dance','sewing','copy
 assert.ok(app.includes("const scheduleLayerV2PilotIds=new Set(['kitchenhelp','childcare','painting','music','dance','sewing','copying','woodwork','loomwork','farmwork','swordsmanship','spellcraft','classics','masonry','clinichelp','innhelp','ferryhelp','merchanthelp','accounting','tutoring'])"),'활성 일정 v2 20종이 모두 필요합니다.');
 assert.ok(app.includes('window.SCHEDULE_LAYER_V2_SPECS?.[actionId]')&&html.includes('schedule-layer-manifests.js'),'file 실행에서도 v2 명세 번들을 사용해야 합니다.');
 assert.ok(app.includes("if(actionId==='farmwork'&&patternKey==='fail-b'){")&&app.includes('npc.hidden=true;'),'농가 실패 B는 선화의 닭 추격만 보여야 합니다.');
+assert.ok(app.includes("Math.floor(dayIndex/14)%2===0")&&!app.includes("farmQaDirection?farmQaDirection==='right':dayIndex%4===3"),'농가 닭 추격 방향은 날짜마다 바뀌지 않고 14일 페이즈 동안 고정되어야 합니다.');
+assert.ok(app.includes("stage.dataset.chaseDirection=farmChaseTravelsRight?'right':'left'")&&app.includes('delete stage.dataset.chaseDirection'),'추격 장면 방향 속성을 시작부터 종료까지 유지하고 정리해야 합니다.');
+assert.match(css,/action-farmwork\.schedule-layered\[data-chase-direction="left"\][\s\S]*?stage-character\.pixel-sprite>img\{transform:scaleX\(-1\)!important/,'왼쪽 추격 시 선화 몸 방향을 고정해야 합니다.');
 assert.ok(app.includes("if(outcome==='mistake')document.querySelector('#dialogueText').textContent=''"),'실수 판정은 설명 글씨 없이 실패 모션으로 전달해야 합니다.');
 assert.ok(app.includes("if(action.id!=='vacation'&&outcome!=='mistake')"),'실수 판정에서 결과 글씨 팝업을 표시하면 안 됩니다.');
 assert.ok(app.includes("scheduleQaParams.get('qaPattern')"),'QA 패턴 강제 재생이 필요합니다.');

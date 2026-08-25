@@ -237,7 +237,7 @@ const vacationIllustrations=[
 function unifiedAgeFolder(){return '09';}
 function scheduleFramePath(file){return `../assets/characters/seonhwa/schedule-actions/${file}`;}
 function scheduleBasePath(file){return `../assets/characters/seonhwa/schedule-base/${file}`;}
-const scheduleAssetRevision='0.64.47-debug';
+const scheduleAssetRevision='0.64.48-debug';
 const scheduleQaParams=new URLSearchParams(location.search);
 const moonlightStandaloneQa=scheduleQaParams.get('qaHoliday')==='chuseok';
 const sehwaStandaloneQa=scheduleQaParams.get('qaHoliday')==='seollal';
@@ -839,6 +839,8 @@ async function playScheduleLayerScene(actionId,seonImage,rank,outcome,dayIndex){
   const childcareIdleFrames=['npc/child/idle-1.png','npc/child/idle-2.png','npc/child/idle-3.png'];
   const npcFrames=actionId==='farmwork'?farmTillingFrames:actionId==='childcare'?childcareRunningFrames:(patternSpec?.npcFrames?.length===3?patternSpec.npcFrames:v2Spec?spec.npc?.frames||[]:spec.npc||[]);
   const heroFrames=actionId==='childcare'?childcareChaseFrames:actionId==='farmwork'&&patternKey==='fail-b'?farmChickenChaseFrames:patternSpec?.heroFrames?.length===3?patternSpec.heroFrames:spec.existingHeroFrames||[];
+  const farmQaDirection=scheduleQaParams.get('qaDirection');
+  const farmChaseTravelsRight=actionId==='farmwork'&&patternKey==='fail-b'?(lockedScheduleQaMode&&farmQaDirection?farmQaDirection==='right':Math.floor(dayIndex/14)%2===0):null;
   if(heroFrames.length!==3||npcFrames.length!==3||patternFrames?.length!==3)throw new Error(`schedule layer frame count invalid: ${actionId}/${patternKey}`);
   const placement=spec.placement||{};
   const positionPercent=value=>Number.parseFloat(String(value??'').replace('%',''));
@@ -858,6 +860,7 @@ async function playScheduleLayerScene(actionId,seonImage,rank,outcome,dayIndex){
   stage.style.setProperty('--layer-prop-bottom',placement.propBottom||'7%');
   stage.style.setProperty('--layer-effect-left',placement.effectLeft||placement.propLeft||'52%');
   stage.style.setProperty('--layer-effect-bottom',placement.effectBottom||placement.propBottom||'7%');
+  if(farmChaseTravelsRight!==null)stage.dataset.chaseDirection=farmChaseTravelsRight?'right':'left';
   try{
     if(spec.backgroundOverlay)layers.push(make('background',spec.backgroundOverlay));
     const npc=make('npc',npcFrames[0]);
@@ -881,16 +884,12 @@ async function playScheduleLayerScene(actionId,seonImage,rank,outcome,dayIndex){
           npc.hidden=true;
           const travelStep=loop*3+frame;
           const travelProgress=travelStep/8;
-          const qaDirection=scheduleQaParams.get('qaDirection');
-          const travelsRight=lockedScheduleQaMode&&qaDirection?qaDirection==='right':dayIndex%4===3;
+          const travelsRight=farmChaseTravelsRight;
           const heroLeft=travelsRight?2+travelProgress*76:98-travelProgress*76;
           const chaseGap=26;
           const chickenLeft=travelsRight?heroLeft+chaseGap:heroLeft-chaseGap;
           stage.style.setProperty('--layer-hero-left',`${heroLeft}%`,'important');
           stage.style.setProperty('--layer-prop-left',`${chickenLeft}%`,'important');
-          seonImage.style.setProperty('transform',travelsRight?'none':'scaleX(-1)','important');
-          seonImage.style.setProperty('transform-origin','center bottom','important');
-          pattern.style.transform=travelsRight?'translateX(-50%)':'translateX(-50%) scaleX(-1)';
         }
         if(actionId==='childcare'){
           const travelStep=loop*3+frame,travelsRight=dayIndex%2===0,rawProgress=Math.min(1,travelStep/8),progress=failed?Math.min(.62,rawProgress):rawProgress;
@@ -927,6 +926,7 @@ async function playScheduleLayerScene(actionId,seonImage,rank,outcome,dayIndex){
   }finally{
     layers.forEach(layer=>layer.remove());
     stage.classList.remove('schedule-layered');
+    delete stage.dataset.chaseDirection;
     seonImage.style.removeProperty('transform');
     seonImage.style.removeProperty('transform-origin');
     ['--layer-hero-left','--layer-floor','--layer-npc-left','--layer-npc-scale','--layer-prop-left','--layer-prop-bottom','--layer-effect-left','--layer-effect-bottom'].forEach(name=>stage.style.removeProperty(name));
