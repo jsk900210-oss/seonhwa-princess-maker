@@ -237,7 +237,7 @@ const vacationIllustrations=[
 function unifiedAgeFolder(){return '09';}
 function scheduleFramePath(file){return `../assets/characters/seonhwa/schedule-actions/${file}`;}
 function scheduleBasePath(file){return `../assets/characters/seonhwa/schedule-base/${file}`;}
-const scheduleAssetRevision='0.64.43-debug';
+const scheduleAssetRevision='0.64.44-debug';
 const scheduleQaParams=new URLSearchParams(location.search);
 const moonlightStandaloneQa=scheduleQaParams.get('qaHoliday')==='chuseok';
 const sehwaStandaloneQa=scheduleQaParams.get('qaHoliday')==='seollal';
@@ -731,9 +731,11 @@ async function animateStudyPropDrop(activity,image){
     {left:startLeft+5,bottom:7,rotate:62,opacity:1,hero:'translateY(0) rotate(0deg)'}
   ]:[
     {left:startLeft,bottom:30,rotate:-6,opacity:1,hero:'translateY(0) rotate(0deg)'},
-    {left:startLeft+8,bottom:41,rotate:24,opacity:1,hero:'translateY(-1px) rotate(-5deg)'},
-    {left:startLeft+19,bottom:52,rotate:-22,opacity:.9,hero:'translateY(-1px) rotate(4deg)'},
-    {left:startLeft+31,bottom:61,rotate:38,opacity:.25,hero:'translateY(0) rotate(0deg)'}
+    {left:startLeft+4,bottom:28,rotate:14,opacity:1,hero:'translateY(-1px) rotate(-4deg)'},
+    {left:startLeft+11,bottom:23,rotate:-18,opacity:1,hero:'translateY(-1px) rotate(3deg)'},
+    {left:startLeft+19,bottom:16,rotate:28,opacity:1,hero:'translateY(1px) rotate(-2deg)'},
+    {left:startLeft+25,bottom:8,rotate:-36,opacity:1,hero:'translateY(0) rotate(1deg)'},
+    {left:startLeft+27,bottom:5,rotate:-29,opacity:1,hero:'translateY(0) rotate(0deg)'}
   ];
   props.hidden=false;
   props.className=`stage-props prop-${propName} study-prop-drop`;
@@ -745,7 +747,7 @@ async function animateStudyPropDrop(activity,image){
       props.style.setProperty('transform',`translateX(-50%) rotate(${frame.rotate}deg)`,'important');
       props.style.opacity=String(frame.opacity);
       image.style.transform=frame.hero;
-      await schedulePlaybackDelay(150);
+      await schedulePlaybackDelay(isArithmetic?150:140);
     }
   }finally{
     image.style.transform='';
@@ -3103,8 +3105,35 @@ async function startScheduleLayerQaPattern(pattern){
     await playScheduleLayerScene(scheduleQaActionId,image,0,activePattern.startsWith('fail-')?'mistake':'success',activePattern.endsWith('-b')?1:0);
   }
 }
+async function startStudyFailureQa(actionId){
+  if(scheduleQaLoopRunning)return;
+  scheduleQaLoopRunning=true;
+  const image=document.querySelector('#stageCharacterImage'),props=document.querySelector('#stageProps');
+  while(scheduleLayerStandaloneQa){
+    props.hidden=true;
+    image.src=await outfitActivityFrame(activityFrameSet(actionId)[0],game.equippedOutfit);
+    await animateActivitySprite(image,actionPresentation[actionId]?.motion||'motion-study',actionId,null,null,game.equippedOutfit,0);
+    await animateStudyPropDrop(actionId,image);
+    await schedulePlaybackDelay(520);
+  }
+}
+function initStudyFailureQa(actionId){
+  ['studioLoading','prologue','birthdaySetup','recoveryPrompt','guardianStory','guardianChoice','guardianNaming'].forEach(id=>{const element=document.querySelector(`#${id}`);if(element)element.hidden=true;});
+  panel.hidden=true;
+  const phone=document.querySelector('.phone'),stage=document.querySelector('#activityStage'),presentation=actionPresentation[actionId];
+  phone.classList.add('playing','schedule-qa-playing');
+  stage.hidden=false;stage.className=`activity-stage pm3-phase-scene lesson-scene action-${actionId}`;
+  document.querySelector('#activityPlayback').hidden=true;document.querySelector('#stagePm3Hud').hidden=true;
+  document.querySelector('#stageMap').src=backgrounds[presentation.location];
+  document.querySelector('#stageMap').alt=`${actions.find(action=>action.id===actionId)?.name||actionId} 실패 장면`;
+  document.querySelector('#stageCaption').textContent=`QA · ${actionId==='reading'?'글읽기 · 종이 낙하':'셈하기 · 주판 낙하'}`;
+  const character=document.querySelector('#stageCharacter');character.hidden=false;character.className=`stage-character pixel-sprite ${presentation.motion}`;
+  document.querySelector('#stageNpc').hidden=true;document.querySelector('#stageProps').hidden=true;
+  startStudyFailureQa(actionId);
+}
 function initScheduleLayerQa(){
   const actionId=scheduleQaParams.get('qaSchedule')||'kitchenhelp';
+  if(actionId==='reading'||actionId==='arithmetic'){initStudyFailureQa(actionId);return;}
   if(!scheduleLayerIds.has(actionId))return;
   scheduleQaActionId=actionId;
   ['studioLoading','prologue','birthdaySetup','recoveryPrompt','guardianStory','guardianChoice','guardianNaming'].forEach(id=>{const element=document.querySelector(`#${id}`);if(element)element.hidden=true;});

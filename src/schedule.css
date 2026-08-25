@@ -2423,6 +2423,24 @@ body .phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage:
   transform-origin:center bottom!important;
 }
 @keyframes free-time-exchange{0%,100%{translate:0 0}45%{translate:5px -2px}72%{translate:3px 0}}
+
+/* v0.64.44: reading failure drops one sheet from the desk to the floor. */
+.phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage .stage-props.prop-paper.study-prop-drop{
+  width:42px!important;
+  height:30px!important;
+  z-index:6!important;
+  transform-origin:center center!important;
+  filter:drop-shadow(0 3px 2px #2b160966)!important;
+}
+.phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage .stage-props.prop-paper.study-prop-drop:after{
+  display:none!important;
+}
+.phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage .stage-props.prop-paper.study-prop-drop:before{
+  left:5px!important;
+  bottom:4px!important;
+  width:32px!important;
+  height:22px!important;
+}
 .phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-childcare.schedule-layered .schedule-scene-layer.layer-pattern.dedicated-failure{
   left:var(--layer-prop-left)!important;bottom:17%!important;width:54px!important;clip-path:none!important;
 }
