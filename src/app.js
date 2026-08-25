@@ -237,7 +237,7 @@ const vacationIllustrations=[
 function unifiedAgeFolder(){return '09';}
 function scheduleFramePath(file){return `../assets/characters/seonhwa/schedule-actions/${file}`;}
 function scheduleBasePath(file){return `../assets/characters/seonhwa/schedule-base/${file}`;}
-const scheduleAssetRevision='0.64.42-debug';
+const scheduleAssetRevision='0.64.43-debug';
 const scheduleQaParams=new URLSearchParams(location.search);
 const moonlightStandaloneQa=scheduleQaParams.get('qaHoliday')==='chuseok';
 const sehwaStandaloneQa=scheduleQaParams.get('qaHoliday')==='seollal';
@@ -2792,9 +2792,9 @@ async function playWeeklySchedule(selected) {
   const playbackPhase=phaseInfo();
   const dayNames = ['월요일','화요일','수요일','목요일','금요일','토요일','일요일'];
   const freeTimeVariants=[
-    {name:'비단 리본 구매',activity:'errand',purchaseLayer:'goods',cost:70,stop:43,change:{sense:1,charm:1,stress:-9},line:'저잣거리 매대에서 옷에 어울리는 비단 리본을 골라 샀어요.'},
-    {name:'작은 장신구 구매',activity:'errand',purchaseLayer:'coins',cost:110,stop:48,change:{sense:2,charm:1,stress:-7},line:'장터 좌판을 살펴보고 마음에 드는 작은 장신구를 골라 값을 치렀어요.'},
-    {name:'문방 소품 구매',activity:'errand',purchaseLayer:'goods',cost:90,stop:53,change:{speech:1,sensitivity:1,stress:-8},line:'상인에게 물어본 뒤 마음에 드는 문방 소품을 하나 샀어요.'}
+    {name:'비단 리본 구매',activity:'merchanthelp',purchaseLayer:'goods',cost:70,stop:32,change:{sense:1,charm:1,stress:-9},line:'저잣거리 매대에서 옷에 어울리는 비단 리본을 골라 샀어요.'},
+    {name:'작은 장신구 구매',activity:'merchanthelp',purchaseLayer:'coins',cost:110,stop:35,change:{sense:2,charm:1,stress:-7},line:'장터 좌판을 살펴보고 마음에 드는 작은 장신구를 골라 값을 치렀어요.'},
+    {name:'문방 소품 구매',activity:'merchanthelp',purchaseLayer:'goods',cost:90,stop:38,change:{speech:1,sensitivity:1,stress:-8},line:'상인에게 물어본 뒤 마음에 드는 문방 소품을 하나 샀어요.'}
   ];
   const moonlightSession=selected.some(action=>action.id==='holiday-chuseok')?evaluateChuseokFestival():null;
   const sehwaSession=selected.some(action=>action.id==='holiday-seollal')?evaluateSeollalFestival():null;
@@ -2888,13 +2888,17 @@ async function playWeeklySchedule(selected) {
       stageNpc.hidden=false;stageNpc.className='stage-npc npc-purchase-merchant';
       stageNpcImage.src='../assets/schedule-layers-v2/merchanthelp/npc/merchant/idle-1.png';
       stageCharacter.style.left='12%';
+      stageCharacterImage.style.setProperty('transform','none','important');
+      stageCharacterImage.style.setProperty('transform-origin','center bottom','important');
       try{
         for(const position of [30,freeTimeVariant?.stop??56]){stageCharacter.style.left=`${position}%`;await animateActivitySprite(stageCharacterImage,'motion-walk',null,stageNpcImage,null,dailyOutfit,currentMasteryRank);}
         stageCharacter.classList.add('is-purchasing');
-        await animateActivitySprite(stageCharacterImage,presentation.motion,freeTimeVariant?.activity||'errand',stageNpcImage,null,dailyOutfit,currentMasteryRank);
+        await animateActivitySprite(stageCharacterImage,'motion-market-roam',freeTimeVariant?.activity||'merchanthelp',stageNpcImage,null,dailyOutfit,currentMasteryRank);
       }finally{
         stageCharacter.classList.remove('is-purchasing');
         stageCharacter.style.removeProperty('left');
+        stageCharacterImage.style.removeProperty('transform');
+        stageCharacterImage.style.removeProperty('transform-origin');
         stageCharacter.hidden=false;stageProps.hidden=false;stageNpc.hidden=true;
       }
     }else if(action.id==='vacation'){
