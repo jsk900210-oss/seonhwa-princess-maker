@@ -237,7 +237,7 @@ const vacationIllustrations=[
 function unifiedAgeFolder(){return '09';}
 function scheduleFramePath(file){return `../assets/characters/seonhwa/schedule-actions/${file}`;}
 function scheduleBasePath(file){return `../assets/characters/seonhwa/schedule-base/${file}`;}
-const scheduleAssetRevision='0.64.40-debug';
+const scheduleAssetRevision='0.64.41-debug';
 const scheduleQaParams=new URLSearchParams(location.search);
 const moonlightStandaloneQa=scheduleQaParams.get('qaHoliday')==='chuseok';
 const sehwaStandaloneQa=scheduleQaParams.get('qaHoliday')==='seollal';
@@ -854,17 +854,21 @@ async function playScheduleLayerScene(actionId,seonImage,rank,outcome,dayIndex){
     if(spec.backgroundOverlay)layers.push(make('background',spec.backgroundOverlay));
     const npc=make('npc',npcFrames[0]);
     if(actionId==='farmwork'){
-      npc.style.setProperty('width','148px','important');
-      npc.style.setProperty('height','148px','important');
+      npc.style.setProperty('width','128px','important');
+      npc.style.setProperty('height','128px','important');
     }
     const patternLayer=v2Spec&&patternSpec?.layer==='effects'?'effect':'pattern';
     const pattern=make(`${patternLayer} ${patternKey} ${patternKey.startsWith('fail-')?'dedicated-failure':''}`,patternFrames[0]);
     if(patternSpec?.heroIncludesProp||(actionId==='farmwork'&&patternKey!=='fail-b'))pattern.hidden=true;
     layers.push(npc,pattern);
-    const delay=actionId==='farmwork'&&patternKey==='fail-b'?165:actionId==='childcare'?280:([360,300,250][rank]||300);
+    const delay=actionId==='farmwork'&&patternKey==='fail-b'?165:actionId==='farmwork'?240:actionId==='childcare'?280:([360,300,250][rank]||300);
     for(let loop=0;loop<3;loop+=1){
       for(let frame=0;frame<3;frame+=1){
         let activeHeroFrame=heroFrames[frame],activeNpcFrame=npcFrames[frame];
+        if(actionId==='farmwork'&&patternKey!=='fail-b'){
+          const tillingCycle=[0,1,2,1,0,1,2,1,0];
+          activeNpcFrame=npcFrames[tillingCycle[loop*3+frame]];
+        }
         if(actionId==='farmwork'&&patternKey==='fail-b'){
           npc.hidden=true;
           const travelStep=loop*3+frame;

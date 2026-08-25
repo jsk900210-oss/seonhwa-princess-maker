@@ -2311,8 +2311,8 @@
 }
 .phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-farmwork.schedule-layered .schedule-scene-layer.layer-npc{
   left:var(--layer-npc-left)!important;
-  width:148px!important;
-  height:148px!important;
+  width:128px!important;
+  height:128px!important;
   transform:translateX(-50%) scaleX(-1)!important;
   transform-origin:center bottom!important;
   animation:none!important;
@@ -2394,8 +2394,8 @@ body .phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage:
 
 /* v0.64.22: fixed adult farmer scale and consistent tilling motion. */
 .phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-farmwork.schedule-layered .schedule-scene-layer.layer-npc{
-  width:148px!important;
-  height:148px!important;
+  width:128px!important;
+  height:128px!important;
   max-width:none!important;
   object-fit:contain!important;
   object-position:center bottom!important;
