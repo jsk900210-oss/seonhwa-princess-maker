@@ -85,8 +85,8 @@
     "failures"
   ],
   "failureHeroFrames": [
-    "../childcare/hero-actions/chase-running-v1/seonhwa-chase-1.png",
-    "../childcare/hero-actions/chase-running-v1/seonhwa-chase-2.png",
-    "../childcare/hero-actions/chase-running-v1/seonhwa-chase-3.png"
+    "hero-actions/chicken-chase-v2/seonhwa-chicken-chase-1.png",
+    "hero-actions/chicken-chase-v2/seonhwa-chicken-chase-2.png",
+    "hero-actions/chicken-chase-v2/seonhwa-chicken-chase-3.png"
   ]
 }
