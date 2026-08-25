@@ -237,7 +237,7 @@ const vacationIllustrations=[
 function unifiedAgeFolder(){return '09';}
 function scheduleFramePath(file){return `../assets/characters/seonhwa/schedule-actions/${file}`;}
 function scheduleBasePath(file){return `../assets/characters/seonhwa/schedule-base/${file}`;}
-const scheduleAssetRevision='0.64.28-debug';
+const scheduleAssetRevision='0.64.29-debug';
 const scheduleQaParams=new URLSearchParams(location.search);
 const moonlightStandaloneQa=scheduleQaParams.get('qaHoliday')==='chuseok';
 const sehwaStandaloneQa=scheduleQaParams.get('qaHoliday')==='seollal';
@@ -695,6 +695,39 @@ async function animateActionStumble(image,level='mistake'){
     await schedulePlaybackDelay(level==='mistake'?95:120);
   }
   image.style.transform='';
+}
+async function animateStudyPropDrop(activity,image){
+  const props=document.querySelector('#stageProps');
+  if(!props||!image)return;
+  const isArithmetic=activity==='arithmetic';
+  const propName=isArithmetic?'abacus':'paper';
+  const startLeft=isArithmetic?54:31;
+  const frames=isArithmetic?[
+    {left:startLeft,bottom:30,rotate:-4,opacity:1,hero:'translateY(0) rotate(0deg)'},
+    {left:startLeft+2,bottom:21,rotate:24,opacity:1,hero:'translateY(-1px) rotate(-4deg)'},
+    {left:startLeft+5,bottom:8,rotate:68,opacity:1,hero:'translateY(1px) rotate(3deg)'},
+    {left:startLeft+5,bottom:7,rotate:62,opacity:1,hero:'translateY(0) rotate(0deg)'}
+  ]:[
+    {left:startLeft,bottom:30,rotate:-6,opacity:1,hero:'translateY(0) rotate(0deg)'},
+    {left:startLeft+8,bottom:41,rotate:24,opacity:1,hero:'translateY(-1px) rotate(-5deg)'},
+    {left:startLeft+19,bottom:52,rotate:-22,opacity:.9,hero:'translateY(-1px) rotate(4deg)'},
+    {left:startLeft+31,bottom:61,rotate:38,opacity:.25,hero:'translateY(0) rotate(0deg)'}
+  ];
+  props.hidden=false;
+  props.className=`stage-props prop-${propName} study-prop-drop`;
+  props.style.opacity='1';
+  try{
+    for(const frame of frames){
+      props.style.setProperty('left',`${frame.left}%`,'important');
+      props.style.setProperty('bottom',`${frame.bottom}%`,'important');
+      props.style.setProperty('transform',`translateX(-50%) rotate(${frame.rotate}deg)`,'important');
+      props.style.opacity=String(frame.opacity);
+      image.style.transform=frame.hero;
+      await schedulePlaybackDelay(150);
+    }
+  }finally{
+    image.style.transform='';
+  }
 }
 async function animateActivitySprite(image,motion,activity,npcImage,npc,outfitId,masteryRank=0){
   if(activity){
@@ -2724,7 +2757,7 @@ async function playWeeklySchedule(selected) {
     clearMoonlightPageant();
     const freeTimeVariant=action.id==='freeTime'?freeTimeVariants[Math.floor(Math.random()*freeTimeVariants.length)]:null;
     const currentMasteryRank=activityRank(action.id);
-    stage.hidden=false;stageCharacter.hidden=false;stageProps.hidden=false;
+    stage.hidden=false;stageCharacter.hidden=false;stageProps.hidden=false;stageProps.removeAttribute('style');
     setScheduleDialogue(action,'start',index);
     if(forcedRest)document.querySelector('#dialogueText').textContent='스트레스가 100에 도달해 오늘 일정은 집에서 휴식으로 변경했어요.';
     const dailyOutfit=game.autoOutfit?updateAutoOutfit(action.id):game.equippedOutfit;
@@ -2851,7 +2884,8 @@ async function playWeeklySchedule(selected) {
     if(!guaranteedSuccess&&condition==='mistake')outcome='mistake';
     else if(!guaranteedSuccess&&condition==='drowsy'&&outcome!=='mistake')outcome='struggle';
     if(!guaranteedSuccess&&(outcome==='mistake'||outcome==='struggle')&&action.id!=='shopping'&&!scheduleLayerIds.has(action.id)){
-      await animateActionStumble(stageCharacterImage,outcome);
+      if(outcome==='mistake'&&(action.id==='reading'||action.id==='arithmetic'))await animateStudyPropDrop(action.id,stageCharacterImage);
+      else await animateActionStumble(stageCharacterImage,outcome);
     }
     const fullPhaseHoliday=action.id==='holiday-seollal'||action.id==='holiday-chuseok';
     const resolvedChange=fullPhaseHoliday?{...resolvedActivityChange(action,outcome)}:phaseDailyChange(freeTimeVariant?{...freeTimeVariant.change}:resolvedActivityChange(action,outcome),index%14);
