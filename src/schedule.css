@@ -2283,6 +2283,34 @@
 }
 .phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-farmwork.schedule-layered .schedule-scene-layer.layer-pattern.success-a{
   width:86px!important;
+  clip-path:inset(52% 0 0 0);
+}
+
+/* v0.64.14: compose farmwork as one shared task instead of three unrelated cutouts. */
+.phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-farmwork.schedule-layered{
+  --layer-hero-left:29%!important;
+  --layer-npc-left:78%!important;
+  --layer-prop-left:53%!important;
+  --layer-effect-left:54%!important;
+  --layer-floor:3%!important;
+}
+.phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-farmwork.schedule-layered .schedule-scene-layer.layer-npc{
+  left:var(--layer-npc-left)!important;
+  width:138px!important;
+  transform:translateX(-50%) scaleX(-1)!important;
+  transform-origin:center bottom!important;
+}
+.phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-farmwork.schedule-layered .schedule-scene-layer.layer-npc[hidden]{
+  display:none!important;
+}
+.phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-farmwork.schedule-layered .schedule-scene-layer.layer-pattern.success-a{
+  left:var(--layer-prop-left)!important;
+  bottom:2%!important;
+}
+.phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-farmwork.schedule-layered .schedule-scene-layer.layer-effect.success-b{
+  left:var(--layer-effect-left)!important;
+  bottom:1%!important;
+  width:112px!important;
   clip-path:inset(42% 0 0 0);
 }
 .sehwa-contest.festival-pm3 .sehwa-award-sequence{

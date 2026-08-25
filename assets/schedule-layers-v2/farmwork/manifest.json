@@ -61,13 +61,13 @@
     }
   },
   "placement": {
-    "heroLeft": "30%",
-    "floorBottom": "4%",
-    "npcLeft": "75%",
+    "heroLeft": "29%",
+    "floorBottom": "3%",
+    "npcLeft": "78%",
     "npcScale": 1,
-    "propLeft": "52%",
-    "propBottom": "3%",
-    "effectLeft": "52%",
+    "propLeft": "53%",
+    "propBottom": "2%",
+    "effectLeft": "54%",
     "effectBottom": "3%"
   },
   "layerOrder": [
