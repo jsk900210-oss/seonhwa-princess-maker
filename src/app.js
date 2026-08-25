@@ -237,7 +237,7 @@ const vacationIllustrations=[
 function unifiedAgeFolder(){return '09';}
 function scheduleFramePath(file){return `../assets/characters/seonhwa/schedule-actions/${file}`;}
 function scheduleBasePath(file){return `../assets/characters/seonhwa/schedule-base/${file}`;}
-const scheduleAssetRevision='0.64.33-debug';
+const scheduleAssetRevision='0.64.35-debug';
 const scheduleQaParams=new URLSearchParams(location.search);
 const moonlightStandaloneQa=scheduleQaParams.get('qaHoliday')==='chuseok';
 const sehwaStandaloneQa=scheduleQaParams.get('qaHoliday')==='seollal';
@@ -800,6 +800,7 @@ async function playScheduleLayerScene(actionId,seonImage,rank,outcome,dayIndex){
   const patternSpec=spec.patterns?.[patternKey];
   const patternFrames=v2Spec?patternSpec?.frames:patternSpec;
   const farmTillingFrames=['npc/farmer-tilling-v2/farmer-tilling-v2-1.png','npc/farmer-tilling-v2/farmer-tilling-v2-2.png','npc/farmer-tilling-v2/farmer-tilling-v2-3.png'];
+  const farmChickenChaseFrames=['../childcare/hero-actions/chase-running-v1/seonhwa-chase-1.png','../childcare/hero-actions/chase-running-v1/seonhwa-chase-2.png','../childcare/hero-actions/chase-running-v1/seonhwa-chase-3.png'];
   const childcareRunningFrames=['npc/child-running-v1/child-run-1.png','npc/child-running-v1/child-run-2.png','npc/child-running-v1/child-run-3.png'];
   const childcareFallFrames=['npc/child-fall-v1/child-fall-1.png','npc/child-fall-v1/child-fall-2.png','npc/child-fall-v1/child-fall-3.png'];
   const childcareChaseFrames=['hero-actions/chase-running-v1/seonhwa-chase-1.png','hero-actions/chase-running-v1/seonhwa-chase-2.png','hero-actions/chase-running-v1/seonhwa-chase-3.png'];
@@ -807,7 +808,7 @@ async function playScheduleLayerScene(actionId,seonImage,rank,outcome,dayIndex){
   const childcareForwardFallFrames=['hero-actions/trip-forward-v1/seonhwa-trip-forward-1.png','hero-actions/trip-forward-v1/seonhwa-trip-forward-2.png','hero-actions/trip-forward-v1/seonhwa-trip-forward-3.png'];
   const childcareIdleFrames=['npc/child/idle-1.png','npc/child/idle-2.png','npc/child/idle-3.png'];
   const npcFrames=actionId==='farmwork'?farmTillingFrames:actionId==='childcare'?childcareRunningFrames:(patternSpec?.npcFrames?.length===3?patternSpec.npcFrames:v2Spec?spec.npc?.frames||[]:spec.npc||[]);
-  const heroFrames=actionId==='childcare'?childcareChaseFrames:patternSpec?.heroFrames?.length===3?patternSpec.heroFrames:actionId==='farmwork'&&patternKey==='fail-b'&&spec.failureHeroFrames?.length===3?spec.failureHeroFrames:spec.existingHeroFrames||[];
+  const heroFrames=actionId==='childcare'?childcareChaseFrames:actionId==='farmwork'&&patternKey==='fail-b'?farmChickenChaseFrames:patternSpec?.heroFrames?.length===3?patternSpec.heroFrames:spec.existingHeroFrames||[];
   if(heroFrames.length!==3||npcFrames.length!==3||patternFrames?.length!==3)throw new Error(`schedule layer frame count invalid: ${actionId}/${patternKey}`);
   const placement=spec.placement||{};
   const positionPercent=value=>Number.parseFloat(String(value??'').replace('%',''));
@@ -834,7 +835,7 @@ async function playScheduleLayerScene(actionId,seonImage,rank,outcome,dayIndex){
     const pattern=make(`${patternLayer} ${patternKey} ${patternKey.startsWith('fail-')?'dedicated-failure':''}`,patternFrames[0]);
     if(patternSpec?.heroIncludesProp||(actionId==='farmwork'&&patternKey!=='fail-b'))pattern.hidden=true;
     layers.push(npc,pattern);
-    const delay=actionId==='farmwork'&&patternKey==='fail-b'?190:actionId==='childcare'?220:([360,300,250][rank]||300);
+    const delay=actionId==='farmwork'&&patternKey==='fail-b'?130:actionId==='childcare'?220:([360,300,250][rank]||300);
     for(let loop=0;loop<3;loop+=1){
       for(let frame=0;frame<3;frame+=1){
         let activeHeroFrame=heroFrames[frame],activeNpcFrame=npcFrames[frame];
@@ -845,7 +846,8 @@ async function playScheduleLayerScene(actionId,seonImage,rank,outcome,dayIndex){
           const qaDirection=scheduleQaParams.get('qaDirection');
           const travelsRight=lockedScheduleQaMode&&qaDirection?qaDirection==='right':dayIndex%4===3;
           const heroLeft=travelsRight?-16+travelProgress*102:86-travelProgress*102;
-          const chickenLeft=travelsRight?heroLeft+18:heroLeft-18;
+          const chaseGap=27-travelProgress*5;
+          const chickenLeft=travelsRight?heroLeft+chaseGap:heroLeft-chaseGap;
           stage.style.setProperty('--layer-hero-left',`${heroLeft}%`,'important');
           stage.style.setProperty('--layer-prop-left',`${chickenLeft}%`,'important');
           seonImage.style.setProperty('transform',travelsRight?'none':'scaleX(-1)','important');

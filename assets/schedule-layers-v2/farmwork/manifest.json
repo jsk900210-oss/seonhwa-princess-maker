@@ -85,8 +85,8 @@
     "failures"
   ],
   "failureHeroFrames": [
-    "../../characters/seonhwa/base-actions/carry-walk-right/carry-walk-right-1.png",
-    "../../characters/seonhwa/base-actions/carry-walk-right/carry-walk-right-2.png",
-    "../../characters/seonhwa/base-actions/carry-walk-right/carry-walk-right-3.png"
+    "../childcare/hero-actions/chase-running-v1/seonhwa-chase-1.png",
+    "../childcare/hero-actions/chase-running-v1/seonhwa-chase-2.png",
+    "../childcare/hero-actions/chase-running-v1/seonhwa-chase-3.png"
   ]
 }

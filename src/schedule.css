@@ -2303,8 +2303,8 @@
 
 /* v0.64.14: compose farmwork as one shared task instead of three unrelated cutouts. */
 .phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-farmwork.schedule-layered{
-  --layer-hero-left:29%!important;
-  --layer-npc-left:78%!important;
+  --layer-hero-left:26%!important;
+  --layer-npc-left:79%!important;
   --layer-prop-left:53%!important;
   --layer-effect-left:54%!important;
   --layer-floor:3%!important;
