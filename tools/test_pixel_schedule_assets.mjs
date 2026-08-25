@@ -1,6 +1,9 @@
-import sharp from "file:///C:/Users/jsk90/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/sharp/dist/index.mjs";
+import fs from "node:fs";
 import path from "node:path";
-import { fileURLToPath } from "node:url";
+import { fileURLToPath, pathToFileURL } from "node:url";
+const sharpEntry = path.join(process.env.USERPROFILE||'', '.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/sharp/dist/index.mjs');
+if(!fs.existsSync(sharpEntry))throw new Error(`Codex bundled sharp missing: ${sharpEntry}`);
+const {default:sharp}=await import(pathToFileURL(sharpEntry));
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const directory = path.join(root, "assets/characters/seonhwa/schedule-actions");
 const activities = ["calligraphy", "arithmetic", "manners", "sweeping", "herbs", "farmwork", "childcare", "kitchenhelp", "houseclean", "woodwork", "loomwork", "masonry", "clinichelp", "ferryhelp", "merchanthelp", "errand", "tea", "sleep", "fail", "eating", "sit"];

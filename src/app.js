@@ -237,7 +237,7 @@ const vacationIllustrations=[
 function unifiedAgeFolder(){return '09';}
 function scheduleFramePath(file){return `../assets/characters/seonhwa/schedule-actions/${file}`;}
 function scheduleBasePath(file){return `../assets/characters/seonhwa/schedule-base/${file}`;}
-const scheduleAssetRevision='0.64.46-debug';
+const scheduleAssetRevision='0.64.47-debug';
 const scheduleQaParams=new URLSearchParams(location.search);
 const moonlightStandaloneQa=scheduleQaParams.get('qaHoliday')==='chuseok';
 const sehwaStandaloneQa=scheduleQaParams.get('qaHoliday')==='seollal';
@@ -932,9 +932,9 @@ async function playScheduleLayerScene(actionId,seonImage,rank,outcome,dayIndex){
     ['--layer-hero-left','--layer-floor','--layer-npc-left','--layer-npc-scale','--layer-prop-left','--layer-prop-bottom','--layer-effect-left','--layer-effect-bottom'].forEach(name=>stage.style.removeProperty(name));
   }
 }
-function conditionEvent(stress, dayIndex){
-  if(stress>=80||(stress>=70&&dayIndex%2===1))return 'mistake';
-  if(stress>=55)return 'drowsy';
+function conditionEvent(stress,dayIndex,outcome=null){
+  if(outcome==='mistake')return 'mistake';
+  if(outcome==='struggle'&&stress>=55)return 'drowsy';
   return null;
 }
 const activitySkill={reading:'intelligence',arithmetic:'sense',manners:'manners',painting:'sensitivity',music:'sensitivity',dance:'agility',swordsmanship:'strength',spellcraft:'magic',cooking:'sense',martial:'strength',classics:'intelligence',errand:'speech',sweeping:'strength',herbs:'sense',houseclean:'sense',farmwork:'strength',childcare:'sensitivity',kitchenhelp:'sense',woodwork:'strength',loomwork:'sense',masonry:'strength',clinichelp:'intelligence',innhelp:'speech',sewing:'sense',copying:'intelligence',ferryhelp:'health',merchanthelp:'speech',accounting:'sense',tutoring:'intelligence',dungeon:'strength',rest:'mentality',freeTime:'sense'};
@@ -946,11 +946,13 @@ function activityOutcomeThresholds(action,stress){
   const mastery=activityProgressFor(action.id).attempts;
   const healthRatio=clampStat('health',game.health)/statMaximum('health');
   const healthBonus=healthRatio*14;
-  const condition=Math.min(8,(game.mentality||0)*.04)-stress*.35;
+  const boundedStress=Math.max(0,Math.min(statMaximum('stress'),Number(stress)||0));
+  const stressRatio=boundedStress/statMaximum('stress');
+  const condition=Math.min(8,(game.mentality||0)*.04)-stressRatio*45;
   const masteryBonus=Math.min(10,Math.sqrt(mastery)*1.2);
   const success=Math.max(15,Math.min(92,32+skillRatio*20+masteryBonus+condition+healthBonus));
   const perfect=Math.max(4,success-(32-healthRatio*7));
-  const struggle=Math.min(98,success+(20-healthRatio*7));
+  const struggle=Math.min(98,success+(22-healthRatio*7-stressRatio*4));
   return {perfect,success,struggle};
 }
 function judgeActivityOutcome(action,stress){
@@ -1358,8 +1360,11 @@ const moonlightMotionNames=['invitation','prepare','guardian-cheer','palace-ente
 function moonlightAgeIndex(){return game.age>=18?3:game.age>=16?2:game.age>=13?1:0;}
 function moonlightAssetAge(){return game.age>=18?'18':game.age>=16?'16':game.age>=13?'13':'09';}
 function moonlightSeonhwaImage(){const age=moonlightAssetAge();return `../assets/events/holidays/moonlight-pageant/seonhwa/age-${age}/seonhwa-winner-v1.png?v=${scheduleAssetRevision}`;}
+const moonlightActingPoseMap={invitation:[1,2,3,4],prepare:[5,7,8],enter:[9,10,11],bow:[11,12,13],finish:[13,14,15],interview:[14,15,16]};
 function moonlightMotionFrames(motion){
-  const age=moonlightAssetAge(),count=motion==='dance'?6:3,version=motion==='dance'?'v3':'v2';
+  const age=moonlightAssetAge(),actingPoses=moonlightActingPoseMap[motion];
+  if(actingPoses)return actingPoses.map(frame=>`../assets/events/holidays/moonlight-pageant/seonhwa/age-${age}/acting-v4/seonhwa-acting-${String(frame).padStart(2,'0')}-v4.png?v=${scheduleAssetRevision}`);
+  const count=motion==='dance'?6:3,version=motion==='dance'?'v3':'v2';
   return Array.from({length:count},(_,index)=>`../assets/events/holidays/moonlight-pageant/seonhwa/age-${age}/seonhwa-${motion}-${index+1}-${version}.png?v=${scheduleAssetRevision}`);
 }
 function shuffled(items){return items.map(value=>({value,sort:Math.random()})).sort((a,b)=>a.sort-b.sort).map(item=>item.value);}
@@ -1397,13 +1402,14 @@ function festivalLineup(session){return `<section class="pageant-lineup pageant-
 function festivalWinnerInterview(session){
   const winner=session.winner,playerWinner=winner.player;
   const answer=playerWinner?'긴장했지만 장단을 놓치지 않으려 했어요. 함께 응원해 주신 분들께 감사드려요.':'마지막까지 제 호흡을 지킨 것이 좋은 결과로 이어진 것 같아요.';
-  return `<section class="pageant-interview" aria-label="대상 수상자 ${winner.name} 인터뷰"><span class="pageant-interview-mark" aria-hidden="true">記</span><figure><img src="${moonlightEntrantImage(winner)}" alt="인터뷰하는 대상 수상자 ${winner.name}"><figcaption>대상 · ${winner.name}</figcaption></figure><div><p class="pageant-interview-question">“오늘 무대에서 가장 마음에 남은 순간은 무엇인가요?”</p><p class="pageant-interview-answer"><b>${winner.name}</b>${answer}</p></div></section>`;
+  const portrait=playerWinner?`<span class="pageant-interview-frames" role="img" aria-label="인터뷰하는 대상 수상자 ${winner.name}">${moonlightMotionFrames('interview').map((src,index)=>`<img src="${src}" alt="" style="--pageant-frame:${index}">`).join('')}</span>`:`<img src="${moonlightEntrantImage(winner)}" alt="인터뷰하는 대상 수상자 ${winner.name}">`;
+  return `<section class="pageant-interview" aria-label="대상 수상자 ${winner.name} 인터뷰"><span class="pageant-interview-mark" aria-hidden="true">記</span><figure>${portrait}<figcaption>대상 · ${winner.name}</figcaption></figure><div><p class="pageant-interview-question">“오늘 무대에서 가장 마음에 남은 순간은 무엇인가요?”</p><p class="pageant-interview-answer"><b>${winner.name}</b>${answer}</p></div></section>`;
 }
 function renderMoonlightPageant(session,dayIndex){
   const overlay=document.querySelector('#moonlightPageant');if(!overlay)return;
   const beat=Math.min(moonlightStoryBeats.length-1,dayIndex%moonlightStoryBeats.length),title=beat===4,lineup=beat===5,intro=beat===6,vote=beat===14,result=beat===15,guardianResult=beat===16,award=beat===17,interview=beat===18;
   overlay.hidden=false;overlay.className=`moonlight-pageant festival-pm3 beat-${beat+1} motion-${moonlightMotionNames[beat]} reaction-${session.reaction.replaceAll(' ','-')}`;
-  const frameMotion=beat===9?'dance':beat===11?'walk':null;
+  const frameMotion=beat===0?'invitation':beat===1?'prepare':beat===3?'enter':beat===7?'bow':beat===9?'dance':beat===11?'walk':beat===13?'finish':null;
   const hero=(!title&&!lineup&&!intro&&!vote&&!result&&!guardianResult&&!award&&!interview)?(frameMotion?`<span class="pageant-hero-frames is-${frameMotion}" role="img" aria-label="${moonlightStoryBeats[beat]}">${moonlightMotionFrames(frameMotion).map((src,index)=>`<img src="${src}" alt="" style="--pageant-frame:${index}">`).join('')}</span>`:`<img class="pageant-hero-action" src="${moonlightSeonhwaImage()}" alt="${moonlightStoryBeats[beat]}">`):'';
   const titleCard=title?festivalTitleCard('한가위 달빛 아씨 경연','센스·예절·기품으로 빛나는 한가위 무대'):'';
   const entrantLineup=lineup?festivalLineup(session):'';
@@ -2886,10 +2892,8 @@ async function playWeeklySchedule(selected) {
   let holidayContestResult=null;
   let condition=null,outcome=null;
   if(scheduleLayerIds.has(action.id)){
-    condition=conditionEvent(simulated.stress,index);
     outcome=judgeActivityOutcome(action,simulated.stress);
-    if(condition==='mistake')outcome='mistake';
-    else if(condition==='drowsy'&&outcome!=='mistake')outcome='struggle';
+    condition=conditionEvent(simulated.stress,index,outcome);
   }
   if(action.id==='shopping'){
       playMarketMusic();
@@ -2972,12 +2976,10 @@ async function playWeeklySchedule(selected) {
       await playScheduleLayerScene(action.id,stageCharacterImage,currentMasteryRank,outcome,index);
     }else await animateActivitySprite(stageCharacterImage,presentation.motion,restActivity||presentation.activity,stageNpcImage,presentation.npc,dailyOutfit,currentMasteryRank);
     const guaranteedSuccess=['rest','freeTime','vacation','dungeon','holiday-chuseok','holiday-seollal'].includes(action.id)||action.special==='date';
-    if(condition===null&&!['shopping','rest','freeTime','vacation','dungeon','holiday-chuseok','holiday-seollal'].includes(action.id)&&!action.special)condition=conditionEvent(simulated.stress,index);
     if(outcome===null)outcome=judgeActivityOutcome(action,simulated.stress);
+    if(condition===null&&!['shopping','rest','freeTime','vacation','dungeon','holiday-chuseok','holiday-seollal'].includes(action.id)&&!action.special)condition=conditionEvent(simulated.stress,index,outcome);
     if(action.id==='holiday-chuseok'||action.id==='holiday-seollal')outcome='success';
     if(action.id==='dungeon')outcome=dungeonReward.money>=140?'perfect':dungeonReward.money>0?'normal':'struggle';
-    if(!guaranteedSuccess&&condition==='mistake')outcome='mistake';
-    else if(!guaranteedSuccess&&condition==='drowsy'&&outcome!=='mistake')outcome='struggle';
     if(!guaranteedSuccess&&(outcome==='mistake'||outcome==='struggle')&&action.id!=='shopping'&&!scheduleLayerIds.has(action.id)){
       if(action.id==='errand'&&outcome==='mistake')await animateErrandFall(stageCharacterImage);
       else if(action.id==='errand'&&outcome==='struggle')await animateErrandNearFall(stageCharacterImage);

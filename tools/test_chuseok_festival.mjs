@@ -21,10 +21,15 @@ assert.match(css,/\.pageant-winner/,'우승자 확대 레이어 규격이 필요
 assert.match(css,/@keyframes pageant-bow/,'예절 심사 절 동작이 필요합니다.');
 assert.match(app,/moonlightMotionNames=\['invitation','prepare','guardian-cheer'/,'스토리별 선화 동작 연결이 필요합니다.');
 assert.match(app,/motion==='dance'\?6:3/,'춤은 준비부터 마무리까지 6프레임이어야 합니다.');
+assert.match(app,/moonlightActingPoseMap=\{invitation:\[1,2,3,4\],prepare:\[5,7,8\],enter:\[9,10,11\],bow:\[11,12,13\],finish:\[13,14,15\],interview:\[14,15,16\]\}/,'경연 핵심 행동별 연속 포즈 연결이 필요합니다.');
 assert.match(app,/festivalWinnerInterview\(session\)/,'경연 마지막에 실제 대상 수상자 인터뷰가 필요합니다.');
 for(const age of ['09','13','16','18'])for(let frame=1;frame<=6;frame+=1){
   const file=new URL(`../assets/events/holidays/moonlight-pageant/seonhwa/age-${age}/seonhwa-dance-${frame}-v3.png`,import.meta.url);
   assert.ok(fs.existsSync(file),`연령 ${age} 춤 ${frame}프레임이 필요합니다.`);
+}
+for(const age of ['09','13','16','18'])for(let frame=1;frame<=16;frame+=1){
+  const file=new URL(`../assets/events/holidays/moonlight-pageant/seonhwa/age-${age}/acting-v4/seonhwa-acting-${String(frame).padStart(2,'0')}-v4.png`,import.meta.url);
+  assert.ok(fs.existsSync(file),`연령 ${age} 경연 연기 ${frame}프레임이 필요합니다.`);
 }
 assert.match(app,/qaHoliday'\)==='chuseok'/,'경연 즉시 검수 모드가 필요합니다.');
 

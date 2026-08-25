@@ -16,10 +16,10 @@ if(!html.includes('id="merchantVisit"'))throw new Error('방문상점 등장 선
 if(!app.includes("errand:'errand'")||!app.includes("canonicalActivityAliases[activity]||'errand'"))throw new Error('장터 심부름 연령별 기준 프레임 연결 누락');
 if(!app.includes("restActivity==='tea'?' rest-tea':''"))throw new Error('차 마시기 전용 표시 영역 누락');
 if(!app.includes('purchasedGoods:[]'))throw new Error('방문상점 별도 구매 기록 누락');
-if(app.includes("game.items.push({id:good.id"))throw new Error('방문상점 상품이 소지품에 보관됨');
+if(!app.includes("game.items.push({id:good.id,type:good.type")||!app.includes("source:'sundry-shop'")||!app.includes('sellable:true'))throw new Error('잡화점 구매품의 소지품·재판매 연결 누락');
 const goodsSection=app.slice(app.indexOf('const generalGoods = ['),app.indexOf('const outfits = ['));
 const goodsCount=(goodsSection.match(/\{id:'/g)||[]).length;
-if(goodsCount!==50)throw new Error(`방문상점 상품 수 오류: ${goodsCount}/50`);
+if(goodsCount!==65)throw new Error(`방문상점·잡화점 상품 수 오류: ${goodsCount}/65`);
 if(!app.includes('function prepareVisitShopStock()'))throw new Error('방문별 무작위 진열 준비 로직 누락');
 if(!app.includes('eligible.slice(0,10)'))throw new Error('방문상점 10종 제한 누락');
 if(app.includes('repeatable:true'))throw new Error('반복 구매 가능한 상품이 남아 있음');
@@ -28,4 +28,4 @@ if(!app.includes('let visitShopPurchaseMade=false'))throw new Error('방문당 �
 if(!app.includes('good||visitShopPurchaseMade||game.money'))throw new Error('방문당 1개 구매 제한 누락');
 if(!app.includes('visitShopPurchaseMade=true'))throw new Error('방문 구매 완료 처리 누락');
 
-console.log('PASS: 방문상점 50종·무작위 10종·방문당 1개·중복 구매 방지, 신규 아르바이트 9종 연결');
+console.log('PASS: 방문상점 50종+잡화점 15종·무작위 10종·방문당 1개·재판매, 신규 아르바이트 9종 연결');

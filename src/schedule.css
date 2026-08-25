@@ -2162,11 +2162,14 @@
 .pageant-hero-action{position:absolute;z-index:4;left:50%;bottom:12%;width:154px;height:205px;object-fit:contain;object-position:center bottom;transform-origin:center bottom;filter:drop-shadow(0 5px 6px #160b08aa)}
 .pageant-hero-frames{position:absolute;z-index:4;left:50%;bottom:9%;width:190px;height:235px;display:block;transform:translateX(-50%);filter:drop-shadow(0 5px 6px #160b08aa)}
 .pageant-hero-frames img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;object-position:center bottom;opacity:0;animation:pageant-frame-123 .9s steps(1,end) infinite;animation-delay:calc(var(--pageant-frame) * .3s)}
+.pageant-hero-frames.is-invitation img{animation-name:pageant-frame-4;animation-duration:1.2s;animation-delay:calc(var(--pageant-frame) * .3s)}
 .pageant-hero-frames.is-dance img{animation-name:pageant-frame-6;animation-duration:1.44s;animation-delay:calc(var(--pageant-frame) * .24s)}
 .pageant-hero-frames.is-walk{animation:pageant-frame-travel 2.7s linear infinite}
 .pageant-interview{position:absolute;z-index:8;inset:10% 6% 16%;display:grid;grid-template-columns:42% 1fr;align-items:end;gap:10px;padding:12px;border:2px solid #bd883a;border-radius:16px;background:linear-gradient(145deg,#fffaf0f2,#ead9b8f2);box-shadow:0 8px 24px #140a06aa;color:#402716}
 .pageant-interview figure{margin:0;display:grid;align-content:end;height:100%;text-align:center}
-.pageant-interview figure img{width:100%;height:210px;object-fit:contain;object-position:center bottom;filter:drop-shadow(0 5px 5px #3a1c0d66)}
+.pageant-interview figure img,.pageant-interview-frames{width:100%;height:210px;object-fit:contain;object-position:center bottom;filter:drop-shadow(0 5px 5px #3a1c0d66)}
+.pageant-interview-frames{position:relative;display:block}
+.pageant-interview-frames img{position:absolute;inset:0;opacity:0;animation:pageant-frame-123 .9s steps(1,end) infinite;animation-delay:calc(var(--pageant-frame) * .3s)}
 .pageant-interview figcaption{margin-top:-2px;padding:4px;border-radius:999px;background:#5c351c;color:#fff6dc;font-weight:800;font-size:11px}
 .pageant-interview>div{align-self:center;display:grid;gap:8px}
 .pageant-interview p{margin:0;padding:9px;border-radius:11px;background:#fffdf7;border:1px solid #cda66c;font-size:11px;line-height:1.45}
@@ -2213,6 +2216,7 @@
 @keyframes pageant-finish{0%,100%{transform:translateX(-50%) scale(1)}50%{transform:translateX(-50%) scale(1.06);filter:drop-shadow(0 0 12px #ffe7a8)}}
 @keyframes pageant-judged{0%,100%{transform:translateX(-50%)}50%{transform:translateX(-50%) translateY(-3px)}}
 @keyframes pageant-frame-123{0%,32.99%{opacity:1}33%,100%{opacity:0}}
+@keyframes pageant-frame-4{0%,24.99%{opacity:1}25%,100%{opacity:0}}
 @keyframes pageant-frame-6{0%,16.64%{opacity:1}16.67%,100%{opacity:0}}
 @keyframes pageant-frame-travel{0%{left:30%}100%{left:70%}}
 @keyframes pageant-guardian-bounce{from{transform:translateY(0) rotate(-2deg)}to{transform:translateY(-8px) rotate(2deg)}}
