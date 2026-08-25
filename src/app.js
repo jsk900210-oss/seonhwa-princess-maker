@@ -237,7 +237,7 @@ const vacationIllustrations=[
 function unifiedAgeFolder(){return '09';}
 function scheduleFramePath(file){return `../assets/characters/seonhwa/schedule-actions/${file}`;}
 function scheduleBasePath(file){return `../assets/characters/seonhwa/schedule-base/${file}`;}
-const scheduleAssetRevision='0.64.49-debug';
+const scheduleAssetRevision='0.64.50-debug';
 const scheduleQaParams=new URLSearchParams(location.search);
 const moonlightStandaloneQa=scheduleQaParams.get('qaHoliday')==='chuseok';
 const sehwaStandaloneQa=scheduleQaParams.get('qaHoliday')==='seollal';
@@ -693,6 +693,10 @@ async function animateNaturalFailure(actionId,image,level='mistake'){
   const prefix=forwardFallActivities.has(actionId)?'seonhwa-trip-forward':'seonhwa-stumble';
   const order=level==='mistake'?[1,2,3]:[1,2,1];
   image.style.transform='';
+  if(actionId==='herbs'){
+    image.src=versionedScheduleAsset('../assets/characters/seonhwa/schedule-actions/herbs-startle-arms-up-v1.png');
+    await schedulePlaybackDelay(level==='mistake'?210:175);
+  }
   for(const frame of order){
     image.src=versionedScheduleAsset(`../assets/schedule-layers-v2/childcare/hero-actions/${folder}/${prefix}-${frame}.png`);
     await schedulePlaybackDelay(level==='mistake'?180:150);
