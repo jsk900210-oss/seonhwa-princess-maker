@@ -29,6 +29,12 @@
   "patterns": {
     "success-a": {
       "layer": "props",
+      "heroIncludesProp": true,
+      "heroFrames": [
+        "../../characters/seonhwa/schedule-actions/farmwork-pixel-1.png",
+        "../../characters/seonhwa/schedule-actions/farmwork-pixel-1.png",
+        "../../characters/seonhwa/schedule-actions/farmwork-pixel-1.png"
+      ],
       "frames": [
         "props/cabbage-basket-1.png",
         "props/cabbage-basket-2.png",

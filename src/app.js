@@ -237,7 +237,7 @@ const vacationIllustrations=[
 function unifiedAgeFolder(){return '09';}
 function scheduleFramePath(file){return `../assets/characters/seonhwa/schedule-actions/${file}`;}
 function scheduleBasePath(file){return `../assets/characters/seonhwa/schedule-base/${file}`;}
-const scheduleAssetRevision='0.64.15-debug';
+const scheduleAssetRevision='0.64.16-debug';
 const scheduleQaParams=new URLSearchParams(location.search);
 const moonlightStandaloneQa=scheduleQaParams.get('qaHoliday')==='chuseok';
 const sehwaStandaloneQa=scheduleQaParams.get('qaHoliday')==='seollal';
@@ -865,7 +865,7 @@ const scheduleDialogue={
   sweeping:{perfect:['마당에 티끌 하나 남지 않았어요.'],normal:['마당을 쓸고 나니 마음도 개운해요.']},
   herbs:{perfect:['좋은 약초만 골라 바구니를 채웠어요.'],normal:['뿌리가 다치지 않도록 조심히 뽑았어요.']},
   houseclean:{perfect:['방 안이 반짝반짝해졌어요.'],normal:['가구 밑까지 깨끗하게 닦았어요.']},
-  farmwork:{perfect:['먹이와 밭일을 순서대로 완벽히 마쳤어요.'],normal:['가축에게 먹이를 주고 밭고랑을 고르게 다듬었어요.']},
+  farmwork:{perfect:['밭흙을 고르고 밭고랑을 반듯하게 완성했어요.'],normal:['호미삽으로 흙을 고르게 갈아 밭을 정돈했어요.']},
   childcare:{perfect:['아이가 하루 종일 환하게 웃었어요.'],normal:['장난감으로 놀아 주고 다치지 않도록 살폈어요.']},
   kitchenhelp:{perfect:['재료 손질과 그릇 나르기를 막힘없이 해냈어요.'],normal:['채소를 다듬고 빈 그릇을 차곡차곡 옮겼어요.']},
   woodwork:{perfect:['연장과 목재를 쓰임새대로 완벽히 정리했어요.'],normal:['나무 결을 살피며 연장을 안전하게 정리했어요.']},
