@@ -2150,6 +2150,7 @@
 .phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-clinichelp.schedule-layered .schedule-scene-layer.layer-pattern.fail-a,
 .phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-clinichelp.schedule-layered .schedule-scene-layer.layer-effect.fail-b{left:52%!important;width:164px!important}
 
+
 /* v0.63.98 — 한가위 달빛 아씨 경연: 8인 대열과 왕의 대상 단독 시상. */
 .activity-stage.action-holiday-chuseok .stage-map{object-position:center 58%}
 .activity-stage.action-holiday-chuseok>.stage-inner>.stage-character{display:none!important}

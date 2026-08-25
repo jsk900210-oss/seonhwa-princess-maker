@@ -237,7 +237,7 @@ const vacationIllustrations=[
 function unifiedAgeFolder(){return '09';}
 function scheduleFramePath(file){return `../assets/characters/seonhwa/schedule-actions/${file}`;}
 function scheduleBasePath(file){return `../assets/characters/seonhwa/schedule-base/${file}`;}
-const scheduleAssetRevision='0.64.31-debug';
+const scheduleAssetRevision='0.64.32-debug';
 const scheduleQaParams=new URLSearchParams(location.search);
 const moonlightStandaloneQa=scheduleQaParams.get('qaHoliday')==='chuseok';
 const sehwaStandaloneQa=scheduleQaParams.get('qaHoliday')==='seollal';
@@ -799,7 +799,7 @@ async function playScheduleLayerScene(actionId,seonImage,rank,outcome,dayIndex){
   const patternKey=forcedPattern||`${failed?'fail':'success'}-${dayIndex%2===0?'a':'b'}`;
   const patternSpec=spec.patterns?.[patternKey];
   const patternFrames=v2Spec?patternSpec?.frames:patternSpec;
-  const farmTillingFrames=['npc/farmer-tilling-v1/farmer-tilling-v1-1.png','npc/farmer-tilling-v1/farmer-tilling-v1-2.png','npc/farmer-tilling-v1/farmer-tilling-v1-3.png'];
+  const farmTillingFrames=['npc/farmer-tilling-v2/farmer-tilling-v2-1.png','npc/farmer-tilling-v2/farmer-tilling-v2-2.png','npc/farmer-tilling-v2/farmer-tilling-v2-3.png'];
   const childcareRunningFrames=['npc/child-running-v1/child-run-1.png','npc/child-running-v1/child-run-2.png','npc/child-running-v1/child-run-3.png'];
   const childcareChaseFrames=['hero-actions/chase-running-v1/seonhwa-chase-1.png','hero-actions/chase-running-v1/seonhwa-chase-2.png','hero-actions/chase-running-v1/seonhwa-chase-3.png'];
   const childcareStumbleFrames=['hero-actions/stumble-sit-v1/seonhwa-stumble-1.png','hero-actions/stumble-sit-v1/seonhwa-stumble-2.png','hero-actions/stumble-sit-v1/seonhwa-stumble-3.png'];
@@ -831,7 +831,7 @@ async function playScheduleLayerScene(actionId,seonImage,rank,outcome,dayIndex){
     const npc=make('npc',npcFrames[0]);
     const patternLayer=v2Spec&&patternSpec?.layer==='effects'?'effect':'pattern';
     const pattern=make(`${patternLayer} ${patternKey} ${patternKey.startsWith('fail-')?'dedicated-failure':''}`,patternFrames[0]);
-    if(patternSpec?.heroIncludesProp)pattern.hidden=true;
+    if(patternSpec?.heroIncludesProp||(actionId==='farmwork'&&patternKey.startsWith('success-')))pattern.hidden=true;
     layers.push(npc,pattern);
     const delay=actionId==='farmwork'&&patternKey==='fail-b'?190:actionId==='childcare'?220:([360,300,250][rank]||300);
     for(let loop=0;loop<3;loop+=1){
