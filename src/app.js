@@ -237,7 +237,7 @@ const vacationIllustrations=[
 function unifiedAgeFolder(){return '09';}
 function scheduleFramePath(file){return `../assets/characters/seonhwa/schedule-actions/${file}`;}
 function scheduleBasePath(file){return `../assets/characters/seonhwa/schedule-base/${file}`;}
-const scheduleAssetRevision='0.64.23-debug';
+const scheduleAssetRevision='0.64.24-debug';
 const scheduleQaParams=new URLSearchParams(location.search);
 const moonlightStandaloneQa=scheduleQaParams.get('qaHoliday')==='chuseok';
 const sehwaStandaloneQa=scheduleQaParams.get('qaHoliday')==='seollal';
@@ -771,11 +771,18 @@ async function playScheduleLayerScene(actionId,seonImage,rank,outcome,dayIndex){
   const heroFrames=patternSpec?.heroFrames?.length===3?patternSpec.heroFrames:actionId==='farmwork'&&patternKey==='fail-b'&&spec.failureHeroFrames?.length===3?spec.failureHeroFrames:spec.existingHeroFrames||[];
   if(heroFrames.length!==3||npcFrames.length!==3||patternFrames?.length!==3)throw new Error(`schedule layer frame count invalid: ${actionId}/${patternKey}`);
   const placement=spec.placement||{};
+  const positionPercent=value=>Number.parseFloat(String(value??'').replace('%',''));
+  let heroPosition=positionPercent(placement.heroLeft||'40%'),npcPosition=positionPercent(placement.npcLeft||'72%');
+  const minimumActorGap=42;
+  if(Number.isFinite(heroPosition)&&Number.isFinite(npcPosition)&&Math.abs(npcPosition-heroPosition)<minimumActorGap){
+    if(npcPosition>=heroPosition)npcPosition=Math.min(90,heroPosition+minimumActorGap);else npcPosition=Math.max(10,heroPosition-minimumActorGap);
+    if(Math.abs(npcPosition-heroPosition)<minimumActorGap)heroPosition=npcPosition>=heroPosition?npcPosition-minimumActorGap:npcPosition+minimumActorGap;
+  }
   const layers=[];
   stage.classList.add('schedule-layered');
-  stage.style.setProperty('--layer-hero-left',placement.heroLeft||'40%');
+  stage.style.setProperty('--layer-hero-left',`${heroPosition}%`);
   stage.style.setProperty('--layer-floor',placement.floorBottom||placement.heroBottom||'5%');
-  stage.style.setProperty('--layer-npc-left',placement.npcLeft||'72%');
+  stage.style.setProperty('--layer-npc-left',`${npcPosition}%`);
   stage.style.setProperty('--layer-npc-scale',placement.npcScale||1);
   stage.style.setProperty('--layer-prop-left',placement.propLeft||'52%');
   stage.style.setProperty('--layer-prop-bottom',placement.propBottom||'7%');
@@ -806,9 +813,9 @@ async function playScheduleLayerScene(actionId,seonImage,rank,outcome,dayIndex){
           pattern.style.transform=travelsRight?'translateX(-50%)':'translateX(-50%) scaleX(-1)';
         }
         if(actionId==='childcare'){
-          const travelStep=loop*3+frame,travelsRight=dayIndex%2===0,rawProgress=Math.min(1,travelStep/7),progress=failed?Math.min(.72,rawProgress):rawProgress;
+          const travelStep=loop*3+frame,travelsRight=dayIndex%2===0,rawProgress=Math.min(1,travelStep/7),progress=failed?Math.min(.62,rawProgress):rawProgress;
           const childLeft=travelsRight?-5+progress*110:105-progress*110;
-          const heroLeft=travelsRight?childLeft-18:childLeft+18;
+          const heroLeft=travelsRight?childLeft-30:childLeft+30;
           const fallen=failed&&travelStep>=6;
           stage.style.setProperty('--layer-npc-left',`${childLeft}%`,'important');
           stage.style.setProperty('--layer-hero-left',`${heroLeft}%`,'important');

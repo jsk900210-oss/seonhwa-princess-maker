@@ -2332,6 +2332,15 @@ body .phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.
   left:var(--layer-prop-left)!important;bottom:24%!important;width:54px!important;clip-path:none!important;filter:none!important;
 }
 
+/* v0.64.24: hard actor separation rule for every schedule scene. */
+body .phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage:not(.schedule-layered):not(.market-choice-stage):has(.stage-npc:not([hidden])){
+  --actor-left:26%!important;
+}
+body .phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage:not(.schedule-layered):not(.market-choice-stage):has(.stage-npc:not([hidden])) .stage-npc:not(.npc-romance-date){
+  left:auto!important;right:2%!important;max-width:42%!important;transform-origin:center bottom!important;
+}
+.activity-stage.schedule-layered .stage-character.pixel-sprite,.activity-stage.schedule-layered .schedule-scene-layer.layer-npc{will-change:left,transform}
+
 /* v0.64.23: the child runs ahead while Seonhwa follows; failure ends in a fall. */
 .phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-childcare.schedule-layered .stage-character.pixel-sprite{
   left:var(--layer-hero-left)!important;bottom:5%!important;width:132px!important;height:132px!important;
