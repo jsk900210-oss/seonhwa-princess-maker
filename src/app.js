@@ -243,7 +243,7 @@ const vacationIllustrations=[
 function unifiedAgeFolder(){return '09';}
 function scheduleFramePath(file){return `../assets/characters/seonhwa/schedule-actions/${file}`;}
 function scheduleBasePath(file){return `../assets/characters/seonhwa/schedule-base/${file}`;}
-const scheduleAssetRevision='0.64.108-debug';
+const scheduleAssetRevision='0.64.109-debug';
 const scheduleQaParams=new URLSearchParams(location.search);
 const moonlightStandaloneQa=scheduleQaParams.get('qaHoliday')==='chuseok';
 const sehwaStandaloneQa=scheduleQaParams.get('qaHoliday')==='seollal';
@@ -1306,8 +1306,18 @@ function protagonistPortraitForAge(age=game.age){
 function relationPortraitMarkup(candidate,className=''){return `<img class="relation-dialogue-cutout ${className}" src="../assets/characters/dialogue-fullbody/romance/${candidate.id}.png?v=${scheduleAssetRevision}" alt="${candidate.name}">`;}
 function applyRelationPortrait(element,candidate){if(!element||!candidate)return;element.src=`../assets/characters/dialogue-fullbody/romance/${candidate.id}.png?v=${scheduleAssetRevision}`;element.alt=`${candidate.name} 전신`;}
 function relationReplyChoices(candidate){return [{line:`반가워요, ${candidate.name}님. 잠시 함께 이야기해요.`,reply:'나도 반가워. 오늘은 서두르지 않고 네 이야기를 듣고 싶어.'},{line:'이곳에는 무슨 일로 오셨어요?',reply:'해야 할 일이 있었는데, 너를 만나니 잠시 걸음을 멈추게 되는군.'}];}
-function playRelationEncounterScene(candidate,opening,resultLine=''){
+const relationSceneBackgrounds={
+  '활터':'../assets/backgrounds/phase-scenes/martial.webp','집 마당':'../assets/backgrounds/pixel-activities/courtyard.webp','마당':'../assets/backgrounds/pixel-activities/courtyard.webp',
+  '산길 입구':'../assets/backgrounds/pixel-activities/herb-field-v2.webp','어두운 길목':'../assets/backgrounds/pixel-activities/herb-field.webp','강가 산책로':'../assets/events/vacation/spring-stream-v2.webp',
+  '서당 서가':'../assets/backgrounds/seodang/seodang-day.webp','서책상':'../assets/backgrounds/phase-scenes/study.webp','서당 마루':'../assets/backgrounds/phase-scenes/arithmetic.webp','서책방':'../assets/backgrounds/pixel-activities/study-room.webp',
+  '정자':'../assets/events/holidays/moonlight-pageant/background/moonlight-courtyard-v1.webp','꽃밭 길':'../assets/events/weekly-v2/spring-flower-market.webp','화실':'../assets/backgrounds/phase-scenes/painting.webp','연습 마루':'../assets/backgrounds/phase-scenes/dance.webp','달빛 정원':'../assets/events/holidays/moonlight-pageant/background/moonlight-courtyard-v1.webp','야외 화판 앞':'../assets/backgrounds/phase-scenes/painting.webp',
+  '나루터':'../assets/backgrounds/phase-scenes/ferry.webp','저잣거리':'../assets/backgrounds/market/market-day.webp','상단 장부방':'../assets/backgrounds/phase-scenes/merchant.webp','나루터 저녁':'../assets/events/vacation/autumn-maple-v2.webp','큰 장 입구':'../assets/backgrounds/pixel-activities/market-errand-v2.webp',
+  '등불 거리':'../assets/events/weekly-v2/autumn-festival.webp','큰 문 앞':'../assets/events/holidays/sehwa-contest/background/royal-contest-hall-v1.png'
+};
+function relationSceneBackground(episode){return relationSceneBackgrounds[episode?.scene]||'../assets/backgrounds/home/home-room-morning.webp';}
+function playRelationEncounterScene(candidate,opening,resultLine='',episode=null){
   const scene=document.querySelector('#relationEncounterScene'),male=document.querySelector('#relationEncounterMale'),female=document.querySelector('#relationEncounterFemale'),speaker=document.querySelector('#relationEncounterSpeaker'),text=document.querySelector('#relationEncounterText'),next=document.querySelector('#relationEncounterNext'),choices=document.querySelector('#relationEncounterChoices');
+  scene.style.setProperty('--relation-scene-background',`url('${relationSceneBackground(episode)}?v=${scheduleAssetRevision}')`);scene.dataset.location=episode?.scene||'집 안';
   applyRelationPortrait(male,candidate);female.src=protagonistFullbodyForAge();female.alt=`${game.characterName||'선화'} ${game.age}세 전신`;
   scene.hidden=false;scene.classList.remove('is-entered');requestAnimationFrame(()=>scene.classList.add('is-entered'));scene.dataset.speaker='male';speaker.textContent=candidate.name;text.textContent=opening||candidate.dialogues[0];choices.hidden=true;next.hidden=false;
   return new Promise(resolve=>{
@@ -3220,7 +3230,7 @@ async function playWeeklySchedule(selected) {
     const holidayResultText=holidayContestResult?`<br>${holidayContestResult.summary}`:'';
     const resultTitle=holidayContestResult?`${action.id==='holiday-seollal'?'복을 그리는 왕실 세화 경연':'한가위 달빛 아씨 경연'} · ${holidayContestResult.overallRank}`:`${action.name} · ${outcomeLabels[outcome]}`;
     dayResult.innerHTML = `<b>${resultTitle}</b><span>${resultSummary||'능력치 변화 없음'}${holidayResultText}<br>${moneyText} · 현재 ${game.money.toLocaleString()}냥${dateRelation?`<br>${dateRelation.candidate.name} +12 · ${dateRelation.record.affinity} · ${dateRelation.record.relationship}`:''}${relationEvent?`<br>${relationEvent.candidate.name} — ${relationEvent.episode.title}`:''}</span>`;
-    if(relationEvent){document.querySelector('#dialogueText').textContent=relationEvent.episode.line;await playRelationEncounterScene(relationEvent.candidate,relationEvent.episode.line,`호감 ${relationRecord(relationEvent.candidate.id).affinity} · ${relationRecord(relationEvent.candidate.id).relationship}`);}
+    if(relationEvent){document.querySelector('#dialogueText').textContent=relationEvent.episode.line;await playRelationEncounterScene(relationEvent.candidate,relationEvent.episode.line,`호감 ${relationRecord(relationEvent.candidate.id).affinity} · ${relationRecord(relationEvent.candidate.id).relationship}`,relationEvent.episode);}
     if(action.id!=='vacation'&&outcome!=='mistake'){
       if(action.id==='childcare')stageCharacter.hidden=true;
       dayResult.hidden = false;
@@ -3461,7 +3471,7 @@ function initRelationEncounterQa(){
   const openQa=(id,nextMeeting)=>{const params=new URLSearchParams(location.search);params.set('qaRelation',id);params.set('qaMeeting',String(nextMeeting));params.set('qaAge',String(Math.max(endingRelationCandidates.find(item=>item.id===id)?.minAge||13,game.age)));location.search=params.toString();};
   controls.querySelectorAll('[data-relation-id]').forEach(button=>button.addEventListener('click',()=>openQa(button.dataset.relationId,meeting)));
   controls.querySelectorAll('[data-relation-meeting]').forEach(button=>button.addEventListener('click',()=>openQa(candidate.id,Number(button.dataset.relationMeeting))));
-  playRelationEncounterScene(candidate,`${meeting}회차 · ${episode?.title||'첫 만남'} · ${episode?.scene||candidate.role}\n${episode?.line||`${candidate.role} ${candidate.name}과 마주쳤어요.`}`,`QA · ${game.age}세 · ${episode?.pose||'화자 교대'} · ${episode?.expression||'표정 확인'} · ${episode?.camera||'전신 확인'}`);
+  playRelationEncounterScene(candidate,`${meeting}회차 · ${episode?.title||'첫 만남'} · ${episode?.scene||candidate.role}\n${episode?.line||`${candidate.role} ${candidate.name}과 마주쳤어요.`}`,`QA · ${game.age}세 · ${episode?.pose||'화자 교대'} · ${episode?.expression||'표정 확인'} · ${episode?.camera||'전신 확인'}`,episode);
 }
 function initBasePortraitQa(){
   ['studioLoading','prologue','birthdaySetup','recoveryPrompt','guardianStory','guardianChoice','guardianNaming'].forEach(id=>{const element=document.querySelector(`#${id}`);if(element)element.hidden=true;});
