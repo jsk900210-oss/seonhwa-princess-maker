@@ -6,12 +6,35 @@
   width:72px;
   height:72px;
   margin:0 auto 5px;
-  background:var(--item-art) center/contain no-repeat;
+  background:var(--item-art) center 74%/92px 92px no-repeat;
   image-rendering:auto;
 }
+.goods-card[data-general-good]::before{
+  grid-column:1/-1;
+  grid-row:1;
+  align-self:center;
+  overflow:hidden;
+}
+.goods-card[data-general-good]{
+  grid-template-columns:minmax(0,1fr) auto;
+  grid-template-rows:76px auto auto;
+  align-content:start;
+  overflow:hidden;
+}
+.goods-card[data-general-good]>b{
+  grid-column:1;
+  grid-row:2;
+  min-width:0;
+  white-space:normal;
+  word-break:keep-all;
+  overflow-wrap:normal;
+  line-height:1.35;
+}
+.goods-card[data-general-good]>span{grid-column:2;grid-row:2;white-space:nowrap}
+.goods-card[data-general-good]>small{grid-column:1/-1;grid-row:3;min-width:0;word-break:keep-all;overflow-wrap:break-word}
 .goods-card[data-general-good] .item-glyph,
 .inventory-slot.filled[data-item][style*="--item-art"] .item-glyph{display:none}
-.inventory-slot.filled[data-item]::before{width:42px;height:42px;margin:0 auto 2px}
+.inventory-slot.filled[data-item]::before{width:42px;height:42px;margin:0 auto 2px;background-size:54px 54px;background-position:center 74%}
 
 [data-general-good="wooden-doll"],[data-item="wooden-doll"]{--item-art:url('../assets/items/illustrated/wooden-doll.png')}
 [data-general-good="basic-book"],[data-item="basic-book"]{--item-art:url('../assets/items/illustrated/basic-book.png')}
