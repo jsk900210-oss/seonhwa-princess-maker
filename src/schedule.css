@@ -2538,22 +2538,15 @@ body .phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage:
   width:55%;
   height:auto;
   aspect-ratio:3/4;
-  background-image:var(--sehwa-expression-sheet);
+  background-image:var(--sehwa-expression-image);
   background-repeat:no-repeat;
-  background-size:400% 200%;
+  background-size:contain;
+  background-position:center bottom;
   filter:drop-shadow(0 6px 7px #160b08bb);
   transform:none;
   animation:sehwa-expression-from-right .78s cubic-bezier(.18,.75,.24,1) both!important;
 }
 .sehwa-opening-dialogue>.sehwa-expression.expression-age-13{aspect-ratio:813/967}
-.sehwa-expression.expression-neutral{background-position:0 0}
-.sehwa-expression.expression-smile{background-position:33.333% 0}
-.sehwa-expression.expression-joyful{background-position:66.667% 0}
-.sehwa-expression.expression-nervous{background-position:100% 0}
-.sehwa-expression.expression-startled{background-position:0 100%}
-.sehwa-expression.expression-sad{background-position:33.333% 100%}
-.sehwa-expression.expression-determined{background-position:66.667% 100%}
-.sehwa-expression.expression-shy{background-position:100% 100%}
 @keyframes sehwa-expression-from-right{from{opacity:0;transform:translateX(34px)}to{opacity:1;transform:none}}
 .sehwa-drawing-ensemble{position:absolute;z-index:38;inset:6% 3% 16%;display:grid;grid-template-columns:repeat(4,1fr);grid-template-rows:repeat(2,1fr);gap:1px 3px;align-items:end}
 .sehwa-drawing-ensemble figure{position:relative;height:100%;margin:0;display:grid;place-items:end center;overflow:hidden}
