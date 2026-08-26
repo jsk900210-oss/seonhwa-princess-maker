@@ -15,8 +15,9 @@ assert.ok(app.includes("stageNpc.className='stage-npc npc-purchase-merchant'")&&
 assert.ok(app.includes("activity:'merchanthelp'")&&app.includes("stageCharacterImage.style.setProperty('transform','none','important')"),'자유행동은 상점 교환 전용 픽셀 동작과 오른쪽 진행 방향을 사용해야 합니다.');
 assert.ok(app.includes("assets/schedule-layers-v2/merchanthelp/npc/merchant/idle-1.png"),'자유행동 상인은 v2 자산을 사용해야 합니다.');
 assert.ok(app.includes("for(const position of [30,freeTimeVariant?.stop??56])"),'자유행동 이동 구간은 짧은 2단계여야 합니다.');
+assert.ok(app.includes("stop:46"),'선화는 상품대 앞의 공통 결제 위치에서 멈춰야 합니다.');
 assert.ok(css.includes("schedule-layers-v2/merchanthelp/props/goods-display-1.png")&&css.includes("schedule-layers-v2/merchanthelp/effects/coin-exchange-1.png"),'자유행동 소품은 v2 상품·결제 레이어를 사용해야 합니다.');
-assert.ok(css.includes("left:82%!important")&&css.includes("left:58%!important"),'자유행동 상인과 상품대는 겹침 방지 좌표를 사용해야 합니다.');
+assert.ok(css.includes("left:78%!important")&&css.includes("left:62%!important"),'자유행동 상인과 상품대는 겹침 방지 좌표를 사용해야 합니다.');
 assert.ok(app.includes('phaseDailyChange(freeTimeVariant?{...freeTimeVariant.change}:resolvedActivityChange(action,outcome),index%14)'),'선택된 자유행동 결과가 페이즈 일차에 맞춰 적용되어야 합니다.');
 
 console.log('PASS: 휴식 자유행동 3종·무실패·능력치 반영');

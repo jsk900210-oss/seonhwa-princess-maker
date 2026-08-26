@@ -2391,7 +2391,7 @@ body .phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage:
 
 /* v0.64.43: free action follows the schedule actor/layer contract. */
 .phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-freeTime.free-time-market .stage-character.pixel-sprite{
-  bottom:13%!important;
+  bottom:7%!important;
   width:132px!important;
   height:132px!important;
   transition:left .28s linear!important;
@@ -2399,18 +2399,18 @@ body .phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage:
 }
 .phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-freeTime.free-time-market .stage-npc.npc-purchase-merchant{
   display:block!important;
-  left:82%!important;
+  left:78%!important;
   bottom:5%!important;
-  width:146px!important;
-  height:146px!important;
+  width:124px!important;
+  height:124px!important;
   transform:none!important;
   z-index:4!important;
 }
 .phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-freeTime.free-time-market .stage-props.prop-stall{
-  left:58%!important;
+  left:62%!important;
   bottom:5%!important;
-  width:150px!important;
-  height:150px!important;
+  width:130px!important;
+  height:130px!important;
   z-index:3!important;
 }
 .phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-freeTime.free-time-market .stage-character.is-purchasing{
@@ -2418,6 +2418,12 @@ body .phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage:
   transform-origin:center bottom!important;
 }
 @keyframes free-time-exchange{0%,100%{translate:0 0}45%{translate:5px -2px}72%{translate:3px 0}}
+
+/* v0.64.93: keep study failures at the desk and hide the finished childcare actor. */
+.phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-reading .stage-character,
+.phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-arithmetic .stage-character{
+  transition:transform .16s ease-out!important;
+}
 
 /* v0.64.44: reading failure drops one sheet from the desk to the floor. */
 .phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage .stage-props.prop-paper.study-prop-drop{

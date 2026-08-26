@@ -17,6 +17,9 @@ for(const [pattern,stem] of [['success-a','sawing'],['success-b','hammering']]){
   if(new Set(hashes).size!==3)throw new Error(`${pattern}: duplicate static frames`);
 }
 const app=fs.readFileSync(path.join(root,'src/app.js'),'utf8');
+if(!app.includes("animateStudyDeskCollapse(stageCharacterImage,outcome)"))throw new Error('글읽기·셈하기 실패는 책상 엎드림 동작을 사용해야 함');
+if(!app.includes("const tillingCycle=[1,2,1,2,1,2,1,2,1]"))throw new Error('농부 밭갈기는 크기가 안정적인 두 자세를 번갈아야 함');
+if(!app.includes("if(actionId==='manners')")||!app.includes("seonhwa-stumble-3.png"))throw new Error('예절 실패는 손을 뻗는 추격 프레임 없이 주저앉아야 함');
 if(!app.includes('patternSpec?.heroFrames?.length===3'))throw new Error('pattern-specific hero renderer missing');
 const herbStartle='assets/characters/seonhwa/schedule-actions/herbs-startle-arms-up-v1.png';
 if(!fs.existsSync(path.join(root,herbStartle)))throw new Error('약초 뽑기 손 번쩍 프레임 누락');

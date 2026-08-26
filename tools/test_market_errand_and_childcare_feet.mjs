@@ -53,5 +53,6 @@ for(const [folder,prefix] of babySets){
   for(const number of [1,2,3])assert.ok(app.includes(`npc/${folder}/${prefix}-${number}.png`),`app must use ${folder} frame ${number}`);
 }
 
-assert.ok(html.includes('v0.64.92-debug'),'HTML cache revision must expose the new build');
+assert.ok(html.includes('v0.64.93-debug'),'HTML cache revision must expose the new build');
+assert.ok(app.includes("if(action.id==='childcare')stageCharacter.hidden=true"),'childcare result must hide the leftover Seonhwa frame');
 console.log('market errand traversal and childcare foot-frame checks passed');

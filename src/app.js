@@ -237,7 +237,7 @@ const vacationIllustrations=[
 function unifiedAgeFolder(){return '09';}
 function scheduleFramePath(file){return `../assets/characters/seonhwa/schedule-actions/${file}`;}
 function scheduleBasePath(file){return `../assets/characters/seonhwa/schedule-base/${file}`;}
-const scheduleAssetRevision='0.64.92-debug';
+const scheduleAssetRevision='0.64.93-debug';
 const scheduleQaParams=new URLSearchParams(location.search);
 const moonlightStandaloneQa=scheduleQaParams.get('qaHoliday')==='chuseok';
 const sehwaStandaloneQa=scheduleQaParams.get('qaHoliday')==='seollal';
@@ -688,6 +688,23 @@ function clearFallbackSpriteMotion(image){
 }
 async function animateNaturalFailure(actionId,image,level='mistake'){
   if(!image)return;
+  if(actionId==='manners'){
+    const closeHandFrames=[
+      '../assets/characters/seonhwa/schedule-actions/manners-pixel-1.png',
+      '../assets/characters/seonhwa/schedule-actions/manners-pixel-2.png',
+      '../assets/characters/seonhwa/schedule-actions/manners-pixel-3.png'
+    ];
+    const sequence=level==='mistake'?[closeHandFrames[0],closeHandFrames[1],closeHandFrames[2],'../assets/schedule-layers-v2/childcare/hero-actions/stumble-sit-v1/seonhwa-stumble-3.png']:[closeHandFrames[0],closeHandFrames[1],closeHandFrames[2]];
+    image.style.transformOrigin='52% 88%';
+    for(const [index,frame] of sequence.entries()){
+      image.src=versionedScheduleAsset(frame);
+      image.style.transform=`translateY(${Math.min(index,2)*4}px) rotate(${Math.min(index,2)*3}deg)`;
+      await schedulePlaybackDelay(level==='mistake'?190:160);
+    }
+    if(level!=='mistake'){image.style.transform='';image.style.transformOrigin='';}
+    else await schedulePlaybackDelay(260);
+    return;
+  }
   const original=image.src;
   const forwardFallActivities=new Set(['sweeping','herbs','houseclean','martial']);
   const folder=forwardFallActivities.has(actionId)?'trip-forward-v1':'stumble-sit-v1';
@@ -764,6 +781,33 @@ async function animateStudyPropDrop(activity,image){
     image.style.transform='';
   }
 }
+async function animateStudyDeskCollapse(image,level='mistake'){
+  if(!image)return;
+  const poses=level==='mistake'?
+    [
+      'translate(0,0) rotate(0deg)',
+      'translate(4px,5px) rotate(5deg)',
+      'translate(10px,13px) rotate(12deg)',
+      'translate(15px,21px) rotate(19deg)'
+    ]:
+    [
+      'translate(0,0) rotate(0deg)',
+      'translate(4px,7px) rotate(7deg)',
+      'translate(8px,12px) rotate(11deg)',
+      'translate(2px,3px) rotate(2deg)',
+      'translate(0,0) rotate(0deg)'
+    ];
+  image.style.transformOrigin='58% 78%';
+  try{
+    for(const pose of poses){
+      image.style.transform=pose;
+      await schedulePlaybackDelay(level==='mistake'?180:150);
+    }
+    if(level==='mistake')await schedulePlaybackDelay(260);
+  }finally{
+    if(level!=='mistake'){image.style.transform='';image.style.transformOrigin='';}
+  }
+}
 async function animateActivitySprite(image,motion,activity,npcImage,npc,outfitId,masteryRank=0,dayIndex=0,outcome=null){
   if(activity){
     if(!outfitId)outfitId=game.autoOutfit?recommendOutfit(activity):game.equippedOutfit;
@@ -794,6 +838,7 @@ async function animateActivitySprite(image,motion,activity,npcImage,npc,outfitId
       (activity==='errand'?errandRunCycle.slice(0,errandTrack.length)
         :activity==='houseclean'?[0,1,2,1,0]
         :activity==='sweeping'?[0,1,2,1,0,1,2,1,0]
+        :activity==='manners'?[0,1,2,1,0]
         :activity==='sleep'?[0,1,2,1,0]
         :activity==='tea'?[0,1,2,1,0]
         :[0,1,2,1,0]);
@@ -903,7 +948,7 @@ async function playScheduleLayerScene(actionId,seonImage,rank,outcome,dayIndex){
   if(childcareTravelsRight!==null)stage.dataset.childcareDirection=childcareTravelsRight?'right':'left';
   try{
     if(spec.backgroundOverlay)layers.push(make('background',spec.backgroundOverlay));
-    const npc=make('npc',npcFrames[0]);
+    const npc=make('npc',npcFrames[actionId==='farmwork'?1:0]);
     if(actionId==='farmwork'){
       npc.style.setProperty('width','160px','important');
       npc.style.setProperty('height','160px','important');
@@ -922,7 +967,7 @@ async function playScheduleLayerScene(actionId,seonImage,rank,outcome,dayIndex){
       for(let frame=0;frame<3;frame+=1){
         let activeHeroFrame=heroFrames[frame],activeNpcFrame=npcFrames[frame],activePatternFrame=patternFrames[frame];
         if(actionId==='farmwork'&&patternKey!=='fail-b'){
-          const tillingCycle=[0,1,2,1,0,1,2,1,0];
+          const tillingCycle=[1,2,1,2,1,2,1,2,1];
           activeNpcFrame=npcFrames[tillingCycle[loop*3+frame]];
         }
         if(actionId==='farmwork'&&patternKey==='fail-b'){
@@ -2963,9 +3008,9 @@ async function playWeeklySchedule(selected) {
   const playbackPhase=phaseInfo();
   const dayNames = ['월요일','화요일','수요일','목요일','금요일','토요일','일요일'];
   const freeTimeVariants=[
-    {name:'비단 리본 구매',activity:'merchanthelp',purchaseLayer:'goods',cost:70,stop:32,change:{sense:1,charm:1,stress:-9},line:'저잣거리 매대에서 옷에 어울리는 비단 리본을 골라 샀어요.'},
-    {name:'작은 장신구 구매',activity:'merchanthelp',purchaseLayer:'coins',cost:110,stop:35,change:{sense:2,charm:1,stress:-7},line:'장터 좌판을 살펴보고 마음에 드는 작은 장신구를 골라 값을 치렀어요.'},
-    {name:'문방 소품 구매',activity:'merchanthelp',purchaseLayer:'goods',cost:90,stop:38,change:{speech:1,sensitivity:1,stress:-8},line:'상인에게 물어본 뒤 마음에 드는 문방 소품을 하나 샀어요.'}
+    {name:'비단 리본 구매',activity:'merchanthelp',purchaseLayer:'goods',cost:70,stop:46,change:{sense:1,charm:1,stress:-9},line:'저잣거리 매대에서 옷에 어울리는 비단 리본을 골라 샀어요.'},
+    {name:'작은 장신구 구매',activity:'merchanthelp',purchaseLayer:'coins',cost:110,stop:46,change:{sense:2,charm:1,stress:-7},line:'장터 좌판을 살펴보고 마음에 드는 작은 장신구를 골라 값을 치렀어요.'},
+    {name:'문방 소품 구매',activity:'merchanthelp',purchaseLayer:'goods',cost:90,stop:46,change:{speech:1,sensitivity:1,stress:-8},line:'상인에게 물어본 뒤 마음에 드는 문방 소품을 하나 샀어요.'}
   ];
   const moonlightSession=selected.some(action=>action.id==='holiday-chuseok')?evaluateChuseokFestival():null;
   const sehwaSession=selected.some(action=>action.id==='holiday-seollal')?evaluateSeollalFestival():null;
@@ -3021,7 +3066,7 @@ async function playWeeklySchedule(selected) {
     }
     const outfitName=outfits.find(item=>item.id===dailyOutfit)?.name;
     const showOutfitName=action.id!=='rest'&&Boolean(outfitName);
-    const restActivity=action.id==='rest'?(Math.random()<.5?'tea':'sleep'):null;
+    const restActivity=action.id==='rest'?(index%14<7?'tea':'sleep'):null;
     document.querySelector('#stageCaption').textContent = `${action.name}${freeTimeVariant?` · ${freeTimeVariant.name}`:''}${['교육','아르바이트'].includes(action.category)?` · ${activityRankNames[currentMasteryRank]}`:''}${restActivity?` · ${restActivity==='tea'?'차 마시기':'잠자기'}`:''}`;
     document.querySelector('#playbackProgress').style.width = `${((index + 1) / selected.length) * 100}%`;
     bg.src = backgrounds[presentation.location];
@@ -3126,6 +3171,10 @@ async function playWeeklySchedule(selected) {
     }else if(scheduleLayerIds.has(action.id)){
       stageNpc.hidden=true;stageProps.hidden=true;
       await playScheduleLayerScene(action.id,stageCharacterImage,currentMasteryRank,outcome,index);
+    }else if(action.id==='rest'&&![0,7].includes(index%14)){
+      const restFrames=activityFrameSet(restActivity)||activityFrameSet('sleep');
+      stageCharacterImage.src=await outfitActivityFrame(restFrames[restActivity==='tea'?0:2],dailyOutfit);
+      await schedulePlaybackDelay(180);
     }else await animateActivitySprite(stageCharacterImage,presentation.motion,restActivity||presentation.activity,stageNpcImage,presentation.npc,dailyOutfit,currentMasteryRank,index,outcome);
     const guaranteedSuccess=['rest','freeTime','vacation','dungeon','holiday-chuseok','holiday-seollal'].includes(action.id)||action.special==='date';
     if(outcome===null)outcome=judgeActivityOutcome(action,simulated.stress);
@@ -3135,7 +3184,7 @@ async function playWeeklySchedule(selected) {
     if(!guaranteedSuccess&&(outcome==='mistake'||outcome==='struggle')&&action.id!=='shopping'&&!scheduleLayerIds.has(action.id)){
       if(action.id==='errand'&&outcome==='mistake')await animateErrandFall(stageCharacterImage);
       else if(action.id==='errand'&&outcome==='struggle')await animateErrandNearFall(stageCharacterImage);
-      else if(outcome==='mistake'&&(action.id==='reading'||action.id==='arithmetic'))await animateStudyPropDrop(action.id,stageCharacterImage);
+      else if((action.id==='reading'||action.id==='arithmetic')&&(outcome==='mistake'||outcome==='struggle'))await animateStudyDeskCollapse(stageCharacterImage,outcome);
       else await animateNaturalFailure(action.id,stageCharacterImage,outcome);
     }
     const fullPhaseHoliday=action.id==='holiday-seollal'||action.id==='holiday-chuseok';
@@ -3181,6 +3230,7 @@ async function playWeeklySchedule(selected) {
     dayResult.innerHTML = `<b>${resultTitle}</b><span>${resultSummary||'능력치 변화 없음'}${holidayResultText}<br>${moneyText} · 현재 ${game.money.toLocaleString()}냥${dateRelation?`<br>${dateRelation.candidate.name} +12 · ${dateRelation.record.affinity} · ${dateRelation.record.relationship}`:''}${relationEvent?`<br>${relationEvent.candidate.name} — ${relationEvent.episode.title}`:''}</span>`;
     if(relationEvent){document.querySelector('#dialogueText').textContent=relationEvent.episode.line;await playRelationEncounterScene(relationEvent.candidate,relationEvent.episode.line,`호감 ${relationRecord(relationEvent.candidate.id).affinity} · ${relationRecord(relationEvent.candidate.id).relationship}`);}
     if(action.id!=='vacation'&&outcome!=='mistake'){
+      if(action.id==='childcare')stageCharacter.hidden=true;
       dayResult.hidden = false;
       await schedulePlaybackDelay(900);
       dayResult.hidden = true;

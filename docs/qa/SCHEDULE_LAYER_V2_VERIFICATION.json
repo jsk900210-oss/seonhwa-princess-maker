@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-23",
+  "generatedAt": "2026-08-26",
   "scope": "schedule-layers-v2 discovered manifests",
   "manifests": 20,
   "summary": {
@@ -654,97 +654,97 @@
       "activity": "childcare",
       "check": "path exists",
       "passed": true,
-      "detail": "assets\\schedule-layers-v2\\childcare\\npc\\child\\idle-1.png"
+      "detail": "assets\\schedule-layers-v2\\childcare\\npc\\child-idle-v2\\child-idle-v2-1.png"
     },
     {
       "activity": "childcare",
       "check": "PNG opens",
       "passed": true,
-      "detail": "npc/child/idle-1.png"
+      "detail": "npc/child-idle-v2/child-idle-v2-1.png"
     },
     {
       "activity": "childcare",
       "check": "RGBA/transparency",
       "passed": true,
-      "detail": "npc/child/idle-1.png: RGBA"
+      "detail": "npc/child-idle-v2/child-idle-v2-1.png: RGBA"
     },
     {
       "activity": "childcare",
       "check": "not empty",
       "passed": true,
-      "detail": "npc/child/idle-1.png"
+      "detail": "npc/child-idle-v2/child-idle-v2-1.png"
     },
     {
       "activity": "childcare",
       "check": "production filename",
       "passed": true,
-      "detail": "npc/child/idle-1.png"
+      "detail": "npc/child-idle-v2/child-idle-v2-1.png"
     },
     {
       "activity": "childcare",
       "check": "path exists",
       "passed": true,
-      "detail": "assets\\schedule-layers-v2\\childcare\\npc\\child\\idle-2.png"
+      "detail": "assets\\schedule-layers-v2\\childcare\\npc\\child-idle-v2\\child-idle-v2-2.png"
     },
     {
       "activity": "childcare",
       "check": "PNG opens",
       "passed": true,
-      "detail": "npc/child/idle-2.png"
+      "detail": "npc/child-idle-v2/child-idle-v2-2.png"
     },
     {
       "activity": "childcare",
       "check": "RGBA/transparency",
       "passed": true,
-      "detail": "npc/child/idle-2.png: RGBA"
+      "detail": "npc/child-idle-v2/child-idle-v2-2.png: RGBA"
     },
     {
       "activity": "childcare",
       "check": "not empty",
       "passed": true,
-      "detail": "npc/child/idle-2.png"
+      "detail": "npc/child-idle-v2/child-idle-v2-2.png"
     },
     {
       "activity": "childcare",
       "check": "production filename",
       "passed": true,
-      "detail": "npc/child/idle-2.png"
+      "detail": "npc/child-idle-v2/child-idle-v2-2.png"
     },
     {
       "activity": "childcare",
       "check": "path exists",
       "passed": true,
-      "detail": "assets\\schedule-layers-v2\\childcare\\npc\\child\\idle-3.png"
+      "detail": "assets\\schedule-layers-v2\\childcare\\npc\\child-idle-v2\\child-idle-v2-3.png"
     },
     {
       "activity": "childcare",
       "check": "PNG opens",
       "passed": true,
-      "detail": "npc/child/idle-3.png"
+      "detail": "npc/child-idle-v2/child-idle-v2-3.png"
     },
     {
       "activity": "childcare",
       "check": "RGBA/transparency",
       "passed": true,
-      "detail": "npc/child/idle-3.png: RGBA"
+      "detail": "npc/child-idle-v2/child-idle-v2-3.png: RGBA"
     },
     {
       "activity": "childcare",
       "check": "not empty",
       "passed": true,
-      "detail": "npc/child/idle-3.png"
+      "detail": "npc/child-idle-v2/child-idle-v2-3.png"
     },
     {
       "activity": "childcare",
       "check": "production filename",
       "passed": true,
-      "detail": "npc/child/idle-3.png"
+      "detail": "npc/child-idle-v2/child-idle-v2-3.png"
     },
     {
       "activity": "childcare",
       "check": "npc canvas match",
       "passed": true,
-      "detail": "[(261, 320)]"
+      "detail": "[(320, 320)]"
     },
     {
       "activity": "childcare",
@@ -756,13 +756,13 @@
       "activity": "childcare",
       "check": "npc floor tolerance",
       "passed": true,
-      "detail": "[311, 311, 311]"
+      "detail": "[258, 274, 270]"
     },
     {
       "activity": "childcare",
       "check": "npc bbox consistency",
       "passed": true,
-      "detail": "widths=[186, 194, 175], heights=[303, 303, 304]"
+      "detail": "widths=[130, 142, 125], heights=[214, 233, 231]"
     },
     {
       "activity": "childcare",
@@ -3684,91 +3684,91 @@
       "activity": "farmwork",
       "check": "path exists",
       "passed": true,
-      "detail": "assets\\schedule-layers-v2\\farmwork\\npc\\farmer\\idle-1.png"
+      "detail": "assets\\schedule-layers-v2\\farmwork\\..\\..\\schedule-layers\\farmwork\\npc\\farmer-v3-1.png"
     },
     {
       "activity": "farmwork",
       "check": "PNG opens",
       "passed": true,
-      "detail": "npc/farmer/idle-1.png"
+      "detail": "../../schedule-layers/farmwork/npc/farmer-v3-1.png"
     },
     {
       "activity": "farmwork",
       "check": "RGBA/transparency",
       "passed": true,
-      "detail": "npc/farmer/idle-1.png: RGBA"
+      "detail": "../../schedule-layers/farmwork/npc/farmer-v3-1.png: RGBA"
     },
     {
       "activity": "farmwork",
       "check": "not empty",
       "passed": true,
-      "detail": "npc/farmer/idle-1.png"
+      "detail": "../../schedule-layers/farmwork/npc/farmer-v3-1.png"
     },
     {
       "activity": "farmwork",
       "check": "production filename",
       "passed": true,
-      "detail": "npc/farmer/idle-1.png"
+      "detail": "../../schedule-layers/farmwork/npc/farmer-v3-1.png"
     },
     {
       "activity": "farmwork",
       "check": "path exists",
       "passed": true,
-      "detail": "assets\\schedule-layers-v2\\farmwork\\npc\\farmer\\idle-2.png"
+      "detail": "assets\\schedule-layers-v2\\farmwork\\..\\..\\schedule-layers\\farmwork\\npc\\farmer-v3-2.png"
     },
     {
       "activity": "farmwork",
       "check": "PNG opens",
       "passed": true,
-      "detail": "npc/farmer/idle-2.png"
+      "detail": "../../schedule-layers/farmwork/npc/farmer-v3-2.png"
     },
     {
       "activity": "farmwork",
       "check": "RGBA/transparency",
       "passed": true,
-      "detail": "npc/farmer/idle-2.png: RGBA"
+      "detail": "../../schedule-layers/farmwork/npc/farmer-v3-2.png: RGBA"
     },
     {
       "activity": "farmwork",
       "check": "not empty",
       "passed": true,
-      "detail": "npc/farmer/idle-2.png"
+      "detail": "../../schedule-layers/farmwork/npc/farmer-v3-2.png"
     },
     {
       "activity": "farmwork",
       "check": "production filename",
       "passed": true,
-      "detail": "npc/farmer/idle-2.png"
+      "detail": "../../schedule-layers/farmwork/npc/farmer-v3-2.png"
     },
     {
       "activity": "farmwork",
       "check": "path exists",
       "passed": true,
-      "detail": "assets\\schedule-layers-v2\\farmwork\\npc\\farmer\\idle-3.png"
+      "detail": "assets\\schedule-layers-v2\\farmwork\\..\\..\\schedule-layers\\farmwork\\npc\\farmer-v3-3.png"
     },
     {
       "activity": "farmwork",
       "check": "PNG opens",
       "passed": true,
-      "detail": "npc/farmer/idle-3.png"
+      "detail": "../../schedule-layers/farmwork/npc/farmer-v3-3.png"
     },
     {
       "activity": "farmwork",
       "check": "RGBA/transparency",
       "passed": true,
-      "detail": "npc/farmer/idle-3.png: RGBA"
+      "detail": "../../schedule-layers/farmwork/npc/farmer-v3-3.png: RGBA"
     },
     {
       "activity": "farmwork",
       "check": "not empty",
       "passed": true,
-      "detail": "npc/farmer/idle-3.png"
+      "detail": "../../schedule-layers/farmwork/npc/farmer-v3-3.png"
     },
     {
       "activity": "farmwork",
       "check": "production filename",
       "passed": true,
-      "detail": "npc/farmer/idle-3.png"
+      "detail": "../../schedule-layers/farmwork/npc/farmer-v3-3.png"
     },
     {
       "activity": "farmwork",
@@ -3786,13 +3786,13 @@
       "activity": "farmwork",
       "check": "npc floor tolerance",
       "passed": true,
-      "detail": "[309, 309, 309]"
+      "detail": "[303, 303, 303]"
     },
     {
       "activity": "farmwork",
       "check": "npc bbox consistency",
       "passed": true,
-      "detail": "widths=[280, 280, 280], heights=[230, 230, 230]"
+      "detail": "widths=[120, 209, 192], heights=[288, 288, 288]"
     },
     {
       "activity": "farmwork",
@@ -12370,53 +12370,53 @@
       "floor": 309,
       "sha256": "1aba487502047dac351ff32649fa197f15e49a733b1fc0d523feb11186971cd3"
     },
-    "assets/schedule-layers-v2/childcare/npc/child/idle-1.png": {
+    "assets/schedule-layers-v2/childcare/npc/child-idle-v2/child-idle-v2-1.png": {
       "size": [
-        261,
+        320,
         320
       ],
       "mode": "RGBA",
       "hasTransparency": true,
       "bbox": [
-        37,
-        9,
-        223,
-        312
+        99,
+        45,
+        229,
+        259
       ],
-      "floor": 311,
-      "sha256": "c737bc6d3a674be639d0528053ea636ad0e420b6bf22b830f12f767b6099fcbc"
+      "floor": 258,
+      "sha256": "67dbe8c1051996427fc3415f03f9b8e638d038cb5db68a1f2fa3089bd529b46a"
     },
-    "assets/schedule-layers-v2/childcare/npc/child/idle-2.png": {
+    "assets/schedule-layers-v2/childcare/npc/child-idle-v2/child-idle-v2-2.png": {
       "size": [
-        261,
+        320,
         320
       ],
       "mode": "RGBA",
       "hasTransparency": true,
       "bbox": [
-        33,
-        9,
-        227,
-        312
+        96,
+        42,
+        238,
+        275
       ],
-      "floor": 311,
-      "sha256": "af363c05c806bfe9eaca000fd0927a399eb1361a076ed3c5edfc423281201ed5"
+      "floor": 274,
+      "sha256": "705ed88a85e069b10c02619adb1c534fbb568e276001b1fb9d24874903a9f189"
     },
-    "assets/schedule-layers-v2/childcare/npc/child/idle-3.png": {
+    "assets/schedule-layers-v2/childcare/npc/child-idle-v2/child-idle-v2-3.png": {
       "size": [
-        261,
+        320,
         320
       ],
       "mode": "RGBA",
       "hasTransparency": true,
       "bbox": [
-        43,
-        8,
-        218,
-        312
+        95,
+        40,
+        220,
+        271
       ],
-      "floor": 311,
-      "sha256": "dfcb7535223027c4e765bdee1578323c897e30005f8310f3dc2f83b2ad5ce1ee"
+      "floor": 270,
+      "sha256": "793f9e7eb320fa133c9ce1126d79956221364c54becfb89e246347fe97238286"
     },
     "assets/schedule-layers-v2/childcare/props/toy-play-1.png": {
       "size": [
@@ -13570,7 +13570,7 @@
       "floor": 311,
       "sha256": "d0f190a7f455c3e83f6a821851ab08e7e3410099502fea6499e5510897e27ae3"
     },
-    "assets/schedule-layers-v2/farmwork/npc/farmer/idle-1.png": {
+    "assets/schedule-layers-v2/farmwork/../../schedule-layers/farmwork/npc/farmer-v3-1.png": {
       "size": [
         320,
         320
@@ -13578,15 +13578,15 @@
       "mode": "RGBA",
       "hasTransparency": true,
       "bbox": [
-        20,
-        80,
-        300,
-        310
+        100,
+        16,
+        220,
+        304
       ],
-      "floor": 309,
-      "sha256": "83956d9ebba96f9a0bea533532dda1d3dd93503068a1dc7b7e2c94bc813de39b"
+      "floor": 303,
+      "sha256": "fb3465ba24e1584f21f8ad7b7e577f57759a1cf161bfa3313f21f2e1460e2226"
     },
-    "assets/schedule-layers-v2/farmwork/npc/farmer/idle-2.png": {
+    "assets/schedule-layers-v2/farmwork/../../schedule-layers/farmwork/npc/farmer-v3-2.png": {
       "size": [
         320,
         320
@@ -13594,15 +13594,15 @@
       "mode": "RGBA",
       "hasTransparency": true,
       "bbox": [
-        20,
-        80,
-        300,
-        310
+        55,
+        16,
+        264,
+        304
       ],
-      "floor": 309,
-      "sha256": "d296f30217d33906f094984364dadf671825930ae6b78c36d6c3232edaa52fd3"
+      "floor": 303,
+      "sha256": "efd015e20603a9711bd5e6b4ae770492a1e0e9c69e367baca305c736cf0479c7"
     },
-    "assets/schedule-layers-v2/farmwork/npc/farmer/idle-3.png": {
+    "assets/schedule-layers-v2/farmwork/../../schedule-layers/farmwork/npc/farmer-v3-3.png": {
       "size": [
         320,
         320
@@ -13610,13 +13610,13 @@
       "mode": "RGBA",
       "hasTransparency": true,
       "bbox": [
-        20,
-        80,
-        300,
-        310
+        64,
+        16,
+        256,
+        304
       ],
-      "floor": 309,
-      "sha256": "566d300c44fc09f49aaff4642d0328f085c7520e21da7b6b1283b92219a3392c"
+      "floor": 303,
+      "sha256": "0b343e1595809d509d5e6bb53051ad62e3abd1b13d80ee3942bd4fa3b23d6851"
     },
     "assets/schedule-layers-v2/farmwork/props/cabbage-basket-1.png": {
       "size": [
