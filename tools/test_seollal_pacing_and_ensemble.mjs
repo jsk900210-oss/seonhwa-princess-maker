@@ -31,7 +31,10 @@ assert.match(css,/\.sehwa-drawing-ensemble\.is-preparing i:before,[^{]+\{[^}]*he
 assert.match(app,/function sehwaRegistrationScene\(\)/,'참가표를 건네받는 별도 접수 장면이 필요합니다.');
 assert.match(app,/class="sehwa-registration-seonhwa"/,'접수 장면에는 참가표를 받는 선화가 명시적으로 보여야 합니다.');
 for(const frame of [1,2,3])assert.ok(existsSync(new URL(`../assets/events/holidays/sehwa-contest/registration-scene/age-13/receive-${frame}-v1.png`,import.meta.url)),`공손한 참가표 수령 ${frame} 프레임이 필요합니다.`);
-assert.match(css,/@keyframes sehwa-receive-frames/,'참가표 수령은 인사·두 손 내밀기·수령 확인 순서로 재생되어야 합니다.');
+assert.match(css,/@keyframes sehwa-receive-bow/,'참가표 수령은 공손한 인사로 시작해야 합니다.');
+assert.match(css,/@keyframes sehwa-receive-reach/,'참가표 수령은 두 손을 내미는 자세로 이어져야 합니다.');
+assert.match(css,/@keyframes sehwa-receive-hold/,'참가표 수령은 표를 받은 자세로 끝나야 합니다.');
+assert.doesNotMatch(css,/sehwa-(?:receive|slip)[^;}]*infinite/,'참가표 수령 동작은 반복되면 안 됩니다.');
 assert.match(css,/@keyframes sehwa-slip-handover/,'참가표가 접수 관리에게서 선화에게 이동해야 합니다.');
 assert.match(app,/session\.entrants\.map/,'그림 장면에는 참가자 8명이 모두 포함되어야 합니다.');
 assert.match(css,/\.sehwa-drawing-ensemble\{[^}]*grid-template-columns:repeat\(4,1fr\)/,'참가자 8명은 4×2 구도로 배치해야 합니다.');
