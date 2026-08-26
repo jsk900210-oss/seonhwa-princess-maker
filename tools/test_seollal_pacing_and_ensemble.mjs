@@ -30,8 +30,10 @@ assert.match(css,/\.sehwa-drawing-ensemble\.is-preparing figure:nth-child\(-n\+4
 assert.match(css,/\.sehwa-drawing-ensemble\.is-preparing i:before,[^{]+\{[^}]*height:23px/,'준비 장면 책상에는 떠 보이지 않도록 다리가 있어야 합니다.');
 assert.match(app,/function sehwaRegistrationScene\(\)/,'참가표를 건네받는 별도 접수 장면이 필요합니다.');
 assert.match(app,/class="sehwa-registration-seonhwa"/,'접수 장면에는 참가표를 받는 선화가 명시적으로 보여야 합니다.');
+for(const frame of [1,2,3])assert.ok(existsSync(new URL(`../assets/events/holidays/sehwa-contest/registration-scene/age-13/receive-${frame}-v1.png`,import.meta.url)),`공손한 참가표 수령 ${frame} 프레임이 필요합니다.`);
+assert.match(css,/@keyframes sehwa-receive-frames/,'참가표 수령은 인사·두 손 내밀기·수령 확인 순서로 재생되어야 합니다.');
 assert.match(css,/@keyframes sehwa-slip-handover/,'참가표가 접수 관리에게서 선화에게 이동해야 합니다.');
 assert.match(app,/session\.entrants\.map/,'그림 장면에는 참가자 8명이 모두 포함되어야 합니다.');
 assert.match(css,/\.sehwa-drawing-ensemble\{[^}]*grid-template-columns:repeat\(4,1fr\)/,'참가자 8명은 4×2 구도로 배치해야 합니다.');
 assert.match(css,/\.sehwa-contest\.festival-pm3 \.sehwa-hero\{[^}]*width:132px!important;[^}]*height:176px!important/,'설날 주인공 크기는 축소된 고정 규격이어야 합니다.');
-console.log('PASS: 설날 수동 진행·5초 전원 그림·스테이터스 응답·캐릭터 축소');
+console.log('PASS: 설날 수동 진행·5초 전원 그림·스테이터스 응답·캐릭터 축소·공손한 참가표 수령');

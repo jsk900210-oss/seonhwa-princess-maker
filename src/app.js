@@ -237,7 +237,7 @@ const vacationIllustrations=[
 function unifiedAgeFolder(){return '09';}
 function scheduleFramePath(file){return `../assets/characters/seonhwa/schedule-actions/${file}`;}
 function scheduleBasePath(file){return `../assets/characters/seonhwa/schedule-base/${file}`;}
-const scheduleAssetRevision='0.64.75-debug';
+const scheduleAssetRevision='0.64.76-debug';
 const scheduleQaParams=new URLSearchParams(location.search);
 const moonlightStandaloneQa=scheduleQaParams.get('qaHoliday')==='chuseok';
 const sehwaStandaloneQa=scheduleQaParams.get('qaHoliday')==='seollal';
@@ -1492,7 +1492,8 @@ function sehwaPreparationEnsemble(session){
 }
 function sehwaRegistrationScene(){
   const name=game.characterName||'선화';
-  return `<section class="sehwa-registration" aria-label="접수 관리에게 참가표를 받는 ${name}"><img class="sehwa-registration-seonhwa" src="${sehwaFrame('opening',2)}" alt="손을 내밀어 참가표를 받는 ${name}"><figure><img src="../assets/characters/npcs/activity/teacher-reading-1.png?v=${scheduleAssetRevision}" alt="명부를 확인하는 접수 관리"><figcaption>왕실 화원 접수</figcaption></figure><div class="sehwa-entry-slip" aria-label="${name}의 여덟 번째 참가표"><small>복을 그리는 왕실 세화 경연</small><b>참가표 八</b><span>${name}</span><i aria-hidden="true">印</i></div></section>`;
+  const receiving=[1,2,3].map((frame,index)=>`<img src="../assets/events/holidays/sehwa-contest/registration-scene/age-13/receive-${frame}-v1.png?v=${scheduleAssetRevision}" alt="" style="--receive-frame:${index}">`).join('');
+  return `<section class="sehwa-registration" aria-label="접수 관리에게 공손히 인사하고 참가표를 두 손으로 받는 ${name}"><span class="sehwa-registration-seonhwa" role="img" aria-label="공손히 허리를 숙인 뒤 두 손으로 참가표를 받는 ${name}">${receiving}</span><figure><img src="../assets/characters/npcs/activity/teacher-reading-1.png?v=${scheduleAssetRevision}" alt="명부를 확인하는 접수 관리"><figcaption>왕실 화원 접수</figcaption></figure><div class="sehwa-entry-slip" aria-label="${name}의 여덟 번째 참가표"><small>복을 그리는 왕실 세화 경연</small><b>참가표 八</b><span>${name}</span><i aria-hidden="true">印</i></div></section>`;
 }
 function renderSehwaContest(session,beatIndex){
   const overlay=document.querySelector('#moonlightPageant');if(!overlay)return;
