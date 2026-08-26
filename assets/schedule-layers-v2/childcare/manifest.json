@@ -1,5 +1,5 @@
 {
-  "version": "2.0.0-pilot.3",
+  "version": "2.0.0-pilot.4",
   "activityId": "childcare",
   "nameKo": "아이 돌보기",
   "status": "pilot-review",
@@ -9,9 +9,11 @@
     "../../characters/seonhwa/schedule-actions/childcare-pixel-3.png"
   ],
   "existingBackground": "../../backgrounds/phase-scenes/childcare.webp",
-  "animation": {"sequence": [1, 2, 3], "loopCount": 3, "frameDurationMs": 300},
-  "npc": {"id": "child", "frames": ["npc/child/idle-1.png", "npc/child/idle-2.png", "npc/child/idle-3.png"]},
-  "npcFailureFallFrames": ["npc/child-fall-v1/child-fall-1.png", "npc/child-fall-v1/child-fall-2.png", "npc/child-fall-v1/child-fall-3.png"],
+  "animation": {"sequence": [1, 2, 3], "heroRunSequence": [1, 2, 3, 4, 5, 6], "npcRunSequence": [1, 2, 3, 2, 1, 2], "loopCount": 3, "frameDurationMs": 150},
+  "heroRunFrames": ["hero-actions/chase-running-v3/seonhwa-chase-v3-1.png", "hero-actions/chase-running-v3/seonhwa-chase-v3-2.png", "hero-actions/chase-running-v3/seonhwa-chase-v3-3.png", "hero-actions/chase-running-v3/seonhwa-chase-v3-4.png", "hero-actions/chase-running-v3/seonhwa-chase-v3-5.png", "hero-actions/chase-running-v3/seonhwa-chase-v3-6.png"],
+  "npcRunFrames": ["npc/child-running-v2/child-run-v2-1.png", "npc/child-running-v2/child-run-v2-2.png", "npc/child-running-v2/child-run-v2-3.png"],
+  "npc": {"id": "child", "frames": ["npc/child-idle-v2/child-idle-v2-1.png", "npc/child-idle-v2/child-idle-v2-2.png", "npc/child-idle-v2/child-idle-v2-3.png"]},
+  "npcFailureFallFrames": ["npc/child-fall-v2/child-fall-v2-1.png", "npc/child-fall-v2/child-fall-v2-2.png", "npc/child-fall-v2/child-fall-v2-3.png"],
   "patterns": {
     "success-a": {"layer": "props", "frames": ["props/toy-play-1.png", "props/toy-play-2.png", "props/toy-play-3.png"]},
     "success-b": {"layer": "effects", "frames": ["effects/comfort-blanket-1.png", "effects/comfort-blanket-2.png", "effects/comfort-blanket-3.png"]},

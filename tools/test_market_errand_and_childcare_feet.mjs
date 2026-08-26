@@ -24,20 +24,34 @@ assert.match(css,/motion-errand\[data-errand-starting="true"\]\{\s*transition:no
 assert.match(css,/data-errand-direction="right"\]>img\{\s*transform:none!important;/s,'rightward actor must face right');
 assert.match(css,/data-errand-direction="left"\]>img\{\s*transform:scaleX\(-1\)!important;/s,'leftward actor must face left');
 
-const frameDir=path.join(root,'assets','schedule-layers-v2','childcare','hero-actions','chase-running-v2');
-const frames=[1,2,3].map(number=>path.join(frameDir,`seonhwa-chase-v2-${number}.png`));
-const hashes=frames.map(file=>{
+const validateFrames=(frames,label)=>frames.map(file=>{
   assert.ok(fs.existsSync(file),`missing childcare running frame: ${path.basename(file)}`);
   const bytes=fs.readFileSync(file);
-  assert.ok(bytes.length>50000,`childcare running frame is unexpectedly small: ${path.basename(file)}`);
+  assert.ok(bytes.length>50000,`${label} frame is unexpectedly small: ${path.basename(file)}`);
   assert.deepEqual([...bytes.subarray(0,8)],[137,80,78,71,13,10,26,10],`${path.basename(file)} must be a PNG`);
   assert.equal(bytes.readUInt32BE(16),320,`${path.basename(file)} width must be 320`);
   assert.equal(bytes.readUInt32BE(20),320,`${path.basename(file)} height must be 320`);
   assert.equal(bytes[25],6,`${path.basename(file)} must retain RGBA transparency`);
   return crypto.createHash('sha256').update(bytes).digest('hex');
 });
-assert.equal(new Set(hashes).size,3,'all three foot-contact frames must be visually distinct files');
-for(const number of [1,2,3])assert.ok(app.includes(`hero-actions/chase-running-v2/seonhwa-chase-v2-${number}.png`),`app must use childcare v2 frame ${number}`);
+const heroDir=path.join(root,'assets','schedule-layers-v2','childcare','hero-actions','chase-running-v3');
+const heroFrames=[1,2,3,4,5,6].map(number=>path.join(heroDir,`seonhwa-chase-v3-${number}.png`));
+const heroHashes=validateFrames(heroFrames,'Seonhwa running');
+assert.equal(new Set(heroHashes).size,6,'all six Seonhwa foot-motion frames must be distinct files');
+assert.ok(app.includes("Array.from({length:6},(_,index)=>`hero-actions/chase-running-v3/seonhwa-chase-v3-${index+1}.png`)"),'app must use all six Seonhwa v3 frames');
+assert.ok(app.includes('const childcareHeroRunCycle=[0,1,2,3,4,5,0,1,2]'),'Seonhwa must run through six smooth frames');
 
-assert.ok(html.includes('v0.64.88-debug'),'HTML cache revision must expose the new build');
+const babySets=[
+  ['child-running-v2','child-run-v2'],
+  ['child-idle-v2','child-idle-v2'],
+  ['child-fall-v2','child-fall-v2']
+];
+for(const [folder,prefix] of babySets){
+  const frames=[1,2,3].map(number=>path.join(root,'assets','schedule-layers-v2','childcare','npc',folder,`${prefix}-${number}.png`));
+  const hashes=validateFrames(frames,folder);
+  assert.equal(new Set(hashes).size,3,`${folder} must contain three distinct poses`);
+  for(const number of [1,2,3])assert.ok(app.includes(`npc/${folder}/${prefix}-${number}.png`),`app must use ${folder} frame ${number}`);
+}
+
+assert.ok(html.includes('v0.64.89-debug'),'HTML cache revision must expose the new build');
 console.log('market errand traversal and childcare foot-frame checks passed');

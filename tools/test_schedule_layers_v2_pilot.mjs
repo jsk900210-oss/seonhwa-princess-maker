@@ -28,7 +28,8 @@ assert.match(css,/action-farmwork\.schedule-layered\[data-chase-direction="left"
 assert.ok(app.includes('const minimumActorGap=58')&&app.includes("stage.dataset.actorSafeGap=String(minimumActorGap)"),'성인 NPC와 선화는 실제 프레임 폭을 고려한 공통 안전 간격을 사용해야 합니다.');
 assert.ok(app.includes("setProperty('--layer-hero-left',`${heroPosition}%`,'important')")&&app.includes("setProperty('--layer-npc-left',`${npcPosition}%`,'important')"),'공통 안전 좌표가 일정별 CSS에 덮이면 안 됩니다.');
 assert.ok(app.includes('const childcareMinimumGap=34')&&app.includes('childLeft-childcareMinimumGap')&&app.includes('childLeft+childcareMinimumGap'),'아이 돌보기 이동 중 선화와 아이의 최소 중심 간격을 양방향으로 유지해야 합니다.');
-assert.ok(app.includes('const childcareRunCycle=[0,1,2,1,0,1,2,1,0]'),'아이 돌보기 달리기는 3→1 점프 없이 왕복 보간 프레임을 사용해야 합니다.');
+assert.ok(app.includes('const childcareHeroRunCycle=[0,1,2,3,4,5,0,1,2]'),'아이 돌보기 선화는 추가 연결 자세를 포함한 6프레임을 사용해야 합니다.');
+assert.ok(app.includes('const childcareNpcRunCycle=[0,1,2,1,0,1,2,1,0]'),'아이 돌보기 아기는 3→1 점프 없이 왕복 보간 프레임을 사용해야 합니다.');
 assert.ok(app.includes('const childcareTravelDistance=32')&&app.includes('const childStart=travelsRight?54:46'),'아이 돌보기 선화와 아이는 화면 안의 안전 좌표에서 달려야 합니다.');
 assert.ok(app.includes("stage.dataset.childcareStarting='true'")&&app.includes('void stage.offsetWidth')&&css.includes('data-childcare-starting="true"'),'연속 재생 시작점에서는 이전 위치에서 미끄러져 오지 않아야 합니다.');
 assert.match(css,/data-childcare-direction="right"[\s\S]*?layer-npc\{transform:translateX\(-50%\)!important/,'오른쪽 달리기 아기 NPC는 중심 좌표를 유지해야 합니다.');

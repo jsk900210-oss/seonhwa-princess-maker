@@ -237,7 +237,7 @@ const vacationIllustrations=[
 function unifiedAgeFolder(){return '09';}
 function scheduleFramePath(file){return `../assets/characters/seonhwa/schedule-actions/${file}`;}
 function scheduleBasePath(file){return `../assets/characters/seonhwa/schedule-base/${file}`;}
-const scheduleAssetRevision='0.64.88-debug';
+const scheduleAssetRevision='0.64.89-debug';
 const scheduleQaParams=new URLSearchParams(location.search);
 const moonlightStandaloneQa=scheduleQaParams.get('qaHoliday')==='chuseok';
 const sehwaStandaloneQa=scheduleQaParams.get('qaHoliday')==='seollal';
@@ -852,21 +852,23 @@ async function playScheduleLayerScene(actionId,seonImage,rank,outcome,dayIndex){
   const patternFrames=v2Spec?patternSpec?.frames:patternSpec;
   const farmTillingFrames=['npc/farmer-tilling-v1/farmer-tilling-v1-1.png','npc/farmer-tilling-v1/farmer-tilling-v1-2.png','npc/farmer-tilling-v1/farmer-tilling-v1-3.png'];
   const farmChickenChaseFrames=['hero-actions/chicken-chase-v2/seonhwa-chicken-chase-1.png','hero-actions/chicken-chase-v2/seonhwa-chicken-chase-2.png','hero-actions/chicken-chase-v2/seonhwa-chicken-chase-3.png'];
-  const childcareRunningFrames=['npc/child-running-v1/child-run-1.png','npc/child-running-v1/child-run-2.png','npc/child-running-v1/child-run-3.png'];
-  const childcareFallFrames=['npc/child-fall-v1/child-fall-1.png','npc/child-fall-v1/child-fall-2.png','npc/child-fall-v1/child-fall-3.png'];
-  const childcareChaseFrames=['hero-actions/chase-running-v2/seonhwa-chase-v2-1.png','hero-actions/chase-running-v2/seonhwa-chase-v2-2.png','hero-actions/chase-running-v2/seonhwa-chase-v2-3.png'];
+  const childcareRunningFrames=['npc/child-running-v2/child-run-v2-1.png','npc/child-running-v2/child-run-v2-2.png','npc/child-running-v2/child-run-v2-3.png'];
+  const childcareFallFrames=['npc/child-fall-v2/child-fall-v2-1.png','npc/child-fall-v2/child-fall-v2-2.png','npc/child-fall-v2/child-fall-v2-3.png'];
+  const childcareChaseFrames=Array.from({length:6},(_,index)=>`hero-actions/chase-running-v3/seonhwa-chase-v3-${index+1}.png`);
   const childcareStumbleFrames=['hero-actions/stumble-sit-v1/seonhwa-stumble-1.png','hero-actions/stumble-sit-v1/seonhwa-stumble-2.png','hero-actions/stumble-sit-v1/seonhwa-stumble-3.png'];
   const childcareForwardFallFrames=['hero-actions/trip-forward-v1/seonhwa-trip-forward-1.png','hero-actions/trip-forward-v1/seonhwa-trip-forward-2.png','hero-actions/trip-forward-v1/seonhwa-trip-forward-3.png'];
-  const childcareIdleFrames=['npc/child/idle-1.png','npc/child/idle-2.png','npc/child/idle-3.png'];
+  const childcareIdleFrames=['npc/child-idle-v2/child-idle-v2-1.png','npc/child-idle-v2/child-idle-v2-2.png','npc/child-idle-v2/child-idle-v2-3.png'];
   const npcFrames=actionId==='farmwork'?farmTillingFrames:actionId==='childcare'?childcareRunningFrames:(patternSpec?.npcFrames?.length===3?patternSpec.npcFrames:v2Spec?spec.npc?.frames||[]:spec.npc||[]);
   const heroFrames=actionId==='childcare'?childcareChaseFrames:actionId==='farmwork'&&patternKey==='fail-b'?farmChickenChaseFrames:patternSpec?.heroFrames?.length===3?patternSpec.heroFrames:spec.existingHeroFrames||[];
   const farmQaDirection=scheduleQaParams.get('qaDirection');
   const farmChaseTravelsRight=actionId==='farmwork'&&patternKey==='fail-b'?(lockedScheduleQaMode&&farmQaDirection?farmQaDirection==='right':Math.floor(dayIndex/14)%2===0):null;
   const childcareTravelsRight=actionId==='childcare'?(lockedScheduleQaMode&&farmQaDirection?farmQaDirection==='right':dayIndex%2===0):null;
-  const childcareRunCycle=[0,1,2,1,0,1,2,1,0];
+  const childcareHeroRunCycle=[0,1,2,3,4,5,0,1,2];
+  const childcareNpcRunCycle=[0,1,2,1,0,1,2,1,0];
   const childcareTravelDistance=32;
   const childcareMinimumGap=34;
-  if(heroFrames.length!==3||npcFrames.length!==3||patternFrames?.length!==3)throw new Error(`schedule layer frame count invalid: ${actionId}/${patternKey}`);
+  const requiredHeroFrameCount=actionId==='childcare'?6:3;
+  if(heroFrames.length!==requiredHeroFrameCount||npcFrames.length!==3||patternFrames?.length!==3)throw new Error(`schedule layer frame count invalid: ${actionId}/${patternKey}`);
   const placement=spec.placement||{};
   const positionPercent=value=>Number.parseFloat(String(value??'').replace('%',''));
   let heroPosition=positionPercent(placement.heroLeft||'40%'),npcPosition=positionPercent(placement.npcLeft||'72%');
@@ -913,7 +915,7 @@ async function playScheduleLayerScene(actionId,seonImage,rank,outcome,dayIndex){
       void stage.offsetWidth;
       delete stage.dataset.childcareStarting;
     }
-    const delay=actionId==='farmwork'&&patternKey==='fail-b'?165:actionId==='farmwork'?240:actionId==='childcare'?180:([360,300,250][rank]||300);
+    const delay=actionId==='farmwork'&&patternKey==='fail-b'?165:actionId==='farmwork'?240:actionId==='childcare'?150:([360,300,250][rank]||300);
     for(let loop=0;loop<3;loop+=1){
       for(let frame=0;frame<3;frame+=1){
         let activeHeroFrame=heroFrames[frame],activeNpcFrame=npcFrames[frame],activePatternFrame=patternFrames[frame];
@@ -938,8 +940,8 @@ async function playScheduleLayerScene(actionId,seonImage,rank,outcome,dayIndex){
         }
         if(actionId==='childcare'){
           const travelStep=loop*3+frame,travelsRight=childcareTravelsRight,rawProgress=Math.min(1,travelStep/8),progress=failed?Math.min(.62,rawProgress):rawProgress;
-          activeHeroFrame=childcareChaseFrames[childcareRunCycle[travelStep]];
-          activeNpcFrame=childcareRunningFrames[childcareRunCycle[travelStep]];
+          activeHeroFrame=childcareChaseFrames[childcareHeroRunCycle[travelStep]];
+          activeNpcFrame=childcareRunningFrames[childcareNpcRunCycle[travelStep]];
           const childStart=travelsRight?54:46;
           const childLeft=childStart+(travelsRight?1:-1)*progress*childcareTravelDistance;
           const heroLeft=travelsRight?childLeft-childcareMinimumGap:childLeft+childcareMinimumGap;
@@ -3332,7 +3334,8 @@ function initScheduleLayerQa(){
   document.querySelector('#stageCaption').textContent=`QA · ${actions.find(action=>action.id===actionId)?.name||actionId}`;
   const character=document.querySelector('#stageCharacter');character.hidden=false;character.className=`stage-character pixel-sprite ${actionPresentation[actionId]?.motion||'motion-study'}`;
   document.querySelector('#stageNpc').hidden=true;document.querySelector('#stageProps').hidden=true;
-  const controls=document.createElement('aside');controls.className='schedule-layer-qa';controls.innerHTML=`<strong>${actionId} QA</strong><div>${['success-a','success-b','fail-a','fail-b'].map(pattern=>`<button type="button" data-qa-pattern="${pattern}">${pattern}</button>`).join('')}</div><div><button type="button" data-qa-speed="1">1×</button><button type="button" data-qa-speed="2">2×</button></div><small>선화 고정 132px · 1→2→3 반복</small>`;phone.appendChild(controls);
+  const frameSummary=actionId==='childcare'?'선화 6프레임 · 아기 3프레임 · 좌우 추격':'선화 고정 132px · 1→2→3 반복';
+  const controls=document.createElement('aside');controls.className='schedule-layer-qa';controls.innerHTML=`<strong>${actionId} QA</strong><div>${['success-a','success-b','fail-a','fail-b'].map(pattern=>`<button type="button" data-qa-pattern="${pattern}">${pattern}</button>`).join('')}</div><div><button type="button" data-qa-speed="1">1×</button><button type="button" data-qa-speed="2">2×</button></div><small>${frameSummary}</small>`;phone.appendChild(controls);
   controls.querySelectorAll('[data-qa-pattern]').forEach(button=>button.addEventListener('click',()=>startScheduleLayerQaPattern(button.dataset.qaPattern)));
   controls.querySelectorAll('[data-qa-speed]').forEach(button=>button.addEventListener('click',()=>{schedulePlaybackSpeed=Number(button.dataset.qaSpeed);controls.querySelectorAll('[data-qa-speed]').forEach(item=>item.classList.toggle('active',Number(item.dataset.qaSpeed)===schedulePlaybackSpeed));}));
   controls.querySelector('[data-qa-speed="1"]').classList.add('active');
