@@ -243,7 +243,7 @@ const vacationIllustrations=[
 function unifiedAgeFolder(){return '09';}
 function scheduleFramePath(file){return `../assets/characters/seonhwa/schedule-actions/${file}`;}
 function scheduleBasePath(file){return `../assets/characters/seonhwa/schedule-base/${file}`;}
-const scheduleAssetRevision='0.64.107-debug';
+const scheduleAssetRevision='0.64.108-debug';
 const scheduleQaParams=new URLSearchParams(location.search);
 const moonlightStandaloneQa=scheduleQaParams.get('qaHoliday')==='chuseok';
 const sehwaStandaloneQa=scheduleQaParams.get('qaHoliday')==='seollal';
@@ -3450,10 +3450,18 @@ function initRelationEncounterQa(){
   panel.hidden=true;
   const requestedId=scheduleQaParams.get('qaRelation')||'seojin';
   const candidate=endingRelationCandidates.find(item=>item.id===requestedId)||endingRelationCandidates[1];
-  game.age=Math.min(18,Math.max(9,Number(scheduleQaParams.get('qaAge'))||13));
+  const meeting=Math.min(5,Math.max(1,Number(scheduleQaParams.get('qaMeeting'))||1));
+  const episode=relationEpisodeCatalog[candidate.id]?.[meeting-1];
+  game.age=Math.min(18,Math.max(candidate.minAge,Number(scheduleQaParams.get('qaAge'))||candidate.minAge));
   game.characterName=game.characterName||'선화';
-  document.querySelector('.phone').classList.add('playing','relation-qa-playing');
-  playRelationEncounterScene(candidate,`${candidate.role} ${candidate.name}과 마주쳤어요.`,`QA · ${game.age}세 전신과 화자 교대 확인`);
+  const phone=document.querySelector('.phone');phone.classList.add('playing','relation-qa-playing');
+  const controls=document.createElement('aside');controls.className='relation-event-qa';
+  controls.innerHTML=`<strong>인연 이벤트 QA</strong><div>${endingRelationCandidates.map(item=>`<button type="button" data-relation-id="${item.id}" class="${item.id===candidate.id?'active':''}">${item.name}</button>`).join('')}</div><div>${Array.from({length:5},(_,index)=>`<button type="button" data-relation-meeting="${index+1}" class="${index+1===meeting?'active':''}">${index+1}회</button>`).join('')}</div><small>${candidate.role} ${candidate.name} · ${meeting}/5 · ${episode?.title||'첫 만남'}</small>`;
+  phone.appendChild(controls);
+  const openQa=(id,nextMeeting)=>{const params=new URLSearchParams(location.search);params.set('qaRelation',id);params.set('qaMeeting',String(nextMeeting));params.set('qaAge',String(Math.max(endingRelationCandidates.find(item=>item.id===id)?.minAge||13,game.age)));location.search=params.toString();};
+  controls.querySelectorAll('[data-relation-id]').forEach(button=>button.addEventListener('click',()=>openQa(button.dataset.relationId,meeting)));
+  controls.querySelectorAll('[data-relation-meeting]').forEach(button=>button.addEventListener('click',()=>openQa(candidate.id,Number(button.dataset.relationMeeting))));
+  playRelationEncounterScene(candidate,`${meeting}회차 · ${episode?.title||'첫 만남'} · ${episode?.scene||candidate.role}\n${episode?.line||`${candidate.role} ${candidate.name}과 마주쳤어요.`}`,`QA · ${game.age}세 · ${episode?.pose||'화자 교대'} · ${episode?.expression||'표정 확인'} · ${episode?.camera||'전신 확인'}`);
 }
 function initBasePortraitQa(){
   ['studioLoading','prologue','birthdaySetup','recoveryPrompt','guardianStory','guardianChoice','guardianNaming'].forEach(id=>{const element=document.querySelector(`#${id}`);if(element)element.hidden=true;});

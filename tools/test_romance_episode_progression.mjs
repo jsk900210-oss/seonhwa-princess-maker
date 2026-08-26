@@ -14,4 +14,8 @@ assert.match(app,/maybeScheduleRelationEncounter\(action\)/);
 assert.match(app,/nextRelationEpisode\(relation,'vacation'\)/);
 assert.match(app,/record\.meetings=Math\.min\(5,record\.meetings\+1\)/);
 assert.match(app,/record\.dateUnlocked=true/);
+assert.match(app,/scheduleQaParams\.get\('qaMeeting'\)/,'인연 QA에서 1~5회차를 직접 선택할 수 있어야 합니다.');
+assert.match(app,/data-relation-id/,'인연 QA에서 다섯 후보를 직접 전환할 수 있어야 합니다.');
+assert.match(app,/data-relation-meeting/,'인연 QA에 다섯 회차 버튼이 있어야 합니다.');
+assert.match(app,/episode\?\.pose.*episode\?\.expression.*episode\?\.camera/s,'인연 QA 결과에 회차별 시각 지침이 표시되어야 합니다.');
 console.log('PASS: 인연 후보 5명 × 고유 만남 5회, 시각 정보와 일정·바캉스 기록, 데이트 해금 연결');
