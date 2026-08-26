@@ -2171,7 +2171,7 @@
 .pageant-interview-frames img{position:absolute;inset:0;opacity:0;animation:pageant-frame-123 .9s steps(1,end) infinite;animation-delay:calc(var(--pageant-frame) * .3s)}
 .pageant-interview figcaption{margin-top:-2px;padding:4px;border-radius:999px;background:#5c351c;color:#fff6dc;font-weight:800;font-size:11px}
 .pageant-interview>div{align-self:center;display:grid;gap:8px}
-.pageant-interview p{margin:0;padding:9px;border-radius:11px;background:#fffdf7;border:1px solid #cda66c;font-size:11px;line-height:1.45}
+.pageant-interview p{margin:0;padding:9px;border-radius:11px;background:#fffdf7;border:1px solid #cda66c;font-size:11px;line-height:1.45;word-break:keep-all;overflow-wrap:normal;text-wrap:pretty}
 .pageant-interview-answer b{display:block;margin-bottom:4px;color:#8b4f1d}
 .pageant-interview-mark{position:absolute;right:10px;top:8px;display:grid;place-items:center;width:27px;height:27px;border-radius:50%;background:#7a4421;color:#fff1c8;font-weight:900}
 .moonlight-pageant.beat-5 .pageant-lineup,.moonlight-pageant.beat-6 .pageant-lineup{left:2%;right:2%;bottom:48%;grid-template-columns:repeat(7,1fr);gap:1px}
@@ -2521,6 +2521,16 @@ body .phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage:
 .sehwa-contest.festival-pm3{overflow:visible}
 .phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage:not(.market-choice-stage):has(.sehwa-contest:not([hidden]))>.stage-inner{overflow:visible!important}
 .sehwa-contest.festival-pm3 .pageant-next,.sehwa-contest.festival-pm3:has(.sehwa-opening-dialogue) .pageant-next{left:19%;right:19%;bottom:-52px;width:auto;min-height:39px;padding:8px 14px;border-color:#b68b4d;background:linear-gradient(145deg,#fff9e8,#ead4aa);box-shadow:0 5px 13px #1b0e087d;animation:sehwa-next-dock-pulse 1.2s ease-in-out infinite}
+
+/* v0.64.91: align the Chuseok pageant with the clean Seollal presentation. */
+.moonlight-pageant.festival-pm3{overflow:visible}
+.phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage:not(.market-choice-stage):has(.moonlight-pageant.festival-pm3:not([hidden]))>.stage-inner{overflow:visible!important}
+.moonlight-pageant.festival-pm3 .festival-crowd{display:none!important}
+.moonlight-pageant.festival-pm3 .pageant-hero-action,
+.moonlight-pageant.festival-pm3 .pageant-hero-frames{bottom:15%!important;width:132px!important;height:176px!important}
+.moonlight-pageant.festival-pm3 .pageant-lineup .is-player img{width:58px;height:78px;filter:drop-shadow(0 2px 2px #180d08aa)}
+.moonlight-pageant.festival-pm3 .pageant-next,
+.moonlight-pageant.festival-pm3:has(.moonlight-opening-dialogue) .pageant-next{left:19%;right:19%;bottom:-52px;width:auto;min-width:0;min-height:39px;padding:8px 14px;border-color:#b68b4d;background:linear-gradient(145deg,#fff9e8,#ead4aa);box-shadow:0 5px 13px #1b0e087d;animation:sehwa-next-dock-pulse 1.2s ease-in-out infinite}
 @keyframes sehwa-next-dock-pulse{50%{transform:translateY(2px);filter:brightness(1.06)}}
 .sehwa-registration{position:absolute;z-index:38;inset:5% 3% 10%;pointer-events:none}
 .sehwa-registration-seonhwa{position:absolute;z-index:3;left:0;bottom:2%;width:48%;height:80%;display:block;filter:drop-shadow(0 5px 5px #160b08aa)}
