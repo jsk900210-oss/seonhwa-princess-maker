@@ -237,7 +237,7 @@ const vacationIllustrations=[
 function unifiedAgeFolder(){return '09';}
 function scheduleFramePath(file){return `../assets/characters/seonhwa/schedule-actions/${file}`;}
 function scheduleBasePath(file){return `../assets/characters/seonhwa/schedule-base/${file}`;}
-const scheduleAssetRevision='0.64.82-debug';
+const scheduleAssetRevision='0.64.83-debug';
 const scheduleQaParams=new URLSearchParams(location.search);
 const moonlightStandaloneQa=scheduleQaParams.get('qaHoliday')==='chuseok';
 const sehwaStandaloneQa=scheduleQaParams.get('qaHoliday')==='seollal';
@@ -1541,12 +1541,12 @@ function sehwaPreparationEnsemble(session){
 function sehwaRegistrationScene(){
   const name=game.characterName||'선화';
   const receiving=[1,2,3].map((frame,index)=>`<img src="../assets/events/holidays/sehwa-contest/registration-scene/age-13/receive-${frame}-v1.png?v=${scheduleAssetRevision}" alt="" style="--receive-frame:${index}">`).join('');
-  return `<section class="sehwa-registration" aria-label="젊은 왕실 화원 접수 서리에게 공손히 인사하고 참가표를 두 손으로 받는 ${name}"><span class="sehwa-registration-seonhwa" role="img" aria-label="공손히 허리를 숙인 뒤 두 손으로 참가표를 받는 ${name}">${receiving}</span><figure class="sehwa-registration-clerk"><img src="../assets/characters/npcs/shops/hanbok-owner.png?v=${scheduleAssetRevision}" alt="접수 명부를 든 젊은 왕실 화원 접수 서리"><span aria-hidden="true"></span><figcaption>왕실 화원 접수</figcaption></figure><div class="sehwa-entry-slip" aria-label="${name}의 여덟 번째 참가표"><small>복을 그리는 왕실 세화 경연</small><b>참가표 八</b><span>${name}</span><i aria-hidden="true">印</i></div></section>`;
+  return `<section class="sehwa-registration" aria-label="젊은 왕실 화원 접수 서리에게 공손히 인사하고 참가표를 두 손으로 받는 ${name}"><span class="sehwa-registration-seonhwa" role="img" aria-label="공손히 허리를 숙인 뒤 두 손으로 참가표를 받는 ${name}">${receiving}</span><div class="sehwa-entry-slip" aria-label="${name}의 여덟 번째 참가표"><small>복을 그리는 왕실 세화 경연</small><b>참가표 八</b><span>${name}</span><i aria-hidden="true">印</i></div></section>`;
 }
 function renderSehwaContest(session,beatIndex){
   const overlay=document.querySelector('#moonlightPageant');if(!overlay)return;
   const beat=Math.min(sehwaStoryBeats.length-1,Math.max(0,beatIndex)),opening=beat<=1,preparing=beat===5,drawingGroup=beat===6,drawing=beat>=7&&beat<=11,title=beat===3,intro=beat===4,vote=beat===12,result=beat===13,guardianResult=beat===14,award=beat===15&&session.winner.player;
-  const stageMap=document.querySelector('#stageMap');if(stageMap)stageMap.src=`../assets/events/holidays/sehwa-contest/background/${drawing||drawingGroup||preparing?'royal-atelier-v1.webp':'royal-contest-hall-v1.png'}?v=${scheduleAssetRevision}`;
+  const stageMap=document.querySelector('#stageMap');if(stageMap)stageMap.src=`../assets/events/holidays/sehwa-contest/background/${beat===2?'royal-contest-registration-young-clerk-v1.png':drawing||drawingGroup||preparing?'royal-atelier-v1.webp':'royal-contest-hall-v1.png'}?v=${scheduleAssetRevision}`;
   const frameKind=beat<3?'opening':'drawing';
   const frameUrls=[1,2,3].map(frame=>award?sehwaAwardSceneFrame(frame):sehwaFrame(frameKind,frame));
   const hero=award?`<span class="sehwa-award-sequence" role="img" aria-label="${sehwaStoryBeats[beat]}">${frameUrls.map((src,index)=>`<img src="${src}" alt="" style="--award-index:${index}">`).join('')}</span>`:drawing?`<span class="sehwa-hero is-drawing" style="--sehwa-f1:url('${frameUrls[0]}');--sehwa-f2:url('${frameUrls[1]}');--sehwa-f3:url('${frameUrls[2]}')" role="img" aria-label="${sehwaStoryBeats[beat]}"></span>`:'';
