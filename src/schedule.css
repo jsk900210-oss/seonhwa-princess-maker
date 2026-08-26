@@ -1402,7 +1402,8 @@
   overflow:hidden!important
 }
 .day-result.phase-brief-result .phase-work-days,
-.day-result.phase-brief-result .phase-work-income{
+.day-result.phase-brief-result .phase-work-income,
+.day-result.phase-brief-result .phase-work-expense{
   display:grid!important;
   grid-template-columns:1fr auto!important;
   min-height:0!important;
@@ -1419,7 +1420,8 @@
   grid-column:1/-1!important;
   text-align:left!important
 }
-.day-result.phase-brief-result .phase-work-income strong{
+.day-result.phase-brief-result .phase-work-income strong,
+.day-result.phase-brief-result .phase-work-expense strong{
   color:#fff!important
 }
 @media(max-width:380px){

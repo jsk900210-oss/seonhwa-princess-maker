@@ -237,7 +237,7 @@ const vacationIllustrations=[
 function unifiedAgeFolder(){return '09';}
 function scheduleFramePath(file){return `../assets/characters/seonhwa/schedule-actions/${file}`;}
 function scheduleBasePath(file){return `../assets/characters/seonhwa/schedule-base/${file}`;}
-const scheduleAssetRevision='0.64.99-debug';
+const scheduleAssetRevision='0.64.100-debug';
 const scheduleQaParams=new URLSearchParams(location.search);
 const moonlightStandaloneQa=scheduleQaParams.get('qaHoliday')==='chuseok';
 const sehwaStandaloneQa=scheduleQaParams.get('qaHoliday')==='seollal';
@@ -2672,16 +2672,20 @@ function showMonthlyReport(ledger){
 }
 
 function showPhaseReport(dayRecords,phaseStart){
-  const counts={perfect:0,success:0,struggle:0,mistake:0};let income=0;
-  dayRecords.forEach(record=>{counts[record.outcome]=(counts[record.outcome]||0)+1;if(record.moneyChange>0)income+=record.moneyChange;});
+  const counts={perfect:0,success:0,struggle:0,mistake:0};let income=0,expense=0;
+  dayRecords.forEach(record=>{counts[record.outcome]=(counts[record.outcome]||0)+1;if(record.moneyChange>0)income+=record.moneyChange;else if(record.moneyChange<0)expense+=Math.abs(record.moneyChange);});
   const diligent=counts.perfect+counts.success,rate=dayRecords.length?Math.round(diligent/dayRecords.length*100):0;
   const mastery=awardPhaseMastery(dayRecords);
   const result=document.querySelector('#dayResult');
   result.classList.add('phase-brief-result');
   const vacationPhase=dayRecords.length>0&&dayRecords.every(record=>record.action?.id==='vacation');
-  const workDaysLine=vacationPhase?'':`<p class="phase-work-days"><span>착실히 일한 일수</span><strong>${dayRecords.length}일 중 ${diligent}일 (${rate}%)</strong></p>`;
-  const incomeLine=(vacationPhase&&income<=0)?'':`<p class="phase-work-income"><span>수입${mastery?.rankUp?` · ${mastery.rankUp} 승급!`:''}</span><strong>+${income.toLocaleString()}냥</strong></p>`;
-  result.innerHTML=workDaysLine+incomeLine||'<p class="phase-work-days"><span>바캉스를 마쳤어요.</span></p>';
+  const educationPhase=dayRecords.length>0&&dayRecords.every(record=>record.action?.category==='교육');
+  const diligentLabel=educationPhase?'착실히 수업한 일수':'착실히 일한 일수';
+  const workDaysLine=vacationPhase?'':`<p class="phase-work-days"><span>${diligentLabel}</span><strong>${dayRecords.length}일 중 ${diligent}일 (${rate}%)</strong></p>`;
+  const moneyLine=educationPhase
+    ?`<p class="phase-work-expense"><span>지출 금액${mastery?.rankUp?` · ${mastery.rankUp} 승급!`:''}</span><strong>-${expense.toLocaleString()}냥</strong></p>`
+    :(vacationPhase&&income<=0)?'':`<p class="phase-work-income"><span>수입${mastery?.rankUp?` · ${mastery.rankUp} 승급!`:''}</span><strong>+${income.toLocaleString()}냥</strong></p>`;
+  result.innerHTML=workDaysLine+moneyLine||'<p class="phase-work-days"><span>바캉스를 마쳤어요.</span></p>';
   const closePhaseReport=()=>{result.hidden=true;result.classList.remove('phase-brief-result');};
   result.hidden=false;
   return new Promise(resolve=>setTimeout(()=>{closePhaseReport();resolve();},3000));
