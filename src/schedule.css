@@ -2369,23 +2369,25 @@ body .phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage:
   78%{translate:0 6px;rotate:4deg;filter:brightness(.86)}
 }
 
-/* v0.64.23: the child runs ahead while Seonhwa follows; failure ends in a fall. */
+/* v0.64.87: keep both childcare runners centered, visible and cadence-matched. */
 .phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-childcare.schedule-layered .stage-character.pixel-sprite{
   left:var(--layer-hero-left)!important;bottom:5%!important;width:132px!important;height:132px!important;
-  transition:left .28s linear!important;
-  animation:childcare-chase-step .56s steps(2,end) infinite!important;
+  transition:left .18s linear!important;
+  animation:childcare-chase-step .36s cubic-bezier(.45,0,.55,1) infinite!important;
 }
 .phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-childcare.schedule-layered .schedule-scene-layer.layer-npc{
   left:var(--layer-npc-left)!important;bottom:5%!important;width:84px!important;height:84px!important;object-fit:contain!important;object-position:center bottom!important;
-  transition:left .28s linear!important;
-  animation:childcare-child-step .56s steps(2,end) infinite!important;
+  transition:left .18s linear!important;
+  animation:childcare-child-step .36s cubic-bezier(.45,0,.55,1) infinite!important;
 }
-@keyframes childcare-chase-step{0%,100%{translate:0 0}50%{translate:0 -3px}}
-@keyframes childcare-child-step{0%,100%{translate:0 -2px}50%{translate:0 1px}}
-.phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-childcare.schedule-layered[data-childcare-direction="right"] .stage-character.pixel-sprite>img,
-.phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-childcare.schedule-layered[data-childcare-direction="right"] .schedule-scene-layer.layer-npc{transform:none!important;transform-origin:center bottom!important}
-.phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-childcare.schedule-layered[data-childcare-direction="left"] .stage-character.pixel-sprite>img,
-.phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-childcare.schedule-layered[data-childcare-direction="left"] .schedule-scene-layer.layer-npc{transform:scaleX(-1)!important;transform-origin:center bottom!important}
+.phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-childcare.schedule-layered[data-childcare-starting="true"] .stage-character.pixel-sprite,
+.phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-childcare.schedule-layered[data-childcare-starting="true"] .schedule-scene-layer.layer-npc{transition:none!important;animation:none!important}
+@keyframes childcare-chase-step{0%,100%{translate:0 1px}50%{translate:0 -3px}}
+@keyframes childcare-child-step{0%,100%{translate:0 1px}50%{translate:0 -2px}}
+.phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-childcare.schedule-layered[data-childcare-direction="right"] .stage-character.pixel-sprite>img{transform:none!important;transform-origin:center bottom!important}
+.phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-childcare.schedule-layered[data-childcare-direction="right"] .schedule-scene-layer.layer-npc{transform:translateX(-50%)!important;transform-origin:center bottom!important}
+.phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-childcare.schedule-layered[data-childcare-direction="left"] .stage-character.pixel-sprite>img{transform:scaleX(-1)!important;transform-origin:center bottom!important}
+.phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-childcare.schedule-layered[data-childcare-direction="left"] .schedule-scene-layer.layer-npc{transform:translateX(-50%) scaleX(-1)!important;transform-origin:center bottom!important}
 
 /* v0.64.43: free action follows the schedule actor/layer contract. */
 .phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-freeTime.free-time-market .stage-character.pixel-sprite{
