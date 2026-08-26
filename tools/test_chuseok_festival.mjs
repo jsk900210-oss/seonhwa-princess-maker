@@ -34,11 +34,11 @@ assert.match(css,/\.moonlight-pageant\.festival-pm3 \.pageant-next,[^{]+\{[^}]*b
 assert.match(css,/\.moonlight-pageant\.festival-pm3 \.pageant-lineup \.is-player img\{[^}]*width:58px;[^}]*height:78px;[^}]*drop-shadow\(0 2px 2px/,'참가자 소개에서 선화만 과도하게 빛나거나 커지면 안 됩니다.');
 assert.match(css,/\.pageant-interview p\{[^}]*word-break:keep-all;[^}]*text-wrap:pretty/,'우승자 인터뷰 대사는 한글 어절 중간에서 끊기지 않아야 합니다.');
 for(const age of ['09','13','16','18'])for(let frame=1;frame<=6;frame+=1){
-  const file=new URL(`../assets/events/holidays/moonlight-pageant/seonhwa/age-${age}/seonhwa-dance-${frame}-v3.png`,import.meta.url);
+  const file=new URL(`../assets/events/holidays/moonlight-pageant/seonhwa/age-${age}/seonhwa-dance-${frame}-v4.png`,import.meta.url);
   assert.ok(fs.existsSync(file),`연령 ${age} 춤 ${frame}프레임이 필요합니다.`);
 }
 for(const age of ['09','13','16','18'])for(let frame=1;frame<=16;frame+=1){
-  const file=new URL(`../assets/events/holidays/moonlight-pageant/seonhwa/age-${age}/acting-v4/seonhwa-acting-${String(frame).padStart(2,'0')}-v4.png`,import.meta.url);
+  const file=new URL(`../assets/events/holidays/moonlight-pageant/seonhwa/age-${age}/acting-v5/seonhwa-acting-${String(frame).padStart(2,'0')}-v5.png`,import.meta.url);
   assert.ok(fs.existsSync(file),`연령 ${age} 경연 연기 ${frame}프레임이 필요합니다.`);
 }
 assert.match(app,/qaHoliday'\)==='chuseok'/,'경연 즉시 검수 모드가 필요합니다.');

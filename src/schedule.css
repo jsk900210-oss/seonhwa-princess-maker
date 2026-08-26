@@ -2435,10 +2435,12 @@ body .phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage:
 }
 .sehwa-contest.festival-pm3 .sehwa-award-sequence{
   left:4%!important;
-  right:4%!important;
+  right:auto!important;
+  width:58%!important;
   bottom:14%!important;
   height:72%!important;
 }
+.sehwa-contest.festival-pm3 .sehwa-award-king{right:4%!important;bottom:16%!important;width:38%!important;height:64%!important;object-position:center bottom}
 .sehwa-contest.festival-pm3.beat-16 .pageant-winner,
 .moonlight-pageant.festival-pm3.beat-14 .pageant-winner{
   bottom:16%!important;

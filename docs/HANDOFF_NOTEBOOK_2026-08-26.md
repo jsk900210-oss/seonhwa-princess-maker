@@ -3,18 +3,18 @@
 ## 현재 기준점
 
 - 브랜치: `agent/pixel-schedule-handoff`
-- 최신 완료 버전: `v0.64.110-debug`
-- 최신 완료 커밋: `a1fe31a` (`fix: use semi-real Seonhwa in relation scenes`)
+- 최신 작업 버전: `v0.64.113-debug`
+- 기준 브랜치: `agent/pixel-schedule-handoff`
 - 라이브 QA: `https://jsk900210-oss.github.io/seonhwa-princess-maker/src/?qaRelation=seojin&qaMeeting=1&qaAge=13&v=a1fe31a`
 
 `v0.64.110`까지는 GitHub Pages 배포와 Notion 기록이 완료되었다. 인연 이벤트의 선화는 9·13·16·19세 승인된 반실사 베이스를 사용한다.
 
-## 다음 작업 1 — 남자 주인공 5인 연령별 이미지 전면 검수·재제작
+## 완료 — 남자 주인공 5인 연령별 이미지 전면 검수·재제작
 
 대상은 도윤·서진·연우·태겸·현의 13세·16세·19세, 총 15개 이미지다.
 
-- 현재 실제 인연 장면은 `assets/characters/dialogue-fullbody/romance/{id}.png` 한 장을 모든 나이에 공용으로 사용한다.
-- 기존 연령 시트는 `assets/characters/romance/identity/fullbody/{id}-age-13-16-19-fullbody-v1.png`에 있다.
+- 실제 인연 장면은 `assets/characters/romance/identity/fullbody-v2/{id}-age-{13|16|19}-v2.png`를 게임 나이에 따라 선택한다.
+- 5인×3연령 총 15개 파일은 실제 알파 투명 PNG이며 인물별 역할 복식과 동일 인물 성장선을 적용했다.
 - 각 인물은 13→16→19세 동안 동일 인물로 보여야 하며 얼굴형, 눈, 코, 입, 피부색, 체형 성장선이 이어져야 한다.
 - 다섯 인물의 의상 실루엣과 색을 서로 확실히 구분한다.
 - 반실사 쯔꾸르풍, 전신, 실제 알파 투명 PNG로 통일한다.
