@@ -243,12 +243,13 @@ const vacationIllustrations=[
 function unifiedAgeFolder(){return '09';}
 function scheduleFramePath(file){return `../assets/characters/seonhwa/schedule-actions/${file}`;}
 function scheduleBasePath(file){return `../assets/characters/seonhwa/schedule-base/${file}`;}
-const scheduleAssetRevision='0.64.118-debug';
+const scheduleAssetRevision='0.64.119-debug';
 const scheduleQaParams=new URLSearchParams(location.search);
 const moonlightStandaloneQa=scheduleQaParams.get('qaHoliday')==='chuseok';
 const sehwaStandaloneQa=scheduleQaParams.get('qaHoliday')==='seollal';
 const sehwaHomeQaTheme=scheduleQaParams.get('qaSehwaHome');
 const relationStandaloneQa=scheduleQaParams.has('qaRelation');
+const endingStandaloneQa=scheduleQaParams.has('qaEnding');
 const basePortraitStandaloneQa=scheduleQaParams.has('qaBaseAge');
 const scheduleLayerStandaloneQa=scheduleQaParams.get('qa')==='1';
 const lockedScheduleQaMode=scheduleQaParams.has('qaSchedules')||scheduleLayerStandaloneQa;
@@ -1248,7 +1249,7 @@ function normalizeActivityProgress(){
   });
   actions.forEach(action=>{const current=game.activityProgress[action.id]||{},successes=Math.max(0,Number(current.successes)||0),legacyPoints=current.phasePoints===undefined?Math.min(30,Math.floor(successes/14)):Number(current.phasePoints);game.activityProgress[action.id]={attempts:Math.max(0,Number(current.attempts)||0),successes,phasePoints:Math.max(0,legacyPoints||0),completedPhases:Math.max(0,Number(current.completedPhases)||0),streak:Math.max(0,Number(current.streak)||0),perfectStreak:Math.max(0,Number(current.perfectStreak)||0),bestStreak:Math.max(0,Number(current.bestStreak)||0)};});
 }
-function activityProgressFor(id){normalizeActivityProgress();return game.activityProgress[id];}
+function activityProgressFor(id){normalizeActivityProgress();return game.activityProgress[id]||{attempts:0,successes:0,phasePoints:0,completedPhases:0,streak:0,perfectStreak:0,bestStreak:0};}
 function activityRank(id){const points=activityProgressFor(id).phasePoints;return points>=activityRankThresholds[2]?2:points>=activityRankThresholds[1]?1:0;}
 function activityPay(action){if(action.category!=='아르바이트')return -action.cost;return Math.round((-action.cost)*[1,1.25,1.6][activityRank(action.id)]);}
 function recordActivityProgress(action,outcome){
@@ -1439,6 +1440,12 @@ function resolveEnding(){
   const ownedCards=new Set(game.items.filter(item=>item&&item.type==='event'&&vacationIllustrations.some(card=>card.id===item.id)).map(item=>item.id));
   const strongest=[...statGroups.flatMap(group=>group.stats)].map(([key,label])=>({key,label,value:clampStat(key,game[key])})).sort((left,right)=>right.value-left.value).slice(0,3);
   return {resolvedAt:new Date().toISOString(),category,endingId:outcome.id,title:category==='relation'?outcome.ending:outcome.title,description:category==='relation'?`${outcome.name}과(와) 함께 서로의 길을 존중하며 새로운 삶을 시작했습니다.`:outcome.description,careerId:career.id,careerTitle:career.title,partnerId:relation?.candidate.id||null,partnerName:relation?.candidate.name||null,partnerRole:relation?.candidate.role||null,relationMeetings:relation?.record.meetings||0,relationAffinity:relation?.record.affinity||0,strongest,collectionCount:ownedCards.size,collectionTotal:vacationIllustrations.length};
+}
+function relationEndingVisual(result){
+  if(result.category!=='relation'||!result.partnerId)return '';
+  const candidate=endingRelationCandidates.find(item=>item.id===result.partnerId);if(!candidate)return '';
+  const episode=relationEpisodeCatalog[candidate.id]?.at(-1),presentation=relationScenePresentation(episode);
+  return `<figure class="relation-ending-visual" style="--ending-background:url('${presentation.src}?v=${scheduleAssetRevision}');--ending-background-position:${presentation.position}"><img class="ending-partner" src="${relationPortraitPath(candidate,19)}" alt="${candidate.name} 19세 전신"><img class="ending-seonhwa" src="${baseSpriteForAge(19)}?v=${scheduleAssetRevision}" alt="${game.characterName||'선화'} 19세 전신"><figcaption>${candidate.name}과(와) 나란히 시작하는 다음 이야기</figcaption></figure>`;
 }
 function normalizeRelations(){
   if(!game.relations||typeof game.relations!=='object')game.relations={};
@@ -2957,8 +2964,10 @@ function showEnding(){
   const categoryLabel={relation:'인연 엔딩',career:'직업 엔딩',downfall:'몰락 엔딩'}[result.category];
   const partner=result.partnerName?`<div><small>함께한 인연</small><b>${result.partnerName} · ${result.partnerRole}</b></div>`:'';
   panel.hidden=false; panelTitle.textContent=`${game.characterName || '아이'}의 성장 기록`;
-  panelBody.innerHTML=`<div class="ending-card ${result.category}"><small class="ending-date">${game.currentDate}</small><em>${categoryLabel}</em><h2>${result.title}</h2><p class="ending-lead">${result.description}</p><section class="ending-summary">${result.category==='relation'?`<div><small>직업 성향</small><b>${result.careerTitle}</b></div>`:''}${partner}<div><small>대표 능력</small><b>${result.strongest.map(stat=>`${stat.label} ${stat.value}`).join(' · ')}</b></div><div><small>수집</small><b>${result.collectionCount} / ${result.collectionTotal}</b></div><div><small>은전</small><b>${Math.max(0,game.money).toLocaleString()}냥</b></div></section><button id="endingRestart">새로운 생일로 시작</button></div>`;
+  const qaControls=endingStandaloneQa?`<nav class="ending-qa" aria-label="인연 엔딩 QA">${endingRelationCandidates.map(candidate=>`<button type="button" data-ending-id="${candidate.id}" class="${candidate.id===result.partnerId?'active':''}">${candidate.name}</button>`).join('')}</nav>`:'';
+  panelBody.innerHTML=`<div class="ending-card ${result.category}">${qaControls}<small class="ending-date">${game.currentDate}</small><em>${categoryLabel}</em><h2>${result.title}</h2>${relationEndingVisual(result)}<p class="ending-lead">${result.description}</p><section class="ending-summary">${result.category==='relation'?`<div><small>직업 성향</small><b>${result.careerTitle}</b></div>`:''}${partner}<div><small>대표 능력</small><b>${result.strongest.map(stat=>`${stat.label} ${stat.value}`).join(' · ')}</b></div><div><small>수집</small><b>${result.collectionCount} / ${result.collectionTotal}</b></div><div><small>은전</small><b>${Math.max(0,game.money).toLocaleString()}냥</b></div></section><button id="endingRestart">새로운 생일로 시작</button></div>`;
   document.querySelector('#endingRestart').addEventListener('click',beginNewGrowth);
+  document.querySelectorAll('[data-ending-id]').forEach(button=>button.addEventListener('click',()=>{const params=new URLSearchParams(location.search);params.set('qaEnding',button.dataset.endingId);location.search=params.toString();}));
 }
 function updatePrologueCopy(scene,index){
   const copy=document.querySelector('.prologue-copy');
@@ -3509,6 +3518,13 @@ function initRelationEncounterQa(){
   controls.querySelectorAll('[data-relation-meeting]').forEach(button=>button.addEventListener('click',()=>openQa(candidate.id,Number(button.dataset.relationMeeting))));
   playRelationEncounterScene(candidate,`${meeting}회차 · ${episode?.title||'첫 만남'} · ${episode?.scene||candidate.role}\n${episode?.line||`${candidate.role} ${candidate.name}과 마주쳤어요.`}`,`QA · ${game.age}세 · ${episode?.pose||'화자 교대'} · ${episode?.expression||'표정 확인'} · ${episode?.camera||'전신 확인'}`,episode);
 }
+function initRelationEndingQa(){
+  ['studioLoading','prologue','birthdaySetup','recoveryPrompt','guardianStory','guardianChoice','guardianNaming'].forEach(id=>{const element=document.querySelector(`#${id}`);if(element)element.hidden=true;});
+  const requestedId=scheduleQaParams.get('qaEnding')||'doyun',candidate=endingRelationCandidates.find(item=>item.id===requestedId)||endingRelationCandidates[0];
+  game.characterName='선화';game.age=19;game.currentDate='2009-11-13';game.endingDate='2009-11-13';game.ended=true;game.stress=20;game.money=50000;game.health=650;game.manners=620;game.dignity=640;
+  game.relations={};game.relations[candidate.id]={meetings:5,affinity:85,dateUnlocked:true,completedEpisodes:relationEpisodeCatalog[candidate.id].map(episode=>episode.id),relationship:'연인',holidayFlags:{},vacationMemories:[]};
+  game.endingResult=resolveEnding();renderHud();showEnding();
+}
 function initBasePortraitQa(){
   ['studioLoading','prologue','birthdaySetup','recoveryPrompt','guardianStory','guardianChoice','guardianNaming'].forEach(id=>{const element=document.querySelector(`#${id}`);if(element)element.hidden=true;});
   panel.hidden=true;
@@ -3528,7 +3544,8 @@ syncSettingsUi();
 renderHud();
 updateHomeCharacter();
 updateImageState();
-if(basePortraitStandaloneQa)initBasePortraitQa();
+if(endingStandaloneQa)initRelationEndingQa();
+else if(basePortraitStandaloneQa)initBasePortraitQa();
 else if(relationStandaloneQa)initRelationEncounterQa();
 else if(sehwaStandaloneQa)initSehwaContestQa();
 else if(moonlightStandaloneQa)initMoonlightPageantQa();
