@@ -237,7 +237,7 @@ const vacationIllustrations=[
 function unifiedAgeFolder(){return '09';}
 function scheduleFramePath(file){return `../assets/characters/seonhwa/schedule-actions/${file}`;}
 function scheduleBasePath(file){return `../assets/characters/seonhwa/schedule-base/${file}`;}
-const scheduleAssetRevision='0.64.89-debug';
+const scheduleAssetRevision='0.64.90-debug';
 const scheduleQaParams=new URLSearchParams(location.search);
 const moonlightStandaloneQa=scheduleQaParams.get('qaHoliday')==='chuseok';
 const sehwaStandaloneQa=scheduleQaParams.get('qaHoliday')==='seollal';
@@ -850,7 +850,7 @@ async function playScheduleLayerScene(actionId,seonImage,rank,outcome,dayIndex){
   const patternKey=forcedPattern||`${failed?'fail':'success'}-${dayIndex%2===0?'a':'b'}`;
   const patternSpec=spec.patterns?.[patternKey];
   const patternFrames=v2Spec?patternSpec?.frames:patternSpec;
-  const farmTillingFrames=['npc/farmer-tilling-v1/farmer-tilling-v1-1.png','npc/farmer-tilling-v1/farmer-tilling-v1-2.png','npc/farmer-tilling-v1/farmer-tilling-v1-3.png'];
+  const farmTillingFrames=['npc/farmer-tilling-v4/farmer-tilling-v4-1.png','npc/farmer-tilling-v4/farmer-tilling-v4-2.png','npc/farmer-tilling-v4/farmer-tilling-v4-3.png'];
   const farmChickenChaseFrames=['hero-actions/chicken-chase-v2/seonhwa-chicken-chase-1.png','hero-actions/chicken-chase-v2/seonhwa-chicken-chase-2.png','hero-actions/chicken-chase-v2/seonhwa-chicken-chase-3.png'];
   const childcareRunningFrames=['npc/child-running-v2/child-run-v2-1.png','npc/child-running-v2/child-run-v2-2.png','npc/child-running-v2/child-run-v2-3.png'];
   const childcareFallFrames=['npc/child-fall-v2/child-fall-v2-1.png','npc/child-fall-v2/child-fall-v2-2.png','npc/child-fall-v2/child-fall-v2-3.png'];
@@ -904,8 +904,8 @@ async function playScheduleLayerScene(actionId,seonImage,rank,outcome,dayIndex){
     if(spec.backgroundOverlay)layers.push(make('background',spec.backgroundOverlay));
     const npc=make('npc',npcFrames[0]);
     if(actionId==='farmwork'){
-      npc.style.setProperty('width','120px','important');
-      npc.style.setProperty('height','120px','important');
+      npc.style.setProperty('width','160px','important');
+      npc.style.setProperty('height','160px','important');
     }
     const patternLayer=v2Spec&&patternSpec?.layer==='effects'?'effect':'pattern';
     const pattern=make(`${patternLayer} ${patternKey} ${patternKey.startsWith('fail-')?'dedicated-failure':''}`,patternFrames[0]);

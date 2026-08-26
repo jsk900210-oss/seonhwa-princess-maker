@@ -1,5 +1,13 @@
 # 선화공주 만들기 — MVP 이미지 자산 패키지
 
+## v0.64.90-debug · 농부 투명도·농가 등장인물 비율 보정
+
+- 농부 작업 3프레임의 다리 사이와 농기구 주변에 남아 있던 흰 배경을 실제 알파 투명으로 제거한 `farmer-tilling-v4` 세트로 교체했습니다.
+- 성인 농부는 선화보다 확실히 크게 보이도록 160px, 닭은 원본 캔버스의 큰 투명 여백을 고려해 72px 표시 상자로 조정했습니다.
+- 농부·선화·닭 모두 같은 바닥선을 유지하며 좌우 추격 방향 규칙과 3프레임 왕복 재생은 그대로 보존했습니다.
+- QA: `src/?qa=1&qaSchedule=farmwork&qaPattern=success-a&qaDirection=right&v=0.64.90-debug`
+- QA: `src/?qa=1&qaSchedule=farmwork&qaPattern=fail-b&qaDirection=right&v=0.64.90-debug`
+
 ## v0.64.89-debug · 아이 돌보기 화풍 통일·선화 6프레임 달리기
 
 - 아기 NPC의 대기·달리기·넘어짐 9장을 동일한 얼굴과 녹색 한복의 선화 v2 화풍으로 전면 교체했습니다.

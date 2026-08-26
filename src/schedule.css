@@ -2440,10 +2440,10 @@ body .phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage:
   left:var(--layer-prop-left)!important;bottom:17%!important;width:54px!important;clip-path:none!important;
 }
 
-/* v0.64.85: smaller farmer with a stable tilling baseline. */
+/* v0.64.90: adult-height farmer and knee-height chicken on one stable baseline. */
 .phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-farmwork.schedule-layered .schedule-scene-layer.layer-npc{
-  width:120px!important;
-  height:120px!important;
+  width:160px!important;
+  height:160px!important;
   max-width:none!important;
   object-fit:contain!important;
   object-position:center bottom!important;
@@ -2452,7 +2452,7 @@ body .phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage:
 }
 .phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-farmwork.schedule-layered .schedule-scene-layer.layer-pattern.fail-b{
   bottom:3%!important;
-  width:58px!important;
+  width:72px!important;
   transform-origin:center bottom!important;
 }
 .phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-farmwork.schedule-layered[data-chase-direction="right"] .stage-character.pixel-sprite>img{transform:none!important;transform-origin:center bottom!important}
