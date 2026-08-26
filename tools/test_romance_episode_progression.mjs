@@ -24,4 +24,6 @@ const episodeScenes=[...catalog.matchAll(/scene:'([^']+)'/g)].map(match=>match[1
 for(const scene of new Set(episodeScenes))assert.ok(backgroundMap.includes(`'${scene}':`),`${scene} 인연 배경 매핑이 필요합니다.`);
 for(const [,path] of backgroundMap.matchAll(/:'\.\.\/([^']+)'/g))assert.ok(fs.existsSync(new URL(path,root)),`${path} 인연 배경 파일이 필요합니다.`);
 assert.match(app,/playRelationEncounterScene\(relationEvent\.candidate[\s\S]*relationEvent\.episode\)/,'실제 일정 인연 이벤트에도 회차별 배경을 전달해야 합니다.');
+assert.match(app,/function protagonistFullbodyForAge\(age=game\.age\)\{\s*return `\$\{baseSpriteForAge\(age\)\}\?v=\$\{scheduleAssetRevision\}`;/,'인연 장면 선화는 검수 완료된 연령별 반실사 베이스를 사용해야 합니다.');
+assert.ok(!app.includes('../assets/characters/dialogue-fullbody/seonhwa/age-'),'인연 장면에 예전 SD 선화 전신 경로가 남아 있으면 안 됩니다.');
 console.log('PASS: 인연 후보 5명 × 고유 만남 5회, 시각 정보와 일정·바캉스 기록, 데이트 해금 연결');

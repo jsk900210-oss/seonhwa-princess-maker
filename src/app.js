@@ -243,7 +243,7 @@ const vacationIllustrations=[
 function unifiedAgeFolder(){return '09';}
 function scheduleFramePath(file){return `../assets/characters/seonhwa/schedule-actions/${file}`;}
 function scheduleBasePath(file){return `../assets/characters/seonhwa/schedule-base/${file}`;}
-const scheduleAssetRevision='0.64.109-debug';
+const scheduleAssetRevision='0.64.110-debug';
 const scheduleQaParams=new URLSearchParams(location.search);
 const moonlightStandaloneQa=scheduleQaParams.get('qaHoliday')==='chuseok';
 const sehwaStandaloneQa=scheduleQaParams.get('qaHoliday')==='seollal';
@@ -1296,8 +1296,7 @@ const endingRelationCandidates=[
   {id:'hyeon',name:'현',role:'정체를 숨긴 왕자',motif:'차은우',image:'../assets/characters/romance/hyeon/vacation.png',baseSheet:'../assets/characters/romance/identity/fullbody/hyeon-age-13-16-19-fullbody-v1.png',assetReady:true,minAge:15,ending:'왕자의 연인',dialogues:['“내가 누구인지는 잠시 잊고, 오늘만 평범하게 걸어도 될까?”','“또 만났네. 이쯤 되면 우연이라고만 하기는 어렵겠어.”']}
 ];
 function protagonistFullbodyForAge(age=game.age){
-  const actualAge=age>=19?18:age>=16?16:age>=13?13:9;
-  return `../assets/characters/dialogue-fullbody/seonhwa/age-${String(actualAge).padStart(2,'0')}.png?v=${scheduleAssetRevision}`;
+  return `${baseSpriteForAge(age)}?v=${scheduleAssetRevision}`;
 }
 function protagonistPortraitForAge(age=game.age){
   const actualAge=age>=19?18:age>=16?16:age>=13?13:9;
