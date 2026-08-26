@@ -36,7 +36,7 @@ function stopCompetingBgm(active=gameMusic){document.querySelectorAll('audio').f
 function playGameMusic(source,volume=.24,playbackRate=1){if(!source)return;stopCompetingBgm(gameMusic);const target=new URL(source,document.baseURI).href;if(gameMusic.src!==target){gameMusic.pause();gameMusic.src=target;gameMusic.currentTime=0;gameMusic.load();}gameMusic.playbackRate=playbackRate;gameMusic.dataset.track=source;gameMusic.dataset.baseVolume=String(volume);gameMusic.dataset.playbackRate=String(playbackRate);gameMusic.volume=scaledVolume(volume,'bgm');if(userSettings.bgmEnabled&&!gameMusic.paused&&gameMusic.src===target)return;if(userSettings.bgmEnabled)gameMusic.play().catch(()=>{});else gameMusic.pause();}
 function playHomeMusic(){playGameMusic(gameMusicTracks.home,.22);}
 function playMarketMusic(){playGameMusic(gameMusicTracks.market,.20);}
-function playScheduleMusic(action){if(['shopping','freeTime','vacation'].includes(action?.id))return;if(action?.category==='교육')playGameMusic(gameMusicTracks.education,.20,1.12);else if(action?.category==='아르바이트')playGameMusic(gameMusicTracks.work,.20,1.12);else playHomeMusic();}
+function playScheduleMusic(action){if(['shopping','vacation'].includes(action?.id))return;if(action?.category==='교육')playGameMusic(gameMusicTracks.education,.20,1.12);else if(action?.category==='아르바이트')playGameMusic(gameMusicTracks.work,.20,1.12);else playHomeMusic();}
 function playVacationMusic(seasonName=game.season){
   const source=vacationMusicPath(seasonName);
   playGameMusic(source,.04);
@@ -153,7 +153,6 @@ const actionPresentation = {
   masonry: { motion:'motion-job-masonry', location:'masonryJob', prop:'none', activity:'masonry', npc:null },
   clinichelp: { motion:'motion-job-clinic', location:'clinicJob', prop:'none', activity:'clinichelp', npc:null },
   rest: { motion:'motion-resting', location:'restRoom', prop:'none', activity:'sleep', npc:null },
-  freeTime: { motion:'motion-market-roam', location:'market', prop:'none', activity:null, npc:null },
   sleep: { motion:'motion-sleep', location:'restRoom', prop:'none', activity:'sleep', npc:null },
   shopping: { motion:'motion-walk', location:'marketErrand', prop:'none', activity:null, npc:null },
   'holiday-seollal': { motion:'motion-manners', location:'restRoom', prop:'none', activity:'manners', npc:null },
@@ -244,7 +243,7 @@ const vacationIllustrations=[
 function unifiedAgeFolder(){return '09';}
 function scheduleFramePath(file){return `../assets/characters/seonhwa/schedule-actions/${file}`;}
 function scheduleBasePath(file){return `../assets/characters/seonhwa/schedule-base/${file}`;}
-const scheduleAssetRevision='0.64.105-debug';
+const scheduleAssetRevision='0.64.106-debug';
 const scheduleQaParams=new URLSearchParams(location.search);
 const moonlightStandaloneQa=scheduleQaParams.get('qaHoliday')==='chuseok';
 const sehwaStandaloneQa=scheduleQaParams.get('qaHoliday')==='seollal';
@@ -327,7 +326,7 @@ const canonicalActivityAliases={
   masonry:'masonry',
   clinichelp:'clinichelp',
   ferryhelp:'ferryhelp',
-  merchanthelp:'merchanthelp',innhelp:'merchanthelp',sewing:'loomwork',freeTime:'errand',
+  merchanthelp:'merchanthelp',innhelp:'merchanthelp',sewing:'loomwork',
   rest:'rest',sleep:'sleep',tea:'tea'
 };
 function activityFrameSet(activity){
@@ -1045,7 +1044,7 @@ function conditionEvent(stress,dayIndex,outcome=null){
   if(outcome==='struggle'&&stress>=55)return 'drowsy';
   return null;
 }
-const activitySkill={reading:'intelligence',arithmetic:'sense',manners:'manners',painting:'sensitivity',music:'sensitivity',dance:'agility',swordsmanship:'strength',spellcraft:'magic',cooking:'sense',martial:'strength',classics:'intelligence',errand:'speech',sweeping:'strength',herbs:'sense',houseclean:'sense',farmwork:'strength',childcare:'sensitivity',kitchenhelp:'sense',woodwork:'strength',loomwork:'sense',masonry:'strength',clinichelp:'intelligence',innhelp:'speech',sewing:'sense',copying:'intelligence',ferryhelp:'health',merchanthelp:'speech',accounting:'sense',tutoring:'intelligence',dungeon:'strength',rest:'mentality',freeTime:'sense'};
+const activitySkill={reading:'intelligence',arithmetic:'sense',manners:'manners',painting:'sensitivity',music:'sensitivity',dance:'agility',swordsmanship:'strength',spellcraft:'magic',cooking:'sense',martial:'strength',classics:'intelligence',errand:'speech',sweeping:'strength',herbs:'sense',houseclean:'sense',farmwork:'strength',childcare:'sensitivity',kitchenhelp:'sense',woodwork:'strength',loomwork:'sense',masonry:'strength',clinichelp:'intelligence',innhelp:'speech',sewing:'sense',copying:'intelligence',ferryhelp:'health',merchanthelp:'speech',accounting:'sense',tutoring:'intelligence',dungeon:'strength',rest:'mentality'};
 const outcomeLabels={perfect:'완벽',success:'성공',struggle:'힘겨움',mistake:'실수',normal:'무난'};
 function activityOutcomeThresholds(action,stress){
   const skill=game[activitySkill[action.id]]||0;
@@ -1064,7 +1063,7 @@ function activityOutcomeThresholds(action,stress){
   return {perfect,success,struggle};
 }
 function judgeActivityOutcome(action,stress){
-  if(['shopping','vacation','freeTime'].includes(action.id))return 'success';
+  if(['shopping','vacation'].includes(action.id))return 'success';
   if(action.id==='rest')return stress<35&&Math.random()<.35?'perfect':'success';
   const chance=activityOutcomeThresholds(action,stress);
   const roll=Math.random()*100;
@@ -1074,7 +1073,7 @@ function judgeActivityOutcome(action,stress){
   return 'mistake';
 }
 function resolvedActivityChange(action,outcome){
-  if((['rest','vacation','freeTime'].includes(action.id)||action.special==='date')&&['struggle','mistake'].includes(outcome))outcome='success';
+  if((['rest','vacation'].includes(action.id)||action.special==='date')&&['struggle','mistake'].includes(outcome))outcome='success';
   const change={};
   Object.entries(action.change).forEach(([key,value])=>{
     const beneficial=key==='stress'?value<0:value>0;
@@ -1198,7 +1197,6 @@ const actions = [
   { id: 'accounting', category:'아르바이트', name:'상단 장부 정리', cost:-210, unlockAge:16, unlockStats:{sense:300,intelligence:250}, mentor:'상단 행수', icon:'arithmetic', intro:'숫자 하나가 상단의 신뢰를 좌우하니 꼼꼼히 살펴보거라.', summary:'센스 +4 · 지능 +2 · 화술 +2 · 스트레스 +4 · 210냥 획득', change:{sense:4,intelligence:2,speech:2,stress:4}, retiredJob:true },
   { id: 'tutoring', category:'아르바이트', name:'학동 가르치기', cost:-230, unlockAge:16, unlockStats:{intelligence:350,manners:220,speech:180}, mentor:'서당 훈장', icon:'reading', intro:'배운 바가 충분하니 이제 어린 학동에게 글과 셈, 예절을 일러 주거라.', summary:'지능 +2 · 화술 +4 · 기품 +2 · 스트레스 +5 · 230냥 획득', change:{intelligence:2,speech:4,dignity:2,stress:5} },
   { id: 'rest', category: '휴식', name: '집에서 휴식', cost: 0, summary: '14일 동안 스트레스 최대 -70 · 체력·정신력 회복', change: { health:2, mentality:2, stress:-15 } },
-  { id: 'freeTime', category: '휴식', name: '자유행동', cost: 0, summary: '가벼운 외출·취미·산책 중 하나 · 스트레스 감소', change: { sense:1, stress:-8 }, special:'free-time' },
   { id: 'shopping', category: '휴식', name: '저잣거리', cost: 0, summary: '', change: {}, special:'market' },
   { id: 'vacation', category: '휴식', name: '바캉스', cost: 180, summary: '감수성 +3 · 매력 +1 · 스트레스 -35 · 추억 일러스트 획득', change: {sensitivity:3,charm:1,stress:-105}, special:'vacation' },
   { id: 'dungeon', category: '휴식', name: '비경 탐사', cost: 50, unlockAge:13, unlockAnyStats:[{strength:120},{magic:120}], mentor:'수호신수', icon:'herbs', intro:'성 밖의 숨은 길에는 보물과 위험이 함께 있단다. 준비를 갖추고 나서자.', summary:'체력 +2 · 힘 +2 · 마력 +2 · 스트레스 +5 · 보물 은전 획득 가능', change:{health:2,strength:2,magic:2,stress:5}, special:'dungeon' },
@@ -2378,7 +2376,7 @@ function normalizePhaseSchedule(){
     legacy.forEach(id=>{if(compressed.at(-1)!==id)compressed.push(id);});
     game.dailySchedule=compressed;game.scheduleFormat='phase-v1';
   }
-  game.dailySchedule=game.dailySchedule.map(id=>{const chain=jobChainFor(id),active=chain&&activeJobInChain(chain);return active?.id||id;}).filter(id=>{const action=actions.find(item=>item.id===id);return action&&actionUnlocked(action);});
+  game.dailySchedule=game.dailySchedule.map(id=>{if(id==='freeTime')return 'rest';const chain=jobChainFor(id),active=chain&&activeJobInChain(chain);return active?.id||id;}).filter(id=>{const action=actions.find(item=>item.id===id);return action&&actionUnlocked(action);});
   const holiday=currentPhaseHoliday();
   if(holiday){
     game.dailySchedule=game.dailySchedule.filter(id=>id===holiday.id||id==='rest').slice(0,1);
@@ -2396,7 +2394,7 @@ function masteryMeter(points){
   const skilled=current>=activityRankThresholds[1],start=skilled?activityRankThresholds[1]:0,target=skilled?activityRankThresholds[2]:activityRankThresholds[1];
   return {label:`${activityRankNames[skilled?1:0]} → ${activityRankNames[skilled?2:1]}까지 ${target-current}점`,percent:Math.round((current-start)/(target-start)*100)};
 }
-const scheduleActionIconAliases={freeTime:'shopping',dungeon:'herbs'};
+const scheduleActionIconAliases={dungeon:'herbs'};
 function scheduleActionIcon(action){return action.icon||scheduleActionIconAliases[action.id]||(action.category==='인연'?'manners':'reading');}
 function scheduleActionMoneyLabel(action){
   if(action.category==='아르바이트')return `일당 +${activityPay(action).toLocaleString()}냥`;
@@ -3028,11 +3026,6 @@ async function playWeeklySchedule(selected) {
   const scheduleStart=new Date(`${game.currentDate}T00:00:00`);
   const playbackPhase=phaseInfo();
   const dayNames = ['월요일','화요일','수요일','목요일','금요일','토요일','일요일'];
-  const freeTimeVariants=[
-    {name:'장터 산책',activity:'errand',cost:0,change:{sense:1,stress:-9},line:'사람들의 활기찬 모습을 구경하며 저잣거리를 천천히 걸었어요.'},
-    {name:'가게 구경',activity:'errand',cost:0,change:{sense:1,sensitivity:1,stress:-7},line:'물건을 사지 않고 가게마다 진열된 물건과 색을 즐겁게 구경했어요.'},
-    {name:'골목 나들이',activity:'errand',cost:0,change:{speech:1,stress:-8},line:'햇볕이 드는 장터 골목을 한 바퀴 돌며 기분을 환기했어요.'}
-  ];
   const moonlightSession=selected.some(action=>action.id==='holiday-chuseok')?evaluateChuseokFestival():null;
   const sehwaSession=selected.some(action=>action.id==='holiday-seollal')?evaluateSeollalFestival():null;
   document.querySelector('#homeGreeting').hidden=true;
@@ -3061,7 +3054,6 @@ async function playWeeklySchedule(selected) {
     }
     const presentation = actionPresentation[action.id]||actionPresentation.rest;
     clearMoonlightPageant();
-    const freeTimeVariant=action.id==='freeTime'?freeTimeVariants[Math.floor(Math.random()*freeTimeVariants.length)]:null;
     const currentMasteryRank=activityRank(action.id);
     stage.hidden=false;stageCharacter.hidden=true;stageProps.hidden=false;stageProps.removeAttribute('style');
     // 이동형 일정이 남긴 인라인 좌표와 방향을 매일 초기화한다. 특히 장터 심부름이
@@ -3088,7 +3080,7 @@ async function playWeeklySchedule(selected) {
     const outfitName=outfits.find(item=>item.id===dailyOutfit)?.name;
     const showOutfitName=action.id!=='rest'&&Boolean(outfitName);
     const restActivity=action.id==='rest'?(index%14<7?'tea':'sleep'):null;
-    document.querySelector('#stageCaption').textContent = `${action.name}${freeTimeVariant?` · ${freeTimeVariant.name}`:''}${['교육','아르바이트'].includes(action.category)?` · ${activityRankNames[currentMasteryRank]}`:''}${restActivity?` · ${restActivity==='tea'?'차 마시기':'잠자기'}`:''}`;
+    document.querySelector('#stageCaption').textContent = `${action.name}${['교육','아르바이트'].includes(action.category)?` · ${activityRankNames[currentMasteryRank]}`:''}${restActivity?` · ${restActivity==='tea'?'차 마시기':'잠자기'}`:''}`;
     document.querySelector('#playbackProgress').style.width = `${((index + 1) / selected.length) * 100}%`;
     bg.src = backgrounds[presentation.location];
     stageMap.src = backgrounds[presentation.location];
@@ -3121,24 +3113,6 @@ async function playWeeklySchedule(selected) {
         closeMarketUiForTransition();
         stage.hidden=false;stageCharacter.hidden=false;stageProps.hidden=false;
         playHomeMusic();
-      }
-    }else if(action.id==='freeTime'){
-      stageMap.src=backgrounds.market;stageMap.alt='자유행동으로 둘러보는 가로형 저잣거리';
-      stage.className=`activity-stage ${phaseSceneType} map-market action-freeTime free-time-market`;
-      stageProps.hidden=true;stageProps.className='stage-props prop-none';
-      stageNpc.hidden=true;stageNpc.className='stage-npc';
-      const forcedFreeTimeDirection=scheduleQaParams.get('qaDirection');
-      const freeTimeTravelsRight=lockedScheduleQaMode&&['left','right'].includes(forcedFreeTimeDirection)?forcedFreeTimeDirection==='right':index%2===0;
-      stageCharacterImage.style.setProperty('transform',freeTimeTravelsRight?'none':'scaleX(-1)','important');
-      stageCharacterImage.style.setProperty('transform-origin','center bottom','important');
-      try{
-        await animateActivitySprite(stageCharacterImage,'motion-market-roam',freeTimeVariant?.activity||'errand',null,null,dailyOutfit,currentMasteryRank,index,'success');
-      }finally{
-        // 그날 결과가 뜰 때까지 마지막 산책 위치를 유지한다. 다음 날 공통
-        // 초기화가 left를 지우므로 오른쪽 기본 좌표로 순간 이동하지 않는다.
-        stageCharacterImage.style.removeProperty('transform');
-        stageCharacterImage.style.removeProperty('transform-origin');
-        stageCharacter.hidden=false;stageProps.hidden=true;stageNpc.hidden=true;
       }
     }else if(action.id==='vacation'){
       closeMarketUiForTransition();
@@ -3195,9 +3169,9 @@ async function playWeeklySchedule(selected) {
       stageCharacterImage.src=await outfitActivityFrame(restFrames[restActivity==='tea'?0:2],dailyOutfit);
       await schedulePlaybackDelay(180);
     }else await animateActivitySprite(stageCharacterImage,presentation.motion,restActivity||presentation.activity,stageNpcImage,presentation.npc,dailyOutfit,currentMasteryRank,index,outcome);
-    const guaranteedSuccess=['rest','freeTime','vacation','dungeon','holiday-chuseok','holiday-seollal'].includes(action.id)||action.special==='date';
+    const guaranteedSuccess=['rest','vacation','dungeon','holiday-chuseok','holiday-seollal'].includes(action.id)||action.special==='date';
     if(outcome===null)outcome=judgeActivityOutcome(action,simulated.stress);
-    if(condition===null&&!['shopping','rest','freeTime','vacation','dungeon','holiday-chuseok','holiday-seollal'].includes(action.id)&&!action.special)condition=conditionEvent(simulated.stress,index,outcome);
+    if(condition===null&&!['shopping','rest','vacation','dungeon','holiday-chuseok','holiday-seollal'].includes(action.id)&&!action.special)condition=conditionEvent(simulated.stress,index,outcome);
     if(action.id==='holiday-chuseok'||action.id==='holiday-seollal')outcome='success';
     if(action.id==='dungeon')outcome=dungeonReward.money>=140?'perfect':dungeonReward.money>0?'normal':'struggle';
     if(!guaranteedSuccess&&(outcome==='mistake'||outcome==='struggle')&&action.id!=='shopping'&&!scheduleLayerIds.has(action.id)){
@@ -3207,13 +3181,13 @@ async function playWeeklySchedule(selected) {
       else await animateNaturalFailure(action.id,stageCharacterImage,outcome);
     }
     const fullPhaseHoliday=action.id==='holiday-seollal'||action.id==='holiday-chuseok';
-    const resolvedChange=fullPhaseHoliday?{...resolvedActivityChange(action,outcome)}:phaseDailyChange(freeTimeVariant?{...freeTimeVariant.change}:resolvedActivityChange(action,outcome),index%14);
+    const resolvedChange=fullPhaseHoliday?{...resolvedActivityChange(action,outcome)}:phaseDailyChange(resolvedActivityChange(action,outcome),index%14);
     if(holidayContestResult){
       const contestChange=fullPhaseHoliday?holidayContestResult.change:phaseDailyChange(holidayContestResult.change,index%14);
       Object.entries(contestChange).forEach(([key,value])=>{resolvedChange[key]=(resolvedChange[key]||0)+value;});
     }
     const isWork=action.category==='아르바이트',basePay=isWork?activityPay(action):0;
-    let moneyChange=isWork?(outcome==='mistake'?0:outcome==='struggle'?Math.round(basePay*.5):basePay):-action.cost-(freeTimeVariant?.cost||0);
+    let moneyChange=isWork?(outcome==='mistake'?0:outcome==='struggle'?Math.round(basePay*.5):basePay):-action.cost;
     if(action.id==='dungeon'){
       moneyChange+=dungeonReward.money;
     }
@@ -3225,7 +3199,6 @@ async function playWeeklySchedule(selected) {
     }
     setScheduleDialogue(action,outcome,index);
     if(outcome==='mistake')document.querySelector('#dialogueText').textContent='';
-    if(freeTimeVariant)document.querySelector('#dialogueText').textContent=freeTimeVariant.line;
     if(dateRelation)document.querySelector('#dialogueText').textContent=`${dateRelation.candidate.name}과 조금 더 가까워졌어요. ${dateRelation.record.relationship}예요.`;
     stageCharacter.className = `stage-character pixel-sprite ${presentation.motion}${restActivity==='tea'?' rest-tea':''}`;
     const actualChange={};
@@ -3410,37 +3383,10 @@ function initErrandQa(){
   document.querySelector('#stageNpc').hidden=true;document.querySelector('#stageProps').hidden=true;
   startErrandQa();
 }
-async function startFreeTimeQa(){
-  if(scheduleQaLoopRunning)return;
-  scheduleQaLoopRunning=true;
-  const image=document.querySelector('#stageCharacterImage');
-  while(scheduleLayerStandaloneQa){
-    const travelsRight=scheduleQaParams.get('qaDirection')!=='left';
-    image.style.setProperty('transform',travelsRight?'none':'scaleX(-1)','important');
-    image.style.setProperty('transform-origin','center bottom','important');
-    await animateActivitySprite(image,'motion-market-roam','errand',null,null,game.equippedOutfit,0,travelsRight?0:1,'success');
-    await schedulePlaybackDelay(480);
-  }
-}
-function initFreeTimeQa(){
-  ['studioLoading','prologue','birthdaySetup','recoveryPrompt','guardianStory','guardianChoice','guardianNaming'].forEach(id=>{const element=document.querySelector(`#${id}`);if(element)element.hidden=true;});
-  panel.hidden=true;
-  const phone=document.querySelector('.phone'),stage=document.querySelector('#activityStage'),travelsRight=scheduleQaParams.get('qaDirection')!=='left';
-  phone.classList.add('playing','schedule-qa-playing');
-  stage.hidden=false;stage.className='activity-stage pm3-phase-scene daily-scene map-market action-freeTime free-time-market';
-  document.querySelector('#activityPlayback').hidden=true;document.querySelector('#stagePm3Hud').hidden=true;
-  document.querySelector('#stageMap').src=backgrounds.market;
-  document.querySelector('#stageMap').alt='자유행동 양방향 전체 이동 장면';
-  document.querySelector('#stageCaption').textContent=`QA · 자유행동 · ${travelsRight?'좌측 끝→우측 끝':'우측 끝→좌측 끝'}`;
-  const character=document.querySelector('#stageCharacter');character.hidden=false;character.className='stage-character pixel-sprite motion-market-roam';character.style.removeProperty('left');
-  document.querySelector('#stageNpc').hidden=true;document.querySelector('#stageProps').hidden=true;
-  startFreeTimeQa();
-}
 function initScheduleLayerQa(){
   const actionId=scheduleQaParams.get('qaSchedule')||'kitchenhelp';
   if(actionId==='reading'||actionId==='arithmetic'){initStudyFailureQa(actionId);return;}
   if(actionId==='errand'){initErrandQa();return;}
-  if(actionId==='freeTime'){initFreeTimeQa();return;}
   if(!scheduleLayerIds.has(actionId))return;
   scheduleQaActionId=actionId;
   ['studioLoading','prologue','birthdaySetup','recoveryPrompt','guardianStory','guardianChoice','guardianNaming'].forEach(id=>{const element=document.querySelector(`#${id}`);if(element)element.hidden=true;});
