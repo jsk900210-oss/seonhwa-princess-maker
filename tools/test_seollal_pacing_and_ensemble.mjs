@@ -10,6 +10,8 @@ assert.match(app,/function sehwaOpeningDialogue\(session,beat\)/,'시작과 동�
 assert.match(app,/speaker-\$\{guardianTurn\?'guardian':'seonhwa'\}/,'신수와 선화가 번갈아 말하는 화자 구분이 필요합니다.');
 assert.match(css,/@keyframes sehwa-dialogue-from-right/,'신수 대화창의 오른쪽 슬라이드가 필요합니다.');
 assert.match(css,/@keyframes sehwa-dialogue-from-left/,'선화 대화창의 왼쪽 슬라이드가 필요합니다.');
+assert.match(app,/protagonistFullbodyForAge\(\)/,'선화 대화는 연령별 상반신 원화를 사용해야 합니다.');
+assert.match(css,/\.sehwa-opening-dialogue>\.sehwa-dialogue-bust\{[^}]*transform:scale\(1\.5\)/,'대화 중 화자는 얼굴과 상체 중심으로 확대되어야 합니다.');
 assert.match(app,/function sehwaDrawingEnsemble\(session\)/,'참가자 전원의 그림 장면이 필요합니다.');
 assert.match(app,/session\.entrants\.map/,'그림 장면에는 참가자 8명이 모두 포함되어야 합니다.');
 assert.match(css,/\.sehwa-drawing-ensemble\{[^}]*grid-template-columns:repeat\(4,1fr\)/,'참가자 8명은 4×2 구도로 배치해야 합니다.');
