@@ -237,7 +237,7 @@ const vacationIllustrations=[
 function unifiedAgeFolder(){return '09';}
 function scheduleFramePath(file){return `../assets/characters/seonhwa/schedule-actions/${file}`;}
 function scheduleBasePath(file){return `../assets/characters/seonhwa/schedule-base/${file}`;}
-const scheduleAssetRevision='0.64.93-debug';
+const scheduleAssetRevision='0.64.94-debug';
 const scheduleQaParams=new URLSearchParams(location.search);
 const moonlightStandaloneQa=scheduleQaParams.get('qaHoliday')==='chuseok';
 const sehwaStandaloneQa=scheduleQaParams.get('qaHoliday')==='seollal';
@@ -897,7 +897,7 @@ async function playScheduleLayerScene(actionId,seonImage,rank,outcome,dayIndex){
   const patternFrames=v2Spec?patternSpec?.frames:patternSpec;
   const farmTillingFrames=['npc/farmer-tilling-v4/farmer-tilling-v4-1.png','npc/farmer-tilling-v4/farmer-tilling-v4-2.png','npc/farmer-tilling-v4/farmer-tilling-v4-3.png'];
   const farmChickenChaseFrames=['hero-actions/chicken-chase-v2/seonhwa-chicken-chase-1.png','hero-actions/chicken-chase-v2/seonhwa-chicken-chase-2.png','hero-actions/chicken-chase-v2/seonhwa-chicken-chase-3.png'];
-  const childcareRunningFrames=['npc/child-running-v2/child-run-v2-1.png','npc/child-running-v2/child-run-v2-2.png','npc/child-running-v2/child-run-v2-3.png'];
+  const childcareRunningFrames=['npc/child-running-v2/child-run-v2-1.png','npc/child-running-v2/child-run-v2-2.png','npc/child-running-v2/child-run-v2-3.png','npc/child-running-v3/child-run-v3-cross.png'];
   const childcareFallFrames=['npc/child-fall-v2/child-fall-v2-1.png','npc/child-fall-v2/child-fall-v2-2.png','npc/child-fall-v2/child-fall-v2-3.png'];
   const childcareChaseFrames=Array.from({length:6},(_,index)=>`hero-actions/chase-running-v3/seonhwa-chase-v3-${index+1}.png`);
   const childcareStumbleFrames=['hero-actions/stumble-sit-v1/seonhwa-stumble-1.png','hero-actions/stumble-sit-v1/seonhwa-stumble-2.png','hero-actions/stumble-sit-v1/seonhwa-stumble-3.png'];
@@ -908,8 +908,8 @@ async function playScheduleLayerScene(actionId,seonImage,rank,outcome,dayIndex){
   const farmQaDirection=scheduleQaParams.get('qaDirection');
   const farmChaseTravelsRight=actionId==='farmwork'&&patternKey==='fail-b'?(lockedScheduleQaMode&&farmQaDirection?farmQaDirection==='right':Math.floor(dayIndex/14)%2===0):null;
   const childcareTravelsRight=actionId==='childcare'?(lockedScheduleQaMode&&farmQaDirection?farmQaDirection==='right':dayIndex%2===0):null;
-  const childcareHeroRunCycle=[0,1,2,3,4,5];
-  const childcareNpcRunCycle=[0,1,2,1];
+  const childcareHeroRunCycle=[0,3,1,4,2,5];
+  const childcareNpcRunCycle=[0,3,2,3];
   const childcareTravelDistance=178;
   const childcareMinimumGap=34;
   const childcareChildStart=childcareTravelsRight===null?null:childcareTravelsRight?-20:120;
