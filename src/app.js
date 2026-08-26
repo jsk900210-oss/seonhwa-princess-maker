@@ -243,7 +243,7 @@ const vacationIllustrations=[
 function unifiedAgeFolder(){return '09';}
 function scheduleFramePath(file){return `../assets/characters/seonhwa/schedule-actions/${file}`;}
 function scheduleBasePath(file){return `../assets/characters/seonhwa/schedule-base/${file}`;}
-const scheduleAssetRevision='0.64.116-debug';
+const scheduleAssetRevision='0.64.117-debug';
 const scheduleQaParams=new URLSearchParams(location.search);
 const moonlightStandaloneQa=scheduleQaParams.get('qaHoliday')==='chuseok';
 const sehwaStandaloneQa=scheduleQaParams.get('qaHoliday')==='seollal';
@@ -1324,10 +1324,24 @@ function relationDialogueEmotion(episode){
   if(/흥이 오른|장난기|웃|미소/.test(cue))return 'smile';
   return 'neutral';
 }
-function relationDialoguePosePath(candidate,episode){const emotion=relationDialogueEmotion(episode);return `../assets/characters/romance/dialogue-poses-v1/${candidate.id}/${candidate.id}-${emotion}-v1.png?v=${scheduleAssetRevision}`;}
+function relationDialoguePosePath(candidate,episode,emotionOverride=null){const emotion=emotionOverride||relationDialogueEmotion(episode);return `../assets/characters/romance/dialogue-poses-v1/${candidate.id}/${candidate.id}-${emotion}-v1.png?v=${scheduleAssetRevision}`;}
 function relationPortraitMarkup(candidate,className=''){return `<img class="relation-dialogue-cutout ${className}" src="${relationPortraitPath(candidate)}" alt="${candidate.name} ${relationPortraitAge()}세 전신">`;}
 function applyRelationPortrait(element,candidate,episode=null){if(!element||!candidate)return;element.src=episode?relationDialoguePosePath(candidate,episode):relationPortraitPath(candidate);element.alt=episode?`${candidate.name} ${relationDialogueEmotion(episode)} 상반신`:`${candidate.name} ${relationPortraitAge()}세 전신`;}
-function relationReplyChoices(candidate){return [{line:`반가워요, ${candidate.name}님. 잠시 함께 이야기해요.`,reply:'나도 반가워. 오늘은 서두르지 않고 네 이야기를 듣고 싶어.'},{line:'이곳에는 무슨 일로 오셨어요?',reply:'해야 할 일이 있었는데, 너를 만나니 잠시 걸음을 멈추게 되는군.'}];}
+const relationVoiceProgression={
+  doyun:['아직은 내 일이라 생각했지만','지난번보다 네 발걸음을 믿게 됐어','이제는 네가 곁에 있어도 경계하지 않아','너와 걷는 길이라면 서두르지 않아도 좋겠군','앞으로도 내 옆자리를 비워 두겠다'],
+  seojin:['처음 만난 분께 폐를 끼치고 싶진 않지만','당신과 나누면 어려운 글도 한결 쉬워집니다','요즘은 답보다 당신의 생각이 먼저 궁금해집니다','당신과 함께 읽은 구절은 오래 기억에 남겠군요','다음 장도 당신과 함께 넘기고 싶습니다'],
+  yeonwoo:['혼자 그리는 데 익숙했는데','네가 보는 색을 조금은 알 것 같아','이제 화폭을 보면 네 표정부터 떠올라','네가 곁에 있으면 평범한 풍경도 달라 보여','마지막 빈자리는 네가 채워 줬으면 해'],
+  taegyeom:['공짜 도움은 받지 않는 성격이지만','네 몫은 확실히 기억해 두겠어','이제는 셈보다 네 판단을 먼저 믿게 되네','너와 함께라면 먼 장길도 지루하지 않겠어','다음 거래가 아니라 다음 여행을 약속하지'],
+  hyeon:['내 사정을 쉽게 말할 수는 없지만','너에게는 평범한 사람으로 기억되고 싶어','이상하게 네 앞에서는 경계를 늦추게 되는군','언젠가는 숨김없이 내 이야기를 들려주고 싶어','다음 문을 넘을 때는 네 곁에서 내 이름을 밝히겠다']
+};
+function relationReplyChoices(candidate,episode){
+  const meeting=Math.max(1,Math.min(5,Number(episode?.id?.match(/-(\d)$/)?.[1])||1));
+  const voice=relationVoiceProgression[candidate.id]?.[meeting-1]||'네가 말을 건네 주니 마음이 놓이는군';
+  return [
+    {line:`${episode?.scene||'이곳'}에서 하시던 일, 제가 도와드릴까요?`,reply:`${voice}. 함께해 준다면 고맙겠어.`,emotion:meeting>=4?'affectionate':'smile'},
+    {line:`「${episode?.title||'오늘의 일'}」에 관해 조금 더 들려주세요.`,reply:`${voice}. 오늘 있었던 일부터 천천히 이야기해 줄게.`,emotion:meeting>=3?'shy':'serious'}
+  ];
+}
 const relationSceneBackgrounds={
   '활터':'../assets/backgrounds/phase-scenes/martial.webp','집 마당':'../assets/backgrounds/pixel-activities/courtyard.webp','마당':'../assets/backgrounds/pixel-activities/courtyard.webp',
   '산길 입구':'../assets/backgrounds/pixel-activities/herb-field-v2.webp','어두운 길목':'../assets/backgrounds/pixel-activities/herb-field.webp','강가 산책로':'../assets/events/vacation/spring-stream-v2.webp',
@@ -1345,7 +1359,7 @@ function playRelationEncounterScene(candidate,opening,resultLine='',episode=null
   return new Promise(resolve=>{
     const finish=()=>{scene.hidden=true;scene.classList.remove('is-entered');scene.removeAttribute('data-speaker');male.removeAttribute('src');female.removeAttribute('src');resolve();};
     const showResult=()=>{scene.dataset.speaker='result';speaker.textContent='인연';text.textContent=resultLine||'서로의 마음에 작은 기억이 남았습니다.';next.hidden=false;next.onclick=finish;};
-    const showChoices=()=>{next.hidden=true;choices.hidden=false;choices.replaceChildren(...relationReplyChoices(candidate).map(choice=>{const button=document.createElement('button');button.type='button';button.textContent=choice.line;button.addEventListener('click',()=>{choices.hidden=true;next.hidden=false;scene.dataset.speaker='female';speaker.textContent=game.characterName||'선화';text.textContent=choice.line;next.onclick=()=>{scene.dataset.speaker='male';speaker.textContent=candidate.name;text.textContent=choice.reply;next.onclick=showResult;};},{once:true});return button;}));};
+    const showChoices=()=>{next.hidden=true;choices.hidden=false;choices.replaceChildren(...relationReplyChoices(candidate,episode).map(choice=>{const button=document.createElement('button');button.type='button';button.textContent=choice.line;button.addEventListener('click',()=>{choices.hidden=true;next.hidden=false;scene.dataset.speaker='female';speaker.textContent=game.characterName||'선화';text.textContent=choice.line;next.onclick=()=>{male.src=relationDialoguePosePath(candidate,episode,choice.emotion);male.alt=`${candidate.name} ${choice.emotion} 반응`;scene.dataset.speaker='male';speaker.textContent=candidate.name;text.textContent=choice.reply;next.onclick=showResult;};},{once:true});return button;}));};
     next.onclick=showChoices;
   });
 }
