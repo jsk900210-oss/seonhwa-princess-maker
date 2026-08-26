@@ -237,7 +237,7 @@ const vacationIllustrations=[
 function unifiedAgeFolder(){return '09';}
 function scheduleFramePath(file){return `../assets/characters/seonhwa/schedule-actions/${file}`;}
 function scheduleBasePath(file){return `../assets/characters/seonhwa/schedule-base/${file}`;}
-const scheduleAssetRevision='0.64.54-debug';
+const scheduleAssetRevision='0.64.55-debug';
 const scheduleQaParams=new URLSearchParams(location.search);
 const moonlightStandaloneQa=scheduleQaParams.get('qaHoliday')==='chuseok';
 const sehwaStandaloneQa=scheduleQaParams.get('qaHoliday')==='seollal';
@@ -1447,7 +1447,7 @@ const sehwaContestants=[
   {id:'eunseo',name:'은서',scores:[182,395,630,830]}
 ];
 const sehwaStoryBeats=[
-  '설날 경연에 참가할지 묻는 왕실 화원의 초청장이 도착했어요.','행사장 앞에 선 선화가 긴장한 듯 두 손을 모았어요.','신수가 나타나 “평소처럼 하면 돼.”라며 선화를 응원했어요.','선화는 떨리는 마음을 털어놓고 천천히 숨을 골랐어요.','선화가 마음을 다잡고 왕실 행사장으로 들어갔어요.','「복을 그리는 왕실 세화 경연」의 막이 올랐어요.','황이 주제 「까치·매화·새해 첫 해」를 발표했어요.','먹을 곱게 갈고 붓을 준비했어요.','선화가 화지 위에 첫 먹선을 그었어요.','매화 가지와 까치의 윤곽을 완성했어요.','붉은 매화와 떠오르는 해에 색을 입혔어요.','마지막으로 낙관을 찍어 세화를 완성했어요.','여덟 참가자의 세화 점수가 차례로 집계됐어요.','선화의 최종 등급과 점수가 발표됐어요.','신수가 결과를 듣고 선화 곁으로 달려왔어요.','황이 대상 수상자와 마주 서서 왕실 화원의 세화첩을 직접 건넸어요.'
+  '왕실 화원의 초청장을 펼치자 신수가 가장 먼저 선화를 응원했어요.','선화가 자신의 준비와 마음을 솔직하게 대답했어요.','선화가 신수와 함께 천천히 숨을 고르며 마음을 다잡았어요.','선화가 왕실 행사장으로 들어가 참가표를 받았어요.','「복을 그리는 왕실 세화 경연」의 막이 올랐어요.','황이 주제 「까치·매화·새해 첫 해」를 발표했어요.','여덟 참가자가 각자의 화구와 화지를 준비했어요.','모든 참가자가 자리에 앉아 동시에 세화를 그리기 시작했어요.','먹을 곱게 갈고 붓끝을 가지런히 다듬었어요.','선화가 화지 위에 첫 먹선을 그었어요.','매화 가지와 까치의 윤곽을 완성했어요.','붉은 매화와 떠오르는 해에 색을 입혔어요.','마지막으로 낙관을 찍어 세화를 완성했어요.','여덟 참가자의 세화 점수가 차례로 집계됐어요.','선화의 최종 등급과 점수가 발표됐어요.','신수가 결과를 듣고 선화 곁으로 달려왔어요.','황이 대상 수상자와 마주 서서 왕실 화원의 세화첩을 직접 건넸어요.'
 ];
 function sehwaAgeIndex(){return game.age>=18?3:game.age>=16?2:game.age>=13?1:0;}
 function sehwaAssetAge(){return game.age>=18?'18':game.age>=16?'16':game.age>=13?'13':'09';}
@@ -1466,20 +1466,38 @@ function evaluateSeollalFestival(){
   const reaction=playerScore>=sehwaContestants[4].scores[ageIndex]?'자신감 넘침':playerScore>=median?'차분한 자신감':playerScore>=sehwaContestants[1].scores[ageIndex]?'긴장하지만 씩씩함':playerScore>=sehwaContestants[2].scores[ageIndex]?'자신 없음':'부끄러움';
   return {entrants:shuffled(entrants),ranked,player,winner,overallRank:player.rank,reaction,change:canonicalizeChange({charm:2,arts:3,sensitivity:2,sense:1,dignity:1,stress:-3}),summary:`복을 그리는 왕실 세화 경연 ${player.rank} · 종합 ${player.score}점`,prize:winner.player?'왕실 화원의 세화첩':null};
 }
+function sehwaOpeningAnswer(session){
+  const answers={'자신감 넘침':'그동안 익힌 붓끝을 믿어요. 제 세화로 새해의 복을 환하게 보여 드릴게요.','차분한 자신감':'서두르지 않고 한 획씩 정성껏 그리면 제 마음이 전해질 거예요.','긴장하지만 씩씩함':'조금 떨리지만 신수가 곁에 있으니 끝까지 용기 내서 그려 볼게요.','자신 없음':'아직 부족한 것 같아 걱정되지만, 배운 순서부터 천천히 떠올려 볼게요.','부끄러움':'사람들이 모두 보고 있어서 떨려요… 그래도 종이 앞에서는 숨지 않을게요.'};
+  return answers[session.reaction]||answers['긴장하지만 씩씩함'];
+}
+function sehwaOpeningDialogue(session){
+  if(!game.guardianType)return '';
+  const name=game.guardianName||guardianDefs[game.guardianType]?.name||'신수';
+  return `<section class="sehwa-opening-dialogue"><img src="../assets/cinematics/guardian/humanized/poses/${game.guardianType}-happy-transparent-v3.png?v=${scheduleAssetRevision}" alt="선화를 응원하는 ${name}"><div><p><b>${name}</b>첫 획부터 완벽할 필요는 없어. 네가 담고 싶은 새해의 복을 보여 줘.</p><p><b>${game.characterName||'선화'}</b>${sehwaOpeningAnswer(session)}</p></div></section>`;
+}
+function sehwaDrawingEnsemble(session){
+  return `<section class="sehwa-drawing-ensemble" aria-label="세화를 그리는 참가자 8명">${session.entrants.map(entry=>`<figure class="${entry.player?'is-player':''}"><span><img src="${entry.player?sehwaFrame('drawing',2):moonlightEntrantImage(entry)}" alt="세화를 그리는 ${entry.name}"></span><i aria-hidden="true"></i><figcaption>${entry.name}</figcaption></figure>`).join('')}</section>`;
+}
 function renderSehwaContest(session,beatIndex){
   const overlay=document.querySelector('#moonlightPageant');if(!overlay)return;
-  const beat=Math.min(15,Math.max(0,beatIndex)),drawing=beat>=7&&beat<=11,title=beat===5,intro=beat===6,vote=beat===12,result=beat===13,guardianResult=beat===14,award=beat===15&&session.winner.player;
-  const stageMap=document.querySelector('#stageMap');if(stageMap)stageMap.src=`../assets/events/holidays/sehwa-contest/background/${drawing?'royal-atelier-v1.webp':'royal-contest-hall-v1.png'}?v=${scheduleAssetRevision}`;
-  const frameKind=beat<5?'opening':'drawing';
+  const beat=Math.min(sehwaStoryBeats.length-1,Math.max(0,beatIndex)),opening=beat<=1,drawingGroup=beat===7,drawing=beat>=8&&beat<=12,title=beat===4,intro=beat===5,vote=beat===13,result=beat===14,guardianResult=beat===15,award=beat===16&&session.winner.player;
+  const stageMap=document.querySelector('#stageMap');if(stageMap)stageMap.src=`../assets/events/holidays/sehwa-contest/background/${drawing||drawingGroup?'royal-atelier-v1.webp':'royal-contest-hall-v1.png'}?v=${scheduleAssetRevision}`;
+  const frameKind=beat<4?'opening':'drawing';
   const frameUrls=[1,2,3].map(frame=>award?sehwaAwardSceneFrame(frame):sehwaFrame(frameKind,frame));
-  const hero=award?`<span class="sehwa-award-sequence" role="img" aria-label="${sehwaStoryBeats[beat]}">${frameUrls.map((src,index)=>`<img src="${src}" alt="" style="--award-index:${index}">`).join('')}</span>`:(drawing||beat<5)?`<span class="sehwa-hero is-drawing" style="--sehwa-f1:url('${frameUrls[0]}');--sehwa-f2:url('${frameUrls[1]}');--sehwa-f3:url('${frameUrls[2]}')" role="img" aria-label="${sehwaStoryBeats[beat]}"></span>`:'';
+  const hero=award?`<span class="sehwa-award-sequence" role="img" aria-label="${sehwaStoryBeats[beat]}">${frameUrls.map((src,index)=>`<img src="${src}" alt="" style="--award-index:${index}">`).join('')}</span>`:(drawing||beat<4)?`<span class="sehwa-hero is-drawing" style="--sehwa-f1:url('${frameUrls[0]}');--sehwa-f2:url('${frameUrls[1]}');--sehwa-f3:url('${frameUrls[2]}')" role="img" aria-label="${sehwaStoryBeats[beat]}"></span>`:'';
   const titleCard=title?festivalTitleCard('복을 그리는 왕실 세화 경연','새해의 복을 한 폭의 세화에 담는 설날 행사'):'';
-  const guardian=guardianResult?festivalGuardianCut(session):(beat>=2&&beat<=3&&game.guardianType?`<img class="pageant-guardian-cheer" src="../assets/cinematics/guardian/humanized/poses/${game.guardianType}-happy-transparent-v3.png?v=${scheduleAssetRevision}" alt="선화를 응원하는 신수">`:'');
+  const guardian=guardianResult?festivalGuardianCut(session):(!opening&&beat===2&&game.guardianType?`<img class="pageant-guardian-cheer" src="../assets/cinematics/guardian/humanized/poses/${game.guardianType}-happy-transparent-v3.png?v=${scheduleAssetRevision}" alt="선화를 응원하는 신수">`:'');
   const board=vote?festivalScoreboard(session,'8인 세화 심사'):result?`<section class="festival-result-card"><small>최종 결과</small><strong>${session.overallRank}</strong><p>${session.player.score}점 · ${session.reaction}</p></section>`:'';
   const king=intro?festivalKingCut('새해의 복을 담아 까치와 매화, 첫 해를 한 폭에 그려 보이거라.','세화 경연의 주제를 알리는 황'):'';
-  const winner=beat===15&&!session.winner.player?`<figure class="pageant-winner"><img src="${moonlightEntrantImage(session.winner)}" alt="대상 수상자 ${session.winner.name}"><figcaption>대상 · ${session.winner.name}</figcaption></figure><img class="pageant-king" src="../assets/events/holidays/moonlight-pageant/king/king-presenting-v1.png?v=${scheduleAssetRevision}" alt="대상을 시상하는 황">`:'';
+  const winner=beat===16&&!session.winner.player?`<figure class="pageant-winner"><img src="${moonlightEntrantImage(session.winner)}" alt="대상 수상자 ${session.winner.name}"><figcaption>대상 · ${session.winner.name}</figcaption></figure><img class="pageant-king" src="../assets/events/holidays/moonlight-pageant/king/king-presenting-v1.png?v=${scheduleAssetRevision}" alt="대상을 시상하는 황">`:'';
   overlay.hidden=false;overlay.className=`moonlight-pageant sehwa-contest festival-pm3 beat-${beat+1} reaction-${session.reaction.replaceAll(' ','-')}`;
-  overlay.innerHTML=`${festivalCrowd()}${titleCard}${hero}${guardian}${king}${board}${winner}<p class="pageant-beat">${beat+1}/16 · ${sehwaStoryBeats[beat]}</p>`;
+  const nextLabel=award?'경연 마치기':result?'결과 확인':'다음';
+  overlay.innerHTML=`${festivalCrowd()}${titleCard}${hero}${guardian}${opening?sehwaOpeningDialogue(session):''}${drawingGroup?sehwaDrawingEnsemble(session):''}${king}${board}${winner}<p class="pageant-beat">${beat+1}/${sehwaStoryBeats.length} · ${sehwaStoryBeats[beat]}</p><button class="pageant-next" type="button">${nextLabel}</button>`;
+}
+function waitForSehwaAdvance(beat){
+  const button=document.querySelector('#moonlightPageant .pageant-next');if(!button)return schedulePlaybackDelay(2500);
+  const minimumStay=beat===7?5000:700;
+  return new Promise(resolve=>{button.disabled=true;window.setTimeout(()=>{button.disabled=false;button.addEventListener('click',resolve,{once:true});},minimumStay);});
 }
 function presentHolidayRelation(){
   if(!pendingHolidayRelation)return false;
@@ -2967,8 +2985,8 @@ async function playWeeklySchedule(selected) {
       holidayContestResult=sehwaSession;
       for(let beat=0;beat<sehwaStoryBeats.length;beat+=1){
         renderSehwaContest(holidayContestResult,beat);
-        document.querySelector('#dialogueText').textContent=beat===3?`선화: “긴장되지만 끝까지 그려 볼게.” · ${holidayContestResult.reaction}`:sehwaStoryBeats[beat];
-        await schedulePlaybackDelay(620);
+        document.querySelector('#dialogueText').textContent=beat===1?`선화: “${sehwaOpeningAnswer(holidayContestResult)}”`:sehwaStoryBeats[beat];
+        await waitForSehwaAdvance(beat);
       }
       if(holidayContestResult.prize&&!game.items.some(item=>item.id==='royal-sehwa-album'))game.items.push({id:'royal-sehwa-album',type:'event',name:'왕실 화원의 세화첩',description:'복을 그리는 왕실 세화 경연에서 대상을 받아 황에게 직접 하사받은 세화첩',qty:1,source:'seollal-sehwa-contest'});
     }else if(action.id==='dungeon'){
@@ -3212,14 +3230,14 @@ function initSehwaContestQa(){
   ['studioLoading','prologue','birthdaySetup','recoveryPrompt','guardianStory','guardianChoice','guardianNaming'].forEach(id=>{const element=document.querySelector(`#${id}`);if(element)element.hidden=true;});
   panel.hidden=true;
   const qaAge=Math.min(18,Math.max(9,Number(scheduleQaParams.get('qaAge'))||13));
-  const qaBeat=Math.min(16,Math.max(1,Number(scheduleQaParams.get('qaBeat')||scheduleQaParams.get('qaDay'))||16));
+  const qaBeat=Math.min(sehwaStoryBeats.length,Math.max(1,Number(scheduleQaParams.get('qaBeat')||scheduleQaParams.get('qaDay'))||sehwaStoryBeats.length));
   game.age=qaAge;game.guardianType=game.guardianType||'cheongryong';
   const session=evaluateSeollalFestival(),phone=document.querySelector('.phone'),stage=document.querySelector('#activityStage');
   phone.classList.add('playing','schedule-qa-playing');stage.hidden=false;stage.className='activity-stage pm3-phase-scene daily-scene action-holiday-seollal';
   document.querySelector('#activityPlayback').hidden=true;document.querySelector('#stagePm3Hud').hidden=true;
   document.querySelector('#stageMap').src=`../assets/events/holidays/sehwa-contest/background/royal-atelier-v1.webp?v=${scheduleAssetRevision}`;
   document.querySelector('#stageCharacter').hidden=true;document.querySelector('#stageNpc').hidden=true;document.querySelector('#stageProps').hidden=true;
-  document.querySelector('#stageCaption').textContent=`복을 그리는 왕실 세화 경연 QA · ${qaBeat}/16장면 · 선화 ${session.overallRank}`;
+  document.querySelector('#stageCaption').textContent=`복을 그리는 왕실 세화 경연 QA · ${qaBeat}/${sehwaStoryBeats.length}장면 · 선화 ${session.overallRank}`;
   document.querySelector('#dialogueText').textContent=sehwaStoryBeats[qaBeat-1];
   renderSehwaContest(session,qaBeat-1);
 }

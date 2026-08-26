@@ -1,0 +1,14 @@
+import assert from 'node:assert/strict';
+import {readFileSync} from 'node:fs';
+const app=readFileSync(new URL('../src/app.js',import.meta.url),'utf8');
+const css=readFileSync(new URL('../src/schedule.css',import.meta.url),'utf8');
+assert.match(app,/function waitForSehwaAdvance\(beat\)/,'설날 장면은 전용 진행 대기가 필요합니다.');
+assert.match(app,/minimumStay=beat===7\?5000:700/,'전원 그림 장면은 최소 5초간 보여야 합니다.');
+assert.match(app,/await waitForSehwaAdvance\(beat\)/,'설날 장면은 다음 버튼 입력을 기다려야 합니다.');
+assert.match(app,/function sehwaOpeningAnswer\(session\)/,'스테이터스에 따른 선화의 시작 답변이 필요합니다.');
+assert.match(app,/function sehwaOpeningDialogue\(session\)/,'시작과 동시에 신수 응원 대화가 필요합니다.');
+assert.match(app,/function sehwaDrawingEnsemble\(session\)/,'참가자 전원의 그림 장면이 필요합니다.');
+assert.match(app,/session\.entrants\.map/,'그림 장면에는 참가자 8명이 모두 포함되어야 합니다.');
+assert.match(css,/\.sehwa-drawing-ensemble\{[^}]*grid-template-columns:repeat\(4,1fr\)/,'참가자 8명은 4×2 구도로 배치해야 합니다.');
+assert.match(css,/\.sehwa-contest\.festival-pm3 \.sehwa-hero\{[^}]*width:132px!important;[^}]*height:176px!important/,'설날 주인공 크기는 축소된 고정 규격이어야 합니다.');
+console.log('PASS: 설날 수동 진행·5초 전원 그림·스테이터스 응답·캐릭터 축소');
