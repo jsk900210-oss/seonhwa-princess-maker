@@ -243,7 +243,7 @@ const vacationIllustrations=[
 function unifiedAgeFolder(){return '09';}
 function scheduleFramePath(file){return `../assets/characters/seonhwa/schedule-actions/${file}`;}
 function scheduleBasePath(file){return `../assets/characters/seonhwa/schedule-base/${file}`;}
-const scheduleAssetRevision='0.64.106-debug';
+const scheduleAssetRevision='0.64.107-debug';
 const scheduleQaParams=new URLSearchParams(location.search);
 const moonlightStandaloneQa=scheduleQaParams.get('qaHoliday')==='chuseok';
 const sehwaStandaloneQa=scheduleQaParams.get('qaHoliday')==='seollal';
@@ -851,7 +851,7 @@ async function animateActivitySprite(image,motion,activity,npcImage,npc,outfitId
         :[0,1,2,1,0]);
     const dedicatedJob=Object.hasOwn(coreJobSequences,activity);
     const staticFrameFallback=new Set(frames).size<=1;
-    const delay=dedicatedJob?[360,300,240][masteryRank]:Math.max(130,(activity==='errand'?170:activity==='houseclean'?340:activity==='sweeping'?260:activity==='sleep'?430:activity==='tea'?460:240)-masteryRank*(activity==='errand'?15:30));
+    const delay=dedicatedJob?[360,300,240][masteryRank]:Math.max(130,(activity==='errand'?300:activity==='houseclean'?340:activity==='sweeping'?260:activity==='sleep'?430:activity==='tea'?460:240)-masteryRank*(activity==='errand'?20:30));
     const rankedSequence=masteryRank===2&&activity!=='errand'?[...sequence,...sequence.slice(1)]:sequence;
     const actor=image.parentElement;
     if(activity==='errand'){

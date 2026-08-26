@@ -2565,7 +2565,7 @@ body .phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage:
 .phone.playing:not(.market-playing):not(.vacation-playing)
   .activity-stage.map-marketErrand.action-errand:not(.market-choice-stage)
   .stage-character.pixel-sprite.motion-errand{
-  transition:left .17s linear!important;
+  transition:left .30s linear!important;
   animation:none!important;
 }
 .phone.playing:not(.market-playing):not(.vacation-playing)

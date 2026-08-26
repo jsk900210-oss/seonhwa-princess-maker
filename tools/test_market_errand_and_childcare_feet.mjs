@@ -19,7 +19,8 @@ assert.match(app,/currentMasteryRank,index,outcome\)/,'the live schedule must pa
 assert.match(app,/stageCharacter\.style\.removeProperty\('left'\)/,'moving coordinates must be cleared between schedule days');
 assert.match(app,/if\(actionId==='errand'\)\{initErrandQa\(\);return;\}/,'standalone errand QA must be available');
 
-assert.match(css,/motion-errand\{\s*transition:left \.17s linear!important;/s,'errand travel should be smooth and match its frame cadence');
+assert.match(css,/motion-errand\{\s*transition:left \.30s linear!important;/s,'errand travel should be smooth and match its slower frame cadence');
+assert.ok(app.includes("activity==='errand'?300")&&app.includes("activity==='errand'?20:30"),'errand walking must use a relaxed 300ms base cadence');
 assert.match(css,/motion-errand\[data-errand-starting="true"\]\{\s*transition:none!important;/s,'offscreen reset must not visibly slide backward');
 assert.match(css,/data-errand-direction="right"\]>img\{\s*transform:none!important;/s,'rightward actor must face right');
 assert.match(css,/data-errand-direction="left"\]>img\{\s*transform:scaleX\(-1\)!important;/s,'leftward actor must face left');
@@ -59,7 +60,7 @@ assert.ok(app.includes('const childcareNpcRunCycle=[0,3,2,3]'),'child must pass 
 assert.ok(app.includes("const requiredNpcFrameCount=actionId==='childcare'?4:3")&&app.includes('npcFrames.length!==requiredNpcFrameCount'),'childcare playback must accept its fourth crossing frame');
 const layeredQaBody=app.slice(app.indexOf('async function startScheduleLayerQaPattern'),app.indexOf('async function startStudyFailureQa'));
 assert.ok(layeredQaBody.includes("const oneShotQa=scheduleQaActionId==='childcare'||(scheduleQaActionId==='farmwork'&&pattern==='fail-b')")&&layeredQaBody.includes("'아이 돌보기':'논가 닭 추격'")&&layeredQaBody.includes('finally{scheduleQaLoopRunning=false;}'),'childcare and farm chicken one-shot handling must live inside the layered QA runner');
-assert.ok(html.includes('v0.64.106-debug'),'HTML cache revision must expose the new build');
+assert.ok(html.includes('v0.64.107-debug'),'HTML cache revision must expose the new build');
 assert.ok(css.includes('.stage-character[hidden]{display:none!important}'),'Hidden stage characters must stay hidden after chase scenes');
 assert.ok(app.includes("const heroStart=travelsRight?-25:125")&&app.includes("*travelProgress*150"),'농가 닭 추격은 좌우 양방향으로 화면 밖까지 완주해야 합니다.');
 assert.ok(app.includes("actionId==='farmwork'&&patternKey==='fail-b'))seonImage.closest('.stage-character')?.setAttribute('hidden','')"),'농가 추격 종료 좌표를 지우기 전에 선화를 숨겨 되감기 잔상을 막아야 합니다.');
