@@ -75,10 +75,10 @@ def save(source: Path, destination: Path, checker=False):
 
 def main():
     seonhwa_sources = {
-        9: ROOT / "assets/characters/seonhwa/age-09/base/seonhwa-age09-home-main-v5-transparent.png",
-        13: ROOT / "assets/characters/seonhwa/age-13/base/seonhwa-age13-base.png",
-        16: ROOT / "assets/characters/seonhwa/age-16/base/seonhwa-age16-base.png",
-        18: ROOT / "assets/characters/seonhwa/age-18/base/seonhwa-age18-base.png",
+        9: ROOT / "assets/characters/seonhwa/age-09/base/seonhwa-age09-home-main-v6-semi-real-transparent.png",
+        13: ROOT / "assets/characters/seonhwa/age-13/base/seonhwa-age13-base-v2-semi-real-transparent.png",
+        16: ROOT / "assets/characters/seonhwa/age-16/base/seonhwa-age16-base-v2-semi-real-transparent.png",
+        18: ROOT / "assets/characters/seonhwa/age-18/base/seonhwa-age18-base-v2-semi-real-transparent.png",
     }
     for age, source in seonhwa_sources.items():
         save(source, OUT / "seonhwa" / f"age-{age:02d}.png", checker=age != 9)

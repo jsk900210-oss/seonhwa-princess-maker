@@ -51,7 +51,14 @@ function transitionPrologueToHomeMusic(){
 }
 
 const game = { characterName:'', nannyName:'', guardianType:null, guardianName:'', profileSlot:null, age: 9, height:130, weight:28.5, month: 1, week: 1, season:'봄', money: 50000, cash:50000, health:42, strength:18, agility:20, intelligence:35, magic:8, mentality:30, dignity:36, manners:28, speech:14, sensitivity:40, sense:24, charm:30, stress:0, items: [], purchasedGoods:[], relations:{}, activityProgress:{}, activityUnlocksSeen:[], completedPhases:[], startingGiftId:null, fatherBirthdayYears:[], sehwaWins:[], latestSehwaArtwork:null, equippedOutfit:null, autoOutfit:true, dailySchedule: [], scheduleFormat:'phase-v1', birthday:null, currentDate:null, endingDate:null, ended:false, endingResult:null, birthdayCount:0, element:null, birthSeason:null, memory:0, truth:0, exposure:0, fatherAffinity:0, guardianTrust:50, nannyAffinity:50, lastGreetingDate:null, lastGuardianTalkDate:null, lastGuardianTalkPhase:null, monthlyLedger:null };
-const baseSpritePath='../assets/characters/seonhwa/age-09/base/seonhwa-age09-home-main-v5-transparent.png';
+const baseSpritePaths=Object.freeze({
+  9:'../assets/characters/seonhwa/age-09/base/seonhwa-age09-home-main-v6-semi-real-transparent.png',
+  13:'../assets/characters/seonhwa/age-13/base/seonhwa-age13-base-v2-semi-real-transparent.png',
+  16:'../assets/characters/seonhwa/age-16/base/seonhwa-age16-base-v2-semi-real-transparent.png',
+  19:'../assets/characters/seonhwa/age-18/base/seonhwa-age18-base-v2-semi-real-transparent.png'
+});
+const baseSpriteForAge=(age=game.age)=>baseSpritePaths[age>=18?19:age>=16?16:age>=13?13:9];
+const baseSpritePath=baseSpritePaths[9];
 const guardianDefs={
   cheongryong:{name:'청룡',mark:'龍',theme:'#294e67',gift:{name:'푸른 여의주 조각',change:{intelligence:5,magic:4}},intro:'동쪽의 푸른 숨결. 배움과 술법의 길을 살피는 신수입니다.'},
   baekho:{name:'백호',mark:'虎',theme:'#ddd8ce',gift:{name:'흰 범의 방울',change:{strength:5,agility:4}},intro:'서쪽의 굳센 발걸음. 위험 앞에서 용기와 무예를 북돋는 신수입니다.'},
@@ -80,13 +87,13 @@ const expressions = [
   [baseSpritePath,'기본']
 ];
 const homeConditionPoses={
-  happy:baseSpritePath,
-  sad:baseSpritePath,
-  shocked:baseSpritePath,
-  angry:baseSpritePath,
-  tired:baseSpritePath,
-  rebellious:baseSpritePath,
-  normal:()=>baseSpritePath
+  happy:()=>baseSpriteForAge(),
+  sad:()=>baseSpriteForAge(),
+  shocked:()=>baseSpriteForAge(),
+  angry:()=>baseSpriteForAge(),
+  tired:()=>baseSpriteForAge(),
+  rebellious:()=>baseSpriteForAge(),
+  normal:()=>baseSpriteForAge()
 };
 const backgrounds = {
   home: '../assets/backgrounds/home/home-room-morning.webp',
@@ -237,12 +244,13 @@ const vacationIllustrations=[
 function unifiedAgeFolder(){return '09';}
 function scheduleFramePath(file){return `../assets/characters/seonhwa/schedule-actions/${file}`;}
 function scheduleBasePath(file){return `../assets/characters/seonhwa/schedule-base/${file}`;}
-const scheduleAssetRevision='0.64.102-debug';
+const scheduleAssetRevision='0.64.103-debug';
 const scheduleQaParams=new URLSearchParams(location.search);
 const moonlightStandaloneQa=scheduleQaParams.get('qaHoliday')==='chuseok';
 const sehwaStandaloneQa=scheduleQaParams.get('qaHoliday')==='seollal';
 const sehwaHomeQaTheme=scheduleQaParams.get('qaSehwaHome');
 const relationStandaloneQa=scheduleQaParams.has('qaRelation');
+const basePortraitStandaloneQa=scheduleQaParams.has('qaBaseAge');
 const scheduleLayerStandaloneQa=scheduleQaParams.get('qa')==='1';
 const lockedScheduleQaMode=scheduleQaParams.has('qaSchedules')||scheduleLayerStandaloneQa;
 let scheduleQaForcedPattern=scheduleQaParams.get('qaPattern');
@@ -486,7 +494,7 @@ const correctedOutfitVariants=new Map([['13:age13-scholar','age13-scholar-fixed-
 const outfitImageForAge=(id,visualAge=growthVisualAge())=>{
   const outfit=outfits.find(item=>item.id===id);
   if(!outfit)return '';
-  return baseSpritePath;
+  return baseSpriteForAge(visualAge);
 };
 const outfitImage=id=>outfitImageForAge(id,growthVisualAge());
 function homeCondition(){
@@ -980,8 +988,12 @@ async function playScheduleLayerScene(actionId,seonImage,rank,outcome,dayIndex){
           const chaseFrame=farmChaseCycle[travelStep];
           activeHeroFrame=farmChickenChaseFrames[chaseFrame];
           activePatternFrame=patternFrames[chaseFrame];
-          const heroLeft=travelsRight?10+travelProgress*44:90-travelProgress*44;
           const chaseGap=34;
+          // 선화와 닭 모두 한쪽 창 밖에서 들어와 반대쪽 창 밖까지 완주한다.
+          // 마지막 좌표를 무대 안에 남기면 공통 좌표 초기화 순간 선화가 뒤로
+          // 되감겨 보이므로, 결과 전환 전에 확실히 화면 밖으로 보낸다.
+          const heroStart=travelsRight?-25:125;
+          const heroLeft=heroStart+(travelsRight?1:-1)*travelProgress*150;
           const chickenLeft=travelsRight?heroLeft+chaseGap:heroLeft-chaseGap;
           stage.style.setProperty('--layer-hero-left',`${heroLeft}%`,'important');
           stage.style.setProperty('--layer-prop-left',`${chickenLeft}%`,'important');
@@ -1016,7 +1028,7 @@ async function playScheduleLayerScene(actionId,seonImage,rank,outcome,dayIndex){
   }finally{
     // chase 좌표를 지우고 schedule-layered 클래스를 제거하기 전에 숨겨야
     // 기본 중앙 배치의 선화가 결과 전환 사이에 한 프레임 다시 나타나지 않는다.
-    if(actionId==='childcare')seonImage.closest('.stage-character')?.setAttribute('hidden','');
+    if(actionId==='childcare'||(actionId==='farmwork'&&patternKey==='fail-b'))seonImage.closest('.stage-character')?.setAttribute('hidden','');
     layers.forEach(layer=>layer.remove());
     stage.classList.remove('schedule-layered');
     delete stage.dataset.chaseDirection;
@@ -2125,7 +2137,7 @@ function showVacationCollectionCard(id){
 function renderWardrobe(){
   panel.hidden=false;panelTitle.textContent='옷 갈아입기';
   const owned=game.items.filter(item=>item&&item.type==='outfit');
-  panelBody.innerHTML=`<div class="auto-outfit"><div><b>계절·상황 자동 갈아입기</b><small>${game.autoOutfit?'보유한 한복 중 알맞은 옷을 자동 선택합니다.':'직접 선택한 한복을 계속 입습니다.'}</small></div><button id="autoOutfitToggle" class="${game.autoOutfit?'on':''}">${game.autoOutfit?'켜짐':'꺼짐'}</button></div><div class="wardrobe-grid"><button class="wardrobe-card ${!game.equippedOutfit?'on':''}" data-wear=""><img src="${baseSpritePath}" alt="기본 한복"><b>기본 한복</b></button>${owned.map(item=>{const meta=outfits.find(outfit=>outfit.id===item.id);return `<button class="wardrobe-card ${game.equippedOutfit===item.id?'on':''}" data-wear="${item.id}"><img src="${outfitImage(item.id)}" alt="${item.name}"><b>${item.name}</b><small>${meta?`${outfitAgeLabel(meta)} · ${meta.seasons.join('·')}<br>`:''}${meta&&game.age>meta.ageEnd?'자라서 조금 꼭 맞음':'현재 몸에 맞음'}</small></button>`;}).join('')}</div>`;
+  panelBody.innerHTML=`<div class="auto-outfit"><div><b>계절·상황 자동 갈아입기</b><small>${game.autoOutfit?'보유한 한복 중 알맞은 옷을 자동 선택합니다.':'직접 선택한 한복을 계속 입습니다.'}</small></div><button id="autoOutfitToggle" class="${game.autoOutfit?'on':''}">${game.autoOutfit?'켜짐':'꺼짐'}</button></div><div class="wardrobe-grid"><button class="wardrobe-card ${!game.equippedOutfit?'on':''}" data-wear=""><img src="${baseSpriteForAge()}" alt="${game.age}세 기본 한복"><b>기본 한복</b></button>${owned.map(item=>{const meta=outfits.find(outfit=>outfit.id===item.id);return `<button class="wardrobe-card ${game.equippedOutfit===item.id?'on':''}" data-wear="${item.id}"><img src="${outfitImage(item.id)}" alt="${item.name}"><b>${item.name}</b><small>${meta?`${outfitAgeLabel(meta)} · ${meta.seasons.join('·')}<br>`:''}${meta&&game.age>meta.ageEnd?'자라서 조금 꼭 맞음':'현재 몸에 맞음'}</small></button>`;}).join('')}</div>`;
   document.querySelector('#autoOutfitToggle').addEventListener('click',()=>{game.autoOutfit=!game.autoOutfit;if(game.autoOutfit)updateAutoOutfit();renderWardrobe();});
   panelBody.querySelectorAll('[data-wear]').forEach(button=>button.addEventListener('click',()=>{game.autoOutfit=false;game.equippedOutfit=button.dataset.wear||null;applyEquippedOutfit();renderWardrobe();}));
 }
@@ -2324,7 +2336,7 @@ function resetGameState() {
   syncBirthdaySelectors(true);
   document.querySelector('#birthdayTitle').textContent='아이의 이름과 생일';
   bg.src = backgrounds.home;
-  character.src = baseSpritePath;
+  character.src = baseSpriteForAge(9);
   resetTransientScenes();
   renderHud();
   panel.hidden = true;
@@ -2891,6 +2903,7 @@ function advanceGameDate(days){
   const birthdayEvents=[];
   for(let age=Math.max(9,previousAge);age<=game.age;age+=1){const birthdayDate=addYears(birth,age);if(birthdayDate>previousDate&&birthdayDate<=date){const gift=awardFatherBirthdayGift(age);if(gift)birthdayEvents.push(gift);}}
   if(game.autoOutfit)updateAutoOutfit();
+  else applyEquippedOutfit();
   return birthdayEvents;
 }
 function seasonForMonth(month){ return month>=3&&month<=5?'봄':month>=6&&month<=8?'여름':month>=9&&month<=11?'가을':'겨울'; }
@@ -3297,7 +3310,8 @@ document.querySelector('#referralCode').addEventListener('keydown',event=>{if(ev
 bg.addEventListener('error', updateImageState);
 character.addEventListener('load', updateImageState);
 character.addEventListener('error',()=>{
-  if(!character.src.endsWith('/seonhwa-age09-home-main-v5-transparent.png'))character.src=baseSpritePath;
+  const expectedBase=baseSpriteForAge();
+  if(!game.equippedOutfit&&!character.src.endsWith(expectedBase.split('/').pop()))character.src=expectedBase;
   updateImageState();
 });
 document.querySelectorAll('[data-panel]').forEach(button => button.addEventListener('click', () => openPanel(button.dataset.panel)));
@@ -3468,6 +3482,18 @@ function initRelationEncounterQa(){
   document.querySelector('.phone').classList.add('playing','relation-qa-playing');
   playRelationEncounterScene(candidate,`${candidate.role} ${candidate.name}과 마주쳤어요.`,`QA · ${game.age}세 전신과 화자 교대 확인`);
 }
+function initBasePortraitQa(){
+  ['studioLoading','prologue','birthdaySetup','recoveryPrompt','guardianStory','guardianChoice','guardianNaming'].forEach(id=>{const element=document.querySelector(`#${id}`);if(element)element.hidden=true;});
+  panel.hidden=true;
+  const requestedAge=Number(scheduleQaParams.get('qaBaseAge'))||9;
+  game.age=requestedAge>=19?19:requestedAge>=16?16:requestedAge>=13?13:9;
+  game.characterName='선화';
+  document.querySelector('.phone').classList.remove('playing','schedule-qa-playing','market-playing','vacation-playing');
+  renderHud();
+  updateHomeCharacter();
+  document.querySelector('#speakerName').textContent='베이스 검수';
+  document.querySelector('#dialogueText').textContent=`${game.age}세 반실사 기본 얼굴 · 땋은 올림머리 · 오른쪽 꽃 장식 · 갈색 눈`;
+}
 prologueScenes.forEach(scene=>{const image=new Image();image.src=scene.image;});
 guardianStoryScenes.forEach(scene=>{const image=new Image();image.decoding='async';image.src=scene.image;});
 syncBirthdaySelectors(true);
@@ -3475,7 +3501,8 @@ syncSettingsUi();
 renderHud();
 updateHomeCharacter();
 updateImageState();
-if(relationStandaloneQa)initRelationEncounterQa();
+if(basePortraitStandaloneQa)initBasePortraitQa();
+else if(relationStandaloneQa)initRelationEncounterQa();
 else if(sehwaStandaloneQa)initSehwaContestQa();
 else if(moonlightStandaloneQa)initMoonlightPageantQa();
 else if(scheduleLayerStandaloneQa)initScheduleLayerQa();
