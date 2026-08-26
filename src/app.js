@@ -50,7 +50,7 @@ function transitionPrologueToHomeMusic(){
   fadeAudio(prologueMusic,0,1600);
 }
 
-const game = { characterName:'', nannyName:'', guardianType:null, guardianName:'', profileSlot:null, age: 9, height:130, weight:28.5, month: 1, week: 1, season:'봄', money: 50000, cash:50000, health:42, strength:18, agility:20, intelligence:35, magic:8, mentality:30, dignity:36, manners:28, speech:14, sensitivity:40, sense:24, charm:30, stress:0, items: [], purchasedGoods:[], relations:{}, activityProgress:{}, activityUnlocksSeen:[], completedPhases:[], startingGiftId:null, fatherBirthdayYears:[], equippedOutfit:null, autoOutfit:true, dailySchedule: [], scheduleFormat:'phase-v1', birthday:null, currentDate:null, endingDate:null, ended:false, endingResult:null, birthdayCount:0, element:null, birthSeason:null, memory:0, truth:0, exposure:0, fatherAffinity:0, guardianTrust:50, nannyAffinity:50, lastGreetingDate:null, lastGuardianTalkDate:null, lastGuardianTalkPhase:null, monthlyLedger:null };
+const game = { characterName:'', nannyName:'', guardianType:null, guardianName:'', profileSlot:null, age: 9, height:130, weight:28.5, month: 1, week: 1, season:'봄', money: 50000, cash:50000, health:42, strength:18, agility:20, intelligence:35, magic:8, mentality:30, dignity:36, manners:28, speech:14, sensitivity:40, sense:24, charm:30, stress:0, items: [], purchasedGoods:[], relations:{}, activityProgress:{}, activityUnlocksSeen:[], completedPhases:[], startingGiftId:null, fatherBirthdayYears:[], sehwaWins:[], latestSehwaArtwork:null, equippedOutfit:null, autoOutfit:true, dailySchedule: [], scheduleFormat:'phase-v1', birthday:null, currentDate:null, endingDate:null, ended:false, endingResult:null, birthdayCount:0, element:null, birthSeason:null, memory:0, truth:0, exposure:0, fatherAffinity:0, guardianTrust:50, nannyAffinity:50, lastGreetingDate:null, lastGuardianTalkDate:null, lastGuardianTalkPhase:null, monthlyLedger:null };
 const baseSpritePath='../assets/characters/seonhwa/age-09/base/seonhwa-age09-home-main-v5-transparent.png';
 const guardianDefs={
   cheongryong:{name:'청룡',mark:'龍',theme:'#294e67',gift:{name:'푸른 여의주 조각',change:{intelligence:5,magic:4}},intro:'동쪽의 푸른 숨결. 배움과 술법의 길을 살피는 신수입니다.'},
@@ -237,10 +237,11 @@ const vacationIllustrations=[
 function unifiedAgeFolder(){return '09';}
 function scheduleFramePath(file){return `../assets/characters/seonhwa/schedule-actions/${file}`;}
 function scheduleBasePath(file){return `../assets/characters/seonhwa/schedule-base/${file}`;}
-const scheduleAssetRevision='0.64.78-debug';
+const scheduleAssetRevision='0.64.79-debug';
 const scheduleQaParams=new URLSearchParams(location.search);
 const moonlightStandaloneQa=scheduleQaParams.get('qaHoliday')==='chuseok';
 const sehwaStandaloneQa=scheduleQaParams.get('qaHoliday')==='seollal';
+const sehwaHomeQaTheme=scheduleQaParams.get('qaSehwaHome');
 const relationStandaloneQa=scheduleQaParams.has('qaRelation');
 const scheduleLayerStandaloneQa=scheduleQaParams.get('qa')==='1';
 const lockedScheduleQaMode=scheduleQaParams.has('qaSchedules')||scheduleLayerStandaloneQa;
@@ -1453,6 +1454,51 @@ function sehwaAgeIndex(){return game.age>=18?3:game.age>=16?2:game.age>=13?1:0;}
 function sehwaAssetAge(){return game.age>=18?'18':game.age>=16?'16':game.age>=13?'13':'09';}
 function sehwaFrame(kind,frame){return `../assets/events/holidays/sehwa-contest/seonhwa/${kind}/age-${sehwaAssetAge()}/${kind}-${frame}.png?v=${scheduleAssetRevision}`;}
 function sehwaAwardSceneFrame(frame){return `../assets/events/holidays/sehwa-contest/award-scene/age-${sehwaAssetAge()}/award-scene-${frame}.png?v=${scheduleAssetRevision}`;}
+const sehwaArtworkDefs={
+  sensitivity:{title:'매향의 새벽',ability:'감수성',asset:'../assets/events/holidays/sehwa-contest/winning-artworks/sensitivity-v1.png'},
+  charm:{title:'화접영복도',ability:'매력',asset:'../assets/events/holidays/sehwa-contest/winning-artworks/charm-v1.png'},
+  sense:{title:'까치와 풍년',ability:'센스',asset:'../assets/events/holidays/sehwa-contest/winning-artworks/sense-v1.png'},
+  dignity:{title:'해오름 학송도',ability:'기품',asset:'../assets/events/holidays/sehwa-contest/winning-artworks/dignity-v1.png'}
+};
+function sehwaContestYear(){
+  const date=game.currentDate?new Date(`${game.currentDate}T00:00:00`):null;
+  return date&&Number.isFinite(date.getTime())?date.getFullYear():616+Math.max(1,Number(game.age)||9)-8;
+}
+function normalizeSehwaWins(){
+  const seen=new Set();
+  game.sehwaWins=(Array.isArray(game.sehwaWins)?game.sehwaWins:[]).filter(record=>record&&Number.isFinite(Number(record.year))&&sehwaArtworkDefs[record.theme]&&!seen.has(Number(record.year))&&seen.add(Number(record.year))).sort((a,b)=>Number(a.year)-Number(b.year));
+  const latest=game.sehwaWins.at(-1)||null;
+  game.latestSehwaArtwork=latest;
+  return latest;
+}
+function selectSehwaArtwork(stats,year){
+  const keys=['sensitivity','charm','sense','dignity'];
+  const theme=[...keys].sort((a,b)=>(Number(stats[b])||0)-(Number(stats[a])||0)||((keys.indexOf(a)+year)%keys.length)-((keys.indexOf(b)+year)%keys.length))[0];
+  return {theme,...sehwaArtworkDefs[theme]};
+}
+function awardSehwaArtwork(session){
+  if(!session?.winner?.player)return null;
+  normalizeSehwaWins();
+  const year=sehwaContestYear(),existing=game.sehwaWins.find(record=>Number(record.year)===year);
+  if(existing){game.latestSehwaArtwork=existing;renderHomeSehwaArtwork();return existing;}
+  const stats=session.artworkStats||{charm:game.charm,sensitivity:game.sensitivity,sense:game.sense,dignity:game.dignity};
+  const selected=selectSehwaArtwork(stats,year);
+  const record={year,age:Number(game.age)||9,score:Number(session.player?.score)||0,wonAt:game.currentDate||null,stats:{...stats},...selected};
+  game.sehwaWins.push(record);game.sehwaWins.sort((a,b)=>Number(a.year)-Number(b.year));game.latestSehwaArtwork=record;
+  renderHomeSehwaArtwork();
+  return record;
+}
+function renderHomeSehwaArtwork(){
+  const gallery=document.querySelector('#homeSehwaGallery'),image=document.querySelector('#homeSehwaArtwork'),caption=document.querySelector('#homeSehwaCaption');
+  if(!gallery||!image||!caption)return;
+  const qaDef=sehwaArtworkDefs[sehwaHomeQaTheme];
+  const record=qaDef?{year:sehwaContestYear(),theme:sehwaHomeQaTheme,...qaDef}:normalizeSehwaWins();
+  gallery.hidden=!record;
+  if(!record){image.removeAttribute('src');image.alt='';caption.textContent='';return;}
+  image.src=`${record.asset}?v=${scheduleAssetRevision}`;
+  image.alt=`${record.year}년 세화 경연 우승작 ${record.title}`;
+  caption.textContent=`${record.year}년 · ${record.title}`;
+}
 function evaluateSeollalFestival(){
   const ageIndex=sehwaAgeIndex();
   const stats={charm:Number(game.charm)||0,sensitivity:Number(game.sensitivity)||0,sense:Number(game.sense)||0,dignity:Number(game.dignity)||0};
@@ -1464,7 +1510,7 @@ function evaluateSeollalFestival(){
   ranked.forEach((entry,index)=>entry.rank=index===0?'대상':index<=2?'우수상':index<=4?'장려상':'예선탈락');
   const player=ranked.find(entry=>entry.player),winner=ranked[0],median=sehwaContestants[3].scores[ageIndex];
   const reaction=playerScore>=sehwaContestants[4].scores[ageIndex]?'자신감 넘침':playerScore>=median?'차분한 자신감':playerScore>=sehwaContestants[1].scores[ageIndex]?'긴장하지만 씩씩함':playerScore>=sehwaContestants[2].scores[ageIndex]?'자신 없음':'부끄러움';
-  return {entrants:shuffled(entrants),ranked,player,winner,overallRank:player.rank,reaction,change:canonicalizeChange({charm:2,arts:3,sensitivity:2,sense:1,dignity:1,stress:-3}),summary:`복을 그리는 왕실 세화 경연 ${player.rank} · 종합 ${player.score}점`,prize:winner.player?'왕실 화원의 세화첩':null};
+  return {entrants:shuffled(entrants),ranked,player,winner,artworkStats:stats,overallRank:player.rank,reaction,change:canonicalizeChange({charm:2,arts:3,sensitivity:2,sense:1,dignity:1,stress:-3}),summary:`복을 그리는 왕실 세화 경연 ${player.rank} · 종합 ${player.score}점`,prize:winner.player?'왕실 화원의 세화첩':null};
 }
 function sehwaOpeningAnswer(session){
   const answers={'자신감 넘침':'그동안 익힌 붓끝을 믿어요. 제 세화로 새해의 복을 환하게 보여 드릴게요.','차분한 자신감':'서두르지 않고 한 획씩 정성껏 그리면 제 마음이 전해질 거예요.','긴장하지만 씩씩함':'조금 떨리지만 신수가 곁에 있으니 끝까지 용기 내서 그려 볼게요.','자신 없음':'아직 부족한 것 같아 걱정되지만, 배운 순서부터 천천히 떠올려 볼게요.','부끄러움':'사람들이 모두 보고 있어서 떨려요… 그래도 종이 앞에서는 숨지 않을게요.'};
@@ -1668,6 +1714,7 @@ function renderHud() {
   document.querySelector('#dateLabel').textContent = date ? `${game.age}세 · ${date.getFullYear()}년 ${date.getMonth()+1}월 ${date.getDate()}일 · 제${phase.index}페이즈 ${phase.week}주차` : '생일 설정 전';
   document.querySelector('#moneyLabel').textContent = `${game.money.toLocaleString()}냥`;
   document.querySelector('#cashLabel').textContent = `캐시 ${game.cash.toLocaleString()}원`;
+  renderHomeSehwaArtwork();
   const guardian=guardianDefs[game.guardianType];
   document.querySelector('#speakerName').textContent = game.guardianName || guardian?.name || '수호신수';
   const companion=document.querySelector('#guardianCompanion');
@@ -2058,6 +2105,7 @@ function applySavePayload(saved) {
   if(!Number.isFinite(game.cash))game.cash=50000;
   if(!Number.isFinite(Number(game.fatherAffinity)))game.fatherAffinity=0;
   if(!Array.isArray(game.fatherBirthdayYears))game.fatherBirthdayYears=[];
+  normalizeSehwaWins();
   normalizeStats();
   normalizeRelations();
   normalizeActivityProgress();
@@ -2169,7 +2217,7 @@ function deleteCharacterRecord(slot){
 }
 
 function resetGameState() {
-  Object.assign(game, { characterName:'',nannyName:'',guardianType:null,guardianName:'',profileSlot:null,age:9,height:130,weight:28.5,month:1,week:1,season:'봄',money:50000,cash:50000,health:42,strength:18,agility:20,intelligence:35,magic:8,mentality:30,dignity:36,manners:28,speech:14,sensitivity:40,sense:24,charm:30,stress:0,items:[],purchasedGoods:[],relations:{},activityProgress:{},activityUnlocksSeen:[],startingGiftId:null,fatherBirthdayYears:[],equippedOutfit:null,autoOutfit:true,dailySchedule:[],scheduleFormat:'phase-v1',birthday:null,currentDate:null,endingDate:null,ended:false,endingResult:null,birthdayCount:0,element:null,birthSeason:null,memory:0,truth:0,exposure:0,fatherAffinity:0,guardianTrust:50,nannyAffinity:50,lastGreetingDate:null,lastGuardianTalkDate:null,lastGuardianTalkPhase:null,monthlyLedger:null});
+  Object.assign(game, { characterName:'',nannyName:'',guardianType:null,guardianName:'',profileSlot:null,age:9,height:130,weight:28.5,month:1,week:1,season:'봄',money:50000,cash:50000,health:42,strength:18,agility:20,intelligence:35,magic:8,mentality:30,dignity:36,manners:28,speech:14,sensitivity:40,sense:24,charm:30,stress:0,items:[],purchasedGoods:[],relations:{},activityProgress:{},activityUnlocksSeen:[],startingGiftId:null,fatherBirthdayYears:[],sehwaWins:[],latestSehwaArtwork:null,equippedOutfit:null,autoOutfit:true,dailySchedule:[],scheduleFormat:'phase-v1',birthday:null,currentDate:null,endingDate:null,ended:false,endingResult:null,birthdayCount:0,element:null,birthSeason:null,memory:0,truth:0,exposure:0,fatherAffinity:0,guardianTrust:50,nannyAffinity:50,lastGreetingDate:null,lastGuardianTalkDate:null,lastGuardianTalkPhase:null,monthlyLedger:null});
   document.querySelector('#liveChanges').innerHTML='';
   const greeting=document.querySelector('#homeGreeting');greeting.hidden=true;greeting.classList.remove('greeting-active');
   document.querySelector('#characterNameInput').value='';
@@ -3005,7 +3053,10 @@ async function playWeeklySchedule(selected) {
         document.querySelector('#dialogueText').textContent=beat===1?`선화: “${sehwaOpeningAnswer(holidayContestResult)}”`:sehwaStoryBeats[beat];
         await waitForSehwaAdvance(beat);
       }
-      if(holidayContestResult.prize&&!game.items.some(item=>item.id==='royal-sehwa-album'))game.items.push({id:'royal-sehwa-album',type:'event',name:'왕실 화원의 세화첩',description:'복을 그리는 왕실 세화 경연에서 대상을 받아 황에게 직접 하사받은 세화첩',qty:1,source:'seollal-sehwa-contest'});
+      if(holidayContestResult.prize){
+        if(!game.items.some(item=>item.id==='royal-sehwa-album'))game.items.push({id:'royal-sehwa-album',type:'event',name:'왕실 화원의 세화첩',description:'복을 그리는 왕실 세화 경연에서 대상을 받아 황에게 직접 하사받은 세화첩',qty:1,source:'seollal-sehwa-contest'});
+        holidayContestResult.homeArtwork=awardSehwaArtwork(holidayContestResult);
+      }
     }else if(action.id==='dungeon'){
       stageCharacter.hidden=true;stageNpc.hidden=true;stageProps.hidden=true;dungeonReward=await exploreDungeon();stageCharacter.hidden=false;stageProps.hidden=false;
     }else if(action.special==='date'){
