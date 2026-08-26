@@ -142,6 +142,46 @@
   .phone.intro-guardian-active .home-greeting.guardian-overlay .greeting-answer-dock{animation-duration:.01ms!important;animation-delay:0s!important}
 }
 
+/* v0.64.54: reserve separate vertical lanes for guardian rewards, speaker,
+   dialogue and answers. Four reward cards must never descend into the nameplate. */
+.home-greeting.guardian-overlay>.guardian-talk-result{
+  bottom:41.5%!important;
+  min-height:66px;
+  max-height:78px;
+  align-items:stretch;
+  overflow:hidden;
+}
+.home-greeting.guardian-overlay>.guardian-talk-result span{
+  grid-template-columns:minmax(0,1fr) auto;
+  align-content:center;
+  min-height:52px;
+  padding:5px 6px;
+}
+.home-greeting.guardian-overlay>.guardian-talk-result b{
+  min-width:0;
+  white-space:nowrap;
+  font-size:10px;
+}
+.home-greeting.guardian-overlay>.guardian-talk-result em{font-size:12px}
+.home-greeting.guardian-overlay>.guardian-talk-result small{
+  white-space:nowrap;
+  font-size:8px;
+}
+.home-greeting.guardian-overlay .home-greeting-head b{bottom:33%!important}
+.home-greeting.guardian-overlay>p{bottom:20%!important}
+.home-greeting.guardian-overlay>.greeting-answer-dock{bottom:2%!important}
+@media(max-width:380px){
+  .home-greeting.guardian-overlay>.guardian-talk-result{
+    bottom:42%!important;
+    min-height:62px;
+    max-height:72px;
+    grid-template-columns:repeat(4,minmax(0,1fr));
+  }
+  .home-greeting.guardian-overlay>.guardian-talk-result span{min-height:48px;padding:4px}
+  .home-greeting.guardian-overlay>.guardian-talk-result b{font-size:9px}
+  .home-greeting.guardian-overlay>.guardian-talk-result em{font-size:11px}
+}
+
 /* v0.64.30: keep guardian answer rewards in their own row above the nameplate.
    The previous 32% baseline occupied the same vertical band as the speaker. */
 .home-greeting.guardian-overlay>.guardian-talk-result{
@@ -208,4 +248,16 @@
   .home-greeting.guardian-overlay.is-dissolving>p,
   .home-greeting.guardian-overlay.is-dissolving>.guardian-talk-result,
   .home-greeting.guardian-overlay.is-dissolving>.greeting-answer-dock{animation-duration:.01ms!important}
+}
+
+/* Final lane constraints: keep these after every legacy guardian override. */
+.home-greeting.guardian-overlay>.guardian-talk-result{bottom:41.5%!important}
+.home-greeting.guardian-overlay>.guardian-talk-result span{padding:5px 6px}
+@media(max-width:380px){
+  .home-greeting.guardian-overlay>.guardian-talk-result{
+    bottom:42%!important;
+    grid-template-columns:repeat(4,minmax(0,1fr));
+    padding:6px 5px;
+  }
+  .home-greeting.guardian-overlay>.guardian-talk-result span{padding:4px}
 }
