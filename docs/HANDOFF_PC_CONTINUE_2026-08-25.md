@@ -28,6 +28,68 @@ git pull --ff-only origin agent/pixel-schedule-handoff
 
 로컬 변경이 표시되면 덮어쓰거나 초기화하지 말고 먼저 별도 커밋 또는 백업으로 보존합니다.
 
+## 다른 PC에서 이미 이어서 작업 중인 경우
+
+다른 PC의 기존 작업과 이 인계본은 **커밋과 브랜치 기준으로 구분할 수 있습니다.** 먼저 아래 네 명령의 결과를 확인합니다.
+
+```powershell
+git status --short --branch
+git branch --show-current
+git log -5 --oneline
+git remote -v
+```
+
+이 인계본의 구분 기준은 다음과 같습니다.
+
+- 기능 기준 커밋: `f423a15`
+- 최초 PC 인계 문서 커밋: `1126943`
+- 공통 작업 브랜치: `agent/pixel-schedule-handoff`
+- `git status`에 표시되는 수정·신규 파일: 아직 해당 PC에만 있는 로컬 작업
+- 위 기준 커밋 뒤의 다른 커밋: 다른 PC에서 추가한 작업일 가능성이 있으므로 커밋 메시지와 변경 파일 확인 필요
+
+### 다른 PC의 미커밋 작업 보존
+
+미커밋 변경이 있으면 바로 `pull`, `reset`, `clean`하지 않습니다. 먼저 그 PC 전용 보존 브랜치를 만듭니다.
+
+```powershell
+git switch -c pc-existing-work-20260825
+git status --short
+```
+
+그다음 실제 작업 파일만 명시적으로 스테이징하고 커밋합니다. `.local-backup-logs/`나 대용량 개인 백업은 함께 추가하지 않습니다.
+
+```powershell
+git add <실제로 수정한 파일 또는 폴더>
+git commit -m "backup: 다른 PC 기존 작업 보존"
+```
+
+커밋할 수 없는 중간 파일은 저장소 밖의 별도 폴더에 복사해 보존합니다. 사용자가 확인하기 전에는 파일을 삭제하거나 되돌리지 않습니다.
+
+### 두 PC 작업 비교
+
+기존 작업을 보존한 뒤 원격 정보를 받아 비교합니다.
+
+```powershell
+git fetch origin
+git log --left-right --graph --cherry-pick --oneline origin/agent/pixel-schedule-handoff...pc-existing-work-20260825
+git diff --name-status origin/agent/pixel-schedule-handoff...pc-existing-work-20260825
+```
+
+- 왼쪽(`<`)은 GitHub 작업 브랜치에만 있는 커밋입니다.
+- 오른쪽(`>`)은 다른 PC 보존 브랜치에만 있는 커밋입니다.
+- 같은 파일을 양쪽에서 수정했다면 자동 덮어쓰지 말고 파일별로 내용을 비교한 뒤 병합합니다.
+- 비교와 병합이 끝나기 전에는 `main`으로 전환하거나 병합하지 않습니다.
+
+### 다른 PC의 Codex에 전달할 시작 문구
+
+```text
+프로젝트의 docs/HANDOFF_PC_CONTINUE_2026-08-25.md를 먼저 끝까지 읽어줘.
+다른 PC에서 작업 중이던 변경이 있을 수 있으니 먼저 git status, branch,
+log, fetch를 확인하고 기준 커밋 f423a15 및 인계 커밋 1126943과 비교해줘.
+기존 변경은 별도 브랜치와 커밋으로 보존하고 pull, reset, clean은 자동 실행하지 마.
+충돌 가능성이 있는 파일은 어느 PC 변경인지 구분해서 보고한 뒤 이어서 작업해줘.
+```
+
 ## 로컬 데모 실행
 
 저장소 루트에서 실행합니다.
