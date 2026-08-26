@@ -237,7 +237,7 @@ const vacationIllustrations=[
 function unifiedAgeFolder(){return '09';}
 function scheduleFramePath(file){return `../assets/characters/seonhwa/schedule-actions/${file}`;}
 function scheduleBasePath(file){return `../assets/characters/seonhwa/schedule-base/${file}`;}
-const scheduleAssetRevision='0.64.95-debug';
+const scheduleAssetRevision='0.64.96-debug';
 const scheduleQaParams=new URLSearchParams(location.search);
 const moonlightStandaloneQa=scheduleQaParams.get('qaHoliday')==='chuseok';
 const sehwaStandaloneQa=scheduleQaParams.get('qaHoliday')==='seollal';
@@ -981,7 +981,7 @@ async function playScheduleLayerScene(actionId,seonImage,rank,outcome,dayIndex){
           activeHeroFrame=farmChickenChaseFrames[chaseFrame];
           activePatternFrame=patternFrames[chaseFrame];
           const heroLeft=travelsRight?10+travelProgress*44:90-travelProgress*44;
-          const chaseGap=28;
+          const chaseGap=34;
           const chickenLeft=travelsRight?heroLeft+chaseGap:heroLeft-chaseGap;
           stage.style.setProperty('--layer-hero-left',`${heroLeft}%`,'important');
           stage.style.setProperty('--layer-prop-left',`${chickenLeft}%`,'important');
@@ -3328,6 +3328,14 @@ async function startScheduleLayerQaPattern(pattern){
   if(scheduleQaLoopRunning)return;
   scheduleQaLoopRunning=true;
   const image=document.querySelector('#stageCharacterImage');
+  const oneShotQa=scheduleQaActionId==='childcare'||(scheduleQaActionId==='farmwork'&&pattern==='fail-b');
+  if(oneShotQa){
+    try{
+      await playScheduleLayerScene(scheduleQaActionId,image,0,pattern.startsWith('fail-')?'mistake':'success',pattern.endsWith('-b')?1:0);
+      document.querySelector('#stageCaption').textContent=`QA · ${scheduleQaActionId==='childcare'?'아이 돌보기':'논가 닭 추격'} · 1회 재생 완료`;
+    }finally{scheduleQaLoopRunning=false;}
+    return;
+  }
   while(scheduleLayerStandaloneQa){
     const activePattern=scheduleQaForcedPattern;
     await playScheduleLayerScene(scheduleQaActionId,image,0,activePattern.startsWith('fail-')?'mistake':'success',activePattern.endsWith('-b')?1:0);
@@ -3399,7 +3407,7 @@ function initScheduleLayerQa(){
   document.querySelector('#stageCaption').textContent=`QA · ${actions.find(action=>action.id===actionId)?.name||actionId}`;
   const character=document.querySelector('#stageCharacter');character.hidden=false;character.className=`stage-character pixel-sprite ${actionPresentation[actionId]?.motion||'motion-study'}`;
   document.querySelector('#stageNpc').hidden=true;document.querySelector('#stageProps').hidden=true;
-  const frameSummary=actionId==='childcare'?'선화 6프레임 · 아기 3프레임 · 좌우 추격':'선화 고정 132px · 1→2→3 반복';
+  const frameSummary=actionId==='childcare'?'선화 6프레임 · 아이 4프레임 · 1회 재생 후 버튼으로 다시 보기':'선화 고정 132px · 1→2→3 반복';
   const controls=document.createElement('aside');controls.className='schedule-layer-qa';controls.innerHTML=`<strong>${actionId} QA</strong><div>${['success-a','success-b','fail-a','fail-b'].map(pattern=>`<button type="button" data-qa-pattern="${pattern}">${pattern}</button>`).join('')}</div><div><button type="button" data-qa-speed="1">1×</button><button type="button" data-qa-speed="2">2×</button></div><small>${frameSummary}</small>`;phone.appendChild(controls);
   controls.querySelectorAll('[data-qa-pattern]').forEach(button=>button.addEventListener('click',()=>startScheduleLayerQaPattern(button.dataset.qaPattern)));
   controls.querySelectorAll('[data-qa-speed]').forEach(button=>button.addEventListener('click',()=>{schedulePlaybackSpeed=Number(button.dataset.qaSpeed);controls.querySelectorAll('[data-qa-speed]').forEach(item=>item.classList.toggle('active',Number(item.dataset.qaSpeed)===schedulePlaybackSpeed));}));

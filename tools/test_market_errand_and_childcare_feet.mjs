@@ -57,6 +57,8 @@ const childCross=path.join(root,'assets','schedule-layers-v2','childcare','npc',
 validateFrames([childCross],'child crossing');
 assert.ok(app.includes('const childcareNpcRunCycle=[0,3,2,3]'),'child must pass through the close crossed-leg frame between wide strides');
 assert.ok(app.includes("const requiredNpcFrameCount=actionId==='childcare'?4:3")&&app.includes('npcFrames.length!==requiredNpcFrameCount'),'childcare playback must accept its fourth crossing frame');
-assert.ok(html.includes('v0.64.95-debug'),'HTML cache revision must expose the new build');
+const layeredQaBody=app.slice(app.indexOf('async function startScheduleLayerQaPattern'),app.indexOf('async function startStudyFailureQa'));
+assert.ok(layeredQaBody.includes("const oneShotQa=scheduleQaActionId==='childcare'||(scheduleQaActionId==='farmwork'&&pattern==='fail-b')")&&layeredQaBody.includes("'아이 돌보기':'논가 닭 추격'")&&layeredQaBody.includes('finally{scheduleQaLoopRunning=false;}'),'childcare and farm chicken one-shot handling must live inside the layered QA runner');
+assert.ok(html.includes('v0.64.96-debug'),'HTML cache revision must expose the new build');
 assert.ok(app.includes("if(action.id==='childcare')stageCharacter.hidden=true"),'childcare result must hide the leftover Seonhwa frame');
 console.log('market errand traversal and childcare foot-frame checks passed');
