@@ -243,7 +243,7 @@ const vacationIllustrations=[
 function unifiedAgeFolder(){return '09';}
 function scheduleFramePath(file){return `../assets/characters/seonhwa/schedule-actions/${file}`;}
 function scheduleBasePath(file){return `../assets/characters/seonhwa/schedule-base/${file}`;}
-const scheduleAssetRevision='0.64.115-debug';
+const scheduleAssetRevision='0.64.116-debug';
 const scheduleQaParams=new URLSearchParams(location.search);
 const moonlightStandaloneQa=scheduleQaParams.get('qaHoliday')==='chuseok';
 const sehwaStandaloneQa=scheduleQaParams.get('qaHoliday')==='seollal';
@@ -978,7 +978,7 @@ async function playScheduleLayerScene(actionId,seonImage,rank,outcome,dayIndex){
       void stage.offsetWidth;
       delete stage.dataset.childcareStarting;
     }
-    const delay=actionId==='farmwork'&&patternKey==='fail-b'?210:actionId==='farmwork'?240:actionId==='childcare'?220:([360,300,250][rank]||300);
+    const delay=actionId==='farmwork'&&patternKey==='fail-b'?280:actionId==='farmwork'?240:actionId==='childcare'?220:([360,300,250][rank]||300);
     const playbackLoopCount=actionId==='childcare'?6:3;
     for(let loop=0;loop<playbackLoopCount;loop+=1){
       for(let frame=0;frame<3;frame+=1){
@@ -996,7 +996,7 @@ async function playScheduleLayerScene(actionId,seonImage,rank,outcome,dayIndex){
           const chaseFrame=farmChaseCycle[travelStep];
           activeHeroFrame=farmChickenChaseFrames[chaseFrame];
           activePatternFrame=patternFrames[chaseFrame];
-          const chaseGap=34;
+          const chaseGap=38;
           // 선화와 닭 모두 한쪽 창 밖에서 들어와 반대쪽 창 밖까지 완주한다.
           // 마지막 좌표를 무대 안에 남기면 공통 좌표 초기화 순간 선화가 뒤로
           // 되감겨 보이므로, 결과 전환 전에 확실히 화면 밖으로 보낸다.

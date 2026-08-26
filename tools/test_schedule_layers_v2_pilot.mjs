@@ -37,10 +37,10 @@ assert.match(css,/data-childcare-direction="right"[\s\S]*?layer-npc\{transform:t
 assert.match(css,/data-childcare-direction="left"[\s\S]*?layer-npc\{transform:translateX\(-50%\) scaleX\(-1\)!important/,'왼쪽 달리기 아기 NPC는 중심 좌표에서 반전해야 합니다.');
 assert.ok(app.includes('const farmChaseCycle=[0,1,2,1,0,1,2,1,0]'),'농가 닭 추격은 3→1 점프 없이 왕복 보간 프레임을 사용해야 합니다.');
 assert.ok(app.includes('const heroStart=travelsRight?-25:125')&&app.includes('*travelProgress*150'),'농가 닭 추격은 한쪽 화면 밖에서 반대편 화면 밖까지 완주해야 합니다.');
-assert.ok(app.includes('const chaseGap=34'),'농가 닭 추격은 선화와 닭의 불투명 영역이 겹치지 않는 안전 간격을 유지해야 합니다.');
+assert.ok(app.includes('const chaseGap=38'),'커진 닭과 선화의 불투명 영역이 겹치지 않는 안전 간격을 유지해야 합니다.');
 assert.ok(app.includes("npc/farmer-tilling-v4/farmer-tilling-v4-1.png")&&!app.includes("const farmTillingFrames=['npc/farmer-tilling-v1"),'농부 작업 프레임은 흰 배경을 제거한 v4 세트만 사용해야 합니다.');
 assert.match(css,/action-farmwork\.schedule-layered \.schedule-scene-layer\.layer-npc\{[\s\S]*?width:160px!important;[\s\S]*?height:160px!important;/,'농부 NPC는 선화보다 큰 성인 체격이어야 합니다.');
-assert.match(css,/action-farmwork\.schedule-layered \.schedule-scene-layer\.layer-pattern\.fail-b\{[\s\S]*?width:72px!important;/,'닭은 원본 투명 여백을 보정한 자연스러운 몸집이어야 합니다.');
+assert.match(css,/action-farmwork\.schedule-layered \.schedule-scene-layer\.layer-pattern\.fail-b\{[\s\S]*?width:84px!important;/,'닭은 추격 장면에서 알아보기 쉬운 크기여야 합니다.');
 assert.ok(app.includes("stage.dataset.childcareDirection=childcareTravelsRight?'right':'left'")&&app.includes('delete stage.dataset.childcareDirection'),'아이 돌보기 방향은 장면 시작부터 종료까지 고정해야 합니다.');
 assert.doesNotMatch(css,/action-childcare[\s\S]{0,300}transition:left \.28s linear,transform/,'아이 방향 반전에 transform 보간을 사용하면 도는 것처럼 보입니다.');
 assert.ok(app.includes("if(outcome==='mistake')document.querySelector('#dialogueText').textContent=''"),'실수 판정은 설명 글씨 없이 실패 모션으로 전달해야 합니다.');

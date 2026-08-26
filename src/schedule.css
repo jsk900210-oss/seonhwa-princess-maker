@@ -2411,11 +2411,11 @@ body .phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage:
 }
 .phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-farmwork.schedule-layered .schedule-scene-layer.layer-pattern.fail-b{
   bottom:3%!important;
-  width:72px!important;
-  transition:left .21s linear!important;
+  width:84px!important;
+  transition:left .28s linear!important;
   transform-origin:center bottom!important;
 }
-.phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-farmwork.schedule-layered:has(.schedule-scene-layer.layer-pattern.fail-b) .stage-character.pixel-sprite{transition:left .21s linear!important}
+.phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-farmwork.schedule-layered:has(.schedule-scene-layer.layer-pattern.fail-b) .stage-character.pixel-sprite{transition:left .28s linear!important}
 .phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-farmwork.schedule-layered[data-chase-direction="right"] .stage-character.pixel-sprite>img{transform:none!important;transform-origin:center bottom!important}
 .phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-farmwork.schedule-layered[data-chase-direction="left"] .stage-character.pixel-sprite>img{transform:scaleX(-1)!important;transform-origin:center bottom!important}
 .phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-farmwork.schedule-layered[data-chase-direction="right"] .schedule-scene-layer.layer-pattern.fail-b{transform:translateX(-50%)!important}
