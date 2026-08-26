@@ -2554,9 +2554,18 @@ body .phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage:
 .sehwa-drawing-ensemble i{position:absolute;z-index:2;left:9%;right:9%;bottom:15%;height:19%;border:1px solid #7a4b2b;border-radius:2px 2px 5px 5px;background:linear-gradient(165deg,#f5e8c8 0 48%,#9a6338 50%);box-shadow:0 2px 3px #0006}
 .sehwa-drawing-ensemble figcaption{position:relative;z-index:3;margin-bottom:1px;padding:1px 4px;border-radius:7px;background:#26160edb;color:#fff0c8;font-size:6px}
 .sehwa-drawing-ensemble figure.is-player{filter:drop-shadow(0 0 5px #ffd66e)}
-.sehwa-drawing-ensemble.is-preparing figure>span{animation:sehwa-participant-prepare 1.35s ease-in-out infinite alternate}
-.sehwa-drawing-ensemble.is-preparing i{background:linear-gradient(165deg,#fffaf0 0 46%,#9a6338 49%)}
+.sehwa-drawing-ensemble.is-preparing{inset:11% 3% 12%;grid-template-rows:44% 56%;gap:0 4px;perspective:520px}
+.sehwa-drawing-ensemble.is-preparing figure{overflow:visible;transform-origin:center bottom}
+.sehwa-drawing-ensemble.is-preparing figure:nth-child(-n+4){transform:scale(.82);filter:brightness(.9) saturate(.92)}
+.sehwa-drawing-ensemble.is-preparing figure:nth-child(n+5){z-index:2;transform:scale(1.04)}
+.sehwa-drawing-ensemble.is-preparing figure>span{bottom:27%;width:58px;height:76px;animation:sehwa-participant-prepare 1.35s ease-in-out infinite alternate}
+.sehwa-drawing-ensemble.is-preparing figure:nth-child(-n+4)>span{bottom:29%}
+.sehwa-drawing-ensemble.is-preparing i{left:4%;right:4%;bottom:12%;height:22%;overflow:visible;background:linear-gradient(168deg,#fffaf0 0 44%,#cfaa75 46% 55%,#774827 57%);transform:perspective(90px) rotateX(8deg);box-shadow:0 4px 3px #0007}
+.sehwa-drawing-ensemble.is-preparing i:before,.sehwa-drawing-ensemble.is-preparing i:after{content:'';position:absolute;z-index:-1;top:82%;width:5px;height:23px;border-radius:0 0 2px 2px;background:#56341f;box-shadow:inset 1px 0 #9b6b42}
+.sehwa-drawing-ensemble.is-preparing i:before{left:14%}.sehwa-drawing-ensemble.is-preparing i:after{right:14%}
+.sehwa-drawing-ensemble.is-preparing figure:after{content:'';position:absolute;left:10%;right:10%;bottom:2%;height:12px;border-radius:50%;background:#1c100b55;filter:blur(2px)}
 .sehwa-drawing-ensemble.is-preparing i b,.sehwa-drawing-ensemble.is-preparing i em{position:absolute;top:16%;display:block;background:#35251b}.sehwa-drawing-ensemble.is-preparing i b{left:22%;width:3px;height:15px;transform:rotate(20deg);transform-origin:bottom}.sehwa-drawing-ensemble.is-preparing i em{right:18%;width:10px;height:6px;border-radius:50%;background:#33251d;box-shadow:inset 0 0 0 2px #7b6046}
+.sehwa-drawing-ensemble.is-preparing figcaption{z-index:5;margin-bottom:3px;padding:2px 5px;background:#372117ed}
 @keyframes sehwa-participant-prepare{from{transform:translateX(-50%) translateY(0) rotate(-1deg)}to{transform:translateX(-50%) translateY(-3px) rotate(1deg)}}
 @keyframes sehwa-participant-draw{from{transform:translateX(-50%) rotate(-1.5deg)}to{transform:translateX(-50%) translateY(2px) rotate(2deg)}}
 .sehwa-contest.festival-pm3.beat-17 .pageant-winner{bottom:16%!important;height:58%!important}
