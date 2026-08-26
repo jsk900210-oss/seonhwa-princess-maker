@@ -1,6 +1,6 @@
 {
   "character": "seonhwa",
-  "version": "0.61.86-debug",
+  "version": "0.64.111-debug",
   "policy": "identity-locked",
   "unofficialVisualMotif": {
     "name": "IVE Jang Wonyoung",
@@ -12,6 +12,12 @@
     "13": "seonhwa-face-age-13-neutral.png",
     "16": "seonhwa-face-age-16-neutral.png",
     "18": "seonhwa-face-age-18-neutral.png"
+  },
+  "fullBodyBases": {
+    "9": "../age-09/base/seonhwa-age09-base-v3-wonyoung-motif-transparent.png",
+    "13": "../age-13/base/seonhwa-age13-base-v3-wonyoung-motif-transparent.png",
+    "16": "../age-16/base/seonhwa-age16-base-v3-wonyoung-motif-transparent.png",
+    "18": "../age-18/base/seonhwa-age18-base-v3-wonyoung-motif-transparent.png"
   },
   "invariants": [
     "almond-shaped dark-brown eyes and fixed eye spacing",

@@ -6,10 +6,10 @@ import { fileURLToPath } from 'node:url';
 const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..');
 const app=readFileSync(path.join(root,'src','app.js'),'utf8').replace(/\r\n/g,'\n');
 const files=[
-  'assets/characters/seonhwa/age-09/base/seonhwa-age09-home-main-v6-semi-real-transparent.png',
-  'assets/characters/seonhwa/age-13/base/seonhwa-age13-base-v2-semi-real-transparent.png',
-  'assets/characters/seonhwa/age-16/base/seonhwa-age16-base-v2-semi-real-transparent.png',
-  'assets/characters/seonhwa/age-18/base/seonhwa-age18-base-v2-semi-real-transparent.png'
+  'assets/characters/seonhwa/age-09/base/seonhwa-age09-base-v3-wonyoung-motif-transparent.png',
+  'assets/characters/seonhwa/age-13/base/seonhwa-age13-base-v3-wonyoung-motif-transparent.png',
+  'assets/characters/seonhwa/age-16/base/seonhwa-age16-base-v3-wonyoung-motif-transparent.png',
+  'assets/characters/seonhwa/age-18/base/seonhwa-age18-base-v3-wonyoung-motif-transparent.png'
 ];
 files.forEach(file=>assert.ok(existsSync(path.join(root,file)),`${file} missing`));
 assert.ok(app.includes('const baseSpritePaths=Object.freeze({'),'연령별 반실사 베이스 매핑이 필요합니다.');

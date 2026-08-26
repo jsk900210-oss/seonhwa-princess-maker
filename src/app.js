@@ -52,10 +52,10 @@ function transitionPrologueToHomeMusic(){
 
 const game = { characterName:'', nannyName:'', guardianType:null, guardianName:'', profileSlot:null, age: 9, height:130, weight:28.5, month: 1, week: 1, season:'봄', money: 50000, cash:50000, health:42, strength:18, agility:20, intelligence:35, magic:8, mentality:30, dignity:36, manners:28, speech:14, sensitivity:40, sense:24, charm:30, stress:0, items: [], purchasedGoods:[], relations:{}, activityProgress:{}, activityUnlocksSeen:[], completedPhases:[], startingGiftId:null, fatherBirthdayYears:[], sehwaWins:[], latestSehwaArtwork:null, equippedOutfit:null, autoOutfit:true, dailySchedule: [], scheduleFormat:'phase-v1', birthday:null, currentDate:null, endingDate:null, ended:false, endingResult:null, birthdayCount:0, element:null, birthSeason:null, memory:0, truth:0, exposure:0, fatherAffinity:0, guardianTrust:50, nannyAffinity:50, lastGreetingDate:null, lastGuardianTalkDate:null, lastGuardianTalkPhase:null, monthlyLedger:null };
 const baseSpritePaths=Object.freeze({
-  9:'../assets/characters/seonhwa/age-09/base/seonhwa-age09-home-main-v6-semi-real-transparent.png',
-  13:'../assets/characters/seonhwa/age-13/base/seonhwa-age13-base-v2-semi-real-transparent.png',
-  16:'../assets/characters/seonhwa/age-16/base/seonhwa-age16-base-v2-semi-real-transparent.png',
-  19:'../assets/characters/seonhwa/age-18/base/seonhwa-age18-base-v2-semi-real-transparent.png'
+  9:'../assets/characters/seonhwa/age-09/base/seonhwa-age09-base-v3-wonyoung-motif-transparent.png',
+  13:'../assets/characters/seonhwa/age-13/base/seonhwa-age13-base-v3-wonyoung-motif-transparent.png',
+  16:'../assets/characters/seonhwa/age-16/base/seonhwa-age16-base-v3-wonyoung-motif-transparent.png',
+  19:'../assets/characters/seonhwa/age-18/base/seonhwa-age18-base-v3-wonyoung-motif-transparent.png'
 });
 const baseSpriteForAge=(age=game.age)=>baseSpritePaths[age>=18?19:age>=16?16:age>=13?13:9];
 const baseSpritePath=baseSpritePaths[9];
@@ -243,7 +243,7 @@ const vacationIllustrations=[
 function unifiedAgeFolder(){return '09';}
 function scheduleFramePath(file){return `../assets/characters/seonhwa/schedule-actions/${file}`;}
 function scheduleBasePath(file){return `../assets/characters/seonhwa/schedule-base/${file}`;}
-const scheduleAssetRevision='0.64.110-debug';
+const scheduleAssetRevision='0.64.111-debug';
 const scheduleQaParams=new URLSearchParams(location.search);
 const moonlightStandaloneQa=scheduleQaParams.get('qaHoliday')==='chuseok';
 const sehwaStandaloneQa=scheduleQaParams.get('qaHoliday')==='seollal';
