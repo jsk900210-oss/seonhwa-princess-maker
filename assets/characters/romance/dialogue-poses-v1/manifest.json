@@ -1,0 +1,90 @@
+{
+  "version": "v1",
+  "referenceAge": 16,
+  "emotions": [
+    "neutral",
+    "smile",
+    "happy",
+    "shy",
+    "flustered",
+    "angry",
+    "worried",
+    "sad",
+    "serious",
+    "startled",
+    "affectionate",
+    "determined"
+  ],
+  "characters": {
+    "doyun": {
+      "neutral": "doyun/doyun-neutral-v1.png",
+      "smile": "doyun/doyun-smile-v1.png",
+      "happy": "doyun/doyun-happy-v1.png",
+      "shy": "doyun/doyun-shy-v1.png",
+      "flustered": "doyun/doyun-flustered-v1.png",
+      "angry": "doyun/doyun-angry-v1.png",
+      "worried": "doyun/doyun-worried-v1.png",
+      "sad": "doyun/doyun-sad-v1.png",
+      "serious": "doyun/doyun-serious-v1.png",
+      "startled": "doyun/doyun-startled-v1.png",
+      "affectionate": "doyun/doyun-affectionate-v1.png",
+      "determined": "doyun/doyun-determined-v1.png"
+    },
+    "seojin": {
+      "neutral": "seojin/seojin-neutral-v1.png",
+      "smile": "seojin/seojin-smile-v1.png",
+      "happy": "seojin/seojin-happy-v1.png",
+      "shy": "seojin/seojin-shy-v1.png",
+      "flustered": "seojin/seojin-flustered-v1.png",
+      "angry": "seojin/seojin-angry-v1.png",
+      "worried": "seojin/seojin-worried-v1.png",
+      "sad": "seojin/seojin-sad-v1.png",
+      "serious": "seojin/seojin-serious-v1.png",
+      "startled": "seojin/seojin-startled-v1.png",
+      "affectionate": "seojin/seojin-affectionate-v1.png",
+      "determined": "seojin/seojin-determined-v1.png"
+    },
+    "yeonwoo": {
+      "neutral": "yeonwoo/yeonwoo-neutral-v1.png",
+      "smile": "yeonwoo/yeonwoo-smile-v1.png",
+      "happy": "yeonwoo/yeonwoo-happy-v1.png",
+      "shy": "yeonwoo/yeonwoo-shy-v1.png",
+      "flustered": "yeonwoo/yeonwoo-flustered-v1.png",
+      "angry": "yeonwoo/yeonwoo-angry-v1.png",
+      "worried": "yeonwoo/yeonwoo-worried-v1.png",
+      "sad": "yeonwoo/yeonwoo-sad-v1.png",
+      "serious": "yeonwoo/yeonwoo-serious-v1.png",
+      "startled": "yeonwoo/yeonwoo-startled-v1.png",
+      "affectionate": "yeonwoo/yeonwoo-affectionate-v1.png",
+      "determined": "yeonwoo/yeonwoo-determined-v1.png"
+    },
+    "taegyeom": {
+      "neutral": "taegyeom/taegyeom-neutral-v1.png",
+      "smile": "taegyeom/taegyeom-smile-v1.png",
+      "happy": "taegyeom/taegyeom-happy-v1.png",
+      "shy": "taegyeom/taegyeom-shy-v1.png",
+      "flustered": "taegyeom/taegyeom-flustered-v1.png",
+      "angry": "taegyeom/taegyeom-angry-v1.png",
+      "worried": "taegyeom/taegyeom-worried-v1.png",
+      "sad": "taegyeom/taegyeom-sad-v1.png",
+      "serious": "taegyeom/taegyeom-serious-v1.png",
+      "startled": "taegyeom/taegyeom-startled-v1.png",
+      "affectionate": "taegyeom/taegyeom-affectionate-v1.png",
+      "determined": "taegyeom/taegyeom-determined-v1.png"
+    },
+    "hyeon": {
+      "neutral": "hyeon/hyeon-neutral-v1.png",
+      "smile": "hyeon/hyeon-smile-v1.png",
+      "happy": "hyeon/hyeon-happy-v1.png",
+      "shy": "hyeon/hyeon-shy-v1.png",
+      "flustered": "hyeon/hyeon-flustered-v1.png",
+      "angry": "hyeon/hyeon-angry-v1.png",
+      "worried": "hyeon/hyeon-worried-v1.png",
+      "sad": "hyeon/hyeon-sad-v1.png",
+      "serious": "hyeon/hyeon-serious-v1.png",
+      "startled": "hyeon/hyeon-startled-v1.png",
+      "affectionate": "hyeon/hyeon-affectionate-v1.png",
+      "determined": "hyeon/hyeon-determined-v1.png"
+    }
+  }
+}

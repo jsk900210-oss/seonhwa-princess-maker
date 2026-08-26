@@ -243,7 +243,7 @@ const vacationIllustrations=[
 function unifiedAgeFolder(){return '09';}
 function scheduleFramePath(file){return `../assets/characters/seonhwa/schedule-actions/${file}`;}
 function scheduleBasePath(file){return `../assets/characters/seonhwa/schedule-base/${file}`;}
-const scheduleAssetRevision='0.64.114-debug';
+const scheduleAssetRevision='0.64.115-debug';
 const scheduleQaParams=new URLSearchParams(location.search);
 const moonlightStandaloneQa=scheduleQaParams.get('qaHoliday')==='chuseok';
 const sehwaStandaloneQa=scheduleQaParams.get('qaHoliday')==='seollal';
@@ -1313,8 +1313,20 @@ function protagonistPortraitForAge(age=game.age){
 }
 function relationPortraitAge(age=game.age){return age>=18?19:age>=16?16:13;}
 function relationPortraitPath(candidate,age=game.age){return `../assets/characters/romance/identity/fullbody-v2/${candidate.id}-age-${relationPortraitAge(age)}-v2.png?v=${scheduleAssetRevision}`;}
+function relationDialogueEmotion(episode){
+  const cue=`${episode?.expression||''} ${episode?.pose||''}`;
+  if(/놀라|충돌|날아간/.test(cue))return 'startled';
+  if(/경계|날카로운|화/.test(cue))return 'angry';
+  if(/난처|머쓱|고백 직전|숨긴/.test(cue))return 'shy';
+  if(/안도|걱정|위험/.test(cue))return 'worried';
+  if(/결심|책임|집중|판단|설명/.test(cue))return 'serious';
+  if(/약속|함께|기대|손을 내미/.test(cue))return 'affectionate';
+  if(/흥이 오른|장난기|웃|미소/.test(cue))return 'smile';
+  return 'neutral';
+}
+function relationDialoguePosePath(candidate,episode){const emotion=relationDialogueEmotion(episode);return `../assets/characters/romance/dialogue-poses-v1/${candidate.id}/${candidate.id}-${emotion}-v1.png?v=${scheduleAssetRevision}`;}
 function relationPortraitMarkup(candidate,className=''){return `<img class="relation-dialogue-cutout ${className}" src="${relationPortraitPath(candidate)}" alt="${candidate.name} ${relationPortraitAge()}세 전신">`;}
-function applyRelationPortrait(element,candidate){if(!element||!candidate)return;element.src=relationPortraitPath(candidate);element.alt=`${candidate.name} ${relationPortraitAge()}세 전신`;}
+function applyRelationPortrait(element,candidate,episode=null){if(!element||!candidate)return;element.src=episode?relationDialoguePosePath(candidate,episode):relationPortraitPath(candidate);element.alt=episode?`${candidate.name} ${relationDialogueEmotion(episode)} 상반신`:`${candidate.name} ${relationPortraitAge()}세 전신`;}
 function relationReplyChoices(candidate){return [{line:`반가워요, ${candidate.name}님. 잠시 함께 이야기해요.`,reply:'나도 반가워. 오늘은 서두르지 않고 네 이야기를 듣고 싶어.'},{line:'이곳에는 무슨 일로 오셨어요?',reply:'해야 할 일이 있었는데, 너를 만나니 잠시 걸음을 멈추게 되는군.'}];}
 const relationSceneBackgrounds={
   '활터':'../assets/backgrounds/phase-scenes/martial.webp','집 마당':'../assets/backgrounds/pixel-activities/courtyard.webp','마당':'../assets/backgrounds/pixel-activities/courtyard.webp',
@@ -1328,7 +1340,7 @@ function relationSceneBackground(episode){return relationSceneBackgrounds[episod
 function playRelationEncounterScene(candidate,opening,resultLine='',episode=null){
   const scene=document.querySelector('#relationEncounterScene'),male=document.querySelector('#relationEncounterMale'),female=document.querySelector('#relationEncounterFemale'),speaker=document.querySelector('#relationEncounterSpeaker'),text=document.querySelector('#relationEncounterText'),next=document.querySelector('#relationEncounterNext'),choices=document.querySelector('#relationEncounterChoices');
   scene.style.setProperty('--relation-scene-background',`url('${relationSceneBackground(episode)}?v=${scheduleAssetRevision}')`);scene.dataset.location=episode?.scene||'집 안';
-  applyRelationPortrait(male,candidate);female.src=protagonistFullbodyForAge();female.alt=`${game.characterName||'선화'} ${game.age}세 전신`;
+  applyRelationPortrait(male,candidate,episode);female.src=protagonistFullbodyForAge();female.alt=`${game.characterName||'선화'} ${game.age}세 전신`;
   scene.hidden=false;scene.classList.remove('is-entered');requestAnimationFrame(()=>scene.classList.add('is-entered'));scene.dataset.speaker='male';speaker.textContent=candidate.name;text.textContent=opening||candidate.dialogues[0];choices.hidden=true;next.hidden=false;
   return new Promise(resolve=>{
     const finish=()=>{scene.hidden=true;scene.classList.remove('is-entered');scene.removeAttribute('data-speaker');male.removeAttribute('src');female.removeAttribute('src');resolve();};
