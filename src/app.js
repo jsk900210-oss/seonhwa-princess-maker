@@ -237,7 +237,7 @@ const vacationIllustrations=[
 function unifiedAgeFolder(){return '09';}
 function scheduleFramePath(file){return `../assets/characters/seonhwa/schedule-actions/${file}`;}
 function scheduleBasePath(file){return `../assets/characters/seonhwa/schedule-base/${file}`;}
-const scheduleAssetRevision='0.64.98-debug';
+const scheduleAssetRevision='0.64.99-debug';
 const scheduleQaParams=new URLSearchParams(location.search);
 const moonlightStandaloneQa=scheduleQaParams.get('qaHoliday')==='chuseok';
 const sehwaStandaloneQa=scheduleQaParams.get('qaHoliday')==='seollal';
@@ -1014,6 +1014,9 @@ async function playScheduleLayerScene(actionId,seonImage,rank,outcome,dayIndex){
       }
     }
   }finally{
+    // chase 좌표를 지우고 schedule-layered 클래스를 제거하기 전에 숨겨야
+    // 기본 중앙 배치의 선화가 결과 전환 사이에 한 프레임 다시 나타나지 않는다.
+    if(actionId==='childcare')seonImage.closest('.stage-character')?.setAttribute('hidden','');
     layers.forEach(layer=>layer.remove());
     stage.classList.remove('schedule-layered');
     delete stage.dataset.chaseDirection;
