@@ -1,5 +1,11 @@
 # 선화공주 만들기 — MVP 이미지 자산 패키지
 
+## v0.64.95-debug · 아이 돌보기 진행 멈춤 수정
+
+- 아이 교차 프레임을 포함한 4장 구성을 재생 검증기가 정상 허용하도록 수정했습니다.
+- 기존 3장 전제 때문에 일정 진입 즉시 발생하던 `schedule layer frame count invalid` 예외를 제거했습니다.
+- QA: `src/?qa=1&qaSchedule=childcare&qaPattern=success-a&qaDirection=right&v=0.64.95-debug`
+
 ## v0.64.94-debug · 아이 돌보기 교차 보행 프레임
 
 - 선화는 새로 생성한 교차 프레임의 얼굴·체형 불일치를 발견해 제외하고, 승인된 추격 6프레임만 교차 순서로 재배열했습니다.

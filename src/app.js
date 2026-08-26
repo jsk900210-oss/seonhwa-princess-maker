@@ -237,7 +237,7 @@ const vacationIllustrations=[
 function unifiedAgeFolder(){return '09';}
 function scheduleFramePath(file){return `../assets/characters/seonhwa/schedule-actions/${file}`;}
 function scheduleBasePath(file){return `../assets/characters/seonhwa/schedule-base/${file}`;}
-const scheduleAssetRevision='0.64.94-debug';
+const scheduleAssetRevision='0.64.95-debug';
 const scheduleQaParams=new URLSearchParams(location.search);
 const moonlightStandaloneQa=scheduleQaParams.get('qaHoliday')==='chuseok';
 const sehwaStandaloneQa=scheduleQaParams.get('qaHoliday')==='seollal';
@@ -914,7 +914,8 @@ async function playScheduleLayerScene(actionId,seonImage,rank,outcome,dayIndex){
   const childcareMinimumGap=34;
   const childcareChildStart=childcareTravelsRight===null?null:childcareTravelsRight?-20:120;
   const requiredHeroFrameCount=actionId==='childcare'?6:3;
-  if(heroFrames.length!==requiredHeroFrameCount||npcFrames.length!==3||patternFrames?.length!==3)throw new Error(`schedule layer frame count invalid: ${actionId}/${patternKey}`);
+  const requiredNpcFrameCount=actionId==='childcare'?4:3;
+  if(heroFrames.length!==requiredHeroFrameCount||npcFrames.length!==requiredNpcFrameCount||patternFrames?.length!==3)throw new Error(`schedule layer frame count invalid: ${actionId}/${patternKey}`);
   const placement=spec.placement||{};
   const positionPercent=value=>Number.parseFloat(String(value??'').replace('%',''));
   let heroPosition=positionPercent(placement.heroLeft||'40%'),npcPosition=positionPercent(placement.npcLeft||'72%');
