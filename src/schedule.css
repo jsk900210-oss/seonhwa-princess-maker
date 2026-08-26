@@ -2554,6 +2554,10 @@ body .phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage:
 .sehwa-drawing-ensemble i{position:absolute;z-index:2;left:9%;right:9%;bottom:15%;height:19%;border:1px solid #7a4b2b;border-radius:2px 2px 5px 5px;background:linear-gradient(165deg,#f5e8c8 0 48%,#9a6338 50%);box-shadow:0 2px 3px #0006}
 .sehwa-drawing-ensemble figcaption{position:relative;z-index:3;margin-bottom:1px;padding:1px 4px;border-radius:7px;background:#26160edb;color:#fff0c8;font-size:6px}
 .sehwa-drawing-ensemble figure.is-player{filter:drop-shadow(0 0 5px #ffd66e)}
+.sehwa-drawing-ensemble.is-preparing figure>span{animation:sehwa-participant-prepare 1.35s ease-in-out infinite alternate}
+.sehwa-drawing-ensemble.is-preparing i{background:linear-gradient(165deg,#fffaf0 0 46%,#9a6338 49%)}
+.sehwa-drawing-ensemble.is-preparing i b,.sehwa-drawing-ensemble.is-preparing i em{position:absolute;top:16%;display:block;background:#35251b}.sehwa-drawing-ensemble.is-preparing i b{left:22%;width:3px;height:15px;transform:rotate(20deg);transform-origin:bottom}.sehwa-drawing-ensemble.is-preparing i em{right:18%;width:10px;height:6px;border-radius:50%;background:#33251d;box-shadow:inset 0 0 0 2px #7b6046}
+@keyframes sehwa-participant-prepare{from{transform:translateX(-50%) translateY(0) rotate(-1deg)}to{transform:translateX(-50%) translateY(-3px) rotate(1deg)}}
 @keyframes sehwa-participant-draw{from{transform:translateX(-50%) rotate(-1.5deg)}to{transform:translateX(-50%) translateY(2px) rotate(2deg)}}
 .sehwa-contest.festival-pm3.beat-17 .pageant-winner{bottom:16%!important;height:58%!important}
 .sehwa-contest.festival-pm3.beat-17 .pageant-king{bottom:16%!important;width:104px!important;height:146px!important}

@@ -237,7 +237,7 @@ const vacationIllustrations=[
 function unifiedAgeFolder(){return '09';}
 function scheduleFramePath(file){return `../assets/characters/seonhwa/schedule-actions/${file}`;}
 function scheduleBasePath(file){return `../assets/characters/seonhwa/schedule-base/${file}`;}
-const scheduleAssetRevision='0.64.70-debug';
+const scheduleAssetRevision='0.64.71-debug';
 const scheduleQaParams=new URLSearchParams(location.search);
 const moonlightStandaloneQa=scheduleQaParams.get('qaHoliday')==='chuseok';
 const sehwaStandaloneQa=scheduleQaParams.get('qaHoliday')==='seollal';
@@ -1486,14 +1486,17 @@ function sehwaOpeningDialogue(session,beat){
 function sehwaDrawingEnsemble(session){
   return `<section class="sehwa-drawing-ensemble" aria-label="세화를 그리는 참가자 8명">${session.entrants.map(entry=>`<figure class="${entry.player?'is-player':''}"><span><img src="${entry.player?sehwaFrame('drawing',2):moonlightEntrantImage(entry)}" alt="세화를 그리는 ${entry.name}"></span><i aria-hidden="true"></i><figcaption>${entry.name}</figcaption></figure>`).join('')}</section>`;
 }
+function sehwaPreparationEnsemble(session){
+  return `<section class="sehwa-drawing-ensemble is-preparing" aria-label="화구와 화지를 준비하는 참가자 8명">${session.entrants.map(entry=>`<figure class="${entry.player?'is-player':''}"><span><img src="${entry.player?sehwaFrame('opening',2):moonlightEntrantImage(entry)}" alt="화구를 준비하는 ${entry.name}"></span><i aria-hidden="true"><b></b><em></em></i><figcaption>${entry.name}</figcaption></figure>`).join('')}</section>`;
+}
 function sehwaRegistrationScene(){
   const name=game.characterName||'선화';
   return `<section class="sehwa-registration" aria-label="접수 관리에게 참가표를 받는 ${name}"><img class="sehwa-registration-seonhwa" src="${sehwaFrame('opening',2)}" alt="손을 내밀어 참가표를 받는 ${name}"><figure><img src="../assets/characters/npcs/activity/teacher-reading-1.png?v=${scheduleAssetRevision}" alt="명부를 확인하는 접수 관리"><figcaption>왕실 화원 접수</figcaption></figure><div class="sehwa-entry-slip" aria-label="${name}의 여덟 번째 참가표"><small>복을 그리는 왕실 세화 경연</small><b>참가표 八</b><span>${name}</span><i aria-hidden="true">印</i></div></section>`;
 }
 function renderSehwaContest(session,beatIndex){
   const overlay=document.querySelector('#moonlightPageant');if(!overlay)return;
-  const beat=Math.min(sehwaStoryBeats.length-1,Math.max(0,beatIndex)),opening=beat<=1,drawingGroup=beat===6,drawing=beat>=7&&beat<=11,title=beat===3,intro=beat===4,vote=beat===12,result=beat===13,guardianResult=beat===14,award=beat===15&&session.winner.player;
-  const stageMap=document.querySelector('#stageMap');if(stageMap)stageMap.src=`../assets/events/holidays/sehwa-contest/background/${drawing||drawingGroup?'royal-atelier-v1.webp':'royal-contest-hall-v1.png'}?v=${scheduleAssetRevision}`;
+  const beat=Math.min(sehwaStoryBeats.length-1,Math.max(0,beatIndex)),opening=beat<=1,preparing=beat===5,drawingGroup=beat===6,drawing=beat>=7&&beat<=11,title=beat===3,intro=beat===4,vote=beat===12,result=beat===13,guardianResult=beat===14,award=beat===15&&session.winner.player;
+  const stageMap=document.querySelector('#stageMap');if(stageMap)stageMap.src=`../assets/events/holidays/sehwa-contest/background/${drawing||drawingGroup||preparing?'royal-atelier-v1.webp':'royal-contest-hall-v1.png'}?v=${scheduleAssetRevision}`;
   const frameKind=beat<3?'opening':'drawing';
   const frameUrls=[1,2,3].map(frame=>award?sehwaAwardSceneFrame(frame):sehwaFrame(frameKind,frame));
   const hero=award?`<span class="sehwa-award-sequence" role="img" aria-label="${sehwaStoryBeats[beat]}">${frameUrls.map((src,index)=>`<img src="${src}" alt="" style="--award-index:${index}">`).join('')}</span>`:drawing?`<span class="sehwa-hero is-drawing" style="--sehwa-f1:url('${frameUrls[0]}');--sehwa-f2:url('${frameUrls[1]}');--sehwa-f3:url('${frameUrls[2]}')" role="img" aria-label="${sehwaStoryBeats[beat]}"></span>`:'';
@@ -1504,7 +1507,7 @@ function renderSehwaContest(session,beatIndex){
   const winner=beat===15&&!session.winner.player?`<figure class="pageant-winner"><img src="${moonlightEntrantImage(session.winner)}" alt="대상 수상자 ${session.winner.name}"><figcaption>대상 · ${session.winner.name}</figcaption></figure><img class="pageant-king" src="../assets/events/holidays/moonlight-pageant/king/king-presenting-v1.png?v=${scheduleAssetRevision}" alt="대상을 시상하는 황">`:'';
   overlay.hidden=false;overlay.className=`moonlight-pageant sehwa-contest festival-pm3 beat-${beat+1} reaction-${session.reaction.replaceAll(' ','-')}`;
   const nextLabel=award?'경연 마치기':result?'결과 확인':'다음';
-  overlay.innerHTML=`${titleCard}${hero}${guardian}${opening?sehwaOpeningDialogue(session,beat):''}${beat===2?sehwaRegistrationScene():''}${drawingGroup?sehwaDrawingEnsemble(session):''}${king}${board}${winner}<button class="pageant-next" type="button">${nextLabel}</button>`;
+  overlay.innerHTML=`${titleCard}${hero}${guardian}${opening?sehwaOpeningDialogue(session,beat):''}${beat===2?sehwaRegistrationScene():''}${preparing?sehwaPreparationEnsemble(session):''}${drawingGroup?sehwaDrawingEnsemble(session):''}${king}${board}${winner}<button class="pageant-next" type="button">${nextLabel}</button>`;
 }
 function waitForSehwaAdvance(beat){
   const button=document.querySelector('#moonlightPageant .pageant-next');if(!button)return schedulePlaybackDelay(2500);
