@@ -2,6 +2,11 @@
   "character": "seonhwa",
   "version": "0.61.86-debug",
   "policy": "identity-locked",
+  "unofficialVisualMotif": {
+    "name": "IVE Jang Wonyoung",
+    "usage": "inspiration for a bright, elegant presence and confident posture only",
+    "restriction": "do not copy the real person's exact likeness, photos, outfits, or expressions"
+  },
   "ageAnchors": {
     "9": "seonhwa-face-age-09-neutral.png",
     "13": "seonhwa-face-age-13-neutral.png",
@@ -14,6 +19,7 @@
     "small cupid-bow lips",
     "consistent brow shape and ear placement",
     "natural age progression without changing identity"
+    ,"bright elegant presence and poised posture inspired by the unofficial motif"
   ],
   "allowedChanges": [
     "expression",
