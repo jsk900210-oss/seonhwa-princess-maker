@@ -17,7 +17,11 @@ for(const [pattern,stem] of [['success-a','sawing'],['success-b','hammering']]){
   if(new Set(hashes).size!==3)throw new Error(`${pattern}: duplicate static frames`);
 }
 const app=fs.readFileSync(path.join(root,'src/app.js'),'utf8');
-if(!app.includes("animateStudyDeskCollapse(stageCharacterImage,outcome)"))throw new Error('글읽기·셈하기 실패는 책상 엎드림 동작을 사용해야 함');
+if(!app.includes("animateStudySweatWipe(action.id,stageCharacterImage)"))throw new Error('글읽기·셈하기 실패는 이마의 땀을 닦는 전용 동작을 사용해야 함');
+for(const activity of ['calligraphy','arithmetic'])for(const frame of [1,2,3]){
+  const file=path.join(root,'assets','characters','seonhwa','schedule-actions','failures','sweat-wipe-v1',`seonhwa-${activity}-sweat-wipe-${frame}.png`);
+  if(!fs.existsSync(file))throw new Error(`땀 닦기 프레임 누락: ${activity}-${frame}`);
+}
 if(!app.includes("const tillingCycle=[1,2,1,2,1,2,1,2,1]"))throw new Error('농부 밭갈기는 크기가 안정적인 두 자세를 번갈아야 함');
 if(!app.includes("if(actionId==='manners')")||!app.includes("seonhwa-stumble-3.png"))throw new Error('예절 실패는 손을 뻗는 추격 프레임 없이 주저앉아야 함');
 if(!app.includes('patternSpec?.heroFrames?.length===3'))throw new Error('pattern-specific hero renderer missing');

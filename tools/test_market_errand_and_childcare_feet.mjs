@@ -39,8 +39,10 @@ const heroDir=path.join(root,'assets','schedule-layers-v2','childcare','hero-act
 const heroFrames=[1,2,3,4,5,6].map(number=>path.join(heroDir,`seonhwa-chase-v3-${number}.png`));
 const heroHashes=validateFrames(heroFrames,'Seonhwa running');
 assert.equal(new Set(heroHashes).size,6,'all six Seonhwa foot-motion frames must be distinct files');
-assert.ok(app.includes("Array.from({length:6},(_,index)=>`hero-actions/chase-running-v3/seonhwa-chase-v3-${index+1}.png`)"),'app must use all six Seonhwa v3 frames');
-assert.ok(app.includes('const childcareHeroRunCycle=[0,3,1,4,2,5]')&&app.includes('travelStep%childcareHeroRunCycle.length'),'Seonhwa must use the six approved frames in alternating silhouette order');
+const crossDir=path.join(root,'assets','schedule-layers-v2','childcare','hero-actions','chase-running-v4');
+validateFrames([1,2].map(number=>path.join(crossDir,`seonhwa-chase-cross-v4-${number}.png`)),'Seonhwa crossing');
+assert.ok(app.includes("Array.from({length:6},(_,index)=>`hero-actions/chase-running-v3/seonhwa-chase-v3-${index+1}.png`)"),'app must retain all six Seonhwa v3 frames');
+assert.ok(app.includes('const childcareHeroRunCycle=[0,6,3,1,7,4,2,5]')&&app.includes('travelStep%childcareHeroRunCycle.length'),'Seonhwa must pass through both new crossed-leg frames');
 
 const babySets=[
   ['child-running-v2','child-run-v2'],
@@ -60,7 +62,7 @@ assert.ok(app.includes('const childcareNpcRunCycle=[0,3,2,3]'),'child must pass 
 assert.ok(app.includes("const requiredNpcFrameCount=actionId==='childcare'?4:3")&&app.includes('npcFrames.length!==requiredNpcFrameCount'),'childcare playback must accept its fourth crossing frame');
 const layeredQaBody=app.slice(app.indexOf('async function startScheduleLayerQaPattern'),app.indexOf('async function startStudyFailureQa'));
 assert.ok(layeredQaBody.includes("const oneShotQa=scheduleQaActionId==='childcare'||(scheduleQaActionId==='farmwork'&&pattern==='fail-b')")&&layeredQaBody.includes("'아이 돌보기':'논가 닭 추격'")&&layeredQaBody.includes('finally{scheduleQaLoopRunning=false;}'),'childcare and farm chicken one-shot handling must live inside the layered QA runner');
-assert.ok(html.includes('v0.64.110-debug'),'HTML cache revision must expose the new build');
+assert.ok(html.includes('v0.64.114-debug'),'HTML cache revision must expose the new build');
 assert.ok(css.includes('.stage-character[hidden]{display:none!important}'),'Hidden stage characters must stay hidden after chase scenes');
 assert.ok(app.includes("const heroStart=travelsRight?-25:125")&&app.includes("*travelProgress*150"),'농가 닭 추격은 좌우 양방향으로 화면 밖까지 완주해야 합니다.');
 assert.ok(app.includes("actionId==='farmwork'&&patternKey==='fail-b'))seonImage.closest('.stage-character')?.setAttribute('hidden','')"),'농가 추격 종료 좌표를 지우기 전에 선화를 숨겨 되감기 잔상을 막아야 합니다.');

@@ -28,7 +28,7 @@ assert.match(css,/action-farmwork\.schedule-layered\[data-chase-direction="left"
 assert.ok(app.includes('const minimumActorGap=58')&&app.includes("stage.dataset.actorSafeGap=String(minimumActorGap)"),'성인 NPC와 선화는 실제 프레임 폭을 고려한 공통 안전 간격을 사용해야 합니다.');
 assert.ok(app.includes("setProperty('--layer-hero-left',`${heroPosition}%`,'important')")&&app.includes("setProperty('--layer-npc-left',`${npcPosition}%`,'important')"),'공통 안전 좌표가 일정별 CSS에 덮이면 안 됩니다.');
 assert.ok(app.includes('const childcareMinimumGap=34')&&app.includes('childLeft-childcareMinimumGap')&&app.includes('childLeft+childcareMinimumGap'),'아이 돌보기 이동 중 선화와 아이의 최소 중심 간격을 양방향으로 유지해야 합니다.');
-assert.ok(app.includes('const childcareHeroRunCycle=[0,3,1,4,2,5]')&&app.includes('travelStep%childcareHeroRunCycle.length'),'아이 돌보기 선화는 승인된 6프레임을 교차 실루엣 순서로 반복해야 합니다.');
+assert.ok(app.includes('const childcareHeroRunCycle=[0,6,3,1,7,4,2,5]')&&app.includes('travelStep%childcareHeroRunCycle.length'),'아이 돌보기 선화는 두 다리 교차 프레임을 포함한 8프레임 순서로 반복해야 합니다.');
 assert.ok(app.includes('const childcareNpcRunCycle=[0,3,2,3]')&&app.includes('travelStep%childcareNpcRunCycle.length'),'아이 돌보기 아이는 벌린 보폭 사이에 교차 보간 프레임을 반복해야 합니다.');
 assert.ok(app.includes('const childcareTravelDistance=178')&&app.includes("childcareTravelsRight?-20:120")&&app.includes("actionId==='childcare'?6:3"),'아이 돌보기 성공·실수 장면은 화면 밖에서 시작해 18단계로 반대편 밖까지 완주해야 합니다.');
 assert.ok(app.includes('const childStart=childcareChildStart')&&app.includes('childStart+(travelsRight?1:-1)*progress*childcareTravelDistance'),'아이와 선화의 진행 방향은 장면 중간에 바뀌면 안 됩니다.');

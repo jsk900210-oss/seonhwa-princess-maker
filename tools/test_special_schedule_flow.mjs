@@ -19,7 +19,9 @@ const mustContain = [
   ['closeMarketUiForTransition();\n      if(index%14===0){', '바캉스 전환 전에 저잣거리 주문창을 닫아야 합니다.'],
   ['const metSomeone=await playVacationScene(prize,index,vacationCompanion,scheduleStart,index<selected.length-1);', '바캉스 동행 선택·감상·인연 장면이 끝날 때까지 다음 일정은 대기해야 합니다.'],
   ["if((action.id==='vacation'||action.id==='holiday-seollal'||action.id==='holiday-chuseok')&&index%14===0)index=Math.min(index+13,selected.length-1);", '14일 바캉스·명절 장면 종료 후 중복 재생 없이 다음 일정으로 이동해야 합니다.'],
-  ["scene.classList.remove('has-encounter','child-live');scene.hidden=true", '바캉스 종료 시 일러스트와 인연 UI를 숨겨야 합니다.'],
+  ["scene.classList.remove('has-encounter');scene.classList.add('vacation-leaving');", '바캉스 종료 시 점진 흐림 전환을 시작해야 합니다.'],
+  ["scene.classList.remove('child-live','vacation-leaving');scene.hidden=true", '흐림 전환 뒤 바캉스 일러스트를 숨겨야 합니다.'],
+  ["if(holiday)game.dailySchedule=[holiday.id];", '설날·추석 포함 페이즈는 해당 명절 일정을 자동 편성해야 합니다.'],
   ["phone.classList.remove('playing','schedule-holiday');", '주간 일정 종료 시 홈 화면 조작 상태를 복구해야 합니다.'],
 ];
 
