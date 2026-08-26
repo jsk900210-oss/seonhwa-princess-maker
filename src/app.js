@@ -237,7 +237,7 @@ const vacationIllustrations=[
 function unifiedAgeFolder(){return '09';}
 function scheduleFramePath(file){return `../assets/characters/seonhwa/schedule-actions/${file}`;}
 function scheduleBasePath(file){return `../assets/characters/seonhwa/schedule-base/${file}`;}
-const scheduleAssetRevision='0.64.68-debug';
+const scheduleAssetRevision='0.64.69-debug';
 const scheduleQaParams=new URLSearchParams(location.search);
 const moonlightStandaloneQa=scheduleQaParams.get('qaHoliday')==='chuseok';
 const sehwaStandaloneQa=scheduleQaParams.get('qaHoliday')==='seollal';
@@ -1447,7 +1447,7 @@ const sehwaContestants=[
   {id:'eunseo',name:'은서',scores:[182,395,630,830]}
 ];
 const sehwaStoryBeats=[
-  '왕실 화원의 초청장을 펼치자 신수가 가장 먼저 선화를 응원했어요.','선화가 자신의 준비와 마음을 솔직하게 대답했어요.','선화가 왕실 행사장으로 들어가 참가표를 받았어요.','「복을 그리는 왕실 세화 경연」의 막이 올랐어요.','황이 주제 「까치·매화·새해 첫 해」를 발표했어요.','여덟 참가자가 각자의 화구와 화지를 준비했어요.','모든 참가자가 자리에 앉아 동시에 세화를 그리기 시작했어요.','먹을 곱게 갈고 붓끝을 가지런히 다듬었어요.','선화가 화지 위에 첫 먹선을 그었어요.','매화 가지와 까치의 윤곽을 완성했어요.','붉은 매화와 떠오르는 해에 색을 입혔어요.','마지막으로 낙관을 찍어 세화를 완성했어요.','여덟 참가자의 세화 점수가 차례로 집계됐어요.','선화의 최종 등급과 점수가 발표됐어요.','신수가 결과를 듣고 선화 곁으로 달려왔어요.','황이 대상 수상자와 마주 서서 왕실 화원의 세화첩을 직접 건넸어요.'
+  '왕실 화원의 초청장을 펼치자 신수가 가장 먼저 선화를 응원했어요.','선화가 자신의 준비와 마음을 솔직하게 대답했어요.','접수 관리가 명부를 확인한 뒤 선화에게 여덟 번째 참가표를 건넸어요.','「복을 그리는 왕실 세화 경연」의 막이 올랐어요.','황이 주제 「까치·매화·새해 첫 해」를 발표했어요.','여덟 참가자가 각자의 화구와 화지를 준비했어요.','모든 참가자가 자리에 앉아 동시에 세화를 그리기 시작했어요.','먹을 곱게 갈고 붓끝을 가지런히 다듬었어요.','선화가 화지 위에 첫 먹선을 그었어요.','매화 가지와 까치의 윤곽을 완성했어요.','붉은 매화와 떠오르는 해에 색을 입혔어요.','마지막으로 낙관을 찍어 세화를 완성했어요.','여덟 참가자의 세화 점수가 차례로 집계됐어요.','선화의 최종 등급과 점수가 발표됐어요.','신수가 결과를 듣고 선화 곁으로 달려왔어요.','황이 대상 수상자와 마주 서서 왕실 화원의 세화첩을 직접 건넸어요.'
 ];
 function sehwaAgeIndex(){return game.age>=18?3:game.age>=16?2:game.age>=13?1:0;}
 function sehwaAssetAge(){return game.age>=18?'18':game.age>=16?'16':game.age>=13?'13':'09';}
@@ -1486,6 +1486,10 @@ function sehwaOpeningDialogue(session,beat){
 function sehwaDrawingEnsemble(session){
   return `<section class="sehwa-drawing-ensemble" aria-label="세화를 그리는 참가자 8명">${session.entrants.map(entry=>`<figure class="${entry.player?'is-player':''}"><span><img src="${entry.player?sehwaFrame('drawing',2):moonlightEntrantImage(entry)}" alt="세화를 그리는 ${entry.name}"></span><i aria-hidden="true"></i><figcaption>${entry.name}</figcaption></figure>`).join('')}</section>`;
 }
+function sehwaRegistrationScene(){
+  const name=game.characterName||'선화';
+  return `<section class="sehwa-registration" aria-label="접수 관리에게 참가표를 받는 ${name}"><figure><img src="../assets/characters/npcs/activity/teacher-reading-1.png?v=${scheduleAssetRevision}" alt="명부를 확인하는 접수 관리"><figcaption>왕실 화원 접수</figcaption></figure><div class="sehwa-entry-slip" aria-label="${name}의 여덟 번째 참가표"><small>복을 그리는 왕실 세화 경연</small><b>참가표 八</b><span>${name}</span><i aria-hidden="true">印</i></div></section>`;
+}
 function renderSehwaContest(session,beatIndex){
   const overlay=document.querySelector('#moonlightPageant');if(!overlay)return;
   const beat=Math.min(sehwaStoryBeats.length-1,Math.max(0,beatIndex)),opening=beat<=1,drawingGroup=beat===6,drawing=beat>=7&&beat<=11,title=beat===3,intro=beat===4,vote=beat===12,result=beat===13,guardianResult=beat===14,award=beat===15&&session.winner.player;
@@ -1500,7 +1504,7 @@ function renderSehwaContest(session,beatIndex){
   const winner=beat===15&&!session.winner.player?`<figure class="pageant-winner"><img src="${moonlightEntrantImage(session.winner)}" alt="대상 수상자 ${session.winner.name}"><figcaption>대상 · ${session.winner.name}</figcaption></figure><img class="pageant-king" src="../assets/events/holidays/moonlight-pageant/king/king-presenting-v1.png?v=${scheduleAssetRevision}" alt="대상을 시상하는 황">`:'';
   overlay.hidden=false;overlay.className=`moonlight-pageant sehwa-contest festival-pm3 beat-${beat+1} reaction-${session.reaction.replaceAll(' ','-')}`;
   const nextLabel=award?'경연 마치기':result?'결과 확인':'다음';
-  overlay.innerHTML=`${titleCard}${hero}${guardian}${opening?sehwaOpeningDialogue(session,beat):''}${drawingGroup?sehwaDrawingEnsemble(session):''}${king}${board}${winner}<button class="pageant-next" type="button">${nextLabel}</button>`;
+  overlay.innerHTML=`${titleCard}${hero}${guardian}${opening?sehwaOpeningDialogue(session,beat):''}${beat===2?sehwaRegistrationScene():''}${drawingGroup?sehwaDrawingEnsemble(session):''}${king}${board}${winner}<button class="pageant-next" type="button">${nextLabel}</button>`;
 }
 function waitForSehwaAdvance(beat){
   const button=document.querySelector('#moonlightPageant .pageant-next');if(!button)return schedulePlaybackDelay(2500);
