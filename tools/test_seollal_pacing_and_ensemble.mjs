@@ -23,7 +23,8 @@ for(const age of ['09','13','16','18'])for(const expression of ['neutral','smile
 assert.match(app,/function sehwaDrawingEnsemble\(session\)/,'참가자 전원의 그림 장면이 필요합니다.');
 assert.match(app,/function sehwaPreparationEnsemble\(session\)/,'빈 준비 장면 대신 참가자 8명의 화구 준비 장면이 필요합니다.');
 assert.match(app,/class="sehwa-preparation-sequence"/,'13세 준비 장면은 전용 생성 이미지 프레임을 사용해야 합니다.');
-for(const frame of [1,2,3])assert.ok(existsSync(new URL(`../assets/events/holidays/sehwa-contest/preparation-scene/age-13/preparation-${frame}.png`,import.meta.url)),`13세 화구 준비 ${frame} 프레임이 필요합니다.`);
+for(const frame of [1,2,3,4,5,6])assert.ok(existsSync(new URL(`../assets/events/holidays/sehwa-contest/preparation-scene/age-13/preparation-${frame}.png`,import.meta.url)),`13세 화구 준비 ${frame} 프레임이 필요합니다.`);
+assert.match(css,/animation:sehwa-preparation-frames 6s/,'참가자별 비동기 준비 동작은 6프레임으로 순환해야 합니다.');
 assert.match(css,/\.sehwa-drawing-ensemble\.is-preparing figure:nth-child\(-n\+4\)\{[^}]*scale\(\.82\)/,'준비 장면의 뒤쪽 참가자는 원근에 맞게 작아야 합니다.');
 assert.match(css,/\.sehwa-drawing-ensemble\.is-preparing i:before,[^{]+\{[^}]*height:23px/,'준비 장면 책상에는 떠 보이지 않도록 다리가 있어야 합니다.');
 assert.match(app,/function sehwaRegistrationScene\(\)/,'참가표를 건네받는 별도 접수 장면이 필요합니다.');
