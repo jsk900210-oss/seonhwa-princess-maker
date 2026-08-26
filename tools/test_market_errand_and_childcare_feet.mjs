@@ -59,8 +59,11 @@ assert.ok(app.includes('const childcareNpcRunCycle=[0,3,2,3]'),'child must pass 
 assert.ok(app.includes("const requiredNpcFrameCount=actionId==='childcare'?4:3")&&app.includes('npcFrames.length!==requiredNpcFrameCount'),'childcare playback must accept its fourth crossing frame');
 const layeredQaBody=app.slice(app.indexOf('async function startScheduleLayerQaPattern'),app.indexOf('async function startStudyFailureQa'));
 assert.ok(layeredQaBody.includes("const oneShotQa=scheduleQaActionId==='childcare'||(scheduleQaActionId==='farmwork'&&pattern==='fail-b')")&&layeredQaBody.includes("'아이 돌보기':'논가 닭 추격'")&&layeredQaBody.includes('finally{scheduleQaLoopRunning=false;}'),'childcare and farm chicken one-shot handling must live inside the layered QA runner');
-assert.ok(html.includes('v0.64.97-debug'),'HTML cache revision must expose the new build');
+assert.ok(html.includes('v0.64.98-debug'),'HTML cache revision must expose the new build');
 assert.match(app,/childcare:\s*\{[^\n]+npc:null\s*\}/,'childcare must not enable the legacy static stage NPC before layered chase playback');
 assert.ok(!css.includes('.npc-child'),'legacy childcare stage NPC CSS must be removed to prevent a pre-chase flash');
+assert.ok(app.includes("const playbackLoopCount=actionId==='childcare'?6:3"),'all childcare outcomes must traverse the full 18-step track');
+assert.ok(!app.includes('Math.min(.62,rawProgress)'),'failed childcare must not freeze at the middle of the stage');
+assert.ok(app.includes('const fallen=failed&&travelStep>=7&&travelStep<=9'),'failure reaction must be a short moving beat before the chase continues');
 assert.ok(app.includes("if(action.id==='childcare')stageCharacter.hidden=true"),'childcare result must hide the leftover Seonhwa frame');
 console.log('market errand traversal and childcare foot-frame checks passed');

@@ -237,7 +237,7 @@ const vacationIllustrations=[
 function unifiedAgeFolder(){return '09';}
 function scheduleFramePath(file){return `../assets/characters/seonhwa/schedule-actions/${file}`;}
 function scheduleBasePath(file){return `../assets/characters/seonhwa/schedule-base/${file}`;}
-const scheduleAssetRevision='0.64.97-debug';
+const scheduleAssetRevision='0.64.98-debug';
 const scheduleQaParams=new URLSearchParams(location.search);
 const moonlightStandaloneQa=scheduleQaParams.get('qaHoliday')==='chuseok';
 const sehwaStandaloneQa=scheduleQaParams.get('qaHoliday')==='seollal';
@@ -963,7 +963,7 @@ async function playScheduleLayerScene(actionId,seonImage,rank,outcome,dayIndex){
       delete stage.dataset.childcareStarting;
     }
     const delay=actionId==='farmwork'&&patternKey==='fail-b'?165:actionId==='farmwork'?240:actionId==='childcare'?150:([360,300,250][rank]||300);
-    const playbackLoopCount=actionId==='childcare'&&!failed?6:3;
+    const playbackLoopCount=actionId==='childcare'?6:3;
     for(let loop=0;loop<playbackLoopCount;loop+=1){
       for(let frame=0;frame<3;frame+=1){
         let activeHeroFrame=heroFrames[frame],activeNpcFrame=npcFrames[frame],activePatternFrame=patternFrames[frame];
@@ -987,13 +987,13 @@ async function playScheduleLayerScene(actionId,seonImage,rank,outcome,dayIndex){
           stage.style.setProperty('--layer-prop-left',`${chickenLeft}%`,'important');
         }
         if(actionId==='childcare'){
-          const travelStep=loop*3+frame,travelsRight=childcareTravelsRight,totalTravelSteps=playbackLoopCount*3-1,rawProgress=Math.min(1,travelStep/totalTravelSteps),progress=failed?Math.min(.62,rawProgress):rawProgress;
+          const travelStep=loop*3+frame,travelsRight=childcareTravelsRight,totalTravelSteps=playbackLoopCount*3-1,progress=Math.min(1,travelStep/totalTravelSteps);
           activeHeroFrame=childcareChaseFrames[childcareHeroRunCycle[travelStep%childcareHeroRunCycle.length]];
           activeNpcFrame=childcareRunningFrames[childcareNpcRunCycle[travelStep%childcareNpcRunCycle.length]];
           const childStart=childcareChildStart;
           const childLeft=childStart+(travelsRight?1:-1)*progress*childcareTravelDistance;
           const heroLeft=travelsRight?childLeft-childcareMinimumGap:childLeft+childcareMinimumGap;
-          const fallen=failed&&travelStep>=6;
+          const fallen=failed&&travelStep>=7&&travelStep<=9;
           const childLooksBack=fallen&&patternKey==='fail-b';
           const forcedFall=scheduleQaParams.get('qaFall');
           const fallsForward=patternKey==='fail-b'&&(forcedFall==='forward'||(forcedFall!=='seated'&&dayIndex%4===3));
