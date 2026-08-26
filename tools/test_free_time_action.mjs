@@ -12,9 +12,11 @@ assert.ok(app.includes("['rest','freeTime','vacation','dungeon','holiday-chuseok
 assert.ok(!app.includes("activity:'eating',cost:"),'자유여행에서 앉아서 먹는 동작이 남아 있으면 안 됩니다.');
 assert.ok(app.includes("name:'장터 산책'")&&app.includes("name:'가게 구경'")&&app.includes("name:'골목 나들이'"),'자유행동은 구매가 아닌 나들이 결과 3종이어야 합니다.');
 assert.ok(app.includes("stageProps.hidden=true;stageProps.className='stage-props prop-none'")&&app.includes("stageNpc.hidden=true;stageNpc.className='stage-npc'"),'자유행동에는 상인·상품 합성을 표시하지 않아야 합니다.');
-assert.ok(app.includes("activity:'errand'")&&app.includes("stageCharacterImage.style.setProperty('transform','none','important')"),'자유행동은 승인된 선화 보행 동작과 오른쪽 진행 방향을 사용해야 합니다.');
-assert.ok(app.includes("for(const position of [30,freeTimeVariant?.stop??56])"),'자유행동 이동 구간은 짧은 2단계여야 합니다.');
-assert.ok(app.includes("stop:48")&&app.includes("stop:58")&&app.includes("stop:68"),'세 나들이는 서로 다른 저잣거리 정지 위치를 사용해야 합니다.');
+assert.ok(app.includes("activity:'errand'")&&app.includes("freeTimeVariant?.activity||'errand'"),'자유행동은 승인된 선화 보행 동작을 사용해야 합니다.');
+assert.ok(app.includes("forcedFreeTimeDirection==='right':index%2===0")&&app.includes("freeTimeTravelsRight?'none':'scaleX(-1)'"),'자유행동은 일차별로 좌우 진행 방향과 바라보는 방향을 맞춰야 합니다.');
+assert.ok(app.includes("currentMasteryRank,index,'success'")&&app.includes('const fullErrandTrack=[-24,-8,8,24,40,56,72,88,104,124]'),'자유행동은 좌측 화면 밖과 우측 화면 밖 사이의 전체 동선을 완주해야 합니다.');
+assert.ok(app.includes("if(actionId==='freeTime'){initFreeTimeQa();return;}")&&app.includes("'좌측 끝→우측 끝':'우측 끝→좌측 끝'"),'자유행동 좌우 전체 동선을 직접 확인하는 QA 경로가 있어야 합니다.');
+assert.ok(!app.includes('freeTimeVariant?.stop'),'자유행동에 중앙 정지 좌표가 남아 있으면 안 됩니다.');
 assert.ok(app.includes('phaseDailyChange(freeTimeVariant?{...freeTimeVariant.change}:resolvedActivityChange(action,outcome),index%14)'),'선택된 자유행동 결과가 페이즈 일차에 맞춰 적용되어야 합니다.');
 
 console.log('PASS: 휴식 자유행동 3종·무실패·능력치 반영');

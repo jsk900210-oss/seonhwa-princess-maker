@@ -244,7 +244,7 @@ const vacationIllustrations=[
 function unifiedAgeFolder(){return '09';}
 function scheduleFramePath(file){return `../assets/characters/seonhwa/schedule-actions/${file}`;}
 function scheduleBasePath(file){return `../assets/characters/seonhwa/schedule-base/${file}`;}
-const scheduleAssetRevision='0.64.104-debug';
+const scheduleAssetRevision='0.64.105-debug';
 const scheduleQaParams=new URLSearchParams(location.search);
 const moonlightStandaloneQa=scheduleQaParams.get('qaHoliday')==='chuseok';
 const sehwaStandaloneQa=scheduleQaParams.get('qaHoliday')==='seollal';
@@ -3029,9 +3029,9 @@ async function playWeeklySchedule(selected) {
   const playbackPhase=phaseInfo();
   const dayNames = ['월요일','화요일','수요일','목요일','금요일','토요일','일요일'];
   const freeTimeVariants=[
-    {name:'장터 산책',activity:'errand',cost:0,stop:48,change:{sense:1,stress:-9},line:'사람들의 활기찬 모습을 구경하며 저잣거리를 천천히 걸었어요.'},
-    {name:'가게 구경',activity:'errand',cost:0,stop:58,change:{sense:1,sensitivity:1,stress:-7},line:'물건을 사지 않고 가게마다 진열된 물건과 색을 즐겁게 구경했어요.'},
-    {name:'골목 나들이',activity:'errand',cost:0,stop:68,change:{speech:1,stress:-8},line:'햇볕이 드는 장터 골목을 한 바퀴 돌며 기분을 환기했어요.'}
+    {name:'장터 산책',activity:'errand',cost:0,change:{sense:1,stress:-9},line:'사람들의 활기찬 모습을 구경하며 저잣거리를 천천히 걸었어요.'},
+    {name:'가게 구경',activity:'errand',cost:0,change:{sense:1,sensitivity:1,stress:-7},line:'물건을 사지 않고 가게마다 진열된 물건과 색을 즐겁게 구경했어요.'},
+    {name:'골목 나들이',activity:'errand',cost:0,change:{speech:1,stress:-8},line:'햇볕이 드는 장터 골목을 한 바퀴 돌며 기분을 환기했어요.'}
   ];
   const moonlightSession=selected.some(action=>action.id==='holiday-chuseok')?evaluateChuseokFestival():null;
   const sehwaSession=selected.some(action=>action.id==='holiday-seollal')?evaluateSeollalFestival():null;
@@ -3127,12 +3127,12 @@ async function playWeeklySchedule(selected) {
       stage.className=`activity-stage ${phaseSceneType} map-market action-freeTime free-time-market`;
       stageProps.hidden=true;stageProps.className='stage-props prop-none';
       stageNpc.hidden=true;stageNpc.className='stage-npc';
-      stageCharacter.style.left='12%';
-      stageCharacterImage.style.setProperty('transform','none','important');
+      const forcedFreeTimeDirection=scheduleQaParams.get('qaDirection');
+      const freeTimeTravelsRight=lockedScheduleQaMode&&['left','right'].includes(forcedFreeTimeDirection)?forcedFreeTimeDirection==='right':index%2===0;
+      stageCharacterImage.style.setProperty('transform',freeTimeTravelsRight?'none':'scaleX(-1)','important');
       stageCharacterImage.style.setProperty('transform-origin','center bottom','important');
       try{
-        for(const position of [30,freeTimeVariant?.stop??56]){stageCharacter.style.left=`${position}%`;await animateActivitySprite(stageCharacterImage,'motion-walk',null,null,null,dailyOutfit,currentMasteryRank);}
-        await animateActivitySprite(stageCharacterImage,'motion-market-roam',freeTimeVariant?.activity||'errand',null,null,dailyOutfit,currentMasteryRank);
+        await animateActivitySprite(stageCharacterImage,'motion-market-roam',freeTimeVariant?.activity||'errand',null,null,dailyOutfit,currentMasteryRank,index,'success');
       }finally{
         // 그날 결과가 뜰 때까지 마지막 산책 위치를 유지한다. 다음 날 공통
         // 초기화가 left를 지우므로 오른쪽 기본 좌표로 순간 이동하지 않는다.
@@ -3410,10 +3410,37 @@ function initErrandQa(){
   document.querySelector('#stageNpc').hidden=true;document.querySelector('#stageProps').hidden=true;
   startErrandQa();
 }
+async function startFreeTimeQa(){
+  if(scheduleQaLoopRunning)return;
+  scheduleQaLoopRunning=true;
+  const image=document.querySelector('#stageCharacterImage');
+  while(scheduleLayerStandaloneQa){
+    const travelsRight=scheduleQaParams.get('qaDirection')!=='left';
+    image.style.setProperty('transform',travelsRight?'none':'scaleX(-1)','important');
+    image.style.setProperty('transform-origin','center bottom','important');
+    await animateActivitySprite(image,'motion-market-roam','errand',null,null,game.equippedOutfit,0,travelsRight?0:1,'success');
+    await schedulePlaybackDelay(480);
+  }
+}
+function initFreeTimeQa(){
+  ['studioLoading','prologue','birthdaySetup','recoveryPrompt','guardianStory','guardianChoice','guardianNaming'].forEach(id=>{const element=document.querySelector(`#${id}`);if(element)element.hidden=true;});
+  panel.hidden=true;
+  const phone=document.querySelector('.phone'),stage=document.querySelector('#activityStage'),travelsRight=scheduleQaParams.get('qaDirection')!=='left';
+  phone.classList.add('playing','schedule-qa-playing');
+  stage.hidden=false;stage.className='activity-stage pm3-phase-scene daily-scene map-market action-freeTime free-time-market';
+  document.querySelector('#activityPlayback').hidden=true;document.querySelector('#stagePm3Hud').hidden=true;
+  document.querySelector('#stageMap').src=backgrounds.market;
+  document.querySelector('#stageMap').alt='자유행동 양방향 전체 이동 장면';
+  document.querySelector('#stageCaption').textContent=`QA · 자유행동 · ${travelsRight?'좌측 끝→우측 끝':'우측 끝→좌측 끝'}`;
+  const character=document.querySelector('#stageCharacter');character.hidden=false;character.className='stage-character pixel-sprite motion-market-roam';character.style.removeProperty('left');
+  document.querySelector('#stageNpc').hidden=true;document.querySelector('#stageProps').hidden=true;
+  startFreeTimeQa();
+}
 function initScheduleLayerQa(){
   const actionId=scheduleQaParams.get('qaSchedule')||'kitchenhelp';
   if(actionId==='reading'||actionId==='arithmetic'){initStudyFailureQa(actionId);return;}
   if(actionId==='errand'){initErrandQa();return;}
+  if(actionId==='freeTime'){initFreeTimeQa();return;}
   if(!scheduleLayerIds.has(actionId))return;
   scheduleQaActionId=actionId;
   ['studioLoading','prologue','birthdaySetup','recoveryPrompt','guardianStory','guardianChoice','guardianNaming'].forEach(id=>{const element=document.querySelector(`#${id}`);if(element)element.hidden=true;});
