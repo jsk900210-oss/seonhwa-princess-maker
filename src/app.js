@@ -237,7 +237,7 @@ const vacationIllustrations=[
 function unifiedAgeFolder(){return '09';}
 function scheduleFramePath(file){return `../assets/characters/seonhwa/schedule-actions/${file}`;}
 function scheduleBasePath(file){return `../assets/characters/seonhwa/schedule-base/${file}`;}
-const scheduleAssetRevision='0.64.79-debug';
+const scheduleAssetRevision='0.64.81-debug';
 const scheduleQaParams=new URLSearchParams(location.search);
 const moonlightStandaloneQa=scheduleQaParams.get('qaHoliday')==='chuseok';
 const sehwaStandaloneQa=scheduleQaParams.get('qaHoliday')==='seollal';
@@ -1455,18 +1455,19 @@ function sehwaAssetAge(){return game.age>=18?'18':game.age>=16?'16':game.age>=13
 function sehwaFrame(kind,frame){return `../assets/events/holidays/sehwa-contest/seonhwa/${kind}/age-${sehwaAssetAge()}/${kind}-${frame}.png?v=${scheduleAssetRevision}`;}
 function sehwaAwardSceneFrame(frame){return `../assets/events/holidays/sehwa-contest/award-scene/age-${sehwaAssetAge()}/award-scene-${frame}.png?v=${scheduleAssetRevision}`;}
 const sehwaArtworkDefs={
-  sensitivity:{title:'매향의 새벽',ability:'감수성',asset:'../assets/events/holidays/sehwa-contest/winning-artworks/sensitivity-v1.png'},
-  charm:{title:'화접영복도',ability:'매력',asset:'../assets/events/holidays/sehwa-contest/winning-artworks/charm-v1.png'},
-  sense:{title:'까치와 풍년',ability:'센스',asset:'../assets/events/holidays/sehwa-contest/winning-artworks/sense-v1.png'},
-  dignity:{title:'해오름 학송도',ability:'기품',asset:'../assets/events/holidays/sehwa-contest/winning-artworks/dignity-v1.png'}
+  sensitivity:{title:'매향의 새벽',ability:'감수성',asset:'../assets/events/holidays/sehwa-contest/winning-artworks/sensitivity-v1.png',childAsset:'../assets/events/holidays/sehwa-contest/winning-artworks/sensitivity-child-v1.png'},
+  charm:{title:'화접영복도',ability:'매력',asset:'../assets/events/holidays/sehwa-contest/winning-artworks/charm-v1.png',childAsset:'../assets/events/holidays/sehwa-contest/winning-artworks/charm-child-v1.png'},
+  sense:{title:'까치와 풍년',ability:'센스',asset:'../assets/events/holidays/sehwa-contest/winning-artworks/sense-v1.png',childAsset:'../assets/events/holidays/sehwa-contest/winning-artworks/sense-child-v1.png'},
+  dignity:{title:'해오름 학송도',ability:'기품',asset:'../assets/events/holidays/sehwa-contest/winning-artworks/dignity-v1.png',childAsset:'../assets/events/holidays/sehwa-contest/winning-artworks/dignity-child-v1.png'}
 };
+function sehwaArtworkAsset(theme,age){const def=sehwaArtworkDefs[theme];return Number(age)<=12?def?.childAsset:def?.asset;}
 function sehwaContestYear(){
   const date=game.currentDate?new Date(`${game.currentDate}T00:00:00`):null;
   return date&&Number.isFinite(date.getTime())?date.getFullYear():616+Math.max(1,Number(game.age)||9)-8;
 }
 function normalizeSehwaWins(){
   const seen=new Set();
-  game.sehwaWins=(Array.isArray(game.sehwaWins)?game.sehwaWins:[]).filter(record=>record&&Number.isFinite(Number(record.year))&&sehwaArtworkDefs[record.theme]&&!seen.has(Number(record.year))&&seen.add(Number(record.year))).sort((a,b)=>Number(a.year)-Number(b.year));
+  game.sehwaWins=(Array.isArray(game.sehwaWins)?game.sehwaWins:[]).filter(record=>record&&Number.isFinite(Number(record.year))&&sehwaArtworkDefs[record.theme]&&!seen.has(Number(record.year))&&seen.add(Number(record.year))).map(record=>({...record,asset:sehwaArtworkAsset(record.theme,record.age)})).sort((a,b)=>Number(a.year)-Number(b.year));
   const latest=game.sehwaWins.at(-1)||null;
   game.latestSehwaArtwork=latest;
   return latest;
@@ -1474,7 +1475,8 @@ function normalizeSehwaWins(){
 function selectSehwaArtwork(stats,year){
   const keys=['sensitivity','charm','sense','dignity'];
   const theme=[...keys].sort((a,b)=>(Number(stats[b])||0)-(Number(stats[a])||0)||((keys.indexOf(a)+year)%keys.length)-((keys.indexOf(b)+year)%keys.length))[0];
-  return {theme,...sehwaArtworkDefs[theme]};
+  const {title,ability}=sehwaArtworkDefs[theme];
+  return {theme,title,ability,asset:sehwaArtworkAsset(theme,game.age)};
 }
 function awardSehwaArtwork(session){
   if(!session?.winner?.player)return null;
@@ -1491,8 +1493,8 @@ function awardSehwaArtwork(session){
 function renderHomeSehwaArtwork(){
   const gallery=document.querySelector('#homeSehwaGallery'),image=document.querySelector('#homeSehwaArtwork'),caption=document.querySelector('#homeSehwaCaption');
   if(!gallery||!image||!caption)return;
-  const qaDef=sehwaArtworkDefs[sehwaHomeQaTheme];
-  const record=qaDef?{year:sehwaContestYear(),theme:sehwaHomeQaTheme,...qaDef}:normalizeSehwaWins();
+  const qaDef=sehwaArtworkDefs[sehwaHomeQaTheme],qaAge=Number(scheduleQaParams.get('qaAge'))||Number(game.age)||9;
+  const record=qaDef?{year:sehwaContestYear(),age:qaAge,theme:sehwaHomeQaTheme,title:qaDef.title,ability:qaDef.ability,asset:sehwaArtworkAsset(sehwaHomeQaTheme,qaAge)}:normalizeSehwaWins();
   gallery.hidden=!record;
   if(!record){image.removeAttribute('src');image.alt='';caption.textContent='';return;}
   image.src=`${record.asset}?v=${scheduleAssetRevision}`;

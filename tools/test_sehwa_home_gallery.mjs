@@ -20,6 +20,11 @@ for(const theme of themes){
   assert.equal(fs.existsSync(asset),true,`${theme} artwork asset missing`);
   assert.ok(fs.statSync(asset).size>100_000,`${theme} artwork asset is unexpectedly small`);
   assert.match(app,new RegExp(`${theme}:\\{title:`));
+  const childAsset=new URL(`../assets/events/holidays/sehwa-contest/winning-artworks/${theme}-child-v1.png`,import.meta.url);
+  assert.equal(fs.existsSync(childAsset),true,`${theme} child artwork asset missing`);
+  assert.ok(fs.statSync(childAsset).size>100_000,`${theme} child artwork asset is unexpectedly small`);
 }
+assert.match(app,/Number\(age\)<=12\?def\?\.childAsset:def\?\.asset/);
+assert.match(app,/asset:sehwaArtworkAsset\(record\.theme,record\.age\)/);
 
 console.log('Sehwa annual winner gallery contract: OK');
