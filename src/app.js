@@ -237,7 +237,7 @@ const vacationIllustrations=[
 function unifiedAgeFolder(){return '09';}
 function scheduleFramePath(file){return `../assets/characters/seonhwa/schedule-actions/${file}`;}
 function scheduleBasePath(file){return `../assets/characters/seonhwa/schedule-base/${file}`;}
-const scheduleAssetRevision='0.64.60-debug';
+const scheduleAssetRevision='0.64.61-debug';
 const scheduleQaParams=new URLSearchParams(location.search);
 const moonlightStandaloneQa=scheduleQaParams.get('qaHoliday')==='chuseok';
 const sehwaStandaloneQa=scheduleQaParams.get('qaHoliday')==='seollal';
@@ -1481,7 +1481,7 @@ function sehwaOpeningDialogue(session,beat){
   const line=guardianTurn?'첫 획부터 완벽할 필요는 없어. 네가 담고 싶은 새해의 복을 보여 줘.':sehwaOpeningAnswer(session);
   const expression=sehwaDialogueExpression(session);
   const portrait=guardianTurn?`<img class="sehwa-dialogue-bust" src="../assets/cinematics/guardian/humanized/poses/${game.guardianType}-happy-transparent-v3.png?v=${scheduleAssetRevision}" alt="말하는 ${speaker}의 얼굴과 상체">`:`<span class="sehwa-dialogue-bust sehwa-expression expression-age-${sehwaAssetAge()} expression-${expression}" style="--sehwa-expression-image:url('${sehwaExpressionAsset(expression)}')" role="img" aria-label="${expression} 표정으로 말하는 ${speaker}"></span>`;
-  return `<section class="sehwa-opening-dialogue speaker-${guardianTurn?'guardian':'seonhwa'}">${portrait}<div role="dialog" aria-label="${speaker}의 대화"><small>${guardianTurn?'수호신수':'참가자'}</small><p><b>${speaker}</b>${line}</p></div></section>`;
+  return `<section class="sehwa-opening-dialogue speaker-${guardianTurn?'guardian':'seonhwa'}">${portrait}<div role="dialog" aria-label="${speaker}의 대화"><p><b>${speaker}</b>${line}</p></div></section>`;
 }
 function sehwaDrawingEnsemble(session){
   return `<section class="sehwa-drawing-ensemble" aria-label="세화를 그리는 참가자 8명">${session.entrants.map(entry=>`<figure class="${entry.player?'is-player':''}"><span><img src="${entry.player?sehwaFrame('drawing',2):moonlightEntrantImage(entry)}" alt="세화를 그리는 ${entry.name}"></span><i aria-hidden="true"></i><figcaption>${entry.name}</figcaption></figure>`).join('')}</section>`;
