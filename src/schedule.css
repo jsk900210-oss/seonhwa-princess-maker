@@ -2594,3 +2594,4 @@ body .phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage:
   transform:scaleX(-1)!important;
   transform-origin:center bottom!important;
 }
+.stage-character[hidden]{display:none!important}
