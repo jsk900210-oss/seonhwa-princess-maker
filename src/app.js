@@ -243,7 +243,7 @@ const vacationIllustrations=[
 function unifiedAgeFolder(){return '09';}
 function scheduleFramePath(file){return `../assets/characters/seonhwa/schedule-actions/${file}`;}
 function scheduleBasePath(file){return `../assets/characters/seonhwa/schedule-base/${file}`;}
-const scheduleAssetRevision='0.64.117-debug';
+const scheduleAssetRevision='0.64.118-debug';
 const scheduleQaParams=new URLSearchParams(location.search);
 const moonlightStandaloneQa=scheduleQaParams.get('qaHoliday')==='chuseok';
 const sehwaStandaloneQa=scheduleQaParams.get('qaHoliday')==='seollal';
@@ -1342,18 +1342,18 @@ function relationReplyChoices(candidate,episode){
     {line:`「${episode?.title||'오늘의 일'}」에 관해 조금 더 들려주세요.`,reply:`${voice}. 오늘 있었던 일부터 천천히 이야기해 줄게.`,emotion:meeting>=3?'shy':'serious'}
   ];
 }
-const relationSceneBackgrounds={
-  '활터':'../assets/backgrounds/phase-scenes/martial.webp','집 마당':'../assets/backgrounds/pixel-activities/courtyard.webp','마당':'../assets/backgrounds/pixel-activities/courtyard.webp',
-  '산길 입구':'../assets/backgrounds/pixel-activities/herb-field-v2.webp','어두운 길목':'../assets/backgrounds/pixel-activities/herb-field.webp','강가 산책로':'../assets/events/vacation/spring-stream-v2.webp',
-  '서당 서가':'../assets/backgrounds/seodang/seodang-day.webp','서책상':'../assets/backgrounds/phase-scenes/study.webp','서당 마루':'../assets/backgrounds/phase-scenes/arithmetic.webp','서책방':'../assets/backgrounds/pixel-activities/study-room.webp',
-  '정자':'../assets/events/holidays/moonlight-pageant/background/moonlight-courtyard-v1.webp','꽃밭 길':'../assets/events/weekly-v2/spring-flower-market.webp','화실':'../assets/backgrounds/phase-scenes/painting.webp','연습 마루':'../assets/backgrounds/phase-scenes/dance.webp','달빛 정원':'../assets/events/holidays/moonlight-pageant/background/moonlight-courtyard-v1.webp','야외 화판 앞':'../assets/backgrounds/phase-scenes/painting.webp',
-  '나루터':'../assets/backgrounds/phase-scenes/ferry.webp','저잣거리':'../assets/backgrounds/market/market-day.webp','상단 장부방':'../assets/backgrounds/phase-scenes/merchant.webp','나루터 저녁':'../assets/events/vacation/autumn-maple-v2.webp','큰 장 입구':'../assets/backgrounds/pixel-activities/market-errand-v2.webp',
-  '등불 거리':'../assets/events/weekly-v2/autumn-festival.webp','큰 문 앞':'../assets/events/holidays/sehwa-contest/background/royal-contest-hall-v1.png'
+const relationScenePresentations={
+  '활터':{src:'../assets/backgrounds/phase-scenes/martial.webp',size:'100% auto',position:'center 34%'},'집 마당':{src:'../assets/backgrounds/pixel-activities/courtyard.webp',size:'100% auto',position:'center 36%'},'마당':{src:'../assets/backgrounds/pixel-activities/courtyard.webp',size:'100% auto',position:'center 36%'},
+  '산길 입구':{src:'../assets/backgrounds/pixel-activities/herb-field-v2.webp',size:'100% auto',position:'center 34%'},'어두운 길목':{src:'../assets/backgrounds/pixel-activities/herb-field.webp',size:'100% auto',position:'center 34%'},'강가 산책로':{src:'../assets/backgrounds/phase-scenes/ferry.webp',size:'100% auto',position:'center 32%'},
+  '서당 서가':{src:'../assets/backgrounds/seodang/seodang-day.webp',size:'cover',position:'center 46%'},'서책상':{src:'../assets/backgrounds/phase-scenes/study.webp',size:'100% auto',position:'center 34%'},'서당 마루':{src:'../assets/backgrounds/phase-scenes/arithmetic.webp',size:'100% auto',position:'center 34%'},'서책방':{src:'../assets/backgrounds/pixel-activities/study-room.webp',size:'100% auto',position:'center 34%'},
+  '정자':{src:'../assets/events/holidays/moonlight-pageant/background/moonlight-courtyard-v1.webp',size:'cover',position:'center 46%'},'꽃밭 길':{src:'../assets/backgrounds/market/market-day.webp',size:'cover',position:'center 45%'},'화실':{src:'../assets/backgrounds/phase-scenes/painting.webp',size:'100% auto',position:'center 34%'},'연습 마루':{src:'../assets/backgrounds/phase-scenes/dance.webp',size:'100% auto',position:'center 34%'},'달빛 정원':{src:'../assets/events/holidays/moonlight-pageant/background/moonlight-courtyard-v1.webp',size:'cover',position:'center 46%'},'야외 화판 앞':{src:'../assets/backgrounds/pixel-activities/courtyard.webp',size:'100% auto',position:'center 36%'},
+  '나루터':{src:'../assets/backgrounds/phase-scenes/ferry.webp',size:'100% auto',position:'center 32%'},'저잣거리':{src:'../assets/backgrounds/market/market-day.webp',size:'cover',position:'center 45%'},'상단 장부방':{src:'../assets/backgrounds/phase-scenes/merchant.webp',size:'100% auto',position:'center 34%'},'나루터 저녁':{src:'../assets/backgrounds/phase-scenes/ferry.webp',size:'100% auto',position:'center 32%'},'큰 장 입구':{src:'../assets/backgrounds/pixel-activities/market-errand-v2.webp',size:'100% auto',position:'center 34%'},
+  '등불 거리':{src:'../assets/events/holidays/moonlight-pageant/background/moonlight-courtyard-v1.webp',size:'cover',position:'center 46%'},'큰 문 앞':{src:'../assets/events/holidays/sehwa-contest/background/royal-contest-hall-v1.png',size:'cover',position:'center 44%'}
 };
-function relationSceneBackground(episode){return relationSceneBackgrounds[episode?.scene]||'../assets/backgrounds/home/home-room-morning.webp';}
+function relationScenePresentation(episode){return relationScenePresentations[episode?.scene]||{src:'../assets/backgrounds/home/home-room-morning.webp',size:'cover',position:'center'};}
 function playRelationEncounterScene(candidate,opening,resultLine='',episode=null){
   const scene=document.querySelector('#relationEncounterScene'),male=document.querySelector('#relationEncounterMale'),female=document.querySelector('#relationEncounterFemale'),speaker=document.querySelector('#relationEncounterSpeaker'),text=document.querySelector('#relationEncounterText'),next=document.querySelector('#relationEncounterNext'),choices=document.querySelector('#relationEncounterChoices');
-  scene.style.setProperty('--relation-scene-background',`url('${relationSceneBackground(episode)}?v=${scheduleAssetRevision}')`);scene.dataset.location=episode?.scene||'집 안';
+  const presentation=relationScenePresentation(episode);scene.style.setProperty('--relation-scene-background',`url('${presentation.src}?v=${scheduleAssetRevision}')`);scene.style.setProperty('--relation-scene-size',presentation.size);scene.style.setProperty('--relation-scene-position',presentation.position);scene.dataset.location=episode?.scene||'집 안';
   applyRelationPortrait(male,candidate,episode);female.src=protagonistFullbodyForAge();female.alt=`${game.characterName||'선화'} ${game.age}세 전신`;
   scene.hidden=false;scene.classList.remove('is-entered');requestAnimationFrame(()=>scene.classList.add('is-entered'));scene.dataset.speaker='male';speaker.textContent=candidate.name;text.textContent=opening||candidate.dialogues[0];choices.hidden=true;next.hidden=false;
   return new Promise(resolve=>{
