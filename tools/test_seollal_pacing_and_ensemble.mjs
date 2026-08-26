@@ -30,7 +30,7 @@ assert.match(css,/\.sehwa-drawing-ensemble\.is-preparing figure:nth-child\(-n\+4
 assert.match(css,/\.sehwa-drawing-ensemble\.is-preparing i:before,[^{]+\{[^}]*height:23px/,'준비 장면 책상에는 떠 보이지 않도록 다리가 있어야 합니다.');
 assert.match(app,/function sehwaRegistrationScene\(\)/,'참가표를 건네받는 별도 접수 장면이 필요합니다.');
 assert.match(app,/class="sehwa-registration-seonhwa"/,'접수 장면에는 참가표를 받는 선화가 명시적으로 보여야 합니다.');
-assert.match(app,/royal-contest-registration-young-clerk-v1\.png/,'접수 장면은 왕실 경연장에 통합된 젊은 화원 서리 전용 배경을 사용해야 합니다.');
+assert.match(app,/royal-contest-registration-young-clerk-v2\.png/,'접수 장면은 축소된 접수대와 젊은 화원 서리가 통합된 전용 배경을 사용해야 합니다.');
 assert.doesNotMatch(app,/class="sehwa-registration-clerk"/,'접수 장면에 이질적인 별도 합성 NPC가 남아 있으면 안 됩니다.');
 assert.doesNotMatch(app,/npcs\/shops\/hanbok-owner\.png[^\n]*왕실 화원 접수/,'한복점 주인 자산을 왕실 접수 NPC로 재사용하면 안 됩니다.');
 assert.doesNotMatch(app,/study-child-tsukuru-v1\.png[^\n]*왕실 화원 접수/,'체커보드 배경이 남은 접수 NPC 자산을 사용하면 안 됩니다.');
@@ -39,7 +39,7 @@ assert.match(css,/\.sehwa-contest\.festival-pm3\{overflow:visible\}/,'창 밖 �
 assert.match(css,/\.activity-stage:not\(\.market-choice-stage\):has\(\.sehwa-contest:not\(\[hidden\]\)\)>\.stage-inner\{overflow:visible!important\}/,'쯔꾸르 창 바깥 버튼이 stage-inner에 잘리면 안 됩니다.');
 assert.match(css,/\.sehwa-contest\.festival-pm3 \.pageant-next,[^{]+\{[^}]*bottom:-52px/,'세화 다음 버튼은 쯔꾸르 창 바로 아래에 배치해야 합니다.');
 for(const frame of [1,2,3])assert.ok(existsSync(new URL(`../assets/events/holidays/sehwa-contest/registration-scene/age-13/receive-${frame}-v1.png`,import.meta.url)),`공손한 참가표 수령 ${frame} 프레임이 필요합니다.`);
-assert.ok(existsSync(new URL('../assets/events/holidays/sehwa-contest/background/royal-contest-registration-young-clerk-v1.png',import.meta.url)),'왕실 화원 접수 배경 이미지가 필요합니다.');
+assert.ok(existsSync(new URL('../assets/events/holidays/sehwa-contest/background/royal-contest-registration-young-clerk-v2.png',import.meta.url)),'축소된 접수대가 포함된 왕실 화원 접수 배경 이미지가 필요합니다.');
 assert.match(css,/@keyframes sehwa-receive-bow/,'참가표 수령은 공손한 인사로 시작해야 합니다.');
 assert.match(css,/@keyframes sehwa-receive-reach/,'참가표 수령은 두 손을 내미는 자세로 이어져야 합니다.');
 assert.match(css,/@keyframes sehwa-receive-hold/,'참가표 수령은 표를 받은 자세로 끝나야 합니다.');
