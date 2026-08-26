@@ -2527,6 +2527,8 @@ body .phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage:
 .sehwa-opening-dialogue p b{display:block;margin-bottom:3px;color:#7b4727;font-family:serif;font-size:12px}
 .sehwa-opening-dialogue.speaker-guardian>div{right:3%;animation:sehwa-dialogue-from-right .72s cubic-bezier(.18,.75,.24,1) .28s both}
 .sehwa-opening-dialogue.speaker-seonhwa>div{left:3%;background:#f3ead8f5;animation:sehwa-dialogue-from-left .72s cubic-bezier(.18,.75,.24,1) .28s both}
+.activity-stage:has(.sehwa-opening-dialogue) .stage-pm3-hud>#stageHudStats{display:none!important}
+.sehwa-contest:has(.sehwa-opening-dialogue) .pageant-next{bottom:3%}
 @keyframes sehwa-dialogue-from-right{from{opacity:0;transform:translateX(34px)}to{opacity:1;transform:none}}
 @keyframes sehwa-dialogue-from-left{from{opacity:0;transform:translateX(-34px)}to{opacity:1;transform:none}}
 @keyframes sehwa-bust-from-left{from{opacity:0;transform:translateX(-34px) scale(1.5)}to{opacity:1;transform:translateX(0) scale(1.5)}}

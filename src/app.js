@@ -237,7 +237,7 @@ const vacationIllustrations=[
 function unifiedAgeFolder(){return '09';}
 function scheduleFramePath(file){return `../assets/characters/seonhwa/schedule-actions/${file}`;}
 function scheduleBasePath(file){return `../assets/characters/seonhwa/schedule-base/${file}`;}
-const scheduleAssetRevision='0.64.61-debug';
+const scheduleAssetRevision='0.64.62-debug';
 const scheduleQaParams=new URLSearchParams(location.search);
 const moonlightStandaloneQa=scheduleQaParams.get('qaHoliday')==='chuseok';
 const sehwaStandaloneQa=scheduleQaParams.get('qaHoliday')==='seollal';
@@ -1500,7 +1500,7 @@ function renderSehwaContest(session,beatIndex){
   const winner=beat===16&&!session.winner.player?`<figure class="pageant-winner"><img src="${moonlightEntrantImage(session.winner)}" alt="대상 수상자 ${session.winner.name}"><figcaption>대상 · ${session.winner.name}</figcaption></figure><img class="pageant-king" src="../assets/events/holidays/moonlight-pageant/king/king-presenting-v1.png?v=${scheduleAssetRevision}" alt="대상을 시상하는 황">`:'';
   overlay.hidden=false;overlay.className=`moonlight-pageant sehwa-contest festival-pm3 beat-${beat+1} reaction-${session.reaction.replaceAll(' ','-')}`;
   const nextLabel=award?'경연 마치기':result?'결과 확인':'다음';
-  overlay.innerHTML=`${festivalCrowd()}${titleCard}${hero}${guardian}${opening?sehwaOpeningDialogue(session,beat):''}${drawingGroup?sehwaDrawingEnsemble(session):''}${king}${board}${winner}<p class="pageant-beat">${beat+1}/${sehwaStoryBeats.length} · ${sehwaStoryBeats[beat]}</p><button class="pageant-next" type="button">${nextLabel}</button>`;
+  overlay.innerHTML=`${festivalCrowd()}${titleCard}${hero}${guardian}${opening?sehwaOpeningDialogue(session,beat):''}${drawingGroup?sehwaDrawingEnsemble(session):''}${king}${board}${winner}${opening?'':`<p class="pageant-beat">${beat+1}/${sehwaStoryBeats.length} · ${sehwaStoryBeats[beat]}</p>`}<button class="pageant-next" type="button">${nextLabel}</button>`;
 }
 function waitForSehwaAdvance(beat){
   const button=document.querySelector('#moonlightPageant .pageant-next');if(!button)return schedulePlaybackDelay(2500);
