@@ -2438,10 +2438,10 @@ body .phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage:
   left:var(--layer-prop-left)!important;bottom:17%!important;width:54px!important;clip-path:none!important;
 }
 
-/* v0.64.22: fixed adult farmer scale and consistent tilling motion. */
+/* v0.64.85: smaller farmer with a stable tilling baseline. */
 .phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-farmwork.schedule-layered .schedule-scene-layer.layer-npc{
-  width:128px!important;
-  height:128px!important;
+  width:120px!important;
+  height:120px!important;
   max-width:none!important;
   object-fit:contain!important;
   object-position:center bottom!important;

@@ -237,7 +237,7 @@ const vacationIllustrations=[
 function unifiedAgeFolder(){return '09';}
 function scheduleFramePath(file){return `../assets/characters/seonhwa/schedule-actions/${file}`;}
 function scheduleBasePath(file){return `../assets/characters/seonhwa/schedule-base/${file}`;}
-const scheduleAssetRevision='0.64.84-debug';
+const scheduleAssetRevision='0.64.86-debug';
 const scheduleQaParams=new URLSearchParams(location.search);
 const moonlightStandaloneQa=scheduleQaParams.get('qaHoliday')==='chuseok';
 const sehwaStandaloneQa=scheduleQaParams.get('qaHoliday')==='seollal';
@@ -834,7 +834,7 @@ async function playScheduleLayerScene(actionId,seonImage,rank,outcome,dayIndex){
   const patternKey=forcedPattern||`${failed?'fail':'success'}-${dayIndex%2===0?'a':'b'}`;
   const patternSpec=spec.patterns?.[patternKey];
   const patternFrames=v2Spec?patternSpec?.frames:patternSpec;
-  const farmTillingFrames=['npc/farmer-tilling-v3/farmer-tilling-v3-1.png','npc/farmer-tilling-v3/farmer-tilling-v3-2.png','npc/farmer-tilling-v3/farmer-tilling-v3-3.png'];
+  const farmTillingFrames=['npc/farmer-tilling-v1/farmer-tilling-v1-1.png','npc/farmer-tilling-v1/farmer-tilling-v1-2.png','npc/farmer-tilling-v1/farmer-tilling-v1-3.png'];
   const farmChickenChaseFrames=['hero-actions/chicken-chase-v2/seonhwa-chicken-chase-1.png','hero-actions/chicken-chase-v2/seonhwa-chicken-chase-2.png','hero-actions/chicken-chase-v2/seonhwa-chicken-chase-3.png'];
   const childcareRunningFrames=['npc/child-running-v1/child-run-1.png','npc/child-running-v1/child-run-2.png','npc/child-running-v1/child-run-3.png'];
   const childcareFallFrames=['npc/child-fall-v1/child-fall-1.png','npc/child-fall-v1/child-fall-2.png','npc/child-fall-v1/child-fall-3.png'];
@@ -878,8 +878,8 @@ async function playScheduleLayerScene(actionId,seonImage,rank,outcome,dayIndex){
     if(spec.backgroundOverlay)layers.push(make('background',spec.backgroundOverlay));
     const npc=make('npc',npcFrames[0]);
     if(actionId==='farmwork'){
-      npc.style.setProperty('width','128px','important');
-      npc.style.setProperty('height','128px','important');
+      npc.style.setProperty('width','120px','important');
+      npc.style.setProperty('height','120px','important');
     }
     const patternLayer=v2Spec&&patternSpec?.layer==='effects'?'effect':'pattern';
     const pattern=make(`${patternLayer} ${patternKey} ${patternKey.startsWith('fail-')?'dedicated-failure':''}`,patternFrames[0]);
@@ -888,7 +888,7 @@ async function playScheduleLayerScene(actionId,seonImage,rank,outcome,dayIndex){
     const delay=actionId==='farmwork'&&patternKey==='fail-b'?165:actionId==='farmwork'?240:actionId==='childcare'?280:([360,300,250][rank]||300);
     for(let loop=0;loop<3;loop+=1){
       for(let frame=0;frame<3;frame+=1){
-        let activeHeroFrame=heroFrames[frame],activeNpcFrame=npcFrames[frame];
+        let activeHeroFrame=heroFrames[frame],activeNpcFrame=npcFrames[frame],activePatternFrame=patternFrames[frame];
         if(actionId==='farmwork'&&patternKey!=='fail-b'){
           const tillingCycle=[0,1,2,1,0,1,2,1,0];
           activeNpcFrame=npcFrames[tillingCycle[loop*3+frame]];
@@ -898,8 +898,12 @@ async function playScheduleLayerScene(actionId,seonImage,rank,outcome,dayIndex){
           const travelStep=loop*3+frame;
           const travelProgress=travelStep/8;
           const travelsRight=farmChaseTravelsRight;
-          const heroLeft=travelsRight?2+travelProgress*76:98-travelProgress*76;
-          const chaseGap=32;
+          const farmChaseCycle=[0,1,2,1,0,1,2,1,0];
+          const chaseFrame=farmChaseCycle[travelStep];
+          activeHeroFrame=farmChickenChaseFrames[chaseFrame];
+          activePatternFrame=patternFrames[chaseFrame];
+          const heroLeft=travelsRight?10+travelProgress*44:90-travelProgress*44;
+          const chaseGap=28;
           const chickenLeft=travelsRight?heroLeft+chaseGap:heroLeft-chaseGap;
           stage.style.setProperty('--layer-hero-left',`${heroLeft}%`,'important');
           stage.style.setProperty('--layer-prop-left',`${chickenLeft}%`,'important');
@@ -928,7 +932,7 @@ async function playScheduleLayerScene(actionId,seonImage,rank,outcome,dayIndex){
         }
         seonImage.src=v2Spec?`${base}/${activeHeroFrame}${v}`:`${activeHeroFrame}${v}`;
         npc.src=`${base}/${activeNpcFrame}${v}`;
-        pattern.src=`${base}/${patternFrames[frame]}${v}`;
+        pattern.src=`${base}/${activePatternFrame}${v}`;
         await schedulePlaybackDelay(delay);
       }
     }

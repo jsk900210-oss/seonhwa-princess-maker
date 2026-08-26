@@ -28,7 +28,10 @@ assert.match(css,/action-farmwork\.schedule-layered\[data-chase-direction="left"
 assert.ok(app.includes('const minimumActorGap=58')&&app.includes("stage.dataset.actorSafeGap=String(minimumActorGap)"),'성인 NPC와 선화는 실제 프레임 폭을 고려한 공통 안전 간격을 사용해야 합니다.');
 assert.ok(app.includes("setProperty('--layer-hero-left',`${heroPosition}%`,'important')")&&app.includes("setProperty('--layer-npc-left',`${npcPosition}%`,'important')"),'공통 안전 좌표가 일정별 CSS에 덮이면 안 됩니다.');
 assert.ok(app.includes('const childcareMinimumGap=40')&&app.includes('childLeft-childcareMinimumGap')&&app.includes('childLeft+childcareMinimumGap'),'아이 돌보기 이동 중 선화와 아이의 최소 중심 간격을 양방향으로 유지해야 합니다.');
-assert.ok(app.includes('const chaseGap=32'),'농가 닭 추격은 선화와 닭의 실제 폭보다 넓은 중심 간격을 유지해야 합니다.');
+assert.ok(app.includes('const farmChaseCycle=[0,1,2,1,0,1,2,1,0]'),'농가 닭 추격은 3→1 점프 없이 왕복 보간 프레임을 사용해야 합니다.');
+assert.ok(app.includes('const heroLeft=travelsRight?10+travelProgress*44:90-travelProgress*44'),'농가 닭 추격은 선화와 닭이 화면 안에서 끝나야 합니다.');
+assert.ok(app.includes('const chaseGap=28'),'농가 닭 추격은 선화와 닭 사이의 안전 간격을 유지해야 합니다.');
+assert.match(css,/action-farmwork\.schedule-layered \.schedule-scene-layer\.layer-npc\{[\s\S]*?width:120px!important;[\s\S]*?height:120px!important;/,'농부 NPC는 선화와 균형을 이루면서 화면 가장자리에서 잘리지 않는 크기여야 합니다.');
 assert.ok(app.includes("stage.dataset.childcareDirection=childcareTravelsRight?'right':'left'")&&app.includes('delete stage.dataset.childcareDirection'),'아이 돌보기 방향은 장면 시작부터 종료까지 고정해야 합니다.');
 assert.doesNotMatch(css,/action-childcare[\s\S]{0,300}transition:left \.28s linear,transform/,'아이 방향 반전에 transform 보간을 사용하면 도는 것처럼 보입니다.');
 assert.ok(app.includes("if(outcome==='mistake')document.querySelector('#dialogueText').textContent=''"),'실수 판정은 설명 글씨 없이 실패 모션으로 전달해야 합니다.');

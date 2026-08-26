@@ -1,5 +1,5 @@
 {
-  "version": "2.0.0",
+  "version": "2.0.1",
   "activityId": "farmwork",
   "nameKo": "농가 일손 돕기",
   "status": "review",
@@ -31,9 +31,9 @@
       "layer": "props",
       "heroIncludesProp": true,
       "npcFrames": [
-        "npc/farmer-tilling-v3/farmer-tilling-v3-1.png",
-        "npc/farmer-tilling-v3/farmer-tilling-v3-2.png",
-        "npc/farmer-tilling-v3/farmer-tilling-v3-3.png"
+        "npc/farmer-tilling-v1/farmer-tilling-v1-1.png",
+        "npc/farmer-tilling-v1/farmer-tilling-v1-2.png",
+        "npc/farmer-tilling-v1/farmer-tilling-v1-3.png"
       ],
       "frames": [
         "props/cabbage-basket-1.png",
@@ -67,9 +67,9 @@
     }
   },
   "placement": {
-    "heroLeft": "29%",
+    "heroLeft": "22%",
     "floorBottom": "3%",
-    "npcLeft": "78%",
+    "npcLeft": "80%",
     "npcScale": 1,
     "propLeft": "53%",
     "propBottom": "2%",
