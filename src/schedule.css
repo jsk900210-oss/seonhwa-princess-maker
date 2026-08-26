@@ -2194,7 +2194,6 @@
 .pageant-winner{position:absolute;left:6%;bottom:12%;width:54%;height:72%;margin:0;display:grid;justify-items:center;align-content:end;animation:pageant-winner-enter .75s ease-out both}
 .pageant-winner img{width:100%;height:100%;object-fit:contain;object-position:center bottom;filter:drop-shadow(0 5px 7px #160b08bb)}
 .pageant-winner figcaption{position:absolute;bottom:0;padding:4px 12px;border:1px solid #e5c476;border-radius:14px;background:#301b10e8;color:#ffeebd;font-size:10px;font-weight:900}
-.pageant-beat{position:absolute;left:4%;right:4%;bottom:2%;margin:0;padding:5px 8px;border:1px solid #d8b56c;border-radius:9px;background:#24140ddd;color:#fff3d3;font-size:9px;line-height:1.35;text-align:center;box-shadow:0 2px 7px #0008}
 .moonlight-pageant .pageant-next{position:absolute;z-index:70;right:5%;bottom:8%;min-width:72px;min-height:34px;padding:7px 13px;border:1px solid #e2c27f;border-radius:999px;background:#fff6dfeb;color:#54351f;font-size:11px;font-weight:900;pointer-events:auto;box-shadow:0 4px 12px #0008;animation:pageant-next-pulse 1.2s ease-in-out infinite}
 .moonlight-pageant .pageant-next:disabled{opacity:.38;animation:none;pointer-events:none}
 .moonlight-pageant.festival-pm3.beat-6 .pageant-intro-lineup{display:grid!important;left:3%;right:3%;bottom:14%;grid-template-columns:repeat(4,1fr);gap:2px 4px}
@@ -2276,17 +2275,6 @@
 @media(max-width:380px){.festival-title-card h2{font-size:19px}.festival-scoreboard{left:5%;right:5%}.pageant-king.is-announcer{width:134px;height:180px}.pageant-guardian-cheer.is-result{width:122px;height:164px}}
 
 /* v0.64.13: keep holiday actors stable and reserve a clear dialogue lane. */
-.moonlight-pageant.festival-pm3 .pageant-beat{
-  z-index:60!important;
-  bottom:2%!important;
-  min-height:34px;
-  box-sizing:border-box;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  background:#24140df2!important;
-  box-shadow:0 2px 8px #000b!important;
-}
 
 /* v0.64.13: childcare keeps Seonhwa's authored facing and separates actor layers. */
 .phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-childcare.schedule-layered{

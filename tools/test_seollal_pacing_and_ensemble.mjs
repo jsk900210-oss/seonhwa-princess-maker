@@ -9,7 +9,7 @@ assert.match(app,/await waitForSehwaAdvance\(beat\)/,'설날 장면은 다음 �
 assert.match(app,/function sehwaOpeningAnswer\(session\)/,'스테이터스에 따른 선화의 시작 답변이 필요합니다.');
 assert.match(app,/function sehwaOpeningDialogue\(session,beat\)/,'시작과 동시에 신수 응원 대화가 필요합니다.');
 assert.match(app,/speaker-\$\{guardianTurn\?'guardian':'seonhwa'\}/,'신수와 선화가 번갈아 말하는 화자 구분이 필요합니다.');
-assert.match(app,/\$\{beat<=2\?'':`<p class="pageant-beat">/,'도입 1~3장면에는 중복되는 하단 설명창이 없어야 합니다.');
+assert.doesNotMatch(app,/class="pageant-beat"/,'명절 이벤트 내부에는 중복되는 하단 설명창이 없어야 합니다.');
 assert.match(app,/\$\{opening\?'':festivalCrowd\(\)\}/,'대화 장면에는 인물 아래로 관객 실루엣이 겹치지 않아야 합니다.');
 assert.match(app,/const guardian=guardianResult\?festivalGuardianCut\(session\):''/,'마음을 다잡는 3장면에는 신수가 다시 나타나지 않아야 합니다.');
 assert.match(css,/\.activity-stage:has\(\.sehwa-opening-dialogue\) \.stage-pm3-hud>#stageHudStats\{display:none!important\}/,'대화 장면에는 스테이터스 막대가 없어야 합니다.');
