@@ -1,5 +1,6 @@
 import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
+import {existsSync} from 'node:fs';
 const app=readFileSync(new URL('../src/app.js',import.meta.url),'utf8');
 const css=readFileSync(new URL('../src/schedule.css',import.meta.url),'utf8');
 assert.match(app,/function waitForSehwaAdvance\(beat\)/,'설날 장면은 전용 진행 대기가 필요합니다.');
@@ -12,6 +13,8 @@ assert.match(css,/@keyframes sehwa-dialogue-from-right/,'신수 대화창의 오
 assert.match(css,/@keyframes sehwa-dialogue-from-left/,'선화 대화창의 왼쪽 슬라이드가 필요합니다.');
 assert.match(app,/protagonistFullbodyForAge\(\)/,'선화 대화는 연령별 상반신 원화를 사용해야 합니다.');
 assert.match(css,/\.sehwa-opening-dialogue>\.sehwa-dialogue-bust\{[^}]*transform:scale\(1\.5\)/,'대화 중 화자는 얼굴과 상체 중심으로 확대되어야 합니다.');
+assert.match(app,/function sehwaExpressionSheet\(\)/,'연령별 반실사 표정 시트를 선택해야 합니다.');
+for(const age of ['09','13','16','18'])assert.ok(existsSync(new URL(`../assets/characters/dialogue-busts/seonhwa/age-${age}-expression-sheet-v1.png`,import.meta.url)),`${age}세 대화 표정 시트가 필요합니다.`);
 assert.match(app,/function sehwaDrawingEnsemble\(session\)/,'참가자 전원의 그림 장면이 필요합니다.');
 assert.match(app,/session\.entrants\.map/,'그림 장면에는 참가자 8명이 모두 포함되어야 합니다.');
 assert.match(css,/\.sehwa-drawing-ensemble\{[^}]*grid-template-columns:repeat\(4,1fr\)/,'참가자 8명은 4×2 구도로 배치해야 합니다.');

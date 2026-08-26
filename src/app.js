@@ -237,7 +237,7 @@ const vacationIllustrations=[
 function unifiedAgeFolder(){return '09';}
 function scheduleFramePath(file){return `../assets/characters/seonhwa/schedule-actions/${file}`;}
 function scheduleBasePath(file){return `../assets/characters/seonhwa/schedule-base/${file}`;}
-const scheduleAssetRevision='0.64.58-debug';
+const scheduleAssetRevision='0.64.59-debug';
 const scheduleQaParams=new URLSearchParams(location.search);
 const moonlightStandaloneQa=scheduleQaParams.get('qaHoliday')==='chuseok';
 const sehwaStandaloneQa=scheduleQaParams.get('qaHoliday')==='seollal';
@@ -1470,13 +1470,17 @@ function sehwaOpeningAnswer(session){
   const answers={'자신감 넘침':'그동안 익힌 붓끝을 믿어요. 제 세화로 새해의 복을 환하게 보여 드릴게요.','차분한 자신감':'서두르지 않고 한 획씩 정성껏 그리면 제 마음이 전해질 거예요.','긴장하지만 씩씩함':'조금 떨리지만 신수가 곁에 있으니 끝까지 용기 내서 그려 볼게요.','자신 없음':'아직 부족한 것 같아 걱정되지만, 배운 순서부터 천천히 떠올려 볼게요.','부끄러움':'사람들이 모두 보고 있어서 떨려요… 그래도 종이 앞에서는 숨지 않을게요.'};
   return answers[session.reaction]||answers['긴장하지만 씩씩함'];
 }
+function sehwaDialogueExpression(session){
+  return {'자신감 넘침':'determined','차분한 자신감':'smile','긴장하지만 씩씩함':'nervous','자신 없음':'sad','부끄러움':'shy'}[session.reaction]||'neutral';
+}
+function sehwaExpressionSheet(){return `../assets/characters/dialogue-busts/seonhwa/age-${sehwaAssetAge()}-expression-sheet-v1.png?v=${scheduleAssetRevision}`;}
 function sehwaOpeningDialogue(session,beat){
   if(!game.guardianType)return '';
   const name=game.guardianName||guardianDefs[game.guardianType]?.name||'신수';
   const guardianTurn=beat===0,speaker=guardianTurn?name:(game.characterName||'선화');
   const line=guardianTurn?'첫 획부터 완벽할 필요는 없어. 네가 담고 싶은 새해의 복을 보여 줘.':sehwaOpeningAnswer(session);
-  const portrait=guardianTurn?`../assets/cinematics/guardian/humanized/poses/${game.guardianType}-happy-transparent-v3.png?v=${scheduleAssetRevision}`:protagonistFullbodyForAge();
-  return `<section class="sehwa-opening-dialogue speaker-${guardianTurn?'guardian':'seonhwa'}"><img class="sehwa-dialogue-bust" src="${portrait}" alt="말하는 ${speaker}의 얼굴과 상체"><div role="dialog" aria-label="${speaker}의 대화"><small>${guardianTurn?'수호신수':'참가자'}</small><p><b>${speaker}</b>${line}</p></div></section>`;
+  const portrait=guardianTurn?`<img class="sehwa-dialogue-bust" src="../assets/cinematics/guardian/humanized/poses/${game.guardianType}-happy-transparent-v3.png?v=${scheduleAssetRevision}" alt="말하는 ${speaker}의 얼굴과 상체">`:`<span class="sehwa-dialogue-bust sehwa-expression expression-age-${sehwaAssetAge()} expression-${sehwaDialogueExpression(session)}" style="--sehwa-expression-sheet:url('${sehwaExpressionSheet()}')" role="img" aria-label="${sehwaDialogueExpression(session)} 표정으로 말하는 ${speaker}"></span>`;
+  return `<section class="sehwa-opening-dialogue speaker-${guardianTurn?'guardian':'seonhwa'}">${portrait}<div role="dialog" aria-label="${speaker}의 대화"><small>${guardianTurn?'수호신수':'참가자'}</small><p><b>${speaker}</b>${line}</p></div></section>`;
 }
 function sehwaDrawingEnsemble(session){
   return `<section class="sehwa-drawing-ensemble" aria-label="세화를 그리는 참가자 8명">${session.entrants.map(entry=>`<figure class="${entry.player?'is-player':''}"><span><img src="${entry.player?sehwaFrame('drawing',2):moonlightEntrantImage(entry)}" alt="세화를 그리는 ${entry.name}"></span><i aria-hidden="true"></i><figcaption>${entry.name}</figcaption></figure>`).join('')}</section>`;
