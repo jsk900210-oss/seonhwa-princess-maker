@@ -243,7 +243,7 @@ const vacationIllustrations=[
 function unifiedAgeFolder(){return '09';}
 function scheduleFramePath(file){return `../assets/characters/seonhwa/schedule-actions/${file}`;}
 function scheduleBasePath(file){return `../assets/characters/seonhwa/schedule-base/${file}`;}
-const scheduleAssetRevision='0.64.111-debug';
+const scheduleAssetRevision='0.64.112-debug';
 const scheduleQaParams=new URLSearchParams(location.search);
 const moonlightStandaloneQa=scheduleQaParams.get('qaHoliday')==='chuseok';
 const sehwaStandaloneQa=scheduleQaParams.get('qaHoliday')==='seollal';
@@ -1478,7 +1478,7 @@ function moonlightSeonhwaImage(){const age=moonlightAssetAge();return `../assets
 const moonlightActingPoseMap={invitation:[1,2,3,4],prepare:[5,7,8],enter:[9,10,11],bow:[11,12,13],finish:[13,14,15],interview:[14,15,16]};
 function moonlightMotionFrames(motion){
   const age=moonlightAssetAge(),actingPoses=moonlightActingPoseMap[motion];
-  if(actingPoses)return actingPoses.map(frame=>`../assets/events/holidays/moonlight-pageant/seonhwa/age-${age}/acting-v4/seonhwa-acting-${String(frame).padStart(2,'0')}-v4.png?v=${scheduleAssetRevision}`);
+  if(actingPoses)return actingPoses.map(frame=>`../assets/events/holidays/moonlight-pageant/seonhwa/age-${age}/acting-v5/seonhwa-acting-${String(frame).padStart(2,'0')}-v5.png?v=${scheduleAssetRevision}`);
   const count=motion==='dance'?6:3,version=motion==='dance'?'v3':'v2';
   return Array.from({length:count},(_,index)=>`../assets/events/holidays/moonlight-pageant/seonhwa/age-${age}/seonhwa-${motion}-${index+1}-${version}.png?v=${scheduleAssetRevision}`);
 }
@@ -1637,7 +1637,7 @@ function sehwaOpeningAnswer(session){
 function sehwaDialogueExpression(session){
   return {'자신감 넘침':'determined','차분한 자신감':'smile','긴장하지만 씩씩함':'nervous','자신 없음':'sad','부끄러움':'shy'}[session.reaction]||'neutral';
 }
-function sehwaExpressionAsset(expression){return `../assets/characters/dialogue-busts/seonhwa/age-${sehwaAssetAge()}-${expression}-v1.png?v=${scheduleAssetRevision}`;}
+function sehwaExpressionAsset(expression){return `../assets/characters/dialogue-busts/seonhwa/age-${sehwaAssetAge()}-${expression}-v2.png?v=${scheduleAssetRevision}`;}
 function sehwaOpeningDialogue(session,beat){
   if(!game.guardianType)return '';
   const name=game.guardianName||guardianDefs[game.guardianType]?.name||'신수';
