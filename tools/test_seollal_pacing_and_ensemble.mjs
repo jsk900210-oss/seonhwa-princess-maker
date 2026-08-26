@@ -13,6 +13,7 @@ assert.match(app,/\$\{opening\?'':`<p class="pageant-beat">/,'대화 장면에�
 assert.match(css,/\.activity-stage:has\(\.sehwa-opening-dialogue\) \.stage-pm3-hud>#stageHudStats\{display:none!important\}/,'대화 장면에는 스테이터스 막대가 없어야 합니다.');
 assert.match(css,/@keyframes sehwa-dialogue-from-right/,'신수 대화창의 오른쪽 슬라이드가 필요합니다.');
 assert.match(css,/@keyframes sehwa-dialogue-from-left/,'선화 대화창의 왼쪽 슬라이드가 필요합니다.');
+assert.match(css,/\.sehwa-opening-dialogue p\{[^}]*word-break:keep-all;[^}]*text-wrap:pretty/,'한글 대사는 어절 중간에서 끊기지 않아야 합니다.');
 assert.match(app,/protagonistFullbodyForAge\(\)/,'선화 대화는 연령별 상반신 원화를 사용해야 합니다.');
 assert.match(css,/\.sehwa-opening-dialogue>\.sehwa-dialogue-bust\{[^}]*transform:scale\(1\.5\)/,'대화 중 화자는 얼굴과 상체 중심으로 확대되어야 합니다.');
 assert.match(app,/function sehwaExpressionAsset\(expression\)/,'연령별 투명 표정 자산을 선택해야 합니다.');
