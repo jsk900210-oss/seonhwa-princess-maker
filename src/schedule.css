@@ -2589,3 +2589,30 @@ body .phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage:
   .sehwa-opening-dialogue p{font-size:8px}
   .sehwa-drawing-ensemble figure>span{width:47px;height:57px}
 }
+
+/* v0.64.88: the market errand crosses the entire set in either direction.
+   The first coordinate is snapped while hidden outside the framed stage, then
+   only the actor travels; the map remains completely fixed. */
+.phone.playing:not(.market-playing):not(.vacation-playing)
+  .activity-stage.map-marketErrand.action-errand:not(.market-choice-stage)
+  .stage-character.pixel-sprite.motion-errand{
+  transition:left .17s linear!important;
+  animation:none!important;
+}
+.phone.playing:not(.market-playing):not(.vacation-playing)
+  .activity-stage.map-marketErrand.action-errand:not(.market-choice-stage)
+  .stage-character.pixel-sprite.motion-errand[data-errand-starting="true"]{
+  transition:none!important;
+}
+.phone.playing:not(.market-playing):not(.vacation-playing)
+  .activity-stage.map-marketErrand.action-errand:not(.market-choice-stage)
+  .stage-character.pixel-sprite.motion-errand[data-errand-direction="right"]>img{
+  transform:none!important;
+  transform-origin:center bottom!important;
+}
+.phone.playing:not(.market-playing):not(.vacation-playing)
+  .activity-stage.map-marketErrand.action-errand:not(.market-choice-stage)
+  .stage-character.pixel-sprite.motion-errand[data-errand-direction="left"]>img{
+  transform:scaleX(-1)!important;
+  transform-origin:center bottom!important;
+}

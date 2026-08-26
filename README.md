@@ -1,5 +1,15 @@
 # 선화공주 만들기 — MVP 이미지 자산 패키지
 
+## v0.64.88-debug · 장터 양방향 완주·아이 돌보기 발동작 재제작
+
+- 장터 심부름은 날짜에 따라 왼쪽 창 밖→오른쪽 창 밖, 오른쪽 창 밖→왼쪽 창 밖을 번갈아 완주합니다.
+- 실수·고전 결과는 화면 가운데에서 멈춘 뒤 기존 넘어짐 동작으로 이어지고, 성공 시에만 반대편 창 밖까지 나갑니다.
+- 장터 배경은 고정하고 선화의 좌표와 바라보는 방향만 바꾸며, 다음 일정 시작 전 이동 좌표를 초기화합니다.
+- 아이 돌보기 선화 달리기를 `착지→공중 교차→반대발 착지`가 분명한 신규 투명 3프레임으로 교체했습니다.
+- QA: `src/?qa=1&qaSchedule=errand&qaDirection=right&v=0.64.88-debug`
+- QA: `src/?qa=1&qaSchedule=errand&qaDirection=left&v=0.64.88-debug`
+- QA: `src/?qa=1&qaSchedule=childcare&qaPattern=success-a&qaDirection=right&v=0.64.88-debug`
+
 ## v0.64.87-debug · 아이 돌보기 달리기 보정
 
 - 아기 NPC의 좌표 기준을 이미지 왼쪽 끝이 아닌 몸의 중심으로 통일해 달리면서 옆으로 밀리는 현상을 제거했습니다.
