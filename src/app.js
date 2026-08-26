@@ -237,7 +237,7 @@ const vacationIllustrations=[
 function unifiedAgeFolder(){return '09';}
 function scheduleFramePath(file){return `../assets/characters/seonhwa/schedule-actions/${file}`;}
 function scheduleBasePath(file){return `../assets/characters/seonhwa/schedule-base/${file}`;}
-const scheduleAssetRevision='0.64.56-debug';
+const scheduleAssetRevision='0.64.57-debug';
 const scheduleQaParams=new URLSearchParams(location.search);
 const moonlightStandaloneQa=scheduleQaParams.get('qaHoliday')==='chuseok';
 const sehwaStandaloneQa=scheduleQaParams.get('qaHoliday')==='seollal';
@@ -1470,10 +1470,12 @@ function sehwaOpeningAnswer(session){
   const answers={'자신감 넘침':'그동안 익힌 붓끝을 믿어요. 제 세화로 새해의 복을 환하게 보여 드릴게요.','차분한 자신감':'서두르지 않고 한 획씩 정성껏 그리면 제 마음이 전해질 거예요.','긴장하지만 씩씩함':'조금 떨리지만 신수가 곁에 있으니 끝까지 용기 내서 그려 볼게요.','자신 없음':'아직 부족한 것 같아 걱정되지만, 배운 순서부터 천천히 떠올려 볼게요.','부끄러움':'사람들이 모두 보고 있어서 떨려요… 그래도 종이 앞에서는 숨지 않을게요.'};
   return answers[session.reaction]||answers['긴장하지만 씩씩함'];
 }
-function sehwaOpeningDialogue(session){
+function sehwaOpeningDialogue(session,beat){
   if(!game.guardianType)return '';
   const name=game.guardianName||guardianDefs[game.guardianType]?.name||'신수';
-  return `<section class="sehwa-opening-dialogue"><img src="../assets/cinematics/guardian/humanized/poses/${game.guardianType}-happy-transparent-v3.png?v=${scheduleAssetRevision}" alt="선화를 응원하는 ${name}"><div><p><b>${name}</b>첫 획부터 완벽할 필요는 없어. 네가 담고 싶은 새해의 복을 보여 줘.</p><p><b>${game.characterName||'선화'}</b>${sehwaOpeningAnswer(session)}</p></div></section>`;
+  const guardianTurn=beat===0,speaker=guardianTurn?name:(game.characterName||'선화');
+  const line=guardianTurn?'첫 획부터 완벽할 필요는 없어. 네가 담고 싶은 새해의 복을 보여 줘.':sehwaOpeningAnswer(session);
+  return `<section class="sehwa-opening-dialogue speaker-${guardianTurn?'guardian':'seonhwa'}"><img src="../assets/cinematics/guardian/humanized/poses/${game.guardianType}-happy-transparent-v3.png?v=${scheduleAssetRevision}" alt="선화를 응원하는 ${name}"><div role="dialog" aria-label="${speaker}의 대화"><small>${guardianTurn?'수호신수':'참가자'}</small><p><b>${speaker}</b>${line}</p></div></section>`;
 }
 function sehwaDrawingEnsemble(session){
   return `<section class="sehwa-drawing-ensemble" aria-label="세화를 그리는 참가자 8명">${session.entrants.map(entry=>`<figure class="${entry.player?'is-player':''}"><span><img src="${entry.player?sehwaFrame('drawing',2):moonlightEntrantImage(entry)}" alt="세화를 그리는 ${entry.name}"></span><i aria-hidden="true"></i><figcaption>${entry.name}</figcaption></figure>`).join('')}</section>`;
@@ -1492,11 +1494,11 @@ function renderSehwaContest(session,beatIndex){
   const winner=beat===16&&!session.winner.player?`<figure class="pageant-winner"><img src="${moonlightEntrantImage(session.winner)}" alt="대상 수상자 ${session.winner.name}"><figcaption>대상 · ${session.winner.name}</figcaption></figure><img class="pageant-king" src="../assets/events/holidays/moonlight-pageant/king/king-presenting-v1.png?v=${scheduleAssetRevision}" alt="대상을 시상하는 황">`:'';
   overlay.hidden=false;overlay.className=`moonlight-pageant sehwa-contest festival-pm3 beat-${beat+1} reaction-${session.reaction.replaceAll(' ','-')}`;
   const nextLabel=award?'경연 마치기':result?'결과 확인':'다음';
-  overlay.innerHTML=`${festivalCrowd()}${titleCard}${hero}${guardian}${opening?sehwaOpeningDialogue(session):''}${drawingGroup?sehwaDrawingEnsemble(session):''}${king}${board}${winner}<p class="pageant-beat">${beat+1}/${sehwaStoryBeats.length} · ${sehwaStoryBeats[beat]}</p><button class="pageant-next" type="button">${nextLabel}</button>`;
+  overlay.innerHTML=`${festivalCrowd()}${titleCard}${hero}${guardian}${opening?sehwaOpeningDialogue(session,beat):''}${drawingGroup?sehwaDrawingEnsemble(session):''}${king}${board}${winner}<p class="pageant-beat">${beat+1}/${sehwaStoryBeats.length} · ${sehwaStoryBeats[beat]}</p><button class="pageant-next" type="button">${nextLabel}</button>`;
 }
 function waitForSehwaAdvance(beat){
   const button=document.querySelector('#moonlightPageant .pageant-next');if(!button)return schedulePlaybackDelay(2500);
-  const minimumStay=beat===7?5000:700;
+  const minimumStay=beat===7?5000:beat<=1?1600:700;
   return new Promise(resolve=>{button.disabled=true;window.setTimeout(()=>{button.disabled=false;button.addEventListener('click',resolve,{once:true});},minimumStay);});
 }
 function presentHolidayRelation(){
