@@ -237,7 +237,7 @@ const vacationIllustrations=[
 function unifiedAgeFolder(){return '09';}
 function scheduleFramePath(file){return `../assets/characters/seonhwa/schedule-actions/${file}`;}
 function scheduleBasePath(file){return `../assets/characters/seonhwa/schedule-base/${file}`;}
-const scheduleAssetRevision='0.64.101-debug';
+const scheduleAssetRevision='0.64.102-debug';
 const scheduleQaParams=new URLSearchParams(location.search);
 const moonlightStandaloneQa=scheduleQaParams.get('qaHoliday')==='chuseok';
 const sehwaStandaloneQa=scheduleQaParams.get('qaHoliday')==='seollal';
@@ -3121,7 +3121,8 @@ async function playWeeklySchedule(selected) {
         for(const position of [30,freeTimeVariant?.stop??56]){stageCharacter.style.left=`${position}%`;await animateActivitySprite(stageCharacterImage,'motion-walk',null,null,null,dailyOutfit,currentMasteryRank);}
         await animateActivitySprite(stageCharacterImage,'motion-market-roam',freeTimeVariant?.activity||'errand',null,null,dailyOutfit,currentMasteryRank);
       }finally{
-        stageCharacter.style.removeProperty('left');
+        // 그날 결과가 뜰 때까지 마지막 산책 위치를 유지한다. 다음 날 공통
+        // 초기화가 left를 지우므로 오른쪽 기본 좌표로 순간 이동하지 않는다.
         stageCharacterImage.style.removeProperty('transform');
         stageCharacterImage.style.removeProperty('transform-origin');
         stageCharacter.hidden=false;stageProps.hidden=true;stageNpc.hidden=true;
