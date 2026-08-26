@@ -2516,15 +2516,21 @@ body .phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage:
 .sehwa-opening-dialogue.speaker-seonhwa>div{left:3%;background:#f3ead8f5;animation:sehwa-dialogue-from-left .72s cubic-bezier(.18,.75,.24,1) .28s both}
 .activity-stage:has(.moonlight-pageant:not([hidden])) .stage-pm3-hud>#stageHudStats{display:none!important}
 .sehwa-contest:has(.sehwa-opening-dialogue) .pageant-next{bottom:3%}
+.sehwa-contest.festival-pm3{overflow:visible}
+.phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage:not(.market-choice-stage):has(.sehwa-contest:not([hidden]))>.stage-inner{overflow:visible!important}
+.sehwa-contest.festival-pm3 .pageant-next,.sehwa-contest.festival-pm3:has(.sehwa-opening-dialogue) .pageant-next{left:19%;right:19%;bottom:-52px;width:auto;min-height:39px;padding:8px 14px;border-color:#b68b4d;background:linear-gradient(145deg,#fff9e8,#ead4aa);box-shadow:0 5px 13px #1b0e087d;animation:sehwa-next-dock-pulse 1.2s ease-in-out infinite}
+@keyframes sehwa-next-dock-pulse{50%{transform:translateY(2px);filter:brightness(1.06)}}
 .sehwa-registration{position:absolute;z-index:38;inset:5% 3% 10%;pointer-events:none}
 .sehwa-registration-seonhwa{position:absolute;z-index:3;left:0;bottom:2%;width:48%;height:80%;display:block;filter:drop-shadow(0 5px 5px #160b08aa)}
 .sehwa-registration-seonhwa img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;object-position:center bottom;opacity:0}
 .sehwa-registration-seonhwa img:nth-child(1){animation:sehwa-receive-bow 3.6s steps(1,end) 1 both}
 .sehwa-registration-seonhwa img:nth-child(2){animation:sehwa-receive-reach 3.6s steps(1,end) 1 both}
 .sehwa-registration-seonhwa img:nth-child(3){animation:sehwa-receive-hold 3.6s steps(1,end) 1 both}
-.sehwa-registration figure{position:absolute;right:2%;bottom:4%;width:43%;margin:0;display:grid;justify-items:center;animation:sehwa-clerk-enter .65s ease-out both}
-.sehwa-registration figure img{width:100%;height:142px;object-fit:contain;object-position:center bottom;filter:drop-shadow(0 5px 5px #160b08aa)}
-.sehwa-registration figcaption{margin-top:-10px;padding:3px 8px;border:1px solid #cfaa68;border-radius:999px;background:#382116e8;color:#fff1ce;font-size:8px;font-weight:900}
+.sehwa-registration figure{position:absolute;right:1%;bottom:4%;width:39%;margin:0;display:grid;justify-items:center;animation:sehwa-clerk-enter .65s ease-out both}
+.sehwa-registration figure img{position:relative;z-index:1;width:100%;height:150px;object-fit:contain;object-position:center bottom;filter:drop-shadow(0 5px 5px #160b08aa)}
+.sehwa-registration-clerk>span{position:absolute;z-index:2;left:2%;right:2%;bottom:17px;height:35px;border:2px solid #342014;border-radius:3px 3px 7px 7px;background:linear-gradient(180deg,#8b5733 0 22%,#57351f 24% 100%);box-shadow:0 5px 8px #160b0888}
+.sehwa-registration-clerk>span:before{content:'접수 명부';position:absolute;left:50%;top:-18px;width:58px;height:24px;display:grid;place-items:center;border:1px solid #8b6039;background:#f7ebce;color:#54351f;font-family:serif;font-size:7px;font-weight:900;transform:translateX(-50%) rotate(-2deg);box-shadow:0 2px 4px #0006}
+.sehwa-registration figcaption{position:relative;z-index:3;margin-top:-10px;padding:3px 8px;border:1px solid #cfaa68;border-radius:999px;background:#382116e8;color:#fff1ce;font-size:8px;font-weight:900}
 .sehwa-entry-slip{position:absolute;left:48%;bottom:26%;width:82px;min-height:54px;box-sizing:border-box;padding:6px 7px;border:2px solid #8b6039;background:#fff9e8;color:#503521;box-shadow:0 5px 9px #0008;transform:rotate(-4deg);animation:sehwa-slip-handover 3.6s cubic-bezier(.2,.72,.25,1) 1 both}
 .sehwa-entry-slip:before{content:'';position:absolute;inset:3px;border:1px solid #c9a774;pointer-events:none}.sehwa-entry-slip small,.sehwa-entry-slip b,.sehwa-entry-slip span{position:relative;z-index:1;display:block;text-align:center}.sehwa-entry-slip small{font-size:5px}.sehwa-entry-slip b{margin:3px 0 1px;font-family:serif;font-size:12px}.sehwa-entry-slip span{font-size:8px;font-weight:900}.sehwa-entry-slip i{position:absolute;z-index:1;right:6px;bottom:5px;display:grid;place-items:center;width:14px;height:14px;border:1px solid #9d302a;border-radius:50%;color:#9d302a;font-size:7px;font-style:normal;font-weight:900}
 @keyframes sehwa-clerk-enter{from{opacity:0;transform:translateX(28px)}to{opacity:1;transform:translateX(0)}}
