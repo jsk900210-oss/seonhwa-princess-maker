@@ -22,6 +22,7 @@ assert.match(app,/function sehwaExpressionAsset\(expression\)/,'연령별 투명
 for(const age of ['09','13','16','18'])for(const expression of ['neutral','smile','joyful','nervous','startled','sad','determined','shy'])assert.ok(existsSync(new URL(`../assets/characters/dialogue-busts/seonhwa/age-${age}-${expression}-v1.png`,import.meta.url)),`${age}세 ${expression} 투명 대화 표정이 필요합니다.`);
 assert.match(app,/function sehwaDrawingEnsemble\(session\)/,'참가자 전원의 그림 장면이 필요합니다.');
 assert.match(app,/function sehwaRegistrationScene\(\)/,'참가표를 건네받는 별도 접수 장면이 필요합니다.');
+assert.match(app,/class="sehwa-registration-seonhwa"/,'접수 장면에는 참가표를 받는 선화가 명시적으로 보여야 합니다.');
 assert.match(css,/@keyframes sehwa-slip-handover/,'참가표가 접수 관리에게서 선화에게 이동해야 합니다.');
 assert.match(app,/session\.entrants\.map/,'그림 장면에는 참가자 8명이 모두 포함되어야 합니다.');
 assert.match(css,/\.sehwa-drawing-ensemble\{[^}]*grid-template-columns:repeat\(4,1fr\)/,'참가자 8명은 4×2 구도로 배치해야 합니다.');
