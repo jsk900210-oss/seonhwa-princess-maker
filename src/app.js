@@ -139,7 +139,7 @@ const actionPresentation = {
   sweeping: { motion:'motion-sweeping', location:'courtyard', prop:'none', activity:'sweeping', npc:'dolsoe' }, herbs: { motion:'motion-herbs', location:'herbField', prop:'none', activity:'herbs', npc:'herbalist' },
   houseclean: { motion:'motion-houseclean', location:'restRoom', prop:'none', activity:'houseclean', npc:null },
   farmwork: { motion:'motion-job-farm', location:'farmJob', prop:'none', activity:'farmwork', npc:null },
-  childcare: { motion:'motion-job-childcare', location:'childcareJob', prop:'none', activity:'childcare', npc:'child' },
+  childcare: { motion:'motion-job-childcare', location:'childcareJob', prop:'none', activity:'childcare', npc:null },
   kitchenhelp: { motion:'motion-job-kitchen', location:'kitchenJob', prop:'none', activity:'kitchenhelp', npc:null },
   woodwork: { motion:'motion-job-woodwork', location:'woodworkJob', prop:'none', activity:'woodwork', npc:null },
   loomwork: { motion:'motion-job-loom', location:'loomJob', prop:'none', activity:'loomwork', npc:null },
@@ -237,7 +237,7 @@ const vacationIllustrations=[
 function unifiedAgeFolder(){return '09';}
 function scheduleFramePath(file){return `../assets/characters/seonhwa/schedule-actions/${file}`;}
 function scheduleBasePath(file){return `../assets/characters/seonhwa/schedule-base/${file}`;}
-const scheduleAssetRevision='0.64.96-debug';
+const scheduleAssetRevision='0.64.97-debug';
 const scheduleQaParams=new URLSearchParams(location.search);
 const moonlightStandaloneQa=scheduleQaParams.get('qaHoliday')==='chuseok';
 const sehwaStandaloneQa=scheduleQaParams.get('qaHoliday')==='seollal';
