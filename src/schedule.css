@@ -2081,16 +2081,6 @@
 .compact-category .compact-action b{display:-webkit-box!important;max-width:100%;overflow:hidden;-webkit-box-orient:vertical;-webkit-line-clamp:2;white-space:normal!important;text-overflow:clip;font-size:11px!important;line-height:1.15!important;word-break:keep-all}
 .compact-category .compact-action .schedule-action-money{font-size:9px!important;line-height:1.1!important}
 
-/* 자유여행은 식사 대신 매대에서 물건을 고르고 값을 치르는 장면으로 표시한다. */
-.activity-stage.free-time-market .stage-character.is-purchasing{z-index:5;animation:free-time-purchase .54s ease-in-out 1}
-.activity-stage.free-time-market .stage-props.prop-stall{display:block;left:43%;bottom:5%;width:150px;height:150px;background-position:center bottom;background-repeat:no-repeat;background-size:contain;opacity:1;z-index:3;image-rendering:pixelated;animation:free-time-goods .78s steps(1) 2}
-.activity-stage.free-time-market .stage-props.prop-stall.purchase-goods{--purchase-1:url('../assets/schedule-layers-v2/merchanthelp/props/goods-display-1.png');--purchase-2:url('../assets/schedule-layers-v2/merchanthelp/props/goods-display-2.png');--purchase-3:url('../assets/schedule-layers-v2/merchanthelp/props/goods-display-3.png')}
-.activity-stage.free-time-market .stage-props.prop-stall.purchase-coins{--purchase-1:url('../assets/schedule-layers-v2/merchanthelp/effects/coin-exchange-1.png');--purchase-2:url('../assets/schedule-layers-v2/merchanthelp/effects/coin-exchange-2.png');--purchase-3:url('../assets/schedule-layers-v2/merchanthelp/effects/coin-exchange-3.png')}
-.activity-stage.free-time-market .stage-npc.npc-purchase-merchant{display:block;left:76%;bottom:5%;width:146px;height:146px;z-index:4}
-.activity-stage.free-time-market .stage-npc.npc-purchase-merchant img{width:100%;height:100%;object-fit:contain;object-position:center bottom;image-rendering:pixelated}
-@keyframes free-time-purchase{0%,100%{transform:translateX(0) rotate(0)}45%{transform:translateX(8px) rotate(2deg)}70%{transform:translateX(5px) rotate(-1deg)}}
-@keyframes free-time-goods{0%{background-image:var(--purchase-1)}34%{background-image:var(--purchase-2)}67%{background-image:var(--purchase-3)}}
-
 .phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-loomwork.schedule-layered .schedule-scene-layer.layer-npc{width:160px!important}
 .phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-loomwork.schedule-layered .schedule-scene-layer.layer-pattern,.phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-loomwork.schedule-layered .schedule-scene-layer.layer-effect{width:150px!important}
 
@@ -2391,28 +2381,6 @@ body .phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage:
   transition:left .28s linear!important;
   z-index:5!important;
 }
-.phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-freeTime.free-time-market .stage-npc.npc-purchase-merchant{
-  display:block!important;
-  left:78%!important;
-  bottom:5%!important;
-  width:124px!important;
-  height:124px!important;
-  transform:none!important;
-  z-index:4!important;
-}
-.phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-freeTime.free-time-market .stage-props.prop-stall{
-  left:62%!important;
-  bottom:5%!important;
-  width:130px!important;
-  height:130px!important;
-  z-index:3!important;
-}
-.phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-freeTime.free-time-market .stage-character.is-purchasing{
-  animation:free-time-exchange .72s steps(3,end) 1!important;
-  transform-origin:center bottom!important;
-}
-@keyframes free-time-exchange{0%,100%{translate:0 0}45%{translate:5px -2px}72%{translate:3px 0}}
-
 /* v0.64.93: keep study failures at the desk and hide the finished childcare actor. */
 .phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-reading .stage-character,
 .phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-arithmetic .stage-character{

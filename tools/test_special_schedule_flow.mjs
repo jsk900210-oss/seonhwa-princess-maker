@@ -7,7 +7,7 @@ const scheduleCss = readFileSync(new URL('../src/schedule.css', import.meta.url)
 assert.match(source,/stressRestUntilPhaseEnd=false/,'페이즈 휴식 고정 상태가 필요합니다.');
 assert.match(source,/if\(simulated\.stress>=statMaximum\('stress'\)\)stressRestUntilPhaseEnd=true/,'스트레스 100부터 남은 페이즈를 휴식으로 고정해야 합니다.');
 assert.match(source,/const vacationPhase=phaseRecords\.length>0&&phaseRecords\.every/,'바캉스 전용 페이즈를 판별해야 합니다.');
-assert.match(source,/if\(!vacationPhase\)await showPhaseReport/,'바캉스 뒤 결과 대기 없이 다음 일정 또는 홈으로 가야 합니다.');
+assert.match(source,/if\(!vacationPhase\)\{stageCharacter\.hidden=true/,'바캉스 뒤 결과 대기 없이 다음 일정 또는 홈으로 가야 합니다.');
 assert.match(source,/stress:-105/,'바캉스 스트레스 회복은 페이즈 환산 후 -35여야 합니다.');
 
 const mustContain = [

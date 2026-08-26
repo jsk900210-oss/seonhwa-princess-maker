@@ -9,5 +9,5 @@ const names=['study','arithmetic','etiquette','painting','music','dance','martia
 names.forEach(name=>assert.ok(existsSync(join(root,'assets','backgrounds','phase-scenes',`${name}.webp`)),`${name} 전용 활동 배경이 필요합니다.`));
 assert.ok(app.includes("motion:'motion-market-roam', location:'market'"),'자유행동은 저잣거리 보행이어야 합니다.');
 assert.ok(app.includes('stopCompetingBgm(gameMusic)'),'장면 BGM은 중복 재생을 막아야 합니다.');
-assert.ok(app.includes('if(!vacationPhase)await showPhaseReport(phaseRecords'),'일반 14일 페이즈 결산과 바캉스 즉시 복귀 분기가 필요합니다.');
+assert.ok(app.includes('if(!vacationPhase){stageCharacter.hidden=true'),'일반 14일 페이즈 결산과 바캉스 즉시 복귀 분기가 필요합니다.');
 console.log('PASS: 16종 전용 활동 배경, 저잣거리 자유행동, BGM 단일 재생, 페이즈 결산');

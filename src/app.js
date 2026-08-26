@@ -237,7 +237,7 @@ const vacationIllustrations=[
 function unifiedAgeFolder(){return '09';}
 function scheduleFramePath(file){return `../assets/characters/seonhwa/schedule-actions/${file}`;}
 function scheduleBasePath(file){return `../assets/characters/seonhwa/schedule-base/${file}`;}
-const scheduleAssetRevision='0.64.100-debug';
+const scheduleAssetRevision='0.64.101-debug';
 const scheduleQaParams=new URLSearchParams(location.search);
 const moonlightStandaloneQa=scheduleQaParams.get('qaHoliday')==='chuseok';
 const sehwaStandaloneQa=scheduleQaParams.get('qaHoliday')==='seollal';
@@ -3016,9 +3016,9 @@ async function playWeeklySchedule(selected) {
   const playbackPhase=phaseInfo();
   const dayNames = ['월요일','화요일','수요일','목요일','금요일','토요일','일요일'];
   const freeTimeVariants=[
-    {name:'비단 리본 구매',activity:'merchanthelp',purchaseLayer:'goods',cost:70,stop:46,change:{sense:1,charm:1,stress:-9},line:'저잣거리 매대에서 옷에 어울리는 비단 리본을 골라 샀어요.'},
-    {name:'작은 장신구 구매',activity:'merchanthelp',purchaseLayer:'coins',cost:110,stop:46,change:{sense:2,charm:1,stress:-7},line:'장터 좌판을 살펴보고 마음에 드는 작은 장신구를 골라 값을 치렀어요.'},
-    {name:'문방 소품 구매',activity:'merchanthelp',purchaseLayer:'goods',cost:90,stop:46,change:{speech:1,sensitivity:1,stress:-8},line:'상인에게 물어본 뒤 마음에 드는 문방 소품을 하나 샀어요.'}
+    {name:'장터 산책',activity:'errand',cost:0,stop:48,change:{sense:1,stress:-9},line:'사람들의 활기찬 모습을 구경하며 저잣거리를 천천히 걸었어요.'},
+    {name:'가게 구경',activity:'errand',cost:0,stop:58,change:{sense:1,sensitivity:1,stress:-7},line:'물건을 사지 않고 가게마다 진열된 물건과 색을 즐겁게 구경했어요.'},
+    {name:'골목 나들이',activity:'errand',cost:0,stop:68,change:{speech:1,stress:-8},line:'햇볕이 드는 장터 골목을 한 바퀴 돌며 기분을 환기했어요.'}
   ];
   const moonlightSession=selected.some(action=>action.id==='holiday-chuseok')?evaluateChuseokFestival():null;
   const sehwaSession=selected.some(action=>action.id==='holiday-seollal')?evaluateSeollalFestival():null;
@@ -3112,22 +3112,19 @@ async function playWeeklySchedule(selected) {
     }else if(action.id==='freeTime'){
       stageMap.src=backgrounds.market;stageMap.alt='자유행동으로 둘러보는 가로형 저잣거리';
       stage.className=`activity-stage ${phaseSceneType} map-market action-freeTime free-time-market`;
-      stageProps.className=`stage-props prop-stall purchase-${freeTimeVariant?.purchaseLayer||'goods'}`;
-      stageNpc.hidden=false;stageNpc.className='stage-npc npc-purchase-merchant';
-      stageNpcImage.src='../assets/schedule-layers-v2/merchanthelp/npc/merchant/idle-1.png';
+      stageProps.hidden=true;stageProps.className='stage-props prop-none';
+      stageNpc.hidden=true;stageNpc.className='stage-npc';
       stageCharacter.style.left='12%';
       stageCharacterImage.style.setProperty('transform','none','important');
       stageCharacterImage.style.setProperty('transform-origin','center bottom','important');
       try{
-        for(const position of [30,freeTimeVariant?.stop??56]){stageCharacter.style.left=`${position}%`;await animateActivitySprite(stageCharacterImage,'motion-walk',null,stageNpcImage,null,dailyOutfit,currentMasteryRank);}
-        stageCharacter.classList.add('is-purchasing');
-        await animateActivitySprite(stageCharacterImage,'motion-market-roam',freeTimeVariant?.activity||'merchanthelp',stageNpcImage,null,dailyOutfit,currentMasteryRank);
+        for(const position of [30,freeTimeVariant?.stop??56]){stageCharacter.style.left=`${position}%`;await animateActivitySprite(stageCharacterImage,'motion-walk',null,null,null,dailyOutfit,currentMasteryRank);}
+        await animateActivitySprite(stageCharacterImage,'motion-market-roam',freeTimeVariant?.activity||'errand',null,null,dailyOutfit,currentMasteryRank);
       }finally{
-        stageCharacter.classList.remove('is-purchasing');
         stageCharacter.style.removeProperty('left');
         stageCharacterImage.style.removeProperty('transform');
         stageCharacterImage.style.removeProperty('transform-origin');
-        stageCharacter.hidden=false;stageProps.hidden=false;stageNpc.hidden=true;
+        stageCharacter.hidden=false;stageProps.hidden=true;stageNpc.hidden=true;
       }
     }else if(action.id==='vacation'){
       closeMarketUiForTransition();
@@ -3250,7 +3247,7 @@ async function playWeeklySchedule(selected) {
     if((index+1)%14===0||index===selected.length-1){
       const start=index-index%14,phaseRecords=dayRecords.slice(start,index+1);
       const vacationPhase=phaseRecords.length>0&&phaseRecords.every(record=>record.action?.id==='vacation');
-      if(!vacationPhase)await showPhaseReport(phaseRecords,{...playbackPhase,index:playbackPhase.index+Math.floor(index/14)});
+      if(!vacationPhase){stageCharacter.hidden=true;stageNpc.hidden=true;stageProps.hidden=true;await showPhaseReport(phaseRecords,{...playbackPhase,index:playbackPhase.index+Math.floor(index/14)});}
     }
   }
   playback.hidden = true;

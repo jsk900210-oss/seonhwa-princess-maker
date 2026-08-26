@@ -18,5 +18,5 @@ assert.ok(app.includes("gameMusicTracks.education,.20,1.12")&&app.includes("game
 assert.ok(app.includes("game.birthday&&!phone.classList.contains('playing')&&!phone.classList.contains('market-playing')&&!phone.classList.contains('vacation-playing')")&&app.includes('playHomeMusic();'),'홈 화면에서 기존 홈 BGM을 복구하는 경계가 없습니다.');
 assert.ok(!app.includes("waitForVacationTap('터치해 다음 칸으로'"),'바캉스 종료 후 추가 터치 대기가 남아 있습니다.');
 assert.ok(app.includes('index<selected.length-1'),'바캉스 다음 일정 직행 조건이 없습니다.');
-assert.ok(app.includes("phaseRecords.every(record=>record.action?.id==='vacation')")&&app.includes('if(!vacationPhase)await showPhaseReport'),'바캉스 종료 뒤 결과 대기가 남아 있습니다.');
+assert.ok(app.includes("phaseRecords.every(record=>record.action?.id==='vacation')")&&app.includes('if(!vacationPhase){stageCharacter.hidden=true'),'바캉스 종료 뒤 결과 대기가 남아 있습니다.');
 console.log('PASS: 13세 바로가기 제거, 9세 홈 축소, 홈·시장·일·교육 BGM 패턴');
