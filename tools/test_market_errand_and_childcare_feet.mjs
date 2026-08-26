@@ -39,7 +39,7 @@ const heroFrames=[1,2,3,4,5,6].map(number=>path.join(heroDir,`seonhwa-chase-v3-$
 const heroHashes=validateFrames(heroFrames,'Seonhwa running');
 assert.equal(new Set(heroHashes).size,6,'all six Seonhwa foot-motion frames must be distinct files');
 assert.ok(app.includes("Array.from({length:6},(_,index)=>`hero-actions/chase-running-v3/seonhwa-chase-v3-${index+1}.png`)"),'app must use all six Seonhwa v3 frames');
-assert.ok(app.includes('const childcareHeroRunCycle=[0,1,2,3,4,5,0,1,2]'),'Seonhwa must run through six smooth frames');
+assert.ok(app.includes('const childcareHeroRunCycle=[0,1,2,3,4,5]')&&app.includes('travelStep%childcareHeroRunCycle.length'),'Seonhwa must loop through all six alternating foot frames');
 
 const babySets=[
   ['child-running-v2','child-run-v2'],
@@ -53,5 +53,5 @@ for(const [folder,prefix] of babySets){
   for(const number of [1,2,3])assert.ok(app.includes(`npc/${folder}/${prefix}-${number}.png`),`app must use ${folder} frame ${number}`);
 }
 
-assert.ok(html.includes('v0.64.91-debug'),'HTML cache revision must expose the new build');
+assert.ok(html.includes('v0.64.92-debug'),'HTML cache revision must expose the new build');
 console.log('market errand traversal and childcare foot-frame checks passed');

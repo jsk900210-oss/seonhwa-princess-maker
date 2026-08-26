@@ -2369,7 +2369,7 @@ body .phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage:
   78%{translate:0 6px;rotate:4deg;filter:brightness(.86)}
 }
 
-/* v0.64.89: six-frame Seonhwa run and restyled baby share one cadence. */
+/* v0.64.92: six-frame Seonhwa run crosses the full stage without turning. */
 .phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-childcare.schedule-layered .stage-character.pixel-sprite{
   left:var(--layer-hero-left)!important;bottom:5%!important;width:132px!important;height:132px!important;
   transition:left .15s linear!important;

@@ -237,7 +237,7 @@ const vacationIllustrations=[
 function unifiedAgeFolder(){return '09';}
 function scheduleFramePath(file){return `../assets/characters/seonhwa/schedule-actions/${file}`;}
 function scheduleBasePath(file){return `../assets/characters/seonhwa/schedule-base/${file}`;}
-const scheduleAssetRevision='0.64.91-debug';
+const scheduleAssetRevision='0.64.92-debug';
 const scheduleQaParams=new URLSearchParams(location.search);
 const moonlightStandaloneQa=scheduleQaParams.get('qaHoliday')==='chuseok';
 const sehwaStandaloneQa=scheduleQaParams.get('qaHoliday')==='seollal';
@@ -863,10 +863,11 @@ async function playScheduleLayerScene(actionId,seonImage,rank,outcome,dayIndex){
   const farmQaDirection=scheduleQaParams.get('qaDirection');
   const farmChaseTravelsRight=actionId==='farmwork'&&patternKey==='fail-b'?(lockedScheduleQaMode&&farmQaDirection?farmQaDirection==='right':Math.floor(dayIndex/14)%2===0):null;
   const childcareTravelsRight=actionId==='childcare'?(lockedScheduleQaMode&&farmQaDirection?farmQaDirection==='right':dayIndex%2===0):null;
-  const childcareHeroRunCycle=[0,1,2,3,4,5,0,1,2];
-  const childcareNpcRunCycle=[0,1,2,1,0,1,2,1,0];
-  const childcareTravelDistance=32;
+  const childcareHeroRunCycle=[0,1,2,3,4,5];
+  const childcareNpcRunCycle=[0,1,2,1];
+  const childcareTravelDistance=178;
   const childcareMinimumGap=34;
+  const childcareChildStart=childcareTravelsRight===null?null:childcareTravelsRight?-20:120;
   const requiredHeroFrameCount=actionId==='childcare'?6:3;
   if(heroFrames.length!==requiredHeroFrameCount||npcFrames.length!==3||patternFrames?.length!==3)throw new Error(`schedule layer frame count invalid: ${actionId}/${patternKey}`);
   const placement=spec.placement||{};
@@ -883,7 +884,7 @@ async function playScheduleLayerScene(actionId,seonImage,rank,outcome,dayIndex){
     if(Math.abs(npcPosition-heroPosition)<minimumActorGap)heroPosition=npcPosition+(actorsFaceRight?-minimumActorGap:minimumActorGap);
   }
   if(childcareTravelsRight!==null){
-    npcPosition=childcareTravelsRight?54:46;
+    npcPosition=childcareChildStart;
     heroPosition=npcPosition+(childcareTravelsRight?-childcareMinimumGap:childcareMinimumGap);
     stage.dataset.childcareStarting='true';
   }
@@ -916,7 +917,8 @@ async function playScheduleLayerScene(actionId,seonImage,rank,outcome,dayIndex){
       delete stage.dataset.childcareStarting;
     }
     const delay=actionId==='farmwork'&&patternKey==='fail-b'?165:actionId==='farmwork'?240:actionId==='childcare'?150:([360,300,250][rank]||300);
-    for(let loop=0;loop<3;loop+=1){
+    const playbackLoopCount=actionId==='childcare'&&!failed?6:3;
+    for(let loop=0;loop<playbackLoopCount;loop+=1){
       for(let frame=0;frame<3;frame+=1){
         let activeHeroFrame=heroFrames[frame],activeNpcFrame=npcFrames[frame],activePatternFrame=patternFrames[frame];
         if(actionId==='farmwork'&&patternKey!=='fail-b'){
@@ -939,10 +941,10 @@ async function playScheduleLayerScene(actionId,seonImage,rank,outcome,dayIndex){
           stage.style.setProperty('--layer-prop-left',`${chickenLeft}%`,'important');
         }
         if(actionId==='childcare'){
-          const travelStep=loop*3+frame,travelsRight=childcareTravelsRight,rawProgress=Math.min(1,travelStep/8),progress=failed?Math.min(.62,rawProgress):rawProgress;
-          activeHeroFrame=childcareChaseFrames[childcareHeroRunCycle[travelStep]];
-          activeNpcFrame=childcareRunningFrames[childcareNpcRunCycle[travelStep]];
-          const childStart=travelsRight?54:46;
+          const travelStep=loop*3+frame,travelsRight=childcareTravelsRight,totalTravelSteps=playbackLoopCount*3-1,rawProgress=Math.min(1,travelStep/totalTravelSteps),progress=failed?Math.min(.62,rawProgress):rawProgress;
+          activeHeroFrame=childcareChaseFrames[childcareHeroRunCycle[travelStep%childcareHeroRunCycle.length]];
+          activeNpcFrame=childcareRunningFrames[childcareNpcRunCycle[travelStep%childcareNpcRunCycle.length]];
+          const childStart=childcareChildStart;
           const childLeft=childStart+(travelsRight?1:-1)*progress*childcareTravelDistance;
           const heroLeft=travelsRight?childLeft-childcareMinimumGap:childLeft+childcareMinimumGap;
           const fallen=failed&&travelStep>=6;
