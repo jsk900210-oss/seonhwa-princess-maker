@@ -237,7 +237,7 @@ const vacationIllustrations=[
 function unifiedAgeFolder(){return '09';}
 function scheduleFramePath(file){return `../assets/characters/seonhwa/schedule-actions/${file}`;}
 function scheduleBasePath(file){return `../assets/characters/seonhwa/schedule-base/${file}`;}
-const scheduleAssetRevision='0.64.74-debug';
+const scheduleAssetRevision='0.64.75-debug';
 const scheduleQaParams=new URLSearchParams(location.search);
 const moonlightStandaloneQa=scheduleQaParams.get('qaHoliday')==='chuseok';
 const sehwaStandaloneQa=scheduleQaParams.get('qaHoliday')==='seollal';
@@ -1487,7 +1487,7 @@ function sehwaDrawingEnsemble(session){
   return `<section class="sehwa-drawing-ensemble" aria-label="세화를 그리는 참가자 8명">${session.entrants.map(entry=>`<figure class="${entry.player?'is-player':''}"><span><img src="${entry.player?sehwaFrame('drawing',2):moonlightEntrantImage(entry)}" alt="세화를 그리는 ${entry.name}"></span><i aria-hidden="true"></i><figcaption>${entry.name}</figcaption></figure>`).join('')}</section>`;
 }
 function sehwaPreparationEnsemble(session){
-  if(sehwaAssetAge()==='13')return `<span class="sehwa-preparation-sequence" role="img" aria-label="여덟 참가자가 서로 다른 순서로 화지를 놓고 먹을 갈고 붓끝을 정돈하는 모습">${[1,2,3,4,5,6].map((frame,index)=>`<img src="../assets/events/holidays/sehwa-contest/preparation-scene/age-13/preparation-${frame}.png?v=${scheduleAssetRevision}" alt="" style="--preparation-frame:${index}">`).join('')}</span>`;
+  if(sehwaAssetAge()==='13')return `<span class="sehwa-preparation-sequence" role="img" aria-label="여덟 참가자가 서로 다른 순서로 화지를 놓고 먹을 갈고 붓끝을 정돈하는 모습">${Array.from({length:12},(_,index)=>`<img src="../assets/events/holidays/sehwa-contest/preparation-scene/age-13/smooth-${String(index+1).padStart(2,'0')}.png?v=${scheduleAssetRevision}" alt="" style="--preparation-frame:${index}">`).join('')}</span>`;
   return `<section class="sehwa-drawing-ensemble is-preparing" aria-label="화구와 화지를 준비하는 참가자 8명">${session.entrants.map(entry=>`<figure class="${entry.player?'is-player':''}"><span><img src="${entry.player?sehwaFrame('opening',2):moonlightEntrantImage(entry)}" alt="화구를 준비하는 ${entry.name}"></span><i aria-hidden="true"><b></b><em></em></i><figcaption>${entry.name}</figcaption></figure>`).join('')}</section>`;
 }
 function sehwaRegistrationScene(){
