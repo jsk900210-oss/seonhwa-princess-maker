@@ -243,7 +243,7 @@ const vacationIllustrations=[
 function unifiedAgeFolder(){return '09';}
 function scheduleFramePath(file){return `../assets/characters/seonhwa/schedule-actions/${file}`;}
 function scheduleBasePath(file){return `../assets/characters/seonhwa/schedule-base/${file}`;}
-const scheduleAssetRevision='0.64.122-debug';
+const scheduleAssetRevision='0.64.123-debug';
 const scheduleQaParams=new URLSearchParams(location.search);
 const moonlightStandaloneQa=scheduleQaParams.get('qaHoliday')==='chuseok';
 const sehwaStandaloneQa=scheduleQaParams.get('qaHoliday')==='seollal';
@@ -1451,7 +1451,8 @@ const soloEndingScenes={
   queen:['../assets/events/holidays/sehwa-contest/background/royal-contest-hall-v1.png','center 44%'], 'royal-scholar':['../assets/backgrounds/phase-scenes/study.webp','center 34%'], 'village-teacher':['../assets/backgrounds/seodang/seodang-day.webp','center 46%'], 'court-artist':['../assets/backgrounds/phase-scenes/painting.webp','center 34%'], 'renowned-painter':['../assets/backgrounds/pixel-activities/courtyard.webp','center 36%'], 'court-dancer':['../assets/backgrounds/phase-scenes/dance.webp','center 34%'], 'master-entertainer':['../assets/backgrounds/phase-scenes/music.webp','center 34%'], 'great-general':['../assets/backgrounds/phase-scenes/martial.webp','center 34%'], 'martial-instructor':['../assets/backgrounds/phase-scenes/martial.webp','center 34%'], 'royal-magician':['../assets/backgrounds/phase-scenes/magic.webp','center 34%'], 'secret-explorer':['../assets/backgrounds/pixel-activities/herb-field-v2.webp','center 34%'], 'great-merchant':['../assets/backgrounds/market/market-day.webp','center 45%'], 'fashion-master':['../assets/backgrounds/phase-scenes/loom.webp','center 34%'], 'royal-chef':['../assets/backgrounds/phase-scenes/kitchen.webp','center 34%'], physician:['../assets/backgrounds/phase-scenes/clinic.webp','center 34%'], diplomat:['../assets/backgrounds/phase-scenes/etiquette.webp','center 34%'], 'guardian-keeper':['../assets/events/holidays/moonlight-pageant/background/moonlight-courtyard-v1.webp','center 46%'], 'quiet-life':['../assets/backgrounds/home/home-room-morning.webp','center'],
   tyrant:['../assets/events/holidays/sehwa-contest/background/royal-contest-hall-v1.png','center 44%'], 'greedy-merchant':['../assets/backgrounds/phase-scenes/merchant.webp','center 34%'], 'fallen-magician':['../assets/backgrounds/phase-scenes/magic.webp','center 34%'], 'disgraced-warrior':['../assets/backgrounds/phase-scenes/martial.webp','center 34%'], 'fraud-merchant':['../assets/backgrounds/pixel-activities/market-errand-v2.webp','center 34%'], 'debt-runaway':['../assets/backgrounds/market/market-day.webp','center 45%'], forsaken:['../assets/backgrounds/home/home-room-morning.webp','center']
 };
-function soloEndingVisual(result){if(result.category==='relation')return '';const [src,position]=soloEndingScenes[result.endingId]||soloEndingScenes['quiet-life'];return `<figure class="solo-ending-visual ${result.category}" style="--ending-background:url('${src}?v=${scheduleAssetRevision}');--ending-background-position:${position}"><img src="${baseSpriteForAge(19)}?v=${scheduleAssetRevision}" alt="${game.characterName||'선화'} 19세 전신"><figcaption>${result.title}</figcaption></figure>`;}
+function careerEndingIllustrationPath(endingId){return `../assets/endings/career-illustrations-v1/${endingId}.webp?v=${scheduleAssetRevision}`;}
+function soloEndingVisual(result){if(result.category==='relation')return '';if(result.category==='career')return `<figure class="solo-ending-visual career career-illustration"><img src="${careerEndingIllustrationPath(result.endingId)}" alt="${game.characterName||'선화'}의 ${result.title} 엔딩 장면"><figcaption>${result.title}</figcaption></figure>`;const [src,position]=soloEndingScenes[result.endingId]||soloEndingScenes['quiet-life'];return `<figure class="solo-ending-visual ${result.category}" style="--ending-background:url('${src}?v=${scheduleAssetRevision}');--ending-background-position:${position}"><img src="${baseSpriteForAge(19)}?v=${scheduleAssetRevision}" alt="${game.characterName||'선화'} 19세 전신"><figcaption>${result.title}</figcaption></figure>`;}
 const relationEndingEpilogues={
   doyun:[{speaker:'도윤',side:'partner',line:'이제는 내가 앞서 지키는 길이 아니라, 네 곁에서 함께 걷는 길을 택하고 싶어.'},{speaker:'선화',side:'seonhwa',line:'그럼 저도 뒤따르지 않을게요. 같은 걸음으로 나란히 가요.'},{speaker:'후일담',side:'both',line:'다음 날 새벽, 두 사람은 빈 활터에서 같은 과녁을 바라보며 새로운 하루를 시작했습니다.'}],
   seojin:[{speaker:'서진',side:'partner',line:'책의 마지막 장을 덮어도 우리 이야기는 끝나지 않겠지요.'},{speaker:'선화',side:'seonhwa',line:'빈 여백은 남겨 둬요. 앞으로 함께 쓸 이야기가 많으니까요.'},{speaker:'후일담',side:'both',line:'다음 날, 두 사람은 서책방 창가에 나란히 앉아 아이들을 위한 첫 교재를 펼쳤습니다.'}],
@@ -1486,12 +1487,32 @@ const soloEndingEpilogues={
   'debt-runaway':[{speaker:'새벽의 빈집',side:'world',line:'독촉장이 문을 덮었고 남길 수 있는 짐은 작은 보퉁이 하나뿐이었습니다.'},{speaker:'선화',side:'seonhwa',line:'내일의 몫까지 오늘 써 버린 끝이 이렇게 가벼운 짐일 줄은 몰랐어.'},{speaker:'후일담',side:'both',line:'선화는 아무도 모르는 길로 떠나 작은 품삯부터 갚으며 다시 삶을 세워야 했습니다.'}],
   forsaken:[{speaker:'빛을 잃은 방',side:'world',line:'늘 곁을 맴돌던 신수의 기척이 사라지자 집 안에는 깊은 침묵만 남았습니다.'},{speaker:'선화',side:'seonhwa',line:'믿음을 시험하기만 했지, 내가 먼저 믿어 준 적은 없었구나.'},{speaker:'후일담',side:'both',line:'선화는 사라진 빛의 자리를 바라보며 다시 약속을 배울 긴 길을 시작했습니다.'}]
 };
-function endingEpilogueBeats(result){return result.category==='relation'?relationEndingEpilogues[result.partnerId]:soloEndingEpilogues[result.endingId];}
-function endingEpilogueMarkup(result){const beats=endingEpilogueBeats(result);if(!beats?.length)return '';const first=beats[0];return `<section class="relation-ending-epilogue" data-ending-beat="0"><small>결말 이야기 · 1/${beats.length}</small><b>${first.speaker}</b><p>${first.line}</p><button type="button" id="endingEpilogueNext">다음</button></section>`;}
+const careerEndingLetters={
+  queen:['아버지, 오늘도 대전의 문을 열고 백성들의 청을 먼저 들었습니다.','높은 자리에 설수록 낮은 목소리에 귀 기울이라는 아버지의 가르침을 잊지 않으려 합니다.','누구도 억울하게 고개 숙이지 않는 나라를 지키겠습니다. 부디 오래 지켜봐 주세요.'],
+  'royal-scholar':['아버지, 저는 왕실의 기록을 맡아 하루의 사실을 붓끝에 남기고 있습니다.','권세에 흔들리지 않는 한 줄이 훗날 나라의 잘못을 막는다는 것을 배웠습니다.','제가 배운 글을 바른 기억으로 돌려드리겠습니다. 아버지께 부끄럽지 않은 학사가 될게요.'],
+  'village-teacher':['아버지, 저는 작은 서당의 훈장이 되었습니다.','삐뚤빼뚤한 첫 글자가 반듯해질 때마다 제가 받은 사랑을 아이들에게 돌려주는 기분입니다.','크게 이름나지 않아도 이 아이들의 내일을 밝혀 주는 스승으로 살겠습니다.'],
+  'court-artist':['아버지, 도화서의 화원이 되어 궁궐과 백성의 하루를 함께 그리고 있습니다.','화려한 것만 남기지 말고 진짜 얼굴을 보라는 말씀을 이제야 알 것 같습니다.','제 그림이 우리가 살았던 시대를 정직하게 기억하도록 끝까지 바라보고 그리겠습니다.'],
+  'renowned-painter':['아버지, 제 그림이 저보다 먼저 먼 고을을 여행한다는 소식을 들었습니다.','이름을 얻는 일보다 한 사람의 마음에 바람과 온기를 전하는 일이 더 귀하다는 것을 배웠습니다.','앞으로도 제가 본 세상을 과장하지 않고 다정하게 화폭에 담겠습니다.'],
+  'court-dancer':['아버지, 궁중의 큰 연향에서 제 춤으로 마지막 장단을 맺었습니다.','한 걸음을 아름답게 보이려 수천 번 넘어지던 날들이 이제는 제 몸의 말이 되었습니다.','박수가 멎은 뒤에도 오래 남는 마음을 춤추는 사람이 되겠습니다.'],
+  'master-entertainer':['아버지, 오늘도 장터의 작은 무대에서 노래와 이야기를 들려주었습니다.','고단한 얼굴에 웃음이 번지는 순간이면 제가 택한 길의 값을 충분히 받았다고 느낍니다.','궁과 마을 어디에서든 사람들의 하루를 가볍게 해 주는 재주꾼으로 살겠습니다.'],
+  'great-general':['아버지, 저는 국경의 성루에서 모두가 무사히 돌아올 길을 살피고 있습니다.','앞에 선다는 것은 명예가 아니라 뒤의 사람을 지켜야 할 책임임을 매일 배웁니다.','싸움을 즐기지 않되 지켜야 할 때 물러서지 않는 장수가 되겠습니다.'],
+  'martial-instructor':['아버지, 이제 저는 수련생들에게 칼을 드는 법보다 내려놓는 때를 먼저 가르칩니다.','강함은 상대를 꺾는 힘이 아니라 제 마음을 다스리는 데서 시작된다는 것을 알았습니다.','사람을 해치지 않고 지킬 줄 아는 무예를 다음 세대에 전하겠습니다.'],
+  'royal-magician':['아버지, 별의 흐름과 신수의 기운을 살펴 궁과 마을의 재앙을 막고 있습니다.','힘을 부르는 재주보다 그 힘을 어디에 써야 하는지 판단하는 마음이 더 어렵고 중요했습니다.','두려움을 키우는 술법이 아니라 사람을 살리고 지키는 빛을 다루겠습니다.'],
+  'secret-explorer':['아버지, 지도에 없던 산길 끝에서 오래된 유적과 돌아오는 길을 함께 찾았습니다.','첫발을 내딛는 용기만큼 뒤따를 사람에게 안전한 기록을 남기는 일이 중요했습니다.','먼 곳을 향하더라도 반드시 제 발로 돌아와 새로운 세상을 들려드리겠습니다.'],
+  'great-merchant':['아버지, 제 상단의 짐이 이제 먼 나라의 장터까지 오가게 되었습니다.','한 번의 큰 이익보다 작은 상인과 오래 나누는 믿음이 더 값진 재산이라는 것을 배웠습니다.','어느 거래에서도 사람의 마음을 장부보다 먼저 살피겠습니다.'],
+  'fashion-master':['아버지, 저는 사람마다 다른 삶과 몸에 어울리는 옷을 짓고 있습니다.','오래된 법도를 지키면서도 입는 이가 편안해야 전통이 다음 날로 이어진다는 것을 알았습니다.','제 손을 거친 옷이 누군가의 가장 당당한 하루가 되도록 정성껏 바느질하겠습니다.'],
+  'royal-chef':['아버지, 수라간에서 계절의 재료로 따뜻한 한 상을 올리고 있습니다.','귀한 재료보다 먹는 사람의 몸과 마음을 헤아리는 일이 음식의 시작임을 배웠습니다.','궁의 맛을 백성의 식탁과 나누며 누구도 허기진 채 돌아서지 않게 하겠습니다.'],
+  physician:['아버지, 제 약방에는 형편을 묻기 전에 아픈 곳부터 살피는 문이 열려 있습니다.','약이 병을 다스려도 다시 일어서는 힘은 사람의 마음과 곁을 지키는 손에서 온다는 것을 배웠습니다.','가난한 이도 문턱에서 돌아서지 않는 의원으로 오래 남겠습니다.'],
+  diplomat:['아버지, 서로 다른 말과 풍습을 가진 이들과 마주 앉아 평화의 약속을 맺었습니다.','말이 다르다고 마음까지 먼 것은 아니며 먼저 듣는 사람이 길을 연다는 것을 배웠습니다.','제가 이은 길로 학자와 상인, 가족들이 두려움 없이 오가게 하겠습니다.'],
+  'guardian-keeper':['아버지, 저는 신수와 함께 사람과 오래된 존재들의 경계를 지키고 있습니다.','받은 빛을 소유하지 않고 모두가 돌아올 길에 비추는 것이 수호자의 몫임을 알았습니다.','처음 제 손을 잡아 주셨던 것처럼 저도 다음 생명의 손을 놓지 않겠습니다.'],
+  'quiet-life':['아버지, 저는 작은 집과 텃밭을 돌보며 계절마다 다른 차를 끓이고 있습니다.','멀리 이름을 떨치지 않아도 사랑하는 이와 웃는 오늘이 얼마나 귀한지 알게 되었습니다.','평범해서 더욱 단단한 이 행복을 오래 지키며 자주 소식 전하겠습니다.']
+};
+function endingEpilogueBeats(result){if(result.category==='relation')return relationEndingEpilogues[result.partnerId];if(result.category==='career')return careerEndingLetters[result.endingId]?.map((line,index,lines)=>({speaker:index===0?'아버지께':index===lines.length-1?'선화 올림':'선화의 편지',side:'seonhwa',line}));return soloEndingEpilogues[result.endingId];}
+function endingEpilogueMarkup(result){const beats=endingEpilogueBeats(result);if(!beats?.length)return '';const first=beats[0],isLetter=result.category==='career';return `<section class="relation-ending-epilogue${isLetter?' ending-letter':''}" data-ending-beat="0"><small>${isLetter?'아버지께 보내는 편지':'결말 이야기'} · 1/${beats.length}</small><b>${first.speaker}</b><p>${first.line}</p><button type="button" id="endingEpilogueNext">다음</button></section>`;}
 function bindEndingEpilogue(result){
   const beats=endingEpilogueBeats(result),epilogue=document.querySelector('.relation-ending-epilogue');if(!beats||!epilogue)return;
   const summary=document.querySelector('.ending-summary'),restart=document.querySelector('#endingRestart'),visual=document.querySelector('.relation-ending-visual,.solo-ending-visual');let index=0;summary.hidden=true;restart.hidden=true;
-  const render=()=>{const beat=beats[index];epilogue.dataset.endingBeat=String(index);epilogue.querySelector('small').textContent=`결말 이야기 · ${index+1}/${beats.length}`;epilogue.querySelector('b').textContent=beat.speaker;epilogue.querySelector('p').textContent=beat.line;epilogue.querySelector('button').textContent=index===beats.length-1?'성장 기록 보기':'다음';if(visual)visual.dataset.endingSpeaker=beat.side;};render();
+  const render=()=>{const beat=beats[index],label=result.category==='career'?'아버지께 보내는 편지':'결말 이야기';epilogue.dataset.endingBeat=String(index);epilogue.querySelector('small').textContent=`${label} · ${index+1}/${beats.length}`;epilogue.querySelector('b').textContent=beat.speaker;epilogue.querySelector('p').textContent=beat.line;epilogue.querySelector('button').textContent=index===beats.length-1?'성장 기록 보기':'다음';if(visual)visual.dataset.endingSpeaker=beat.side;};render();
   epilogue.querySelector('button').addEventListener('click',()=>{if(index<beats.length-1){index+=1;render();return;}epilogue.hidden=true;summary.hidden=false;restart.hidden=false;if(visual)visual.dataset.endingSpeaker='both';});
 }
 function normalizeRelations(){

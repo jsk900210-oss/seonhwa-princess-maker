@@ -24,6 +24,8 @@ for(const id of ['doyun','seojin','yeonwoo','taegyeom','hyeon'])assert.match(app
 assert.match(app,/성장 기록 보기/,'세 장면을 마친 뒤 성장 기록을 열어야 합니다.');
 assert.match(app,/const soloEndingScenes=/,'직업·몰락 엔딩별 무인 배경 규격이 필요합니다.');
 assert.match(app,/function soloEndingVisual\(result\)/,'직업·몰락 엔딩에는 승인된 선화 전신 장면이 필요합니다.');
+assert.match(app,/function careerEndingIllustrationPath\(endingId\)/,'직업 엔딩에는 직업별 완성 일러스트 경로가 필요합니다.');
+assert.match(app,/const careerEndingLetters=/,'직업 엔딩에는 아버지께 보내는 전용 편지가 필요합니다.');
 assert.match(app,/const soloEndingEpilogues=/,'직업·몰락 엔딩별 전용 후일담 데이터가 필요합니다.');
 const soloEpilogueBlock=app.slice(app.indexOf('const soloEndingEpilogues='),app.indexOf('function endingEpilogueBeats'));
 for(const id of [...careerBlock.matchAll(/\{id:'([^']+)'/g),...downfallBlock.matchAll(/\{id:'([^']+)'/g)].map(match=>match[1]))assert.match(soloEpilogueBlock,new RegExp(`(?:'${id}'|${id}):\\[\\{speaker:[\\s\\S]*?\\}\\]`),`${id} 엔딩에는 3장면 후일담이 필요합니다.`);
