@@ -21,10 +21,11 @@ assert.match(html,/id="moonlightPageant"/,'경연 전용 레이어 컨테이너�
 assert.match(css,/\.pageant-winner/,'우승자 확대 레이어 규격이 필요합니다.');
 assert.match(css,/@keyframes pageant-bow/,'예절 심사 절 동작이 필요합니다.');
 assert.match(app,/moonlightMotionNames=\['opening-dialogue','opening-dialogue','title','final-lineup'/,'첫 대화 뒤 중복 준비 장면 없이 제목과 참가자 소개로 이어져야 합니다.');
-assert.match(css,/@keyframes pageant-lineup-hair-tuck/,'참가자 머리카락 정돈 동작이 필요합니다.');
-assert.match(css,/@keyframes pageant-lineup-hesitate/,'참가자 머뭇거림 동작이 필요합니다.');
-assert.match(css,/@keyframes pageant-lineup-skirt-sway/,'참가자 치맛자락 흔들림 동작이 필요합니다.');
-assert.match(css,/@keyframes pageant-lineup-look-around/,'참가자 좌우 살핌 동작이 필요합니다.');
+assert.match(app,/function moonlightLineupGestureImage\(entry\)/,'13세 참가자 실제 동작 프레임 선택기가 필요합니다.');
+assert.match(css,/@keyframes pageant-lineup-real-frames/,'정지 그림 흔들기 대신 실제 자세 이미지 교체 애니메이션이 필요합니다.');
+assert.doesNotMatch(css,/@keyframes pageant-lineup-(?:hair-tuck|hesitate|skirt-sway|look-around)/,'정지 그림을 통째로 흔드는 가짜 동작이 남아 있으면 안 됩니다.');
+for(let contestant=1;contestant<=7;contestant+=1)assert.ok(fs.existsSync(new URL(`../assets/events/holidays/moonlight-pageant/contestants/animation/age-13/contestant-${contestant}-gesture-v1.png`,import.meta.url)),`13세 참가자 ${contestant} 실제 3프레임 묶음이 필요합니다.`);
+assert.ok(fs.existsSync(new URL('../assets/events/holidays/moonlight-pageant/contestants/animation/age-13/seonhwa-gesture-v1.png',import.meta.url)),'13세 선화 실제 3프레임 묶음이 필요합니다.');
 assert.match(app,/motion==='dance'\?6:3/,'춤은 준비부터 마무리까지 6프레임이어야 합니다.');
 assert.match(app,/moonlightActingPoseMap=\{invitation:\[1,2,3,4\],prepare:\[5,7,8\],enter:\[9,10,11\],bow:\[11,12,13\],finish:\[13,14,15\],interview:\[14,15,16\]\}/,'경연 핵심 행동별 연속 포즈 연결이 필요합니다.');
 assert.match(app,/festivalWinnerInterview\(session\)/,'경연 마지막에 실제 대상 수상자 인터뷰가 필요합니다.');
@@ -48,5 +49,8 @@ for(const age of ['09','13','16','18'])for(let frame=1;frame<=16;frame+=1){
   assert.ok(fs.existsSync(file),`연령 ${age} 경연 연기 ${frame}프레임이 필요합니다.`);
 }
 assert.match(app,/qaHoliday'\)==='chuseok'/,'경연 즉시 검수 모드가 필요합니다.');
+assert.match(app,/function bindHolidayQaTap\(session,startBeat,beats,renderer,caption\)/,'명절 QA도 화면 터치로 다음 장면을 순환해야 합니다.');
+assert.match(css,/\.moonlight-pageant\.festival-pm3\.tap-ready\{[^}]*pointer-events:auto/,'터치 준비가 끝난 경연 레이어는 실제 포인터 입력을 받아야 합니다.');
+assert.match(css,/\.sehwa-opening-dialogue>\.sehwa-dialogue-bust\{[^}]*width:62%;[^}]*height:132%;[^}]*mask-image:linear-gradient/,'경연 대화 초상은 동일 크기와 자연스러운 하단 페이드를 사용해야 합니다.');
 
 console.log('PASS: 한가위 달빛 아씨 경연 8인·19장면·6프레임 춤·우승자 인터뷰');

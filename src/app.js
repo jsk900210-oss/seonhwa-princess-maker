@@ -243,7 +243,7 @@ const vacationIllustrations=[
 function unifiedAgeFolder(){return '09';}
 function scheduleFramePath(file){return `../assets/characters/seonhwa/schedule-actions/${file}`;}
 function scheduleBasePath(file){return `../assets/characters/seonhwa/schedule-base/${file}`;}
-const scheduleAssetRevision='0.64.139-debug';
+const scheduleAssetRevision='0.64.140-debug';
 const scheduleQaParams=new URLSearchParams(location.search);
 const moonlightStandaloneQa=scheduleQaParams.get('qaHoliday')==='chuseok';
 const sehwaStandaloneQa=scheduleQaParams.get('qaHoliday')==='seollal';
@@ -1611,6 +1611,11 @@ function moonlightEntrantImage(entry){
   if(entry.player)return moonlightSeonhwaImage();
   return `../assets/events/holidays/moonlight-pageant/contestants/age-${moonlightAssetAge()}/contestant-${entry.index+1}-winner-v1.png?v=${scheduleAssetRevision}`;
 }
+function moonlightLineupGestureImage(entry){
+  if(moonlightAssetAge()!=='13')return '';
+  const file=entry.player?'seonhwa-gesture-v1.png':`contestant-${entry.index+1}-gesture-v1.png`;
+  return `../assets/events/holidays/moonlight-pageant/contestants/animation/age-13/${file}?v=${scheduleAssetRevision}`;
+}
 function festivalScoreboard(session,title){
   const best=Math.max(1,...session.ranked.map(entry=>entry.score));
   return `<section class="festival-scoreboard" aria-label="${title} 8인 심사표"><h3>${title}</h3>${session.ranked.map((entry,index)=>`<div class="festival-score-row ${entry.player?'is-player':''}"><b>${index+1}</b><span>${entry.name}</span><i><em style="width:${Math.max(4,Math.round(entry.score/best*100))}%"></em></i><strong>${entry.score}</strong></div>`).join('')}</section>`;
@@ -1624,7 +1629,7 @@ function festivalGuardianCut(session){
   return `<section class="festival-character-cut guardian-cut"><img src="../assets/cinematics/guardian/humanized/poses/${game.guardianType}-happy-transparent-v3.png?v=${scheduleAssetRevision}" alt="결과를 알려 주는 ${name}"><p><b>${name}</b>${line}</p></section>`;
 }
 function festivalCrowd(){return '<div class="festival-crowd" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>';}
-function festivalLineup(session){return `<section class="pageant-lineup pageant-intro-lineup" aria-label="서로 다른 몸짓으로 차례를 기다리는 달빛 아씨 경연 참가자 8명">${session.entrants.map((entry,index)=>`<figure class="${entry.player?'is-player ':''}lineup-gesture-${index%4}" style="--lineup-delay:${index*-0.31}s"><img src="${moonlightEntrantImage(entry)}" alt="${entry.name}"><figcaption>${entry.name}</figcaption></figure>`).join('')}</section>`;}
+function festivalLineup(session){return `<section class="pageant-lineup pageant-intro-lineup" aria-label="서로 다른 몸짓으로 차례를 기다리는 달빛 아씨 경연 참가자 8명">${session.entrants.map((entry,index)=>{const gesture=moonlightLineupGestureImage(entry);return `<figure class="${entry.player?'is-player ':''}${gesture?'has-gesture-frames':'static-lineup'}" style="--lineup-delay:${index*-0.31}s">${gesture?`<span class="lineup-gesture-frames" style="--lineup-frames:url('${gesture}')" role="img" aria-label="${entry.name}의 실제 대기 동작"></span>`:`<img src="${moonlightEntrantImage(entry)}" alt="${entry.name}">`}<figcaption>${entry.name}</figcaption></figure>`;}).join('')}</section>`;}
 function moonlightOpeningAnswer(session){
   const answers={'자신감 넘침':'장단과 발끝까지 충분히 익혔어요. 제가 준비한 달빛을 흔들림 없이 보여 드릴게요.','차분한 자신감':'호흡을 서두르지 않고 예를 다하면 제 춤의 마음이 전해질 거예요.','긴장하지만 씩씩함':'조금 떨리지만 신수가 곁에 있으니 첫 절부터 차분히 해 볼게요.','자신 없음':'아직 동작이 부족한 것 같아 걱정돼요. 그래도 배운 순서를 하나씩 떠올려 볼게요.','부끄러움':'많은 사람 앞에 서려니 떨려요… 그래도 달을 바라보며 끝까지 춰 볼게요.'};
   return answers[session.reaction]||answers['긴장하지만 씩씩함'];
@@ -3555,8 +3560,7 @@ function initMoonlightPageantQa(){
   document.querySelector('#stageMap').src=`../assets/events/holidays/moonlight-pageant/background/moonlight-courtyard-v1.webp?v=${scheduleAssetRevision}`;
   document.querySelector('#stageCharacter').hidden=true;document.querySelector('#stageNpc').hidden=true;document.querySelector('#stageProps').hidden=true;
   document.querySelector('#stageCaption').textContent=`한가위 달빛 아씨 경연 QA · ${qaDay}일차 · 선화 ${session.overallRank}`;
-  document.querySelector('#dialogueText').textContent=moonlightStoryBeats[qaDay-1];
-  renderMoonlightPageant(session,qaDay-1);
+  bindHolidayQaTap(session,qaDay-1,moonlightStoryBeats,renderMoonlightPageant,'한가위 달빛 아씨 경연 QA');
 }
 function initSehwaContestQa(){
   ['studioLoading','prologue','birthdaySetup','recoveryPrompt','guardianStory','guardianChoice','guardianNaming'].forEach(id=>{const element=document.querySelector(`#${id}`);if(element)element.hidden=true;});
@@ -3570,8 +3574,14 @@ function initSehwaContestQa(){
   document.querySelector('#stageMap').src=`../assets/events/holidays/sehwa-contest/background/royal-atelier-v1.webp?v=${scheduleAssetRevision}`;
   document.querySelector('#stageCharacter').hidden=true;document.querySelector('#stageNpc').hidden=true;document.querySelector('#stageProps').hidden=true;
   document.querySelector('#stageCaption').textContent=`복을 그리는 왕실 세화 경연 QA · ${qaBeat}/${sehwaStoryBeats.length}장면 · 선화 ${session.overallRank}`;
-  document.querySelector('#dialogueText').textContent=sehwaStoryBeats[qaBeat-1];
-  renderSehwaContest(session,qaBeat-1);
+  bindHolidayQaTap(session,qaBeat-1,sehwaStoryBeats,renderSehwaContest,'복을 그리는 왕실 세화 경연 QA');
+}
+function bindHolidayQaTap(session,startBeat,beats,renderer,caption){
+  const overlay=document.querySelector('#moonlightPageant');let beat=startBeat;
+  const show=()=>{renderer(session,beat);overlay.classList.add('tap-ready');document.querySelector('#dialogueText').textContent=beats[beat];document.querySelector('#stageCaption').textContent=`${caption} · ${beat+1}/${beats.length}장면 · 화면 터치로 다음`;};
+  overlay.addEventListener('click',()=>{beat=(beat+1)%beats.length;show();});
+  overlay.addEventListener('keydown',event=>{if(!['Enter',' '].includes(event.key))return;event.preventDefault();beat=(beat+1)%beats.length;show();});
+  show();
 }
 function initRelationEncounterQa(){
   ['studioLoading','prologue','birthdaySetup','recoveryPrompt','guardianStory','guardianChoice','guardianNaming'].forEach(id=>{const element=document.querySelector(`#${id}`);if(element)element.hidden=true;});

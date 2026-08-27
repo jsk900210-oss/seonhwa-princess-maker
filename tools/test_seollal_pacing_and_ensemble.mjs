@@ -18,7 +18,7 @@ assert.match(css,/@keyframes sehwa-dialogue-from-left/,'선화 대화창의 왼�
 assert.match(css,/\.sehwa-opening-dialogue p\{[^}]*word-break:keep-all;[^}]*text-wrap:pretty/,'한글 대사는 어절 중간에서 끊기지 않아야 합니다.');
 assert.match(app,/protagonistFullbodyForAge\(\)/,'선화 대화는 연령별 상반신 원화를 사용해야 합니다.');
 assert.match(app,/if\(kind==='drawing'\)return `\$\{scheduleFramePath\(`calligraphy-pixel-\$\{frame\}\.png`\)\}\?v=\$\{scheduleAssetRevision\}`;/,'세화 붓질 장면의 선화는 일정 화면과 같은 쯔꾸르 픽셀 프레임을 사용해야 합니다.');
-assert.match(css,/\.sehwa-opening-dialogue>\.sehwa-dialogue-bust\{[^}]*transform:scale\(1\.5\)/,'대화 중 화자는 얼굴과 상체 중심으로 확대되어야 합니다.');
+assert.match(css,/\.sehwa-opening-dialogue>\.sehwa-dialogue-bust\{[^}]*transform:scale\(1\.28\)/,'대화 중 화자는 통일된 얼굴·상체 크기로 보여야 합니다.');
 assert.match(app,/function sehwaExpressionAsset\(expression\)/,'연령별 투명 표정 자산을 선택해야 합니다.');
 for(const age of ['09','13','16','18'])for(const expression of ['neutral','smile','joyful','nervous','startled','sad','determined','shy'])assert.ok(existsSync(new URL(`../assets/characters/dialogue-busts/seonhwa/age-${age}-${expression}-v2.png`,import.meta.url)),`${age}세 ${expression} 투명 대화 표정이 필요합니다.`);
 assert.match(app,/function sehwaDrawingEnsemble\(session\)/,'참가자 전원의 그림 장면이 필요합니다.');
