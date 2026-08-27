@@ -243,7 +243,7 @@ const vacationIllustrations=[
 function unifiedAgeFolder(){return '09';}
 function scheduleFramePath(file){return `../assets/characters/seonhwa/schedule-actions/${file}`;}
 function scheduleBasePath(file){return `../assets/characters/seonhwa/schedule-base/${file}`;}
-const scheduleAssetRevision='0.64.124-debug';
+const scheduleAssetRevision='0.64.125-debug';
 const scheduleQaParams=new URLSearchParams(location.search);
 const moonlightStandaloneQa=scheduleQaParams.get('qaHoliday')==='chuseok';
 const sehwaStandaloneQa=scheduleQaParams.get('qaHoliday')==='seollal';
@@ -1351,7 +1351,7 @@ const relationScenePresentations={
   '나루터':{src:'../assets/backgrounds/phase-scenes/ferry.webp',size:'100% auto',position:'center 32%'},'저잣거리':{src:'../assets/backgrounds/market/market-day.webp',size:'cover',position:'center 45%'},'상단 장부방':{src:'../assets/backgrounds/phase-scenes/merchant.webp',size:'100% auto',position:'center 34%'},'나루터 저녁':{src:'../assets/backgrounds/phase-scenes/ferry.webp',size:'100% auto',position:'center 32%'},'큰 장 입구':{src:'../assets/backgrounds/pixel-activities/market-errand-v2.webp',size:'100% auto',position:'center 34%'},
   '등불 거리':{src:'../assets/events/holidays/moonlight-pageant/background/moonlight-courtyard-v1.webp',size:'cover',position:'center 46%'},'큰 문 앞':{src:'../assets/events/holidays/sehwa-contest/background/royal-contest-hall-v1.png',size:'cover',position:'center 44%'}
 };
-function relationScenePresentation(episode){return relationScenePresentations[episode?.scene]||{src:'../assets/backgrounds/home/home-room-morning.webp',size:'cover',position:'center'};}
+function relationScenePresentation(episode){const presentation=relationScenePresentations[episode?.scene]||{src:'../assets/backgrounds/home/home-room-morning.webp',position:'center'};return {...presentation,size:'cover'};}
 function playRelationEncounterScene(candidate,opening,resultLine='',episode=null){
   const scene=document.querySelector('#relationEncounterScene'),male=document.querySelector('#relationEncounterMale'),female=document.querySelector('#relationEncounterFemale'),speaker=document.querySelector('#relationEncounterSpeaker'),text=document.querySelector('#relationEncounterText'),next=document.querySelector('#relationEncounterNext'),choices=document.querySelector('#relationEncounterChoices');
   const presentation=relationScenePresentation(episode);scene.style.setProperty('--relation-scene-background',`url('${presentation.src}?v=${scheduleAssetRevision}')`);scene.style.setProperty('--relation-scene-size',presentation.size);scene.style.setProperty('--relation-scene-position',presentation.position);scene.dataset.location=episode?.scene||'집 안';
