@@ -17,6 +17,8 @@ const beats=app.match(/const moonlightStoryBeats=\[([\s\S]*?)\n\];/)?.[1]||'';
 assert.equal((beats.match(/'[^']+'/g)||[]).length,17,'초청장·도착 중복 장면을 뺀 경연은 우승자 인터뷰를 포함한 17개 이야기 비트여야 합니다.');
 assert.doesNotMatch(beats,/초청장을 다시 확인|경연장에 도착해 참가표/,'삭제 요청된 초청장 확인·참가표 수령 장면이 남아 있으면 안 됩니다.');
 assert.match(app,/king-presenting-v1\.png/,'왕의 대상 시상 포즈가 필요합니다.');
+assert.match(app,/motion==='dance'&&age==='13'[^\n]+length:10[^\n]+dance-10fps-v5/,'13세 경연 춤은 쯔꾸르 10프레임 묶음을 사용해야 합니다.');
+assert.match(css,/\.pageant-hero-frames\.is-dance img\{[^}]*animation-name:pageant-frame-10;[^}]*animation-duration:1s;[^}]*\.1s/,'경연 춤은 초당 10프레임으로 재생해야 합니다.');
 assert.match(app,/festivalKingCut\(line,alt\)[^\n]+<b>왕<\/b>/,'경연을 주관하는 군주는 왕으로 표기해야 합니다.');
 assert.doesNotMatch(app,/(황이 예절|황이 대상|알리는 황|시상하는 황|하사하는 황)/,'왕의 경연 대사와 설명에 황 표기가 남으면 안 됩니다.');
 assert.match(app,/id:'hyeon',name:'현',role:'정체를 숨긴 왕세자'/,'현은 왕의 아들인 왕세자로 설정해야 합니다.');
@@ -29,6 +31,7 @@ assert.match(css,/@keyframes pageant-lineup-real-frames/,'정지 그림 흔들�
 assert.doesNotMatch(css,/@keyframes pageant-lineup-(?:hair-tuck|hesitate|skirt-sway|look-around)/,'정지 그림을 통째로 흔드는 가짜 동작이 남아 있으면 안 됩니다.');
 for(let contestant=1;contestant<=7;contestant+=1)assert.ok(fs.existsSync(new URL(`../assets/events/holidays/moonlight-pageant/contestants/animation/age-13/contestant-${contestant}-gesture-v1.png`,import.meta.url)),`13세 참가자 ${contestant} 실제 3프레임 묶음이 필요합니다.`);
 assert.ok(fs.existsSync(new URL('../assets/events/holidays/moonlight-pageant/contestants/animation/age-13/seonhwa-gesture-v1.png',import.meta.url)),'13세 선화 실제 3프레임 묶음이 필요합니다.');
+for(let frame=1;frame<=10;frame+=1)assert.ok(fs.existsSync(new URL(`../assets/events/holidays/moonlight-pageant/seonhwa/age-13/dance-10fps-v5/seonhwa-dance-${String(frame).padStart(2,'0')}-v5.png`,import.meta.url)),`13세 쯔꾸르 춤 ${frame}프레임이 필요합니다.`);
 assert.match(app,/motion==='dance'\?6:3/,'춤은 준비부터 마무리까지 6프레임이어야 합니다.');
 assert.match(app,/moonlightActingPoseMap=\{invitation:\[1,2,3,4\],prepare:\[5,7,8\],enter:\[9,10,11\],bow:\[11,12,13\],finish:\[13,14,15\],interview:\[14,15,16\]\}/,'경연 핵심 행동별 연속 포즈 연결이 필요합니다.');
 assert.match(app,/festivalWinnerInterview\(session\)/,'경연 마지막에 실제 대상 수상자 인터뷰가 필요합니다.');
