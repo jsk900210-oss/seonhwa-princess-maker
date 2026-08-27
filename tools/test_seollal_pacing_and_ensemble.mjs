@@ -38,7 +38,8 @@ assert.doesNotMatch(app,/study-child-tsukuru-v1\.png[^\n]*왕실 화원 접수/,
 assert.doesNotMatch(app,/teacher-reading-1\.png[^\n]*왕실 화원 접수/,'세화 접수 장면에 노년 선생 자산이 남아 있으면 안 됩니다.');
 assert.match(css,/\.sehwa-contest\.festival-pm3\{overflow:visible\}/,'창 밖 진행 버튼을 위해 세화 오버레이가 열려 있어야 합니다.');
 assert.match(css,/\.activity-stage:not\(\.market-choice-stage\):has\(\.sehwa-contest:not\(\[hidden\]\)\)>\.stage-inner\{overflow:visible!important\}/,'쯔꾸르 창 바깥 버튼이 stage-inner에 잘리면 안 됩니다.');
-assert.match(css,/\.sehwa-contest\.festival-pm3 \.pageant-next,[^{]+\{[^}]*bottom:-52px/,'세화 다음 버튼은 쯔꾸르 창 바로 아래에 배치해야 합니다.');
+assert.doesNotMatch(app,/<button class="pageant-next"/,'설날 경연에 별도 다음 버튼이 남아 있으면 안 됩니다.');
+assert.match(app,/return waitForFestivalTapAdvance\(minimumStay\)/,'설날 경연은 화면 터치로 진행해야 합니다.');
 for(const frame of [1,2,3])assert.ok(existsSync(new URL(`../assets/events/holidays/sehwa-contest/registration-scene/age-13/receive-${frame}-v1.png`,import.meta.url)),`공손한 참가표 수령 ${frame} 프레임이 필요합니다.`);
 assert.ok(existsSync(new URL('../assets/events/holidays/sehwa-contest/background/royal-contest-registration-young-clerk-v2.png',import.meta.url)),'축소된 접수대가 포함된 왕실 화원 접수 배경 이미지가 필요합니다.');
 assert.match(css,/@keyframes sehwa-receive-bow/,'참가표 수령은 공손한 인사로 시작해야 합니다.');

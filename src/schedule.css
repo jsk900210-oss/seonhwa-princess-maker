@@ -2178,6 +2178,7 @@
 .pageant-winner figcaption{position:absolute;bottom:0;padding:4px 12px;border:1px solid #e5c476;border-radius:14px;background:#301b10e8;color:#ffeebd;font-size:10px;font-weight:900}
 .moonlight-pageant .pageant-next{position:absolute;z-index:70;right:5%;bottom:8%;min-width:72px;min-height:34px;padding:7px 13px;border:1px solid #e2c27f;border-radius:999px;background:#fff6dfeb;color:#54351f;font-size:11px;font-weight:900;pointer-events:auto;box-shadow:0 4px 12px #0008;animation:pageant-next-pulse 1.2s ease-in-out infinite}
 .moonlight-pageant .pageant-next:disabled{opacity:.38;animation:none;pointer-events:none}
+.moonlight-pageant.festival-pm3.tap-ready{cursor:pointer}
 .moonlight-pageant.festival-pm3.beat-6 .pageant-intro-lineup{display:grid!important;left:3%;right:3%;bottom:14%;grid-template-columns:repeat(4,1fr);gap:2px 4px}
 .moonlight-pageant.festival-pm3.beat-6 .pageant-intro-lineup img{width:58px;height:78px}
 .moonlight-pageant.festival-pm3.beat-6 .pageant-intro-lineup figcaption{font-size:7px}

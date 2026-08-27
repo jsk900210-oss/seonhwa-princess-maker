@@ -243,7 +243,7 @@ const vacationIllustrations=[
 function unifiedAgeFolder(){return '09';}
 function scheduleFramePath(file){return `../assets/characters/seonhwa/schedule-actions/${file}`;}
 function scheduleBasePath(file){return `../assets/characters/seonhwa/schedule-base/${file}`;}
-const scheduleAssetRevision='0.64.136-debug';
+const scheduleAssetRevision='0.64.137-debug';
 const scheduleQaParams=new URLSearchParams(location.search);
 const moonlightStandaloneQa=scheduleQaParams.get('qaHoliday')==='chuseok';
 const sehwaStandaloneQa=scheduleQaParams.get('qaHoliday')==='seollal';
@@ -1658,16 +1658,19 @@ function renderMoonlightPageant(session,dayIndex){
   const guardian=guardianResult?festivalGuardianCut(session):'';
   const winner=award?`<figure class="pageant-winner"><img src="${moonlightEntrantImage(session.winner)}" alt="대상 수상자 ${session.winner.name}"><figcaption>대상 · ${session.winner.name}</figcaption></figure><img class="pageant-king" src="../assets/events/holidays/moonlight-pageant/king/king-presenting-v1.png?v=${scheduleAssetRevision}" alt="대상을 시상하는 황">`:'';
   const winnerInterview=interview?festivalWinnerInterview(session):'';
-  const nextLabel=interview?'경연 마치기':beat===0?'선화의 대답 듣기':beat===1?'경연 준비하기':beat===13?'심사 결과 보기':'다음';
-  overlay.innerHTML=`${titleCard}${entrantLineup}${hero}${guardian}${opening?moonlightOpeningDialogue(session,beat):''}${king}${board}${winner}${winnerInterview}<button class="pageant-next" type="button">${nextLabel}</button>`;
+  overlay.tabIndex=0;overlay.setAttribute('role','button');overlay.setAttribute('aria-label','화면을 터치해 다음 장면으로 이동');
+  overlay.innerHTML=`${titleCard}${entrantLineup}${hero}${guardian}${opening?moonlightOpeningDialogue(session,beat):''}${king}${board}${winner}${winnerInterview}`;
 }
 function waitForMoonlightAdvance(beat){
-  const button=document.querySelector('#moonlightPageant .pageant-next');
-  if(!button)return schedulePlaybackDelay(900);
-  return new Promise(resolve=>{
-    button.disabled=true;
-    window.setTimeout(()=>{button.disabled=false;button.addEventListener('click',resolve,{once:true});},beat<=1?1600:700);
-  });
+  return waitForFestivalTapAdvance(beat<=1?1600:700);
+}
+function waitForFestivalTapAdvance(minimumStay){
+  const overlay=document.querySelector('#moonlightPageant');if(!overlay)return schedulePlaybackDelay(900);
+  return new Promise(resolve=>window.setTimeout(()=>{
+    overlay.classList.add('tap-ready');
+    const advance=event=>{if(event.type==='keydown'&&!['Enter',' '].includes(event.key))return;overlay.removeEventListener('click',advance);overlay.removeEventListener('keydown',advance);overlay.classList.remove('tap-ready');resolve();};
+    overlay.addEventListener('click',advance);overlay.addEventListener('keydown',advance);
+  },minimumStay));
 }
 function clearMoonlightPageant(){const overlay=document.querySelector('#moonlightPageant');if(overlay){overlay.hidden=true;overlay.innerHTML='';overlay.className='moonlight-pageant';}}
 const sehwaContestants=[
@@ -1788,13 +1791,12 @@ function renderSehwaContest(session,beatIndex){
   const king=intro?festivalKingCut('새해의 복을 담아 까치와 매화, 첫 해를 한 폭에 그려 보이거라.','세화 경연의 주제를 알리는 황'):'';
   const winner=beat===15&&!session.winner.player?`<figure class="pageant-winner"><img src="${moonlightEntrantImage(session.winner)}" alt="대상 수상자 ${session.winner.name}"><figcaption>대상 · ${session.winner.name}</figcaption></figure><img class="pageant-king" src="../assets/events/holidays/moonlight-pageant/king/king-presenting-v1.png?v=${scheduleAssetRevision}" alt="대상을 시상하는 황">`:'';
   overlay.hidden=false;overlay.className=`moonlight-pageant sehwa-contest festival-pm3 beat-${beat+1} reaction-${session.reaction.replaceAll(' ','-')}`;
-  const nextLabel=award?'경연 마치기':result?'결과 확인':'다음';
-  overlay.innerHTML=`${titleCard}${hero}${guardian}${opening?sehwaOpeningDialogue(session,beat):''}${beat===2?sehwaRegistrationScene():''}${preparing?sehwaPreparationEnsemble(session):''}${drawingGroup?sehwaDrawingEnsemble(session):''}${king}${board}${winner}<button class="pageant-next" type="button">${nextLabel}</button>`;
+  overlay.tabIndex=0;overlay.setAttribute('role','button');overlay.setAttribute('aria-label','화면을 터치해 다음 장면으로 이동');
+  overlay.innerHTML=`${titleCard}${hero}${guardian}${opening?sehwaOpeningDialogue(session,beat):''}${beat===2?sehwaRegistrationScene():''}${preparing?sehwaPreparationEnsemble(session):''}${drawingGroup?sehwaDrawingEnsemble(session):''}${king}${board}${winner}`;
 }
 function waitForSehwaAdvance(beat){
-  const button=document.querySelector('#moonlightPageant .pageant-next');if(!button)return schedulePlaybackDelay(2500);
   const minimumStay=beat===6?5000:beat<=1?1600:700;
-  return new Promise(resolve=>{button.disabled=true;window.setTimeout(()=>{button.disabled=false;button.addEventListener('click',resolve,{once:true});},minimumStay);});
+  return waitForFestivalTapAdvance(minimumStay);
 }
 function presentHolidayRelation(){
   if(!pendingHolidayRelation)return false;

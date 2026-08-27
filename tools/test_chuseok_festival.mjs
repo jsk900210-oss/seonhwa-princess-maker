@@ -30,7 +30,8 @@ assert.match(app,/beat<=1\?1600:700/,'추석 시작 대화는 최소 1.6초 뒤 
 assert.doesNotMatch(app,/overlay\.innerHTML=`\$\{festivalCrowd\(\)\}/,'추석 이벤트에 관객 실루엣이 계속 남아 있으면 안 됩니다.');
 assert.match(css,/\.moonlight-pageant\.festival-pm3\{overflow:visible\}/,'추석 진행 버튼을 창 아래에 배치할 수 있어야 합니다.');
 assert.match(css,/\.moonlight-pageant\.festival-pm3 \.pageant-hero-action,[^{]+\{[^}]*width:132px!important;[^}]*height:176px!important/,'추석 선화는 설날과 같은 축소 규격이어야 합니다.');
-assert.match(css,/\.moonlight-pageant\.festival-pm3 \.pageant-next,[^{]+\{[^}]*bottom:-52px/,'추석 다음 버튼은 쯔꾸르 창 아래에 배치해야 합니다.');
+assert.doesNotMatch(app,/선화의 대답 듣기|<button class="pageant-next"/,'추석 경연에 별도 다음 버튼이 남아 있으면 안 됩니다.');
+assert.match(app,/return waitForFestivalTapAdvance\(beat<=1\?1600:700\)/,'추석 경연은 화면 터치로 진행해야 합니다.');
 assert.match(css,/\.moonlight-pageant\.festival-pm3 \.pageant-lineup \.is-player img\{[^}]*width:58px;[^}]*height:78px;[^}]*drop-shadow\(0 2px 2px/,'참가자 소개에서 선화만 과도하게 빛나거나 커지면 안 됩니다.');
 assert.match(css,/\.pageant-interview p\{[^}]*word-break:keep-all;[^}]*text-wrap:pretty/,'우승자 인터뷰 대사는 한글 어절 중간에서 끊기지 않아야 합니다.');
 for(const age of ['09','13','16','18'])for(let frame=1;frame<=6;frame+=1){
