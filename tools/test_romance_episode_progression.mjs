@@ -20,7 +20,8 @@ assert.match(app,/data-relation-id/,'인연 QA에서 다섯 후보를 직접 전
 assert.match(app,/data-relation-meeting/,'인연 QA에 다섯 회차 버튼이 있어야 합니다.');
 assert.match(app,/const relationVoiceProgression=/,'남자 주인공별 1~5회 관계 말투 진행표가 필요합니다.');
 assert.match(app,/relationReplyChoices\(candidate,episode\)/,'회차별 장소와 제목을 반영한 선택지를 사용해야 합니다.');
-assert.match(app,/male\.src=relationPortraitPath\(candidate\)/,'선택 결과 뒤에도 나이에 맞는 남자 주인공 전신 정체성을 유지해야 합니다.');
+assert.match(app,/applyRelationPortrait\(male,candidate,episode\)/,'첫 대화부터 회차 감정에 맞는 남자 주인공 상반신 포즈를 사용해야 합니다.');
+assert.match(app,/male\.src=relationDialoguePosePath\(candidate,episode,choice\.emotion\)/,'선택 결과 뒤에도 답변 감정에 맞는 남자 주인공 상반신 포즈를 유지해야 합니다.');
 assert.match(app,/episode\?\.pose.*episode\?\.expression.*episode\?\.camera/s,'인연 QA 결과에 회차별 시각 지침이 표시되어야 합니다.');
 const backgroundMap=app.slice(app.indexOf('const relationScenePresentations='),app.indexOf('function relationScenePresentation'));
 const episodeScenes=[...catalog.matchAll(/scene:'([^']+)'/g)].map(match=>match[1]);
