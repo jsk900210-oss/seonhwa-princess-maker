@@ -2141,6 +2141,16 @@
 .pageant-lineup img{width:58px;height:78px;object-fit:contain;object-position:center bottom}
 .pageant-lineup figcaption{margin-top:-4px;padding:1px 4px;border-radius:8px;background:#21140dcc;color:#fff2ce;font-size:7px;line-height:1.2}
 .pageant-lineup .is-player img{width:64px;height:84px;filter:drop-shadow(0 0 5px #ffe98c)}
+.pageant-intro-lineup figure{transform-origin:center bottom;animation-duration:2.4s;animation-timing-function:ease-in-out;animation-iteration-count:infinite;animation-delay:var(--lineup-delay)}
+.pageant-intro-lineup .lineup-gesture-0{animation-name:pageant-lineup-hair-tuck}
+.pageant-intro-lineup .lineup-gesture-1{animation-name:pageant-lineup-hesitate}
+.pageant-intro-lineup .lineup-gesture-2{animation-name:pageant-lineup-skirt-sway}
+.pageant-intro-lineup .lineup-gesture-3{animation-name:pageant-lineup-look-around}
+.pageant-intro-lineup figure:nth-child(even){animation-direction:alternate-reverse}
+@keyframes pageant-lineup-hair-tuck{0%,18%,100%{transform:translateY(0) rotate(0)}38%{transform:translateY(-2px) rotate(2.5deg)}58%{transform:translateY(-1px) rotate(1deg)}}
+@keyframes pageant-lineup-hesitate{0%,15%,100%{transform:translateX(0) scale(1)}35%{transform:translateX(-2px) scale(.985,1.015)}58%{transform:translateX(2px) scale(1.01,.99)}75%{transform:translateX(0)}}
+@keyframes pageant-lineup-skirt-sway{0%,12%,100%{transform:rotate(0) translateX(0)}38%{transform:rotate(-2.8deg) translateX(-2px)}68%{transform:rotate(2.8deg) translateX(2px)}}
+@keyframes pageant-lineup-look-around{0%,20%,100%{transform:translateX(0) rotate(0)}40%{transform:translateX(-2px) rotate(-2deg)}62%{transform:translateX(2px) rotate(2deg)}80%{transform:translateX(0)}}
 .pageant-hero-action{position:absolute;z-index:4;left:50%;bottom:12%;width:154px;height:205px;object-fit:contain;object-position:center bottom;transform-origin:center bottom;filter:drop-shadow(0 5px 6px #160b08aa)}
 .pageant-hero-frames{position:absolute;z-index:4;left:50%;bottom:9%;width:190px;height:235px;display:block;transform:translateX(-50%);filter:drop-shadow(0 5px 6px #160b08aa)}
 .pageant-hero-frames img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;object-position:center bottom;opacity:0;animation:pageant-frame-123 .9s steps(1,end) infinite;animation-delay:calc(var(--pageant-frame) * .3s)}
@@ -2157,9 +2167,9 @@
 .pageant-interview p{margin:0;padding:9px;border-radius:11px;background:#fffdf7;border:1px solid #cda66c;font-size:11px;line-height:1.45;word-break:keep-all;overflow-wrap:normal;text-wrap:pretty}
 .pageant-interview-answer b{display:block;margin-bottom:4px;color:#8b4f1d}
 .pageant-interview-mark{position:absolute;right:10px;top:8px;display:grid;place-items:center;width:27px;height:27px;border-radius:50%;background:#7a4421;color:#fff1c8;font-weight:900}
-.moonlight-pageant.beat-5 .pageant-lineup,.moonlight-pageant.beat-6 .pageant-lineup{left:2%;right:2%;bottom:48%;grid-template-columns:repeat(7,1fr);gap:1px}
-.moonlight-pageant.beat-5 .pageant-lineup img,.moonlight-pageant.beat-6 .pageant-lineup img{width:40px;height:54px}
-.moonlight-pageant.beat-5 .pageant-lineup figcaption,.moonlight-pageant.beat-6 .pageant-lineup figcaption{font-size:6px;padding:1px 2px}
+.moonlight-pageant.beat-3 .pageant-lineup,.moonlight-pageant.beat-4 .pageant-lineup{left:2%;right:2%;bottom:48%;grid-template-columns:repeat(7,1fr);gap:1px}
+.moonlight-pageant.beat-3 .pageant-lineup img,.moonlight-pageant.beat-4 .pageant-lineup img{width:40px;height:54px}
+.moonlight-pageant.beat-3 .pageant-lineup figcaption,.moonlight-pageant.beat-4 .pageant-lineup figcaption{font-size:6px;padding:1px 2px}
 .pageant-guardian-cheer{position:absolute;z-index:5;right:5%;bottom:15%;width:116px;height:150px;object-fit:contain;object-position:center bottom;filter:drop-shadow(0 4px 6px #160b08aa);animation:pageant-guardian-bounce .55s ease-in-out infinite alternate}
 .motion-invitation .pageant-hero-action{animation:pageant-invitation 1.3s ease-in-out infinite}
 .motion-prepare .pageant-hero-action{animation:pageant-prepare 1.2s ease-in-out infinite}
@@ -2179,9 +2189,9 @@
 .moonlight-pageant .pageant-next{position:absolute;z-index:70;right:5%;bottom:8%;min-width:72px;min-height:34px;padding:7px 13px;border:1px solid #e2c27f;border-radius:999px;background:#fff6dfeb;color:#54351f;font-size:11px;font-weight:900;pointer-events:auto;box-shadow:0 4px 12px #0008;animation:pageant-next-pulse 1.2s ease-in-out infinite}
 .moonlight-pageant .pageant-next:disabled{opacity:.38;animation:none;pointer-events:none}
 .moonlight-pageant.festival-pm3.tap-ready{cursor:pointer}
-.moonlight-pageant.festival-pm3.beat-6 .pageant-intro-lineup{display:grid!important;left:3%;right:3%;bottom:14%;grid-template-columns:repeat(4,1fr);gap:2px 4px}
-.moonlight-pageant.festival-pm3.beat-6 .pageant-intro-lineup img{width:58px;height:78px}
-.moonlight-pageant.festival-pm3.beat-6 .pageant-intro-lineup figcaption{font-size:7px}
+.moonlight-pageant.festival-pm3.beat-4 .pageant-intro-lineup{display:grid!important;left:3%;right:3%;bottom:14%;grid-template-columns:repeat(4,1fr);gap:2px 4px}
+.moonlight-pageant.festival-pm3.beat-4 .pageant-intro-lineup img{width:58px;height:78px}
+.moonlight-pageant.festival-pm3.beat-4 .pageant-intro-lineup figcaption{font-size:7px}
 @keyframes pageant-next-pulse{50%{transform:translateY(2px);filter:brightness(1.08)}}
 .moonlight-pageant.beat-13 .pageant-lineup,.moonlight-pageant.beat-14 .pageant-lineup{display:none}
 @keyframes pageant-king-enter{from{opacity:0;transform:translateX(35px)}to{opacity:1;transform:translateX(0)}}
