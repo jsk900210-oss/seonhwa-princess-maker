@@ -2134,6 +2134,7 @@
 /* v0.63.98 — 한가위 달빛 아씨 경연: 8인 대열과 왕의 대상 단독 시상. */
 .activity-stage.action-holiday-chuseok .stage-map{object-position:center 58%}
 .activity-stage.action-holiday-chuseok>.stage-inner>.stage-character{display:none!important}
+.phone.playing:has(.activity-stage.action-holiday-chuseok:not([hidden]))>.dialogue,.phone.playing:has(.activity-stage.action-holiday-seollal:not([hidden]))>.dialogue{display:none!important}
 .moonlight-pageant{position:absolute;inset:0;z-index:9;overflow:hidden;pointer-events:none;font-family:inherit}
 .moonlight-pageant[hidden]{display:none!important}
 .pageant-lineup{position:absolute;left:3%;right:3%;bottom:14%;display:grid;grid-template-columns:repeat(4,1fr);gap:2px 4px;align-items:end}

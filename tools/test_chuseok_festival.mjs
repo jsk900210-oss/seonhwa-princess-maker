@@ -57,6 +57,7 @@ for(const age of ['09','13','16','18'])for(let frame=1;frame<=16;frame+=1){
 assert.match(app,/qaHoliday'\)==='chuseok'/,'경연 즉시 검수 모드가 필요합니다.');
 assert.match(app,/function bindHolidayQaTap\(session,startBeat,beats,renderer,caption\)/,'명절 QA도 화면 터치로 다음 장면을 순환해야 합니다.');
 assert.match(css,/\.moonlight-pageant\.festival-pm3\.tap-ready\{[^}]*pointer-events:auto/,'터치 준비가 끝난 경연 레이어는 실제 포인터 입력을 받아야 합니다.');
+assert.match(css,/action-holiday-chuseok:not\(\[hidden\]\)[^}]*>\.dialogue,[^}]*action-holiday-seollal:not\(\[hidden\]\)[^}]*>\.dialogue\{display:none!important\}/,'추석·설날 이벤트 중에는 바깥 하단 설명창을 숨겨야 합니다.');
 assert.match(app,/function festivalLineup\(session\)[^\n]+lineup-gesture-frames/,'8인 소개 장면은 실제 동작 프레임을 사용해야 합니다.');
 assert.doesNotMatch(app,/function festivalLineup\(session\)[^\n]+<figcaption>/,'8인 소개 장면에는 캐릭터 이름표를 표시하지 않아야 합니다.');
 assert.match(css,/\.pageant-intro-lineup \.lineup-gesture-frames\{[^}]*width:74px;[^}]*height:100px;[^}]*animation:pageant-lineup-real-frames/,'8인 참가자는 확대된 실제 프레임 애니메이션으로 보여야 합니다.');
