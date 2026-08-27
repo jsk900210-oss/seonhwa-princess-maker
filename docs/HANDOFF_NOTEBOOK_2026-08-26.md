@@ -3,7 +3,7 @@
 ## 현재 기준점
 
 - 브랜치: `agent/pixel-schedule-handoff`
-- 최신 작업 버전: `v0.64.121-debug`
+- 최신 작업 버전: `v0.64.122-debug`
 - 최신 기능 기준 커밋: `73adb85` (`feat: visualize career and downfall endings`)
 - 기준 브랜치: `agent/pixel-schedule-handoff`
 - 라이브 QA: `https://jsk900210-oss.github.io/seonhwa-princess-maker/src/?qaEnding=queen&v=73adb85`
@@ -35,7 +35,7 @@ cd seonhwa-princess-maker
 git log -1 --oneline
 ```
 
-로컬 확인 주소는 `http://127.0.0.1:8000/src/?v=0.64.121-debug`이다.
+로컬 확인 주소는 `http://127.0.0.1:8000/src/?v=0.64.122-debug`이다.
 
 ## 완료 — 남자 주인공 5인 연령별 이미지 전면 검수·재제작
 
@@ -89,7 +89,7 @@ git log -1 --oneline
 ## 다음 작업
 
 1. 직업 엔딩 18종과 몰락 엔딩 7종에 맞는 선화 전용 행동 포즈 제작
-2. 직업·몰락 엔딩별 3장면 후일담 연결
+2. 완료 — 직업·몰락 엔딩별 3장면 후일담 연결
 3. 모바일 360·390·430px 전수 검수
 
 ## 완료 절차

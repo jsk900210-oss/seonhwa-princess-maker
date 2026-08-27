@@ -243,7 +243,7 @@ const vacationIllustrations=[
 function unifiedAgeFolder(){return '09';}
 function scheduleFramePath(file){return `../assets/characters/seonhwa/schedule-actions/${file}`;}
 function scheduleBasePath(file){return `../assets/characters/seonhwa/schedule-base/${file}`;}
-const scheduleAssetRevision='0.64.121-debug';
+const scheduleAssetRevision='0.64.122-debug';
 const scheduleQaParams=new URLSearchParams(location.search);
 const moonlightStandaloneQa=scheduleQaParams.get('qaHoliday')==='chuseok';
 const sehwaStandaloneQa=scheduleQaParams.get('qaHoliday')==='seollal';
@@ -1459,10 +1459,38 @@ const relationEndingEpilogues={
   taegyeom:[{speaker:'태겸',side:'partner',line:'수많은 길의 값을 매겨 봤지만, 너와 걷는 길만은 셈할 수 없더군.'},{speaker:'선화',side:'seonhwa',line:'그 길은 거래하지 말아요. 대신 어디든 함께 가요.'},{speaker:'후일담',side:'both',line:'다음 장날, 두 사람은 첫 짐표에 서로의 이름을 나란히 적고 먼 상행길에 올랐습니다.'}],
   hyeon:[{speaker:'현',side:'partner',line:'다음에 만날 때에는 신분도 이름도 숨기지 않겠다고 약속했지.'},{speaker:'선화',side:'seonhwa',line:'저는 왕자가 아니라, 제 앞에 선 현을 보고 대답할게요.'},{speaker:'후일담',side:'both',line:'다음 날 큰 문이 열렸고, 두 사람은 서로의 자리를 존중하며 같은 방향으로 걸어갔습니다.'}]
 };
-function relationEndingEpilogueMarkup(result){if(result.category!=='relation'||!relationEndingEpilogues[result.partnerId])return '';const first=relationEndingEpilogues[result.partnerId][0];return `<section class="relation-ending-epilogue" data-ending-beat="0"><small>결말 이야기 · 1/3</small><b>${first.speaker}</b><p>${first.line}</p><button type="button" id="endingEpilogueNext">다음</button></section>`;}
-function bindRelationEndingEpilogue(result){
-  const beats=relationEndingEpilogues[result.partnerId],epilogue=document.querySelector('.relation-ending-epilogue');if(!beats||!epilogue)return;
-  const summary=document.querySelector('.ending-summary'),restart=document.querySelector('#endingRestart'),visual=document.querySelector('.relation-ending-visual');let index=0;summary.hidden=true;restart.hidden=true;
+const soloEndingEpilogues={
+  queen:[{speaker:'대전의 대신',side:'world',line:'전하께서 백성의 청을 먼저 들으신 뒤로 조정의 풍경이 달라졌습니다.'},{speaker:'선화',side:'seonhwa',line:'높은 자리는 멀리 보기 위한 곳이지, 사람을 내려다보는 곳이 아니에요.'},{speaker:'후일담',side:'both',line:'몇 해 뒤, 선화는 해마다 궁문을 열어 백성의 목소리를 직접 듣는 여왕으로 기억되었습니다.'}],
+  'royal-scholar':[{speaker:'왕실 기록관',side:'world',line:'오늘도 전하께서 선화 학사의 기록부터 찾으셨습니다.'},{speaker:'선화',side:'seonhwa',line:'붓끝이 권세보다 오래 남는다는 마음으로 사실만 적겠습니다.'},{speaker:'후일담',side:'both',line:'선화가 정리한 기록은 훗날 나라의 잘못을 되풀이하지 않게 하는 귀한 거울이 되었습니다.'}],
+  'village-teacher':[{speaker:'서당 아이들',side:'world',line:'훈장님, 오늘은 글자보다 세상 이야기를 먼저 들려주세요.'},{speaker:'선화',side:'seonhwa',line:'좋아요. 배움은 책을 읽는 데서 시작해 사람을 이해하는 데서 완성된답니다.'},{speaker:'후일담',side:'both',line:'작은 서당에서 자란 아이들은 먼 곳에 가서도 선화의 따뜻한 가르침을 잊지 않았습니다.'}],
+  'court-artist':[{speaker:'도화서 화원',side:'world',line:'선화 화원의 그림에는 궁궐뿐 아니라 백성의 하루도 살아 있습니다.'},{speaker:'선화',side:'seonhwa',line:'화려한 것만 남기면 이 시대의 진짜 얼굴을 놓치게 되니까요.'},{speaker:'후일담',side:'both',line:'선화의 화첩은 궁 안과 저잣거리의 삶을 함께 담은 시대의 기록으로 남았습니다.'}],
+  'renowned-painter':[{speaker:'그림을 보던 아이',side:'world',line:'이 그림을 보면 한 번도 가 본 적 없는 강가의 바람이 느껴져요.'},{speaker:'선화',side:'seonhwa',line:'그 마음이 닿았다면 그림은 이미 제 손을 떠나 네 것이 된 거란다.'},{speaker:'후일담',side:'both',line:'선화는 이름보다 그림이 먼저 길을 떠나는 화가가 되어 곳곳의 마음을 움직였습니다.'}],
+  'court-dancer':[{speaker:'궁중 악사',side:'world',line:'마지막 장단이 끝났는데도 모두 숨을 쉬는 것조차 잊었습니다.'},{speaker:'선화',side:'seonhwa',line:'춤은 끝났지만 오늘 전하고 싶었던 마음은 오래 남을 거예요.'},{speaker:'후일담',side:'both',line:'선화의 춤은 절제된 기품과 힘을 함께 갖춘 궁중의 새로운 법도로 이어졌습니다.'}],
+  'master-entertainer':[{speaker:'공연을 찾은 백성',side:'world',line:'선화 님의 노래와 이야기를 들으면 고단했던 하루가 가벼워집니다.'},{speaker:'선화',side:'seonhwa',line:'그 미소 하나면 오늘 무대에서 받을 값은 모두 받은 셈이에요.'},{speaker:'후일담',side:'both',line:'선화는 궁과 마을을 오가며 누구나 함께 웃을 수 있는 무대를 만들었습니다.'}],
+  'great-general':[{speaker:'휘하 장수',side:'world',line:'장군께서 가장 앞에 서시니 병사들도 물러설 이유가 없습니다.'},{speaker:'선화',side:'seonhwa',line:'앞에 서는 것은 명예가 아니라 모두를 무사히 돌려보낼 책임이다.'},{speaker:'후일담',side:'both',line:'선화는 싸움을 즐기지 않되 피하지도 않는 장군으로 오래도록 국경을 지켰습니다.'}],
+  'martial-instructor':[{speaker:'어린 수련생',side:'world',line:'교관님, 강해지면 누구에게도 지지 않게 되나요?'},{speaker:'선화',side:'seonhwa',line:'진짜 강함은 이길 힘보다 멈출 줄 아는 마음에서 나온단다.'},{speaker:'후일담',side:'both',line:'선화의 수련장은 힘과 절제를 함께 배우려는 이들의 든든한 터전이 되었습니다.'}],
+  'royal-magician':[{speaker:'왕실 관측관',side:'world',line:'신수의 빛과 별의 흐름이 선화 술법사의 손에서 하나로 이어집니다.'},{speaker:'선화',side:'seonhwa',line:'힘을 부르는 것보다 어디에 써야 하는지 아는 일이 더 중요해요.'},{speaker:'후일담',side:'both',line:'선화는 술법을 두려움이 아닌 치유와 수호의 힘으로 바꾸어 나라에 새로운 길을 열었습니다.'}],
+  'secret-explorer':[{speaker:'동행한 길잡이',side:'world',line:'지도에도 없는 길인데 선화 님은 어째서 망설이지 않습니까?'},{speaker:'선화',side:'seonhwa',line:'길이 없다는 건 아직 누군가 첫발을 내딛지 않았다는 뜻이니까요.'},{speaker:'후일담',side:'both',line:'선화가 남긴 지도와 기록은 뒤따르는 탐험가들이 무사히 돌아오는 이정표가 되었습니다.'}],
+  'great-merchant':[{speaker:'상단의 행수',side:'world',line:'대방께서 정한 공정한 값 덕분에 작은 상인들도 다시 장에 나옵니다.'},{speaker:'선화',side:'seonhwa',line:'오래가는 거래는 한쪽의 이익보다 서로의 신뢰를 남겨야 해요.'},{speaker:'후일담',side:'both',line:'선화의 상단은 먼 나라까지 길을 넓혔지만 사람을 먼저 보는 원칙은 바뀌지 않았습니다.'}],
+  'fashion-master':[{speaker:'젊은 침선장',side:'world',line:'스승님의 옷은 오래된 법도를 지키면서도 전에 없던 모습입니다.'},{speaker:'선화',side:'seonhwa',line:'전통은 그대로 멈추는 것이 아니라 다음 사람의 손에서 다시 피어나는 거예요.'},{speaker:'후일담',side:'both',line:'선화의 옷은 신분과 나이를 넘어 각자의 아름다움을 살리는 새로운 유행이 되었습니다.'}],
+  'royal-chef':[{speaker:'수라간 나인',side:'world',line:'오늘 수라는 화려하지 않은데도 전하께서 가장 오래 기억하실 듯합니다.'},{speaker:'선화',side:'seonhwa',line:'좋은 음식은 귀한 재료보다 먹는 사람을 헤아리는 마음에서 시작해요.'},{speaker:'후일담',side:'both',line:'선화는 궁중의 맛을 백성의 식탁과 잇고 계절마다 따뜻한 한 끼를 나누었습니다.'}],
+  physician:[{speaker:'회복한 환자',side:'world',line:'모두 포기했을 때 선화 의원님만 제 손을 놓지 않으셨습니다.'},{speaker:'선화',side:'seonhwa',line:'병을 고친 것은 약이지만 다시 일어선 것은 당신의 마음이에요.'},{speaker:'후일담',side:'both',line:'선화의 약방은 가난한 이도 문턱에서 돌아서지 않는 곳으로 오래 남았습니다.'}],
+  diplomat:[{speaker:'먼 나라의 사절',side:'world',line:'서로 다른 말로 시작했지만 선화 공 덕분에 같은 뜻에 닿았습니다.'},{speaker:'선화',side:'seonhwa',line:'말이 다르다고 마음까지 먼 것은 아니니까요. 이제 함께 지킬 약속을 적어요.'},{speaker:'후일담',side:'both',line:'선화가 맺은 약속은 두 나라 사이에 상단과 학자, 가족들이 오가는 평화의 길이 되었습니다.'}],
+  'guardian-keeper':[{speaker:'신수',side:'world',line:'처음 손을 맞잡던 아이가 이제 사람과 신수의 길을 함께 지키는구나.'},{speaker:'선화',side:'seonhwa',line:'제가 받은 빛을 혼자 간직하지 않고 모두가 돌아올 길에 밝힐게요.'},{speaker:'후일담',side:'both',line:'선화와 신수의 맹세는 오래된 균형을 회복하고 다음 수호자에게 이어졌습니다.'}],
+  'quiet-life':[{speaker:'이웃 아이',side:'world',line:'선화 언니네 집은 언제 와도 따뜻한 차 냄새가 나요.'},{speaker:'선화',side:'seonhwa',line:'멀리 가지 않아도 함께 웃는 오늘이 제게는 가장 귀한 삶이란다.'},{speaker:'후일담',side:'both',line:'선화는 소중한 사람들과 계절을 돌보며 작지만 단단한 행복을 오래 지켜 갔습니다.'}],
+  tyrant:[{speaker:'텅 빈 대전',side:'world',line:'명령은 온 나라에 닿았지만 진심으로 답하는 목소리는 하나도 남지 않았습니다.'},{speaker:'선화',side:'seonhwa',line:'모두가 두려워하면 복종할 줄 알았는데, 곁에 남는 사람은 없었구나.'},{speaker:'후일담',side:'both',line:'선화는 가장 높은 자리에 앉았으나 마음을 나눌 이 없이 차가운 권좌를 지켰습니다.'}],
+  'greedy-merchant':[{speaker:'닫힌 장부방',side:'world',line:'곳간에는 은전이 넘쳤지만 함께 기뻐할 사람의 이름은 장부 어디에도 없었습니다.'},{speaker:'선화',side:'seonhwa',line:'모든 것에 값을 붙이다가 값으로 살 수 없는 것을 잃었구나.'},{speaker:'후일담',side:'both',line:'거대한 상단은 남았지만 선화의 문 앞에는 부탁도 안부도 찾아오지 않았습니다.'}],
+  'fallen-magician':[{speaker:'희미해진 신수의 목소리',side:'world',line:'힘을 붙잡으려 할수록 우리 사이의 약속은 더 멀어졌다.'},{speaker:'선화',side:'seonhwa',line:'조금만 더 강해지면 되돌릴 수 있다고 믿었는데, 이제 빛조차 보이지 않아.'},{speaker:'후일담',side:'both',line:'선화는 금지된 술법의 흔적을 안고 홀로 떠돌며 잃어버린 약속을 뒤늦게 좇았습니다.'}],
+  'disgraced-warrior':[{speaker:'닫힌 수련장',side:'world',line:'한때 환호하던 이름은 문에서 지워지고 부러진 무기만 마당에 남았습니다.'},{speaker:'선화',side:'seonhwa',line:'이기는 데만 마음을 빼앗겨 지켜야 할 것까지 내 손으로 무너뜨렸어.'},{speaker:'후일담',side:'both',line:'선화는 무관의 이름을 내려놓고 긴 시간 동안 힘을 다스리는 법을 처음부터 다시 배웠습니다.'}],
+  'fraud-merchant':[{speaker:'장터의 방',side:'world',line:'선화가 모습을 보이자 상인들은 좌판을 거두고 손님들은 등을 돌렸습니다.'},{speaker:'선화',side:'seonhwa',line:'한 번의 재치로 얻은 은전보다 잃어버린 믿음이 훨씬 무겁구나.'},{speaker:'후일담',side:'both',line:'어느 장에도 머물 수 없게 된 선화는 이름을 감춘 채 먼 길을 떠돌았습니다.'}],
+  'debt-runaway':[{speaker:'새벽의 빈집',side:'world',line:'독촉장이 문을 덮었고 남길 수 있는 짐은 작은 보퉁이 하나뿐이었습니다.'},{speaker:'선화',side:'seonhwa',line:'내일의 몫까지 오늘 써 버린 끝이 이렇게 가벼운 짐일 줄은 몰랐어.'},{speaker:'후일담',side:'both',line:'선화는 아무도 모르는 길로 떠나 작은 품삯부터 갚으며 다시 삶을 세워야 했습니다.'}],
+  forsaken:[{speaker:'빛을 잃은 방',side:'world',line:'늘 곁을 맴돌던 신수의 기척이 사라지자 집 안에는 깊은 침묵만 남았습니다.'},{speaker:'선화',side:'seonhwa',line:'믿음을 시험하기만 했지, 내가 먼저 믿어 준 적은 없었구나.'},{speaker:'후일담',side:'both',line:'선화는 사라진 빛의 자리를 바라보며 다시 약속을 배울 긴 길을 시작했습니다.'}]
+};
+function endingEpilogueBeats(result){return result.category==='relation'?relationEndingEpilogues[result.partnerId]:soloEndingEpilogues[result.endingId];}
+function endingEpilogueMarkup(result){const beats=endingEpilogueBeats(result);if(!beats?.length)return '';const first=beats[0];return `<section class="relation-ending-epilogue" data-ending-beat="0"><small>결말 이야기 · 1/${beats.length}</small><b>${first.speaker}</b><p>${first.line}</p><button type="button" id="endingEpilogueNext">다음</button></section>`;}
+function bindEndingEpilogue(result){
+  const beats=endingEpilogueBeats(result),epilogue=document.querySelector('.relation-ending-epilogue');if(!beats||!epilogue)return;
+  const summary=document.querySelector('.ending-summary'),restart=document.querySelector('#endingRestart'),visual=document.querySelector('.relation-ending-visual,.solo-ending-visual');let index=0;summary.hidden=true;restart.hidden=true;
   const render=()=>{const beat=beats[index];epilogue.dataset.endingBeat=String(index);epilogue.querySelector('small').textContent=`결말 이야기 · ${index+1}/${beats.length}`;epilogue.querySelector('b').textContent=beat.speaker;epilogue.querySelector('p').textContent=beat.line;epilogue.querySelector('button').textContent=index===beats.length-1?'성장 기록 보기':'다음';if(visual)visual.dataset.endingSpeaker=beat.side;};render();
   epilogue.querySelector('button').addEventListener('click',()=>{if(index<beats.length-1){index+=1;render();return;}epilogue.hidden=true;summary.hidden=false;restart.hidden=false;if(visual)visual.dataset.endingSpeaker='both';});
 }
@@ -2984,10 +3012,10 @@ function showEnding(){
   const partner=result.partnerName?`<div><small>함께한 인연</small><b>${result.partnerName} · ${result.partnerRole}</b></div>`:'';
   panel.hidden=false; panelTitle.textContent=`${game.characterName || '아이'}의 성장 기록`;
   const qaPool=result.category==='relation'?endingRelationCandidates:result.category==='career'?careerEndingCandidates:downfallEndingCandidates,qaIndex=Math.max(0,qaPool.findIndex(item=>item.id===result.endingId)),qaControls=endingStandaloneQa?`<nav class="ending-qa compact" aria-label="엔딩 QA"><button type="button" data-ending-id="${qaPool[(qaIndex-1+qaPool.length)%qaPool.length].id}">이전</button><span>${qaIndex+1}/${qaPool.length}</span><button type="button" data-ending-id="${qaPool[(qaIndex+1)%qaPool.length].id}">다음</button></nav>`:'';
-  panelBody.innerHTML=`<div class="ending-card ${result.category}">${qaControls}<small class="ending-date">${game.currentDate}</small><em>${categoryLabel}</em><h2>${result.title}</h2>${relationEndingVisual(result)}${soloEndingVisual(result)}${relationEndingEpilogueMarkup(result)}<p class="ending-lead">${result.description}</p><section class="ending-summary">${result.category==='relation'?`<div><small>직업 성향</small><b>${result.careerTitle}</b></div>`:''}${partner}<div><small>대표 능력</small><b>${result.strongest.map(stat=>`${stat.label} ${stat.value}`).join(' · ')}</b></div><div><small>수집</small><b>${result.collectionCount} / ${result.collectionTotal}</b></div><div><small>은전</small><b>${Math.max(0,game.money).toLocaleString()}냥</b></div></section><button id="endingRestart">새로운 생일로 시작</button></div>`;
+  panelBody.innerHTML=`<div class="ending-card ${result.category}">${qaControls}<small class="ending-date">${game.currentDate}</small><em>${categoryLabel}</em><h2>${result.title}</h2>${relationEndingVisual(result)}${soloEndingVisual(result)}${endingEpilogueMarkup(result)}<p class="ending-lead">${result.description}</p><section class="ending-summary">${result.category==='relation'?`<div><small>직업 성향</small><b>${result.careerTitle}</b></div>`:''}${partner}<div><small>대표 능력</small><b>${result.strongest.map(stat=>`${stat.label} ${stat.value}`).join(' · ')}</b></div><div><small>수집</small><b>${result.collectionCount} / ${result.collectionTotal}</b></div><div><small>은전</small><b>${Math.max(0,game.money).toLocaleString()}냥</b></div></section><button id="endingRestart">새로운 생일로 시작</button></div>`;
   document.querySelector('#endingRestart').addEventListener('click',beginNewGrowth);
   document.querySelectorAll('[data-ending-id]').forEach(button=>button.addEventListener('click',()=>{const params=new URLSearchParams(location.search);params.set('qaEnding',button.dataset.endingId);location.search=params.toString();}));
-  bindRelationEndingEpilogue(result);
+  bindEndingEpilogue(result);
 }
 function updatePrologueCopy(scene,index){
   const copy=document.querySelector('.prologue-copy');
