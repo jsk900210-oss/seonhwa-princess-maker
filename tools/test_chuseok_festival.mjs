@@ -58,7 +58,7 @@ assert.match(app,/qaHoliday'\)==='chuseok'/,'경연 즉시 검수 모드가 필�
 assert.match(app,/function bindHolidayQaTap\(session,startBeat,beats,renderer,caption\)/,'명절 QA도 화면 터치로 다음 장면을 순환해야 합니다.');
 assert.match(css,/\.moonlight-pageant\.festival-pm3\.tap-ready\{[^}]*pointer-events:auto/,'터치 준비가 끝난 경연 레이어는 실제 포인터 입력을 받아야 합니다.');
 assert.match(css,/action-holiday-chuseok:not\(\[hidden\]\)[^}]*>\.dialogue,[^}]*action-holiday-seollal:not\(\[hidden\]\)[^}]*>\.dialogue\{display:none!important\}/,'추석·설날 이벤트 중에는 바깥 하단 설명창을 숨겨야 합니다.');
-assert.match(css,/\.activity-stage:is\(\.action-holiday-chuseok,\.action-holiday-seollal\)\{[^}]*left:2%!important;[^}]*right:2%!important;[^}]*height:55%!important;[^}]*border:0!important;[^}]*background:none!important;[^}]*box-shadow:none!important/,'추석·설날 이벤트는 일반 일정용 쯔꾸르 액자 없이 넓게 보여야 합니다.');
+assert.match(css,/\.activity-stage:is\(\.action-holiday-chuseok,\.action-holiday-seollal\)\{[^}]*left:2%!important;[^}]*right:2%!important;[^}]*top:20%!important;[^}]*bottom:1%!important;[^}]*height:auto!important;[^}]*border:0!important;[^}]*background:none!important;[^}]*box-shadow:none!important/,'추석·설날 이벤트는 일반 일정용 쯔꾸르 액자 없이 화면 하단까지 넓게 보여야 합니다.');
 assert.match(css,/\.activity-stage:is\(\.action-holiday-chuseok,\.action-holiday-seollal\)>\.stage-inner\{[^}]*border:0!important;[^}]*box-shadow:none!important/,'명절 이벤트 내부의 이중 액자도 제거해야 합니다.');
 assert.match(app,/function festivalLineup\(session\)[^\n]+lineup-gesture-frames/,'8인 소개 장면은 실제 동작 프레임을 사용해야 합니다.');
 assert.doesNotMatch(app,/function festivalLineup\(session\)[^\n]+<figcaption>/,'8인 소개 장면에는 캐릭터 이름표를 표시하지 않아야 합니다.');

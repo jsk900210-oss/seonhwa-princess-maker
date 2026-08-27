@@ -21,7 +21,8 @@ assert.match(app,/if\(kind==='drawing'\)return `\$\{scheduleFramePath\(`calligra
 assert.match(css,/\.sehwa-opening-dialogue>\.sehwa-dialogue-bust\{[^}]*transform:scale\(1\.28\)/,'대화 중 화자는 통일된 얼굴·상체 크기로 보여야 합니다.');
 assert.match(app,/function sehwaExpressionAsset\(expression\)/,'연령별 투명 표정 자산을 선택해야 합니다.');
 for(const age of ['09','13','16','18'])for(const expression of ['neutral','smile','joyful','nervous','startled','sad','determined','shy'])assert.ok(existsSync(new URL(`../assets/characters/dialogue-busts/seonhwa/age-${age}-${expression}-v2.png`,import.meta.url)),`${age}세 ${expression} 투명 대화 표정이 필요합니다.`);
-assert.match(app,/function sehwaDrawingEnsemble\(session\)/,'참가자 전원의 그림 장면이 필요합니다.');
+assert.doesNotMatch(app,/function sehwaDrawingEnsemble\(session\)/,'공중에 뜬 8인 판자 합성 장면이 남아 있으면 안 됩니다.');
+assert.match(app,/preparing=beat===5,drawing=beat>=6&&beat<=11/,'화구 준비 다음에는 선화의 정상 붓질 동작으로 바로 이어져야 합니다.');
 assert.match(app,/function sehwaPreparationEnsemble\(session\)/,'빈 준비 장면 대신 참가자 8명의 화구 준비 장면이 필요합니다.');
 assert.match(app,/class="sehwa-preparation-sequence"/,'13세 준비 장면은 전용 생성 이미지 프레임을 사용해야 합니다.');
 for(const frame of [1,2,3,4,5,6])assert.ok(existsSync(new URL(`../assets/events/holidays/sehwa-contest/preparation-scene/age-13/preparation-${frame}.png`,import.meta.url)),`13세 화구 준비 ${frame} 프레임이 필요합니다.`);
@@ -47,7 +48,7 @@ assert.match(css,/@keyframes sehwa-receive-reach/,'참가표 수령은 두 손�
 assert.match(css,/@keyframes sehwa-receive-hold/,'참가표 수령은 표를 받은 자세로 끝나야 합니다.');
 assert.doesNotMatch(css,/sehwa-(?:receive|slip)[^;}]*infinite/,'참가표 수령 동작은 반복되면 안 됩니다.');
 assert.match(css,/@keyframes sehwa-slip-handover/,'참가표가 접수 관리에게서 선화에게 이동해야 합니다.');
-assert.match(app,/session\.entrants\.map/,'그림 장면에는 참가자 8명이 모두 포함되어야 합니다.');
+assert.match(app,/선화가 자리에 앉아 세화를 그리기 시작했어요/,'구형 8인 판자 장면 대신 선화의 그림 시작 서술이 필요합니다.');
 assert.match(css,/\.sehwa-drawing-ensemble\{[^}]*grid-template-columns:repeat\(4,1fr\)/,'참가자 8명은 4×2 구도로 배치해야 합니다.');
 assert.match(css,/\.sehwa-contest\.festival-pm3 \.sehwa-hero\{[^}]*width:132px!important;[^}]*height:176px!important/,'설날 주인공 크기는 축소된 고정 규격이어야 합니다.');
 console.log('PASS: 설날 수동 진행·5초 전원 그림·스테이터스 응답·캐릭터 축소·공손한 참가표 수령');
