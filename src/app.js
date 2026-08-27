@@ -243,7 +243,7 @@ const vacationIllustrations=[
 function unifiedAgeFolder(){return '09';}
 function scheduleFramePath(file){return `../assets/characters/seonhwa/schedule-actions/${file}`;}
 function scheduleBasePath(file){return `../assets/characters/seonhwa/schedule-base/${file}`;}
-const scheduleAssetRevision='0.64.147-debug';
+const scheduleAssetRevision='0.64.148-debug';
 const scheduleQaParams=new URLSearchParams(location.search);
 const moonlightStandaloneQa=scheduleQaParams.get('qaHoliday')==='chuseok';
 const sehwaStandaloneQa=scheduleQaParams.get('qaHoliday')==='seollal';
@@ -1590,7 +1590,7 @@ const moonlightActingPoseMap={invitation:[1,2,3,4],prepare:[5,7,8],enter:[9,10,1
 function moonlightMotionFrames(motion){
   const age=moonlightAssetAge(),actingPoses=moonlightActingPoseMap[motion];
   if(actingPoses)return actingPoses.map(frame=>`../assets/events/holidays/moonlight-pageant/seonhwa/age-${age}/acting-v5/seonhwa-acting-${String(frame).padStart(2,'0')}-v5.png?v=${scheduleAssetRevision}`);
-  if(motion==='dance'&&age==='13')return Array.from({length:10},(_,index)=>`../assets/events/holidays/moonlight-pageant/seonhwa/age-13/dance-10fps-v5/seonhwa-dance-${String(index+1).padStart(2,'0')}-v5.png?v=${scheduleAssetRevision}`);
+  if(motion==='dance'&&age==='13')return Array.from({length:10},(_,index)=>`../assets/events/holidays/moonlight-pageant/seonhwa/age-13/dance-10fps-v5/seonhwa-dance-${String(index+1).padStart(2,'0')}-v5.png?v=${scheduleAssetRevision}`).flatMap(frame=>[frame,frame]);
   const count=motion==='dance'?6:3,version=motion==='dance'?'v4':'v3';
   return Array.from({length:count},(_,index)=>`../assets/events/holidays/moonlight-pageant/seonhwa/age-${age}/seonhwa-${motion}-${index+1}-${version}.png?v=${scheduleAssetRevision}`);
 }
