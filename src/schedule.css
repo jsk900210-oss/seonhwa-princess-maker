@@ -2475,7 +2475,7 @@ body .phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage:
 }
 .sehwa-contest.festival-pm3 .pageant-guardian-cheer{width:88px!important;height:116px!important;bottom:20%!important}
 .sehwa-opening-dialogue{position:absolute;z-index:42;inset:4% 2% 3%;overflow:hidden;pointer-events:none}
-.sehwa-opening-dialogue>.sehwa-dialogue-bust{position:absolute;bottom:-36%;width:62%;height:132%;object-fit:contain;object-position:center top;filter:drop-shadow(0 6px 7px #160b08bb);transform:scale(1.28);transform-origin:center 23%;-webkit-mask-image:linear-gradient(to bottom,#000 0 82%,#000d 90%,transparent 100%);mask-image:linear-gradient(to bottom,#000 0 82%,#000d 90%,transparent 100%);will-change:transform,opacity}
+.sehwa-opening-dialogue>.sehwa-dialogue-bust{position:absolute;bottom:-54%;width:62%;height:132%;object-fit:contain;object-position:center top;filter:drop-shadow(0 6px 7px #160b08bb);transform:scale(1.28);transform-origin:center 23%;-webkit-mask-image:linear-gradient(to bottom,#000 0 86%,#000e 93%,transparent 100%);mask-image:linear-gradient(to bottom,#000 0 86%,#000e 93%,transparent 100%);will-change:transform,opacity}
 .sehwa-opening-dialogue.speaker-guardian>.sehwa-dialogue-bust{left:-10%;animation:sehwa-bust-from-left .78s cubic-bezier(.18,.75,.24,1) both}
 .sehwa-opening-dialogue.speaker-seonhwa>.sehwa-dialogue-bust{right:-10%;animation:sehwa-bust-from-right .78s cubic-bezier(.18,.75,.24,1) both}
 .sehwa-opening-dialogue>div{position:absolute;z-index:2;top:13%;width:57%;display:grid;gap:3px;padding:7px 8px 8px;border:2px solid #8b6039;border-radius:12px;background:#fff8e9f5;box-shadow:0 5px 12px #0008}
@@ -2517,7 +2517,7 @@ body .phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage:
 @keyframes sehwa-bust-from-right{from{opacity:0;transform:translateX(34px) scale(1.28)}to{opacity:1;transform:translateX(0) scale(1.28)}}
 .sehwa-opening-dialogue>.sehwa-expression{
   right:-10%;
-  bottom:-36%;
+  bottom:-54%;
   width:62%;
   height:132%;
   aspect-ratio:auto;

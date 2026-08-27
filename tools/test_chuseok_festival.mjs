@@ -52,5 +52,7 @@ assert.match(app,/qaHoliday'\)==='chuseok'/,'경연 즉시 검수 모드가 필�
 assert.match(app,/function bindHolidayQaTap\(session,startBeat,beats,renderer,caption\)/,'명절 QA도 화면 터치로 다음 장면을 순환해야 합니다.');
 assert.match(css,/\.moonlight-pageant\.festival-pm3\.tap-ready\{[^}]*pointer-events:auto/,'터치 준비가 끝난 경연 레이어는 실제 포인터 입력을 받아야 합니다.');
 assert.match(css,/\.sehwa-opening-dialogue>\.sehwa-dialogue-bust\{[^}]*width:62%;[^}]*height:132%;[^}]*mask-image:linear-gradient/,'경연 대화 초상은 동일 크기와 자연스러운 하단 페이드를 사용해야 합니다.');
+assert.match(css,/\.sehwa-opening-dialogue>\.sehwa-dialogue-bust\{[^}]*bottom:-54%/,'경연 대화 초상은 무대 하단에 닿도록 충분히 내려와야 합니다.');
+assert.match(css,/\.sehwa-opening-dialogue>\.sehwa-expression\{[^}]*bottom:-54%/,'선화 답변 초상도 신수와 같은 무대 바닥선에 닿아야 합니다.');
 
 console.log('PASS: 한가위 달빛 아씨 경연 8인·19장면·6프레임 춤·우승자 인터뷰');
