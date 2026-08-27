@@ -6,6 +6,7 @@ const root=path.resolve(import.meta.dirname,'..');
 const app=fs.readFileSync(path.join(root,'src','app.js'),'utf8');
 const html=fs.readFileSync(path.join(root,'src','index.html'),'utf8');
 const css=fs.readFileSync(path.join(root,'src','style.css'),'utf8');
+assert.match(css,/\.phone:not\(\.playing\):not\(\.market-playing\):not\(\.vacation-playing\) \.character-slot\{[^}]*inset:18% 13% 7%/,'홈 캐릭터 하단은 대화창 뒤까지 이어져 중간에서 잘리지 않아야 합니다.');
 assert.ok(!html.includes('startTestThirteen')&&!html.includes('13세 테스트 시작'),'13세 바로가기 버튼이 남아 있습니다.');
 assert.ok(!app.includes('startThirteenTestGrowth'),'13세 테스트 초기화 함수가 남아 있습니다.');
 assert.ok(css.includes('.phone[data-growth-age="9"] .character-slot'),'9세 홈 전용 크기 규칙이 없습니다.');
