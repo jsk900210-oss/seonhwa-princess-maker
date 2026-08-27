@@ -243,7 +243,7 @@ const vacationIllustrations=[
 function unifiedAgeFolder(){return '09';}
 function scheduleFramePath(file){return `../assets/characters/seonhwa/schedule-actions/${file}`;}
 function scheduleBasePath(file){return `../assets/characters/seonhwa/schedule-base/${file}`;}
-const scheduleAssetRevision='0.64.128-debug';
+const scheduleAssetRevision='0.64.131-debug';
 const scheduleQaParams=new URLSearchParams(location.search);
 const moonlightStandaloneQa=scheduleQaParams.get('qaHoliday')==='chuseok';
 const sehwaStandaloneQa=scheduleQaParams.get('qaHoliday')==='seollal';
@@ -1356,12 +1356,12 @@ function relationScenePresentation(episode){const presentation=relationScenePres
 function playRelationEncounterScene(candidate,opening,resultLine='',episode=null){
   const scene=document.querySelector('#relationEncounterScene'),male=document.querySelector('#relationEncounterMale'),female=document.querySelector('#relationEncounterFemale'),speaker=document.querySelector('#relationEncounterSpeaker'),text=document.querySelector('#relationEncounterText'),next=document.querySelector('#relationEncounterNext'),choices=document.querySelector('#relationEncounterChoices');
   const presentation=relationScenePresentation(episode);scene.style.setProperty('--relation-scene-background',`url('${presentation.src}?v=${scheduleAssetRevision}')`);scene.style.setProperty('--relation-scene-size',presentation.size);scene.style.setProperty('--relation-scene-position',presentation.position);scene.dataset.location=episode?.scene||'집 안';
-  applyRelationPortrait(male,candidate,episode);female.src=protagonistFullbodyForAge();female.alt=`${game.characterName||'선화'} ${game.age}세 전신`;
+  applyRelationPortrait(male,candidate);female.src=protagonistFullbodyForAge();female.alt=`${game.characterName||'선화'} ${game.age}세 전신`;
   scene.hidden=false;scene.classList.remove('is-entered');requestAnimationFrame(()=>scene.classList.add('is-entered'));scene.dataset.speaker='male';speaker.textContent=candidate.name;text.textContent=opening||candidate.dialogues[0];choices.hidden=true;next.hidden=false;
   return new Promise(resolve=>{
     const finish=()=>{scene.hidden=true;scene.classList.remove('is-entered');scene.removeAttribute('data-speaker');male.removeAttribute('src');female.removeAttribute('src');resolve();};
     const showResult=()=>{scene.dataset.speaker='result';speaker.textContent='인연';text.textContent=resultLine||'서로의 마음에 작은 기억이 남았습니다.';next.hidden=false;next.onclick=finish;};
-    const showChoices=()=>{next.hidden=true;choices.hidden=false;choices.replaceChildren(...relationReplyChoices(candidate,episode).map(choice=>{const button=document.createElement('button');button.type='button';button.textContent=choice.line;button.addEventListener('click',()=>{choices.hidden=true;next.hidden=false;scene.dataset.speaker='female';speaker.textContent=game.characterName||'선화';text.textContent=choice.line;next.onclick=()=>{male.src=relationDialoguePosePath(candidate,episode,choice.emotion);male.alt=`${candidate.name} ${choice.emotion} 반응`;scene.dataset.speaker='male';speaker.textContent=candidate.name;text.textContent=choice.reply;next.onclick=showResult;};},{once:true});return button;}));};
+    const showChoices=()=>{next.hidden=true;choices.hidden=false;choices.replaceChildren(...relationReplyChoices(candidate,episode).map(choice=>{const button=document.createElement('button');button.type='button';button.textContent=choice.line;button.addEventListener('click',()=>{choices.hidden=true;next.hidden=false;scene.dataset.speaker='female';speaker.textContent=game.characterName||'선화';text.textContent=choice.line;next.onclick=()=>{male.src=relationPortraitPath(candidate);male.alt=`${candidate.name} ${relationPortraitAge()}세 허벅지 위 인물화`;scene.dataset.speaker='male';speaker.textContent=candidate.name;text.textContent=choice.reply;next.onclick=showResult;};},{once:true});return button;}));};
     next.onclick=showChoices;
   });
 }
