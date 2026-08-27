@@ -243,7 +243,7 @@ const vacationIllustrations=[
 function unifiedAgeFolder(){return '09';}
 function scheduleFramePath(file){return `../assets/characters/seonhwa/schedule-actions/${file}`;}
 function scheduleBasePath(file){return `../assets/characters/seonhwa/schedule-base/${file}`;}
-const scheduleAssetRevision='0.64.119-debug';
+const scheduleAssetRevision='0.64.120-debug';
 const scheduleQaParams=new URLSearchParams(location.search);
 const moonlightStandaloneQa=scheduleQaParams.get('qaHoliday')==='chuseok';
 const sehwaStandaloneQa=scheduleQaParams.get('qaHoliday')==='seollal';
@@ -1446,6 +1446,20 @@ function relationEndingVisual(result){
   const candidate=endingRelationCandidates.find(item=>item.id===result.partnerId);if(!candidate)return '';
   const episode=relationEpisodeCatalog[candidate.id]?.at(-1),presentation=relationScenePresentation(episode);
   return `<figure class="relation-ending-visual" style="--ending-background:url('${presentation.src}?v=${scheduleAssetRevision}');--ending-background-position:${presentation.position}"><img class="ending-partner" src="${relationPortraitPath(candidate,19)}" alt="${candidate.name} 19세 전신"><img class="ending-seonhwa" src="${baseSpriteForAge(19)}?v=${scheduleAssetRevision}" alt="${game.characterName||'선화'} 19세 전신"><figcaption>${candidate.name}과(와) 나란히 시작하는 다음 이야기</figcaption></figure>`;
+}
+const relationEndingEpilogues={
+  doyun:[{speaker:'도윤',side:'partner',line:'이제는 내가 앞서 지키는 길이 아니라, 네 곁에서 함께 걷는 길을 택하고 싶어.'},{speaker:'선화',side:'seonhwa',line:'그럼 저도 뒤따르지 않을게요. 같은 걸음으로 나란히 가요.'},{speaker:'후일담',side:'both',line:'다음 날 새벽, 두 사람은 빈 활터에서 같은 과녁을 바라보며 새로운 하루를 시작했습니다.'}],
+  seojin:[{speaker:'서진',side:'partner',line:'책의 마지막 장을 덮어도 우리 이야기는 끝나지 않겠지요.'},{speaker:'선화',side:'seonhwa',line:'빈 여백은 남겨 둬요. 앞으로 함께 쓸 이야기가 많으니까요.'},{speaker:'후일담',side:'both',line:'다음 날, 두 사람은 서책방 창가에 나란히 앉아 아이들을 위한 첫 교재를 펼쳤습니다.'}],
+  yeonwoo:[{speaker:'연우',side:'partner',line:'오래 비워 둔 화폭의 자리에 이제야 그리고 싶은 사람이 생겼어.'},{speaker:'선화',side:'seonhwa',line:'완성된 그림 속보다, 그림을 그리는 네 곁에 있고 싶어요.'},{speaker:'후일담',side:'both',line:'다음 날 아침, 두 사람은 문을 활짝 연 화실에서 같은 풍경을 서로 다른 빛으로 그렸습니다.'}],
+  taegyeom:[{speaker:'태겸',side:'partner',line:'수많은 길의 값을 매겨 봤지만, 너와 걷는 길만은 셈할 수 없더군.'},{speaker:'선화',side:'seonhwa',line:'그 길은 거래하지 말아요. 대신 어디든 함께 가요.'},{speaker:'후일담',side:'both',line:'다음 장날, 두 사람은 첫 짐표에 서로의 이름을 나란히 적고 먼 상행길에 올랐습니다.'}],
+  hyeon:[{speaker:'현',side:'partner',line:'다음에 만날 때에는 신분도 이름도 숨기지 않겠다고 약속했지.'},{speaker:'선화',side:'seonhwa',line:'저는 왕자가 아니라, 제 앞에 선 현을 보고 대답할게요.'},{speaker:'후일담',side:'both',line:'다음 날 큰 문이 열렸고, 두 사람은 서로의 자리를 존중하며 같은 방향으로 걸어갔습니다.'}]
+};
+function relationEndingEpilogueMarkup(result){if(result.category!=='relation'||!relationEndingEpilogues[result.partnerId])return '';const first=relationEndingEpilogues[result.partnerId][0];return `<section class="relation-ending-epilogue" data-ending-beat="0"><small>결말 이야기 · 1/3</small><b>${first.speaker}</b><p>${first.line}</p><button type="button" id="endingEpilogueNext">다음</button></section>`;}
+function bindRelationEndingEpilogue(result){
+  const beats=relationEndingEpilogues[result.partnerId],epilogue=document.querySelector('.relation-ending-epilogue');if(!beats||!epilogue)return;
+  const summary=document.querySelector('.ending-summary'),restart=document.querySelector('#endingRestart'),visual=document.querySelector('.relation-ending-visual');let index=0;summary.hidden=true;restart.hidden=true;
+  const render=()=>{const beat=beats[index];epilogue.dataset.endingBeat=String(index);epilogue.querySelector('small').textContent=`결말 이야기 · ${index+1}/${beats.length}`;epilogue.querySelector('b').textContent=beat.speaker;epilogue.querySelector('p').textContent=beat.line;epilogue.querySelector('button').textContent=index===beats.length-1?'성장 기록 보기':'다음';if(visual)visual.dataset.endingSpeaker=beat.side;};render();
+  epilogue.querySelector('button').addEventListener('click',()=>{if(index<beats.length-1){index+=1;render();return;}epilogue.hidden=true;summary.hidden=false;restart.hidden=false;if(visual)visual.dataset.endingSpeaker='both';});
 }
 function normalizeRelations(){
   if(!game.relations||typeof game.relations!=='object')game.relations={};
@@ -2965,9 +2979,10 @@ function showEnding(){
   const partner=result.partnerName?`<div><small>함께한 인연</small><b>${result.partnerName} · ${result.partnerRole}</b></div>`:'';
   panel.hidden=false; panelTitle.textContent=`${game.characterName || '아이'}의 성장 기록`;
   const qaControls=endingStandaloneQa?`<nav class="ending-qa" aria-label="인연 엔딩 QA">${endingRelationCandidates.map(candidate=>`<button type="button" data-ending-id="${candidate.id}" class="${candidate.id===result.partnerId?'active':''}">${candidate.name}</button>`).join('')}</nav>`:'';
-  panelBody.innerHTML=`<div class="ending-card ${result.category}">${qaControls}<small class="ending-date">${game.currentDate}</small><em>${categoryLabel}</em><h2>${result.title}</h2>${relationEndingVisual(result)}<p class="ending-lead">${result.description}</p><section class="ending-summary">${result.category==='relation'?`<div><small>직업 성향</small><b>${result.careerTitle}</b></div>`:''}${partner}<div><small>대표 능력</small><b>${result.strongest.map(stat=>`${stat.label} ${stat.value}`).join(' · ')}</b></div><div><small>수집</small><b>${result.collectionCount} / ${result.collectionTotal}</b></div><div><small>은전</small><b>${Math.max(0,game.money).toLocaleString()}냥</b></div></section><button id="endingRestart">새로운 생일로 시작</button></div>`;
+  panelBody.innerHTML=`<div class="ending-card ${result.category}">${qaControls}<small class="ending-date">${game.currentDate}</small><em>${categoryLabel}</em><h2>${result.title}</h2>${relationEndingVisual(result)}${relationEndingEpilogueMarkup(result)}<p class="ending-lead">${result.description}</p><section class="ending-summary">${result.category==='relation'?`<div><small>직업 성향</small><b>${result.careerTitle}</b></div>`:''}${partner}<div><small>대표 능력</small><b>${result.strongest.map(stat=>`${stat.label} ${stat.value}`).join(' · ')}</b></div><div><small>수집</small><b>${result.collectionCount} / ${result.collectionTotal}</b></div><div><small>은전</small><b>${Math.max(0,game.money).toLocaleString()}냥</b></div></section><button id="endingRestart">새로운 생일로 시작</button></div>`;
   document.querySelector('#endingRestart').addEventListener('click',beginNewGrowth);
   document.querySelectorAll('[data-ending-id]').forEach(button=>button.addEventListener('click',()=>{const params=new URLSearchParams(location.search);params.set('qaEnding',button.dataset.endingId);location.search=params.toString();}));
+  bindRelationEndingEpilogue(result);
 }
 function updatePrologueCopy(scene,index){
   const copy=document.querySelector('.prologue-copy');

@@ -19,6 +19,9 @@ assert.match(app,/baseSpriteForAge\(19\)/,'인연 엔딩 선화는 승인된 19�
 assert.match(app,/scheduleQaParams\.has\('qaEnding'\)/,'5개 인연 엔딩을 즉시 확인할 QA 진입점이 필요합니다.');
 assert.match(app,/data-ending-id/,'QA 화면에서 인연 엔딩 5개를 전환할 수 있어야 합니다.');
 assert.match(app,/return game\.activityProgress\[id\]\|\|\{attempts:0,successes:0,phasePoints:0/,'미해금 직업의 숙련 기록이 없어도 엔딩 점수 계산이 중단되면 안 됩니다.');
+assert.match(app,/const relationEndingEpilogues=/,'다섯 인연 엔딩의 전용 후일담 데이터가 필요합니다.');
+for(const id of ['doyun','seojin','yeonwoo','taegyeom','hyeon'])assert.match(app,new RegExp(`${id}:\\[\\{speaker:[\\s\\S]*?\\}\\]`),`${id} 인연 엔딩에는 3장면 대화가 필요합니다.`);
+assert.match(app,/성장 기록 보기/,'세 장면을 마친 뒤 성장 기록을 열어야 합니다.');
 
 console.log('PASS: 인연 5 + 직업 18 + 몰락 7 = 총 30개 엔딩');
 console.log('PASS: 몰락→인연→직업 우선순위와 결과 저장 연결');
