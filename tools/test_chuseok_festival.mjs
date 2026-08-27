@@ -54,6 +54,9 @@ assert.match(css,/\.moonlight-pageant\.festival-pm3\.tap-ready\{[^}]*pointer-eve
 assert.match(app,/function festivalLineup\(session\)[^\n]+lineup-gesture-frames/,'8인 소개 장면은 실제 동작 프레임을 사용해야 합니다.');
 assert.doesNotMatch(app,/function festivalLineup\(session\)[^\n]+<figcaption>/,'8인 소개 장면에는 캐릭터 이름표를 표시하지 않아야 합니다.');
 assert.match(css,/\.pageant-intro-lineup \.lineup-gesture-frames\{[^}]*width:74px;[^}]*height:100px;[^}]*animation:pageant-lineup-real-frames/,'8인 참가자는 확대된 실제 프레임 애니메이션으로 보여야 합니다.');
+assert.match(css,/\.moonlight-pageant\.festival-pm3\.beat-4 \.pageant-intro-lineup\{[^}]*grid-template-rows:88px 112px/,'참가자 대열은 무대 원근에 맞는 앞뒤 두 열이어야 합니다.');
+assert.match(css,/figure:nth-child\(-n\+4\)[^}]*\.lineup-gesture-frames\{[^}]*width:64px;[^}]*height:86px/,'뒤 열 참가자는 원근에 맞게 작아야 합니다.');
+assert.match(css,/figure:nth-child\(n\+5\)[^}]*\.lineup-gesture-frames\{[^}]*width:80px;[^}]*height:108px/,'앞 열 참가자는 원근에 맞게 커야 합니다.');
 assert.match(css,/\.sehwa-opening-dialogue>\.sehwa-dialogue-bust\{[^}]*width:62%;[^}]*height:132%;[^}]*mask-image:linear-gradient/,'경연 대화 초상은 동일 크기와 자연스러운 하단 페이드를 사용해야 합니다.');
 assert.match(css,/\.sehwa-opening-dialogue>\.sehwa-dialogue-bust\{[^}]*bottom:-54%/,'경연 대화 초상은 무대 하단에 닿도록 충분히 내려와야 합니다.');
 assert.match(css,/\.sehwa-opening-dialogue>\.sehwa-expression\{[^}]*bottom:-54%/,'선화 답변 초상도 신수와 같은 무대 바닥선에 닿아야 합니다.');

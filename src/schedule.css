@@ -2182,8 +2182,12 @@
 .moonlight-pageant .pageant-next{position:absolute;z-index:70;right:5%;bottom:8%;min-width:72px;min-height:34px;padding:7px 13px;border:1px solid #e2c27f;border-radius:999px;background:#fff6dfeb;color:#54351f;font-size:11px;font-weight:900;pointer-events:auto;box-shadow:0 4px 12px #0008;animation:pageant-next-pulse 1.2s ease-in-out infinite}
 .moonlight-pageant .pageant-next:disabled{opacity:.38;animation:none;pointer-events:none}
 .moonlight-pageant.festival-pm3.tap-ready{cursor:pointer;pointer-events:auto}
-.moonlight-pageant.festival-pm3.beat-4 .pageant-intro-lineup{display:grid!important;left:3%;right:3%;bottom:14%;grid-template-columns:repeat(4,1fr);gap:2px 4px}
-.moonlight-pageant.festival-pm3.beat-4 .pageant-intro-lineup img,.moonlight-pageant.festival-pm3.beat-4 .pageant-intro-lineup .lineup-gesture-frames{width:74px;height:100px}
+.moonlight-pageant.festival-pm3.beat-4 .pageant-intro-lineup{display:grid!important;left:4%;right:4%;bottom:12%;grid-template-columns:repeat(4,1fr);grid-template-rows:88px 112px;column-gap:3px;row-gap:5px;align-items:end}
+.moonlight-pageant.festival-pm3.beat-4 .pageant-intro-lineup figure:nth-child(-n+4){align-self:end;z-index:1;transform:translateY(-2px)}
+.moonlight-pageant.festival-pm3.beat-4 .pageant-intro-lineup figure:nth-child(n+5){align-self:end;z-index:2}
+.moonlight-pageant.festival-pm3.beat-4 .pageant-intro-lineup figure:nth-child(-n+4) img,.moonlight-pageant.festival-pm3.beat-4 .pageant-intro-lineup figure:nth-child(-n+4) .lineup-gesture-frames{width:64px;height:86px;filter:drop-shadow(0 2px 2px #180d0888)}
+.moonlight-pageant.festival-pm3.beat-4 .pageant-intro-lineup figure:nth-child(n+5) img,.moonlight-pageant.festival-pm3.beat-4 .pageant-intro-lineup figure:nth-child(n+5) .lineup-gesture-frames{width:80px;height:108px;filter:drop-shadow(0 4px 4px #180d08bb)}
+.moonlight-pageant.festival-pm3.beat-4 .pageant-intro-lineup figure.is-player .lineup-gesture-frames{filter:drop-shadow(0 0 6px #ffe98c) drop-shadow(0 3px 3px #180d08aa)}
 @keyframes pageant-next-pulse{50%{transform:translateY(2px);filter:brightness(1.08)}}
 .moonlight-pageant.beat-13 .pageant-lineup,.moonlight-pageant.beat-14 .pageant-lineup{display:none}
 @keyframes pageant-king-enter{from{opacity:0;transform:translateX(35px)}to{opacity:1;transform:translateX(0)}}
