@@ -49,6 +49,7 @@ assert.ok(!app.includes('오늘 변화 계산 중'),'일정 실행 전 계산 �
 assert.ok(app.includes("result.classList.add('phase-brief-result')"),'착실히 해낸 일수는 페이즈 종료 시 작은 오버레이로 한 번만 보여야 합니다.');
 assert.ok(app.includes("if(!vacationPhase){stageCharacter.hidden=true;stageNpc.hidden=true;stageProps.hidden=true;await showPhaseReport"),'페이즈 결산에는 마지막 활동 캐릭터·NPC·소품 잔상이 남으면 안 됩니다.');
 assert.ok(app.includes("record.action?.category==='교육'")&&app.includes("educationPhase?'착실히 수업한 일수':'착실히 일한 일수'"),'교육 결과서는 착실히 수업한 일수로 구분해야 합니다.');
+assert.ok(app.includes('counts.perfect+counts.success+(counts.normal||0)'),'착실히 마친 일수는 완벽·성공·무난을 포함하고 힘겨움·실수는 제외해야 합니다.');
 assert.ok(app.includes("else if(record.moneyChange<0)expense+=Math.abs(record.moneyChange)")&&app.includes('<span>지출 금액'),'교육 결과서에 실제 지출 금액을 합산해 표시해야 합니다.');
 assert.ok(css.includes('.phase-work-expense'),'교육 지출 금액은 페이즈 결과서 공통 레이아웃을 사용해야 합니다.');
 assert.ok(!app.includes('id="phaseResultContinue"'),'프메3에 없는 대형 다음 페이즈 결과창을 사용하면 안 됩니다.');
