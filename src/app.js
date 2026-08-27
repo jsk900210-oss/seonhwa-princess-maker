@@ -243,7 +243,7 @@ const vacationIllustrations=[
 function unifiedAgeFolder(){return '09';}
 function scheduleFramePath(file){return `../assets/characters/seonhwa/schedule-actions/${file}`;}
 function scheduleBasePath(file){return `../assets/characters/seonhwa/schedule-base/${file}`;}
-const scheduleAssetRevision='0.64.120-debug';
+const scheduleAssetRevision='0.64.121-debug';
 const scheduleQaParams=new URLSearchParams(location.search);
 const moonlightStandaloneQa=scheduleQaParams.get('qaHoliday')==='chuseok';
 const sehwaStandaloneQa=scheduleQaParams.get('qaHoliday')==='seollal';
@@ -1447,6 +1447,11 @@ function relationEndingVisual(result){
   const episode=relationEpisodeCatalog[candidate.id]?.at(-1),presentation=relationScenePresentation(episode);
   return `<figure class="relation-ending-visual" style="--ending-background:url('${presentation.src}?v=${scheduleAssetRevision}');--ending-background-position:${presentation.position}"><img class="ending-partner" src="${relationPortraitPath(candidate,19)}" alt="${candidate.name} 19세 전신"><img class="ending-seonhwa" src="${baseSpriteForAge(19)}?v=${scheduleAssetRevision}" alt="${game.characterName||'선화'} 19세 전신"><figcaption>${candidate.name}과(와) 나란히 시작하는 다음 이야기</figcaption></figure>`;
 }
+const soloEndingScenes={
+  queen:['../assets/events/holidays/sehwa-contest/background/royal-contest-hall-v1.png','center 44%'], 'royal-scholar':['../assets/backgrounds/phase-scenes/study.webp','center 34%'], 'village-teacher':['../assets/backgrounds/seodang/seodang-day.webp','center 46%'], 'court-artist':['../assets/backgrounds/phase-scenes/painting.webp','center 34%'], 'renowned-painter':['../assets/backgrounds/pixel-activities/courtyard.webp','center 36%'], 'court-dancer':['../assets/backgrounds/phase-scenes/dance.webp','center 34%'], 'master-entertainer':['../assets/backgrounds/phase-scenes/music.webp','center 34%'], 'great-general':['../assets/backgrounds/phase-scenes/martial.webp','center 34%'], 'martial-instructor':['../assets/backgrounds/phase-scenes/martial.webp','center 34%'], 'royal-magician':['../assets/backgrounds/phase-scenes/magic.webp','center 34%'], 'secret-explorer':['../assets/backgrounds/pixel-activities/herb-field-v2.webp','center 34%'], 'great-merchant':['../assets/backgrounds/market/market-day.webp','center 45%'], 'fashion-master':['../assets/backgrounds/phase-scenes/loom.webp','center 34%'], 'royal-chef':['../assets/backgrounds/phase-scenes/kitchen.webp','center 34%'], physician:['../assets/backgrounds/phase-scenes/clinic.webp','center 34%'], diplomat:['../assets/backgrounds/phase-scenes/etiquette.webp','center 34%'], 'guardian-keeper':['../assets/events/holidays/moonlight-pageant/background/moonlight-courtyard-v1.webp','center 46%'], 'quiet-life':['../assets/backgrounds/home/home-room-morning.webp','center'],
+  tyrant:['../assets/events/holidays/sehwa-contest/background/royal-contest-hall-v1.png','center 44%'], 'greedy-merchant':['../assets/backgrounds/phase-scenes/merchant.webp','center 34%'], 'fallen-magician':['../assets/backgrounds/phase-scenes/magic.webp','center 34%'], 'disgraced-warrior':['../assets/backgrounds/phase-scenes/martial.webp','center 34%'], 'fraud-merchant':['../assets/backgrounds/pixel-activities/market-errand-v2.webp','center 34%'], 'debt-runaway':['../assets/backgrounds/market/market-day.webp','center 45%'], forsaken:['../assets/backgrounds/home/home-room-morning.webp','center']
+};
+function soloEndingVisual(result){if(result.category==='relation')return '';const [src,position]=soloEndingScenes[result.endingId]||soloEndingScenes['quiet-life'];return `<figure class="solo-ending-visual ${result.category}" style="--ending-background:url('${src}?v=${scheduleAssetRevision}');--ending-background-position:${position}"><img src="${baseSpriteForAge(19)}?v=${scheduleAssetRevision}" alt="${game.characterName||'선화'} 19세 전신"><figcaption>${result.title}</figcaption></figure>`;}
 const relationEndingEpilogues={
   doyun:[{speaker:'도윤',side:'partner',line:'이제는 내가 앞서 지키는 길이 아니라, 네 곁에서 함께 걷는 길을 택하고 싶어.'},{speaker:'선화',side:'seonhwa',line:'그럼 저도 뒤따르지 않을게요. 같은 걸음으로 나란히 가요.'},{speaker:'후일담',side:'both',line:'다음 날 새벽, 두 사람은 빈 활터에서 같은 과녁을 바라보며 새로운 하루를 시작했습니다.'}],
   seojin:[{speaker:'서진',side:'partner',line:'책의 마지막 장을 덮어도 우리 이야기는 끝나지 않겠지요.'},{speaker:'선화',side:'seonhwa',line:'빈 여백은 남겨 둬요. 앞으로 함께 쓸 이야기가 많으니까요.'},{speaker:'후일담',side:'both',line:'다음 날, 두 사람은 서책방 창가에 나란히 앉아 아이들을 위한 첫 교재를 펼쳤습니다.'}],
@@ -2978,8 +2983,8 @@ function showEnding(){
   const categoryLabel={relation:'인연 엔딩',career:'직업 엔딩',downfall:'몰락 엔딩'}[result.category];
   const partner=result.partnerName?`<div><small>함께한 인연</small><b>${result.partnerName} · ${result.partnerRole}</b></div>`:'';
   panel.hidden=false; panelTitle.textContent=`${game.characterName || '아이'}의 성장 기록`;
-  const qaControls=endingStandaloneQa?`<nav class="ending-qa" aria-label="인연 엔딩 QA">${endingRelationCandidates.map(candidate=>`<button type="button" data-ending-id="${candidate.id}" class="${candidate.id===result.partnerId?'active':''}">${candidate.name}</button>`).join('')}</nav>`:'';
-  panelBody.innerHTML=`<div class="ending-card ${result.category}">${qaControls}<small class="ending-date">${game.currentDate}</small><em>${categoryLabel}</em><h2>${result.title}</h2>${relationEndingVisual(result)}${relationEndingEpilogueMarkup(result)}<p class="ending-lead">${result.description}</p><section class="ending-summary">${result.category==='relation'?`<div><small>직업 성향</small><b>${result.careerTitle}</b></div>`:''}${partner}<div><small>대표 능력</small><b>${result.strongest.map(stat=>`${stat.label} ${stat.value}`).join(' · ')}</b></div><div><small>수집</small><b>${result.collectionCount} / ${result.collectionTotal}</b></div><div><small>은전</small><b>${Math.max(0,game.money).toLocaleString()}냥</b></div></section><button id="endingRestart">새로운 생일로 시작</button></div>`;
+  const qaPool=result.category==='relation'?endingRelationCandidates:result.category==='career'?careerEndingCandidates:downfallEndingCandidates,qaIndex=Math.max(0,qaPool.findIndex(item=>item.id===result.endingId)),qaControls=endingStandaloneQa?`<nav class="ending-qa compact" aria-label="엔딩 QA"><button type="button" data-ending-id="${qaPool[(qaIndex-1+qaPool.length)%qaPool.length].id}">이전</button><span>${qaIndex+1}/${qaPool.length}</span><button type="button" data-ending-id="${qaPool[(qaIndex+1)%qaPool.length].id}">다음</button></nav>`:'';
+  panelBody.innerHTML=`<div class="ending-card ${result.category}">${qaControls}<small class="ending-date">${game.currentDate}</small><em>${categoryLabel}</em><h2>${result.title}</h2>${relationEndingVisual(result)}${soloEndingVisual(result)}${relationEndingEpilogueMarkup(result)}<p class="ending-lead">${result.description}</p><section class="ending-summary">${result.category==='relation'?`<div><small>직업 성향</small><b>${result.careerTitle}</b></div>`:''}${partner}<div><small>대표 능력</small><b>${result.strongest.map(stat=>`${stat.label} ${stat.value}`).join(' · ')}</b></div><div><small>수집</small><b>${result.collectionCount} / ${result.collectionTotal}</b></div><div><small>은전</small><b>${Math.max(0,game.money).toLocaleString()}냥</b></div></section><button id="endingRestart">새로운 생일로 시작</button></div>`;
   document.querySelector('#endingRestart').addEventListener('click',beginNewGrowth);
   document.querySelectorAll('[data-ending-id]').forEach(button=>button.addEventListener('click',()=>{const params=new URLSearchParams(location.search);params.set('qaEnding',button.dataset.endingId);location.search=params.toString();}));
   bindRelationEndingEpilogue(result);
@@ -3533,12 +3538,12 @@ function initRelationEncounterQa(){
   controls.querySelectorAll('[data-relation-meeting]').forEach(button=>button.addEventListener('click',()=>openQa(candidate.id,Number(button.dataset.relationMeeting))));
   playRelationEncounterScene(candidate,`${meeting}회차 · ${episode?.title||'첫 만남'} · ${episode?.scene||candidate.role}\n${episode?.line||`${candidate.role} ${candidate.name}과 마주쳤어요.`}`,`QA · ${game.age}세 · ${episode?.pose||'화자 교대'} · ${episode?.expression||'표정 확인'} · ${episode?.camera||'전신 확인'}`,episode);
 }
-function initRelationEndingQa(){
+function initEndingQa(){
   ['studioLoading','prologue','birthdaySetup','recoveryPrompt','guardianStory','guardianChoice','guardianNaming'].forEach(id=>{const element=document.querySelector(`#${id}`);if(element)element.hidden=true;});
-  const requestedId=scheduleQaParams.get('qaEnding')||'doyun',candidate=endingRelationCandidates.find(item=>item.id===requestedId)||endingRelationCandidates[0];
+  const requestedId=scheduleQaParams.get('qaEnding')||'doyun',candidate=endingRelationCandidates.find(item=>item.id===requestedId),career=careerEndingCandidates.find(item=>item.id===requestedId),downfall=downfallEndingCandidates.find(item=>item.id===requestedId),selected=candidate||career||downfall||endingRelationCandidates[0];
   game.characterName='선화';game.age=19;game.currentDate='2009-11-13';game.endingDate='2009-11-13';game.ended=true;game.stress=20;game.money=50000;game.health=650;game.manners=620;game.dignity=640;
-  game.relations={};game.relations[candidate.id]={meetings:5,affinity:85,dateUnlocked:true,completedEpisodes:relationEpisodeCatalog[candidate.id].map(episode=>episode.id),relationship:'연인',holidayFlags:{},vacationMemories:[]};
-  game.endingResult=resolveEnding();renderHud();showEnding();
+  game.relations={};if(candidate)game.relations[candidate.id]={meetings:5,affinity:85,dateUnlocked:true,completedEpisodes:relationEpisodeCatalog[candidate.id].map(episode=>episode.id),relationship:'연인',holidayFlags:{},vacationMemories:[]};
+  const strongest=[{label:'기품',value:640},{label:'예절',value:620},{label:'체력',value:650}];game.endingResult=candidate?resolveEnding():{resolvedAt:new Date().toISOString(),category:career?'career':'downfall',endingId:selected.id,title:selected.title,description:selected.description,careerId:career?.id||null,careerTitle:career?.title||'',partnerId:null,partnerName:null,partnerRole:null,relationMeetings:0,relationAffinity:0,strongest,collectionCount:0,collectionTotal:vacationIllustrations.length};renderHud();showEnding();
 }
 function initBasePortraitQa(){
   ['studioLoading','prologue','birthdaySetup','recoveryPrompt','guardianStory','guardianChoice','guardianNaming'].forEach(id=>{const element=document.querySelector(`#${id}`);if(element)element.hidden=true;});
@@ -3559,7 +3564,7 @@ syncSettingsUi();
 renderHud();
 updateHomeCharacter();
 updateImageState();
-if(endingStandaloneQa)initRelationEndingQa();
+if(endingStandaloneQa)initEndingQa();
 else if(basePortraitStandaloneQa)initBasePortraitQa();
 else if(relationStandaloneQa)initRelationEncounterQa();
 else if(sehwaStandaloneQa)initSehwaContestQa();
