@@ -2155,7 +2155,7 @@
 .pageant-hero-frames img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;object-position:center bottom;opacity:0;animation:pageant-frame-123 .9s steps(1,end) infinite;animation-delay:calc(var(--pageant-frame) * .3s)}
 .pageant-hero-frames.is-invitation img{animation-name:pageant-frame-4;animation-duration:1.2s;animation-delay:calc(var(--pageant-frame) * .3s)}
 .pageant-hero-frames.is-dance img{animation-name:pageant-frame-20;animation-duration:2s;animation-delay:calc(var(--pageant-frame) * .1s)}
-.pageant-hero-frames.is-walk{animation:pageant-frame-travel 2.7s linear infinite}
+.pageant-hero-frames.is-walk{animation:pageant-frame-travel 2.7s linear forwards}
 .pageant-interview{position:absolute;z-index:8;inset:10% 6% 16%;display:grid;grid-template-columns:42% 1fr;align-items:end;gap:10px;padding:12px;border:2px solid #bd883a;border-radius:16px;background:linear-gradient(145deg,#fffaf0f2,#ead9b8f2);box-shadow:0 8px 24px #140a06aa;color:#402716}
 .pageant-interview figure{margin:0;display:grid;align-content:end;height:100%;text-align:center}
 .pageant-interview figure img,.pageant-interview-frames{width:100%;height:210px;object-fit:contain;object-position:center bottom;filter:drop-shadow(0 5px 5px #3a1c0d66)}
@@ -2214,7 +2214,7 @@
 @keyframes pageant-frame-6{0%,16.64%{opacity:1}16.67%,100%{opacity:0}}
 @keyframes pageant-frame-10{0%,9.99%{opacity:1}10%,100%{opacity:0}}
 @keyframes pageant-frame-20{0%,4.99%{opacity:1}5%,100%{opacity:0}}
-@keyframes pageant-frame-travel{0%{left:30%}100%{left:70%}}
+@keyframes pageant-frame-travel{0%{left:18%}100%{left:82%}}
 @keyframes pageant-guardian-bounce{from{transform:translateY(0) rotate(-2deg)}to{transform:translateY(-8px) rotate(2deg)}}
 @media(max-width:380px){.pageant-lineup img{width:52px;height:70px}.pageant-lineup .is-player img{width:57px;height:76px}.pageant-king{width:128px;height:174px}.pageant-winner{width:51%}}
 
@@ -2679,6 +2679,8 @@ body .phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage:
   width:132px!important;
   height:176px!important;
 }
+.moonlight-pageant.festival-pm3 .pageant-hero-frames.is-bow{left:18%!important}
+.moonlight-pageant.festival-pm3 .pageant-hero-frames.is-finish{left:82%!important}
 .moonlight-pageant.festival-pm3 .pageant-hero-frames:is(.is-bow,.is-walk,.is-finish,.is-dance) img{
   image-rendering:pixelated;
 }

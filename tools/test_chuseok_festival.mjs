@@ -5,7 +5,7 @@ const app=fs.readFileSync(new URL('../src/app.js',import.meta.url),'utf8');
 const css=fs.readFileSync(new URL('../src/schedule.css',import.meta.url),'utf8');
 const html=fs.readFileSync(new URL('../src/index.html',import.meta.url),'utf8');
 
-for(const asset of ['app.js','style.css','schedule.css'])assert.ok(html.includes(`${asset}?v=0.64.167-debug`),`${asset} 캐시 키가 표시 버전과 같아야 합니다.`);
+for(const asset of ['app.js','style.css','schedule.css'])assert.ok(html.includes(`${asset}?v=0.64.168-debug`),`${asset} 캐시 키가 표시 버전과 같아야 합니다.`);
 
 assert.match(app,/const moonlightContestants=\[/,'고정 더미 참가자 명세가 필요합니다.');
 const contestantBlock=app.match(/const moonlightContestants=\[([\s\S]*?)\n\];/)?.[1]||'';
@@ -39,10 +39,15 @@ for(let contestant=1;contestant<=7;contestant+=1)assert.ok(fs.existsSync(new URL
 assert.ok(fs.existsSync(new URL('../assets/events/holidays/moonlight-pageant/contestants/animation/age-13/seonhwa-gesture-v1.png',import.meta.url)),'13세 선화 실제 3프레임 묶음이 필요합니다.');
 for(let frame=1;frame<=10;frame+=1)assert.ok(fs.existsSync(new URL(`../assets/events/holidays/moonlight-pageant/seonhwa/age-13/dance-10fps-v5/seonhwa-dance-${String(frame).padStart(2,'0')}-v5.png`,import.meta.url)),`13세 쯔꾸르 춤 ${frame}프레임이 필요합니다.`);
 assert.match(app,/motion==='dance'\?6:3/,'춤은 준비부터 마무리까지 6프레임이어야 합니다.');
-assert.match(app,/moonlightPixelMotionMap=\{[\s\S]*bow:\['manners-pixel-1\.png'[\s\S]*walk:\['\.\.\/schedule-base\/walk-1-v2\.png','\.\.\/schedule-base\/walk-2-v2\.png'[\s\S]*finish:\['manners-pixel-3\.png'/,'절·걷기·마지막 인사는 정돈된 쯔꾸르 전용 프레임이어야 합니다.');
+assert.match(app,/moonlightPixelMotionMap=\{[\s\S]*bow:\['manners-pixel-1\.png'[\s\S]*walk:\['\.\.\/schedule-base\/walk-1-v2\.png','\.\.\/schedule-base\/walk-2-v2\.png'[\s\S]*finish:\['manners-pixel-1\.png'/,'절·걷기·마지막 인사는 정돈된 쯔꾸르 전용 프레임이어야 합니다.');
 for(const frame of ['walk-1-v2.png','walk-2-v2.png'])assert.ok(fs.existsSync(new URL(`../assets/characters/seonhwa/schedule-base/${frame}`,import.meta.url)),`${frame} 정돈 자산이 필요합니다.`);
 assert.doesNotMatch(app,/moonlightActingPoseMap=\{[^}]*bow:|moonlightActingPoseMap=\{[^}]*finish:/,'무대 동작에 반실사 연기 프레임을 다시 연결하면 안 됩니다.');
 assert.match(css,/\.pageant-hero-frames:is\(\.is-bow,\.is-walk,\.is-finish,\.is-dance\) img\{[^}]*image-rendering:pixelated/,'무대 쯔꾸르 프레임은 픽셀 렌더링을 유지해야 합니다.');
+assert.match(app,/bow:\['manners-pixel-1\.png','manners-pixel-2\.png','manners-pixel-1\.png'\]/,'첫 인사는 치마를 잡은 자세에서 숙였다가 같은 자세로 돌아와야 합니다.');
+assert.match(app,/finish:\['manners-pixel-1\.png','manners-pixel-2\.png','manners-pixel-1\.png'\]/,'마지막 인사도 치마를 잡은 자세로 완결되어야 합니다.');
+assert.match(css,/\.pageant-hero-frames\.is-walk\{animation:pageant-frame-travel 2\.7s linear forwards\}/,'걷기는 오른쪽 끝에서 멈추고 왼쪽으로 되돌아가면 안 됩니다.');
+assert.match(css,/@keyframes pageant-frame-travel\{0%\{left:18%\}100%\{left:82%\}\}/,'걷기는 무대 왼쪽 끝에서 오른쪽 끝까지 이동해야 합니다.');
+assert.match(css,/\.pageant-hero-frames\.is-bow\{left:18%!important\}[\s\S]*\.pageant-hero-frames\.is-finish\{left:82%!important\}/,'첫 인사와 마지막 인사는 각각 무대 양끝에 배치되어야 합니다.');
 assert.match(app,/festivalWinnerInterview\(session\)/,'경연 마지막에 실제 대상 수상자 인터뷰가 필요합니다.');
 assert.match(app,/function moonlightOpeningAnswer\(session\)/,'스테이터스에 따른 추석 선화의 시작 답변이 필요합니다.');
 assert.match(app,/function moonlightOpeningDialogue\(session,beat\)/,'추석 시작 장면은 신수와 선화의 상반신 대화가 필요합니다.');
