@@ -5,7 +5,7 @@ const app=fs.readFileSync(new URL('../src/app.js',import.meta.url),'utf8');
 const css=fs.readFileSync(new URL('../src/schedule.css',import.meta.url),'utf8');
 const html=fs.readFileSync(new URL('../src/index.html',import.meta.url),'utf8');
 
-for(const asset of ['app.js','style.css','schedule.css'])assert.ok(html.includes(`${asset}?v=0.64.158-debug`),`${asset} 캐시 키가 표시 버전과 같아야 합니다.`);
+for(const asset of ['app.js','style.css','schedule.css'])assert.ok(html.includes(`${asset}?v=0.64.159-debug`),`${asset} 캐시 키가 표시 버전과 같아야 합니다.`);
 
 assert.match(app,/const moonlightContestants=\[/,'고정 더미 참가자 명세가 필요합니다.');
 const contestantBlock=app.match(/const moonlightContestants=\[([\s\S]*?)\n\];/)?.[1]||'';
@@ -65,6 +65,7 @@ assert.match(css,/\.activity-stage:is\(\.action-holiday-chuseok,\.action-holiday
 assert.match(css,/\.activity-stage:is\(\.action-holiday-chuseok,\.action-holiday-seollal\) \.stage-map\{opacity:0!important\}/,'명절 이벤트는 내부 배경을 겹쳐 그리지 않고 전체 화면 배경 하나만 사용해야 합니다.');
 assert.match(app,/holidayBackground[\s\S]{0,220}bg\.src=holidayBackground;stageMap\.src=holidayBackground/,'추석 실제 진행에서는 전체 화면과 무대가 같은 배경 자산을 공유해야 합니다.');
 assert.match(app,/holidayBackground[^\n]+bg\.src=holidayBackground;document\.querySelector\('#stageMap'\)\.src=holidayBackground/,'추석 QA에서도 전체 화면과 무대가 같은 배경 자산을 공유해야 합니다.');
+assert.match(app,/phone\.classList\.remove\('playing','schedule-holiday'\);\s*bg\.src=backgrounds\.home;\s*bg\.alt='한옥 안채'/,'명절 일정이 끝나면 이벤트 배경이 홈에 남지 않아야 합니다.');
 assert.match(app,/function festivalLineup\(session\)[^\n]+lineup-gesture-frames/,'8인 소개 장면은 실제 동작 프레임을 사용해야 합니다.');
 assert.doesNotMatch(app,/function festivalLineup\(session\)[^\n]+<figcaption>/,'8인 소개 장면에는 캐릭터 이름표를 표시하지 않아야 합니다.');
 assert.match(css,/\.pageant-intro-lineup \.lineup-gesture-frames\{[^}]*width:74px;[^}]*height:100px;[^}]*animation:pageant-lineup-real-frames/,'8인 참가자는 확대된 실제 프레임 애니메이션으로 보여야 합니다.');
