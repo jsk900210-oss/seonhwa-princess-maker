@@ -243,7 +243,7 @@ const vacationIllustrations=[
 function unifiedAgeFolder(){return '09';}
 function scheduleFramePath(file){return `../assets/characters/seonhwa/schedule-actions/${file}`;}
 function scheduleBasePath(file){return `../assets/characters/seonhwa/schedule-base/${file}`;}
-const scheduleAssetRevision='0.64.163-debug';
+const scheduleAssetRevision='0.64.164-debug';
 const scheduleQaParams=new URLSearchParams(location.search);
 const moonlightStandaloneQa=scheduleQaParams.get('qaHoliday')==='chuseok';
 const sehwaStandaloneQa=scheduleQaParams.get('qaHoliday')==='seollal';
@@ -1574,7 +1574,7 @@ const moonlightStoryBeats=[
   '선화가 한국무용 춤사위로 달빛의 흐름을 표현했어요.',
   '부채 끝과 발 디딤이 맞자 객석에서 조용한 탄성이 흘렀어요.',
   '선화가 천천히 무대를 걸으며 차분한 기품을 보여 주었어요.',
-  '황과 심사관이 시선 처리와 마지막 자세를 살폈어요.',
+  '왕과 심사관이 시선 처리와 마지막 자세를 살폈어요.',
   '선화가 보름달 아래에서 마지막 인사를 마쳤어요.',
   '여덟 참가자의 세 항목 점수가 하나씩 집계됐어요.',
   '선화의 최종 등급과 종합 점수가 발표됐어요.',

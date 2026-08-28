@@ -5,7 +5,7 @@ const app=fs.readFileSync(new URL('../src/app.js',import.meta.url),'utf8');
 const css=fs.readFileSync(new URL('../src/schedule.css',import.meta.url),'utf8');
 const html=fs.readFileSync(new URL('../src/index.html',import.meta.url),'utf8');
 
-for(const asset of ['app.js','style.css','schedule.css'])assert.ok(html.includes(`${asset}?v=0.64.163-debug`),`${asset} 캐시 키가 표시 버전과 같아야 합니다.`);
+for(const asset of ['app.js','style.css','schedule.css'])assert.ok(html.includes(`${asset}?v=0.64.164-debug`),`${asset} 캐시 키가 표시 버전과 같아야 합니다.`);
 
 assert.match(app,/const moonlightContestants=\[/,'고정 더미 참가자 명세가 필요합니다.');
 const contestantBlock=app.match(/const moonlightContestants=\[([\s\S]*?)\n\];/)?.[1]||'';
@@ -22,6 +22,8 @@ assert.match(app,/king-presenting-v1\.png/,'왕의 대상 시상 포즈가 필�
 assert.match(app,/motion==='dance'&&age==='13'[^\n]+length:10[^\n]+dance-10fps-v5[^\n]+flatMap\(frame=>\[frame,frame\]\)/,'13세 경연 춤은 10개 자세를 두 틱씩 유지해야 합니다.');
 assert.match(css,/\.pageant-hero-frames\.is-dance img\{[^}]*animation-name:pageant-frame-20;[^}]*animation-duration:2s;[^}]*\.1s/,'경연 춤은 10fps를 유지하며 2초 동안 천천히 재생해야 합니다.');
 assert.match(css,/\.moonlight-pageant\.festival-pm3 \.pageant-hero-frames\.is-dance\{[^}]*bottom:26%!important;[^}]*width:132px!important;[^}]*height:176px!important/,'춤추는 선화는 무대 끝 바닥선 위에 놓여야 합니다.');
+assert.match(css,/\.moonlight-pageant\.festival-pm3 \.pageant-hero-frames:is\(\.is-bow,\.is-walk,\.is-finish\)\{[^}]*bottom:26%!important;[^}]*width:132px!important;[^}]*height:176px!important/,'절·걷기·마지막 인사도 춤과 같은 무대 바닥선을 유지해야 합니다.');
+assert.doesNotMatch(beats,/황과 심사관/,'경연을 주관하는 인물은 황이 아니라 왕이어야 합니다.');
 assert.match(app,/festivalKingCut\(line,alt\)[^\n]+<b>왕<\/b>/,'경연을 주관하는 군주는 왕으로 표기해야 합니다.');
 assert.doesNotMatch(app,/(황이 예절|황이 대상|알리는 황|시상하는 황|하사하는 황)/,'왕의 경연 대사와 설명에 황 표기가 남으면 안 됩니다.');
 assert.match(app,/id:'hyeon',name:'현',role:'정체를 숨긴 왕세자'/,'현은 왕의 아들인 왕세자로 설정해야 합니다.');
