@@ -2625,6 +2625,14 @@ body .phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage:
 .festival-character-cut p{top:14%!important;width:66%!important;min-height:88px!important;padding:13px 12px!important;font-size:12px!important;line-height:1.6!important}
 .festival-character-cut b{font-size:15px!important}
 .guardian-cut p{top:18%!important}
+.sehwa-opening-dialogue>.sehwa-expression{
+  -webkit-mask-image:linear-gradient(to bottom,#000 0 56%,#000e 62%,#0008 68%,transparent 76%)!important;
+  mask-image:linear-gradient(to bottom,#000 0 56%,#000e 62%,#0008 68%,transparent 76%)!important;
+}
+.sehwa-opening-dialogue.speaker-seonhwa>.sehwa-dialogue-bust{
+  -webkit-mask-image:linear-gradient(to bottom,#000 0 60%,#000e 67%,#0008 73%,transparent 82%)!important;
+  mask-image:linear-gradient(to bottom,#000 0 60%,#000e 67%,#0008 73%,transparent 82%)!important;
+}
 @media(max-width:380px){
   .sehwa-opening-dialogue>div{top:3%!important;width:74%!important;min-height:82px!important;padding:10px 11px!important}
   .sehwa-opening-dialogue>div p{font-size:10.5px!important;line-height:1.58!important}
