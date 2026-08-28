@@ -2492,7 +2492,9 @@ body .phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage:
 .sehwa-opening-dialogue>div{position:absolute;z-index:2;top:13%;width:57%;display:grid;gap:3px;padding:7px 8px 8px;border:2px solid #8b6039;border-radius:12px;background:#fff8e9f5;box-shadow:0 5px 12px #0008}
 .sehwa-opening-dialogue p{margin:0;color:#49301e;font-size:9px;line-height:1.5;word-break:keep-all;overflow-wrap:normal;text-wrap:pretty}
 .sehwa-opening-dialogue p b{display:block;margin-bottom:3px;color:#7b4727;font-family:serif;font-size:12px}
-.sehwa-opening-dialogue.speaker-guardian>div{right:3%;animation:sehwa-dialogue-from-right .72s cubic-bezier(.18,.75,.24,1) .28s both}
+.sehwa-opening-dialogue.speaker-guardian>div{top:5%;right:2%;width:68%;min-height:76px;box-sizing:border-box;padding:10px 12px 11px;animation:sehwa-dialogue-from-right .72s cubic-bezier(.18,.75,.24,1) .28s both}
+.sehwa-opening-dialogue.speaker-guardian>div p{font-size:11px;line-height:1.58}
+.sehwa-opening-dialogue.speaker-guardian>div p b{margin-bottom:5px;font-size:14px}
 .sehwa-opening-dialogue.speaker-seonhwa>div{left:3%;background:#f3ead8f5;animation:sehwa-dialogue-from-left .72s cubic-bezier(.18,.75,.24,1) .28s both}
 .activity-stage:has(.moonlight-pageant:not([hidden])) .stage-pm3-hud>#stageHudStats{display:none!important}
 .sehwa-contest:has(.sehwa-opening-dialogue) .pageant-next{bottom:3%}
@@ -2573,7 +2575,9 @@ body .phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage:
   .sehwa-contest.festival-pm3 .sehwa-hero{width:122px!important;height:164px!important}
   .sehwa-contest.festival-pm3.beat-1 .sehwa-hero,.sehwa-contest.festival-pm3.beat-2 .sehwa-hero,.sehwa-contest.festival-pm3.beat-3 .sehwa-hero,.sehwa-contest.festival-pm3.beat-4 .sehwa-hero{width:104px!important;height:148px!important}
   .sehwa-opening-dialogue>div{width:59%}
-  .sehwa-opening-dialogue.speaker-guardian>div{right:17%}
+  .sehwa-opening-dialogue.speaker-guardian>div{top:4%;right:1%;width:70%;min-height:72px;padding:9px 10px 10px}
+  .sehwa-opening-dialogue.speaker-guardian>div p{font-size:10px;line-height:1.55}
+  .sehwa-opening-dialogue.speaker-guardian>div p b{font-size:13px}
   .sehwa-opening-dialogue.speaker-seonhwa>div{left:25%}
   .sehwa-opening-dialogue p{font-size:8px}
   .sehwa-drawing-ensemble figure>span{width:47px;height:57px}
