@@ -1,14 +1,14 @@
-# 노트북 작업 인계 — 2026-08-26
+# PC 간 작업 인계 — 2026-08-28
 
 ## 현재 기준점
 
 - 브랜치: `agent/pixel-schedule-handoff`
-- 최신 작업 버전: `v0.64.122-debug`
-- 최신 기능 기준 커밋: `73adb85` (`feat: visualize career and downfall endings`)
+- 최신 작업 버전: `v0.64.153-debug`
+- 최신 기능 기준 커밋: `b6fc505` (`style: crop transparent margins in relationship dialogue`)
 - 기준 브랜치: `agent/pixel-schedule-handoff`
-- 라이브 QA: `https://jsk900210-oss.github.io/seonhwa-princess-maker/src/?qaEnding=queen&v=73adb85`
+- 라이브 QA: `https://jsk900210-oss.github.io/seonhwa-princess-maker/src/?qaRelation=seojin&qaMeeting=1&qaAge=13&v=838849e`
 
-GitHub의 `agent/pixel-schedule-handoff`와 로컬 HEAD는 `73adb85`로 일치한다. 인연 이벤트의 선화는 9·13·16·19세 승인된 반실사 베이스를 사용한다.
+GitHub의 `agent/pixel-schedule-handoff`와 로컬 HEAD는 인계 시점에 동기화되어 있으며 미추적 파일은 0개다. 인연 이벤트의 선화는 9·13·16·19세 승인된 반실사 베이스를 사용하며, 남자 주인공은 감정별 상반신 대화 포즈를 사용한다.
 
 ## 다른 PC에서 이어받기
 
@@ -21,7 +21,7 @@ git switch agent/pixel-schedule-handoff
 git log -1 --oneline
 ```
 
-로그에 `73adb85 feat: visualize career and downfall endings`가 포함되는지 확인한다. 해당 PC의 브랜치가 뒤처져 있고 작업 트리가 깨끗할 때만 사용자가 직접 fast-forward 병합한다.
+로그에 `b6fc505 style: crop transparent margins in relationship dialogue` 또는 그 이후 커밋이 포함되는지 확인한다. 해당 PC의 브랜치가 뒤처져 있고 작업 트리가 깨끗할 때만 사용자가 직접 fast-forward 병합한다.
 
 ```powershell
 git merge --ff-only origin/agent/pixel-schedule-handoff
@@ -35,7 +35,15 @@ cd seonhwa-princess-maker
 git log -1 --oneline
 ```
 
-로컬 확인 주소는 `http://127.0.0.1:8000/src/?v=0.64.122-debug`이다.
+로컬 확인 주소는 `http://127.0.0.1:8000/src/?v=0.64.153-debug`이다.
+
+## 완료 — 인연 대화 비율·투명 여백 정리
+
+- 첫 대사와 선택 답변 모두 `assets/characters/romance/dialogue-poses-v1/`의 감정별 상반신 PNG를 사용한다.
+- 선화는 연령별 승인 베이스를 허벅지 위 구도로 표시한다.
+- 모바일 화자 이미지는 투명 캔버스 여백이 화면 밖으로 빠지도록 확대했으며 대화창의 하단 안전 영역은 유지한다.
+- 서진 감정 포즈와 13세 선화 베이스는 `RGBA`, 모서리 알파 0으로 확인했다.
+- 현재 QA 기준은 `v0.64.153-debug`이며 360·390·430px에서 다섯 남자 주인공과 13·16·19세 조합을 계속 전수 확인한다.
 
 ## 완료 — 남자 주인공 5인 연령별 이미지 전면 검수·재제작
 
@@ -81,7 +89,7 @@ git log -1 --oneline
 
 ## 저장소 주의사항
 
-다음 미추적 폴더는 사용자 백업이므로 임의로 스테이징하거나 삭제하지 않는다.
+다음 백업 폴더도 현재 Git에서 추적되어 GitHub에 업로드되어 있다. 임의로 삭제하지 않는다.
 
 - `.local-backup-logs/`
 - `assets/cinematics/guardian/humanized/poses/_pre_defringe_v2_backup/`
@@ -90,7 +98,8 @@ git log -1 --oneline
 
 1. 직업 엔딩 18종과 몰락 엔딩 7종에 맞는 선화 전용 행동 포즈 제작
 2. 완료 — 직업·몰락 엔딩별 3장면 후일담 연결
-3. 모바일 360·390·430px 전수 검수
+3. 인연 후보 5명 × 5회차 × 13·16·19세의 모바일 360·390·430px 대화 비율 전수 검수
+4. 전체 일정의 선화·NPC·소품 겹침과 바닥선·방향 전수 검수
 
 ## 완료 절차
 
