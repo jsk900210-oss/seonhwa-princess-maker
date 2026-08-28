@@ -2681,6 +2681,12 @@ body .phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage:
 }
 .moonlight-pageant.festival-pm3 .pageant-hero-frames.is-bow{left:18%!important}
 .moonlight-pageant.festival-pm3 .pageant-hero-frames.is-finish{left:82%!important}
+.moonlight-pageant.festival-pm3 .pageant-hero-frames.is-enter{left:18%!important;bottom:26%!important;width:132px!important;height:176px!important}
+.moonlight-pageant.festival-pm3.beat-8 .pageant-intro-lineup{display:grid!important;left:6%!important;right:6%!important;bottom:26%!important;grid-template-columns:repeat(4,1fr)!important;grid-template-rows:82px 108px!important;column-gap:3px!important;row-gap:0!important;align-items:end!important}
+.moonlight-pageant.festival-pm3.beat-8 .pageant-intro-lineup figure:nth-child(-n+4){align-self:end;z-index:1}
+.moonlight-pageant.festival-pm3.beat-8 .pageant-intro-lineup figure:nth-child(n+5){align-self:end;z-index:2}
+.moonlight-pageant.festival-pm3.beat-8 .pageant-intro-lineup figure:nth-child(-n+4) .lineup-gesture-frames{width:64px;height:86px}
+.moonlight-pageant.festival-pm3.beat-8 .pageant-intro-lineup figure:nth-child(n+5) .lineup-gesture-frames{width:80px;height:108px}
 .moonlight-pageant.festival-pm3 .pageant-hero-frames:is(.is-bow,.is-walk,.is-finish,.is-dance) img{
   image-rendering:pixelated;
 }
