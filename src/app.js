@@ -243,7 +243,7 @@ const vacationIllustrations=[
 function unifiedAgeFolder(){return '09';}
 function scheduleFramePath(file){return `../assets/characters/seonhwa/schedule-actions/${file}`;}
 function scheduleBasePath(file){return `../assets/characters/seonhwa/schedule-base/${file}`;}
-const scheduleAssetRevision='0.64.165-debug';
+const scheduleAssetRevision='0.64.166-debug';
 const scheduleQaParams=new URLSearchParams(location.search);
 const moonlightStandaloneQa=scheduleQaParams.get('qaHoliday')==='chuseok';
 const sehwaStandaloneQa=scheduleQaParams.get('qaHoliday')==='seollal';
@@ -1589,7 +1589,7 @@ function moonlightSeonhwaImage(){const age=moonlightAssetAge();return `../assets
 const moonlightActingPoseMap={invitation:[1,2,3,4],prepare:[5,7,8],enter:[9,10,11],interview:[14,15,16]};
 const moonlightPixelMotionMap={
   bow:['manners-pixel-1.png','manners-pixel-2.png','manners-pixel-3.png'],
-  walk:['../schedule-base/walk-1.png','../schedule-base/walk-2.png','../schedule-base/walk-1.png'],
+  walk:['../schedule-base/walk-1-v2.png','../schedule-base/walk-2-v2.png','../schedule-base/walk-1-v2.png'],
   finish:['manners-pixel-3.png','manners-pixel-2.png','manners-pixel-1.png']
 };
 function moonlightMotionFrames(motion){
