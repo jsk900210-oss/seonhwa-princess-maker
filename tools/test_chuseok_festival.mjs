@@ -5,7 +5,7 @@ const app=fs.readFileSync(new URL('../src/app.js',import.meta.url),'utf8');
 const css=fs.readFileSync(new URL('../src/schedule.css',import.meta.url),'utf8');
 const html=fs.readFileSync(new URL('../src/index.html',import.meta.url),'utf8');
 
-for(const asset of ['app.js','style.css','schedule.css'])assert.ok(html.includes(`${asset}?v=0.64.168-debug`),`${asset} 캐시 키가 표시 버전과 같아야 합니다.`);
+for(const asset of ['app.js','style.css','schedule.css'])assert.ok(html.includes(`${asset}?v=0.64.169-debug`),`${asset} 캐시 키가 표시 버전과 같아야 합니다.`);
 
 assert.match(app,/const moonlightContestants=\[/,'고정 더미 참가자 명세가 필요합니다.');
 const contestantBlock=app.match(/const moonlightContestants=\[([\s\S]*?)\n\];/)?.[1]||'';
@@ -45,6 +45,8 @@ assert.doesNotMatch(app,/moonlightActingPoseMap=\{[^}]*bow:|moonlightActingPoseM
 assert.match(css,/\.pageant-hero-frames:is\(\.is-bow,\.is-walk,\.is-finish,\.is-dance\) img\{[^}]*image-rendering:pixelated/,'무대 쯔꾸르 프레임은 픽셀 렌더링을 유지해야 합니다.');
 assert.match(app,/bow:\['manners-pixel-1\.png','manners-pixel-2\.png','manners-pixel-1\.png'\]/,'첫 인사는 치마를 잡은 자세에서 숙였다가 같은 자세로 돌아와야 합니다.');
 assert.match(app,/finish:\['manners-pixel-1\.png','manners-pixel-2\.png','manners-pixel-1\.png'\]/,'마지막 인사도 치마를 잡은 자세로 완결되어야 합니다.');
+assert.match(app,/moonlightAge13StageMotionMap=\{bow:\[1,7,1\],walk:\[10,1,8\],finish:\[1,7,1\]\}/,'13세 경연 인사·이동은 춤과 같은 이벤트 캐릭터 프레임을 사용해야 합니다.');
+assert.match(app,/eventFrames=age==='13'\?moonlightAge13StageMotionMap\[motion\]:null;[\s\S]*if\(eventFrames\)return eventFrames\.map\(frame=>`\.\.\/assets\/events\/holidays\/moonlight-pageant\/seonhwa\/age-13\/dance-10fps-v5/,'13세 무대 동작은 공용 일정 캐릭터보다 경연 전용 프레임을 우선해야 합니다.');
 assert.match(css,/\.pageant-hero-frames\.is-walk\{animation:pageant-frame-travel 2\.7s linear forwards\}/,'걷기는 오른쪽 끝에서 멈추고 왼쪽으로 되돌아가면 안 됩니다.');
 assert.match(css,/@keyframes pageant-frame-travel\{0%\{left:18%\}100%\{left:82%\}\}/,'걷기는 무대 왼쪽 끝에서 오른쪽 끝까지 이동해야 합니다.');
 assert.match(css,/\.pageant-hero-frames\.is-bow\{left:18%!important\}[\s\S]*\.pageant-hero-frames\.is-finish\{left:82%!important\}/,'첫 인사와 마지막 인사는 각각 무대 양끝에 배치되어야 합니다.');

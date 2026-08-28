@@ -243,7 +243,7 @@ const vacationIllustrations=[
 function unifiedAgeFolder(){return '09';}
 function scheduleFramePath(file){return `../assets/characters/seonhwa/schedule-actions/${file}`;}
 function scheduleBasePath(file){return `../assets/characters/seonhwa/schedule-base/${file}`;}
-const scheduleAssetRevision='0.64.168-debug';
+const scheduleAssetRevision='0.64.169-debug';
 const scheduleQaParams=new URLSearchParams(location.search);
 const moonlightStandaloneQa=scheduleQaParams.get('qaHoliday')==='chuseok';
 const sehwaStandaloneQa=scheduleQaParams.get('qaHoliday')==='seollal';
@@ -1592,8 +1592,11 @@ const moonlightPixelMotionMap={
   walk:['../schedule-base/walk-1-v2.png','../schedule-base/walk-2-v2.png','../schedule-base/walk-1-v2.png'],
   finish:['manners-pixel-1.png','manners-pixel-2.png','manners-pixel-1.png']
 };
+const moonlightAge13StageMotionMap={bow:[1,7,1],walk:[10,1,8],finish:[1,7,1]};
 function moonlightMotionFrames(motion){
   const age=moonlightAssetAge(),actingPoses=moonlightActingPoseMap[motion];
+  const eventFrames=age==='13'?moonlightAge13StageMotionMap[motion]:null;
+  if(eventFrames)return eventFrames.map(frame=>`../assets/events/holidays/moonlight-pageant/seonhwa/age-13/dance-10fps-v5/seonhwa-dance-${String(frame).padStart(2,'0')}-v5.png?v=${scheduleAssetRevision}`);
   const pixelFrames=moonlightPixelMotionMap[motion];
   if(pixelFrames)return pixelFrames.map(file=>`../assets/characters/seonhwa/schedule-actions/${file}?v=${scheduleAssetRevision}`);
   if(actingPoses)return actingPoses.map(frame=>`../assets/events/holidays/moonlight-pageant/seonhwa/age-${age}/acting-v5/seonhwa-acting-${String(frame).padStart(2,'0')}-v5.png?v=${scheduleAssetRevision}`);
