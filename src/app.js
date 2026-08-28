@@ -243,7 +243,7 @@ const vacationIllustrations=[
 function unifiedAgeFolder(){return '09';}
 function scheduleFramePath(file){return `../assets/characters/seonhwa/schedule-actions/${file}`;}
 function scheduleBasePath(file){return `../assets/characters/seonhwa/schedule-base/${file}`;}
-const scheduleAssetRevision='0.64.164-debug';
+const scheduleAssetRevision='0.64.165-debug';
 const scheduleQaParams=new URLSearchParams(location.search);
 const moonlightStandaloneQa=scheduleQaParams.get('qaHoliday')==='chuseok';
 const sehwaStandaloneQa=scheduleQaParams.get('qaHoliday')==='seollal';
@@ -1586,9 +1586,16 @@ const moonlightMotionNames=['opening-dialogue','opening-dialogue','title','final
 function moonlightAgeIndex(){return game.age>=18?3:game.age>=16?2:game.age>=13?1:0;}
 function moonlightAssetAge(){return game.age>=18?'18':game.age>=16?'16':game.age>=13?'13':'09';}
 function moonlightSeonhwaImage(){const age=moonlightAssetAge();return `../assets/events/holidays/moonlight-pageant/seonhwa/age-${age}/seonhwa-winner-v1.png?v=${scheduleAssetRevision}`;}
-const moonlightActingPoseMap={invitation:[1,2,3,4],prepare:[5,7,8],enter:[9,10,11],bow:[11,12,13],finish:[13,14,15],interview:[14,15,16]};
+const moonlightActingPoseMap={invitation:[1,2,3,4],prepare:[5,7,8],enter:[9,10,11],interview:[14,15,16]};
+const moonlightPixelMotionMap={
+  bow:['manners-pixel-1.png','manners-pixel-2.png','manners-pixel-3.png'],
+  walk:['../schedule-base/walk-1.png','../schedule-base/walk-2.png','../schedule-base/walk-1.png'],
+  finish:['manners-pixel-3.png','manners-pixel-2.png','manners-pixel-1.png']
+};
 function moonlightMotionFrames(motion){
   const age=moonlightAssetAge(),actingPoses=moonlightActingPoseMap[motion];
+  const pixelFrames=moonlightPixelMotionMap[motion];
+  if(pixelFrames)return pixelFrames.map(file=>`../assets/characters/seonhwa/schedule-actions/${file}?v=${scheduleAssetRevision}`);
   if(actingPoses)return actingPoses.map(frame=>`../assets/events/holidays/moonlight-pageant/seonhwa/age-${age}/acting-v5/seonhwa-acting-${String(frame).padStart(2,'0')}-v5.png?v=${scheduleAssetRevision}`);
   if(motion==='dance'&&age==='13')return Array.from({length:10},(_,index)=>`../assets/events/holidays/moonlight-pageant/seonhwa/age-13/dance-10fps-v5/seonhwa-dance-${String(index+1).padStart(2,'0')}-v5.png?v=${scheduleAssetRevision}`).flatMap(frame=>[frame,frame]);
   const count=motion==='dance'?6:3,version=motion==='dance'?'v4':'v3';
