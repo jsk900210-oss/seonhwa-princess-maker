@@ -243,7 +243,7 @@ const vacationIllustrations=[
 function unifiedAgeFolder(){return '09';}
 function scheduleFramePath(file){return `../assets/characters/seonhwa/schedule-actions/${file}`;}
 function scheduleBasePath(file){return `../assets/characters/seonhwa/schedule-base/${file}`;}
-const scheduleAssetRevision='0.64.153-debug';
+const scheduleAssetRevision='0.64.154-debug';
 const scheduleQaParams=new URLSearchParams(location.search);
 const moonlightStandaloneQa=scheduleQaParams.get('qaHoliday')==='chuseok';
 const sehwaStandaloneQa=scheduleQaParams.get('qaHoliday')==='seollal';
@@ -1782,7 +1782,7 @@ function sehwaRegistrationScene(){
 function renderSehwaContest(session,beatIndex){
   const overlay=document.querySelector('#moonlightPageant');if(!overlay)return;
   const beat=Math.min(sehwaStoryBeats.length-1,Math.max(0,beatIndex)),opening=beat<=1,preparing=beat===5,drawing=beat>=6&&beat<=11,title=beat===3,intro=beat===4,vote=beat===12,result=beat===13,guardianResult=beat===14,award=beat===15&&session.winner.player;
-  const stageMap=document.querySelector('#stageMap');if(stageMap)stageMap.src=`../assets/events/holidays/sehwa-contest/background/${beat===2?'royal-contest-registration-young-clerk-v2.png':drawing||preparing?'royal-atelier-v1.webp':'royal-contest-hall-v1.png'}?v=${scheduleAssetRevision}`;
+  const stageMap=document.querySelector('#stageMap'),sceneBackground=`../assets/events/holidays/sehwa-contest/background/${beat===2?'royal-contest-registration-young-clerk-v2.png':drawing||preparing?'royal-atelier-v1.webp':'royal-contest-hall-v1.png'}?v=${scheduleAssetRevision}`;if(stageMap)stageMap.src=sceneBackground;if(bg)bg.src=sceneBackground;
   const frameKind=beat<3?'opening':'drawing';
   const frameUrls=[1,2,3].map(frame=>award?sehwaAwardSceneFrame(frame):sehwaFrame(frameKind,frame));
   const hero=award?`<span class="sehwa-award-sequence" role="img" aria-label="${sehwaStoryBeats[beat]}">${frameUrls.map((src,index)=>`<img src="${src}" alt="" style="--award-index:${index}">`).join('')}</span><img class="pageant-king sehwa-award-king" src="../assets/events/holidays/moonlight-pageant/king/king-presenting-v1.png?v=${scheduleAssetRevision}" alt="왕실 화원의 세화첩을 하사하는 왕">`:drawing?`<span class="sehwa-hero is-drawing" style="--sehwa-f1:url('${frameUrls[0]}');--sehwa-f2:url('${frameUrls[1]}');--sehwa-f3:url('${frameUrls[2]}')" role="img" aria-label="${sehwaStoryBeats[beat]}"></span>`:'';
@@ -3255,7 +3255,8 @@ async function playWeeklySchedule(selected) {
         document.querySelector('#dialogueText').textContent=metSomeone?`바캉스에서 「${prize.name}」 일러스트와 ${metSomeone.name}의 인연 추억을 얻었어요.`:`바캉스에서 「${prize.name}」 일러스트를 획득했어요.`;
       }else document.querySelector('#dialogueText').textContent='같은 여행지에서 느긋하게 휴식을 이어 갔어요.';
     }else if(action.id==='holiday-chuseok'){
-      stageMap.src=`../assets/events/holidays/moonlight-pageant/background/moonlight-courtyard-v1.webp?v=${scheduleAssetRevision}`;
+      const holidayBackground=`../assets/events/holidays/moonlight-pageant/background/moonlight-courtyard-v1.webp?v=${scheduleAssetRevision}`;
+      bg.src=holidayBackground;stageMap.src=holidayBackground;
       stageMap.alt='보름달이 뜬 궁중 한가위 달빛 아씨 경연장';
       stage.className=`activity-stage ${phaseSceneType} map-restRoom action-holiday-chuseok`;
       stageProps.className='stage-props prop-none';
@@ -3555,7 +3556,7 @@ function initMoonlightPageantQa(){
   const session=evaluateChuseokFestival(),phone=document.querySelector('.phone'),stage=document.querySelector('#activityStage');
   phone.classList.add('playing','schedule-qa-playing');stage.hidden=false;stage.className='activity-stage pm3-phase-scene daily-scene action-holiday-chuseok';
   document.querySelector('#activityPlayback').hidden=true;document.querySelector('#stagePm3Hud').hidden=true;
-  document.querySelector('#stageMap').src=`../assets/events/holidays/moonlight-pageant/background/moonlight-courtyard-v1.webp?v=${scheduleAssetRevision}`;
+  const holidayBackground=`../assets/events/holidays/moonlight-pageant/background/moonlight-courtyard-v1.webp?v=${scheduleAssetRevision}`;bg.src=holidayBackground;document.querySelector('#stageMap').src=holidayBackground;
   document.querySelector('#stageCharacter').hidden=true;document.querySelector('#stageNpc').hidden=true;document.querySelector('#stageProps').hidden=true;
   document.querySelector('#stageCaption').textContent=`한가위 달빛 아씨 경연 QA · ${qaDay}일차 · 선화 ${session.overallRank}`;
   bindHolidayQaTap(session,qaDay-1,moonlightStoryBeats,renderMoonlightPageant,'한가위 달빛 아씨 경연 QA');
@@ -3569,7 +3570,7 @@ function initSehwaContestQa(){
   const session=evaluateSeollalFestival(),phone=document.querySelector('.phone'),stage=document.querySelector('#activityStage');
   phone.classList.add('playing','schedule-qa-playing');stage.hidden=false;stage.className='activity-stage pm3-phase-scene daily-scene action-holiday-seollal';
   document.querySelector('#activityPlayback').hidden=true;document.querySelector('#stagePm3Hud').hidden=true;
-  document.querySelector('#stageMap').src=`../assets/events/holidays/sehwa-contest/background/royal-atelier-v1.webp?v=${scheduleAssetRevision}`;
+  const holidayBackground=`../assets/events/holidays/sehwa-contest/background/royal-atelier-v1.webp?v=${scheduleAssetRevision}`;bg.src=holidayBackground;document.querySelector('#stageMap').src=holidayBackground;
   document.querySelector('#stageCharacter').hidden=true;document.querySelector('#stageNpc').hidden=true;document.querySelector('#stageProps').hidden=true;
   document.querySelector('#stageCaption').textContent=`복을 그리는 왕실 세화 경연 QA · ${qaBeat}/${sehwaStoryBeats.length}장면 · 선화 ${session.overallRank}`;
   bindHolidayQaTap(session,qaBeat-1,sehwaStoryBeats,renderSehwaContest,'복을 그리는 왕실 세화 경연 QA');

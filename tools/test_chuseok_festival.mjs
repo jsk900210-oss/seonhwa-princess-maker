@@ -60,6 +60,9 @@ assert.match(css,/\.moonlight-pageant\.festival-pm3\.tap-ready\{[^}]*pointer-eve
 assert.match(css,/action-holiday-chuseok:not\(\[hidden\]\)[^}]*>\.dialogue,[^}]*action-holiday-seollal:not\(\[hidden\]\)[^}]*>\.dialogue\{display:none!important\}/,'추석·설날 이벤트 중에는 바깥 하단 설명창을 숨겨야 합니다.');
 assert.match(css,/\.activity-stage:is\(\.action-holiday-chuseok,\.action-holiday-seollal\)\{[^}]*left:2%!important;[^}]*right:2%!important;[^}]*top:20%!important;[^}]*bottom:1%!important;[^}]*height:auto!important;[^}]*border:0!important;[^}]*background:none!important;[^}]*box-shadow:none!important/,'추석·설날 이벤트는 일반 일정용 쯔꾸르 액자 없이 화면 하단까지 넓게 보여야 합니다.');
 assert.match(css,/\.activity-stage:is\(\.action-holiday-chuseok,\.action-holiday-seollal\)>\.stage-inner\{[^}]*border:0!important;[^}]*box-shadow:none!important/,'명절 이벤트 내부의 이중 액자도 제거해야 합니다.');
+assert.match(css,/\.activity-stage:is\(\.action-holiday-chuseok,\.action-holiday-seollal\) \.stage-map\{opacity:0!important\}/,'명절 이벤트는 내부 배경을 겹쳐 그리지 않고 전체 화면 배경 하나만 사용해야 합니다.');
+assert.match(app,/holidayBackground[\s\S]{0,220}bg\.src=holidayBackground;stageMap\.src=holidayBackground/,'추석 실제 진행에서는 전체 화면과 무대가 같은 배경 자산을 공유해야 합니다.');
+assert.match(app,/holidayBackground[^\n]+bg\.src=holidayBackground;document\.querySelector\('#stageMap'\)\.src=holidayBackground/,'추석 QA에서도 전체 화면과 무대가 같은 배경 자산을 공유해야 합니다.');
 assert.match(app,/function festivalLineup\(session\)[^\n]+lineup-gesture-frames/,'8인 소개 장면은 실제 동작 프레임을 사용해야 합니다.');
 assert.doesNotMatch(app,/function festivalLineup\(session\)[^\n]+<figcaption>/,'8인 소개 장면에는 캐릭터 이름표를 표시하지 않아야 합니다.');
 assert.match(css,/\.pageant-intro-lineup \.lineup-gesture-frames\{[^}]*width:74px;[^}]*height:100px;[^}]*animation:pageant-lineup-real-frames/,'8인 참가자는 확대된 실제 프레임 애니메이션으로 보여야 합니다.');
