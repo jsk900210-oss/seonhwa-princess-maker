@@ -2645,6 +2645,30 @@ body .phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage:
 .moonlight-pageant.festival-pm3.beat-4 .pageant-intro-lineup figure:nth-child(2){transform:translate(6px,-2px)!important}
 .moonlight-pageant.festival-pm3.beat-4 .pageant-intro-lineup figure:nth-child(3){transform:translate(-6px,-2px)!important}
 .moonlight-pageant.festival-pm3.beat-4 .pageant-intro-lineup figure:nth-child(4){transform:translate(-18px,-2px)!important}
+/* v0.64.162 — 왕의 안내 컷을 신수 대화 컷과 같은 프레임 규격으로 통일한다. */
+.festival-character-cut.king-cut img{
+  left:-22%!important;
+  bottom:-2%!important;
+  width:112%!important;
+  height:112%!important;
+  object-position:center bottom!important;
+  transform-origin:center bottom!important;
+}
+.festival-character-cut.king-cut p{
+  top:4%!important;
+  right:1%!important;
+  width:72%!important;
+  min-height:88px!important;
+  padding:11px 13px 12px!important;
+  font-size:12px!important;
+  line-height:1.6!important;
+}
+.festival-character-cut.king-cut p b{margin-bottom:5px!important;font-size:15px!important}
+.moonlight-pageant.festival-pm3 .pageant-intro-lineup figure.is-player,
+.moonlight-pageant.festival-pm3 .pageant-intro-lineup figure.is-player .lineup-gesture-frames,
+.moonlight-pageant.festival-pm3 .pageant-intro-lineup figure.is-player img{
+  filter:drop-shadow(0 3px 3px #180d08aa)!important;
+}
 @media(max-width:380px){
   .sehwa-opening-dialogue>div{top:3%!important;width:74%!important;min-height:82px!important;padding:10px 11px!important}
   .sehwa-opening-dialogue>div p{font-size:10.5px!important;line-height:1.58!important}
