@@ -42,3 +42,21 @@ body{min-height:100dvh}.phone{width:min(100vw,calc(100dvh * 9 / 16),430px);max-h
 .relation-encounter-scene{background-color:#24170f;background-image:linear-gradient(#120d0966,#120d0938),var(--relation-scene-background,url('../assets/backgrounds/home/home-room-morning.webp'));background-position:center,var(--relation-scene-position,center);background-size:cover,var(--relation-scene-size,cover);background-repeat:no-repeat}
 .relation-encounter-person{bottom:13%;width:126%;height:90%;background:transparent!important;transform-origin:center bottom}.relation-encounter-male{left:-20%}.relation-encounter-female{right:-18%;bottom:-6%;width:112%;height:100%;clip-path:inset(0 0 25% 0)}
 @media(max-width:430px){.relation-encounter-scene{background-color:#1b120d}.relation-encounter-person{bottom:13%;width:146%;height:95%;background:transparent!important}.relation-encounter-male{left:-25%}.relation-encounter-female{right:-23%;bottom:-6%;width:124%;height:100%;clip-path:inset(0 0 26% 0)}.relation-encounter-dialogue{left:4%;right:4%;bottom:3%}}
+/* v0.64.158 — 공통 이벤트 대화 가독성과 인물 하단 페이드. */
+.relation-encounter-person{
+  -webkit-mask-image:linear-gradient(to bottom,#000 0 84%,#000e 91%,#0007 96%,transparent 100%)!important;
+  mask-image:linear-gradient(to bottom,#000 0 84%,#000e 91%,#0007 96%,transparent 100%)!important;
+  clip-path:none!important;
+}
+.relation-encounter-dialogue{left:3%!important;right:3%!important;bottom:3%!important;border-radius:17px!important}
+.relation-encounter-dialogue>button{min-height:136px!important;gap:7px!important;padding:16px 18px 29px!important}
+.relation-encounter-dialogue b{font-size:19px!important}
+.relation-encounter-dialogue span{font-size:15px!important;line-height:1.58!important}
+.relation-encounter-dialogue small{right:16px!important;bottom:9px!important;font-size:10px!important}
+.relation-encounter-choices{gap:8px!important;padding:13px!important}
+.relation-encounter-choices button{min-height:52px!important;padding:11px 14px!important;font-size:13px!important;line-height:1.45!important}
+@media(max-width:380px){
+  .relation-encounter-dialogue>button{min-height:126px!important;padding:14px 15px 27px!important}
+  .relation-encounter-dialogue b{font-size:17px!important}
+  .relation-encounter-dialogue span{font-size:13px!important;line-height:1.55!important}
+}

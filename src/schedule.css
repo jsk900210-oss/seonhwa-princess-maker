@@ -2610,3 +2610,23 @@ body .phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage:
   transform-origin:center bottom!important;
 }
 .stage-character[hidden]{display:none!important}
+/* v0.64.158 — 설날·추석 대화 컷도 동일한 큰 창과 부드러운 하단 경계를 사용한다. */
+.sehwa-opening-dialogue>div{top:4%!important;width:72%!important;min-height:88px!important;box-sizing:border-box;padding:11px 13px 12px!important}
+.sehwa-opening-dialogue>div p{font-size:12px!important;line-height:1.6!important}
+.sehwa-opening-dialogue>div p b{margin-bottom:5px!important;font-size:15px!important}
+.sehwa-opening-dialogue.speaker-guardian>div{right:1%!important}
+.sehwa-opening-dialogue.speaker-seonhwa>div{left:1%!important}
+.sehwa-opening-dialogue>.sehwa-dialogue-bust,
+.sehwa-opening-dialogue>.sehwa-expression,
+.festival-character-cut img{
+  -webkit-mask-image:linear-gradient(to bottom,#000 0 84%,#000e 91%,#0007 96%,transparent 100%)!important;
+  mask-image:linear-gradient(to bottom,#000 0 84%,#000e 91%,#0007 96%,transparent 100%)!important;
+}
+.festival-character-cut p{top:14%!important;width:66%!important;min-height:88px!important;padding:13px 12px!important;font-size:12px!important;line-height:1.6!important}
+.festival-character-cut b{font-size:15px!important}
+.guardian-cut p{top:18%!important}
+@media(max-width:380px){
+  .sehwa-opening-dialogue>div{top:3%!important;width:74%!important;min-height:82px!important;padding:10px 11px!important}
+  .sehwa-opening-dialogue>div p{font-size:10.5px!important;line-height:1.58!important}
+  .sehwa-opening-dialogue>div p b{font-size:14px!important}
+}

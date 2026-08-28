@@ -5,7 +5,7 @@ const app=fs.readFileSync(new URL('../src/app.js',import.meta.url),'utf8');
 const css=fs.readFileSync(new URL('../src/schedule.css',import.meta.url),'utf8');
 const html=fs.readFileSync(new URL('../src/index.html',import.meta.url),'utf8');
 
-for(const asset of ['app.js','style.css','schedule.css'])assert.ok(html.includes(`${asset}?v=0.64.157-debug`),`${asset} 캐시 키가 표시 버전과 같아야 합니다.`);
+for(const asset of ['app.js','style.css','schedule.css'])assert.ok(html.includes(`${asset}?v=0.64.158-debug`),`${asset} 캐시 키가 표시 버전과 같아야 합니다.`);
 
 assert.match(app,/const moonlightContestants=\[/,'고정 더미 참가자 명세가 필요합니다.');
 const contestantBlock=app.match(/const moonlightContestants=\[([\s\S]*?)\n\];/)?.[1]||'';
@@ -76,6 +76,8 @@ assert.match(css,/\.sehwa-opening-dialogue>\.sehwa-dialogue-bust\{[^}]*bottom:-5
 assert.match(css,/\.sehwa-opening-dialogue\.speaker-guardian>\.sehwa-dialogue-bust\{[^}]*left:-22%;[^}]*bottom:-2%;[^}]*width:112%;[^}]*object-position:center bottom/,'신수 대화 컷은 좌측 무대 하단에 고정해 빈 공간을 채워야 합니다.');
 assert.match(css,/\.sehwa-opening-dialogue\.speaker-guardian>div\{[^}]*top:5%;[^}]*width:68%;[^}]*min-height:76px;[^}]*padding:10px 12px 11px/,'신수 대화창은 위쪽 공간을 넓게 사용해야 합니다.');
 assert.match(css,/\.sehwa-opening-dialogue\.speaker-guardian>div p\{[^}]*font-size:11px;[^}]*line-height:1\.58/,'신수 대화 본문은 읽기 쉬운 크기와 행간이어야 합니다.');
+assert.match(css,/v0\.64\.158[\s\S]+\.sehwa-opening-dialogue>div\{[^}]*width:72%!important;[^}]*min-height:88px!important/,'모든 명절 대화창은 동일한 확대 규격을 사용해야 합니다.');
+assert.match(css,/\.festival-character-cut img\{[\s\S]*?mask-image:linear-gradient\(to bottom,#000 0 84%/,'명절 인물 컷 하단은 부드럽게 투명해져야 합니다.');
 assert.match(css,/\.sehwa-opening-dialogue>\.sehwa-expression\{[^}]*bottom:-54%/,'선화 답변 초상도 신수와 같은 무대 바닥선에 닿아야 합니다.');
 
 console.log('PASS: 한가위 달빛 아씨 경연 8인·19장면·6프레임 춤·우승자 인터뷰');
