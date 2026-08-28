@@ -2633,6 +2633,18 @@ body .phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage:
   -webkit-mask-image:linear-gradient(to bottom,#000 0 60%,#000e 67%,#0008 73%,transparent 82%)!important;
   mask-image:linear-gradient(to bottom,#000 0 60%,#000e 67%,#0008 73%,transparent 82%)!important;
 }
+/* v0.64.161 — 참가자 두 줄을 궁중 무대의 원근과 바닥선에 맞춘다. */
+.moonlight-pageant.festival-pm3.beat-4 .pageant-intro-lineup{
+  left:5%!important;
+  right:5%!important;
+  bottom:26%!important;
+  grid-template-rows:82px 108px!important;
+  row-gap:3px!important;
+}
+.moonlight-pageant.festival-pm3.beat-4 .pageant-intro-lineup figure:nth-child(1){transform:translate(18px,-2px)!important}
+.moonlight-pageant.festival-pm3.beat-4 .pageant-intro-lineup figure:nth-child(2){transform:translate(6px,-2px)!important}
+.moonlight-pageant.festival-pm3.beat-4 .pageant-intro-lineup figure:nth-child(3){transform:translate(-6px,-2px)!important}
+.moonlight-pageant.festival-pm3.beat-4 .pageant-intro-lineup figure:nth-child(4){transform:translate(-18px,-2px)!important}
 @media(max-width:380px){
   .sehwa-opening-dialogue>div{top:3%!important;width:74%!important;min-height:82px!important;padding:10px 11px!important}
   .sehwa-opening-dialogue>div p{font-size:10.5px!important;line-height:1.58!important}
