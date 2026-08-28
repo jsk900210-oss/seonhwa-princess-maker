@@ -5,7 +5,7 @@ const app=fs.readFileSync(new URL('../src/app.js',import.meta.url),'utf8');
 const css=fs.readFileSync(new URL('../src/schedule.css',import.meta.url),'utf8');
 const html=fs.readFileSync(new URL('../src/index.html',import.meta.url),'utf8');
 
-for(const asset of ['app.js','style.css','schedule.css'])assert.ok(html.includes(`${asset}?v=0.64.162-debug`),`${asset} 캐시 키가 표시 버전과 같아야 합니다.`);
+for(const asset of ['app.js','style.css','schedule.css'])assert.ok(html.includes(`${asset}?v=0.64.163-debug`),`${asset} 캐시 키가 표시 버전과 같아야 합니다.`);
 
 assert.match(app,/const moonlightContestants=\[/,'고정 더미 참가자 명세가 필요합니다.');
 const contestantBlock=app.match(/const moonlightContestants=\[([\s\S]*?)\n\];/)?.[1]||'';
@@ -21,6 +21,7 @@ assert.doesNotMatch(beats,/초청장을 다시 확인|경연장에 도착해 참
 assert.match(app,/king-presenting-v1\.png/,'왕의 대상 시상 포즈가 필요합니다.');
 assert.match(app,/motion==='dance'&&age==='13'[^\n]+length:10[^\n]+dance-10fps-v5[^\n]+flatMap\(frame=>\[frame,frame\]\)/,'13세 경연 춤은 10개 자세를 두 틱씩 유지해야 합니다.');
 assert.match(css,/\.pageant-hero-frames\.is-dance img\{[^}]*animation-name:pageant-frame-20;[^}]*animation-duration:2s;[^}]*\.1s/,'경연 춤은 10fps를 유지하며 2초 동안 천천히 재생해야 합니다.');
+assert.match(css,/\.moonlight-pageant\.festival-pm3 \.pageant-hero-frames\.is-dance\{[^}]*bottom:26%!important;[^}]*width:132px!important;[^}]*height:176px!important/,'춤추는 선화는 무대 끝 바닥선 위에 놓여야 합니다.');
 assert.match(app,/festivalKingCut\(line,alt\)[^\n]+<b>왕<\/b>/,'경연을 주관하는 군주는 왕으로 표기해야 합니다.');
 assert.doesNotMatch(app,/(황이 예절|황이 대상|알리는 황|시상하는 황|하사하는 황)/,'왕의 경연 대사와 설명에 황 표기가 남으면 안 됩니다.');
 assert.match(app,/id:'hyeon',name:'현',role:'정체를 숨긴 왕세자'/,'현은 왕의 아들인 왕세자로 설정해야 합니다.');
@@ -28,6 +29,7 @@ assert.match(html,/id="moonlightPageant"/,'경연 전용 레이어 컨테이너�
 assert.match(css,/\.pageant-winner/,'우승자 확대 레이어 규격이 필요합니다.');
 assert.match(css,/@keyframes pageant-bow/,'예절 심사 절 동작이 필요합니다.');
 assert.match(app,/moonlightMotionNames=\['opening-dialogue','opening-dialogue','title','final-lineup'/,'첫 대화 뒤 중복 준비 장면 없이 제목과 참가자 소개로 이어져야 합니다.');
+assert.match(app,/moonlightMotionNames=\[[^\]]*'royal-judging','dance','royal-judging','walk','royal-judging','finish'/,'감각·기품·마무리 심사는 실제 춤·걷기·인사 프레임에 연결되어야 합니다.');
 assert.match(app,/function moonlightLineupGestureImage\(entry\)/,'13세 참가자 실제 동작 프레임 선택기가 필요합니다.');
 assert.match(css,/@keyframes pageant-lineup-real-frames/,'정지 그림 흔들기 대신 실제 자세 이미지 교체 애니메이션이 필요합니다.');
 assert.doesNotMatch(css,/@keyframes pageant-lineup-(?:hair-tuck|hesitate|skirt-sway|look-around)/,'정지 그림을 통째로 흔드는 가짜 동작이 남아 있으면 안 됩니다.');

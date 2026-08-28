@@ -243,7 +243,7 @@ const vacationIllustrations=[
 function unifiedAgeFolder(){return '09';}
 function scheduleFramePath(file){return `../assets/characters/seonhwa/schedule-actions/${file}`;}
 function scheduleBasePath(file){return `../assets/characters/seonhwa/schedule-base/${file}`;}
-const scheduleAssetRevision='0.64.162-debug';
+const scheduleAssetRevision='0.64.163-debug';
 const scheduleQaParams=new URLSearchParams(location.search);
 const moonlightStandaloneQa=scheduleQaParams.get('qaHoliday')==='chuseok';
 const sehwaStandaloneQa=scheduleQaParams.get('qaHoliday')==='seollal';
@@ -1582,7 +1582,7 @@ const moonlightStoryBeats=[
   '왕이 대상 수상자에게 월백 옥패 노리개를 직접 하사했어요.',
   '대상 수상자가 무대 곁에서 오늘의 마음과 춤을 이야기했어요.'
 ];
-const moonlightMotionNames=['opening-dialogue','opening-dialogue','title','final-lineup','greeting','manners-bow','royal-judging','sense-display','royal-judging','dignity-walk','royal-judging','moon-finish','royal-judging','result','result','award','winner-interview'];
+const moonlightMotionNames=['opening-dialogue','opening-dialogue','title','final-lineup','greeting','bow','royal-judging','dance','royal-judging','walk','royal-judging','finish','royal-judging','result','result','award','winner-interview'];
 function moonlightAgeIndex(){return game.age>=18?3:game.age>=16?2:game.age>=13?1:0;}
 function moonlightAssetAge(){return game.age>=18?'18':game.age>=16?'16':game.age>=13?'13':'09';}
 function moonlightSeonhwaImage(){const age=moonlightAssetAge();return `../assets/events/holidays/moonlight-pageant/seonhwa/age-${age}/seonhwa-winner-v1.png?v=${scheduleAssetRevision}`;}

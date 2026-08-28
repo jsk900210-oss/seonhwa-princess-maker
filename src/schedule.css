@@ -2669,6 +2669,11 @@ body .phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage:
 .moonlight-pageant.festival-pm3 .pageant-intro-lineup figure.is-player img{
   filter:drop-shadow(0 3px 3px #180d08aa)!important;
 }
+.moonlight-pageant.festival-pm3 .pageant-hero-frames.is-dance{
+  bottom:26%!important;
+  width:132px!important;
+  height:176px!important;
+}
 @media(max-width:380px){
   .sehwa-opening-dialogue>div{top:3%!important;width:74%!important;min-height:82px!important;padding:10px 11px!important}
   .sehwa-opening-dialogue>div p{font-size:10.5px!important;line-height:1.58!important}
