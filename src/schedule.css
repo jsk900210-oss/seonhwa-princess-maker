@@ -2770,3 +2770,18 @@ body .phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage:
   width:132px!important;
   bottom:2%!important;
 }
+
+/* v0.64.185 — 설날·추석 시상자는 같은 성인 전신 규격을 사용한다. */
+.sehwa-contest.festival-pm3:is(.beat-16,.beat-17) .pageant-king,
+.moonlight-pageant.festival-pm3.beat-16 .pageant-king{
+  right:4%!important;
+  bottom:14%!important;
+  width:180px!important;
+  height:240px!important;
+  object-fit:contain!important;
+  object-position:center bottom!important;
+}
+@media(max-width:380px){
+  .sehwa-contest.festival-pm3:is(.beat-16,.beat-17) .pageant-king,
+  .moonlight-pageant.festival-pm3.beat-16 .pageant-king{width:165px!important;height:220px!important}
+}
