@@ -1185,6 +1185,23 @@
   .phone.playing:not(.market-playing):not(.vacation-playing)>.settings-gear{right:calc(5% + 70px)!important}
   .phone.playing:not(.market-playing):not(.vacation-playing) .day-result.phase-brief-result{bottom:-130px!important;min-height:124px!important;max-height:124px!important}
 }
+/* v0.64.172 — 선화 대화 초상을 신수와 같은 화면상 비율로 맞춘다. */
+.sehwa-opening-dialogue.speaker-seonhwa>.sehwa-expression{
+  right:-22%!important;
+  bottom:-2%!important;
+  width:112%!important;
+  height:112%!important;
+  background-position:center bottom!important;
+  transform:scale(1)!important;
+  transform-origin:center bottom!important;
+  -webkit-mask-image:linear-gradient(to bottom,#000 0 84%,#000e 91%,#0007 96%,transparent 100%)!important;
+  mask-image:linear-gradient(to bottom,#000 0 84%,#000e 91%,#0007 96%,transparent 100%)!important;
+  animation:sehwa-expression-fill-from-right .78s cubic-bezier(.18,.75,.24,1) both!important;
+}
+@keyframes sehwa-expression-fill-from-right{
+  from{opacity:0;transform:translateX(34px) scale(1)}
+  to{opacity:1;transform:translateX(0) scale(1)}
+}
 
 /* v0.63.49: calendar overlapped the decorative roof studs on holiday scenes. */
 .phone.playing.schedule-holiday:not(.market-playing):not(.vacation-playing) .stage-roof::before,
