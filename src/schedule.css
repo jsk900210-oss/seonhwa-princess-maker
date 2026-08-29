@@ -2730,7 +2730,7 @@ body .phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage:
   .sehwa-opening-dialogue>div p{font-size:12.5px!important;line-height:1.62!important}
   .sehwa-opening-dialogue>div p b{font-size:15px!important}
 }
-/* v0.64.175 — 반드시 파일 최종 규칙으로 두고 하단 절단면을 길게 녹인다. */
+/* v0.64.177 — 반드시 파일 최종 규칙으로 두고 하단 절단면을 넓은 구간에서 녹인다. */
 .sehwa-opening-dialogue.speaker-seonhwa>.sehwa-expression{
   right:-22%!important;
   bottom:-2%!important;
@@ -2741,7 +2741,7 @@ body .phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage:
   filter:none!important;
   transform:scale(1)!important;
   transform-origin:center bottom!important;
-  -webkit-mask-image:linear-gradient(to bottom,#000 0 82%,#000e 88%,#000a 93%,#0005 97%,transparent 100%)!important;
-  mask-image:linear-gradient(to bottom,#000 0 82%,#000e 88%,#000a 93%,#0005 97%,transparent 100%)!important;
+  -webkit-mask-image:linear-gradient(to bottom,#000 0 68%,#000f 74%,#000d 80%,#000a 86%,#0006 91%,#0002 96%,transparent 100%)!important;
+  mask-image:linear-gradient(to bottom,#000 0 68%,#000f 74%,#000d 80%,#000a 86%,#0006 91%,#0002 96%,transparent 100%)!important;
   animation:sehwa-expression-fill-from-right .78s cubic-bezier(.18,.75,.24,1) both!important;
 }

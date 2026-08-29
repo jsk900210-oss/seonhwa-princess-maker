@@ -5,7 +5,7 @@ const app=fs.readFileSync(new URL('../src/app.js',import.meta.url),'utf8');
 const css=fs.readFileSync(new URL('../src/schedule.css',import.meta.url),'utf8');
 const html=fs.readFileSync(new URL('../src/index.html',import.meta.url),'utf8');
 
-for(const asset of ['app.js','style.css','schedule.css'])assert.ok(html.includes(`${asset}?v=0.64.176-debug`),`${asset} 캐시 키가 표시 버전과 같아야 합니다.`);
+for(const asset of ['app.js','style.css','schedule.css'])assert.ok(html.includes(`${asset}?v=0.64.177-debug`),`${asset} 캐시 키가 표시 버전과 같아야 합니다.`);
 
 assert.match(app,/const moonlightContestants=\[/,'고정 더미 참가자 명세가 필요합니다.');
 const contestantBlock=app.match(/const moonlightContestants=\[([\s\S]*?)\n\];/)?.[1]||'';
@@ -23,6 +23,7 @@ assert.match(app,/motion==='dance'&&age==='13'[^\n]+length:10[^\n]+dance-10fps-v
 assert.match(css,/\.pageant-hero-frames\.is-dance img\{[^}]*animation-name:pageant-frame-20;[^}]*animation-duration:2s;[^}]*\.1s/,'경연 춤은 10fps를 유지하며 2초 동안 천천히 재생해야 합니다.');
 assert.match(css,/\.moonlight-pageant\.festival-pm3 \.pageant-hero-frames\.is-dance\{[^}]*bottom:26%!important;[^}]*width:132px!important;[^}]*height:176px!important/,'춤추는 선화는 무대 끝 바닥선 위에 놓여야 합니다.');
 assert.match(css,/\.moonlight-pageant\.festival-pm3 \.pageant-hero-frames:is\(\.is-bow,\.is-walk,\.is-finish\)\{[^}]*bottom:26%!important;[^}]*width:132px!important;[^}]*height:176px!important/,'절·걷기·마지막 인사도 춤과 같은 무대 바닥선을 유지해야 합니다.');
+assert.match(css,/\.sehwa-opening-dialogue\.speaker-seonhwa>\.sehwa-expression\{[^}]*filter:none!important;[^}]*linear-gradient\(to bottom,#000 0 68%,[^}]*transparent 100%\)!important/,'선화 초상은 그림자 띠 없이 하단 32%를 길게 그라데이션 처리해야 합니다.');
 assert.doesNotMatch(beats,/황과 심사관/,'경연을 주관하는 인물은 황이 아니라 왕이어야 합니다.');
 assert.match(app,/festivalKingCut\(line,alt\)[^\n]+<b>왕<\/b>/,'경연을 주관하는 군주는 왕으로 표기해야 합니다.');
 assert.doesNotMatch(app,/(황이 예절|황이 대상|알리는 황|시상하는 황|하사하는 황)/,'왕의 경연 대사와 설명에 황 표기가 남으면 안 됩니다.');
@@ -101,9 +102,9 @@ assert.match(css,/\.sehwa-opening-dialogue\.speaker-guardian>div p\{[^}]*font-si
 assert.match(css,/v0\.64\.171[\s\S]+\.sehwa-opening-dialogue>div\{[^}]*width:92%!important;[^}]*min-height:112px!important;[^}]*padding:14px 16px 15px!important/,'모든 명절 도입 대화창은 상단 폭을 충분히 채워야 합니다.');
 assert.match(css,/\.sehwa-opening-dialogue>div p\{font-size:13\.5px!important;line-height:1\.65!important\}/,'확대된 대화창의 본문도 읽기 쉬운 글자 크기여야 합니다.');
 assert.match(css,/v0\.64\.172[\s\S]+\.sehwa-opening-dialogue\.speaker-seonhwa>\.sehwa-expression\{[^}]*right:-22%!important;[^}]*bottom:-2%!important;[^}]*width:112%!important;[^}]*height:112%!important;[^}]*background-position:center bottom!important;[^}]*transform:scale\(1\)!important/,'선화 대화 초상은 신수와 동일한 112% 프레임 비율과 하단선을 사용해야 합니다.');
-assert.match(css,/v0\.64\.175[\s\S]*\.sehwa-opening-dialogue\.speaker-seonhwa>\.sehwa-expression\{[^}]*background-size:contain!important;[^}]*mask-image:linear-gradient\(to bottom,#000 0 82%,#000e 88%,#000a 93%,#0005 97%,transparent 100%\)/,'최종 선화 초상은 하단 18%에 긴 페이드를 사용해야 합니다.');
-assert.match(css,/v0\.64\.175[\s\S]*\.sehwa-opening-dialogue\.speaker-seonhwa>\.sehwa-expression\{[^}]*filter:none!important/,'선화 초상 하단에 검은 가로 띠를 만드는 그림자 필터가 남으면 안 됩니다.');
-assert.ok(css.lastIndexOf('v0.64.175')>css.lastIndexOf('#000 0 56%'),'선화 최종 보정은 구형 56% 페이드보다 뒤에 있어야 합니다.');
+assert.match(css,/v0\.64\.177[\s\S]*\.sehwa-opening-dialogue\.speaker-seonhwa>\.sehwa-expression\{[^}]*background-size:contain!important;[^}]*mask-image:linear-gradient\(to bottom,#000 0 68%,#000f 74%,#000d 80%,#000a 86%,#0006 91%,#0002 96%,transparent 100%\)/,'최종 선화 초상은 하단 32%에 긴 단계형 페이드를 사용해야 합니다.');
+assert.match(css,/v0\.64\.177[\s\S]*\.sehwa-opening-dialogue\.speaker-seonhwa>\.sehwa-expression\{[^}]*filter:none!important/,'선화 초상 하단에 검은 가로 띠를 만드는 그림자 필터가 남으면 안 됩니다.');
+assert.ok(css.lastIndexOf('v0.64.177')>css.lastIndexOf('#000 0 56%'),'선화 최종 보정은 구형 56% 페이드보다 뒤에 있어야 합니다.');
 assert.match(css,/\.sehwa-opening-dialogue>\.sehwa-expression\{[^}]*mask-image:linear-gradient\(to bottom,#000 0 56%,#000e 62%,#0008 68%,transparent 76%\)/,'선화 표정 컷의 실제 인물 하단에서 페이드가 시작되어야 합니다.');
 assert.match(css,/\.festival-character-cut img\{[\s\S]*?mask-image:linear-gradient\(to bottom,#000 0 84%/,'명절 인물 컷 하단은 부드럽게 투명해져야 합니다.');
 assert.match(css,/\.sehwa-opening-dialogue>\.sehwa-expression\{[^}]*bottom:-54%/,'선화 답변 초상도 신수와 같은 무대 바닥선에 닿아야 합니다.');
