@@ -30,6 +30,7 @@ body{min-height:100dvh}.phone{width:min(100vw,calc(100dvh * 9 / 16),430px);max-h
 /* 9세 홈 전용: 성인 단계와 분리해 머리·발 주변 여백을 확보한다. */
 .phone[data-growth-age="9"] .character-slot{inset:23% 17% 24%}
 .phone[data-growth-age="9"] .character-slot>img{transform:translateY(6%)}
+.phone.restoring-save .character-slot{visibility:hidden!important}
 
 /* v0.64.115: PM3-style home portrait framing — keep the source full body,
    but crop the home presentation naturally around the lower thigh. */

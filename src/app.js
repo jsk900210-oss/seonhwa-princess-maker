@@ -243,7 +243,7 @@ const vacationIllustrations=[
 function unifiedAgeFolder(){return '09';}
 function scheduleFramePath(file){return `../assets/characters/seonhwa/schedule-actions/${file}`;}
 function scheduleBasePath(file){return `../assets/characters/seonhwa/schedule-base/${file}`;}
-const scheduleAssetRevision='0.64.180-debug';
+const scheduleAssetRevision='0.64.181-debug';
 const scheduleQaParams=new URLSearchParams(location.search);
 const moonlightStandaloneQa=scheduleQaParams.get('qaHoliday')==='chuseok';
 const sehwaStandaloneQa=scheduleQaParams.get('qaHoliday')==='seollal';
@@ -2425,18 +2425,36 @@ function showUnavailableRecovery(){
   prompt.hidden=false;
   document.querySelector('#recoveryFresh').focus();
 }
-function continueRecovery(){
+async function waitForHomeCharacterReady(){
+  if(character.complete&&character.naturalWidth>0)return;
+  if(typeof character.decode==='function'){
+    try{await character.decode();return;}catch{}
+  }
+  await new Promise(resolve=>{
+    const finish=()=>{character.removeEventListener('load',finish);character.removeEventListener('error',finish);resolve();};
+    character.addEventListener('load',finish,{once:true});
+    character.addEventListener('error',finish,{once:true});
+  });
+}
+async function continueRecovery(){
   const saved=pendingRecoverySave;
+  const continueButton=document.querySelector('#recoveryContinue');
+  const phone=document.querySelector('.phone');
+  continueButton.disabled=true;
+  phone.classList.add('restoring-save');
   document.querySelector('#prologue').hidden=true;
   panel.hidden=true;
   resetTransientScenes();
   if(!isPlayableSave(saved)||!applySavePayload(saved)){
+    phone.classList.remove('restoring-save');
     pendingRecoverySave=null;
     showUnavailableRecovery();
     return;
   }
+  await waitForHomeCharacterReady();
   pendingRecoverySave=null;
   document.querySelector('#recoveryPrompt').hidden=true;
+  requestAnimationFrame(()=>phone.classList.remove('restoring-save'));
   playHomeMusic();
   queueAutoSave();
 }

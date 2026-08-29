@@ -7,6 +7,7 @@ import {fileURLToPath} from 'node:url';
 const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..');
 const app=fs.readFileSync(path.join(root,'src','app.js'),'utf8');
 const css=fs.readFileSync(path.join(root,'src','schedule.css'),'utf8');
+const homeCss=fs.readFileSync(path.join(root,'src','style.css'),'utf8');
 const html=fs.readFileSync(path.join(root,'src','index.html'),'utf8');
 
 assert.match(app,/const fullErrandTrack=\[-24,-8,8,24,40,56,72,88,104,124\]/,'errand must start and finish fully outside the framed stage');
@@ -62,7 +63,10 @@ assert.ok(app.includes('const childcareNpcRunCycle=[0,3,2,3]'),'child must pass 
 assert.ok(app.includes("const requiredNpcFrameCount=actionId==='childcare'?4:3")&&app.includes('npcFrames.length!==requiredNpcFrameCount'),'childcare playback must accept its fourth crossing frame');
 const layeredQaBody=app.slice(app.indexOf('async function startScheduleLayerQaPattern'),app.indexOf('async function startStudyFailureQa'));
 assert.ok(layeredQaBody.includes("const oneShotQa=scheduleQaActionId==='childcare'||(scheduleQaActionId==='farmwork'&&pattern==='fail-b')")&&layeredQaBody.includes("'아이 돌보기':'논가 닭 추격'")&&layeredQaBody.includes('finally{scheduleQaLoopRunning=false;}'),'childcare and farm chicken one-shot handling must live inside the layered QA runner');
-assert.ok(html.includes('v0.64.180-debug'),'HTML cache revision must expose the new build');
+assert.ok(html.includes('v0.64.181-debug'),'HTML cache revision must expose the new build');
+assert.match(app,/async function continueRecovery\(\)/,'이어하기는 저장 캐릭터 이미지 준비를 기다려야 합니다.');
+assert.match(app,/phone\.classList\.add\('restoring-save'\)[\s\S]*await waitForHomeCharacterReady\(\)[\s\S]*phone\.classList\.remove\('restoring-save'\)/,'저장 캐릭터 준비 전에는 홈 선화를 숨겨야 합니다.');
+assert.match(homeCss,/\.phone\.restoring-save \.character-slot\{visibility:hidden!important\}/,'복구 중 이전 선화 프레임을 노출하지 않아야 합니다.');
 assert.ok(css.includes('.stage-character[hidden]{display:none!important}'),'Hidden stage characters must stay hidden after chase scenes');
 assert.ok(app.includes("const heroStart=travelsRight?-25:125")&&app.includes("*travelProgress*150"),'농가 닭 추격은 좌우 양방향으로 화면 밖까지 완주해야 합니다.');
 assert.ok(app.includes("actionId==='farmwork'&&patternKey==='fail-b'))seonImage.closest('.stage-character')?.setAttribute('hidden','')"),'농가 추격 종료 좌표를 지우기 전에 선화를 숨겨 되감기 잔상을 막아야 합니다.');
