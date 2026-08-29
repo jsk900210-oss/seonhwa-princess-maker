@@ -2239,6 +2239,17 @@
   }
   .moonlight-pageant.festival-pm3 .festival-character-cut p b{font-size:15px!important}
 }
+
+/* v0.64.191 · 대상 팻말은 왕의 시상 컷이 아니라 수상자 인사 컷에서 뒤늦게 나타난다. */
+.moonlight-pageant.festival-pm3.motion-award .pageant-winner figcaption{display:none!important}
+.moonlight-pageant.festival-pm3.motion-winner-acceptance .pageant-interview figcaption{
+  opacity:0;
+  animation:moonlight-award-placard-in .38s ease-out .7s forwards;
+}
+@keyframes moonlight-award-placard-in{
+  from{opacity:0;transform:translate(-50%,8px)}
+  to{opacity:1;transform:translate(-50%,0)}
+}
 .moonlight-pageant.beat-3 .pageant-lineup,.moonlight-pageant.beat-4 .pageant-lineup{left:2%;right:2%;bottom:48%;grid-template-columns:repeat(7,1fr);gap:1px}
 .moonlight-pageant.beat-3 .pageant-lineup img,.moonlight-pageant.beat-4 .pageant-lineup img{width:40px;height:54px}
 .moonlight-pageant.beat-3 .pageant-lineup figcaption,.moonlight-pageant.beat-4 .pageant-lineup figcaption{font-size:6px;padding:1px 2px}
