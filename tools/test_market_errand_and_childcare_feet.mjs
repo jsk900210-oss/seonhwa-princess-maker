@@ -63,7 +63,7 @@ assert.ok(app.includes('const childcareNpcRunCycle=[0,3,2,3]'),'child must pass 
 assert.ok(app.includes("const requiredNpcFrameCount=actionId==='childcare'?4:3")&&app.includes('npcFrames.length!==requiredNpcFrameCount'),'childcare playback must accept its fourth crossing frame');
 const layeredQaBody=app.slice(app.indexOf('async function startScheduleLayerQaPattern'),app.indexOf('async function startStudyFailureQa'));
 assert.ok(layeredQaBody.includes("const oneShotQa=scheduleQaActionId==='childcare'||(scheduleQaActionId==='farmwork'&&pattern==='fail-b')")&&layeredQaBody.includes("'아이 돌보기':'논가 닭 추격'")&&layeredQaBody.includes('finally{scheduleQaLoopRunning=false;}'),'childcare and farm chicken one-shot handling must live inside the layered QA runner');
-assert.ok(html.includes('v0.64.189-debug'),'HTML cache revision must expose the new build');
+assert.ok(html.includes('v0.64.190-debug'),'HTML cache revision must expose the new build');
 assert.match(app,/async function continueRecovery\(\)/,'이어하기는 저장 캐릭터 이미지 준비를 기다려야 합니다.');
 assert.match(app,/phone\.classList\.add\('restoring-save'\)[\s\S]*await waitForHomeCharacterReady\(\)[\s\S]*phone\.classList\.remove\('restoring-save'\)/,'저장 캐릭터 준비 전에는 홈 선화를 숨겨야 합니다.');
 assert.match(homeCss,/\.phone\.restoring-save \.character-slot\{visibility:hidden!important\}/,'복구 중 이전 선화 프레임을 노출하지 않아야 합니다.');

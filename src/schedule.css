@@ -2211,6 +2211,34 @@
   object-position:center bottom!important;
   transform-origin:center bottom!important;
 }
+
+/* v0.64.190 · 추석의 모든 대화형 인물은 동일한 큰 대화창 규격을 공유한다. */
+.moonlight-pageant.festival-pm3 .festival-character-cut p{
+  left:4%!important;
+  right:4%!important;
+  top:3%!important;
+  width:auto!important;
+  min-height:112px!important;
+  padding:14px 16px 15px!important;
+  font-size:13.5px!important;
+  line-height:1.65!important;
+}
+.moonlight-pageant.festival-pm3 .festival-character-cut p b{
+  margin-bottom:7px!important;
+  font-size:16px!important;
+}
+@media(max-width:380px){
+  .moonlight-pageant.festival-pm3 .festival-character-cut p{
+    left:3%!important;
+    right:3%!important;
+    top:2%!important;
+    min-height:104px!important;
+    padding:12px 14px 13px!important;
+    font-size:12.5px!important;
+    line-height:1.62!important;
+  }
+  .moonlight-pageant.festival-pm3 .festival-character-cut p b{font-size:15px!important}
+}
 .moonlight-pageant.beat-3 .pageant-lineup,.moonlight-pageant.beat-4 .pageant-lineup{left:2%;right:2%;bottom:48%;grid-template-columns:repeat(7,1fr);gap:1px}
 .moonlight-pageant.beat-3 .pageant-lineup img,.moonlight-pageant.beat-4 .pageant-lineup img{width:40px;height:54px}
 .moonlight-pageant.beat-3 .pageant-lineup figcaption,.moonlight-pageant.beat-4 .pageant-lineup figcaption{font-size:6px;padding:1px 2px}

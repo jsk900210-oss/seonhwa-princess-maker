@@ -5,7 +5,7 @@ const app=fs.readFileSync(new URL('../src/app.js',import.meta.url),'utf8');
 const css=fs.readFileSync(new URL('../src/schedule.css',import.meta.url),'utf8');
 const html=fs.readFileSync(new URL('../src/index.html',import.meta.url),'utf8');
 
-for(const asset of ['app.js','style.css','schedule.css'])assert.ok(html.includes(`${asset}?v=0.64.189-debug`),`${asset} 캐시 키가 표시 버전과 같아야 합니다.`);
+for(const asset of ['app.js','style.css','schedule.css'])assert.ok(html.includes(`${asset}?v=0.64.190-debug`),`${asset} 캐시 키가 표시 버전과 같아야 합니다.`);
 
 assert.match(app,/const moonlightContestants=\[/,'고정 더미 참가자 명세가 필요합니다.');
 const contestantBlock=app.match(/const moonlightContestants=\[([\s\S]*?)\n\];/)?.[1]||'';
@@ -62,6 +62,7 @@ assert.match(css,/\.pageant-interview\.is-acceptance figure\{[^}]*inset:2% 5% 21
 assert.match(css,/v0\.64\.188[\s\S]+\.pageant-interview\.is-acceptance\{[^}]*border:0!important;[^}]*background:none!important;[^}]*box-shadow:none!important/,'대상 소감 화면의 큰 패널과 테두리는 제거되어야 합니다.');
 assert.match(css,/v0\.64\.188[\s\S]+\.pageant-interview\.is-acceptance>div\{[^}]*bottom:0!important/,'대상 수상 소감 대사는 화면 하단에 고정되어야 합니다.');
 assert.match(css,/v0\.64\.189[\s\S]+\.festival-character-cut\.guardian-cut img\{[^}]*left:-22%!important;[^}]*width:112%!important;[^}]*height:112%!important/,'신수 축하 컷은 왕과 같은 확대 인물 규격이어야 합니다.');
+assert.match(css,/v0\.64\.190[\s\S]+\.festival-character-cut p\{[^}]*left:4%!important;[^}]*right:4%!important;[^}]*width:auto!important;[^}]*min-height:112px!important;[^}]*font-size:13\.5px!important/,'왕·신수 등 모든 추석 대화형 인물은 동일한 큰 대화창 규격이어야 합니다.');
 assert.match(app,/guardianCongrats\?festivalGuardianCut\(session\):''/,'선화의 소감 뒤 신수가 마지막 축하를 전해야 합니다.');
 assert.match(app,/function moonlightOpeningAnswer\(session\)/,'스테이터스에 따른 추석 선화의 시작 답변이 필요합니다.');
 assert.match(app,/function moonlightOpeningDialogue\(session,beat\)/,'추석 시작 장면은 신수와 선화의 상반신 대화가 필요합니다.');
