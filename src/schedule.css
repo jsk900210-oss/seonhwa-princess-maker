@@ -2185,6 +2185,16 @@
 .pageant-interview p{margin:0;padding:9px;border-radius:11px;background:#fffdf7;border:1px solid #cda66c;font-size:11px;line-height:1.45;word-break:keep-all;overflow-wrap:normal;text-wrap:pretty}
 .pageant-interview-answer b{display:block;margin-bottom:4px;color:#8b4f1d}
 .pageant-interview-mark{position:absolute;right:10px;top:8px;display:grid;place-items:center;width:27px;height:27px;border-radius:50%;background:#7a4421;color:#fff1c8;font-weight:900}
+
+/* v0.64.187 · 대상 인사는 우승자를 중앙 전신으로 보여 주고, 선화는 두 손을 모아 숙여 인사한다. */
+.pageant-interview.is-acceptance{inset:5% 5% 10%;display:block;padding:0;background:linear-gradient(180deg,#fffaf0e8 0%,#f6ead2e8 100%);overflow:hidden}
+.pageant-interview.is-acceptance figure{position:absolute;inset:2% 5% 21%;display:block;height:auto;margin:0;text-align:center}
+.pageant-interview.is-acceptance .pageant-acceptance-bow{width:100%;height:100%;object-fit:contain;object-position:center bottom;filter:drop-shadow(0 6px 7px #3a1c0d66)}
+.pageant-interview.is-acceptance figcaption{position:absolute;left:50%;bottom:0;min-width:140px;margin:0;padding:5px 14px;transform:translateX(-50%);font-size:12px}
+.pageant-interview.is-acceptance>div{position:absolute;z-index:2;left:6%;right:6%;bottom:3%;display:block}
+.pageant-interview.is-acceptance p{padding:10px 12px;font-size:12px;line-height:1.55}
+.pageant-interview.is-acceptance.is-seonhwa-winner figure{inset:1% 4% 22%}
+.pageant-interview.is-acceptance.is-contestant-winner figure{inset:3% 8% 22%}
 .moonlight-pageant.beat-3 .pageant-lineup,.moonlight-pageant.beat-4 .pageant-lineup{left:2%;right:2%;bottom:48%;grid-template-columns:repeat(7,1fr);gap:1px}
 .moonlight-pageant.beat-3 .pageant-lineup img,.moonlight-pageant.beat-4 .pageant-lineup img{width:40px;height:54px}
 .moonlight-pageant.beat-3 .pageant-lineup figcaption,.moonlight-pageant.beat-4 .pageant-lineup figcaption{font-size:6px;padding:1px 2px}
