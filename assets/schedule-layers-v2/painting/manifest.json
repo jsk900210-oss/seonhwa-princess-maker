@@ -1,12 +1,12 @@
 {
-  "version": "2.0.0-pilot.6",
+  "version": "2.1.0",
   "activityId": "painting",
   "nameKo": "회화 배우기",
   "status": "pilot-review",
   "existingHeroFrames": [
-    "../../characters/seonhwa/schedule-actions/calligraphy-pixel-1.png",
-    "../../characters/seonhwa/schedule-actions/calligraphy-pixel-2.png",
-    "../../characters/seonhwa/schedule-actions/calligraphy-pixel-3.png"
+    "../../characters/seonhwa/schedule-actions/painting-art-pixel-v2-1.png",
+    "../../characters/seonhwa/schedule-actions/painting-art-pixel-v2-2.png",
+    "../../characters/seonhwa/schedule-actions/painting-art-pixel-v2-3.png"
   ],
   "existingBackground": "../../backgrounds/phase-scenes/painting.webp",
   "animation": {

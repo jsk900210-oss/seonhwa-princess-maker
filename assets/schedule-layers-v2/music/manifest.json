@@ -1,12 +1,12 @@
 {
-  "version": "2.0.0-review.2",
+  "version": "2.1.0",
   "activityId": "music",
   "nameKo": "악기 배우기",
   "status": "pilot-review",
   "existingHeroFrames": [
-    "../../characters/seonhwa/schedule-actions/sit-pixel-1.png",
-    "../../characters/seonhwa/schedule-actions/sit-pixel-2.png",
-    "../../characters/seonhwa/schedule-actions/sit-pixel-3.png"
+    "../../characters/seonhwa/schedule-actions/gayageum-pixel-v1-1.png",
+    "../../characters/seonhwa/schedule-actions/gayageum-pixel-v1-2.png",
+    "../../characters/seonhwa/schedule-actions/gayageum-pixel-v1-3.png"
   ],
   "existingBackground": "../../backgrounds/phase-scenes/music.webp",
   "animation": {

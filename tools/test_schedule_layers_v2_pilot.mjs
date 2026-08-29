@@ -9,7 +9,7 @@ for(const activityId of ['kitchenhelp','childcare','painting','music','dance','s
   assert.deepEqual(manifest.animation.sequence,[1,2,3],`${activityId}는 1→2→3 순환이어야 합니다.`);
   assert.equal(manifest.existingHeroFrames.length,3,'기존 선화 3프레임을 참조해야 합니다.');
   assert.equal(manifest.placement.npcScale,activityId==='childcare'?0.78:1,`${activityId} NPC 배율 규격이 맞아야 합니다.`);
-  const heroFrameId=['painting','copying','classics','tutoring'].includes(activityId)?'calligraphy':activityId==='swordsmanship'?'sword-strike':activityId==='spellcraft'?'spell-cast':activityId==='accounting'?'arithmetic':activityId==='innhelp'?'merchanthelp':activityId==='sewing'?'loomwork':activityId==='music'?'sit':activityId==='clinichelp'?'clinic-pack':activityId;
+  const heroFrameId=activityId==='painting'?'painting-art':activityId==='music'?'gayageum':['copying','classics','tutoring'].includes(activityId)?'calligraphy':activityId==='swordsmanship'?'sword-strike':activityId==='spellcraft'?'spell-cast':activityId==='accounting'?'arithmetic':activityId==='innhelp'?'merchanthelp':activityId==='sewing'?'loomwork':activityId==='clinichelp'?'clinic-pack':activityId;
   assert.ok(manifest.existingHeroFrames.every(path=>path.includes(`characters/seonhwa/schedule-actions/${heroFrameId}-pixel-`)),'일정별 승인된 선화 3프레임을 참조해야 합니다.');
   for(const key of ['success-a','success-b','fail-a','fail-b'])assert.equal(manifest.patterns[key].frames.length,3,`${activityId} ${key}는 3프레임이어야 합니다.`);
 }

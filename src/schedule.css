@@ -2757,3 +2757,9 @@ body .phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage:
 .phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage:is(.action-accounting,.action-classics,.action-clinichelp,.action-ferryhelp,.action-innhelp,.action-masonry,.action-merchanthelp,.action-spellcraft,.action-swordsmanship,.action-tutoring).schedule-layered .schedule-scene-layer.layer-npc{width:193px!important}
 .phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-childcare.schedule-layered .schedule-scene-layer.layer-npc{width:84px!important;height:84px!important}
 .phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-painting.schedule-layered .schedule-scene-layer.layer-pattern.success-a{display:none!important}
+
+/* v0.64.183 — 회화·악기는 선화와 작업물을 한 PNG에 합친 전용 프레임이다. */
+.phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-painting.schedule-layered .stage-character.pixel-sprite{width:165px!important;height:165px!important;bottom:2%!important}
+.phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-music.schedule-layered .stage-character.pixel-sprite{width:190px!important;height:190px!important;bottom:1%!important}
+.phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage:is(.action-painting,.action-music).schedule-layered .stage-character.pixel-sprite>img{width:100%!important;height:100%!important;object-fit:contain!important;object-position:center bottom!important}
+.phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-music.schedule-layered .schedule-scene-layer.layer-pattern.success-a{display:none!important}
