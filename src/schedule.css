@@ -1194,8 +1194,8 @@
   background-position:center bottom!important;
   transform:scale(1)!important;
   transform-origin:center bottom!important;
-  -webkit-mask-image:linear-gradient(to bottom,#000 0 84%,#000e 91%,#0007 96%,transparent 100%)!important;
-  mask-image:linear-gradient(to bottom,#000 0 84%,#000e 91%,#0007 96%,transparent 100%)!important;
+  -webkit-mask-image:linear-gradient(to bottom,#000 0 94%,#000e 97%,#0007 99%,transparent 100%)!important;
+  mask-image:linear-gradient(to bottom,#000 0 94%,#000e 97%,#0007 99%,transparent 100%)!important;
   animation:sehwa-expression-fill-from-right .78s cubic-bezier(.18,.75,.24,1) both!important;
 }
 @keyframes sehwa-expression-fill-from-right{
