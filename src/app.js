@@ -243,7 +243,7 @@ const vacationIllustrations=[
 function unifiedAgeFolder(){return '09';}
 function scheduleFramePath(file){return `../assets/characters/seonhwa/schedule-actions/${file}`;}
 function scheduleBasePath(file){return `../assets/characters/seonhwa/schedule-base/${file}`;}
-const scheduleAssetRevision='0.64.177-debug';
+const scheduleAssetRevision='0.64.178-debug';
 const scheduleQaParams=new URLSearchParams(location.search);
 const moonlightStandaloneQa=scheduleQaParams.get('qaHoliday')==='chuseok';
 const sehwaStandaloneQa=scheduleQaParams.get('qaHoliday')==='seollal';
@@ -1356,7 +1356,7 @@ function relationScenePresentation(episode){const presentation=relationScenePres
 function playRelationEncounterScene(candidate,opening,resultLine='',episode=null){
   const scene=document.querySelector('#relationEncounterScene'),male=document.querySelector('#relationEncounterMale'),female=document.querySelector('#relationEncounterFemale'),speaker=document.querySelector('#relationEncounterSpeaker'),text=document.querySelector('#relationEncounterText'),next=document.querySelector('#relationEncounterNext'),choices=document.querySelector('#relationEncounterChoices');
   const presentation=relationScenePresentation(episode);scene.style.setProperty('--relation-scene-background',`url('${presentation.src}?v=${scheduleAssetRevision}')`);scene.style.setProperty('--relation-scene-size',presentation.size);scene.style.setProperty('--relation-scene-position',presentation.position);scene.dataset.location=episode?.scene||'집 안';
-  applyRelationPortrait(male,candidate,episode);female.src=protagonistFullbodyForAge();female.alt=`${game.characterName||'선화'} ${game.age}세 허벅지 위 인물화`;
+  applyRelationPortrait(male,candidate,episode);female.src=protagonistFullbodyForAge();female.alt=`${game.characterName||'선화'} ${game.age}세 상반신 인물화`;
   scene.hidden=false;scene.classList.remove('is-entered');requestAnimationFrame(()=>scene.classList.add('is-entered'));scene.dataset.speaker='male';speaker.textContent=candidate.name;text.textContent=opening||candidate.dialogues[0];choices.hidden=true;next.hidden=false;
   return new Promise(resolve=>{
     const finish=()=>{scene.hidden=true;scene.classList.remove('is-entered');scene.removeAttribute('data-speaker');male.removeAttribute('src');female.removeAttribute('src');resolve();};

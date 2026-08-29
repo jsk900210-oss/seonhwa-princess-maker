@@ -6,5 +6,6 @@ const css=fs.readFileSync(new URL('../src/style.css',import.meta.url),'utf8');
 assert.ok(html.includes('id="relationEncounterScene"')&&html.includes('id="relationEncounterChoices"'),'인연 대화 장면과 선택지가 필요합니다.');
 assert.match(css,/relation-encounter-male\{left:-?\d+%;transform:translateX\(-1\d{2}%\)/,'남자 주인공은 왼쪽에서 등장해야 합니다.');
 assert.match(css,/relation-encounter-female\{right:-?\d+%;transform:translateX\(1\d{2}%\)/,'여자 주인공은 오른쪽에서 등장해야 합니다.');
+assert.match(css,/relation-encounter-female\{[\s\S]*?height:64%!important;[\s\S]*?object-fit:cover!important;[\s\S]*?object-position:center 4%!important;/,'선화는 전신이 아니라 상대 인연과 같은 상반신 크롭으로 표시해야 합니다.');
 assert.ok(app.includes('function relationReplyChoices')&&app.includes('const showChoices=')&&app.includes('choice.line'),'선화 대사를 선택할 수 있어야 합니다.');
 console.log('PASS: 인연 남좌·여우 슬라이드 등장과 선화 대사 선택');
