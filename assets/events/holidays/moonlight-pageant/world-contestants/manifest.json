@@ -1,0 +1,19 @@
+{
+  "schemaVersion": 1,
+  "selection": {"totalCultureSlots":12,"festivalEntrants":8,"alwaysInclude":"joseon","randomOpponents":7,"persistForFestivalSession":true,"onlySelectApprovedAssets":true},
+  "ageBands": ["09", "13", "16", "18"],
+  "cultures": [
+    {"id":"joseon","label":"조선","period":"late Joseon","status":"existing","costume":"hanbok","hair":"age-specific Joseon hairstyle","sources":["https://www.gogung.go.kr/"]},
+    {"id":"edo-japan","label":"일본 에도","period":"1783-1789","status":"reference-approved","costume":"kosode/kimono with obi","hair":"coiffure in dated portrait","sources":["https://www.metmuseum.org/art/collection/search/53446"]},
+    {"id":"qing-china","label":"중국 청","period":"18th century","status":"reference-pending-hair","costume":"women's ceremonial robe","hair":"pending matching portrait","sources":["https://www.metmuseum.org/art/collection/search/70250","https://www.metmuseum.org/art/collection/search/69063"]},
+    {"id":"viet-vietnam","label":"베트남 비엣","period":"18th century","status":"reference-pending-hair","costume":"ao ngu than","hair":"pending matching portrait","sources":["https://baotangphunu.org.vn/en/womens-fashion-2/"]},
+    {"id":"mongol","label":"몽골","period":"18th-19th century","status":"reference-pending","costume":"deel","hair":"pending museum portrait","sources":[]},
+    {"id":"mughal-india","label":"인도 무굴","period":"18th century","status":"reference-pending","costume":"court ensemble","hair":"pending matching portrait","sources":[]},
+    {"id":"siam-thailand","label":"태국 시암","period":"late 18th-early 19th century","status":"reference-pending","costume":"court wrap ensemble","hair":"pending matching portrait","sources":[]},
+    {"id":"qajar-iran","label":"이란 카자르","period":"early 19th century","status":"reference-approved","costume":"jewel-trimmed Qajar court dress","hair":"jeweled coiffure in portrait","sources":["https://www.metmuseum.org/art/collection/search/919185"]},
+    {"id":"ottoman","label":"오스만","period":"18th-19th century","status":"reference-pending-hair","costume":"dort etek entari, gomlek, salvar","hair":"pending matching portrait","sources":["https://www.metmuseum.org/art/collection/search/85543","https://www.metmuseum.org/art/collection/search/451160"]},
+    {"id":"imperial-russia","label":"러시아 제국","period":"late 18th-early 19th century","status":"reference-pending","costume":"court dress","hair":"pending matching portrait","sources":[]},
+    {"id":"bourbon-france","label":"프랑스","period":"ca. 1770","status":"reference-pending-hair","costume":"robe a la francaise","hair":"pending child portrait","sources":["https://www.metmuseum.org/art/collection/search/82495"]},
+    {"id":"bourbon-spain","label":"스페인","period":"late 18th-early 19th century","status":"reference-pending","costume":"court dress","hair":"pending Prado portrait","sources":[]}
+  ]
+}
