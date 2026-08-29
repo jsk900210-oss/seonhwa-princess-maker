@@ -2738,6 +2738,7 @@ body .phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage:
   height:112%!important;
   background-size:contain!important;
   background-position:center bottom!important;
+  filter:none!important;
   transform:scale(1)!important;
   transform-origin:center bottom!important;
   -webkit-mask-image:linear-gradient(to bottom,#000 0 82%,#000e 88%,#000a 93%,#0005 97%,transparent 100%)!important;
