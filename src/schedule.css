@@ -2201,6 +2201,16 @@
 .pageant-interview.is-acceptance figure{inset:1% 4% 23%!important}
 .pageant-interview.is-acceptance>div{left:4%!important;right:4%!important;bottom:0!important}
 .pageant-interview.is-acceptance p{background:#fffaf0f2!important;box-shadow:0 4px 14px #140a0666}
+
+/* v0.64.189 · 추석 신수 축하 컷도 왕·도입 대화와 같은 확대 인물 규격을 사용한다. */
+.moonlight-pageant.festival-pm3 .festival-character-cut.guardian-cut img{
+  left:-22%!important;
+  bottom:-2%!important;
+  width:112%!important;
+  height:112%!important;
+  object-position:center bottom!important;
+  transform-origin:center bottom!important;
+}
 .moonlight-pageant.beat-3 .pageant-lineup,.moonlight-pageant.beat-4 .pageant-lineup{left:2%;right:2%;bottom:48%;grid-template-columns:repeat(7,1fr);gap:1px}
 .moonlight-pageant.beat-3 .pageant-lineup img,.moonlight-pageant.beat-4 .pageant-lineup img{width:40px;height:54px}
 .moonlight-pageant.beat-3 .pageant-lineup figcaption,.moonlight-pageant.beat-4 .pageant-lineup figcaption{font-size:6px;padding:1px 2px}
