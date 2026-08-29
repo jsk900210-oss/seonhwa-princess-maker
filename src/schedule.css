@@ -2763,3 +2763,10 @@ body .phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage:
 .phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-music.schedule-layered .stage-character.pixel-sprite{width:190px!important;height:190px!important;bottom:1%!important}
 .phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage:is(.action-painting,.action-music).schedule-layered .stage-character.pixel-sprite>img{width:100%!important;height:100%!important;object-fit:contain!important;object-position:center bottom!important}
 .phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-music.schedule-layered .schedule-scene-layer.layer-pattern.success-a{display:none!important}
+
+/* v0.64.184 — 회화 선생은 투명 여백이 거의 없는 원본이므로
+   앉은 선화 구도에 맞춰 보이는 키와 발 기준선을 별도로 보정한다. */
+.phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-painting.schedule-layered .schedule-scene-layer.layer-npc{
+  width:132px!important;
+  bottom:2%!important;
+}
