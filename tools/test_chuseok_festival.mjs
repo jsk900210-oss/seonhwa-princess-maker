@@ -5,7 +5,7 @@ const app=fs.readFileSync(new URL('../src/app.js',import.meta.url),'utf8');
 const css=fs.readFileSync(new URL('../src/schedule.css',import.meta.url),'utf8');
 const html=fs.readFileSync(new URL('../src/index.html',import.meta.url),'utf8');
 
-for(const asset of ['app.js','style.css','schedule.css'])assert.ok(html.includes(`${asset}?v=0.64.173-debug`),`${asset} 캐시 키가 표시 버전과 같아야 합니다.`);
+for(const asset of ['app.js','style.css','schedule.css'])assert.ok(html.includes(`${asset}?v=0.64.174-debug`),`${asset} 캐시 키가 표시 버전과 같아야 합니다.`);
 
 assert.match(app,/const moonlightContestants=\[/,'고정 더미 참가자 명세가 필요합니다.');
 const contestantBlock=app.match(/const moonlightContestants=\[([\s\S]*?)\n\];/)?.[1]||'';
@@ -102,6 +102,8 @@ assert.match(css,/v0\.64\.171[\s\S]+\.sehwa-opening-dialogue>div\{[^}]*width:92%
 assert.match(css,/\.sehwa-opening-dialogue>div p\{font-size:13\.5px!important;line-height:1\.65!important\}/,'확대된 대화창의 본문도 읽기 쉬운 글자 크기여야 합니다.');
 assert.match(css,/v0\.64\.172[\s\S]+\.sehwa-opening-dialogue\.speaker-seonhwa>\.sehwa-expression\{[^}]*right:-22%!important;[^}]*bottom:-2%!important;[^}]*width:112%!important;[^}]*height:112%!important;[^}]*background-position:center bottom!important;[^}]*transform:scale\(1\)!important/,'선화 대화 초상은 신수와 동일한 112% 프레임 비율과 하단선을 사용해야 합니다.');
 assert.match(css,/\.sehwa-opening-dialogue\.speaker-seonhwa>\.sehwa-expression\{[^}]*mask-image:linear-gradient\(to bottom,#000 0 94%,#000e 97%,#0007 99%,transparent 100%\)/,'선화의 두 손과 허리 아래가 보이도록 하단 페이드를 늦게 시작해야 합니다.');
+assert.match(css,/v0\.64\.174[\s\S]*\.sehwa-opening-dialogue\.speaker-seonhwa>\.sehwa-expression\{[^}]*background-size:contain!important;[^}]*mask-image:linear-gradient\(to bottom,#000 0 94%/,'최종 CSS 규칙이 구형 선화 마스크를 확실히 덮어써야 합니다.');
+assert.ok(css.lastIndexOf('v0.64.174')>css.lastIndexOf('#000 0 56%'),'선화 최종 보정은 구형 56% 페이드보다 뒤에 있어야 합니다.');
 assert.match(css,/\.sehwa-opening-dialogue>\.sehwa-expression\{[^}]*mask-image:linear-gradient\(to bottom,#000 0 56%,#000e 62%,#0008 68%,transparent 76%\)/,'선화 표정 컷의 실제 인물 하단에서 페이드가 시작되어야 합니다.');
 assert.match(css,/\.festival-character-cut img\{[\s\S]*?mask-image:linear-gradient\(to bottom,#000 0 84%/,'명절 인물 컷 하단은 부드럽게 투명해져야 합니다.');
 assert.match(css,/\.sehwa-opening-dialogue>\.sehwa-expression\{[^}]*bottom:-54%/,'선화 답변 초상도 신수와 같은 무대 바닥선에 닿아야 합니다.');

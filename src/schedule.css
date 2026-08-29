@@ -2730,3 +2730,17 @@ body .phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage:
   .sehwa-opening-dialogue>div p{font-size:12.5px!important;line-height:1.62!important}
   .sehwa-opening-dialogue>div p b{font-size:15px!important}
 }
+/* v0.64.174 — 반드시 파일 최종 규칙으로 두어 구형 선화 마스크를 덮어쓴다. */
+.sehwa-opening-dialogue.speaker-seonhwa>.sehwa-expression{
+  right:-22%!important;
+  bottom:-2%!important;
+  width:112%!important;
+  height:112%!important;
+  background-size:contain!important;
+  background-position:center bottom!important;
+  transform:scale(1)!important;
+  transform-origin:center bottom!important;
+  -webkit-mask-image:linear-gradient(to bottom,#000 0 94%,#000e 97%,#0007 99%,transparent 100%)!important;
+  mask-image:linear-gradient(to bottom,#000 0 94%,#000e 97%,#0007 99%,transparent 100%)!important;
+  animation:sehwa-expression-fill-from-right .78s cubic-bezier(.18,.75,.24,1) both!important;
+}
