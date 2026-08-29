@@ -1198,6 +1198,7 @@
   mask-image:linear-gradient(to bottom,#000 0 94%,#000e 97%,#0007 99%,transparent 100%)!important;
   animation:sehwa-expression-fill-from-right .78s cubic-bezier(.18,.75,.24,1) both!important;
 }
+
 @keyframes sehwa-expression-fill-from-right{
   from{opacity:0;transform:translateX(34px) scale(1)}
   to{opacity:1;transform:translateX(0) scale(1)}
@@ -2125,6 +2126,7 @@
 .phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-reading .stage-character.pixel-sprite{left:23%!important}
 .phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-reading .stage-npc.npc-teacher{left:67%!important;right:auto!important;width:146px!important;height:146px!important}
 
+
 /* v0.63.97 — held weapons are part of Seonhwa's dedicated action frames. */
 .phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-swordsmanship.schedule-layered .schedule-scene-layer.layer-pattern.success-a,
 .phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-spellcraft.schedule-layered .schedule-scene-layer.layer-pattern.success-a{display:none!important}
@@ -2745,3 +2747,13 @@ body .phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage:
   mask-image:linear-gradient(to bottom,#000 0 68%,#000f 74%,#000d 80%,#000a 86%,#0006 91%,#0002 96%,transparent 100%)!important;
   animation:sehwa-expression-fill-from-right .78s cubic-bezier(.18,.75,.24,1) both!important;
 }
+
+/* v0.64.182 — 일정 캐릭터 규격 최종 재정의. */
+.phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage:is(.action-painting,.action-music,.action-dance,.action-sewing,.action-copying).schedule-layered .schedule-scene-layer.layer-npc{width:146px!important}
+.phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-woodwork.schedule-layered .schedule-scene-layer.layer-npc{width:148px!important}
+.phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-kitchenhelp.schedule-layered .schedule-scene-layer.layer-npc{width:159px!important}
+.phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-farmwork.schedule-layered .schedule-scene-layer.layer-npc{width:154px!important}
+.phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-loomwork.schedule-layered .schedule-scene-layer.layer-npc{width:214px!important}
+.phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage:is(.action-accounting,.action-classics,.action-clinichelp,.action-ferryhelp,.action-innhelp,.action-masonry,.action-merchanthelp,.action-spellcraft,.action-swordsmanship,.action-tutoring).schedule-layered .schedule-scene-layer.layer-npc{width:193px!important}
+.phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-childcare.schedule-layered .schedule-scene-layer.layer-npc{width:84px!important;height:84px!important}
+.phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-painting.schedule-layered .schedule-scene-layer.layer-pattern.success-a{display:none!important}
