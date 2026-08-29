@@ -2195,6 +2195,12 @@
 .pageant-interview.is-acceptance p{padding:10px 12px;font-size:12px;line-height:1.55}
 .pageant-interview.is-acceptance.is-seonhwa-winner figure{inset:1% 4% 22%}
 .pageant-interview.is-acceptance.is-contestant-winner figure{inset:3% 8% 22%}
+
+/* v0.64.188 · 수상 인물은 무대 위에 바로 놓고, 대사만 화면 하단에 남긴다. */
+.pageant-interview.is-acceptance{inset:0!important;padding:0!important;border:0!important;border-radius:0!important;background:none!important;box-shadow:none!important;overflow:visible!important}
+.pageant-interview.is-acceptance figure{inset:1% 4% 23%!important}
+.pageant-interview.is-acceptance>div{left:4%!important;right:4%!important;bottom:0!important}
+.pageant-interview.is-acceptance p{background:#fffaf0f2!important;box-shadow:0 4px 14px #140a0666}
 .moonlight-pageant.beat-3 .pageant-lineup,.moonlight-pageant.beat-4 .pageant-lineup{left:2%;right:2%;bottom:48%;grid-template-columns:repeat(7,1fr);gap:1px}
 .moonlight-pageant.beat-3 .pageant-lineup img,.moonlight-pageant.beat-4 .pageant-lineup img{width:40px;height:54px}
 .moonlight-pageant.beat-3 .pageant-lineup figcaption,.moonlight-pageant.beat-4 .pageant-lineup figcaption{font-size:6px;padding:1px 2px}
