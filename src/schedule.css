@@ -2250,6 +2250,18 @@
   from{opacity:0;transform:translate(-50%,8px)}
   to{opacity:1;transform:translate(-50%,0)}
 }
+
+/* v0.64.192 · 수상 컷은 왕 없이 반실사 대상 수상자만 중앙에 배치한다. */
+.moonlight-pageant.festival-pm3.motion-award .pageant-winner.is-solo{
+  left:12%!important;
+  right:12%!important;
+  bottom:8%!important;
+  width:auto!important;
+  height:82%!important;
+}
+.moonlight-pageant.festival-pm3.motion-award .pageant-winner.is-solo img{
+  object-position:center bottom!important;
+}
 .moonlight-pageant.beat-3 .pageant-lineup,.moonlight-pageant.beat-4 .pageant-lineup{left:2%;right:2%;bottom:48%;grid-template-columns:repeat(7,1fr);gap:1px}
 .moonlight-pageant.beat-3 .pageant-lineup img,.moonlight-pageant.beat-4 .pageant-lineup img{width:40px;height:54px}
 .moonlight-pageant.beat-3 .pageant-lineup figcaption,.moonlight-pageant.beat-4 .pageant-lineup figcaption{font-size:6px;padding:1px 2px}

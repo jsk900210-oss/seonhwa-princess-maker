@@ -243,7 +243,7 @@ const vacationIllustrations=[
 function unifiedAgeFolder(){return '09';}
 function scheduleFramePath(file){return `../assets/characters/seonhwa/schedule-actions/${file}`;}
 function scheduleBasePath(file){return `../assets/characters/seonhwa/schedule-base/${file}`;}
-const scheduleAssetRevision='0.64.191-debug';
+const scheduleAssetRevision='0.64.192-debug';
 const scheduleQaParams=new URLSearchParams(location.search);
 const moonlightStandaloneQa=scheduleQaParams.get('qaHoliday')==='chuseok';
 const sehwaStandaloneQa=scheduleQaParams.get('qaHoliday')==='seollal';
@@ -1624,6 +1624,10 @@ function moonlightEntrantImage(entry){
   if(entry.player)return moonlightSeonhwaImage();
   return `../assets/events/holidays/moonlight-pageant/contestants/age-${moonlightAssetAge()}/contestant-${entry.index+1}-winner-v1.png?v=${scheduleAssetRevision}`;
 }
+function moonlightAwardWinnerImage(entry){
+  if(!entry.player)return moonlightEntrantImage(entry);
+  return `../assets/events/holidays/moonlight-pageant/seonhwa/age-${moonlightAssetAge()}/acting-v5/seonhwa-acting-13-v5.png?v=${scheduleAssetRevision}`;
+}
 function moonlightLineupGestureImage(entry){
   if(moonlightAssetAge()!=='13')return '';
   const file=entry.player?'seonhwa-gesture-v1.png':`contestant-${entry.index+1}-gesture-v1.png`;
@@ -1678,7 +1682,7 @@ function renderMoonlightPageant(session,dayIndex){
   const king=intro?festivalKingCut('부채 끝과 발 디딤에 담긴 감각을 차분히 살펴보겠다.','한가위 경연의 감각을 심사하는 왕'):'';
   const board=vote?festivalScoreboard(session,'왕과 심사관 점수 집계'):ranking?festivalScoreboard(session,'참가자 최종 순위'):result?`<section class="festival-result-card"><small>선화의 수상 결과</small><strong>${session.overallRank}</strong><p>${session.player.score}점 · ${session.reaction}</p></section>`:'';
   const guardian=guardianCongrats?festivalGuardianCut(session):'';
-  const winner=award?`<figure class="pageant-winner"><img src="${moonlightEntrantImage(session.winner)}" alt="대상 수상자 ${session.winner.name}"></figure><img class="pageant-king" src="../assets/events/holidays/moonlight-pageant/king/king-presenting-v1.png?v=${scheduleAssetRevision}" alt="대상을 시상하는 왕">`:'';
+  const winner=award?`<figure class="pageant-winner is-solo ${session.winner.player?'is-seonhwa':''}"><img src="${moonlightAwardWinnerImage(session.winner)}" alt="반실사 전신으로 인사하는 대상 수상자 ${session.winner.name}"></figure>`:'';
   const kingCongratulations=kingCongrats?festivalKingWinnerCongratulations(session):'';
   const winnerAcceptance=acceptance?festivalWinnerAcceptance(session):'';
   const closingCard=closing?`<section class="festival-result-card festival-closing-card"><small>한가위 경연 완료</small><strong>${session.overallRank}</strong><p>센스 +2 · 예절 +2 · 기품 +2 · 스트레스 -4${session.prize?`<br>${session.prize} 획득`:''}</p></section>`:'';
