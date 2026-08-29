@@ -2084,3 +2084,6 @@ python tools/verify_assets.py
 - 9세 홈 캐릭터에만 더 넓은 상하좌우 여백을 적용해 13세 이상보다 작게 표시합니다.
 - 프메3식 화면·행동 분류에 따라 홈(`Gwangjang Morning Walk`), 저잣거리(`Market Morning Run`), 아르바이트(`Market Morning Run` 긴 버전), 교육(`Hanbok Study Desk`) BGM을 전환합니다.
 - 같은 분류의 일정이 이어지면 현재 곡을 유지하고, 저잣거리·바캉스는 각각 기존 전용 전환 흐름을 사용합니다.
+## v0.64.179-debug · 인연 이벤트 원경 배경 5종
+
+- 서당, 활터, 화실, 나루터, 큰 문 인연 장면에 캐릭터 없는 세로 원경 배경을 적용했습니다.
