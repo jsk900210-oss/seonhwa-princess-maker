@@ -5,7 +5,7 @@ const app=fs.readFileSync(new URL('../src/app.js',import.meta.url),'utf8');
 const css=fs.readFileSync(new URL('../src/schedule.css',import.meta.url),'utf8');
 const html=fs.readFileSync(new URL('../src/index.html',import.meta.url),'utf8');
 
-for(const asset of ['app.js','style.css','schedule.css'])assert.ok(html.includes(`${asset}?v=0.64.196-debug`),`${asset} 캐시 키가 표시 버전과 같아야 합니다.`);
+for(const asset of ['app.js','style.css','schedule.css'])assert.ok(html.includes(`${asset}?v=0.64.197-debug`),`${asset} 캐시 키가 표시 버전과 같아야 합니다.`);
 
 assert.match(app,/const moonlightContestants=\[/,'고정 더미 참가자 명세가 필요합니다.');
 const contestantBlock=app.match(/const moonlightContestants=\[([\s\S]*?)\n\];/)?.[1]||'';
@@ -58,7 +58,8 @@ assert.match(app,/function festivalKingWinnerCongratulations\(session\)/,'시상
 assert.match(app,/function festivalWinnerAcceptance\(session\)/,'왕이 퇴장한 뒤 선화가 수상 소감을 말해야 합니다.');
 assert.match(app,/function moonlightAcceptanceFrames\(\)[\s\S]*\{src:acting\(14\),fit:'1'\}[\s\S]*\{src:acting\(12\),fit:'1'\}[\s\S]*\{src:acting\(14\),fit:'1'\}/,'인사 동작은 같은 캔버스와 얼굴 세트의 14→13→12→13→14 순서를 사용해야 합니다.');
 assert.match(css,/transform:scale\(var\(--acceptance-fit\)\);transform-origin:center bottom/,'인사 프레임은 바닥선을 고정한 채 인물 높이만 정규화해야 합니다.');
-assert.match(app,/pageant-acceptance-motion[^\n]+자연스럽게 머리 숙여 인사하는/,'선화가 대상이면 대화 중 반실사 전신 인사 모션을 사용해야 합니다.');
+assert.match(app,/pageant-acceptance-bow is-highres-stable[^\n]+moonlightAwardWinnerImage\(winner\)[^\n]+얼굴을 유지한 채/,'선화가 대상이면 대화 중 같은 고해상도 얼굴 이미지를 유지해야 합니다.');
+assert.match(css,/@keyframes moonlight-highres-greeting/,'고해상도 얼굴을 바꾸지 않는 부드러운 인사 모션이 필요합니다.');
 assert.match(css,/pageant-acceptance-motion\{[^}]*transform:scale\(1\.15\)/,'수상 인사 캐릭터는 전신이 잘리지 않는 1.15배 크기로 보여야 합니다.');
 assert.match(app,/name=winner\.name/,'수상 소감 화자는 선화가 아니라 실제 대상 수상자여야 합니다.');
 assert.match(css,/\.pageant-interview\.is-acceptance figure\{[^}]*inset:2% 5% 21%;[^}]*text-align:center/,'대상 수상자는 중앙 전신 규격으로 보여야 합니다.');

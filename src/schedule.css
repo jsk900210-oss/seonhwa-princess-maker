@@ -2270,6 +2270,8 @@
 .pageant-interview.is-acceptance .pageant-acceptance-motion{position:absolute;inset:0;display:block;width:100%;height:100%;transform:scale(1.15);transform-origin:center bottom;filter:drop-shadow(0 6px 7px #3a1c0d66)}
 .pageant-interview.is-acceptance .pageant-acceptance-motion img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;object-position:center bottom;opacity:0;transform:scale(var(--acceptance-fit));transform-origin:center bottom;animation:moonlight-acceptance-bow 2.5s steps(1,end) infinite;animation-delay:calc(var(--acceptance-frame) * .5s)}
 @keyframes moonlight-acceptance-bow{0%,19.99%{opacity:1}20%,100%{opacity:0}}
+.pageant-interview.is-acceptance .pageant-acceptance-bow.is-highres-stable{transform-origin:center bottom;animation:moonlight-highres-greeting 2.6s ease-in-out infinite}
+@keyframes moonlight-highres-greeting{0%,18%,100%{transform:translateY(0) scaleY(1)}45%,68%{transform:translateY(7px) scaleY(.955)}}
 .moonlight-pageant.beat-3 .pageant-lineup,.moonlight-pageant.beat-4 .pageant-lineup{left:2%;right:2%;bottom:48%;grid-template-columns:repeat(7,1fr);gap:1px}
 .moonlight-pageant.beat-3 .pageant-lineup img,.moonlight-pageant.beat-4 .pageant-lineup img{width:40px;height:54px}
 .moonlight-pageant.beat-3 .pageant-lineup figcaption,.moonlight-pageant.beat-4 .pageant-lineup figcaption{font-size:6px;padding:1px 2px}
