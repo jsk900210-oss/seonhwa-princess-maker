@@ -243,7 +243,7 @@ const vacationIllustrations=[
 function unifiedAgeFolder(){return '09';}
 function scheduleFramePath(file){return `../assets/characters/seonhwa/schedule-actions/${file}`;}
 function scheduleBasePath(file){return `../assets/characters/seonhwa/schedule-base/${file}`;}
-const scheduleAssetRevision='0.64.195-debug';
+const scheduleAssetRevision='0.64.196-debug';
 const scheduleQaParams=new URLSearchParams(location.search);
 const moonlightStandaloneQa=scheduleQaParams.get('qaHoliday')==='chuseok';
 const sehwaStandaloneQa=scheduleQaParams.get('qaHoliday')==='seollal';
@@ -1629,9 +1629,14 @@ function moonlightAwardWinnerImage(entry){
   return `${baseSpriteForAge()}?v=${scheduleAssetRevision}`;
 }
 function moonlightAcceptanceFrames(){
-  const standing=`${baseSpriteForAge()}?v=${scheduleAssetRevision}`;
   const acting=frame=>`../assets/events/holidays/moonlight-pageant/seonhwa/age-${moonlightAssetAge()}/acting-v5/seonhwa-acting-${String(frame).padStart(2,'0')}-v5.png?v=${scheduleAssetRevision}`;
-  return [standing,acting(13),acting(12),acting(13),standing];
+  return [
+    {src:acting(14),fit:'1'},
+    {src:acting(13),fit:'1'},
+    {src:acting(12),fit:'1'},
+    {src:acting(13),fit:'1'},
+    {src:acting(14),fit:'1'}
+  ];
 }
 function moonlightLineupGestureImage(entry){
   if(moonlightAssetAge()!=='13')return '';
@@ -1672,7 +1677,7 @@ function festivalWinnerAcceptance(session){
   const winner=session.winner,playerWinner=winner.player,name=winner.name;
   const answer=playerWinner?'감사합니다. 많이 떨렸지만 배운 장단과 마음을 끝까지 놓치지 않으려 했어요. 응원해 주신 모든 분과 이 기쁨을 나누고 싶어요.':'귀한 상을 내려 주셔서 감사합니다. 오늘의 가르침을 잊지 않고 더욱 정진하겠습니다.';
   const portrait=playerWinner
-    ?`<span class="pageant-acceptance-bow pageant-acceptance-motion" role="img" aria-label="두 손을 앞에 모은 채 서서 등장한 뒤 자연스럽게 머리 숙여 인사하는 ${name}">${moonlightAcceptanceFrames().map((src,index)=>`<img src="${src}" alt="" style="--acceptance-frame:${index}">`).join('')}</span>`
+    ?`<span class="pageant-acceptance-bow pageant-acceptance-motion" role="img" aria-label="두 손을 앞에 모은 채 서서 등장한 뒤 자연스럽게 머리 숙여 인사하는 ${name}">${moonlightAcceptanceFrames().map((frame,index)=>`<img src="${frame.src}" alt="" style="--acceptance-frame:${index};--acceptance-fit:${frame.fit}">`).join('')}</span>`
     :`<img class="pageant-acceptance-bow is-contestant" src="${moonlightEntrantImage(winner)}" alt="자신의 전통 인사로 감사를 전하는 대상 수상자 ${name}">`;
   return `<section class="pageant-interview is-acceptance ${playerWinner?'is-seonhwa-winner':'is-contestant-winner'}" aria-label="대상 수상자 ${name}의 인사와 수상 소감"><figure>${portrait}<figcaption>대상 · ${name}</figcaption></figure><div><p class="pageant-interview-answer"><b>${name}</b>${answer}</p></div></section>`;
 }
