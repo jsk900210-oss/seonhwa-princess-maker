@@ -2910,21 +2910,24 @@ body .phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage:
 
 /* 설날 제목 장면은 제목판만, 참가자 8명은 다음 준비 장면에서만 표시한다. */
 .sehwa-contest.festival-pm3.beat-3 .sehwa-drawing-ensemble{display:none!important}
+.sehwa-ten-entrant-sequence{position:absolute;z-index:38;inset:0;overflow:hidden;pointer-events:none}
+.sehwa-ten-entrant-sequence img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;opacity:0;animation:sehwa-ten-painting 2.4s steps(1,end) infinite;animation-delay:calc(var(--sehwa-group-frame) * .8s)}
+@keyframes sehwa-ten-painting{0%,33.32%{opacity:1}33.33%,100%{opacity:0}}
 
 /* 설날 주제 발표: 왕의 얼굴과 대화창이 겹치지 않도록 상·하 영역을 분리한다. */
 .sehwa-contest.festival-pm3.beat-4 .festival-character-cut.king-cut img{
-  left:50%!important;
-  bottom:1%!important;
+  left:-2%!important;
+  bottom:0!important;
   width:58%!important;
-  height:67%!important;
+  height:72%!important;
   object-position:center bottom!important;
-  transform:translateX(-50%)!important;
+  transform:none!important;
 }
 .sehwa-contest.festival-pm3.beat-4 .festival-character-cut.king-cut p{
-  top:1%!important;
-  left:5%!important;
-  right:5%!important;
-  width:auto!important;
+  top:4%!important;
+  left:auto!important;
+  right:2%!important;
+  width:66%!important;
   min-height:78px!important;
   box-sizing:border-box!important;
 }

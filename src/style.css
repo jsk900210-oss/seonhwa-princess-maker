@@ -82,9 +82,14 @@ body{min-height:100dvh}.phone{width:min(100vw,calc(100dvh * 9 / 16),430px);max-h
   }
 }
 
-/* v0.64.202 — 족자는 오른쪽 빈 벽에 걸고, 열린 마당에는 계절과 날씨를 보여 준다. */
-.home-sehwa-gallery{left:70%!important;top:25%!important;width:17.5%!important;transform:rotate(-.2deg)!important}
-.home-weather{position:absolute;z-index:1;left:23%;top:18%;width:47%;height:37%;overflow:hidden;pointer-events:none;clip-path:polygon(9% 0,91% 0,91% 100%,9% 100%)}
+/* v0.64.205 — 문밖 → 날씨 → 방/문틀의 세 레이어. */
+.home-outside{z-index:0;clip-path:inset(25.4% 43.8% 46.9% 24.5%);transition:filter .8s ease}
+.phone[data-home-season="spring"] .home-outside{filter:saturate(1.04) brightness(1.02)}
+.phone[data-home-season="summer"] .home-outside{filter:saturate(1.2) brightness(.97) hue-rotate(4deg)}
+.phone[data-home-season="autumn"] .home-outside{filter:saturate(1.18) sepia(.22) hue-rotate(-12deg) brightness(.96)}
+.phone[data-home-season="winter"] .home-outside{filter:saturate(.48) brightness(1.08) contrast(.92)}
+.home-room-foreground{position:absolute;z-index:2;inset:0;pointer-events:none;background:url('../assets/backgrounds/home/home-room-morning.webp') center/cover no-repeat;-webkit-mask-image:linear-gradient(#000 0 0),linear-gradient(#000 0 0);-webkit-mask-position:0 0,24.5% 25.4%;-webkit-mask-size:100% 100%,31.7% 27.7%;-webkit-mask-repeat:no-repeat;-webkit-mask-composite:xor;mask-image:linear-gradient(#000 0 0),linear-gradient(#000 0 0);mask-position:0 0,24.5% 25.4%;mask-size:100% 100%,31.7% 27.7%;mask-repeat:no-repeat;mask-composite:exclude}
+.home-weather{position:absolute;z-index:1;inset:25.4% 43.8% 46.9% 24.5%;overflow:hidden;pointer-events:none;clip-path:none}
 .home-weather::before{content:"";position:absolute;inset:0;mix-blend-mode:soft-light;transition:background .8s ease,opacity .8s ease}
 .phone[data-home-season="spring"] .home-weather::before{background:linear-gradient(#ffd7dd2d,#8bcf7942);opacity:.8}
 .phone[data-home-season="summer"] .home-weather::before{background:linear-gradient(#59a9d526,#13713942);opacity:.9}
@@ -96,11 +101,21 @@ body{min-height:100dvh}.phone{width:min(100vw,calc(100dvh * 9 / 16),430px);max-h
 @keyframes home-rain{to{transform:translate(-12px,390px) rotate(9deg)}}
 @keyframes home-heavy-snow{0%{transform:translate(0,-8px) rotate(0);opacity:0}12%{opacity:.95}55%{transform:translate(13px,155px) rotate(145deg)}100%{transform:translate(-8px,335px) rotate(310deg);opacity:.25}}
 .phone.playing .home-weather,.phone.market-playing .home-weather,.phone:has(.vacation-scene:not([hidden])) .home-weather{display:none}
-@media(max-width:350px){.home-sehwa-gallery{left:70.5%!important;width:16.5%!important}}
+@media(max-width:350px){.home-sehwa-gallery{left:73%!important;width:13.5%!important}}
+
+/* 기존 오른쪽 벽의 빈 족자 안쪽에 우승작을 자연스럽게 끼운다. */
+.home-sehwa-gallery{z-index:3!important;left:72.6%!important;top:29.1%!important;width:14.2%!important;padding:5px 4px 10px!important;transform:rotate(-.15deg)!important;box-shadow:0 3px 5px #160b0745!important}
+.home-sehwa-gallery::before,.home-sehwa-gallery::after{left:-4px!important;right:-4px!important;height:3px!important}
+.home-sehwa-gallery img{padding:1px!important;background:#eadbb1!important}
+.home-sehwa-gallery figcaption{font-size:5px!important;line-height:8px!important}
 
 /* v0.64.202 — 홈 바로가기는 하단 2×3 메뉴, 저장은 설정 안에서만 연다. */
 .phone:not(.playing):not(.market-playing)>.home-bottom-nav{bottom:1.5%!important;display:grid!important;grid-template-columns:repeat(3,1fr)!important;gap:5px!important}
 .phone:not(.playing):not(.market-playing)>.home-bottom-nav button{min-height:34px!important;padding:7px 2px!important;font-size:11px!important}
+.phone:not(.playing):not(.market-playing)>.home-bottom-nav button:has(.home-nav-icon){display:grid!important;grid-template-columns:21px auto!important;place-content:center!important;align-items:center!important;gap:5px!important}
+.home-bottom-nav .home-nav-icon{display:grid;width:19px;height:19px;place-items:center;object-fit:contain;color:#704522;font-family:serif;font-size:15px;font-weight:900;line-height:1;filter:none}
+.home-bottom-nav img.home-nav-icon{padding:1px;filter:drop-shadow(0 1px 1px #5a371f55)}
+.home-bottom-nav button>b{font:inherit;white-space:nowrap}
 .phone:not(.playing):not(.market-playing)>.dialogue{bottom:13.5%!important}
 .phone:not(.playing):not(.market-playing)>.character-slot{bottom:25%!important}
 .settings-record-button{width:100%;min-height:44px;background:#6d4c2d;color:#fff8e8}

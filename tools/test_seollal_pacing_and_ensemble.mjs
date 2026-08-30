@@ -26,7 +26,11 @@ assert.match(app,/preparing=beat===4,drawing=beat>=5&&beat<=10/,'화구 준비 �
 assert.match(app,/function sehwaPreparationEnsemble\(session\)/,'빈 준비 장면 대신 참가자 8명의 화구 준비 장면이 필요합니다.');
 assert.match(app,/\$\{preparing\?sehwaPreparationEnsemble\(session\):''\}/,'참가자와 책상은 준비 장면에서만 보여야 합니다.');
 assert.doesNotMatch(app,/title\|\|preparing\?sehwaPreparationEnsemble/,'제목 장면에는 참가자와 책상이 다시 나타나면 안 됩니다.');
-assert.match(app,/낮은 화구 앞에 앉은 참가자 8명/,'개막 장면에는 여덟 참가자가 앉은 모습이 필요합니다.');
+assert.match(app,/책상에서 그림을 그리는 쯔꾸르 참가자 10명/,'준비 장면에는 좌우 다섯 명씩 열 참가자가 필요합니다.');
+assert.match(app,/ten-entrant-v1/,'10인 그림 그리기 전용 프레임을 사용해야 합니다.');
+for(const frame of [1,2,3])assert.ok(existsSync(new URL(`../assets/events/holidays/sehwa-contest/preparation-scene/ten-entrant-v1/drawing-${frame}.png`,import.meta.url)),`10인 그림 동작 ${frame}프레임이 필요합니다.`);
+assert.match(app,/\{id:'haneul',name:'하늘'/,'플레이어를 포함한 10인 참가 명단이 필요합니다.');
+assert.match(app,/10인 세화 심사/,'설날 심사표도 10인 기준이어야 합니다.');
 for(const frame of [1,2,3,4,5,6])assert.ok(existsSync(new URL(`../assets/events/holidays/sehwa-contest/preparation-scene/age-13/preparation-${frame}.png`,import.meta.url)),`13세 화구 준비 ${frame} 프레임이 필요합니다.`);
 for(let frame=1;frame<=12;frame+=1)assert.ok(existsSync(new URL(`../assets/events/holidays/sehwa-contest/preparation-scene/age-13/smooth-${String(frame).padStart(2,'0')}.png`,import.meta.url)),`13세 부드러운 화구 준비 ${frame} 프레임이 필요합니다.`);
 assert.match(css,/animation:sehwa-preparation-frames 7\.2s/,'참가자별 비동기 준비 동작은 12프레임으로 부드럽게 순환해야 합니다.');
