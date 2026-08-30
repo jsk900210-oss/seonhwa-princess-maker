@@ -243,7 +243,7 @@ const vacationIllustrations=[
 function unifiedAgeFolder(){return '09';}
 function scheduleFramePath(file){return `../assets/characters/seonhwa/schedule-actions/${file}`;}
 function scheduleBasePath(file){return `../assets/characters/seonhwa/schedule-base/${file}`;}
-const scheduleAssetRevision='0.64.200-debug';
+const scheduleAssetRevision='0.64.201-debug';
 const scheduleQaParams=new URLSearchParams(location.search);
 const moonlightStandaloneQa=scheduleQaParams.get('qaHoliday')==='chuseok';
 const sehwaStandaloneQa=scheduleQaParams.get('qaHoliday')==='seollal';
@@ -1671,7 +1671,7 @@ function festivalWinnerAcceptance(session){
   const winner=session.winner,playerWinner=winner.player,name=winner.name;
   const answer=playerWinner?'감사합니다. 많이 떨렸지만 배운 장단과 마음을 끝까지 놓치지 않으려 했어요. 응원해 주신 모든 분과 이 기쁨을 나누고 싶어요.':'귀한 상을 내려 주셔서 감사합니다. 오늘의 가르침을 잊지 않고 더욱 정진하겠습니다.';
   const portrait=playerWinner
-    ?`<span class="pageant-acceptance-motion" role="img" aria-label="두 손을 모으고 천천히 허리를 숙여 인사하는 ${name}">${moonlightAcceptanceFrames().map((frame,index)=>`<img src="${frame.src}" alt="" style="--acceptance-frame:${index};--acceptance-fit:${frame.fit}">`).join('')}</span>`
+    ?`<img class="pageant-acceptance-bow is-static-gongsu" src="../assets/events/holidays/moonlight-pageant/seonhwa/age-13/acceptance-v7/seonhwa-acceptance-02-v7.png?v=${scheduleAssetRevision}" alt="두 손을 단정히 모으고 서서 감사 인사를 전하는 ${name}">`
     :`<img class="pageant-acceptance-bow is-contestant" src="${moonlightEntrantImage(winner)}" alt="자신의 전통 인사로 감사를 전하는 대상 수상자 ${name}">`;
   return `<section class="pageant-interview is-acceptance ${playerWinner?'is-seonhwa-winner':'is-contestant-winner'}" aria-label="대상 수상자 ${name}의 인사와 수상 소감"><figure>${portrait}<figcaption>대상 · ${name}</figcaption></figure><div><p class="pageant-interview-answer"><b>${name}</b>${answer}</p></div></section>`;
 }

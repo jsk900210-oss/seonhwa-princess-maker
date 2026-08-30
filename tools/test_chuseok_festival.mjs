@@ -5,7 +5,7 @@ const app=fs.readFileSync(new URL('../src/app.js',import.meta.url),'utf8');
 const css=fs.readFileSync(new URL('../src/schedule.css',import.meta.url),'utf8');
 const html=fs.readFileSync(new URL('../src/index.html',import.meta.url),'utf8');
 
-for(const asset of ['app.js','style.css','schedule.css'])assert.ok(html.includes(`${asset}?v=0.64.200-debug`),`${asset} 캐시 키가 표시 버전과 같아야 합니다.`);
+for(const asset of ['app.js','style.css','schedule.css'])assert.ok(html.includes(`${asset}?v=0.64.201-debug`),`${asset} 캐시 키가 표시 버전과 같아야 합니다.`);
 
 assert.match(app,/const moonlightContestants=\[/,'고정 더미 참가자 명세가 필요합니다.');
 const contestantBlock=app.match(/const moonlightContestants=\[([\s\S]*?)\n\];/)?.[1]||'';
@@ -57,9 +57,8 @@ assert.match(css,/\.pageant-hero-frames\.is-bow\{left:18%!important\}[\s\S]*\.pa
 assert.match(app,/function festivalKingWinnerCongratulations\(session\)/,'시상 뒤 왕이 대상 수상자를 축하해야 합니다.');
 assert.match(app,/function festivalWinnerAcceptance\(session\)/,'왕이 퇴장한 뒤 선화가 수상 소감을 말해야 합니다.');
 assert.match(css,/transform:scale\(var\(--acceptance-fit\)\);transform-origin:center bottom/,'인사 프레임은 바닥선을 고정한 채 인물 높이만 정규화해야 합니다.');
-assert.match(app,/\[1,1,1,2,3,4,5,6,7,8,9,10,10,10,9,8,7,6,5,4,3,2\]/,'선화 수상 인사는 10개 고유 이미지의 10fps 왕복 프레임이어야 합니다.');
-assert.match(app,/acceptance-v7\/seonhwa-acceptance-/,'선화 수상 인사는 신규 10프레임 투명 세트를 사용해야 합니다.');
-assert.match(css,/animation:moonlight-acceptance-bow 2\.2s steps\(1,end\) infinite;animation-delay:calc\(var\(--acceptance-frame\) \* \.1s\)/,'수상 인사는 10fps로 재생해야 합니다.');
+assert.match(app,/pageant-acceptance-bow is-static-gongsu[\s\S]*seonhwa-acceptance-02-v7\.png/,'선화 수상 소감은 두 손을 모은 고정 공수 자세를 사용해야 합니다.');
+assert.match(css,/pageant-acceptance-bow\.is-static-gongsu\{[^}]*transform:none!important;animation:none!important/,'공수 자세에는 확대·축소나 프레임 애니메이션이 없어야 합니다.');
 assert.match(css,/pageant-acceptance-motion\{[^}]*transform:scale\(1\.15\)/,'수상 인사 캐릭터는 전신이 잘리지 않는 1.15배 크기로 보여야 합니다.');
 assert.match(app,/name=winner\.name/,'수상 소감 화자는 선화가 아니라 실제 대상 수상자여야 합니다.');
 assert.match(css,/\.pageant-interview\.is-acceptance figure\{[^}]*inset:2% 5% 21%;[^}]*text-align:center/,'대상 수상자는 중앙 전신 규격으로 보여야 합니다.');
