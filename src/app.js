@@ -243,7 +243,7 @@ const vacationIllustrations=[
 function unifiedAgeFolder(){return '09';}
 function scheduleFramePath(file){return `../assets/characters/seonhwa/schedule-actions/${file}`;}
 function scheduleBasePath(file){return `../assets/characters/seonhwa/schedule-base/${file}`;}
-const scheduleAssetRevision='0.64.199-debug';
+const scheduleAssetRevision='0.64.200-debug';
 const scheduleQaParams=new URLSearchParams(location.search);
 const moonlightStandaloneQa=scheduleQaParams.get('qaHoliday')==='chuseok';
 const sehwaStandaloneQa=scheduleQaParams.get('qaHoliday')==='seollal';
@@ -1629,8 +1629,8 @@ function moonlightAwardWinnerImage(entry){
   return `${baseSpriteForAge()}?v=${scheduleAssetRevision}`;
 }
 function moonlightAcceptanceFrames(){
-  const frame=number=>`../assets/events/holidays/moonlight-pageant/seonhwa/age-13/acceptance-v6/seonhwa-acceptance-${String(number).padStart(2,'0')}-v6.png?v=${scheduleAssetRevision}`;
-  return [1,2,3,4,3,2,1].map(number=>({src:frame(number),fit:'1'}));
+  const frame=number=>`../assets/events/holidays/moonlight-pageant/seonhwa/age-13/acceptance-v7/seonhwa-acceptance-${String(number).padStart(2,'0')}-v7.png?v=${scheduleAssetRevision}`;
+  return [1,1,1,2,3,4,5,6,7,8,9,10,10,10,9,8,7,6,5,4,3,2].map(number=>({src:frame(number),fit:'1'}));
 }
 function moonlightLineupGestureImage(entry){
   if(moonlightAssetAge()!=='13')return '';
