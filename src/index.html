@@ -4,8 +4,8 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
   <title>선화공주 만들기 — 자산 로딩 테스트</title>
-  <link rel="stylesheet" href="style.css?v=0.64.201-debug">
-  <link rel="stylesheet" href="schedule.css?v=0.64.201-debug">
+  <link rel="stylesheet" href="style.css?v=0.64.204-debug">
+  <link rel="stylesheet" href="schedule.css?v=0.64.204-debug">
   <link rel="stylesheet" href="schedule-pm2.css?v=0.64.18-debug">
   <link rel="stylesheet" href="birthday.css?v=0.64.153-debug">
   <link rel="stylesheet" href="prologue.css?v=0.64.18-debug">
@@ -48,7 +48,7 @@
       </div>
       <span class="loading-caption">이야기를 열 준비가 되었어요</span>
       <button class="studio-start-sound" id="studioStartSound" type="button">인연의 문을 열기</button>
-      <small class="loading-version" aria-label="현재 게임 버전">v0.64.201-debug</small>
+      <small class="loading-version" aria-label="현재 게임 버전">v0.64.204-debug</small>
     </section>
     <section class="prologue" id="prologue" aria-label="이야기 시작 영상" hidden>
       <audio id="prologueMusic" src="../assets/audio/music/prologue-lantern-and-dawn.mp3" preload="auto" loop></audio>
@@ -114,7 +114,8 @@
         <button class="story-replay" id="guardianReselect" type="button">신수 다시 선택</button>
       </div>
     </section>
-    <img class="background" src="../assets/backgrounds/home/home-room-morning.webp" alt="한옥 안채">
+    <img class="background" src="../assets/backgrounds/home/home-room-morning.webp" alt="마당이 내다보이는 한옥 안채">
+    <div class="home-weather" id="homeWeather" aria-hidden="true"></div>
     <figure class="home-sehwa-gallery" id="homeSehwaGallery" hidden aria-label="가장 최근 세화 경연 우승 족자">
       <img id="homeSehwaArtwork" alt="">
       <figcaption id="homeSehwaCaption"></figcaption>
@@ -127,12 +128,6 @@
     </section>
     <aside class="guardian-companion" id="guardianCompanion" hidden aria-hidden="true"><span id="guardianCompanionMark">龍</span><small id="guardianCompanionName"></small><em>말 걸기</em></aside>
     <section class="dialogue"><b id="speakerName">수호신수</b><p id="dialogueText">오늘의 길을 함께 살펴볼까?</p></section>
-    <aside class="home-side-actions" aria-label="홈 바로가기">
-      <button class="home-object-button" id="marketHomeButton" type="button" aria-label="저잣거리로 이동"><img src="../assets/ui/home-actions/game-record.svg" alt=""><span>저잣거리</span></button>
-      <button class="home-object-button" id="collectionBookButton" type="button" aria-label="수집도감 열기"><img src="../assets/ui/home-actions/collection-book.png" alt=""><span>수집도감</span></button>
-      <button class="home-object-button" id="wardrobeButton" type="button" aria-label="오래된 옷장 열기"><img src="../assets/ui/home-actions/wardrobe.png" alt=""><span>옷장</span></button>
-      <button class="home-object-button" id="gameRecordButton" type="button" aria-label="게임 기록 열기"><img src="../assets/ui/home-actions/game-record.svg" alt=""><span>게임 기록</span></button>
-    </aside>
     <button class="settings-gear" id="settingsButton" type="button" aria-label="설정 열기" title="설정">⚙</button>
     <section class="home-greeting" id="homeGreeting" hidden aria-live="polite">
       <div class="home-greeting-head"><img id="homeGreetingPortrait" alt="대화 중인 신수"><b id="homeGreetingSpeaker"></b></div><p id="homeGreetingLine"></p><div class="guardian-talk-result" id="guardianTalkResult" hidden aria-live="polite"></div><div class="greeting-answer-dock"><b id="homeGreetingPrompt"></b><div id="homeGreetingChoices"></div></div>
@@ -203,7 +198,7 @@
       <div class="activity-gauges" id="activityGauges" hidden aria-label="이번 활동의 능력치 변화"></div>
       <div class="day-result" id="dayResult" hidden></div>
     </section>
-    <nav><button data-panel="schedule">일정</button><button data-panel="status">상태</button><button data-panel="inventory">소지품</button><button data-panel="collection">수집도감</button><button id="marketFinish" type="button">집으로 돌아가기</button></nav>
+    <nav class="home-bottom-nav"><button data-panel="schedule">일정</button><button data-panel="status">상태</button><button data-panel="inventory">소지품</button><button id="marketHomeButton" type="button">저잣거리</button><button id="collectionBookButton" type="button">수집도감</button><button id="wardrobeButton" type="button">옷장</button><button data-panel="collection">수집도감</button><button id="marketFinish" type="button">집으로 돌아가기</button></nav>
     <section class="panel" id="panel" hidden aria-live="polite">
       <div class="panel-head"><h2 id="panelTitle"></h2><button id="closePanel" aria-label="닫기">×</button></div>
       <div id="panelBody"></div>
@@ -237,6 +232,10 @@
           <input class="volume-slider" id="sfxVolume" type="range" min="0" max="100" step="5" value="100" aria-label="효과음 음량">
         </section>
         <section class="settings-section">
+          <h3>게임 기록</h3>
+          <button class="settings-record-button" id="settingsGameRecordButton" type="button">저장·불러오기 열기</button>
+        </section>
+        <section class="settings-section">
           <h3>도움</h3>
           <a class="support-link" id="supportLink" href="https://github.com/jsk900210-oss/seonhwa-princess-maker/issues/new" target="_blank" rel="noopener">고객센터 문의하기</a>
         </section>
@@ -248,6 +247,6 @@
       </div>
     </section>
   </main>
-  <script src="schedule-layer-manifests.js?v=0.64.201-debug"></script><script src="story-data.js?v=0.64.18-debug"></script><script src="app.js?v=0.64.201-debug"></script>
+  <script src="schedule-layer-manifests.js?v=0.64.204-debug"></script><script src="story-data.js?v=0.64.18-debug"></script><script src="app.js?v=0.64.204-debug"></script>
 </body>
 </html>

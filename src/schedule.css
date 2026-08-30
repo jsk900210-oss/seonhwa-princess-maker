@@ -2857,6 +2857,97 @@ body .phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage:
   bottom:2%!important;
 }
 
+/* v0.64.202 — 설날 경연은 한 경연장 안에서 8명이 낮은 화구 앞에 앉아 진행한다. */
+.phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-holiday-seollal,
+.phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-holiday-seollal>.stage-inner,
+.phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-holiday-seollal .moonlight-pageant{border:0!important;border-radius:0!important;outline:0!important;box-shadow:none!important;background-color:transparent!important}
+.phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-holiday-seollal>.stage-inner::before,
+.phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-holiday-seollal>.stage-inner::after{display:none!important}
+.sehwa-contest.festival-pm3 .sehwa-hero{left:50%!important;bottom:13%!important;width:210px!important;height:270px!important;transform:translateX(-50%)!important}
+.sehwa-contest.festival-pm3 .sehwa-drawing-ensemble.is-preparing{inset:18% 2% 9%!important;grid-template-columns:repeat(4,1fr)!important;grid-template-rows:42% 58%!important;gap:0 2px!important}
+.sehwa-contest.festival-pm3 .sehwa-drawing-ensemble.is-preparing figure{overflow:visible!important}
+.sehwa-contest.festival-pm3 .sehwa-drawing-ensemble.is-preparing figure>span{bottom:25%!important;width:68px!important;height:82px!important;animation:none!important}
+.sehwa-contest.festival-pm3 .sehwa-drawing-ensemble.is-preparing figure.is-player>span{width:78px!important;height:96px!important}
+.sehwa-contest.festival-pm3 .sehwa-drawing-ensemble.is-preparing figure>span img{object-position:center bottom!important}
+.sehwa-contest.festival-pm3 .sehwa-drawing-ensemble.is-preparing i{bottom:10%!important;height:25%!important}
+.sehwa-contest.festival-pm3.beat-3 .festival-title-card{z-index:45!important}
+
+/* 목공소 심부름: 목수 앞의 목재를 들고 왼쪽 적재 지점까지 운반한다. */
+.activity-stage.action-woodwork[data-wood-transport="true"] .stage-character{width:132px!important;height:132px!important;transition:none!important}
+.activity-stage.action-woodwork[data-wood-transport="true"] .schedule-scene-layer.layer-pattern{z-index:24!important;width:92px!important;height:42px!important;bottom:calc(var(--layer-floor) + 37px)!important;object-fit:cover!important;object-position:center top!important;clip-path:inset(0 0 48% 0)!important;filter:drop-shadow(0 3px 2px #0008)!important}
+.activity-stage.action-woodwork[data-wood-transport="true"] .schedule-scene-layer.layer-npc{z-index:18!important}
+
+/* 아이돌보기 성공 A: 추격 대신 선화와 아이가 앉아 팽이·윷으로 논다. */
+.activity-stage.action-childcare[data-childcare-play="true"] .stage-character{width:126px!important;height:126px!important;bottom:3%!important}
+.activity-stage.action-childcare[data-childcare-play="true"] .schedule-scene-layer.layer-npc{width:88px!important;height:88px!important;bottom:3%!important;object-position:center bottom!important}
+.activity-stage.action-childcare[data-childcare-play="true"] .schedule-scene-layer.layer-pattern{width:92px!important;height:92px!important;left:49%!important;bottom:0!important;z-index:25!important}
+
+/* 주방 보조: 왼쪽부터 오른쪽까지 이어진 하단 작업장 위에서 불→채소→접시 순서로 진행한다. */
+.activity-stage.action-kitchenhelp[data-kitchen-flow="true"]>.stage-inner::after{content:""!important;display:block!important;position:absolute!important;z-index:10!important;left:0!important;right:0!important;bottom:1%!important;height:50px!important;background:linear-gradient(#87522f 0 9%,#4e2c19 10% 17%,#764426 18% 74%,#3d2417 75%)!important;border-top:2px solid #b98955!important;box-shadow:0 5px 7px #0008!important}
+.activity-stage.action-kitchenhelp[data-kitchen-flow="true"] .stage-character{z-index:24!important;bottom:4%!important}
+.activity-stage.action-kitchenhelp[data-kitchen-flow="true"] .schedule-scene-layer.layer-effect,.activity-stage.action-kitchenhelp[data-kitchen-flow="true"] .schedule-scene-layer.layer-pattern{z-index:27!important;width:112px!important;height:92px!important;transition:left .28s ease,bottom .28s ease!important}
+.activity-stage.action-kitchenhelp[data-kitchen-flow="true"]>.stage-inner::before{content:""!important;display:block!important;position:absolute!important;z-index:12!important;right:7%!important;bottom:44px!important;width:46px!important;height:12px!important;border:2px solid #b9a07a!important;border-radius:50%!important;background:#eee1c9!important;box-shadow:inset 0 2px 3px #7a6349!important}
+
+/* 약방 견습: 왼쪽 약재 → 중앙 포장 → 오른쪽 완성 약봉지 바구니. */
+.activity-stage.action-clinichelp[data-clinic-packing="true"] .stage-character{left:48%!important;z-index:24!important}
+.activity-stage.action-clinichelp[data-clinic-packing="true"] .schedule-scene-layer.layer-effect,.activity-stage.action-clinichelp[data-clinic-packing="true"] .schedule-scene-layer.layer-pattern{z-index:26!important;width:112px!important;height:96px!important;transition:left .28s ease!important}
+.activity-stage.action-clinichelp[data-clinic-packing="true"]>.stage-inner::after{content:""!important;display:block!important;position:absolute!important;z-index:12!important;left:4%!important;bottom:2%!important;width:86px!important;height:48px!important;border-radius:50% 50% 12px 12px!important;background:repeating-linear-gradient(15deg,#a8733b 0 4px,#6c431f 5px 7px)!important;box-shadow:inset 0 7px #4e7e36,0 4px 5px #0006!important}
+
+/* 바느질: 성공은 이불·옷 수선, 실패는 들고 있던 옷감을 옆으로 던진다. */
+.activity-stage.action-sewing.schedule-layered .stage-character{left:36%!important;bottom:4%!important}
+.activity-stage.action-sewing.schedule-layered .schedule-scene-layer.layer-pattern,.activity-stage.action-sewing.schedule-layered .schedule-scene-layer.layer-effect{left:48%!important;bottom:3%!important;width:130px!important;height:106px!important;z-index:25!important;transition:transform .24s ease,opacity .24s ease!important}
+.activity-stage.action-sewing[data-sewing-throw="true"] .schedule-scene-layer.dedicated-failure{z-index:28!important;transform-origin:center!important;transition:transform .22s cubic-bezier(.2,.8,.3,1),opacity .22s ease!important}
+
+/* 모든 일반 일정은 결과 카드가 떠도 동일한 쯔꾸르 창을 끝까지 유지한다. */
+.phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage:not(.market-choice-stage):not(.action-holiday-chuseok):not(.action-holiday-seollal){left:8%!important;right:8%!important;top:25%!important;bottom:auto!important;width:auto!important;height:44%!important;padding:8px!important;border:4px solid #4f321f!important;border-radius:13px!important;background:linear-gradient(145deg,#8c623b,#5c3a25)!important;box-shadow:0 10px 24px #0008,inset 0 0 0 2px #c9a567!important;overflow:visible!important}
+.phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage:not(.market-choice-stage):not(.action-holiday-chuseok):not(.action-holiday-seollal)>.stage-inner{position:absolute!important;inset:7px!important;width:auto!important;height:auto!important;border:1px solid #d5bd8d!important;border-radius:7px!important;background:#21160f!important;box-shadow:inset 0 0 0 2px #3e291a!important;overflow:hidden!important}
+.phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage:not(.market-choice-stage):not(.action-holiday-chuseok):not(.action-holiday-seollal)>.stage-roof{display:block!important;left:2%!important;right:2%!important;top:-17px!important}
+.phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage:not(.market-choice-stage):not(.action-holiday-chuseok):not(.action-holiday-seollal)>.day-result:not(.phase-brief-result){top:31%!important;left:7%!important;right:7%!important;z-index:60!important}
+
+/* 예절은 전체 PNG 흔들림 없이 실제 자세 프레임만 전환한다. */
+.phone.playing .activity-stage.action-manners .stage-character.pixel-sprite.motion-manners{animation:none!important;transition:none!important}
+.phone.playing .activity-stage.action-manners .stage-character.pixel-sprite.motion-manners>img{animation:none!important;transition:none!important;transform:none!important}
+
+/* 설날 제목 장면은 제목판만, 참가자 8명은 다음 준비 장면에서만 표시한다. */
+.sehwa-contest.festival-pm3.beat-3 .sehwa-drawing-ensemble{display:none!important}
+
+/* 설날 주제 발표: 왕의 얼굴과 대화창이 겹치지 않도록 상·하 영역을 분리한다. */
+.sehwa-contest.festival-pm3.beat-4 .festival-character-cut.king-cut img{
+  left:50%!important;
+  bottom:1%!important;
+  width:58%!important;
+  height:67%!important;
+  object-position:center bottom!important;
+  transform:translateX(-50%)!important;
+}
+.sehwa-contest.festival-pm3.beat-4 .festival-character-cut.king-cut p{
+  top:1%!important;
+  left:5%!important;
+  right:5%!important;
+  width:auto!important;
+  min-height:78px!important;
+  box-sizing:border-box!important;
+}
+
+/* 일정 모션 규칙: PNG 전체 흔들기/확대축소 금지, 자세 프레임과 실제 좌표 이동만 허용. */
+.phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage:not(.market-choice-stage) .stage-character.pixel-sprite{
+  animation:none!important;
+  transform:translateX(-50%)!important;
+  transform-origin:50% 100%!important;
+}
+.phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage:not(.market-choice-stage) .stage-character.pixel-sprite>img{
+  animation:none!important;
+  transition:none!important;
+  transform:none!important;
+  transform-origin:center bottom!important;
+}
+.phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage:not(.market-choice-stage) .stage-npc:not(.npc-romance-date){
+  animation:none!important;
+}
+.phone.playing .activity-stage.action-woodwork[data-wood-transport="true"] .stage-character.pixel-sprite>img{
+  transform:scaleX(-1)!important;
+}
+
 /* v0.64.185 — 설날·추석 시상자는 같은 성인 전신 규격을 사용한다. */
 .sehwa-contest.festival-pm3:is(.beat-16,.beat-17) .pageant-king,
 .moonlight-pageant.festival-pm3.beat-15 .pageant-king{

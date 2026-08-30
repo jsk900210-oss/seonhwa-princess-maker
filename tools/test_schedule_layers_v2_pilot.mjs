@@ -30,7 +30,8 @@ assert.ok(app.includes("setProperty('--layer-hero-left',`${heroPosition}%`,'impo
 assert.ok(app.includes('const childcareMinimumGap=34')&&app.includes('childLeft-childcareMinimumGap')&&app.includes('childLeft+childcareMinimumGap'),'아이 돌보기 이동 중 선화와 아이의 최소 중심 간격을 양방향으로 유지해야 합니다.');
 assert.ok(app.includes('const childcareHeroRunCycle=[0,6,3,1,7,4,2,5]')&&app.includes('travelStep%childcareHeroRunCycle.length'),'아이 돌보기 선화는 두 다리 교차 프레임을 포함한 8프레임 순서로 반복해야 합니다.');
 assert.ok(app.includes('const childcareNpcRunCycle=[0,3,2,3]')&&app.includes('travelStep%childcareNpcRunCycle.length'),'아이 돌보기 아이는 벌린 보폭 사이에 교차 보간 프레임을 반복해야 합니다.');
-assert.ok(app.includes('const childcareTravelDistance=178')&&app.includes("childcareTravelsRight?-20:120")&&app.includes("actionId==='childcare'?6:3"),'아이 돌보기 성공·실수 장면은 화면 밖에서 시작해 18단계로 반대편 밖까지 완주해야 합니다.');
+assert.ok(app.includes('const childcareTravelDistance=178')&&app.includes("childcareTravelsRight?-20:120")&&app.includes("actionId==='childcare'&&!childcarePlay?6:3"),'아이 추격은 18단계로 완주하고 앉아서 놀기는 제자리 3프레임이어야 합니다.');
+assert.ok(app.includes("const childcarePlay=actionId==='childcare'&&!failed&&patternKey==='success-a'")&&css.includes('data-childcare-play="true"'),'아이돌보기 성공 A에는 앉아서 장난감으로 노는 패턴이 필요합니다.');
 assert.ok(app.includes('const childStart=childcareChildStart')&&app.includes('childStart+(travelsRight?1:-1)*progress*childcareTravelDistance'),'아이와 선화의 진행 방향은 장면 중간에 바뀌면 안 됩니다.');
 assert.ok(app.includes("stage.dataset.childcareStarting='true'")&&app.includes('void stage.offsetWidth')&&css.includes('data-childcare-starting="true"'),'연속 재생 시작점에서는 이전 위치에서 미끄러져 오지 않아야 합니다.');
 assert.match(css,/data-childcare-direction="right"[\s\S]*?layer-npc\{transform:translateX\(-50%\)!important/,'오른쪽 달리기 아기 NPC는 중심 좌표를 유지해야 합니다.');

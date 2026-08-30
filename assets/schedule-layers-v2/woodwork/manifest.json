@@ -1,5 +1,5 @@
 {
-  "version": "2.0.0",
+  "version": "2.1.0",
   "activityId": "woodwork",
   "nameKo": "목공소 심부름",
   "status": "review",
@@ -29,22 +29,22 @@
   "patterns": {
     "success-a": {
       "layer": "props",
-      "heroIncludesProp": true,
-      "heroFrames": ["hero-actions/sawing-1.png", "hero-actions/sawing-2.png", "hero-actions/sawing-3.png"],
+      "woodTransport": true,
+      "heroFrames": ["../../characters/seonhwa/base-actions/carry-walk-right/carry-walk-right-1.png", "../../characters/seonhwa/base-actions/carry-walk-right/carry-walk-right-2.png", "../../characters/seonhwa/base-actions/carry-walk-right/carry-walk-right-3.png"],
       "frames": [
-        "props/saw-bench-1.png",
-        "props/saw-bench-2.png",
-        "props/saw-bench-3.png"
+        "failures/dropped-plank-1.png",
+        "failures/dropped-plank-2.png",
+        "failures/dropped-plank-3.png"
       ]
     },
     "success-b": {
       "layer": "effects",
-      "heroIncludesProp": true,
-      "heroFrames": ["hero-actions/hammering-1.png", "hero-actions/hammering-2.png", "hero-actions/hammering-3.png"],
+      "woodTransport": true,
+      "heroFrames": ["../../characters/seonhwa/base-actions/carry-walk-right/carry-walk-right-1.png", "../../characters/seonhwa/base-actions/carry-walk-right/carry-walk-right-2.png", "../../characters/seonhwa/base-actions/carry-walk-right/carry-walk-right-3.png"],
       "frames": [
-        "effects/hammer-joint-1.png",
-        "effects/hammer-joint-2.png",
-        "effects/hammer-joint-3.png"
+        "failures/dropped-plank-1.png",
+        "failures/dropped-plank-2.png",
+        "failures/dropped-plank-3.png"
       ]
     },
     "fail-a": {
@@ -65,7 +65,7 @@
     }
   },
   "placement": {
-    "heroLeft": "40%",
+    "heroLeft": "72%",
     "floorBottom": "4%",
     "npcLeft": "78%",
     "npcScale": 1,

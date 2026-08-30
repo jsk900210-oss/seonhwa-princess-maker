@@ -1,5 +1,5 @@
 {
-  "version": "2.0.0-review.2",
+  "version": "2.1.0",
   "activityId": "sewing",
   "nameKo": "바느질 돕기",
   "status": "pilot-review",
@@ -28,6 +28,7 @@
   },
   "patterns": {
     "success-a": {
+      "action": "quilt-hemming",
       "layer": "props",
       "frames": [
         "props/embroidery-1.png",
@@ -36,6 +37,7 @@
       ]
     },
     "success-b": {
+      "action": "clothes-mending",
       "layer": "effects",
       "frames": [
         "effects/folded-cloth-1.png",
@@ -44,6 +46,7 @@
       ]
     },
     "fail-a": {
+      "action": "throw-cloth",
       "layer": "failures",
       "frames": [
         "failures/fail-a-1.png",
@@ -52,6 +55,7 @@
       ]
     },
     "fail-b": {
+      "action": "throw-cloth",
       "layer": "failures",
       "frames": [
         "failures/fail-b-1.png",

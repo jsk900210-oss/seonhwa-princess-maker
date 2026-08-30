@@ -4,12 +4,12 @@ import crypto from 'node:crypto';
 
 const root=path.resolve(import.meta.dirname,'..');
 const manifest=JSON.parse(fs.readFileSync(path.join(root,'assets/schedule-layers-v2/woodwork/manifest.json'),'utf8'));
-for(const [pattern,stem] of [['success-a','sawing'],['success-b','hammering']]){
+for(const pattern of ['success-a','success-b']){
   const spec=manifest.patterns[pattern];
-  if(!spec.heroIncludesProp)throw new Error(`${pattern}: heroIncludesProp missing`);
+  if(!spec.woodTransport)throw new Error(`${pattern}: woodTransport missing`);
   if(spec.heroFrames.length!==3)throw new Error(`${pattern}: not three frames`);
   const hashes=spec.heroFrames.map((file,index)=>{
-    if(!file.endsWith(`${stem}-${index+1}.png`))throw new Error(`${pattern}: sequence is not 1→2→3`);
+    if(!file.endsWith(`carry-walk-right-${index+1}.png`))throw new Error(`${pattern}: carrying sequence is not 1→2→3`);
     const full=path.join(root,'assets/schedule-layers-v2/woodwork',file);
     if(!fs.existsSync(full))throw new Error(`${pattern}: missing ${file}`);
     return crypto.createHash('sha256').update(fs.readFileSync(full)).digest('hex');
@@ -17,6 +17,10 @@ for(const [pattern,stem] of [['success-a','sawing'],['success-b','hammering']]){
   if(new Set(hashes).size!==3)throw new Error(`${pattern}: duplicate static frames`);
 }
 const app=fs.readFileSync(path.join(root,'src/app.js'),'utf8');
+const css=fs.readFileSync(path.join(root,'src/schedule.css'),'utf8');
+if(!app.includes('단일 이미지밖에 없는 일정은 억지로 PNG 전체를 흔들지 않는다'))throw new Error('단일 이미지 흔들기 금지 규칙이 필요함');
+if(app.includes('image.style.transform=`translateY(${bob}) rotate(${swing})`'))throw new Error('폴백 이미지 흔들기가 남아 있음');
+if(!css.includes('일정 모션 규칙: PNG 전체 흔들기/확대축소 금지'))throw new Error('전체 일정 이미지 안정화 CSS 규칙이 필요함');
 if(!app.includes("animateStudySweatWipe(action.id,stageCharacterImage)"))throw new Error('글읽기·셈하기 실패는 이마의 땀을 닦는 전용 동작을 사용해야 함');
 for(const activity of ['calligraphy','arithmetic'])for(const frame of [1,2,3]){
   const file=path.join(root,'assets','characters','seonhwa','schedule-actions','failures','sweat-wipe-v1',`seonhwa-${activity}-sweat-wipe-${frame}.png`);

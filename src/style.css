@@ -81,3 +81,27 @@ body{min-height:100dvh}.phone{width:min(100vw,calc(100dvh * 9 / 16),430px);max-h
     height:62%!important;
   }
 }
+
+/* v0.64.202 — 족자는 오른쪽 빈 벽에 걸고, 열린 마당에는 계절과 날씨를 보여 준다. */
+.home-sehwa-gallery{left:70%!important;top:25%!important;width:17.5%!important;transform:rotate(-.2deg)!important}
+.home-weather{position:absolute;z-index:1;left:23%;top:18%;width:47%;height:37%;overflow:hidden;pointer-events:none;clip-path:polygon(9% 0,91% 0,91% 100%,9% 100%)}
+.home-weather::before{content:"";position:absolute;inset:0;mix-blend-mode:soft-light;transition:background .8s ease,opacity .8s ease}
+.phone[data-home-season="spring"] .home-weather::before{background:linear-gradient(#ffd7dd2d,#8bcf7942);opacity:.8}
+.phone[data-home-season="summer"] .home-weather::before{background:linear-gradient(#59a9d526,#13713942);opacity:.9}
+.phone[data-home-season="autumn"] .home-weather::before{background:linear-gradient(#f5bb5630,#b84b284d);opacity:.95}
+.phone[data-home-season="winter"] .home-weather::before{background:linear-gradient(#dcecff66,#c4d4de54);opacity:1}
+.home-weather i{position:absolute;left:var(--particle-left);top:-12%;display:block;pointer-events:none}
+.home-weather[data-weather="rain"] i{width:1px;height:17px;border-radius:999px;background:#d9efffca;box-shadow:0 0 2px #fff;transform:rotate(9deg);animation:home-rain 1.05s linear infinite;animation-delay:var(--particle-delay)}
+.home-weather[data-weather="heavy-snow"] i{width:calc(5px + (var(--particle-index) % 4) * 1px);height:calc(5px + (var(--particle-index) % 4) * 1px);border-radius:50%;background:#fff;box-shadow:0 0 5px #eaf5ff;animation:home-heavy-snow calc(3.2s + (var(--particle-index) % 5) * .38s) ease-in infinite;animation-delay:var(--particle-delay)}
+@keyframes home-rain{to{transform:translate(-12px,390px) rotate(9deg)}}
+@keyframes home-heavy-snow{0%{transform:translate(0,-8px) rotate(0);opacity:0}12%{opacity:.95}55%{transform:translate(13px,155px) rotate(145deg)}100%{transform:translate(-8px,335px) rotate(310deg);opacity:.25}}
+.phone.playing .home-weather,.phone.market-playing .home-weather,.phone:has(.vacation-scene:not([hidden])) .home-weather{display:none}
+@media(max-width:350px){.home-sehwa-gallery{left:70.5%!important;width:16.5%!important}}
+
+/* v0.64.202 — 홈 바로가기는 하단 2×3 메뉴, 저장은 설정 안에서만 연다. */
+.phone:not(.playing):not(.market-playing)>.home-bottom-nav{bottom:1.5%!important;display:grid!important;grid-template-columns:repeat(3,1fr)!important;gap:5px!important}
+.phone:not(.playing):not(.market-playing)>.home-bottom-nav button{min-height:34px!important;padding:7px 2px!important;font-size:11px!important}
+.phone:not(.playing):not(.market-playing)>.dialogue{bottom:13.5%!important}
+.phone:not(.playing):not(.market-playing)>.character-slot{bottom:25%!important}
+.settings-record-button{width:100%;min-height:44px;background:#6d4c2d;color:#fff8e8}
+.phone:not(.market-playing)>.home-bottom-nav>[data-panel="collection"],.phone:not(.market-playing)>.home-bottom-nav>#marketFinish{display:none!important}
