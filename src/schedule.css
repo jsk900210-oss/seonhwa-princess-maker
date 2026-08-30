@@ -2253,21 +2253,21 @@
 
 /* v0.64.192 · 수상 컷은 왕 없이 반실사 대상 수상자만 중앙에 배치한다. */
 .moonlight-pageant.festival-pm3.motion-award .pageant-winner.is-solo{
-  left:5%!important;
-  right:5%!important;
+  left:14%!important;
+  right:14%!important;
   bottom:1%!important;
   width:auto!important;
-  height:96%!important;
+  height:78%!important;
 }
 .moonlight-pageant.festival-pm3.motion-award .pageant-winner.is-solo img{
   object-position:center bottom!important;
-  transform:scale(1.5)!important;
+  transform:scale(1.15)!important;
   transform-origin:center bottom!important;
 }
 
 /* v0.64.193 · 선화는 서서 등장한 뒤 대사를 이어가며 두 손을 모아 자연스럽게 절한다. */
-.pageant-interview.is-acceptance.is-seonhwa-winner figure{inset:-4% 0 21%!important;overflow:visible!important}
-.pageant-interview.is-acceptance .pageant-acceptance-motion{position:absolute;inset:0;display:block;width:100%;height:100%;transform:scale(1.5);transform-origin:center bottom;filter:drop-shadow(0 6px 7px #3a1c0d66)}
+.pageant-interview.is-acceptance.is-seonhwa-winner figure{inset:5% 7% 25%!important;overflow:visible!important}
+.pageant-interview.is-acceptance .pageant-acceptance-motion{position:absolute;inset:0;display:block;width:100%;height:100%;transform:scale(1.15);transform-origin:center bottom;filter:drop-shadow(0 6px 7px #3a1c0d66)}
 .pageant-interview.is-acceptance .pageant-acceptance-motion img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;object-position:center bottom;opacity:0;animation:moonlight-acceptance-bow 2.5s steps(1,end) infinite;animation-delay:calc(var(--acceptance-frame) * .5s)}
 @keyframes moonlight-acceptance-bow{0%,19.99%{opacity:1}20%,100%{opacity:0}}
 .moonlight-pageant.beat-3 .pageant-lineup,.moonlight-pageant.beat-4 .pageant-lineup{left:2%;right:2%;bottom:48%;grid-template-columns:repeat(7,1fr);gap:1px}
