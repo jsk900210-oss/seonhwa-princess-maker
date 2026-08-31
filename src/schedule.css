@@ -3093,6 +3093,8 @@ body .phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage:
 @keyframes moonlight-complete-dance{0%,100%{opacity:1;transform:translateY(0) rotate(-.45deg)}35%{opacity:1;transform:translateY(-3px) rotate(.35deg)}65%{opacity:1;transform:translateY(-1px) rotate(.7deg)}}
 .moonlight-pageant.festival-pm3.motion-royal-judging .festival-character-cut.king-cut img{left:50%!important;bottom:-2%!important;width:108%!important;height:96%!important;transform:translateX(-50%)!important;object-position:center bottom!important}
 .moonlight-pageant.festival-pm3.motion-royal-judging .festival-character-cut.king-cut p{top:auto!important;bottom:4%!important;left:4%!important;right:4%!important;width:auto!important;min-height:0!important}
+/* Chuseok reply portrait: keep Seonhwa below the dialogue card at a stage-scale ratio. */
+.moonlight-pageant.festival-pm3.motion-stage-enter .sehwa-opening-dialogue.speaker-seonhwa>.sehwa-expression{right:14%!important;bottom:-2%!important;width:66%!important;height:78%!important;background-position:center bottom!important;transform:none!important}
 
 
 /* v0.64.231 — market replaces the home bottom menu with one compact exit. */
