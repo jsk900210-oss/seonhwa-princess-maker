@@ -248,7 +248,7 @@ const vacationIllustrations=[
 function unifiedAgeFolder(){return '09';}
 function scheduleFramePath(file){return `../assets/characters/seonhwa/schedule-actions/v2/${file}`;}
 function scheduleBasePath(file){return `../assets/characters/seonhwa/schedule-base/${file}`;}
-const scheduleAssetRevision='0.64.259-debug';
+const scheduleAssetRevision='0.64.260-debug';
 const scheduleQaParams=new URLSearchParams(location.search);
 const moonlightStandaloneQa=scheduleQaParams.get('qaHoliday')==='chuseok';
 const sehwaStandaloneQa=scheduleQaParams.get('qaHoliday')==='seollal';
@@ -1701,12 +1701,13 @@ function festivalWinnerAcceptance(session){
 }
 function renderMoonlightPageant(session,dayIndex){
   const overlay=document.querySelector('#moonlightPageant');if(!overlay)return;
+  if(overlay._danceFrameTimer){window.clearInterval(overlay._danceFrameTimer);overlay._danceFrameTimer=null;}
   const beat=Math.min(7,dayIndex%8),opening=beat===0,entrance=beat===1,dance=beat===2,judging=beat===3,ranking=beat===4,award=beat===5,acceptance=beat===6,closing=beat===7;
   overlay.hidden=false;overlay.className=`moonlight-pageant festival-pm3 beat-${beat+1} motion-${moonlightMotionNames[beat]} reaction-${session.reaction.replaceAll(' ','-')}`;
   // 신수의 응원과 상태별 선화의 대답은 반드시 한 장면씩 교대한다.
   // 이 대화가 끝난 뒤에만 중앙 춤 프레임을 노출한다.
   const frameMotion=dance?'dance':null;
-  const hero=frameMotion?`<span class="pageant-hero-frames is-${frameMotion}" role="img" aria-label="${moonlightStoryBeats[beat]}">${moonlightMotionFrames(frameMotion).map((src,index)=>`<img src="${src}" alt="" style="--pageant-frame:${index}">`).join('')}</span>`:'';
+  const hero=frameMotion?`<span class="pageant-hero-frames is-${frameMotion}" role="img" aria-label="${moonlightStoryBeats[beat]}">${moonlightMotionFrames(frameMotion).map((src,index)=>`<img class="${index===0?'is-active':''}" src="${src}" alt="" style="--pageant-frame:${index}">`).join('')}</span>`:'';
   const king=judging?festivalKingCut('센스와 예절, 기품에 담긴 마음을 차분히 살펴보겠다.','한가위 경연을 심사하는 왕'):'';
   const board=ranking?festivalScoreboard(session,'참가자 8명 최종 순위와 수상 결과'):'';
   const winner=award?`<figure class="pageant-winner is-solo ${session.winner.player?'is-seonhwa':''}"><img src="${moonlightAwardWinnerImage(session.winner)}" alt="대상 수상자 ${session.winner.name}"></figure>`:'';
@@ -1716,6 +1717,11 @@ function renderMoonlightPageant(session,dayIndex){
   const closingCard=closing?`<section class="festival-result-card festival-closing-card"><small>한가위 경연 완료</small><strong>${session.overallRank}</strong><p>센스 +2 · 예절 +2 · 기품 +2 · 스트레스 -4${session.prize?`<br>${session.prize} 획득`:''}</p></section>`:'';
   overlay.tabIndex=0;overlay.setAttribute('role','button');overlay.setAttribute('aria-label','화면을 터치해 다음 장면으로 이동');
   overlay.innerHTML=`${hero}${opening?moonlightOpeningDialogue(session,0):entrance?moonlightOpeningDialogue(session,1):''}${king}${board}${winner}${kingCongratulations}${winnerAcceptance}${guardian}${closingCard}`;
+  if(dance){
+    const frames=[...overlay.querySelectorAll('.pageant-hero-frames.is-dance img')];let frameIndex=0;
+    const showFrame=()=>frames.forEach((image,index)=>image.classList.toggle('is-active',index===frameIndex));
+    showFrame();overlay._danceFrameTimer=window.setInterval(()=>{frameIndex=(frameIndex+1)%frames.length;showFrame();},100);
+  }
 }
 function waitForMoonlightAdvance(beat){
   return waitForFestivalTapAdvance(beat<=1?1600:700);
@@ -1729,7 +1735,7 @@ function waitForFestivalTapAdvance(minimumStay){
     overlay.addEventListener('click',advance);overlay.addEventListener('keydown',advance);
   },minimumStay));
 }
-function clearMoonlightPageant(){const overlay=document.querySelector('#moonlightPageant');if(overlay){overlay.hidden=true;overlay.innerHTML='';overlay.className='moonlight-pageant';}}
+function clearMoonlightPageant(){const overlay=document.querySelector('#moonlightPageant');if(overlay){if(overlay._danceFrameTimer){window.clearInterval(overlay._danceFrameTimer);overlay._danceFrameTimer=null;}overlay.hidden=true;overlay.innerHTML='';overlay.className='moonlight-pageant';}}
 const sehwaContestants=[
   {id:'yeonhwa',name:'연화',scores:[118,270,455,650]},{id:'daon',name:'다온',scores:[142,315,520,720]},
   {id:'sodam',name:'소담',scores:[96,240,420,610]},{id:'gaeun',name:'가은',scores:[165,360,590,790]},

@@ -3089,8 +3089,8 @@ body .phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage:
 
 /* v0.64.259 — 완성된 춤 프레임은 무대 바닥선 위에서 10fps·5초로 실제 교대한다. */
 .moonlight-pageant.festival-pm3.motion-dance .pageant-hero-frames.is-dance{left:50%!important;bottom:19%!important;width:224px!important;height:306px!important}
-.moonlight-pageant.festival-pm3.motion-dance .pageant-hero-frames.is-dance img{animation:moonlight-dance-50-frame 5s steps(1,end) infinite!important;animation-delay:calc(var(--pageant-frame) * .1s)!important;opacity:0!important;transform:none!important;transform-origin:center bottom!important}
-@keyframes moonlight-dance-50-frame{0%,1.99%{opacity:1}2%,100%{opacity:0}}
+.moonlight-pageant.festival-pm3.motion-dance .pageant-hero-frames.is-dance img{animation:none!important;opacity:0!important;transform:none!important;transform-origin:center bottom!important}
+.moonlight-pageant.festival-pm3.motion-dance .pageant-hero-frames.is-dance img.is-active{opacity:1!important}
 /* 명절 대화 컷: 하단을 넓게 녹이고, 다음 장면으로 갈 때 급하게 끊기지 않는다. */
 .sehwa-opening-dialogue>.sehwa-dialogue-bust,
 .sehwa-opening-dialogue>.sehwa-expression{
