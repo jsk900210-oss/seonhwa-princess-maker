@@ -23,6 +23,14 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+      - name: Run game asset and scene quality gate
+        run: node tools/run_quality_gate.mjs
+      - name: Upload quality report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: quality-gate-report
+          path: output/quality-gate-report.json
       - name: Configure Pages
         uses: actions/configure-pages@v5
         with:

@@ -1,0 +1,41 @@
+{
+  "version": 1,
+  "policy": {
+    "approvedMayShip": true,
+    "retiredMustNotBeReferenced": true,
+    "generatedAssetsRequirePurposeAndReplacementHistory": true
+  },
+  "assets": [
+    {
+      "id": "seollal-eight-painters-frame-1",
+      "path": "assets/events/holidays/sehwa-contest/preparation-scene/eight-entrant-v1/drawing-1-v2.png",
+      "status": "approved",
+      "purpose": "Eight contestants with distinct historically grounded braided hairstyles, painting pose 1"
+    },
+    {
+      "id": "seollal-eight-painters-frame-2",
+      "path": "assets/events/holidays/sehwa-contest/preparation-scene/eight-entrant-v1/drawing-2-v2.png",
+      "status": "approved",
+      "purpose": "Eight contestants maintaining identity and hairstyle continuity, painting pose 2"
+    },
+    {
+      "id": "seollal-eight-painters-frame-3",
+      "path": "assets/events/holidays/sehwa-contest/preparation-scene/eight-entrant-v1/drawing-3-v2.png",
+      "status": "approved",
+      "purpose": "Eight contestants maintaining identity and hairstyle continuity, thinking pose"
+    },
+    {
+      "id": "seollal-seonhwa-brush-sheet",
+      "path": "assets/events/holidays/sehwa-contest/seonhwa/drawing/age-13/painting-brush-10fps-sheet-v1.png",
+      "status": "approved",
+      "purpose": "Five-second 10fps brush-tip animation with static table"
+    },
+    {
+      "id": "seollal-eight-painters-old-composite",
+      "path": "assets/events/holidays/sehwa-contest/preparation-scene/eight-entrant-v1/drawing-1.png",
+      "status": "retired",
+      "replacedBy": "seollal-eight-painters-frame-1",
+      "reason": "Repeated hairstyles and no motion continuity"
+    }
+  ]
+}
