@@ -26,9 +26,12 @@ assert.match(app,/preparing=beat===4,drawing=beat>=5&&beat<=10/,'화구 준비 �
 assert.match(app,/function sehwaPreparationEnsemble\(session\)/,'빈 준비 장면 대신 참가자 8명의 화구 준비 장면이 필요합니다.');
 assert.match(app,/\$\{preparing\?sehwaPreparationEnsemble\(session\):''\}/,'참가자와 책상은 준비 장면에서만 보여야 합니다.');
 assert.doesNotMatch(app,/title\|\|preparing\?sehwaPreparationEnsemble/,'제목 장면에는 참가자와 책상이 다시 나타나면 안 됩니다.');
-assert.match(app,/책상에서 그림을 그리는 쯔꾸르 참가자 8명/,'준비 장면에는 좌우 네 명씩 여덟 참가자가 필요합니다.');
+assert.match(app,/서로 다른 전통 땋은 머리를 한 참가자 8명/,'준비 장면에는 서로 다른 머리 모양의 참가자 여덟 명이 필요합니다.');
 assert.match(app,/eight-entrant-v1/,'8인 그림 그리기 전용 장면을 사용해야 합니다.');
-assert.ok(existsSync(new URL('../assets/events/holidays/sehwa-contest/preparation-scene/eight-entrant-v1/drawing-1.png',import.meta.url)),'8인 그림 장면이 필요합니다.');
+for(const frame of [1,2,3])assert.ok(existsSync(new URL(`../assets/events/holidays/sehwa-contest/preparation-scene/eight-entrant-v1/drawing-${frame}-v2.png`,import.meta.url)),`서로 다른 머리 모양을 유지한 8인 그림 ${frame} 프레임이 필요합니다.`);
+assert.match(css,/@keyframes sehwa-eight-painting/,'8명은 붓질과 고민 자세를 번갈아 보여야 합니다.');
+assert.ok(existsSync(new URL('../assets/events/holidays/sehwa-contest/seonhwa/drawing/age-13/painting-brush-10fps-sheet-v1.png',import.meta.url)),'선화의 10fps 붓질 시트가 필요합니다.');
+assert.match(css,/animation:sehwa-brush-10fps 1s steps\(1,end\) 5 both/,'선화의 붓질은 10fps 한 주기를 5초 동안 반복해야 합니다.');
 assert.match(app,/\{id:'eunseo',name:'은서'/,'플레이어를 포함한 8인 참가 명단이 필요합니다.');
 assert.match(app,/8인 세화 심사/,'설날 심사표도 8인 기준이어야 합니다.');
 for(const frame of [1,2,3,4,5,6])assert.ok(existsSync(new URL(`../assets/events/holidays/sehwa-contest/preparation-scene/age-13/preparation-${frame}.png`,import.meta.url)),`13세 화구 준비 ${frame} 프레임이 필요합니다.`);
