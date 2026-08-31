@@ -3124,3 +3124,9 @@ body .phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage:
 .phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.schedule-layered .stage-character.pixel-sprite{width:112px!important;height:112px!important;box-sizing:border-box!important;transform-origin:center bottom!important}
 .phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.schedule-layered .stage-character.pixel-sprite>img{width:100%!important;height:100%!important;object-fit:contain!important;object-position:center bottom!important}
 .phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.schedule-layered .schedule-scene-layer.layer-npc{width:112px!important;height:112px!important;box-sizing:border-box!important;object-fit:contain!important;object-position:center bottom!important;transform-origin:center bottom!important}
+
+
+/* v0.64.238 — final, ID-scoped tukkur scale wins over every activity override. */
+#activityStage.schedule-layered .stage-character.pixel-sprite{width:96px!important;height:96px!important;min-width:96px!important;min-height:96px!important}
+#activityStage.schedule-layered .stage-character.pixel-sprite>img{width:96px!important;height:96px!important;max-width:96px!important;max-height:96px!important;object-fit:contain!important;object-position:center bottom!important}
+#activityStage.schedule-layered .schedule-scene-layer.layer-npc{width:96px!important;height:96px!important;max-width:96px!important;max-height:96px!important;object-fit:contain!important;object-position:center bottom!important}
