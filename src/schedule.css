@@ -3096,9 +3096,14 @@ body .phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage:
 /* Chuseok reply portrait: keep Seonhwa below the dialogue card at a stage-scale ratio. */
 /* Both speakers use one visual box and floor line during the Chuseok exchange. */
 .moonlight-pageant.festival-pm3 .sehwa-opening-dialogue.speaker-guardian>.sehwa-dialogue-bust,
-.moonlight-pageant.festival-pm3 .sehwa-opening-dialogue.speaker-seonhwa>.sehwa-expression{bottom:-2%!important;width:84%!important;height:96%!important;transform:none!important}
+.moonlight-pageant.festival-pm3 .sehwa-opening-dialogue.speaker-seonhwa>.sehwa-expression{bottom:-2%!important;width:94%!important;height:108%!important;transform:none!important}
 .moonlight-pageant.festival-pm3 .sehwa-opening-dialogue.speaker-guardian>.sehwa-dialogue-bust{left:-13%!important;right:auto!important;object-position:center bottom!important}
 .moonlight-pageant.festival-pm3 .sehwa-opening-dialogue.speaker-seonhwa>.sehwa-expression{left:auto!important;right:12%!important;background-position:center bottom!important}
+/* State remains visible even while the low-braid expression portraits are rebuilt. */
+.moonlight-pageant.festival-pm3 .sehwa-opening-dialogue.speaker-seonhwa.status-happy .sehwa-expression{transform:translateY(-5px) rotate(-2deg)!important}
+.moonlight-pageant.festival-pm3 .sehwa-opening-dialogue.speaker-seonhwa.status-sad .sehwa-expression{transform:translateY(8px) rotate(1deg)!important;filter:saturate(.82) brightness(.96)!important}
+.moonlight-pageant.festival-pm3 .sehwa-opening-dialogue.speaker-seonhwa.status-angry .sehwa-expression,.moonlight-pageant.festival-pm3 .sehwa-opening-dialogue.speaker-seonhwa.status-rebellious .sehwa-expression{transform:translateX(-7px) rotate(-1deg)!important;filter:saturate(1.1) contrast(1.04)!important}
+.moonlight-pageant.festival-pm3 .sehwa-opening-dialogue.speaker-seonhwa.status-shocked .sehwa-expression{transform:translateY(-10px) scale(1.03)!important}
 
 
 /* v0.64.231 — market replaces the home bottom menu with one compact exit. */
