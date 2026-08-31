@@ -30,6 +30,7 @@ for(const age of ['09','13','16','19'])assert.ok(fs.existsSync(path.join(root,`a
 assert.ok(fs.existsSync(path.join(root,'assets/events/holidays/moonlight-pageant/seonhwa/consistent-dance-v9/seonhwa-dance-slow-v1.png')),'complete dance');
 assert.match(app,/const guardianType=game\.guardianType\|\|'hyeonmu';/,'신수 미선택 상태에도 도입 대화 유지');
 assert.match(css,/motion-royal-judging \.festival-character-cut\.king-cut p[\s\S]*bottom:4%!important/,'왕의 얼굴과 대화창 분리');
+assert.match(css,/speaker-seonhwa>\.sehwa-expression\{[^}]*width:100%!important[^}]*height:112%!important/,'선화 상반신은 신수보다 크게 확대되면 안 됩니다.');
 assert.match(app,/const portrait=playerWinner[\s\S]*baseSpriteForAge\(\)[\s\S]*moonlightEntrantImage\(winner\)/,'우승자별 나이 맞춤 반실사 수상 소감 분기');
 assert.match(app,/festivalScoreboard\(session,'참가자 8명 최종 순위와 수상 결과'\)/,'8명 순위 발표');
 assert.match(app,/festivalKingWinnerCongratulations\(session\)/,'왕 시상·축하');
