@@ -3094,7 +3094,11 @@ body .phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage:
 .moonlight-pageant.festival-pm3.motion-royal-judging .festival-character-cut.king-cut img{left:50%!important;bottom:-2%!important;width:108%!important;height:96%!important;transform:translateX(-50%)!important;object-position:center bottom!important}
 .moonlight-pageant.festival-pm3.motion-royal-judging .festival-character-cut.king-cut p{top:auto!important;bottom:4%!important;left:4%!important;right:4%!important;width:auto!important;min-height:0!important}
 /* Chuseok reply portrait: keep Seonhwa below the dialogue card at a stage-scale ratio. */
-.moonlight-pageant.festival-pm3.motion-stage-enter .sehwa-opening-dialogue.speaker-seonhwa>.sehwa-expression{right:14%!important;bottom:-2%!important;width:66%!important;height:78%!important;background-position:center bottom!important;transform:none!important}
+/* Both speakers use one visual box and floor line during the Chuseok exchange. */
+.moonlight-pageant.festival-pm3 .sehwa-opening-dialogue.speaker-guardian>.sehwa-dialogue-bust,
+.moonlight-pageant.festival-pm3 .sehwa-opening-dialogue.speaker-seonhwa>.sehwa-expression{bottom:-2%!important;width:76%!important;height:88%!important;transform:none!important}
+.moonlight-pageant.festival-pm3 .sehwa-opening-dialogue.speaker-guardian>.sehwa-dialogue-bust{left:-13%!important;right:auto!important;object-position:center bottom!important}
+.moonlight-pageant.festival-pm3 .sehwa-opening-dialogue.speaker-seonhwa>.sehwa-expression{left:auto!important;right:12%!important;background-position:center bottom!important}
 
 
 /* v0.64.231 — market replaces the home bottom menu with one compact exit. */
