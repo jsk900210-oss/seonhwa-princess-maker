@@ -4,9 +4,9 @@
   "nameKo": "베틀 돕기",
   "status": "review",
   "existingHeroFrames": [
-    "../../characters/seonhwa/schedule-actions/loomwork-pixel-1.png",
-    "../../characters/seonhwa/schedule-actions/loomwork-pixel-2.png",
-    "../../characters/seonhwa/schedule-actions/loomwork-pixel-3.png"
+    "../../characters/seonhwa/schedule-actions/v2/loomwork-pixel-v2-1.png",
+    "../../characters/seonhwa/schedule-actions/v2/loomwork-pixel-v2-2.png",
+    "../../characters/seonhwa/schedule-actions/v2/loomwork-pixel-v2-3.png"
   ],
   "existingBackground": "../../backgrounds/phase-scenes/loom.webp",
   "animation": {
@@ -33,7 +33,8 @@
         "props/loom-shuttle-1.png",
         "props/loom-shuttle-2.png",
         "props/loom-shuttle-3.png"
-      ]
+      ],
+      "heroIncludesProp": true
     },
     "success-b": {
       "layer": "effects",

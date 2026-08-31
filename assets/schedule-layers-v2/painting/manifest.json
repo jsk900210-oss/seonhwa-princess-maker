@@ -4,9 +4,9 @@
   "nameKo": "회화 배우기",
   "status": "pilot-review",
   "existingHeroFrames": [
-    "../../characters/seonhwa/schedule-actions/painting-art-pixel-v2-1.png",
-    "../../characters/seonhwa/schedule-actions/painting-art-pixel-v2-2.png",
-    "../../characters/seonhwa/schedule-actions/painting-art-pixel-v2-3.png"
+    "../../characters/seonhwa/schedule-actions/v2/painting-art-pixel-v2-1.png",
+    "../../characters/seonhwa/schedule-actions/v2/painting-art-pixel-v2-2.png",
+    "../../characters/seonhwa/schedule-actions/v2/painting-art-pixel-v2-3.png"
   ],
   "existingBackground": "../../backgrounds/phase-scenes/painting.webp",
   "animation": {
@@ -33,7 +33,8 @@
         "props/ink-brush-1.png",
         "props/ink-brush-2.png",
         "props/ink-brush-3.png"
-      ]
+      ],
+      "heroIncludesProp": true
     },
     "success-b": {
       "layer": "effects",

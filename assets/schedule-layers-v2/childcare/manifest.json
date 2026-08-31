@@ -4,25 +4,112 @@
   "nameKo": "아이 돌보기",
   "status": "pilot-review",
   "existingHeroFrames": [
-    "../../characters/seonhwa/schedule-actions/childcare-pixel-1.png",
-    "../../characters/seonhwa/schedule-actions/childcare-pixel-2.png",
-    "../../characters/seonhwa/schedule-actions/childcare-pixel-3.png"
+    "../../characters/seonhwa/schedule-actions/v2/childcare-pixel-v2-1.png",
+    "../../characters/seonhwa/schedule-actions/v2/childcare-pixel-v2-2.png",
+    "../../characters/seonhwa/schedule-actions/v2/childcare-pixel-v2-3.png"
   ],
   "existingBackground": "../../backgrounds/phase-scenes/childcare.webp",
-  "animation": {"sequence": [1, 2, 3], "heroRunSequence": [1, 2, 3, 4, 5, 6], "npcRunSequence": [1, 2, 3, 2, 1, 2], "loopCount": 3, "frameDurationMs": 150},
-  "heroRunFrames": ["hero-actions/chase-running-v3/seonhwa-chase-v3-1.png", "hero-actions/chase-running-v3/seonhwa-chase-v3-2.png", "hero-actions/chase-running-v3/seonhwa-chase-v3-3.png", "hero-actions/chase-running-v3/seonhwa-chase-v3-4.png", "hero-actions/chase-running-v3/seonhwa-chase-v3-5.png", "hero-actions/chase-running-v3/seonhwa-chase-v3-6.png"],
-  "npcRunFrames": ["npc/child-running-v2/child-run-v2-1.png", "npc/child-running-v2/child-run-v2-2.png", "npc/child-running-v2/child-run-v2-3.png"],
-  "npc": {"id": "child", "frames": ["npc/child-idle-v2/child-idle-v2-1.png", "npc/child-idle-v2/child-idle-v2-2.png", "npc/child-idle-v2/child-idle-v2-3.png"]},
-  "npcFailureFallFrames": ["npc/child-fall-v2/child-fall-v2-1.png", "npc/child-fall-v2/child-fall-v2-2.png", "npc/child-fall-v2/child-fall-v2-3.png"],
+  "animation": {
+    "sequence": [
+      1,
+      2,
+      3
+    ],
+    "heroRunSequence": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "npcRunSequence": [
+      1,
+      2,
+      3,
+      2,
+      1,
+      2
+    ],
+    "loopCount": 3,
+    "frameDurationMs": 150
+  },
+  "heroRunFrames": [
+    "hero-actions/chase-running-v3/seonhwa-chase-v3-1.png",
+    "hero-actions/chase-running-v3/seonhwa-chase-v3-2.png",
+    "hero-actions/chase-running-v3/seonhwa-chase-v3-3.png",
+    "hero-actions/chase-running-v3/seonhwa-chase-v3-4.png",
+    "hero-actions/chase-running-v3/seonhwa-chase-v3-5.png",
+    "hero-actions/chase-running-v3/seonhwa-chase-v3-6.png"
+  ],
+  "npcRunFrames": [
+    "npc/child-running-v2/child-run-v2-1.png",
+    "npc/child-running-v2/child-run-v2-2.png",
+    "npc/child-running-v2/child-run-v2-3.png"
+  ],
+  "npc": {
+    "id": "child",
+    "frames": [
+      "npc/child-idle-v2/child-idle-v2-1.png",
+      "npc/child-idle-v2/child-idle-v2-2.png",
+      "npc/child-idle-v2/child-idle-v2-3.png"
+    ]
+  },
+  "npcFailureFallFrames": [
+    "npc/child-fall-v2/child-fall-v2-1.png",
+    "npc/child-fall-v2/child-fall-v2-2.png",
+    "npc/child-fall-v2/child-fall-v2-3.png"
+  ],
   "patterns": {
-    "success-a": {"layer": "props", "frames": ["props/toy-play-1.png", "props/toy-play-2.png", "props/toy-play-3.png"]},
-    "success-b": {"layer": "effects", "frames": ["effects/comfort-blanket-1.png", "effects/comfort-blanket-2.png", "effects/comfort-blanket-3.png"]},
-    "fail-a": {"layer": "failures", "frames": ["failures/fail-a-1.png", "failures/fail-a-2.png", "failures/fail-a-3.png"]},
-    "fail-b": {"layer": "failures", "frames": ["failures/fail-b-1.png", "failures/fail-b-2.png", "failures/fail-b-3.png"]}
+    "success-a": {
+      "layer": "props",
+      "frames": [
+        "props/toy-play-1.png",
+        "props/toy-play-2.png",
+        "props/toy-play-3.png"
+      ]
+    },
+    "success-b": {
+      "layer": "effects",
+      "frames": [
+        "effects/comfort-blanket-1.png",
+        "effects/comfort-blanket-2.png",
+        "effects/comfort-blanket-3.png"
+      ]
+    },
+    "fail-a": {
+      "layer": "failures",
+      "frames": [
+        "failures/fail-a-1.png",
+        "failures/fail-a-2.png",
+        "failures/fail-a-3.png"
+      ]
+    },
+    "fail-b": {
+      "layer": "failures",
+      "frames": [
+        "failures/fail-b-1.png",
+        "failures/fail-b-2.png",
+        "failures/fail-b-3.png"
+      ]
+    }
   },
   "placement": {
-    "heroLeft": "29%", "floorBottom": "5%", "npcLeft": "76%", "npcScale": 0.78,
-    "propLeft": "59%", "propBottom": "5%", "effectLeft": "61%", "effectBottom": "5%"
+    "heroLeft": "29%",
+    "floorBottom": "5%",
+    "npcLeft": "76%",
+    "npcScale": 0.78,
+    "propLeft": "59%",
+    "propBottom": "5%",
+    "effectLeft": "61%",
+    "effectBottom": "5%"
   },
-  "layerOrder": ["existing-background", "npc", "existing-seonhwa", "props", "effects", "failures"]
+  "layerOrder": [
+    "existing-background",
+    "npc",
+    "existing-seonhwa",
+    "props",
+    "effects",
+    "failures"
+  ]
 }

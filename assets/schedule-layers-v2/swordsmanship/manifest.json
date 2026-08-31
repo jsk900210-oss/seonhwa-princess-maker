@@ -4,9 +4,9 @@
   "nameKo": "검술 수련",
   "status": "review",
   "existingHeroFrames": [
-    "../../characters/seonhwa/schedule-actions/sword-strike-pixel-1.png",
-    "../../characters/seonhwa/schedule-actions/sword-strike-pixel-2.png",
-    "../../characters/seonhwa/schedule-actions/sword-strike-pixel-3.png"
+    "../../characters/seonhwa/schedule-actions/v2/sword-strike-pixel-v2-1.png",
+    "../../characters/seonhwa/schedule-actions/v2/sword-strike-pixel-v2-2.png",
+    "../../characters/seonhwa/schedule-actions/v2/sword-strike-pixel-v2-3.png"
   ],
   "existingBackground": "../../backgrounds/phase-scenes/martial.webp",
   "animation": {
@@ -33,7 +33,8 @@
         "props/overhead-sword-1.png",
         "props/overhead-sword-2.png",
         "props/overhead-sword-3.png"
-      ]
+      ],
+      "heroIncludesProp": true
     },
     "success-b": {
       "layer": "effects",

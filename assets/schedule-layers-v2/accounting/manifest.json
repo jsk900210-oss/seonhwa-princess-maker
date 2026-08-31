@@ -4,9 +4,9 @@
   "nameKo": "회계 보조",
   "status": "review",
   "existingHeroFrames": [
-    "../../characters/seonhwa/schedule-actions/arithmetic-pixel-1.png",
-    "../../characters/seonhwa/schedule-actions/arithmetic-pixel-2.png",
-    "../../characters/seonhwa/schedule-actions/arithmetic-pixel-3.png"
+    "../../characters/seonhwa/schedule-actions/v2/arithmetic-pixel-v2-1.png",
+    "../../characters/seonhwa/schedule-actions/v2/arithmetic-pixel-v2-2.png",
+    "../../characters/seonhwa/schedule-actions/v2/arithmetic-pixel-v2-3.png"
   ],
   "existingBackground": "../../backgrounds/pixel-activities/close/arithmetic-room.webp",
   "animation": {
@@ -33,7 +33,8 @@
         "props/abacus-ledger-1.png",
         "props/abacus-ledger-2.png",
         "props/abacus-ledger-3.png"
-      ]
+      ],
+      "heroIncludesProp": true
     },
     "success-b": {
       "layer": "effects",

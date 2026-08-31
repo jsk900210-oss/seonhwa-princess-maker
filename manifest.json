@@ -1,7 +1,7 @@
 {
   "pack": "seonhwa-locked-schedules-complete-v1",
   "scope": "현재 코드에 등록된 잠금 교육 8종 + 잠금 아르바이트 14종 전체",
-  "heroPolicy": "선화 이미지는 생성·교체하지 않는다. manifest의 existingHeroFrames만 사용한다.",
+  "heroPolicy": "선화와 사용하는 도구·재료는 같은 v2 이미지에 통합하고, manifest의 existingHeroFrames를 사용한다.",
   "animation": {
     "sequence": [
       1,
@@ -41,9 +41,9 @@
       "unlockAge": 13,
       "unlockStats": null,
       "existingHeroFrames": [
-        "../assets/characters/seonhwa/schedule-actions/calligraphy-pixel-1.png",
-        "../assets/characters/seonhwa/schedule-actions/calligraphy-pixel-2.png",
-        "../assets/characters/seonhwa/schedule-actions/calligraphy-pixel-3.png"
+        "../assets/characters/seonhwa/schedule-actions/v2/calligraphy-pixel-v2-1.png",
+        "../assets/characters/seonhwa/schedule-actions/v2/calligraphy-pixel-v2-2.png",
+        "../assets/characters/seonhwa/schedule-actions/v2/calligraphy-pixel-v2-3.png"
       ],
       "existingBackground": "../assets/backgrounds/phase-scenes/painting.webp",
       "backgroundOverlay": "background-overlay/painting-background-overlay.png",
@@ -91,9 +91,9 @@
       "unlockAge": 13,
       "unlockStats": null,
       "existingHeroFrames": [
-        "../assets/characters/seonhwa/schedule-actions/calligraphy-pixel-1.png",
-        "../assets/characters/seonhwa/schedule-actions/calligraphy-pixel-2.png",
-        "../assets/characters/seonhwa/schedule-actions/calligraphy-pixel-3.png"
+        "../assets/characters/seonhwa/schedule-actions/v2/calligraphy-pixel-v2-1.png",
+        "../assets/characters/seonhwa/schedule-actions/v2/calligraphy-pixel-v2-2.png",
+        "../assets/characters/seonhwa/schedule-actions/v2/calligraphy-pixel-v2-3.png"
       ],
       "existingBackground": "../assets/backgrounds/phase-scenes/music.webp",
       "backgroundOverlay": "background-overlay/music-background-overlay.png",
@@ -141,9 +141,9 @@
       "unlockAge": 13,
       "unlockStats": null,
       "existingHeroFrames": [
-        "../assets/characters/seonhwa/schedule-actions/manners-pixel-1.png",
-        "../assets/characters/seonhwa/schedule-actions/manners-pixel-2.png",
-        "../assets/characters/seonhwa/schedule-actions/manners-pixel-3.png"
+        "../assets/characters/seonhwa/schedule-actions/v2/manners-pixel-v2-1.png",
+        "../assets/characters/seonhwa/schedule-actions/v2/manners-pixel-v2-2.png",
+        "../assets/characters/seonhwa/schedule-actions/v2/manners-pixel-v2-3.png"
       ],
       "existingBackground": "../assets/backgrounds/phase-scenes/dance.webp",
       "backgroundOverlay": "background-overlay/dance-background-overlay.png",
@@ -193,9 +193,9 @@
         "strength": 120
       },
       "existingHeroFrames": [
-        "../assets/characters/seonhwa/schedule-actions/manners-pixel-1.png",
-        "../assets/characters/seonhwa/schedule-actions/manners-pixel-2.png",
-        "../assets/characters/seonhwa/schedule-actions/manners-pixel-3.png"
+        "../assets/characters/seonhwa/schedule-actions/v2/manners-pixel-v2-1.png",
+        "../assets/characters/seonhwa/schedule-actions/v2/manners-pixel-v2-2.png",
+        "../assets/characters/seonhwa/schedule-actions/v2/manners-pixel-v2-3.png"
       ],
       "existingBackground": "../assets/backgrounds/phase-scenes/martial.webp",
       "backgroundOverlay": "background-overlay/swordsmanship-background-overlay.png",
@@ -246,9 +246,9 @@
         "mentality": 100
       },
       "existingHeroFrames": [
-        "../assets/characters/seonhwa/schedule-actions/calligraphy-pixel-1.png",
-        "../assets/characters/seonhwa/schedule-actions/calligraphy-pixel-2.png",
-        "../assets/characters/seonhwa/schedule-actions/calligraphy-pixel-3.png"
+        "../assets/characters/seonhwa/schedule-actions/v2/calligraphy-pixel-v2-1.png",
+        "../assets/characters/seonhwa/schedule-actions/v2/calligraphy-pixel-v2-2.png",
+        "../assets/characters/seonhwa/schedule-actions/v2/calligraphy-pixel-v2-3.png"
       ],
       "existingBackground": "../assets/backgrounds/phase-scenes/magic.webp",
       "backgroundOverlay": "background-overlay/spellcraft-background-overlay.png",
@@ -296,9 +296,9 @@
       "unlockAge": 13,
       "unlockStats": null,
       "existingHeroFrames": [
-        "../assets/characters/seonhwa/schedule-actions/arithmetic-pixel-1.png",
-        "../assets/characters/seonhwa/schedule-actions/arithmetic-pixel-2.png",
-        "../assets/characters/seonhwa/schedule-actions/arithmetic-pixel-3.png"
+        "../assets/characters/seonhwa/schedule-actions/v2/arithmetic-pixel-v2-1.png",
+        "../assets/characters/seonhwa/schedule-actions/v2/arithmetic-pixel-v2-2.png",
+        "../assets/characters/seonhwa/schedule-actions/v2/arithmetic-pixel-v2-3.png"
       ],
       "existingBackground": "../assets/backgrounds/phase-scenes/kitchen.webp",
       "backgroundOverlay": "background-overlay/cooking-background-overlay.png",
@@ -346,9 +346,9 @@
       "unlockAge": 13,
       "unlockStats": null,
       "existingHeroFrames": [
-        "../assets/characters/seonhwa/schedule-actions/manners-pixel-1.png",
-        "../assets/characters/seonhwa/schedule-actions/manners-pixel-2.png",
-        "../assets/characters/seonhwa/schedule-actions/manners-pixel-3.png"
+        "../assets/characters/seonhwa/schedule-actions/v2/manners-pixel-v2-1.png",
+        "../assets/characters/seonhwa/schedule-actions/v2/manners-pixel-v2-2.png",
+        "../assets/characters/seonhwa/schedule-actions/v2/manners-pixel-v2-3.png"
       ],
       "existingBackground": "../assets/backgrounds/phase-scenes/martial.webp",
       "backgroundOverlay": "background-overlay/martial-background-overlay.png",
@@ -396,9 +396,9 @@
       "unlockAge": 16,
       "unlockStats": null,
       "existingHeroFrames": [
-        "../assets/characters/seonhwa/schedule-actions/calligraphy-pixel-1.png",
-        "../assets/characters/seonhwa/schedule-actions/calligraphy-pixel-2.png",
-        "../assets/characters/seonhwa/schedule-actions/calligraphy-pixel-3.png"
+        "../assets/characters/seonhwa/schedule-actions/v2/calligraphy-pixel-v2-1.png",
+        "../assets/characters/seonhwa/schedule-actions/v2/calligraphy-pixel-v2-2.png",
+        "../assets/characters/seonhwa/schedule-actions/v2/calligraphy-pixel-v2-3.png"
       ],
       "existingBackground": "../assets/backgrounds/phase-scenes/study.webp",
       "backgroundOverlay": "background-overlay/classics-background-overlay.png",
@@ -446,9 +446,9 @@
       "unlockAge": 10,
       "unlockStats": null,
       "existingHeroFrames": [
-        "../assets/characters/seonhwa/schedule-actions/farmwork-pixel-1.png",
-        "../assets/characters/seonhwa/schedule-actions/farmwork-pixel-2.png",
-        "../assets/characters/seonhwa/schedule-actions/farmwork-pixel-3.png"
+        "../assets/characters/seonhwa/schedule-actions/v2/farmwork-pixel-v2-1.png",
+        "../assets/characters/seonhwa/schedule-actions/v2/farmwork-pixel-v2-2.png",
+        "../assets/characters/seonhwa/schedule-actions/v2/farmwork-pixel-v2-3.png"
       ],
       "failureHeroFrames": [
         "../assets/characters/seonhwa/base-actions/carry-walk-right/carry-walk-right-1.png",
@@ -501,9 +501,9 @@
       "unlockAge": 10,
       "unlockStats": null,
       "existingHeroFrames": [
-        "../assets/characters/seonhwa/schedule-actions/childcare-pixel-1.png",
-        "../assets/characters/seonhwa/schedule-actions/childcare-pixel-2.png",
-        "../assets/characters/seonhwa/schedule-actions/childcare-pixel-3.png"
+        "../assets/characters/seonhwa/schedule-actions/v2/childcare-pixel-v2-1.png",
+        "../assets/characters/seonhwa/schedule-actions/v2/childcare-pixel-v2-2.png",
+        "../assets/characters/seonhwa/schedule-actions/v2/childcare-pixel-v2-3.png"
       ],
       "existingBackground": "../assets/backgrounds/phase-scenes/childcare.webp",
       "backgroundOverlay": "background-overlay/childcare-background-overlay.png",
@@ -551,9 +551,9 @@
       "unlockAge": 10,
       "unlockStats": null,
       "existingHeroFrames": [
-        "../assets/characters/seonhwa/schedule-actions/kitchenhelp-pixel-1.png",
-        "../assets/characters/seonhwa/schedule-actions/kitchenhelp-pixel-2.png",
-        "../assets/characters/seonhwa/schedule-actions/kitchenhelp-pixel-3.png"
+        "../assets/characters/seonhwa/schedule-actions/v2/kitchenhelp-pixel-v2-1.png",
+        "../assets/characters/seonhwa/schedule-actions/v2/kitchenhelp-pixel-v2-2.png",
+        "../assets/characters/seonhwa/schedule-actions/v2/kitchenhelp-pixel-v2-3.png"
       ],
       "existingBackground": "../assets/backgrounds/phase-scenes/kitchen.webp",
       "backgroundOverlay": "background-overlay/kitchenhelp-background-overlay.png",
@@ -601,9 +601,9 @@
       "unlockAge": 11,
       "unlockStats": null,
       "existingHeroFrames": [
-        "../assets/characters/seonhwa/schedule-actions/woodwork-pixel-1.png",
-        "../assets/characters/seonhwa/schedule-actions/woodwork-pixel-2.png",
-        "../assets/characters/seonhwa/schedule-actions/woodwork-pixel-3.png"
+        "../assets/characters/seonhwa/schedule-actions/v2/woodwork-pixel-v2-1.png",
+        "../assets/characters/seonhwa/schedule-actions/v2/woodwork-pixel-v2-2.png",
+        "../assets/characters/seonhwa/schedule-actions/v2/woodwork-pixel-v2-3.png"
       ],
       "existingBackground": "../assets/backgrounds/phase-scenes/woodwork.webp",
       "backgroundOverlay": "background-overlay/woodwork-background-overlay.png",
@@ -651,9 +651,9 @@
       "unlockAge": 11,
       "unlockStats": null,
       "existingHeroFrames": [
-        "../assets/characters/seonhwa/schedule-actions/loomwork-pixel-1.png",
-        "../assets/characters/seonhwa/schedule-actions/loomwork-pixel-2.png",
-        "../assets/characters/seonhwa/schedule-actions/loomwork-pixel-3.png"
+        "../assets/characters/seonhwa/schedule-actions/v2/loomwork-pixel-v2-1.png",
+        "../assets/characters/seonhwa/schedule-actions/v2/loomwork-pixel-v2-2.png",
+        "../assets/characters/seonhwa/schedule-actions/v2/loomwork-pixel-v2-3.png"
       ],
       "existingBackground": "../assets/backgrounds/phase-scenes/loom.webp",
       "backgroundOverlay": "background-overlay/loomwork-background-overlay.png",
@@ -701,9 +701,9 @@
       "unlockAge": 12,
       "unlockStats": null,
       "existingHeroFrames": [
-        "../assets/characters/seonhwa/schedule-actions/masonry-pixel-1.png",
-        "../assets/characters/seonhwa/schedule-actions/masonry-pixel-2.png",
-        "../assets/characters/seonhwa/schedule-actions/masonry-pixel-3.png"
+        "../assets/characters/seonhwa/schedule-actions/v2/masonry-pixel-v2-1.png",
+        "../assets/characters/seonhwa/schedule-actions/v2/masonry-pixel-v2-2.png",
+        "../assets/characters/seonhwa/schedule-actions/v2/masonry-pixel-v2-3.png"
       ],
       "existingBackground": "../assets/backgrounds/phase-scenes/woodwork.webp",
       "backgroundOverlay": "background-overlay/masonry-background-overlay.png",
@@ -754,9 +754,9 @@
         "sense": 100
       },
       "existingHeroFrames": [
-        "../assets/characters/seonhwa/schedule-actions/clinichelp-pixel-1.png",
-        "../assets/characters/seonhwa/schedule-actions/clinichelp-pixel-2.png",
-        "../assets/characters/seonhwa/schedule-actions/clinichelp-pixel-3.png"
+        "../assets/characters/seonhwa/schedule-actions/v2/clinichelp-pixel-v2-1.png",
+        "../assets/characters/seonhwa/schedule-actions/v2/clinichelp-pixel-v2-2.png",
+        "../assets/characters/seonhwa/schedule-actions/v2/clinichelp-pixel-v2-3.png"
       ],
       "existingBackground": "../assets/backgrounds/phase-scenes/clinic.webp",
       "backgroundOverlay": "background-overlay/clinichelp-background-overlay.png",
@@ -804,9 +804,9 @@
       "unlockAge": 13,
       "unlockStats": null,
       "existingHeroFrames": [
-        "../assets/characters/seonhwa/schedule-actions/merchanthelp-pixel-1.png",
-        "../assets/characters/seonhwa/schedule-actions/merchanthelp-pixel-2.png",
-        "../assets/characters/seonhwa/schedule-actions/merchanthelp-pixel-3.png"
+        "../assets/characters/seonhwa/schedule-actions/v2/merchanthelp-pixel-v2-1.png",
+        "../assets/characters/seonhwa/schedule-actions/v2/merchanthelp-pixel-v2-2.png",
+        "../assets/characters/seonhwa/schedule-actions/v2/merchanthelp-pixel-v2-3.png"
       ],
       "existingBackground": "../assets/backgrounds/pixel-activities/close/market-errand-v2.webp",
       "backgroundOverlay": "background-overlay/innhelp-background-overlay.png",
@@ -854,9 +854,9 @@
       "unlockAge": 13,
       "unlockStats": null,
       "existingHeroFrames": [
-        "../assets/characters/seonhwa/schedule-actions/loomwork-pixel-1.png",
-        "../assets/characters/seonhwa/schedule-actions/loomwork-pixel-2.png",
-        "../assets/characters/seonhwa/schedule-actions/loomwork-pixel-3.png"
+        "../assets/characters/seonhwa/schedule-actions/v2/loomwork-pixel-v2-1.png",
+        "../assets/characters/seonhwa/schedule-actions/v2/loomwork-pixel-v2-2.png",
+        "../assets/characters/seonhwa/schedule-actions/v2/loomwork-pixel-v2-3.png"
       ],
       "existingBackground": "../assets/backgrounds/pixel-activities/close/rest-room.webp",
       "backgroundOverlay": "background-overlay/sewing-background-overlay.png",
@@ -904,9 +904,9 @@
       "unlockAge": 13,
       "unlockStats": null,
       "existingHeroFrames": [
-        "../assets/characters/seonhwa/schedule-actions/calligraphy-pixel-1.png",
-        "../assets/characters/seonhwa/schedule-actions/calligraphy-pixel-2.png",
-        "../assets/characters/seonhwa/schedule-actions/calligraphy-pixel-3.png"
+        "../assets/characters/seonhwa/schedule-actions/v2/calligraphy-pixel-v2-1.png",
+        "../assets/characters/seonhwa/schedule-actions/v2/calligraphy-pixel-v2-2.png",
+        "../assets/characters/seonhwa/schedule-actions/v2/calligraphy-pixel-v2-3.png"
       ],
       "existingBackground": "../assets/backgrounds/pixel-activities/close/study-room-clear.webp",
       "backgroundOverlay": "background-overlay/copying-background-overlay.png",
@@ -954,9 +954,9 @@
       "unlockAge": 14,
       "unlockStats": null,
       "existingHeroFrames": [
-        "../assets/characters/seonhwa/schedule-actions/ferryhelp-pixel-1.png",
-        "../assets/characters/seonhwa/schedule-actions/ferryhelp-pixel-2.png",
-        "../assets/characters/seonhwa/schedule-actions/ferryhelp-pixel-3.png"
+        "../assets/characters/seonhwa/schedule-actions/v2/ferryhelp-pixel-v2-1.png",
+        "../assets/characters/seonhwa/schedule-actions/v2/ferryhelp-pixel-v2-2.png",
+        "../assets/characters/seonhwa/schedule-actions/v2/ferryhelp-pixel-v2-3.png"
       ],
       "existingBackground": "../assets/backgrounds/phase-scenes/ferry.webp",
       "backgroundOverlay": "background-overlay/ferryhelp-background-overlay.png",
@@ -1007,9 +1007,9 @@
         "sense": 150
       },
       "existingHeroFrames": [
-        "../assets/characters/seonhwa/schedule-actions/merchanthelp-pixel-1.png",
-        "../assets/characters/seonhwa/schedule-actions/merchanthelp-pixel-2.png",
-        "../assets/characters/seonhwa/schedule-actions/merchanthelp-pixel-3.png"
+        "../assets/characters/seonhwa/schedule-actions/v2/merchanthelp-pixel-v2-1.png",
+        "../assets/characters/seonhwa/schedule-actions/v2/merchanthelp-pixel-v2-2.png",
+        "../assets/characters/seonhwa/schedule-actions/v2/merchanthelp-pixel-v2-3.png"
       ],
       "existingBackground": "../assets/backgrounds/phase-scenes/merchant.webp",
       "backgroundOverlay": "background-overlay/merchanthelp-background-overlay.png",
@@ -1057,9 +1057,9 @@
       "unlockAge": 16,
       "unlockStats": null,
       "existingHeroFrames": [
-        "../assets/characters/seonhwa/schedule-actions/arithmetic-pixel-1.png",
-        "../assets/characters/seonhwa/schedule-actions/arithmetic-pixel-2.png",
-        "../assets/characters/seonhwa/schedule-actions/arithmetic-pixel-3.png"
+        "../assets/characters/seonhwa/schedule-actions/v2/arithmetic-pixel-v2-1.png",
+        "../assets/characters/seonhwa/schedule-actions/v2/arithmetic-pixel-v2-2.png",
+        "../assets/characters/seonhwa/schedule-actions/v2/arithmetic-pixel-v2-3.png"
       ],
       "existingBackground": "../assets/backgrounds/pixel-activities/close/arithmetic-room.webp",
       "backgroundOverlay": "background-overlay/accounting-background-overlay.png",
@@ -1111,9 +1111,9 @@
         "speech": 180
       },
       "existingHeroFrames": [
-        "../assets/characters/seonhwa/schedule-actions/calligraphy-pixel-1.png",
-        "../assets/characters/seonhwa/schedule-actions/calligraphy-pixel-2.png",
-        "../assets/characters/seonhwa/schedule-actions/calligraphy-pixel-3.png"
+        "../assets/characters/seonhwa/schedule-actions/v2/calligraphy-pixel-v2-1.png",
+        "../assets/characters/seonhwa/schedule-actions/v2/calligraphy-pixel-v2-2.png",
+        "../assets/characters/seonhwa/schedule-actions/v2/calligraphy-pixel-v2-3.png"
       ],
       "existingBackground": "../assets/backgrounds/pixel-activities/close/study-room-clear.webp",
       "backgroundOverlay": "background-overlay/tutoring-background-overlay.png",

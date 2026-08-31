@@ -4,9 +4,9 @@
   "nameKo": "고전 수업",
   "status": "review",
   "existingHeroFrames": [
-    "../../characters/seonhwa/schedule-actions/calligraphy-pixel-1.png",
-    "../../characters/seonhwa/schedule-actions/calligraphy-pixel-2.png",
-    "../../characters/seonhwa/schedule-actions/calligraphy-pixel-3.png"
+    "../../characters/seonhwa/schedule-actions/v2/calligraphy-pixel-v2-1.png",
+    "../../characters/seonhwa/schedule-actions/v2/calligraphy-pixel-v2-2.png",
+    "../../characters/seonhwa/schedule-actions/v2/calligraphy-pixel-v2-3.png"
   ],
   "existingBackground": "../../backgrounds/phase-scenes/study.webp",
   "animation": {
@@ -33,7 +33,8 @@
         "props/book-stack-1.png",
         "props/book-stack-2.png",
         "props/book-stack-3.png"
-      ]
+      ],
+      "heroIncludesProp": true
     },
     "success-b": {
       "layer": "effects",

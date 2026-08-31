@@ -4,9 +4,9 @@
   "nameKo": "악기 배우기",
   "status": "pilot-review",
   "existingHeroFrames": [
-    "../../characters/seonhwa/schedule-actions/gayageum-pixel-v1-1.png",
-    "../../characters/seonhwa/schedule-actions/gayageum-pixel-v1-2.png",
-    "../../characters/seonhwa/schedule-actions/gayageum-pixel-v1-3.png"
+    "../../characters/seonhwa/schedule-actions/v2/gayageum-pixel-v2-1.png",
+    "../../characters/seonhwa/schedule-actions/v2/gayageum-pixel-v2-2.png",
+    "../../characters/seonhwa/schedule-actions/v2/gayageum-pixel-v2-3.png"
   ],
   "existingBackground": "../../backgrounds/phase-scenes/music.webp",
   "animation": {
@@ -33,7 +33,8 @@
         "props/instrument-1.png",
         "props/instrument-2.png",
         "props/instrument-3.png"
-      ]
+      ],
+      "heroIncludesProp": true
     },
     "success-b": {
       "layer": "effects",

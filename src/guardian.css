@@ -261,3 +261,7 @@
   }
   .home-greeting.guardian-overlay>.guardian-talk-result span{padding:4px}
 }
+
+/* v0.64.221 — 신수 컷아웃의 머리·소매가 화면 밖으로 잘리지 않는 안전 프레임. */
+.home-greeting.guardian-overlay .home-greeting-head img{left:1%!important;bottom:30%!important;width:96%!important;height:68%!important;object-position:center bottom!important;contain:paint}
+@media(max-width:380px){.home-greeting.guardian-overlay .home-greeting-head img{left:1%!important;bottom:31%!important;width:96%!important;height:66%!important}}

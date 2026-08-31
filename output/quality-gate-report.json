@@ -1,0 +1,48 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-08-31T08:57:42.851Z",
+  "commit": "local",
+  "passed": true,
+  "results": [
+    {
+      "test": "test_asset_governance.mjs",
+      "passed": true,
+      "output": "PASS: 4 approved and 2 retired generated assets"
+    },
+    {
+      "test": "test_scene_layer_contracts.mjs",
+      "passed": true,
+      "output": "PASS: home layer order, schedule isolation, Seollal border and motion contracts"
+    },
+    {
+      "test": "test_release_contract.mjs",
+      "passed": true,
+      "output": "PASS: release revision, market background asset, entry wiring, and deployed-menu contract"
+    },
+    {
+      "test": "test_seollal_pacing_and_ensemble.mjs",
+      "passed": true,
+      "output": "PASS: 설날 수동 진행·5초 전원 그림·스테이터스 응답·캐릭터 축소·공손한 참가표 수령"
+    },
+    {
+      "test": "test_locked_schedule_layers.mjs",
+      "passed": true,
+      "output": "PASS: 22 schedule asset packs, 20 active schedules, manifest paths, 3-frame variants, common renderer, QA unlock mode"
+    },
+    {
+      "test": "test_activity_face_consistency.mjs",
+      "passed": true,
+      "output": "PASS: 4개 성장 연령 × 공통 일정 얼굴 프레임 존재\nPASS: 마당 쓸기·장터 심부름·약초 줍기 얼굴 보정 프레임 존재\nPASS: 전용 의상 부재 시 기준 얼굴 보호 및 차/잠 휴식 순차 진행\nPASS: 해금 전 교육·아르바이트·비경 동작의 기준 세트 예약"
+    },
+    {
+      "test": "test_fixed_schedule_backgrounds.mjs",
+      "passed": true,
+      "output": "PASS: 일정·이벤트 배경 고정, 페이드 전환, 바캉스 예외 유지"
+    },
+    {
+      "test": "test_save_recovery.mjs",
+      "passed": true,
+      "output": "PASS: 최대 5개 슬롯과 자동저장·현재 슬롯 동시 저장\nPASS: 손상·종료 기록 제외 및 올바른 최신 기록 선택\nPASS: 잘못된 슬롯 번호를 1~5번 범위로 복구\nPASS: 5초 주기·화면 숨김·페이지 이탈 시 보호 저장"
+    }
+  ]
+}

@@ -4,9 +4,9 @@
   "nameKo": "나루터 운송 보조",
   "status": "review",
   "existingHeroFrames": [
-    "../../characters/seonhwa/schedule-actions/ferryhelp-pixel-1.png",
-    "../../characters/seonhwa/schedule-actions/ferryhelp-pixel-2.png",
-    "../../characters/seonhwa/schedule-actions/ferryhelp-pixel-3.png"
+    "../../characters/seonhwa/schedule-actions/v2/ferryhelp-pixel-v2-1.png",
+    "../../characters/seonhwa/schedule-actions/v2/ferryhelp-pixel-v2-2.png",
+    "../../characters/seonhwa/schedule-actions/v2/ferryhelp-pixel-v2-3.png"
   ],
   "existingBackground": "../../backgrounds/phase-scenes/ferry.webp",
   "animation": {

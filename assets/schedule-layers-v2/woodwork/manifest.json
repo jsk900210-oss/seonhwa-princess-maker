@@ -4,9 +4,9 @@
   "nameKo": "목공소 심부름",
   "status": "review",
   "existingHeroFrames": [
-    "../../characters/seonhwa/schedule-actions/woodwork-pixel-1.png",
-    "../../characters/seonhwa/schedule-actions/woodwork-pixel-2.png",
-    "../../characters/seonhwa/schedule-actions/woodwork-pixel-3.png"
+    "../../characters/seonhwa/schedule-actions/v2/woodwork-pixel-v2-1.png",
+    "../../characters/seonhwa/schedule-actions/v2/woodwork-pixel-v2-2.png",
+    "../../characters/seonhwa/schedule-actions/v2/woodwork-pixel-v2-3.png"
   ],
   "existingBackground": "../../backgrounds/phase-scenes/woodwork.webp",
   "animation": {
@@ -30,7 +30,11 @@
     "success-a": {
       "layer": "props",
       "woodTransport": true,
-      "heroFrames": ["../../characters/seonhwa/base-actions/carry-walk-right/carry-walk-right-1.png", "../../characters/seonhwa/base-actions/carry-walk-right/carry-walk-right-2.png", "../../characters/seonhwa/base-actions/carry-walk-right/carry-walk-right-3.png"],
+      "heroFrames": [
+        "../../characters/seonhwa/base-actions/carry-walk-right/carry-walk-right-1.png",
+        "../../characters/seonhwa/base-actions/carry-walk-right/carry-walk-right-2.png",
+        "../../characters/seonhwa/base-actions/carry-walk-right/carry-walk-right-3.png"
+      ],
       "frames": [
         "failures/dropped-plank-1.png",
         "failures/dropped-plank-2.png",
@@ -40,7 +44,11 @@
     "success-b": {
       "layer": "effects",
       "woodTransport": true,
-      "heroFrames": ["../../characters/seonhwa/base-actions/carry-walk-right/carry-walk-right-1.png", "../../characters/seonhwa/base-actions/carry-walk-right/carry-walk-right-2.png", "../../characters/seonhwa/base-actions/carry-walk-right/carry-walk-right-3.png"],
+      "heroFrames": [
+        "../../characters/seonhwa/base-actions/carry-walk-right/carry-walk-right-1.png",
+        "../../characters/seonhwa/base-actions/carry-walk-right/carry-walk-right-2.png",
+        "../../characters/seonhwa/base-actions/carry-walk-right/carry-walk-right-3.png"
+      ],
       "frames": [
         "failures/dropped-plank-1.png",
         "failures/dropped-plank-2.png",

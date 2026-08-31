@@ -4,9 +4,9 @@
   "nameKo": "주방 보조",
   "status": "pilot-review",
   "existingHeroFrames": [
-    "../../characters/seonhwa/schedule-actions/kitchenhelp-pixel-1.png",
-    "../../characters/seonhwa/schedule-actions/kitchenhelp-pixel-2.png",
-    "../../characters/seonhwa/schedule-actions/kitchenhelp-pixel-3.png"
+    "../../characters/seonhwa/schedule-actions/v2/kitchenhelp-pixel-v2-1.png",
+    "../../characters/seonhwa/schedule-actions/v2/kitchenhelp-pixel-v2-2.png",
+    "../../characters/seonhwa/schedule-actions/v2/kitchenhelp-pixel-v2-3.png"
   ],
   "existingBackground": "../../backgrounds/phase-scenes/kitchen.webp",
   "animation": {

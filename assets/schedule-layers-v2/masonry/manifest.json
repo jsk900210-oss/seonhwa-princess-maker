@@ -4,9 +4,9 @@
   "nameKo": "석공 보조",
   "status": "review",
   "existingHeroFrames": [
-    "../../characters/seonhwa/schedule-actions/masonry-pixel-1.png",
-    "../../characters/seonhwa/schedule-actions/masonry-pixel-2.png",
-    "../../characters/seonhwa/schedule-actions/masonry-pixel-3.png"
+    "../../characters/seonhwa/schedule-actions/v2/masonry-pixel-v2-1.png",
+    "../../characters/seonhwa/schedule-actions/v2/masonry-pixel-v2-2.png",
+    "../../characters/seonhwa/schedule-actions/v2/masonry-pixel-v2-3.png"
   ],
   "existingBackground": "../../backgrounds/phase-scenes/woodwork.webp",
   "animation": {
@@ -33,7 +33,8 @@
         "props/chisel-block-1.png",
         "props/chisel-block-2.png",
         "props/chisel-block-3.png"
-      ]
+      ],
+      "heroIncludesProp": true
     },
     "success-b": {
       "layer": "effects",

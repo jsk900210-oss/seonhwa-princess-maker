@@ -13,7 +13,7 @@ for(const id of expected){
   if(spec.npc?.length!==3)fail(`${id}: npc frames must be 3`);
   for(const key of ['success-a','success-b','fail-a','fail-b'])if(spec.patterns?.[key]?.length!==3)fail(`${id}/${key}: pattern frames must be 3`);
   for(const hero of spec.existingHeroFrames){
-    if(!hero.includes('assets/characters/seonhwa/schedule-actions/')||!/-pixel-[123]\.png$/.test(hero))fail(`${id}: forbidden hero frame ${hero}`);
+    if(!hero.includes('assets/characters/seonhwa/schedule-actions/v2/')||!/-pixel-v2-[123]\.png$/.test(hero))fail(`${id}: forbidden hero frame ${hero}`);
     if(!exists(hero))fail(`${id}: missing hero frame ${hero}`);
   }
   if(id==='farmwork'){

@@ -4,9 +4,9 @@
   "nameKo": "글공부 지도",
   "status": "review",
   "existingHeroFrames": [
-    "../../characters/seonhwa/schedule-actions/calligraphy-pixel-1.png",
-    "../../characters/seonhwa/schedule-actions/calligraphy-pixel-2.png",
-    "../../characters/seonhwa/schedule-actions/calligraphy-pixel-3.png"
+    "../../characters/seonhwa/schedule-actions/v2/calligraphy-pixel-v2-1.png",
+    "../../characters/seonhwa/schedule-actions/v2/calligraphy-pixel-v2-2.png",
+    "../../characters/seonhwa/schedule-actions/v2/calligraphy-pixel-v2-3.png"
   ],
   "existingBackground": "../../backgrounds/pixel-activities/close/study-room-clear.webp",
   "animation": {
@@ -33,7 +33,8 @@
         "props/writing-desk-1.png",
         "props/writing-desk-2.png",
         "props/writing-desk-3.png"
-      ]
+      ],
+      "heroIncludesProp": true
     },
     "success-b": {
       "layer": "effects",

@@ -4,9 +4,9 @@
   "nameKo": "술법 수련",
   "status": "review",
   "existingHeroFrames": [
-    "../../characters/seonhwa/schedule-actions/spell-cast-pixel-1.png",
-    "../../characters/seonhwa/schedule-actions/spell-cast-pixel-2.png",
-    "../../characters/seonhwa/schedule-actions/spell-cast-pixel-3.png"
+    "../../characters/seonhwa/schedule-actions/v2/spell-cast-pixel-v2-1.png",
+    "../../characters/seonhwa/schedule-actions/v2/spell-cast-pixel-v2-2.png",
+    "../../characters/seonhwa/schedule-actions/v2/spell-cast-pixel-v2-3.png"
   ],
   "existingBackground": "../../backgrounds/phase-scenes/magic.webp",
   "animation": {
@@ -33,7 +33,8 @@
         "props/magic-wand-1.png",
         "props/magic-wand-2.png",
         "props/magic-wand-3.png"
-      ]
+      ],
+      "heroIncludesProp": true
     },
     "success-b": {
       "layer": "effects",

@@ -4,9 +4,9 @@
   "nameKo": "바느질 돕기",
   "status": "pilot-review",
   "existingHeroFrames": [
-    "../../characters/seonhwa/schedule-actions/loomwork-pixel-1.png",
-    "../../characters/seonhwa/schedule-actions/loomwork-pixel-2.png",
-    "../../characters/seonhwa/schedule-actions/loomwork-pixel-3.png"
+    "../../characters/seonhwa/schedule-actions/v2/loomwork-pixel-v2-1.png",
+    "../../characters/seonhwa/schedule-actions/v2/loomwork-pixel-v2-2.png",
+    "../../characters/seonhwa/schedule-actions/v2/loomwork-pixel-v2-3.png"
   ],
   "existingBackground": "../../backgrounds/pixel-activities/close/rest-room.webp",
   "animation": {
@@ -34,7 +34,8 @@
         "props/embroidery-1.png",
         "props/embroidery-2.png",
         "props/embroidery-3.png"
-      ]
+      ],
+      "heroIncludesProp": true
     },
     "success-b": {
       "action": "clothes-mending",

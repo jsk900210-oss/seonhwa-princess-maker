@@ -4,9 +4,9 @@
   "nameKo": "주막 운영 보조",
   "status": "review",
   "existingHeroFrames": [
-    "../../characters/seonhwa/schedule-actions/merchanthelp-pixel-1.png",
-    "../../characters/seonhwa/schedule-actions/merchanthelp-pixel-2.png",
-    "../../characters/seonhwa/schedule-actions/merchanthelp-pixel-3.png"
+    "../../characters/seonhwa/schedule-actions/v2/merchanthelp-pixel-v2-1.png",
+    "../../characters/seonhwa/schedule-actions/v2/merchanthelp-pixel-v2-2.png",
+    "../../characters/seonhwa/schedule-actions/v2/merchanthelp-pixel-v2-3.png"
   ],
   "existingBackground": "../../backgrounds/pixel-activities/close/market-errand-v2.webp",
   "animation": {
