@@ -3093,13 +3093,6 @@ body .phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage:
 @keyframes moonlight-complete-dance{0%,100%{opacity:1;transform:translateY(0) rotate(-.45deg)}35%{opacity:1;transform:translateY(-3px) rotate(.35deg)}65%{opacity:1;transform:translateY(-1px) rotate(.7deg)}}
 .moonlight-pageant.festival-pm3.motion-royal-judging .festival-character-cut.king-cut img{left:50%!important;bottom:-2%!important;width:108%!important;height:96%!important;transform:translateX(-50%)!important;object-position:center bottom!important}
 .moonlight-pageant.festival-pm3.motion-royal-judging .festival-character-cut.king-cut p{top:auto!important;bottom:4%!important;left:4%!important;right:4%!important;width:auto!important;min-height:0!important}
-.moonlight-preparation-dialogue{position:absolute;z-index:44;inset:2% 3% 4%;overflow:hidden;pointer-events:none}
-.moonlight-prep-guardian{position:absolute;left:-11%;bottom:-7%;width:68%;height:76%;object-fit:contain;object-position:center bottom;filter:drop-shadow(0 5px 6px #160b08aa)}
-.moonlight-prep-seonhwa{position:absolute;right:-15%;bottom:-7%;width:63%;height:73%;background-image:var(--sehwa-expression-image);background-repeat:no-repeat;background-size:contain;background-position:center bottom;filter:drop-shadow(0 5px 6px #160b08aa)}
-.moonlight-prep-line{position:absolute;z-index:2;box-sizing:border-box;margin:0;padding:9px 11px;border:2px solid #8b6039;border-radius:13px;background:#fff8e9f5;color:#49301e;font-size:10px;line-height:1.48;box-shadow:0 4px 10px #0007}
-.moonlight-prep-line b{display:block;margin-bottom:3px;color:#7b4727;font-family:serif;font-size:12px}
-.moonlight-prep-line.guardian-line{top:2%;right:1%;width:72%}
-.moonlight-prep-line.seonhwa-line{right:8%;bottom:6%;width:72%;background:#f5ead9f5}
 
 
 /* v0.64.231 — market replaces the home bottom menu with one compact exit. */
