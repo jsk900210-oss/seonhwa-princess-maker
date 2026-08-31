@@ -3087,6 +3087,13 @@ body .phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage:
 .sehwa-opening-dialogue.speaker-seonhwa.status-angry .sehwa-expression,.sehwa-opening-dialogue.speaker-seonhwa.status-rebellious .sehwa-expression{transform:scale(1.3) translateX(-5px)!important}
 .sehwa-opening-dialogue.speaker-seonhwa.status-shocked .sehwa-expression{transform:scale(1.28) translateY(-3px)!important}
 
+/* v0.64.243 — Chuseok keeps its complete dancer and unobscured royal judge. */
+.moonlight-pageant.festival-pm3.motion-dance .pageant-hero-frames.is-dance{left:50%!important;bottom:12%!important;width:206px!important;height:286px!important}
+.moonlight-pageant.festival-pm3.motion-dance .pageant-hero-frames.is-dance img{animation:moonlight-complete-dance 5.6s ease-in-out infinite!important;animation-delay:0s!important;opacity:1!important;transform-origin:center bottom!important}
+@keyframes moonlight-complete-dance{0%,100%{opacity:1;transform:translateY(0) rotate(-.45deg)}35%{opacity:1;transform:translateY(-3px) rotate(.35deg)}65%{opacity:1;transform:translateY(-1px) rotate(.7deg)}}
+.moonlight-pageant.festival-pm3.motion-royal-judging .festival-character-cut.king-cut img{left:50%!important;bottom:-2%!important;width:108%!important;height:96%!important;transform:translateX(-50%)!important;object-position:center bottom!important}
+.moonlight-pageant.festival-pm3.motion-royal-judging .festival-character-cut.king-cut p{top:auto!important;bottom:4%!important;left:4%!important;right:4%!important;width:auto!important;min-height:0!important}
+
 
 /* v0.64.231 — market replaces the home bottom menu with one compact exit. */
 .phone.market-playing>.home-bottom-nav>button:not(#marketFinish){display:none!important}

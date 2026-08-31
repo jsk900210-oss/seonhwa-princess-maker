@@ -248,7 +248,7 @@ const vacationIllustrations=[
 function unifiedAgeFolder(){return '09';}
 function scheduleFramePath(file){return `../assets/characters/seonhwa/schedule-actions/v2/${file}`;}
 function scheduleBasePath(file){return `../assets/characters/seonhwa/schedule-base/${file}`;}
-const scheduleAssetRevision='0.64.242-debug';
+const scheduleAssetRevision='0.64.243-debug';
 const scheduleQaParams=new URLSearchParams(location.search);
 const moonlightStandaloneQa=scheduleQaParams.get('qaHoliday')==='chuseok';
 const sehwaStandaloneQa=scheduleQaParams.get('qaHoliday')==='seollal';
@@ -1617,7 +1617,8 @@ const moonlightPixelMotionMap={
 const moonlightAge13StageMotionMap={enter:[1,1,1],bow:[1,7,1],walk:[10,1,8],finish:[1,7,1]};
 function moonlightMotionFrames(motion){
   const frame=number=>`../assets/events/holidays/moonlight-pageant/seonhwa/consistent-dance-v8/seonhwa-dance-${number}-v8.png?v=${scheduleAssetRevision}`;
-  const sequences={enter:[1,1,2],walk:[2,3,6],finish:[6,5,1],bow:[1,5,1],dance:[1,2,3,4,5,6]};
+  if(motion==='dance')return [`../assets/events/holidays/moonlight-pageant/seonhwa/consistent-dance-v9/seonhwa-dance-slow-v1.png?v=${scheduleAssetRevision}`];
+  const sequences={enter:[1,1,2],walk:[2,3,6],finish:[6,5,1],bow:[1,5,1]};
   return (sequences[motion]||sequences.enter).map(frame);
 }
 function shuffled(items){return items.map(value=>({value,sort:Math.random()})).sort((a,b)=>a.sort-b.sort).map(item=>item.value);}
@@ -1658,10 +1659,10 @@ function festivalScoreboard(session,title){
 function festivalTitleCard(title,subtitle){return `<section class="festival-title-card"><small>왕실 명절 경연</small><h2>${title}</h2><p>${subtitle}</p></section>`;}
 function festivalKingCut(line,alt){return `<section class="festival-character-cut king-cut"><img src="../assets/events/holidays/moonlight-pageant/king/king-seated-v1.png?v=${scheduleAssetRevision}" alt="${alt}"><p><b>왕</b>${line}</p></section>`;}
 function festivalGuardianCut(session){
-  if(!game.guardianType)return '';
-  const name=game.guardianName||guardianDefs[game.guardianType]?.name||'신수';
+  const guardianType=game.guardianType||'hyeonmu';
+  const name=game.guardianName||guardianDefs[guardianType]?.name||'신수';
   const line=session.overallRank==='대상'?`${game.characterName||'선화'}, 정말 축하해! 네가 끝까지 보여 준 마음이 달빛보다 더 빛났어.`:`${game.characterName||'선화'}, 오늘 끝까지 해낸 네가 자랑스러워. 정말 잘했어.`;
-  return `<section class="festival-character-cut guardian-cut"><img src="../assets/cinematics/guardian/humanized/poses/${game.guardianType}-happy-transparent-v3.png?v=${scheduleAssetRevision}" alt="결과를 알려 주는 ${name}"><p><b>${name}</b>${line}</p></section>`;
+  return `<section class="festival-character-cut guardian-cut"><img src="../assets/cinematics/guardian/humanized/poses/${guardianType}-happy-transparent-v3.png?v=${scheduleAssetRevision}" alt="결과를 알려 주는 ${name}"><p><b>${name}</b>${line}</p></section>`;
 }
 function festivalCrowd(){return '<div class="festival-crowd" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>';}
 function festivalLineup(session){return `<section class="pageant-lineup pageant-intro-lineup" aria-label="서로 다른 몸짓으로 차례를 기다리는 달빛 아씨 경연 참가자 8명">${session.entrants.map((entry,index)=>{const gesture=moonlightLineupGestureImage(entry);return `<figure class="${entry.player?'is-player ':''}${gesture?'has-gesture-frames':'static-lineup'}" style="--lineup-delay:${index*-0.31}s">${gesture?`<span class="lineup-gesture-frames" style="--lineup-frames:url('${gesture}')" role="img" aria-label="${entry.name}의 실제 대기 동작"></span>`:`<img src="${moonlightEntrantImage(entry)}" alt="${entry.name}">`}</figure>`;}).join('')}</section>`;}
@@ -1674,11 +1675,11 @@ function moonlightStatusExpression(session){
   return {happy:'joyful',sad:'sad',angry:'determined',rebellious:'determined',shocked:'startled',normal:sehwaDialogueExpression(session)}[condition]||sehwaDialogueExpression(session);
 }
 function moonlightOpeningDialogue(session,beat){
-  if(!game.guardianType)return '';
-  const name=game.guardianName||guardianDefs[game.guardianType]?.name||'신수',guardianTurn=beat===0,speaker=guardianTurn?name:(game.characterName||'선화');
+  const guardianType=game.guardianType||'hyeonmu';
+  const name=game.guardianName||guardianDefs[guardianType]?.name||'신수',guardianTurn=beat===0,speaker=guardianTurn?name:(game.characterName||'선화');
   const line=guardianTurn?'점수보다 네가 준비한 빛을 보여 줘. 첫 절부터 마지막 발끝까지 내가 곁에서 지켜볼게.':moonlightOpeningAnswer(session);
   const condition=homeCondition(),expression=moonlightStatusExpression(session);
-  const portrait=guardianTurn?`<img class="sehwa-dialogue-bust" src="../assets/cinematics/guardian/humanized/poses/${game.guardianType}-happy-transparent-v3.png?v=${scheduleAssetRevision}" alt="말하는 ${speaker}의 얼굴과 상체">`:`<span class="sehwa-dialogue-bust sehwa-expression expression-age-${sehwaAssetAge()} expression-${expression} pose-${condition}" style="--sehwa-expression-image:url('${sehwaExpressionAsset(expression)}')" role="img" aria-label="${condition} 상태의 ${expression} 표정으로 말하는 ${speaker}"></span>`;
+  const portrait=guardianTurn?`<img class="sehwa-dialogue-bust" src="../assets/cinematics/guardian/humanized/poses/${guardianType}-happy-transparent-v3.png?v=${scheduleAssetRevision}" alt="말하는 ${speaker}의 얼굴과 상체">`:`<span class="sehwa-dialogue-bust sehwa-expression expression-age-${sehwaAssetAge()} expression-${expression} pose-${condition}" style="--sehwa-expression-image:url('${sehwaExpressionAsset(expression)}')" role="img" aria-label="${condition} 상태의 ${expression} 표정으로 말하는 ${speaker}"></span>`;
   return `<section class="sehwa-opening-dialogue moonlight-opening-dialogue speaker-${guardianTurn?'guardian':'seonhwa'} status-${condition}">${portrait}<div role="dialog" aria-label="${speaker}의 대화"><p><b>${speaker}</b>${line}</p></div></section>`;
 }
 function festivalKingWinnerCongratulations(session){
