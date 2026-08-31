@@ -2924,7 +2924,14 @@ body .phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage:
 @keyframes sehwa-ten-painting{0%,33.32%{opacity:1}33.33%,100%{opacity:0}}
 .sehwa-eight-entrant-scene{position:absolute;z-index:38;inset:0;overflow:hidden;pointer-events:none}
 .sehwa-eight-entrant-scene img{position:absolute;inset:3% 4%;width:92%;height:94%;object-fit:contain;object-position:center}
-.sehwa-eight-entrant-scene .sehwa-ensemble-base{z-index:0;opacity:1}
+.sehwa-eight-entrant-scene .sehwa-ensemble-base{
+  z-index:0;
+  opacity:1;
+  -webkit-mask-image:linear-gradient(to bottom,transparent 0,#000 14%,#000 86%,transparent 100%),linear-gradient(to right,transparent 0,#000 6%,#000 94%,transparent 100%);
+  -webkit-mask-composite:source-in;
+  mask-image:linear-gradient(to bottom,transparent 0,#000 14%,#000 86%,transparent 100%),linear-gradient(to right,transparent 0,#000 6%,#000 94%,transparent 100%);
+  mask-composite:intersect;
+}
 .sehwa-eight-entrant-scene .sehwa-ensemble-motion-patch{
   z-index:1;
   opacity:0;

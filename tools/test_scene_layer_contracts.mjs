@@ -29,4 +29,5 @@ assert.match(schedule,/action-holiday-seollal:not\(\[hidden\]\)\)>\.settings-gea
 assert.match(app,/class="sehwa-ensemble-base"[^>]+drawing-1-v2/,'the approved stable base frame must be rendered');
 assert.match(app,/\[2,3\]\.map\(\(frame,index\)=>`<img class="sehwa-ensemble-motion-patch"/,'only two localized motion patches may be composited above the base');
 assert.match(schedule,/\.sehwa-eight-entrant-scene img\{[^}]*object-fit:contain/,'all eight contestants must fit inside the scene without edge cropping');
+assert.match(schedule,/\.sehwa-eight-entrant-scene \.sehwa-ensemble-base\{[\s\S]*mask-image:linear-gradient\(to bottom,transparent/,'the contained ensemble must feather into the hall without a rectangular seam');
 console.log('PASS: home layer order, schedule isolation, Seollal border and motion contracts');
