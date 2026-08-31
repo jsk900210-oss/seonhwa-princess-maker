@@ -3091,6 +3091,7 @@ body .phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage:
 .moonlight-pageant.festival-pm3.motion-dance .pageant-hero-frames.is-dance{left:50%!important;bottom:19%!important;width:224px!important;height:306px!important}
 .moonlight-pageant.festival-pm3.motion-dance .pageant-hero-frames.is-dance img{animation:none!important;opacity:0!important;transform:none!important;transform-origin:center bottom!important}
 .moonlight-pageant.festival-pm3.motion-dance .pageant-hero-frames.is-dance img.is-active{opacity:1!important}
+.moonlight-pageant.festival-pm3.motion-dance .pageant-hero-frames.is-dance img{image-rendering:auto!important}
 /* 명절 대화 컷: 하단을 넓게 녹이고, 다음 장면으로 갈 때 급하게 끊기지 않는다. */
 .sehwa-opening-dialogue>.sehwa-dialogue-bust,
 .sehwa-opening-dialogue>.sehwa-expression{

@@ -248,7 +248,7 @@ const vacationIllustrations=[
 function unifiedAgeFolder(){return '09';}
 function scheduleFramePath(file){return `../assets/characters/seonhwa/schedule-actions/v2/${file}`;}
 function scheduleBasePath(file){return `../assets/characters/seonhwa/schedule-base/${file}`;}
-const scheduleAssetRevision='0.64.260-debug';
+const scheduleAssetRevision='0.64.261-debug';
 const scheduleQaParams=new URLSearchParams(location.search);
 const moonlightStandaloneQa=scheduleQaParams.get('qaHoliday')==='chuseok';
 const sehwaStandaloneQa=scheduleQaParams.get('qaHoliday')==='seollal';
@@ -1617,11 +1617,17 @@ const moonlightPixelMotionMap={
 const moonlightAge13StageMotionMap={enter:[1,1,1],bow:[1,7,1],walk:[10,1,8],finish:[1,7,1]};
 function moonlightMotionFrames(motion){
   const frame=number=>`../assets/events/holidays/moonlight-pageant/seonhwa/consistent-dance-v8/seonhwa-dance-${number}-v8.png?v=${scheduleAssetRevision}`;
-  // 6장의 동일 선화 춤 원화를 왕복시켜 10fps · 5초(50프레임)로 재생한다.
+  // 낮은 한쪽 땋은머리 전신 원화를 왕복시켜 10fps · 5초(50프레임)로 재생한다.
   // 한 장을 흔드는 효과가 아니라 손·팔·시선 변화가 담긴 원화를 실제로 교대한다.
   if(motion==='dance'){
-    const phrase=[1,2,3,4,5,6,5,4,3,2];
-    return Array.from({length:5},()=>phrase).flat().map(frame);
+    const phrase=[
+      '../assets/events/holidays/moonlight-pageant/seonhwa/consistent-dance-v9/seonhwa-dance-slow-v2.png',
+      '../assets/events/holidays/moonlight-pageant/seonhwa/consistent-dance-v10/seonhwa-dance-frame-03-v10.png',
+      '../assets/events/holidays/moonlight-pageant/seonhwa/consistent-dance-v10/seonhwa-dance-frame-02-v10.png',
+      '../assets/events/holidays/moonlight-pageant/seonhwa/consistent-dance-v10/seonhwa-dance-frame-03-v10.png',
+      '../assets/events/holidays/moonlight-pageant/seonhwa/consistent-dance-v9/seonhwa-dance-slow-v2.png'
+    ];
+    return Array.from({length:10},()=>phrase).flat().map(src=>`${src}?v=${scheduleAssetRevision}`);
   }
   const sequences={enter:[1,1,2],walk:[2,3,6],finish:[6,5,1],bow:[1,5,1]};
   return (sequences[motion]||sequences.enter).map(frame);
