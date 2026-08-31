@@ -1829,12 +1829,12 @@ function sehwaOpeningDialogue(session,beat){
 }
 function sehwaPreparationEnsemble(session){
   const base='../assets/events/holidays/sehwa-contest/preparation-scene/ten-entrant-v1';
-  return `<section class="sehwa-ten-entrant-sequence" aria-label="좌우 다섯 자리씩 열 개의 책상에서 그림을 그리는 쯔꾸르 참가자 10명">${[1,2,3].flatMap((frame,index)=>['left','right'].map(side=>`<img class="side-${side}" src="${base}/drawing-${frame}.png?v=${scheduleAssetRevision}" alt="${index||side==='right'?'':'왕실 세화 경연장에서 그림을 그리는 참가자 10명'}" style="--sehwa-group-frame:${index}">`)).join('')}</section>`;
+  return `<section class="sehwa-ten-entrant-sequence" aria-label="좌우 다섯 자리씩 열 개의 책상에서 그림을 그리는 쯔꾸르 참가자 10명">${[1,2,3].map((frame,index)=>`<img src="${base}/drawing-${frame}.png?v=${scheduleAssetRevision}" alt="${index?'':'왕실 세화 경연장에서 그림을 그리는 참가자 10명'}" style="--sehwa-group-frame:${index}">`).join('')}</section>`;
 }
 function renderSehwaContest(session,beatIndex){
   const overlay=document.querySelector('#moonlightPageant');if(!overlay)return;
   const beat=Math.min(sehwaStoryBeats.length-1,Math.max(0,beatIndex)),opening=beat<=1,title=beat===2,intro=beat===3,preparing=beat===4,drawing=beat>=5&&beat<=10,vote=beat===11,result=beat===12,guardianResult=beat===13;
-  const stageMap=document.querySelector('#stageMap'),sceneBackground=`../assets/events/holidays/sehwa-contest/background/royal-contest-hall-v1.png?v=${scheduleAssetRevision}`;if(stageMap)stageMap.src=sceneBackground;if(bg)bg.src=sceneBackground;
+  const stageMap=document.querySelector('#stageMap'),sceneBackground=`../assets/events/holidays/sehwa-contest/background/royal-contest-hall-empty-v1.png?v=${scheduleAssetRevision}`;if(stageMap)stageMap.src=sceneBackground;if(bg)bg.src=sceneBackground;
   const frameUrls=[1,2,3].map(frame=>sehwaFrame('drawing',frame));
   const hero=drawing?`<span class="sehwa-hero is-drawing" style="--sehwa-f1:url('${frameUrls[0]}');--sehwa-f2:url('${frameUrls[1]}');--sehwa-f3:url('${frameUrls[2]}')" role="img" aria-label="${sehwaStoryBeats[beat]}"></span>`:'';
   const titleCard=title?festivalTitleCard('복을 그리는 왕실 세화 경연','새해의 복을 한 폭의 세화에 담는 설날 행사'):'';
@@ -3347,7 +3347,7 @@ async function playWeeklySchedule(selected) {
         await waitForMoonlightAdvance(beat);
       }
     }else if(action.id==='holiday-seollal'){
-      stageMap.src=`../assets/events/holidays/sehwa-contest/background/royal-contest-hall-v1.png?v=${scheduleAssetRevision}`;
+      stageMap.src=`../assets/events/holidays/sehwa-contest/background/royal-contest-hall-empty-v1.png?v=${scheduleAssetRevision}`;
       stageMap.alt='왕실 화원의 설날 세화 경연장';
       stage.className=`activity-stage ${phaseSceneType} map-restRoom action-holiday-seollal`;
       stageProps.className='stage-props prop-none';

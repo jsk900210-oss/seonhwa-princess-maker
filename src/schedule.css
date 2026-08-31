@@ -2912,8 +2912,6 @@ body .phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage:
 .sehwa-contest.festival-pm3.beat-3 .sehwa-drawing-ensemble{display:none!important}
 .sehwa-ten-entrant-sequence{position:absolute;z-index:38;inset:0;overflow:hidden;pointer-events:none}
 .sehwa-ten-entrant-sequence img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;opacity:0;animation:sehwa-ten-painting 2.4s steps(1,end) infinite;animation-delay:calc(var(--sehwa-group-frame) * .8s)}
-.sehwa-ten-entrant-sequence img.side-left{clip-path:polygon(0 40%,39% 40%,39% 95%,0 95%)}
-.sehwa-ten-entrant-sequence img.side-right{clip-path:polygon(61% 40%,100% 40%,100% 95%,61% 95%)}
 @keyframes sehwa-ten-painting{0%,33.32%{opacity:1}33.33%,100%{opacity:0}}
 
 /* 설날 주제 발표: 왕의 얼굴과 대화창이 겹치지 않도록 상·하 영역을 분리한다. */
