@@ -1,3 +1,4 @@
+import argparse
 from collections import deque
 from pathlib import Path
 
@@ -22,7 +23,11 @@ def is_background(pixel: tuple[int, int, int, int]) -> bool:
 
 
 def main() -> None:
-    image = Image.open(SOURCE).convert("RGBA")
+    parser = argparse.ArgumentParser()
+    parser.add_argument("source", nargs="?", type=Path, default=SOURCE)
+    parser.add_argument("target", nargs="?", type=Path, default=TARGET)
+    args = parser.parse_args()
+    image = Image.open(args.source).convert("RGBA")
     width, height = image.size
     pixels = image.load()
     seen: set[tuple[int, int]] = set()
@@ -54,9 +59,9 @@ def main() -> None:
         enqueue(x, y + 1)
         enqueue(x, y - 1)
 
-    TARGET.parent.mkdir(parents=True, exist_ok=True)
-    image.save(TARGET)
-    print(TARGET)
+    args.target.parent.mkdir(parents=True, exist_ok=True)
+    image.save(args.target)
+    print(args.target)
 
 
 if __name__ == "__main__":
