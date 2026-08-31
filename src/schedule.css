@@ -3003,3 +3003,28 @@ body .phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage:
   .sehwa-contest.festival-pm3:is(.beat-16,.beat-17) .pageant-king,
   .moonlight-pageant.festival-pm3.beat-15 .pageant-king{width:165px!important;height:220px!important}
 }
+
+/* v0.64.217 — 모든 일정 쯔꾸르 선화는 같은 표시 박스와 바닥 기준선을 사용한다. */
+.phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage:not(.market-choice-stage) .stage-character.pixel-sprite{
+  width:146px!important;
+  height:146px!important;
+  padding:0!important;
+  box-sizing:border-box!important;
+}
+.phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage:not(.market-choice-stage) .stage-character.pixel-sprite>img{
+  width:100%!important;
+  height:100%!important;
+  object-fit:contain!important;
+  object-position:center bottom!important;
+  clip-path:none!important;
+}
+/* 선화 프레임에 가야금이 포함되어 있으므로 성공 소품의 중복 악기는 표시하지 않는다. */
+.phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-music.schedule-layered .schedule-scene-layer.layer-pattern.success-a{
+  display:none!important;
+}
+@media(max-width:380px){
+  .phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage:not(.market-choice-stage) .stage-character.pixel-sprite{
+    width:132px!important;
+    height:132px!important;
+  }
+}
