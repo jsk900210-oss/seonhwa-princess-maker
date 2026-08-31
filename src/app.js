@@ -248,7 +248,7 @@ const vacationIllustrations=[
 function unifiedAgeFolder(){return '09';}
 function scheduleFramePath(file){return `../assets/characters/seonhwa/schedule-actions/v2/${file}`;}
 function scheduleBasePath(file){return `../assets/characters/seonhwa/schedule-base/${file}`;}
-const scheduleAssetRevision='0.64.252-debug';
+const scheduleAssetRevision='0.64.253-debug';
 const scheduleQaParams=new URLSearchParams(location.search);
 const moonlightStandaloneQa=scheduleQaParams.get('qaHoliday')==='chuseok';
 const sehwaStandaloneQa=scheduleQaParams.get('qaHoliday')==='seollal';
@@ -1811,8 +1811,13 @@ function sehwaDialogueExpression(session){
 // 다른 연령은 해당 세트가 준비될 때까지 같은 연령의 기준 초상으로 안전하게 폴백한다.
 function sehwaExpressionAsset(expression){
   const canonical={smile:'joyful',shy:'nervous',neutral:'nervous'}[expression]||expression;
-  if(sehwaAssetAge()==='09'&&['joyful','nervous','sad','determined','startled'].includes(canonical)){
-    return `../assets/characters/seonhwa/dialogue/age-09-${canonical}-lowbraid-dialogue-v1.png?v=${scheduleAssetRevision}`;
+  const dialogueAge=sehwaAssetAge();
+  const portraitSets={
+    '09':['joyful','nervous','sad','determined','startled'],
+    '13':['nervous']
+  };
+  if(portraitSets[dialogueAge]?.includes(canonical)){
+    return `../assets/characters/seonhwa/dialogue/age-${dialogueAge}-${canonical}-lowbraid-dialogue-v1.png?v=${scheduleAssetRevision}`;
   }
   return `${baseSpriteForAge()}?v=${scheduleAssetRevision}`;
 }

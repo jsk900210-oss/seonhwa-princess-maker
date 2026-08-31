@@ -15,8 +15,10 @@ for(const phrase of ['신수와 선화','무대 중앙','팔과 손목, 손끝',
 assert.match(app,/moonlightMotionNames=\['opening-dialogue','stage-enter','dance','royal-judging','ranking','award','winner-acceptance','guardian-congratulation'\]/,'8단계 모션 순서');
 assert.match(app,/opening\?moonlightOpeningDialogue\(session,0\):entrance\?moonlightOpeningDialogue\(session,1\)/,'신수 응원 뒤 선화 대답을 한 장면씩 교대 렌더링');
 assert.doesNotMatch(app,/moonlightPreparationDialogue/,'신수와 선화를 한 장면에 함께 노출하지 않음');
-assert.match(app,/age-09-\$\{canonical\}-lowbraid-dialogue-v1\.png/,'9세 대화 선화는 상태별 낮은 한쪽 땋은머리 초상 사용');
+assert.match(app,/age-\$\{dialogueAge\}-\$\{canonical\}-lowbraid-dialogue-v1\.png/,'연령별 대화 선화는 상태별 낮은 한쪽 땋은머리 초상 사용');
 for(const expression of ['joyful','nervous','sad','determined','startled'])assert.ok(fs.existsSync(new URL(`../assets/characters/seonhwa/dialogue/age-09-${expression}-lowbraid-dialogue-v1.png`,import.meta.url)),`9세 ${expression} 낮은 땋은머리 대화 초상이 필요합니다.`);
+assert.ok(fs.existsSync(new URL('../assets/characters/seonhwa/dialogue/age-13-nervous-lowbraid-dialogue-v1.png',import.meta.url)),'현재 13세 한가위 대답은 상반신 낮은 땋은머리 초상을 사용해야 합니다.');
+assert.match(app,/'13':\['nervous'\]/,'13세의 긴장·부끄러움 대답은 전신 폴백으로 빠지면 안 됩니다.');
 assert.doesNotMatch(app,/dialogue-busts\/seonhwa/,'올림머리 대화 표정 세트를 더 이상 참조하지 않음');
 assert.match(app,/consistent-dance-v9\/seonhwa-dance-slow-v1\.png/,'잘리지 않은 동일 선화 전신 춤 자산만 사용');
 assert.match(css,/moonlight-complete-dance 5\.6s/,'느린 손끝 춤');

@@ -19,7 +19,7 @@ assert.match(css,/\.sehwa-opening-dialogue p\{[^}]*word-break:keep-all;[^}]*text
 assert.match(app,/protagonistFullbodyForAge\(\)/,'선화 대화는 연령별 상반신 원화를 사용해야 합니다.');
 assert.match(app,/drawing-\$\{frame\}-v2\.png/,'세화 붓질 장면의 선화는 연령별 반실사 v2 프레임을 사용해야 합니다.');
 assert.match(css,/\.sehwa-opening-dialogue>\.sehwa-dialogue-bust\{[^}]*transform:scale\(1\.28\)/,'대화 중 화자는 통일된 얼굴·상체 크기로 보여야 합니다.');
-assert.match(app,/age-09-\$\{canonical\}-lowbraid-dialogue-v1\.png/,'9세 대화는 올림머리 대신 상태별 낮은 땋은머리 초상을 선택해야 합니다.');
+assert.match(app,/age-\$\{dialogueAge\}-\$\{canonical\}-lowbraid-dialogue-v1\.png/,'대화는 올림머리 대신 연령별 상태 낮은 땋은머리 초상을 선택해야 합니다.');
 for(const age of ['09','13','16','18'])assert.ok(existsSync(new URL(`../assets/characters/seonhwa/age-${age}/base/seonhwa-age${age}-base-v3-wonyoung-motif-transparent.png`,import.meta.url)),`${age}세 낮은 땋은머리 기준 초상이 필요합니다.`);
 assert.doesNotMatch(app,/function sehwaDrawingEnsemble\(session\)/,'공중에 뜬 8인 판자 합성 장면이 남아 있으면 안 됩니다.');
 assert.match(app,/preparing=beat===4,drawing=beat>=5&&beat<=10/,'화구 준비 다음에는 선화의 정상 붓질 동작으로 바로 이어져야 합니다.');
