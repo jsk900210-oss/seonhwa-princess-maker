@@ -132,3 +132,7 @@ body{min-height:100dvh}.phone{width:min(100vw,calc(100dvh * 9 / 16),430px);max-h
 .phone:not(.playing):not(.market-playing)>.character-slot{bottom:25%!important;overflow:visible!important}
 .settings-record-button{width:100%;min-height:44px;background:#6d4c2d;color:#fff8e8}
 .phone:not(.market-playing)>.home-bottom-nav>[data-panel="collection"],.phone:not(.market-playing)>.home-bottom-nav>#marketFinish{display:none!important}
+
+
+/* v0.64.225 — home portrait framing restores the original pixel-body footprint. */
+.phone:not(.playing):not(.market-playing):not(.vacation-playing) .character-slot>img[src*="identity-semi-real-v9"]{width:185%;height:auto;max-width:none;max-height:none;object-fit:contain;object-position:center top;transform:translateY(-2%);transform-origin:center top}

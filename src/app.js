@@ -55,10 +55,10 @@ function transitionPrologueToHomeMusic(){
 
 const game = { characterName:'', nannyName:'', guardianType:null, guardianName:'', profileSlot:null, age: 9, height:130, weight:28.5, month: 1, week: 1, season:'봄', money: 50000, cash:50000, health:42, strength:18, agility:20, intelligence:35, magic:8, mentality:30, dignity:36, manners:28, speech:14, sensitivity:40, sense:24, charm:30, stress:0, items: [], purchasedGoods:[], relations:{}, activityProgress:{}, activityUnlocksSeen:[], completedPhases:[], startingGiftId:null, fatherBirthdayYears:[], sehwaWins:[], latestSehwaArtwork:null, equippedOutfit:null, autoOutfit:true, dailySchedule: [], scheduleFormat:'phase-v1', birthday:null, currentDate:null, endingDate:null, ended:false, endingResult:null, birthdayCount:0, element:null, birthSeason:null, memory:0, truth:0, exposure:0, fatherAffinity:0, guardianTrust:50, nannyAffinity:50, lastGreetingDate:null, lastGuardianTalkDate:null, lastGuardianTalkPhase:null, monthlyLedger:null };
 const baseSpritePaths=Object.freeze({
-  9:'../assets/characters/seonhwa/age-09/base/seonhwa-age09-base-v3-wonyoung-motif-transparent.png',
-  13:'../assets/characters/seonhwa/age-13/base/seonhwa-age13-base-v3-wonyoung-motif-transparent.png',
-  16:'../assets/characters/seonhwa/age-16/base/seonhwa-age16-base-v3-wonyoung-motif-transparent.png',
-  19:'../assets/characters/seonhwa/age-18/base/seonhwa-age18-base-v3-wonyoung-motif-transparent.png'
+  9:'../assets/characters/seonhwa/identity-semi-real-v9/seonhwa-age09-identity-v9.png',
+  13:'../assets/characters/seonhwa/identity-semi-real-v9/seonhwa-age13-identity-v9.png',
+  16:'../assets/characters/seonhwa/identity-semi-real-v9/seonhwa-age16-identity-v9.png',
+  19:'../assets/characters/seonhwa/identity-semi-real-v9/seonhwa-age19-identity-v9.png'
 });
 const baseSpriteForAge=(age=game.age)=>baseSpritePaths[age>=18?19:age>=16?16:age>=13?13:9];
 const baseSpritePath=baseSpritePaths[9];
@@ -110,6 +110,7 @@ const backgrounds = {
   marketErrand: '../assets/backgrounds/pixel-activities/close/market-errand-v2.webp',
   herbField: '../assets/backgrounds/pixel-activities/close/herb-field-v2.webp',
   restRoom: '../assets/backgrounds/pixel-activities/close/rest-room.webp',
+  tavernMeal: '../assets/backgrounds/market/tavern-meal-interior-v1.png',
   houseWorkroom: '../assets/backgrounds/pixel-activities/close/kitchen-workroom.webp'
 };
 Object.assign(backgrounds,{
@@ -244,9 +245,9 @@ const vacationIllustrations=[
 // 일정 화면은 홈 대표 캐릭터와 분리된 9세 단일 쯔꾸르 기준 자산만 사용한다.
 // 새 schedule-base / schedule-actions 폴더를 우선 사용하고, 빠진 프레임만 임시 기본값으로 되돌린다.
 function unifiedAgeFolder(){return '09';}
-function scheduleFramePath(file){return `../assets/characters/seonhwa/schedule-actions/${file}`;}
+function scheduleFramePath(file){return `../assets/characters/seonhwa/schedule-actions/v2/${file}`;}
 function scheduleBasePath(file){return `../assets/characters/seonhwa/schedule-base/${file}`;}
-const scheduleAssetRevision='0.64.219-debug';
+const scheduleAssetRevision='0.64.228-debug';
 const scheduleQaParams=new URLSearchParams(location.search);
 const moonlightStandaloneQa=scheduleQaParams.get('qaHoliday')==='chuseok';
 const sehwaStandaloneQa=scheduleQaParams.get('qaHoliday')==='seollal';
@@ -288,31 +289,31 @@ function sheetTriplet(file,row,rows){
 const spriteFrames = {
   get down(){return repeatedFrame(versionedScheduleAsset(scheduleBasePath('stand-front-v3-pixel.png')));},
   get left(){return repeatedFrame(versionedScheduleAsset(scheduleBasePath('stand-left-v3-pixel.png')));},
-  get right(){return frameTriplet('errand-pixel');}
+  get right(){return frameTriplet('errand-pixel-v2');}
 };
 const scheduleActionFrames={
-  calligraphy:frameTriplet('calligraphy-pixel'),
-  arithmetic:frameTriplet('arithmetic-pixel'),
-  manners:frameTriplet('manners-pixel'),
-  sit:frameTriplet('sit-pixel'),
-  houseclean:frameTriplet('houseclean-pixel'),
-  errand:frameTriplet('errand-pixel'),
-  herbs:frameTriplet('herbs-pixel'),
-  farmwork:frameTriplet('farmwork-pixel'),
-  sweeping:frameTriplet('sweeping-pixel'),
-  childcare:frameTriplet('childcare-pixel'),
-  kitchenhelp:frameTriplet('kitchenhelp-pixel'),
-  woodwork:frameTriplet('woodwork-pixel'),
-  loomwork:frameTriplet('loomwork-pixel'),
-  masonry:frameTriplet('masonry-pixel'),
-  clinichelp:frameTriplet('clinichelp-pixel'),
-  ferryhelp:frameTriplet('ferryhelp-pixel'),
-  merchanthelp:frameTriplet('merchanthelp-pixel'),
-  eating:frameTriplet('eating-pixel'),
-  rest:frameTriplet('tea-pixel'),
-  sleep:frameTriplet('sleep-pixel'),
-  tea:frameTriplet('tea-pixel'),
-  fail:frameTriplet('fail-pixel')
+  calligraphy:frameTriplet('calligraphy-pixel-v2'),
+  arithmetic:frameTriplet('arithmetic-pixel-v2'),
+  manners:frameTriplet('manners-pixel-v2'),
+  sit:frameTriplet('sit-pixel-v2'),
+  houseclean:frameTriplet('houseclean-pixel-v2'),
+  errand:frameTriplet('errand-pixel-v2'),
+  herbs:frameTriplet('herbs-pixel-v2'),
+  farmwork:frameTriplet('farmwork-pixel-v2'),
+  sweeping:frameTriplet('sweeping-pixel-v2'),
+  childcare:frameTriplet('childcare-pixel-v2'),
+  kitchenhelp:frameTriplet('kitchenhelp-pixel-v2'),
+  woodwork:frameTriplet('woodwork-pixel-v2'),
+  loomwork:frameTriplet('loomwork-pixel-v2'),
+  masonry:frameTriplet('masonry-pixel-v2'),
+  clinichelp:frameTriplet('clinichelp-pixel-v2'),
+  ferryhelp:frameTriplet('ferryhelp-pixel-v2'),
+  merchanthelp:frameTriplet('merchanthelp-pixel-v2'),
+  eating:frameTriplet('eating-pixel-v2'),
+  rest:frameTriplet('tea-pixel-v2'),
+  sleep:frameTriplet('sleep-pixel-v2'),
+  tea:frameTriplet('tea-pixel-v2'),
+  fail:frameTriplet('fail-pixel-v2')
 };
 // 승인된 4장(age09/13/16/18-eyes-v2)을 모든 기본 쯔꾸르 동작의 단일 원본으로 사용한다.
 // 잠자기도 연령별 기준 시트에서 불러와 얼굴·체형·기본 의상이 섞이지 않게 한다.
@@ -690,9 +691,9 @@ async function animateNaturalFailure(actionId,image,level='mistake'){
   if(!image)return;
   if(actionId==='manners'){
     const closeHandFrames=[
-      '../assets/characters/seonhwa/schedule-actions/manners-pixel-1.png',
-      '../assets/characters/seonhwa/schedule-actions/manners-pixel-2.png',
-      '../assets/characters/seonhwa/schedule-actions/manners-pixel-3.png'
+      '../assets/characters/seonhwa/schedule-actions/v2/manners-pixel-v2-1.png',
+      '../assets/characters/seonhwa/schedule-actions/v2/manners-pixel-v2-2.png',
+      '../assets/characters/seonhwa/schedule-actions/v2/manners-pixel-v2-3.png'
     ];
     const sequence=level==='mistake'?[closeHandFrames[0],closeHandFrames[1],closeHandFrames[2],'../assets/schedule-layers-v2/childcare/hero-actions/stumble-sit-v1/seonhwa-stumble-3.png']:[closeHandFrames[0],closeHandFrames[1],closeHandFrames[2]];
     for(const [index,frame] of sequence.entries()){
@@ -710,7 +711,7 @@ async function animateNaturalFailure(actionId,image,level='mistake'){
   const order=level==='mistake'?[1,2,3]:[1,2,1];
   image.style.transform='';
   if(actionId==='herbs'){
-    image.src=versionedScheduleAsset('../assets/characters/seonhwa/schedule-actions/herbs-startle-arms-up-v1.png');
+    image.src=versionedScheduleAsset('../assets/characters/seonhwa/schedule-actions/v2/herbs-startle-arms-up-v2.png');
     await schedulePlaybackDelay(level==='mistake'?210:175);
   }
   for(const frame of order){
@@ -1052,7 +1053,7 @@ async function playScheduleLayerScene(actionId,seonImage,rank,outcome,dayIndex){
           stage.style.setProperty('--layer-effect-left',clinicLeft);stage.style.setProperty('--layer-prop-left',clinicLeft);stage.style.setProperty('--layer-effect-bottom','1%');stage.style.setProperty('--layer-prop-bottom','1%');
         }
         if(sewingThrow){
-          if(frame===1)activeHeroFrame='../../characters/seonhwa/schedule-actions/herbs-startle-arms-up-v1.png';
+          if(frame===1)activeHeroFrame='../../characters/seonhwa/schedule-actions/v2/herbs-startle-arms-up-v2.png';
           pattern.style.transform=frame===0?'translateX(-50%) rotate(0deg)':frame===1?'translate(8px,-18px) rotate(18deg)':'translate(78px,-42px) rotate(46deg)';
           pattern.style.opacity=frame===2?'.72':'1';
         }
@@ -1596,30 +1597,19 @@ const moonlightContestants=[
   {id:'eunseo',name:'은서',scores:[136,300,490,660]}
 ];
 const moonlightStoryBeats=[
-  '경연을 앞두고 신수가 선화에게 준비한 달빛을 믿으라고 응원했어요.',
-  '선화가 자신의 센스·예절·기품에 따라 솔직하게 대답했어요.',
-  '「한가위 달빛 아씨 경연」의 막이 올랐어요.',
-  '여덟 참가자가 차례로 이름을 밝히고 무대에 섰어요.',
-  '선화가 무대 왼쪽에 올라 호흡을 가다듬었어요.',
-  '선화가 치마를 잡고 무대 오른쪽으로 천천히 걸어갔어요.',
-  '선화가 오른쪽 끝에서 치마를 잡고 허리 숙여 인사했어요.',
-  '여덟 참가자가 앞뒤 두 줄로 다시 서서 심사를 기다렸어요.',
-  '선화가 왼쪽에서 치마 양끝을 잡고 첫인사를 올렸어요.',
-  '선화가 스무 단계 부채춤으로 달빛의 흐름을 표현했어요.',
-  '왕이 부채 끝과 발 디딤, 감각의 흐름을 살폈어요.',
-  '왕과 심사관이 여덟 참가자의 세 항목 점수를 집계했어요.',
-  '여덟 참가자의 최종 순위가 차례로 발표됐어요.',
-  '선화가 자신의 수상 결과를 듣고 마음을 가다듬었어요.',
-  '왕이 대상 수상자에게 월백 옥패 노리개를 직접 하사했어요.',
-  '왕이 대상 수상자의 이름을 부르고 축하한 뒤 무대에서 물러났어요.',
-  '선화가 무대에 남아 오늘의 마음과 춤에 대한 수상 소감을 말했어요.',
-  '신수가 선화에게 달려와 진심으로 축하한다고 이야기했어요.',
-  '경연의 능력치와 보상이 기록되고 한가위 무대가 끝났어요.'
+  '신수와 선화가 경연을 앞두고 서로의 마음과 준비를 확인했어요.',
+  '선화가 무대 중앙으로 들어와 두 손을 모아 인사했어요.',
+  '선화가 중앙에 머물며 팔과 손목, 손끝을 천천히 이어 춤췄어요.',
+  '왕과 심사관이 센스·예절·기품을 차분히 심사했어요.',
+  '여덟 참가자의 최종 순위와 수상 결과가 발표됐어요.',
+  '왕이 대상 수상자에게 상을 수여하고 직접 축하했어요.',
+  '대상 수상자가 자신의 반실사 모습으로 수상 소감을 전했어요.',
+  '신수가 마지막 축하를 전하고 능력치와 보상이 기록되며 경연이 끝났어요.'
 ];
-const moonlightMotionNames=['opening-dialogue','opening-dialogue','title','final-lineup','stage-enter','walk','finish','final-lineup','bow','dance','royal-judging','score-tally','ranking','result','award','king-congratulation','winner-acceptance','guardian-congratulation','closing'];
+const moonlightMotionNames=['opening-dialogue','stage-enter','dance','royal-judging','ranking','award','winner-acceptance','guardian-congratulation'];
 function moonlightAgeIndex(){return game.age>=18?3:game.age>=16?2:game.age>=13?1:0;}
 function moonlightAssetAge(){return game.age>=18?'18':game.age>=16?'16':game.age>=13?'13':'09';}
-function moonlightSeonhwaImage(){const age=moonlightAssetAge();return `../assets/events/holidays/moonlight-pageant/seonhwa/age-${age}/seonhwa-winner-v1.png?v=${scheduleAssetRevision}`;}
+function moonlightSeonhwaImage(){return `${baseSpriteForAge()}?v=${scheduleAssetRevision}`;}
 const moonlightActingPoseMap={invitation:[1,2,3,4],prepare:[5,7,8],enter:[9,10,11],interview:[14,15,16]};
 const moonlightPixelMotionMap={
   bow:['manners-pixel-1.png','manners-pixel-2.png','manners-pixel-1.png'],
@@ -1628,15 +1618,9 @@ const moonlightPixelMotionMap={
 };
 const moonlightAge13StageMotionMap={enter:[1,1,1],bow:[1,7,1],walk:[10,1,8],finish:[1,7,1]};
 function moonlightMotionFrames(motion){
-  const age=moonlightAssetAge(),actingPoses=moonlightActingPoseMap[motion];
-  const eventFrames=age==='13'?moonlightAge13StageMotionMap[motion]:null;
-  if(eventFrames)return eventFrames.map(frame=>`../assets/events/holidays/moonlight-pageant/seonhwa/age-13/dance-10fps-v5/seonhwa-dance-${String(frame).padStart(2,'0')}-v5.png?v=${scheduleAssetRevision}`);
-  const pixelFrames=moonlightPixelMotionMap[motion];
-  if(pixelFrames)return pixelFrames.map(file=>`../assets/characters/seonhwa/schedule-actions/${file}?v=${scheduleAssetRevision}`);
-  if(actingPoses)return actingPoses.map(frame=>`../assets/events/holidays/moonlight-pageant/seonhwa/age-${age}/acting-v5/seonhwa-acting-${String(frame).padStart(2,'0')}-v5.png?v=${scheduleAssetRevision}`);
-  if(motion==='dance'&&age==='13')return Array.from({length:10},(_,index)=>`../assets/events/holidays/moonlight-pageant/seonhwa/age-13/dance-10fps-v5/seonhwa-dance-${String(index+1).padStart(2,'0')}-v5.png?v=${scheduleAssetRevision}`).flatMap(frame=>[frame,frame]);
-  const count=motion==='dance'?6:3,version=motion==='dance'?'v4':'v3';
-  return Array.from({length:count},(_,index)=>`../assets/events/holidays/moonlight-pageant/seonhwa/age-${age}/seonhwa-${motion}-${index+1}-${version}.png?v=${scheduleAssetRevision}`);
+  const frame=number=>`../assets/events/holidays/moonlight-pageant/seonhwa/consistent-dance-v8/seonhwa-dance-${number}-v8.png?v=${scheduleAssetRevision}`;
+  const sequences={enter:[1,1,2],walk:[2,3,6],finish:[6,5,1],bow:[1,5,1],dance:[1,2,3,4,5,6]};
+  return (sequences[motion]||sequences.enter).map(frame);
 }
 function shuffled(items){return items.map(value=>({value,sort:Math.random()})).sort((a,b)=>a.sort-b.sort).map(item=>item.value);}
 function evaluateChuseokFestival(){
@@ -1687,13 +1671,17 @@ function moonlightOpeningAnswer(session){
   const answers={'자신감 넘침':'장단과 발끝까지 충분히 익혔어요. 제가 준비한 달빛을 흔들림 없이 보여 드릴게요.','차분한 자신감':'호흡을 서두르지 않고 예를 다하면 제 춤의 마음이 전해질 거예요.','긴장하지만 씩씩함':'조금 떨리지만 신수가 곁에 있으니 첫 절부터 차분히 해 볼게요.','자신 없음':'아직 동작이 부족한 것 같아 걱정돼요. 그래도 배운 순서를 하나씩 떠올려 볼게요.','부끄러움':'많은 사람 앞에 서려니 떨려요… 그래도 달을 바라보며 끝까지 춰 볼게요.'};
   return answers[session.reaction]||answers['긴장하지만 씩씩함'];
 }
+function moonlightStatusExpression(session){
+  const condition=homeCondition();
+  return {happy:'joyful',sad:'sad',angry:'determined',rebellious:'determined',shocked:'startled',normal:sehwaDialogueExpression(session)}[condition]||sehwaDialogueExpression(session);
+}
 function moonlightOpeningDialogue(session,beat){
   if(!game.guardianType)return '';
   const name=game.guardianName||guardianDefs[game.guardianType]?.name||'신수',guardianTurn=beat===0,speaker=guardianTurn?name:(game.characterName||'선화');
   const line=guardianTurn?'점수보다 네가 준비한 빛을 보여 줘. 첫 절부터 마지막 발끝까지 내가 곁에서 지켜볼게.':moonlightOpeningAnswer(session);
-  const expression=sehwaDialogueExpression(session);
-  const portrait=guardianTurn?`<img class="sehwa-dialogue-bust" src="../assets/cinematics/guardian/humanized/poses/${game.guardianType}-happy-transparent-v3.png?v=${scheduleAssetRevision}" alt="말하는 ${speaker}의 얼굴과 상체">`:`<span class="sehwa-dialogue-bust sehwa-expression expression-age-${sehwaAssetAge()} expression-${expression}" style="--sehwa-expression-image:url('${sehwaExpressionAsset(expression)}')" role="img" aria-label="${expression} 표정으로 말하는 ${speaker}"></span>`;
-  return `<section class="sehwa-opening-dialogue moonlight-opening-dialogue speaker-${guardianTurn?'guardian':'seonhwa'}">${portrait}<div role="dialog" aria-label="${speaker}의 대화"><p><b>${speaker}</b>${line}</p></div></section>`;
+  const condition=homeCondition(),expression=moonlightStatusExpression(session);
+  const portrait=guardianTurn?`<img class="sehwa-dialogue-bust" src="../assets/cinematics/guardian/humanized/poses/${game.guardianType}-happy-transparent-v3.png?v=${scheduleAssetRevision}" alt="말하는 ${speaker}의 얼굴과 상체">`:`<span class="sehwa-dialogue-bust sehwa-expression expression-age-${sehwaAssetAge()} expression-${expression} pose-${condition}" style="--sehwa-expression-image:url('${sehwaExpressionAsset(expression)}')" role="img" aria-label="${condition} 상태의 ${expression} 표정으로 말하는 ${speaker}"></span>`;
+  return `<section class="sehwa-opening-dialogue moonlight-opening-dialogue speaker-${guardianTurn?'guardian':'seonhwa'} status-${condition}">${portrait}<div role="dialog" aria-label="${speaker}의 대화"><p><b>${speaker}</b>${line}</p></div></section>`;
 }
 function festivalKingWinnerCongratulations(session){
   const winner=session.winner;
@@ -1703,27 +1691,27 @@ function festivalWinnerAcceptance(session){
   const winner=session.winner,playerWinner=winner.player,name=winner.name;
   const answer=playerWinner?'감사합니다. 많이 떨렸지만 배운 장단과 마음을 끝까지 놓치지 않으려 했어요. 응원해 주신 모든 분과 이 기쁨을 나누고 싶어요.':'귀한 상을 내려 주셔서 감사합니다. 오늘의 가르침을 잊지 않고 더욱 정진하겠습니다.';
   const portrait=playerWinner
-    ?`<img class="pageant-acceptance-bow is-static-gongsu" src="../assets/events/holidays/moonlight-pageant/seonhwa/age-13/acceptance-v7/seonhwa-acceptance-02-v7.png?v=${scheduleAssetRevision}" alt="두 손을 단정히 모으고 서서 감사 인사를 전하는 ${name}">`
+    ?`<img class="pageant-acceptance-bow is-static-gongsu" src="${baseSpriteForAge()}?v=${scheduleAssetRevision}" alt="두 손을 단정히 모으고 서서 감사 인사를 전하는 ${name}">`
     :`<img class="pageant-acceptance-bow is-contestant" src="${moonlightEntrantImage(winner)}" alt="자신의 전통 인사로 감사를 전하는 대상 수상자 ${name}">`;
   return `<section class="pageant-interview is-acceptance ${playerWinner?'is-seonhwa-winner':'is-contestant-winner'}" aria-label="대상 수상자 ${name}의 인사와 수상 소감"><figure>${portrait}<figcaption>대상 · ${name}</figcaption></figure><div><p class="pageant-interview-answer"><b>${name}</b>${answer}</p></div></section>`;
 }
 function renderMoonlightPageant(session,dayIndex){
   const overlay=document.querySelector('#moonlightPageant');if(!overlay)return;
-  const beat=Math.min(moonlightStoryBeats.length-1,dayIndex%moonlightStoryBeats.length),opening=beat<=1,title=beat===2,lineup=beat===3||beat===7,intro=beat===10,vote=beat===11,ranking=beat===12,result=beat===13,award=beat===14,kingCongrats=beat===15,acceptance=beat===16,guardianCongrats=beat===17,closing=beat===18;
+  const beat=Math.min(7,dayIndex%8),opening=beat===0,entrance=beat===1,dance=beat===2,judging=beat===3,ranking=beat===4,award=beat===5,acceptance=beat===6,closing=beat===7;
   overlay.hidden=false;overlay.className=`moonlight-pageant festival-pm3 beat-${beat+1} motion-${moonlightMotionNames[beat]} reaction-${session.reaction.replaceAll(' ','-')}`;
-  const frameMotion=beat===4?'enter':beat===5?'walk':beat===6?'finish':beat===8?'bow':beat===9?'dance':null;
-  const hero=(!opening&&!title&&!lineup&&!intro&&!vote&&!ranking&&!result&&!award&&!kingCongrats&&!acceptance&&!guardianCongrats&&!closing)?(frameMotion?`<span class="pageant-hero-frames is-${frameMotion}" role="img" aria-label="${moonlightStoryBeats[beat]}">${moonlightMotionFrames(frameMotion).map((src,index)=>`<img src="${src}" alt="" style="--pageant-frame:${index}">`).join('')}</span>`:`<img class="pageant-hero-action" src="${moonlightSeonhwaImage()}" alt="${moonlightStoryBeats[beat]}">`):'';
-  const titleCard=title?festivalTitleCard('한가위 달빛 아씨 경연','센스·예절·기품으로 빛나는 한가위 무대'):'';
-  const entrantLineup=lineup?festivalLineup(session):'';
-  const king=intro?festivalKingCut('부채 끝과 발 디딤에 담긴 감각을 차분히 살펴보겠다.','한가위 경연의 감각을 심사하는 왕'):'';
-  const board=vote?festivalScoreboard(session,'왕과 심사관 점수 집계'):ranking?festivalScoreboard(session,'참가자 최종 순위'):result?`<section class="festival-result-card"><small>선화의 수상 결과</small><strong>${session.overallRank}</strong><p>${session.player.score}점 · ${session.reaction}</p></section>`:'';
-  const guardian=guardianCongrats?festivalGuardianCut(session):'';
-  const winner=award?`<figure class="pageant-winner is-solo ${session.winner.player?'is-seonhwa':''}"><img src="${moonlightAwardWinnerImage(session.winner)}" alt="반실사 전신으로 인사하는 대상 수상자 ${session.winner.name}"></figure>`:'';
-  const kingCongratulations=kingCongrats?festivalKingWinnerCongratulations(session):'';
+  // 첫 장면은 신수, 다음 장면은 상태별 표정·포즈의 선화 대화로 완성한다.
+  // 이 대화가 끝난 뒤에만 중앙 춤 프레임을 노출한다.
+  const frameMotion=dance?'dance':null;
+  const hero=frameMotion?`<span class="pageant-hero-frames is-${frameMotion}" role="img" aria-label="${moonlightStoryBeats[beat]}">${moonlightMotionFrames(frameMotion).map((src,index)=>`<img src="${src}" alt="" style="--pageant-frame:${index}">`).join('')}</span>`:'';
+  const king=judging?festivalKingCut('센스와 예절, 기품에 담긴 마음을 차분히 살펴보겠다.','한가위 경연을 심사하는 왕'):'';
+  const board=ranking?festivalScoreboard(session,'참가자 8명 최종 순위와 수상 결과'):'';
+  const winner=award?`<figure class="pageant-winner is-solo ${session.winner.player?'is-seonhwa':''}"><img src="${moonlightAwardWinnerImage(session.winner)}" alt="대상 수상자 ${session.winner.name}"></figure>`:'';
+  const kingCongratulations=award?festivalKingWinnerCongratulations(session):'';
   const winnerAcceptance=acceptance?festivalWinnerAcceptance(session):'';
+  const guardian=closing?festivalGuardianCut(session):'';
   const closingCard=closing?`<section class="festival-result-card festival-closing-card"><small>한가위 경연 완료</small><strong>${session.overallRank}</strong><p>센스 +2 · 예절 +2 · 기품 +2 · 스트레스 -4${session.prize?`<br>${session.prize} 획득`:''}</p></section>`:'';
   overlay.tabIndex=0;overlay.setAttribute('role','button');overlay.setAttribute('aria-label','화면을 터치해 다음 장면으로 이동');
-  overlay.innerHTML=`${titleCard}${entrantLineup}${hero}${guardian}${opening?moonlightOpeningDialogue(session,beat):''}${king}${board}${winner}${kingCongratulations}${winnerAcceptance}${closingCard}`;
+  overlay.innerHTML=`${hero}${opening?moonlightOpeningDialogue(session,0):entrance?moonlightOpeningDialogue(session,1):''}${king}${board}${winner}${kingCongratulations}${winnerAcceptance}${guardian}${closingCard}`;
 }
 function waitForMoonlightAdvance(beat){
   return waitForFestivalTapAdvance(beat<=1?1600:700);
@@ -2661,7 +2649,9 @@ function openHomeMarket(){
   document.querySelector('#speakerName').textContent='선화';
   document.querySelector('#dialogueText').textContent='저잣거리로 나가 볼까요?';
   playMarketMusic();
+  marketShoppingActive=true;
   exploreMarket().then(()=>{
+    marketShoppingActive=false;
     playHomeMusic();
     document.querySelector('#speakerName').textContent=game.guardianName||guardianDefs[game.guardianType]?.name||'수호신수';
     document.querySelector('#dialogueText').textContent='저잣거리에서 돌아왔어요.';
@@ -2727,14 +2717,14 @@ function renderShopPanel(tab='food',marketMode=marketShoppingActive,outfitCatego
   const categoryName={general:'일반',premium:'고급',cash:'캐시'}[outfitCategory]||'일반';
   const listTitle=tab==='food'?`음식 메뉴 · ${foods.length}종`:tab==='outfit'?`${categoryName} 의상 · ${visibleOutfits.length}벌`:`단장 잡화 · ${sundryGoods.length}종`;
   const cards=tab==='food'?foodCards:tab==='outfit'?outfitCards:sundryCards;
-  panelBody.innerHTML=`<div class="shop-greeting"><img src="${keeper.image}" alt="${keeper.name}"><div><b>${keeper.name}</b><p>${keeper.greeting}</p></div></div><div class="shop-money"><span>보유 은전 <b>${game.money.toLocaleString()}냥</b></span><span>테스트 캐시 <b>${game.cash.toLocaleString()}원</b></span></div>${marketMode?'':`<div class="shop-tabs"><button data-shop-tab="food" class="${tab==='food'?'on':''}">주막</button><button data-shop-tab="outfit" class="${tab==='outfit'?'on':''}">한복점</button><button data-shop-tab="sundry" class="${tab==='sundry'?'on':''}">잡화점</button></div>`}${outfitCategoryTabs}<h3 class="shop-list-title">${listTitle}</h3><div class="shop-grid">${cards}</div>${tab==='sundry'?`<h3 class="shop-list-title">내 물건 판매</h3><div class="shop-grid">${sellCards||'<p class="empty-shop">판매할 수 있는 물건이 없습니다.</p>'}</div>`:''}<button id="shopBack">${marketMode?'저잣거리로 나가기':'일정으로 돌아가기'}</button>`;
+  panelBody.innerHTML=`<div class="shop-greeting"><img src="${keeper.image}" alt="${keeper.name}"><div><b>${keeper.name}</b><p>${keeper.greeting}</p></div></div><div class="shop-money"><span>보유 은전 <b>${game.money.toLocaleString()}냥</b></span><span>테스트 캐시 <b>${game.cash.toLocaleString()}원</b></span></div>${marketMode?'':`<div class="shop-tabs"><button data-shop-tab="food" class="${tab==='food'?'on':''}">주막</button><button data-shop-tab="outfit" class="${tab==='outfit'?'on':''}">한복점</button><button data-shop-tab="sundry" class="${tab==='sundry'?'on':''}">잡화점</button></div>`}${outfitCategoryTabs}<h3 class="shop-list-title">${listTitle}</h3><div class="shop-grid">${cards}</div>${tab==='sundry'?`<h3 class="shop-list-title">내 물건 판매</h3><div class="shop-grid">${sellCards||'<p class="empty-shop">판매할 수 있는 물건이 없습니다.</p>'}</div>`:''}<button id="shopBack">${marketMode?'집으로 돌아가기':'일정으로 돌아가기'}</button>`;
   if(!marketMode)panelBody.querySelectorAll('[data-shop-tab]').forEach(button=>button.addEventListener('click',()=>renderShopPanel(button.dataset.shopTab,marketMode)));
   panelBody.querySelectorAll('[data-outfit-category]').forEach(button=>button.addEventListener('click',()=>renderShopPanel('outfit',marketMode,button.dataset.outfitCategory)));
   panelBody.querySelectorAll('[data-food]').forEach(button=>button.addEventListener('click',()=>buyFood(button.dataset.food)));
   panelBody.querySelectorAll('[data-outfit-preview]').forEach(button=>button.addEventListener('click',()=>showOutfitPreview(button.dataset.outfitPreview)));
   panelBody.querySelectorAll('[data-sundry-buy]').forEach(button=>button.addEventListener('click',()=>buySundryGood(button.dataset.sundryBuy)));
   panelBody.querySelectorAll('[data-sundry-sell]').forEach(button=>button.addEventListener('click',()=>sellInventoryItem(button.dataset.sundrySell,true)));
-  document.querySelector('#shopBack').addEventListener('click',()=>{if(marketMode)returnToMarketSelection();else renderSchedulePanel();});
+  document.querySelector('#shopBack').addEventListener('click',()=>{if(marketMode)finishMarket();else renderSchedulePanel();});
 }
 function formatChanges(change){return orderedChangeEntries(change).map(([key,value])=>`${statLabels[key]||key} ${value>0?'+':''}${value}`).join(' · ');}
 function showOutfitPreview(id){
@@ -2756,7 +2746,7 @@ function showOutfitPreview(id){
   }));
   document.querySelector('#outfitPreviewBuy').addEventListener('click',()=>buyOutfit(id));
 }
-async function buyFood(id){const food=foods.find(item=>item.id===id);if(!food||game.money<food.price)return;panel.hidden=true;const stage=document.querySelector('#activityStage'),image=document.querySelector('#stageCharacterImage'),character=document.querySelector('#stageCharacter');document.querySelector('#marketExplore').hidden=true;stage.hidden=false;stage.className='activity-stage map-restRoom eating-stage';document.querySelector('#stageMap').src=backgrounds.restRoom;document.querySelector('#stageNpc').hidden=true;document.querySelector('#stageProps').hidden=true;document.querySelector('#stageCaption').textContent=`주막 · ${food.name}`;character.hidden=false;character.className='stage-character pixel-sprite motion-eating';const eatingFrames=activityFrameSet('eating');for(const n of [0,1,2,1,0,1,2]){image.src=await outfitActivityFrame(eatingFrames[n],game.equippedOutfit);await new Promise(r=>setTimeout(r,320));}stage.hidden=true;game.money-=food.price;applyShopChanges(food.change);document.querySelector('#dialogueText').textContent=`주막에서 ${food.name}을(를) 맛있게 먹었어요. 다시 둘러볼 수 있어요.`;showLiveChanges({change:food.change,cost:food.price});panel.hidden=false;renderShopPanel('food',true);queueAutoSave();}
+async function buyFood(id){const food=foods.find(item=>item.id===id);if(!food||game.money<food.price)return;panel.hidden=true;const stage=document.querySelector('#activityStage'),character=document.querySelector('#stageCharacter'),mealScene=document.querySelector('#marketMealScene'),mealDish=document.querySelector('#marketMealDish');document.querySelector('#marketExplore').hidden=true;stage.hidden=false;stage.className='activity-stage map-tavernMeal eating-stage';document.querySelector('#stageMap').src=backgrounds.tavernMeal;document.querySelector('#stageNpc').hidden=true;document.querySelector('#stageProps').hidden=true;document.querySelector('#stageCaption').textContent=`주막 · ${food.name}`;character.hidden=true;mealDish.src=`../assets/items/food/${food.id}.png`;mealDish.alt=`상 위의 ${food.name}`;mealScene.hidden=false;mealScene.classList.remove('is-eating');void mealScene.offsetWidth;mealScene.classList.add('is-eating');await new Promise(r=>setTimeout(r,2240));mealScene.hidden=true;mealScene.classList.remove('is-eating');stage.hidden=true;game.money-=food.price;applyShopChanges(food.change);document.querySelector('#dialogueText').textContent=`주막 상에서 ${food.name}을(를) 맛있게 먹었어요. 다시 둘러볼 수 있어요.`;showLiveChanges({change:food.change,cost:food.price});panel.hidden=false;renderShopPanel('food',true);queueAutoSave();}
 function buyOutfit(id){normalizeInventory();const outfit=outfits.find(item=>item.id===id);if(!outfit||!outfitAvailable(outfit))return;const cash=isCashOutfit(outfit);if(cash?game.cash<outfit.cashPrice:game.money<outfit.price)return;if(game.items.some(item=>item.type==='outfit'&&item.id===id)){document.querySelector('#dialogueText').textContent=`${outfit.name}은(는) 이미 보유하고 있어요.`;panelBody.classList.remove('outfit-preview-open');renderShopPanel('outfit',activeShopMarketMode,activeOutfitShopCategory);return;}if(cash)game.cash-=outfit.cashPrice;else game.money-=outfit.price;game.items.push({id:outfit.id,type:'outfit',name:outfit.name,age:outfit.age,ageEnd:outfit.ageEnd,tone:outfit.tone,seasons:outfit.seasons,qty:1});game.autoOutfit=false;game.equippedOutfit=id;applyEquippedOutfit();applyShopChanges(outfit.change);document.querySelector('#dialogueText').textContent=`${outfit.name}을(를) 구입하고 갈아입었어요. 일정에서도 이 의상이 유지돼요.`;if(!cash)showLiveChanges({change:outfit.change,cost:outfit.price});renderHud();panelBody.classList.remove('outfit-preview-open');renderShopPanel('outfit',activeShopMarketMode,activeOutfitShopCategory);queueAutoSave();}
 
 const marketPlaces=[

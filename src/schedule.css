@@ -3028,3 +3028,61 @@ body .phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage:
     height:132px!important;
   }
 }
+
+/* v0.64.221 — 인연 컷아웃 안전 여백과 한가위 8인 원근/발 기준선. */
+.relation-encounter-person{width:58%!important;height:66%!important;bottom:20%!important;object-fit:contain!important;object-position:center bottom!important}
+.relation-encounter-male{left:2%!important}.relation-encounter-female{right:2%!important}
+.stage-npc.npc-romance-date{width:190px!important;height:190px!important;bottom:3%!important}
+.moonlight-pageant.festival-pm3.beat-4 .pageant-intro-lineup{left:5%!important;right:5%!important;bottom:15%!important;grid-template-rows:80px 98px!important;column-gap:8px!important;row-gap:7px!important}
+.moonlight-pageant.festival-pm3.beat-4 .pageant-intro-lineup figure{overflow:visible!important;align-self:end!important}
+.moonlight-pageant.festival-pm3.beat-4 .pageant-intro-lineup figure:nth-child(-n+4) img,.moonlight-pageant.festival-pm3.beat-4 .pageant-intro-lineup figure:nth-child(-n+4) .lineup-gesture-frames{width:58px!important;height:78px!important}
+.moonlight-pageant.festival-pm3.beat-4 .pageant-intro-lineup figure:nth-child(n+5) img,.moonlight-pageant.festival-pm3.beat-4 .pageant-intro-lineup figure:nth-child(n+5) .lineup-gesture-frames{width:69px!important;height:94px!important}
+.moonlight-pageant.festival-pm3.beat-4 .pageant-intro-lineup figure:nth-child(2),.moonlight-pageant.festival-pm3.beat-4 .pageant-intro-lineup figure:nth-child(6){transform:translateY(-2px)}
+
+/* v0.64.222 — 설날 왕 집중 컷과 같은 중앙 무대 구조, 동일 선화 6컷의 느린 손끝 현대무용. */
+.moonlight-pageant.festival-pm3 .pageant-hero-frames{left:50%!important;bottom:15%!important;width:190px!important;height:235px!important;transform:translateX(-50%)!important;overflow:visible!important}
+.moonlight-pageant.festival-pm3 .pageant-hero-frames.is-dance{left:50%!important;bottom:15%!important;width:210px!important;height:255px!important;transform:translateX(-50%)!important}
+.moonlight-pageant.festival-pm3 .pageant-hero-frames.is-dance img{width:100%!important;height:100%!important;object-fit:contain!important;object-position:center bottom!important;transform:none!important;animation:moonlight-slow-fingertips 6s steps(1,end) infinite!important;animation-delay:calc(var(--pageant-frame) * -1s)!important}
+@keyframes moonlight-slow-fingertips{0%,16.65%{opacity:1}16.66%,100%{opacity:0}}
+
+
+/* v0.64.225 — tavern meal: the selected dish sits on Seonhwa's low table. */
+.activity-stage.eating-stage .stage-map{object-position:center;background:#2d1c12;filter:saturate(.92) contrast(1.04)}
+.activity-stage.eating-stage .stage-map-shade{background:linear-gradient(#130b0733,#10090462)}
+.market-meal-scene{position:absolute;z-index:5;inset:0;pointer-events:none;overflow:hidden}
+.market-meal-scene[hidden]{display:none}
+.market-meal-character{position:absolute;left:50%;bottom:-7%;width:93%;height:auto;transform:translateX(-50%);transform-origin:center bottom;image-rendering:pixelated;filter:drop-shadow(0 7px 5px #130a08aa)}
+.market-meal-dish{position:absolute;z-index:2;left:50%;top:59%;width:25%;height:16%;object-fit:contain;transform:translate(-50%,-50%);image-rendering:pixelated;filter:drop-shadow(0 3px 2px #130a08a8)}
+.market-meal-scene.is-eating .market-meal-character{animation:market-meal-bite .7s ease-in-out 3}
+.market-meal-scene.is-eating .market-meal-dish{animation:market-meal-dish .7s ease-in-out 3}
+@keyframes market-meal-bite{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(3px)}}
+@keyframes market-meal-dish{0%,100%{transform:translate(-50%,-50%) scale(1)}50%{transform:translate(-50%,-50%) scale(.96)}}
+
+
+/* v0.64.226 — three shopkeeper layers share the market background baseline. */
+.activity-stage.market-choice-stage{inset:12% 0 9%!important;overflow:hidden!important}
+.activity-stage.market-choice-stage .stage-inner{overflow:hidden!important;background:#6e4a2b!important}
+.activity-stage.market-choice-stage .stage-map{display:block!important;object-fit:cover!important;object-position:center bottom!important;filter:saturate(.9) contrast(1.04)!important}
+.activity-stage.market-choice-stage .stage-map-shade{display:block!important;background:linear-gradient(#120b0612 0 59%,#140a0558 100%)!important}
+.market-choice-stage .market-explore{display:block!important;inset:0!important;overflow:hidden!important;background:transparent!important;box-shadow:none!important}
+.market-choice-stage .market-shop{position:absolute!important;top:0!important;bottom:0!important;width:33.3334%!important;height:auto!important;margin:0!important;padding:0!important;overflow:visible!important;background:none!important;border:0!important;border-radius:0!important;box-shadow:none!important;outline:0!important;filter:none!important;opacity:1!important;transform:none!important;transform-origin:center bottom!important}
+.market-choice-stage .market-shop:after{display:none!important}
+.market-choice-stage .market-shop.tavern{left:0!important;right:auto!important}
+.market-choice-stage .market-shop.hanbok{left:33.3333%!important;right:auto!important}
+.market-choice-stage .market-shop.sundry{left:66.6666%!important;right:auto!important}
+.market-choice-stage .market-shop>img{position:absolute!important;left:50%!important;top:auto!important;bottom:16%!important;width:100%!important;height:43%!important;max-width:none!important;max-height:none!important;object-fit:contain!important;object-position:center bottom!important;image-rendering:pixelated!important;filter:drop-shadow(0 5px 4px #130a08a8)!important;transform:translateX(-50%) scale(1)!important;transform-origin:center bottom!important;transition:transform .2s ease,filter .2s ease!important}
+.market-choice-stage .market-shop.selected>img{transform:translateX(-50%) scale(1.1)!important;filter:drop-shadow(0 8px 7px #130a08c9) brightness(1.08)!important}
+.market-choice-stage .market-explore.has-selection .market-shop:not(.selected){opacity:.58!important;filter:brightness(.76)!important}
+.market-choice-stage .market-controls{display:none!important}
+.phone.market-playing>nav>#marketHomeButton,.phone.market-playing>nav>#collectionBookButton,.phone.market-playing>nav>#wardrobeButton{display:none!important}
+.phone.market-playing>nav{left:auto!important;right:4%!important;bottom:2%!important;width:112px!important;display:block!important;background:none!important}
+.phone.market-playing>nav #marketFinish{display:block!important;width:112px!important;min-height:32px!important;padding:7px 8px!important;border-radius:999px!important;font-size:10px!important;line-height:1.15!important}
+
+
+/* v0.64.227 — the second Chuseok beat is Seonhwa’s visible status dialogue. */
+.moonlight-pageant.festival-pm3.motion-stage-enter .moonlight-opening-dialogue{display:block!important}
+.moonlight-pageant.festival-pm3.motion-stage-enter .pageant-hero-frames{display:none!important}
+.sehwa-opening-dialogue.speaker-seonhwa.status-happy .sehwa-expression{transform:scale(1.3) rotate(-1deg)!important}
+.sehwa-opening-dialogue.speaker-seonhwa.status-sad .sehwa-expression{transform:scale(1.25) translateY(5px)!important}
+.sehwa-opening-dialogue.speaker-seonhwa.status-angry .sehwa-expression,.sehwa-opening-dialogue.speaker-seonhwa.status-rebellious .sehwa-expression{transform:scale(1.3) translateX(-5px)!important}
+.sehwa-opening-dialogue.speaker-seonhwa.status-shocked .sehwa-expression{transform:scale(1.28) translateY(-3px)!important}
