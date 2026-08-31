@@ -29,7 +29,7 @@ assert.doesNotMatch(app,/title\|\|preparing\?sehwaPreparationEnsemble/,'제목 �
 assert.match(app,/서로 다른 전통 땋은 머리를 한 참가자 8명/,'준비 장면에는 서로 다른 머리 모양의 참가자 여덟 명이 필요합니다.');
 assert.match(app,/eight-entrant-v1/,'8인 그림 그리기 전용 장면을 사용해야 합니다.');
 for(const frame of [1,2,3])assert.ok(existsSync(new URL(`../assets/events/holidays/sehwa-contest/preparation-scene/eight-entrant-v1/drawing-${frame}-v2.png`,import.meta.url)),`서로 다른 머리 모양을 유지한 8인 그림 ${frame} 프레임이 필요합니다.`);
-assert.match(css,/@keyframes sehwa-eight-painting/,'8명은 붓질과 고민 자세를 번갈아 보여야 합니다.');
+assert.match(css,/@keyframes sehwa-eight-local-painting/,'8명은 고정 배경 위의 국소 영역에서만 붓질과 고민 자세를 번갈아 보여야 합니다.');
 assert.ok(existsSync(new URL('../assets/events/holidays/sehwa-contest/seonhwa/drawing/age-13/painting-brush-10fps-sheet-v1.png',import.meta.url)),'선화의 10fps 붓질 시트가 필요합니다.');
 assert.match(css,/animation:sehwa-brush-10fps 1s steps\(1,end\) 5 both/,'선화의 붓질은 10fps 한 주기를 5초 동안 반복해야 합니다.');
 assert.match(app,/\{id:'eunseo',name:'은서'/,'플레이어를 포함한 8인 참가 명단이 필요합니다.');

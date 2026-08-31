@@ -243,7 +243,7 @@ const vacationIllustrations=[
 function unifiedAgeFolder(){return '09';}
 function scheduleFramePath(file){return `../assets/characters/seonhwa/schedule-actions/${file}`;}
 function scheduleBasePath(file){return `../assets/characters/seonhwa/schedule-base/${file}`;}
-const scheduleAssetRevision='0.64.210-debug';
+const scheduleAssetRevision='0.64.211-debug';
 const scheduleQaParams=new URLSearchParams(location.search);
 const moonlightStandaloneQa=scheduleQaParams.get('qaHoliday')==='chuseok';
 const sehwaStandaloneQa=scheduleQaParams.get('qaHoliday')==='seollal';
@@ -1828,7 +1828,7 @@ function sehwaOpeningDialogue(session,beat){
 }
 function sehwaPreparationEnsemble(session){
   const base='../assets/events/holidays/sehwa-contest/preparation-scene/eight-entrant-v1';
-  return `<section class="sehwa-eight-entrant-scene" aria-label="서로 다른 전통 땋은 머리를 한 참가자 8명이 좌우 네 자리씩 앉아 그림을 그리고 고민하는 장면">${[1,2,3].map((frame,index)=>`<img src="${base}/drawing-${frame}-v2.png?v=${scheduleAssetRevision}" alt="${index?'':'왕실 세화 경연장에서 그림을 그리는 참가자 8명'}" style="--sehwa-group-frame:${index}">`).join('')}</section>`;
+  return `<section class="sehwa-eight-entrant-scene" aria-label="서로 다른 전통 땋은 머리를 한 참가자 8명이 좌우 네 자리씩 앉아 그림을 그리고 고민하는 장면"><img class="sehwa-ensemble-base" src="${base}/drawing-1-v2.png?v=${scheduleAssetRevision}" alt="왕실 세화 경연장에서 그림을 그리는 참가자 8명">${[2,3].map((frame,index)=>`<img class="sehwa-ensemble-motion-patch" src="${base}/drawing-${frame}-v2.png?v=${scheduleAssetRevision}" alt="" style="--sehwa-group-frame:${index}">`).join('')}</section>`;
 }
 function renderSehwaContest(session,beatIndex){
   const overlay=document.querySelector('#moonlightPageant');if(!overlay)return;
