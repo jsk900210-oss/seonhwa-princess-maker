@@ -13,6 +13,8 @@ assert.ok(app.includes("marketSelection: '../assets/backgrounds/market/market-th
 assert.ok(app.includes('stageMap.src=backgrounds.marketSelection'),'저잣거리 진입 시 생성 배경을 무대에 연결해야 합니다.');
 assert.ok(app.includes("if(marketReturnToHome){stage.hidden=true;stage.className='activity-stage';stageMap.src=backgrounds.home"),'집으로 돌아가면 저잣거리 무대를 반드시 닫고 홈 배경을 복원해야 합니다.');
 assert.ok(existsSync(path.join(root,'assets/backgrounds/market/market-three-shops-v1.png')),'생성한 저잣거리 배경 파일이 있어야 합니다.');
+for(const asset of ['market-tavern-keeper-v2.png','market-cloth-keeper-v2.png','market-goods-keeper-v2.png'])assert.ok(existsSync(path.join(root,'assets/characters/npcs/shops',asset)),'각 저잣거리 가게의 새 좌식 주인 이미지가 필요합니다.');
+assert.match(index,/market-shop-nameplate[^>]*>주막<.*market-shop-nameplate[^>]*>포목전<.*market-shop-nameplate[^>]*>잡화전/s,'가게 앞 명패에는 시대에 맞는 상점명이 표시되어야 합니다.');
 assert.match(css,/the generated three-store market backdrop is the visible selection scene/,'저잣거리 생성 배경의 최종 표시 규칙이 필요합니다.');
 assert.match(css,/market-choice-stage\{inset:0!important;padding:0!important;border:0!important/,'저잣거리 생성 배경은 카드 여백 없이 전체 무대를 채워야 합니다.');
 assert.match(css,/\.phone\.market-playing>\.home-bottom-nav>button:not\(#marketFinish\)\{display:none!important\}/,'저잣거리에서는 기존 하단 메뉴를 숨겨야 합니다.');

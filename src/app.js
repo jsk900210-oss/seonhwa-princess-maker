@@ -248,7 +248,7 @@ const vacationIllustrations=[
 function unifiedAgeFolder(){return '09';}
 function scheduleFramePath(file){return `../assets/characters/seonhwa/schedule-actions/v2/${file}`;}
 function scheduleBasePath(file){return `../assets/characters/seonhwa/schedule-base/${file}`;}
-const scheduleAssetRevision='0.64.235-debug';
+const scheduleAssetRevision='0.64.236-debug';
 const scheduleQaParams=new URLSearchParams(location.search);
 const moonlightStandaloneQa=scheduleQaParams.get('qaHoliday')==='chuseok';
 const sehwaStandaloneQa=scheduleQaParams.get('qaHoliday')==='seollal';
@@ -2690,7 +2690,7 @@ function buySundryGood(id){
   normalizeInventory();const good=sundryGoods.find(entry=>entry.id===id);if(!good||game.money<good.price||game.items.some(item=>item.id===id))return;
   game.money-=good.price;const actual=applyStatChange(good.change);
   game.items.push({id:good.id,type:good.type,name:good.name,description:good.detail,qty:1,source:'sundry-shop',purchasePrice:good.price,statChange:actual,sellable:true});
-  document.querySelector('#dialogueText').textContent=`잡화점에서 ${good.name}${objectParticle(good.name)} 구입했어요.`;showLiveChanges({change:actual,cost:good.price});renderHud();renderShopPanel('sundry',true);queueAutoSave();
+  document.querySelector('#dialogueText').textContent=`잡화전에서 ${good.name}${objectParticle(good.name)} 구입했어요.`;showLiveChanges({change:actual,cost:good.price});renderHud();renderShopPanel('sundry',true);queueAutoSave();
 }
 function sellInventoryItem(id,returnToShop=false){
   normalizeInventory();const index=game.items.findIndex(item=>item.id===id),item=game.items[index];if(!item||(!item.sellable&&!String(item.source||'').includes('birthday')))return;
@@ -2705,8 +2705,8 @@ function renderShopPanel(tab='food',marketMode=marketShoppingActive,outfitCatego
   normalizeInventory();
   activeShopMarketMode=marketMode;
   activeOutfitShopCategory=outfitCategory;
-  panelTitle.textContent=tab==='food'?'저잣거리 · 주막':tab==='outfit'?'저잣거리 · 한복점':'저잣거리 · 잡화점';
-  const keeper=tab==='food'?{name:'주모',image:'../assets/characters/npcs/shops/tavern-hostess.png',greeting:'어서 오세요. 따뜻한 음식이 준비되어 있답니다.'}:tab==='outfit'?{name:'한복점 주인',image:'../assets/characters/npcs/shops/hanbok-owner.png',greeting:'어서 오세요. 곱게 지은 한복을 천천히 살펴보세요.'}:{name:'잡화점 주인',image:'../assets/characters/companions/portraits/merchant.png',greeting:'비녀부터 단장품까지 두루 살펴보세요. 가져온 물건도 값을 쳐 드리지요.'};
+  panelTitle.textContent=tab==='food'?'저잣거리 · 주막':tab==='outfit'?'저잣거리 · 포목전':'저잣거리 · 잡화전';
+  const keeper=tab==='food'?{name:'주모',image:'../assets/characters/npcs/shops/market-tavern-keeper-v2.png',greeting:'어서 오세요. 따뜻한 음식이 준비되어 있답니다.'}:tab==='outfit'?{name:'포목전 주인',image:'../assets/characters/npcs/shops/market-cloth-keeper-v2.png',greeting:'어서 오세요. 곱게 지은 한복을 천천히 살펴보세요.'}:{name:'잡화전 주인',image:'../assets/characters/npcs/shops/market-goods-keeper-v2.png',greeting:'비녀부터 단장품까지 두루 살펴보세요. 가져온 물건도 값을 쳐 드리지요.'};
   const owned=new Set(game.items.filter(item=>typeof item==='object').map(item=>item.id));
   const foodCards=foods.map(food=>`<button class="shop-card visual-card" data-food="${food.id}" ${game.money<food.price?'disabled':''}><img src="../assets/items/food/${food.id}.png" alt="${food.name}"><b>${food.name}</b><span>${food.price}냥</span><small>${food.detail}<br>${formatChanges(food.change)}</small></button>`).join('');
   const visibleOutfits=outfits.filter(outfit=>outfitShopCategory(outfit)===outfitCategory);
@@ -2718,7 +2718,7 @@ function renderShopPanel(tab='food',marketMode=marketShoppingActive,outfitCatego
   const categoryName={general:'일반',premium:'고급',cash:'캐시'}[outfitCategory]||'일반';
   const listTitle=tab==='food'?`음식 메뉴 · ${foods.length}종`:tab==='outfit'?`${categoryName} 의상 · ${visibleOutfits.length}벌`:`단장 잡화 · ${sundryGoods.length}종`;
   const cards=tab==='food'?foodCards:tab==='outfit'?outfitCards:sundryCards;
-  panelBody.innerHTML=`<div class="shop-greeting"><img src="${keeper.image}" alt="${keeper.name}"><div><b>${keeper.name}</b><p>${keeper.greeting}</p></div></div><div class="shop-money"><span>보유 은전 <b>${game.money.toLocaleString()}냥</b></span><span>테스트 캐시 <b>${game.cash.toLocaleString()}원</b></span></div>${marketMode?'':`<div class="shop-tabs"><button data-shop-tab="food" class="${tab==='food'?'on':''}">주막</button><button data-shop-tab="outfit" class="${tab==='outfit'?'on':''}">한복점</button><button data-shop-tab="sundry" class="${tab==='sundry'?'on':''}">잡화점</button></div>`}${outfitCategoryTabs}<h3 class="shop-list-title">${listTitle}</h3><div class="shop-grid">${cards}</div>${tab==='sundry'?`<h3 class="shop-list-title">내 물건 판매</h3><div class="shop-grid">${sellCards||'<p class="empty-shop">판매할 수 있는 물건이 없습니다.</p>'}</div>`:''}<button id="shopBack" aria-label="저잣거리 상점 선택 화면으로 돌아가기">${marketMode?'← 저잣거리로 돌아가기':'일정으로 돌아가기'}</button>`;
+  panelBody.innerHTML=`<div class="shop-greeting"><img src="${keeper.image}" alt="${keeper.name}"><div><b>${keeper.name}</b><p>${keeper.greeting}</p></div></div><div class="shop-money"><span>보유 은전 <b>${game.money.toLocaleString()}냥</b></span><span>테스트 캐시 <b>${game.cash.toLocaleString()}원</b></span></div>${marketMode?'':`<div class="shop-tabs"><button data-shop-tab="food" class="${tab==='food'?'on':''}">주막</button><button data-shop-tab="outfit" class="${tab==='outfit'?'on':''}">포목전</button><button data-shop-tab="sundry" class="${tab==='sundry'?'on':''}">잡화전</button></div>`}${outfitCategoryTabs}<h3 class="shop-list-title">${listTitle}</h3><div class="shop-grid">${cards}</div>${tab==='sundry'?`<h3 class="shop-list-title">내 물건 판매</h3><div class="shop-grid">${sellCards||'<p class="empty-shop">판매할 수 있는 물건이 없습니다.</p>'}</div>`:''}<button id="shopBack" aria-label="저잣거리 상점 선택 화면으로 돌아가기">${marketMode?'← 저잣거리로 돌아가기':'일정으로 돌아가기'}</button>`;
   if(!marketMode)panelBody.querySelectorAll('[data-shop-tab]').forEach(button=>button.addEventListener('click',()=>renderShopPanel(button.dataset.shopTab,marketMode)));
   panelBody.querySelectorAll('[data-outfit-category]').forEach(button=>button.addEventListener('click',()=>renderShopPanel('outfit',marketMode,button.dataset.outfitCategory)));
   panelBody.querySelectorAll('[data-food]').forEach(button=>button.addEventListener('click',()=>buyFood(button.dataset.food)));
@@ -2752,8 +2752,8 @@ function buyOutfit(id){normalizeInventory();const outfit=outfits.find(item=>item
 
 const marketPlaces=[
   {id:'food',side:-1,label:'주막'},
-  {id:'outfit',side:0,label:'한복점'},
-  {id:'sundry',side:1,label:'잡화점'}
+  {id:'outfit',side:0,label:'포목전'},
+  {id:'sundry',side:1,label:'잡화전'}
   // 추후 {id:'pub',side:-2,label:'주점'}, {id:'gift',side:2,label:'선물가게'} 추가 가능
 ];
 let marketSelection=null,marketResolve=null,marketReturnToHome=false;
@@ -2778,12 +2778,12 @@ function askMarketShop(type){
   const place=marketPlaces.find(item=>item.id===type);
   if(!place)return;
   selectMarketShop(type);
-  document.querySelector('#marketConfirmText').textContent=type==='food'?'주모를 선택하시겠습니까?':type==='outfit'?'한복점 주인을 선택하시겠습니까?':'잡화점 주인을 선택하시겠습니까?';
+  document.querySelector('#marketConfirmText').textContent=type==='food'?'주모를 선택하시겠습니까?':type==='outfit'?'포목전 주인을 선택하시겠습니까?':'잡화전 주인을 선택하시겠습니까?';
   document.querySelector('#marketConfirm').hidden=false;
 }
 function closeMarketConfirm(){document.querySelector('#marketConfirm').hidden=true;selectMarketShop(null);}
 function exploreMarket(){
-  const explore=document.querySelector('#marketExplore'),stage=document.querySelector('#activityStage'),phone=document.querySelector('.phone'),stageMap=document.querySelector('#stageMap');marketReturnToHome=!phone.classList.contains('playing');stageMap.src=backgrounds.marketSelection;stageMap.alt='주막·한복점·잡화점이 늘어선 저잣거리';phone.classList.add('market-playing');stage.hidden=false;stage.classList.add('market-choice-stage');explore.hidden=false;document.querySelector('#marketConfirm').hidden=true;document.querySelector('#stageCharacter').hidden=true;document.querySelector('#stageNpc').hidden=true;document.querySelector('#stageProps').hidden=true;marketMealConsumed=false;marketSelection=null;selectMarketShop(null);
+  const explore=document.querySelector('#marketExplore'),stage=document.querySelector('#activityStage'),phone=document.querySelector('.phone'),stageMap=document.querySelector('#stageMap');marketReturnToHome=!phone.classList.contains('playing');stageMap.src=backgrounds.marketSelection;stageMap.alt='주막·포목전·잡화전이 늘어선 저잣거리';phone.classList.add('market-playing');stage.hidden=false;stage.classList.add('market-choice-stage');explore.hidden=false;document.querySelector('#marketConfirm').hidden=true;document.querySelector('#stageCharacter').hidden=true;document.querySelector('#stageNpc').hidden=true;document.querySelector('#stageProps').hidden=true;marketMealConsumed=false;marketSelection=null;selectMarketShop(null);
   return new Promise(resolve=>{marketResolve=()=>{phone.classList.remove('market-playing');explore.hidden=true;document.querySelector('#stageCharacter').hidden=false;document.querySelector('#stageProps').hidden=false;if(marketReturnToHome){stage.hidden=true;stage.className='activity-stage';stageMap.src=backgrounds.home;stageMap.alt='선화의 집';}marketReturnToHome=false;resolve();};});
 }
 function enterMarketShop(type){if(!type)return;const place=marketPlaces.find(item=>item.id===type);document.querySelector('#dialogueText').textContent=`${place?.label||'가게'} 주인이 “어서 오세요.” 하고 반겨요.`;document.querySelector('#marketExplore').hidden=true;document.querySelector('#activityStage').hidden=true;document.querySelector('.phone').classList.add('market-shop-open');panel.hidden=false;renderShopPanel(type,true);}

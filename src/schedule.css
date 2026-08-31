@@ -3112,3 +3112,9 @@ body .phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage:
 .phone.market-playing .activity-stage.market-choice-stage{inset:0!important;padding:0!important;border:0!important;border-radius:0!important;background:none!important;box-shadow:none!important}
 .phone.market-playing .activity-stage.market-choice-stage::before,.phone.market-playing .activity-stage.market-choice-stage::after,.phone.market-playing .activity-stage.market-choice-stage .stage-roof{display:none!important}
 .phone.market-playing .activity-stage.market-choice-stage>.stage-inner{height:100%!important;border:0!important;box-shadow:none!important}
+
+
+/* v0.64.236 — seated market keepers use legible, era-appropriate desk signs. */
+.phone.market-playing .market-choice-stage .market-shop>img{bottom:12%!important;height:50%!important}
+.phone.market-playing .market-choice-stage .market-shop-nameplate{position:absolute!important;z-index:5!important;left:50%!important;bottom:24%!important;display:block!important;min-width:48%!important;padding:2px 3px!important;transform:translateX(-50%)!important;color:#49301d!important;background:transparent!important;font-family:serif!important;font-size:10px!important;font-weight:900!important;line-height:1!important;letter-spacing:.04em!important;text-align:center!important;text-shadow:0 1px #f5ddad!important;pointer-events:none!important}
+.phone.market-playing .market-choice-stage .market-shop.selected .market-shop-nameplate{transform:translateX(-50%) scale(1.1)!important}
