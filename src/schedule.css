@@ -2853,9 +2853,14 @@ body .phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage:
 /* v0.64.184 — 회화 선생은 투명 여백이 거의 없는 원본이므로
    앉은 선화 구도에 맞춰 보이는 키와 발 기준선을 별도로 보정한다. */
 .phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-painting.schedule-layered .schedule-scene-layer.layer-npc{
-  width:132px!important;
+  width:140px!important;
   bottom:2%!important;
 }
+
+/* 회화 전용 선화 프레임에 책상과 화구가 포함되어 있으므로 중복 소품은 표시하지 않는다. */
+.phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-painting.schedule-layered .stage-character.pixel-sprite{width:150px!important;height:150px!important}
+.phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-painting.schedule-layered .schedule-scene-layer.layer-pattern,
+.phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-painting.schedule-layered .schedule-scene-layer.layer-effect{display:none!important}
 
 /* v0.64.202 — 설날 경연은 한 경연장 안에서 8명이 낮은 화구 앞에 앉아 진행한다. */
 .phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage.action-holiday-seollal,
@@ -2913,6 +2918,8 @@ body .phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage:
 .sehwa-ten-entrant-sequence{position:absolute;z-index:38;inset:0;overflow:hidden;pointer-events:none}
 .sehwa-ten-entrant-sequence img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;opacity:0;animation:sehwa-ten-painting 2.4s steps(1,end) infinite;animation-delay:calc(var(--sehwa-group-frame) * .8s)}
 @keyframes sehwa-ten-painting{0%,33.32%{opacity:1}33.33%,100%{opacity:0}}
+.sehwa-eight-entrant-scene{position:absolute;z-index:38;inset:0;overflow:hidden;pointer-events:none}
+.sehwa-eight-entrant-scene img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center}
 
 /* 설날 주제 발표: 왕의 얼굴과 대화창이 겹치지 않도록 상·하 영역을 분리한다. */
 .sehwa-contest.festival-pm3.beat-4 .festival-character-cut.king-cut img{
