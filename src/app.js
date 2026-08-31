@@ -102,6 +102,7 @@ const backgrounds = {
   home: '../assets/backgrounds/home/home-room-morning.webp',
   seodang: '../assets/backgrounds/seodang/seodang-day.webp',
   market: '../assets/backgrounds/market/market-day.webp',
+  marketSelection: '../assets/backgrounds/market/market-three-shops-v1.png',
   pharmacy: '../assets/backgrounds/pharmacy/pharmacy-day.webp',
   courtyard: '../assets/backgrounds/pixel-activities/close/courtyard.webp',
   etiquetteRoom: '../assets/backgrounds/pixel-activities/close/etiquette-room.webp',
@@ -247,7 +248,7 @@ const vacationIllustrations=[
 function unifiedAgeFolder(){return '09';}
 function scheduleFramePath(file){return `../assets/characters/seonhwa/schedule-actions/v2/${file}`;}
 function scheduleBasePath(file){return `../assets/characters/seonhwa/schedule-base/${file}`;}
-const scheduleAssetRevision='0.64.228-debug';
+const scheduleAssetRevision='0.64.229-debug';
 const scheduleQaParams=new URLSearchParams(location.search);
 const moonlightStandaloneQa=scheduleQaParams.get('qaHoliday')==='chuseok';
 const sehwaStandaloneQa=scheduleQaParams.get('qaHoliday')==='seollal';
@@ -2782,7 +2783,7 @@ function askMarketShop(type){
 }
 function closeMarketConfirm(){document.querySelector('#marketConfirm').hidden=true;selectMarketShop(null);}
 function exploreMarket(){
-  const explore=document.querySelector('#marketExplore'),stage=document.querySelector('#activityStage');document.querySelector('.phone').classList.add('market-playing');stage.hidden=false;stage.classList.add('market-choice-stage');explore.hidden=false;document.querySelector('#marketConfirm').hidden=true;document.querySelector('#stageCharacter').hidden=true;document.querySelector('#stageNpc').hidden=true;document.querySelector('#stageProps').hidden=true;marketMealConsumed=false;marketSelection=null;selectMarketShop(null);
+  const explore=document.querySelector('#marketExplore'),stage=document.querySelector('#activityStage');document.querySelector('#stageMap').src=backgrounds.marketSelection;document.querySelector('#stageMap').alt='주막·한복점·잡화점이 늘어선 저잣거리';document.querySelector('.phone').classList.add('market-playing');stage.hidden=false;stage.classList.add('market-choice-stage');explore.hidden=false;document.querySelector('#marketConfirm').hidden=true;document.querySelector('#stageCharacter').hidden=true;document.querySelector('#stageNpc').hidden=true;document.querySelector('#stageProps').hidden=true;marketMealConsumed=false;marketSelection=null;selectMarketShop(null);
   return new Promise(resolve=>{marketResolve=()=>{document.querySelector('.phone').classList.remove('market-playing');explore.hidden=true;document.querySelector('#stageCharacter').hidden=false;document.querySelector('#stageProps').hidden=false;resolve();};});
 }
 function enterMarketShop(type){if(!type)return;const place=marketPlaces.find(item=>item.id===type);document.querySelector('#dialogueText').textContent=`${place?.label||'가게'} 주인이 “어서 오세요.” 하고 반겨요.`;document.querySelector('#marketExplore').hidden=true;document.querySelector('#activityStage').hidden=true;document.querySelector('.phone').classList.add('market-shop-open');panel.hidden=false;renderShopPanel(type,true);}
