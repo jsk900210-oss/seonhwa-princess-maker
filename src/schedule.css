@@ -3100,3 +3100,9 @@ body .phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage:
 .phone.market-playing .activity-stage.market-choice-stage .stage-map{display:none!important}
 .phone.market-playing .activity-stage.market-choice-stage .stage-map-shade{display:block!important;background:linear-gradient(#120b060c 0 65%,#130a0550 100%)!important}
 .phone.market-playing .market-choice-stage .market-explore{background:transparent!important}
+
+
+/* v0.64.234 — remove legacy shop cards and clear the home-market stage on exit. */
+.phone.market-playing .market-choice-stage .market-shop{background:transparent!important;border:0!important;border-radius:0!important;box-shadow:none!important;outline:0!important}
+.phone.market-playing .market-choice-stage .market-shop::before,.phone.market-playing .market-choice-stage .market-shop::after{display:none!important;background:none!important}
+.phone.market-playing .market-choice-stage .market-shop>img{z-index:3!important}

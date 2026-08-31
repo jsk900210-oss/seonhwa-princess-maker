@@ -42,3 +42,22 @@ jobs:
       - name: Deploy
         id: deployment
         uses: actions/deploy-pages@v4
+
+      - name: Verify deployed revision and critical market asset
+        env:
+          PAGE_URL: ${{ steps.deployment.outputs.page_url }}
+          EXPECTED_SHA: ${{ github.sha }}
+        run: |
+          expected_revision=$(node -e "const fs=require('fs');const s=fs.readFileSync('src/app.js','utf8');process.stdout.write(s.match(/const scheduleAssetRevision='([^']+)'/)[1])")
+          target="$PAGE_URL/src/index.html?deploy=$EXPECTED_SHA"
+          for attempt in {1..24}; do
+            page=$(curl --fail --silent --show-error "$target" || true)
+            if printf '%s' "$page" | grep -Fq "app.js?v=$expected_revision"; then
+              curl --fail --silent --show-error "$PAGE_URL/assets/backgrounds/market/market-three-shops-v1.png?deploy=$EXPECTED_SHA" >/dev/null
+              echo "Verified Pages revision $expected_revision and generated market background."
+              exit 0
+            fi
+            sleep 5
+          done
+          echo "Pages did not serve revision $expected_revision after deployment." >&2
+          exit 1

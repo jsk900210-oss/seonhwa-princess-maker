@@ -1,0 +1,18 @@
+import assert from 'node:assert/strict';
+import {existsSync,readFileSync} from 'node:fs';
+import path from 'node:path';
+import {fileURLToPath} from 'node:url';
+
+const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..');
+const read=file=>readFileSync(path.join(root,file),'utf8');
+const app=read('src/app.js'),index=read('src/index.html'),css=read('src/schedule.css');
+const revision=app.match(/const scheduleAssetRevision='([^']+)'/)?.[1];
+assert.ok(revision,'앱의 배포 자산 리비전이 필요합니다.');
+for(const resource of ['style.css','schedule.css','app.js'])assert.match(index,new RegExp(resource.replace('.', '\\.')+'\\?v='+revision.replaceAll('.','\\.')),'HTML은 '+resource+'에 앱과 동일한 리비전을 사용해야 합니다.');
+assert.ok(app.includes("marketSelection: '../assets/backgrounds/market/market-three-shops-v1.png'"),'저잣거리 선택 배경은 생성한 세 가게 배경을 사용해야 합니다.');
+assert.ok(app.includes('stageMap.src=backgrounds.marketSelection'),'저잣거리 진입 시 생성 배경을 무대에 연결해야 합니다.');
+assert.ok(app.includes("if(marketReturnToHome){stage.hidden=true;stage.className='activity-stage';stageMap.src=backgrounds.home"),'집으로 돌아가면 저잣거리 무대를 반드시 닫고 홈 배경을 복원해야 합니다.');
+assert.ok(existsSync(path.join(root,'assets/backgrounds/market/market-three-shops-v1.png')),'생성한 저잣거리 배경 파일이 있어야 합니다.');
+assert.match(css,/the generated three-store market backdrop is the visible selection scene/,'저잣거리 생성 배경의 최종 표시 규칙이 필요합니다.');
+assert.match(css,/\.phone\.market-playing>\.home-bottom-nav>button:not\(#marketFinish\)\{display:none!important\}/,'저잣거리에서는 기존 하단 메뉴를 숨겨야 합니다.');
+console.log('PASS: release revision, market background asset, entry wiring, and deployed-menu contract');
