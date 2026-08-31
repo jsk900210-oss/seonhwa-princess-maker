@@ -248,7 +248,7 @@ const vacationIllustrations=[
 function unifiedAgeFolder(){return '09';}
 function scheduleFramePath(file){return `../assets/characters/seonhwa/schedule-actions/v2/${file}`;}
 function scheduleBasePath(file){return `../assets/characters/seonhwa/schedule-base/${file}`;}
-const scheduleAssetRevision='0.64.238-debug';
+const scheduleAssetRevision='0.64.239-debug';
 const scheduleQaParams=new URLSearchParams(location.search);
 const moonlightStandaloneQa=scheduleQaParams.get('qaHoliday')==='chuseok';
 const sehwaStandaloneQa=scheduleQaParams.get('qaHoliday')==='seollal';
@@ -295,6 +295,7 @@ const spriteFrames = {
 const scheduleActionFrames={
   calligraphy:frameTriplet('calligraphy-pixel-v2'),
   arithmetic:frameTriplet('arithmetic-pixel-v2'),
+  dance:frameTriplet('dance-fan-held-v1'),
   manners:frameTriplet('manners-pixel-v2'),
   sit:frameTriplet('sit-pixel-v2'),
   houseclean:frameTriplet('houseclean-pixel-v2'),
@@ -320,7 +321,7 @@ const scheduleActionFrames={
 // 잠자기도 연령별 기준 시트에서 불러와 얼굴·체형·기본 의상이 섞이지 않게 한다.
 const canonicalActivityAliases={
   calligraphy:'calligraphy',reading:'calligraphy',study:'calligraphy',painting:'calligraphy',music:'calligraphy',classics:'calligraphy',copying:'calligraphy',tutoring:'calligraphy',
-  dance:'manners',koreanDance:'manners',magic:'spell-cast',spellcraft:'spell-cast',
+  dance:'dance',koreanDance:'dance',magic:'spell-cast',spellcraft:'spell-cast',
   arithmetic:'arithmetic',accounting:'arithmetic',cooking:'arithmetic',swordsmanship:'sword-strike',martial:'manners',dungeon:'manners',manners:'manners',sit:'sit',
   errand:'errand',farmwork:'farmwork',eating:'errand',
   herbs:'herbs',
@@ -1040,7 +1041,7 @@ async function playScheduleLayerScene(actionId,seonImage,rank,outcome,dayIndex){
           stage.style.setProperty('--layer-hero-left',`${carryLeft}%`,'important');
           stage.style.setProperty('--layer-prop-left',`${carryLeft+2}%`,'important');
           pattern.hidden=false;
-          seonImage.style.setProperty('transform','scaleX(-1)');
+          seonImage.style.removeProperty('transform');
           seonImage.style.setProperty('transform-origin','center bottom');
           stage.dataset.woodTransport='true';
         }
@@ -1972,7 +1973,9 @@ async function playVacationScene(prize,index,companion=null,scheduleStart=null,h
     companionText.textContent=dialogue.close;
     await waitForVacationTap('대화 마치기',true);
   }
-  overlay.hidden=true;scene.classList.remove('has-encounter');scene.classList.add('vacation-leaving');
+  overlay.hidden=true;scene.classList.remove('has-encounter');
+  await waitForVacationTap('바캉스를 마치고 돌아가기',true);
+  scene.classList.add('vacation-leaving');
   await schedulePlaybackDelay(900);
   scene.classList.remove('child-live','vacation-leaving');scene.hidden=true;scene.dataset.effect='';scene.dataset.season='';document.querySelector('#vacationMotion').replaceChildren();phone.classList.remove('vacation-playing');
   if(!hasNextSchedule)playHomeMusic();

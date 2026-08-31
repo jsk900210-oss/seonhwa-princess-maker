@@ -11,5 +11,11 @@ assert.ok(!/schedule-actions\/(?!v2\/)/.test(app),'실행 코드에 올림머리
 assert.ok(!/schedule-actions\/(?!v2\/)/.test(manifests),'일정 매니페스트에 올림머리 구형 프레임 경로가 남아 있으면 안 됩니다.');
 assert.match(css,/#activityStage\.schedule-layered \.stage-character\.pixel-sprite\{width:96px!important;height:96px!important/,'선화 쯔꾸르 표시 상자는 일정마다 동일한 96px이어야 합니다.');
 assert.match(css,/#activityStage\.schedule-layered \.schedule-scene-layer\.layer-npc\{width:96px!important;height:96px!important/,'NPC 쯔꾸르 표시 상자도 선화와 동일한 96px이어야 합니다.');
+
+assert.ok(app.includes("dance:frameTriplet('dance-fan-held-v1')"),'춤은 소품을 직접 든 선화 프레임을 사용해야 합니다.');
+assert.ok(app.includes("await waitForVacationTap('바캉스를 마치고 돌아가기',true);"),'바캉스 종료는 클릭으로 진행해야 합니다.');
+assert.match(css,/body:has\(\.panel:not\(\[hidden\]\)\) \.phone>\.home-bottom-nav\{display:none!important\}/,'결산·패널이 열리면 하단 홈 버튼을 숨겨야 합니다.');
+assert.match(css,/#activityStage\.schedule-layered \.stage-character\.pixel-sprite>img\{transform:none!important/,'선화 쯔꾸르 이미지는 좌우 반전하면 안 됩니다.');
+assert.match(css,/#activityStage\.action-dance\.schedule-layered \.schedule-scene-layer\.layer-pattern.*display:none!important/,'춤 소품은 별도 레이어로 표시하면 안 됩니다.');
 console.log('PASS: all schedule heroes use approved low-side-braid v2 frames');
 console.log('PASS: schedule Seonhwa and NPCs share the same 96px tukkur box and floor baseline');

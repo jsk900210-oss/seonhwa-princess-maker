@@ -3130,3 +3130,12 @@ body .phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage:
 #activityStage.schedule-layered .stage-character.pixel-sprite{width:96px!important;height:96px!important;min-width:96px!important;min-height:96px!important}
 #activityStage.schedule-layered .stage-character.pixel-sprite>img{width:96px!important;height:96px!important;max-width:96px!important;max-height:96px!important;object-fit:contain!important;object-position:center bottom!important}
 #activityStage.schedule-layered .schedule-scene-layer.layer-npc{width:96px!important;height:96px!important;max-width:96px!important;max-height:96px!important;object-fit:contain!important;object-position:center bottom!important}
+
+
+/* v0.64.239 — scene controls, fixed braid direction, and integrated dance prop. */
+/* Home navigation never shares space with a panel, report, schedule, market, or event. */
+body:has(.panel:not([hidden])) .phone>.home-bottom-nav{display:none!important}
+#activityStage.schedule-layered .stage-character.pixel-sprite>img{transform:none!important;transform-origin:center bottom!important}
+#activityStage.action-dance.schedule-layered .schedule-scene-layer.layer-pattern,#activityStage.action-dance.schedule-layered .schedule-scene-layer.layer-effect{display:none!important}
+#activityStage.action-dance.schedule-layered .stage-character.pixel-sprite{animation:dance-fan-pose 2.8s ease-in-out infinite!important}
+@keyframes dance-fan-pose{0%,100%{transform:translateY(0) rotate(-1deg)}50%{transform:translateY(-3px) rotate(1deg)}}
