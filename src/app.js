@@ -248,7 +248,7 @@ const vacationIllustrations=[
 function unifiedAgeFolder(){return '09';}
 function scheduleFramePath(file){return `../assets/characters/seonhwa/schedule-actions/v2/${file}`;}
 function scheduleBasePath(file){return `../assets/characters/seonhwa/schedule-base/${file}`;}
-const scheduleAssetRevision='0.64.229-debug';
+const scheduleAssetRevision='0.64.230-debug';
 const scheduleQaParams=new URLSearchParams(location.search);
 const moonlightStandaloneQa=scheduleQaParams.get('qaHoliday')==='chuseok';
 const sehwaStandaloneQa=scheduleQaParams.get('qaHoliday')==='seollal';
@@ -2718,14 +2718,14 @@ function renderShopPanel(tab='food',marketMode=marketShoppingActive,outfitCatego
   const categoryName={general:'일반',premium:'고급',cash:'캐시'}[outfitCategory]||'일반';
   const listTitle=tab==='food'?`음식 메뉴 · ${foods.length}종`:tab==='outfit'?`${categoryName} 의상 · ${visibleOutfits.length}벌`:`단장 잡화 · ${sundryGoods.length}종`;
   const cards=tab==='food'?foodCards:tab==='outfit'?outfitCards:sundryCards;
-  panelBody.innerHTML=`<div class="shop-greeting"><img src="${keeper.image}" alt="${keeper.name}"><div><b>${keeper.name}</b><p>${keeper.greeting}</p></div></div><div class="shop-money"><span>보유 은전 <b>${game.money.toLocaleString()}냥</b></span><span>테스트 캐시 <b>${game.cash.toLocaleString()}원</b></span></div>${marketMode?'':`<div class="shop-tabs"><button data-shop-tab="food" class="${tab==='food'?'on':''}">주막</button><button data-shop-tab="outfit" class="${tab==='outfit'?'on':''}">한복점</button><button data-shop-tab="sundry" class="${tab==='sundry'?'on':''}">잡화점</button></div>`}${outfitCategoryTabs}<h3 class="shop-list-title">${listTitle}</h3><div class="shop-grid">${cards}</div>${tab==='sundry'?`<h3 class="shop-list-title">내 물건 판매</h3><div class="shop-grid">${sellCards||'<p class="empty-shop">판매할 수 있는 물건이 없습니다.</p>'}</div>`:''}<button id="shopBack">${marketMode?'집으로 돌아가기':'일정으로 돌아가기'}</button>`;
+  panelBody.innerHTML=`<div class="shop-greeting"><img src="${keeper.image}" alt="${keeper.name}"><div><b>${keeper.name}</b><p>${keeper.greeting}</p></div></div><div class="shop-money"><span>보유 은전 <b>${game.money.toLocaleString()}냥</b></span><span>테스트 캐시 <b>${game.cash.toLocaleString()}원</b></span></div>${marketMode?'':`<div class="shop-tabs"><button data-shop-tab="food" class="${tab==='food'?'on':''}">주막</button><button data-shop-tab="outfit" class="${tab==='outfit'?'on':''}">한복점</button><button data-shop-tab="sundry" class="${tab==='sundry'?'on':''}">잡화점</button></div>`}${outfitCategoryTabs}<h3 class="shop-list-title">${listTitle}</h3><div class="shop-grid">${cards}</div>${tab==='sundry'?`<h3 class="shop-list-title">내 물건 판매</h3><div class="shop-grid">${sellCards||'<p class="empty-shop">판매할 수 있는 물건이 없습니다.</p>'}</div>`:''}<button id="shopBack" aria-label="저잣거리 상점 선택 화면으로 돌아가기">${marketMode?'← 저잣거리로 돌아가기':'일정으로 돌아가기'}</button>`;
   if(!marketMode)panelBody.querySelectorAll('[data-shop-tab]').forEach(button=>button.addEventListener('click',()=>renderShopPanel(button.dataset.shopTab,marketMode)));
   panelBody.querySelectorAll('[data-outfit-category]').forEach(button=>button.addEventListener('click',()=>renderShopPanel('outfit',marketMode,button.dataset.outfitCategory)));
   panelBody.querySelectorAll('[data-food]').forEach(button=>button.addEventListener('click',()=>buyFood(button.dataset.food)));
   panelBody.querySelectorAll('[data-outfit-preview]').forEach(button=>button.addEventListener('click',()=>showOutfitPreview(button.dataset.outfitPreview)));
   panelBody.querySelectorAll('[data-sundry-buy]').forEach(button=>button.addEventListener('click',()=>buySundryGood(button.dataset.sundryBuy)));
   panelBody.querySelectorAll('[data-sundry-sell]').forEach(button=>button.addEventListener('click',()=>sellInventoryItem(button.dataset.sundrySell,true)));
-  document.querySelector('#shopBack').addEventListener('click',()=>{if(marketMode)finishMarket();else renderSchedulePanel();});
+  document.querySelector('#shopBack').addEventListener('click',()=>{if(marketMode)returnToMarketSelection();else renderSchedulePanel();});
 }
 function formatChanges(change){return orderedChangeEntries(change).map(([key,value])=>`${statLabels[key]||key} ${value>0?'+':''}${value}`).join(' · ');}
 function showOutfitPreview(id){

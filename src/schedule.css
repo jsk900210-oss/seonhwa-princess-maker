@@ -3086,3 +3086,10 @@ body .phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage:
 .sehwa-opening-dialogue.speaker-seonhwa.status-sad .sehwa-expression{transform:scale(1.25) translateY(5px)!important}
 .sehwa-opening-dialogue.speaker-seonhwa.status-angry .sehwa-expression,.sehwa-opening-dialogue.speaker-seonhwa.status-rebellious .sehwa-expression{transform:scale(1.3) translateX(-5px)!important}
 .sehwa-opening-dialogue.speaker-seonhwa.status-shocked .sehwa-expression{transform:scale(1.28) translateY(-3px)!important}
+
+
+/* v0.64.231 — market replaces the home bottom menu with one compact exit. */
+.phone.market-playing>.home-bottom-nav>button:not(#marketFinish){display:none!important}
+.phone.market-playing>.home-bottom-nav{left:auto!important;right:4%!important;bottom:2%!important;width:102px!important;display:block!important;z-index:70!important}
+.phone.market-playing>.home-bottom-nav>#marketFinish{display:block!important;width:102px!important;min-height:30px!important;padding:6px 7px!important;border-radius:999px!important;font-size:9px!important;line-height:1.1!important}
+.phone.market-playing.market-shop-open>.home-bottom-nav{display:none!important}
