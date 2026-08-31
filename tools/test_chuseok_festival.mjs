@@ -13,6 +13,8 @@ const beats=app.match(/const moonlightStoryBeats=\[([\s\S]*?)\n\];/)?.[1]||'';
 assert.equal((beats.match(/'[^']+'/g)||[]).length,8,'사용자가 확정한 8단계');
 for(const phrase of ['신수와 선화','무대 중앙','팔과 손목, 손끝','왕과 심사관','여덟 참가자','상을 수여','반실사','능력치와 보상'])assert.ok(beats.includes(phrase),phrase);
 assert.match(app,/moonlightMotionNames=\['opening-dialogue','stage-enter','dance','royal-judging','ranking','award','winner-acceptance','guardian-congratulation'\]/,'8단계 모션 순서');
+assert.match(app,/function moonlightPreparationDialogue\(session\)/,'시작 장면의 신수·선화 대화');
+assert.match(app,/moonlightPreparationDialogue\(session\):entrance\?moonlightOpeningDialogue\(session,1\)/,'첫 장면에서 응원과 답변을 함께 렌더링');
 assert.match(app,/consistent-dance-v9\/seonhwa-dance-slow-v1\.png/,'잘리지 않은 동일 선화 전신 춤 자산만 사용');
 assert.match(css,/moonlight-complete-dance 5\.6s/,'느린 손끝 춤');
 assert.match(css,/pageant-hero-frames\.is-dance\{[^}]*left:50%!important/,'중앙 춤');
