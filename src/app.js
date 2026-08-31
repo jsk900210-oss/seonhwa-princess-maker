@@ -1,4 +1,7 @@
 const bg = document.querySelector('.background');
+const activityBackdrop=document.querySelector('#activityBackdrop');
+const stageMapElement=document.querySelector('#stageMap');
+if(activityBackdrop&&stageMapElement){const syncActivityBackdrop=()=>{activityBackdrop.src=stageMapElement.src;activityBackdrop.alt=stageMapElement.alt||'현재 일정의 전체 배경';};new MutationObserver(syncActivityBackdrop).observe(stageMapElement,{attributes:true,attributeFilter:['src','alt']});}
 const stableAppHeight=window.innerHeight;document.documentElement.style.setProperty('--stable-app-height',`${stableAppHeight}px`);
 window.addEventListener('orientationchange',()=>setTimeout(()=>document.documentElement.style.setProperty('--stable-app-height',`${window.innerHeight}px`),250));
 const character = document.querySelector('#character');
@@ -243,7 +246,7 @@ const vacationIllustrations=[
 function unifiedAgeFolder(){return '09';}
 function scheduleFramePath(file){return `../assets/characters/seonhwa/schedule-actions/${file}`;}
 function scheduleBasePath(file){return `../assets/characters/seonhwa/schedule-base/${file}`;}
-const scheduleAssetRevision='0.64.211-debug';
+const scheduleAssetRevision='0.64.213-debug';
 const scheduleQaParams=new URLSearchParams(location.search);
 const moonlightStandaloneQa=scheduleQaParams.get('qaHoliday')==='chuseok';
 const sehwaStandaloneQa=scheduleQaParams.get('qaHoliday')==='seollal';
@@ -1008,20 +1011,20 @@ async function playScheduleLayerScene(actionId,seonImage,rank,outcome,dayIndex){
           stage.style.setProperty('--layer-prop-left',`${chickenLeft}%`,'important');
         }
         if(actionId==='childcare'&&!childcarePlay){
-          const travelStep=loop*3+frame,travelsRight=childcareTravelsRight,totalTravelSteps=playbackLoopCount*3-1,progress=Math.min(1,travelStep/totalTravelSteps);
+          const travelStep=loop*3+frame,travelsRight=childcareTravelsRight,totalTravelSteps=playbackLoopCount*3-1,fallStart=7,fallEnd=15,fallPhase=travelStep-fallStart,effectiveTravelStep=failed&&travelStep>fallStart?travelStep<=fallEnd?fallStart:travelStep-(fallEnd-fallStart):travelStep,progress=Math.min(1,effectiveTravelStep/totalTravelSteps);
           activeHeroFrame=childcareChaseFrames[childcareHeroRunCycle[travelStep%childcareHeroRunCycle.length]];
           activeNpcFrame=childcareRunningFrames[childcareNpcRunCycle[travelStep%childcareNpcRunCycle.length]];
           const childStart=childcareChildStart;
           const childLeft=childStart+(travelsRight?1:-1)*progress*childcareTravelDistance;
           const heroLeft=travelsRight?childLeft-childcareMinimumGap:childLeft+childcareMinimumGap;
-          const fallen=failed&&travelStep>=7&&travelStep<=9;
+          const fallen=failed&&travelStep>=fallStart&&travelStep<=fallEnd,fallFrame=fallPhase<3?fallPhase:fallPhase<7?2:fallPhase===7?1:0;
           const childLooksBack=fallen&&patternKey==='fail-b';
           const forcedFall=scheduleQaParams.get('qaFall');
           const fallsForward=patternKey==='fail-b'&&(forcedFall==='forward'||(forcedFall!=='seated'&&dayIndex%4===3));
-          if(childLooksBack){activeHeroFrame=(fallsForward?childcareForwardFallFrames:childcareStumbleFrames)[frame];activeNpcFrame=childcareIdleFrames[frame];}
+          if(childLooksBack){activeHeroFrame=(fallsForward?childcareForwardFallFrames:childcareStumbleFrames)[fallFrame];activeNpcFrame=childcareIdleFrames[Math.min(2,fallFrame)];}
           if(fallen&&patternKey==='fail-a'){
             activeHeroFrame=childcareChaseFrames[0];
-            activeNpcFrame=childcareFallFrames[frame];
+            activeNpcFrame=childcareFallFrames[fallFrame];
           }
           stage.style.setProperty('--layer-npc-left',`${childLeft}%`,'important');
           stage.style.setProperty('--layer-hero-left',`${heroLeft}%`,'important');
@@ -1729,7 +1732,8 @@ function waitForFestivalTapAdvance(minimumStay){
   const overlay=document.querySelector('#moonlightPageant');if(!overlay)return schedulePlaybackDelay(900);
   return new Promise(resolve=>window.setTimeout(()=>{
     overlay.classList.add('tap-ready');
-    const advance=event=>{if(event.type==='keydown'&&!['Enter',' '].includes(event.key))return;overlay.removeEventListener('click',advance);overlay.removeEventListener('keydown',advance);overlay.classList.remove('tap-ready');resolve();};
+    const next=document.createElement('button');next.type='button';next.className='festival-tap-next';next.textContent='다음 장면';next.setAttribute('aria-label','다음 장면으로 이동');overlay.append(next);
+    const advance=event=>{if(event.type==='keydown'&&!['Enter',' '].includes(event.key))return;overlay.removeEventListener('click',advance);overlay.removeEventListener('keydown',advance);next.remove();overlay.classList.remove('tap-ready');resolve();};
     overlay.addEventListener('click',advance);overlay.addEventListener('keydown',advance);
   },minimumStay));
 }
@@ -1834,8 +1838,8 @@ function renderSehwaContest(session,beatIndex){
   const overlay=document.querySelector('#moonlightPageant');if(!overlay)return;
   const beat=Math.min(sehwaStoryBeats.length-1,Math.max(0,beatIndex)),opening=beat<=1,title=beat===2,intro=beat===3,preparing=beat===4,drawing=beat>=5&&beat<=10,vote=beat===11,result=beat===12,guardianResult=beat===13;
   const stageMap=document.querySelector('#stageMap'),sceneBackground=`../assets/events/holidays/sehwa-contest/background/royal-contest-hall-empty-v1.png?v=${scheduleAssetRevision}`;if(stageMap)stageMap.src=sceneBackground;if(bg)bg.src=sceneBackground;
-  const frameUrls=[1,2,3].map(frame=>sehwaFrame('drawing',frame)),brushSheet=`../assets/events/holidays/sehwa-contest/seonhwa/drawing/age-13/painting-brush-10fps-sheet-v1.png?v=${scheduleAssetRevision}`;
-  const hero=drawing?(beat===5?`<span class="sehwa-hero is-brush-sheet" style="--sehwa-brush-sheet:url('${brushSheet}')" role="img" aria-label="정면의 고정된 책상에서 붓끝을 움직여 5초 동안 세화를 그리는 선화"></span>`:`<span class="sehwa-hero is-drawing" style="--sehwa-f1:url('${frameUrls[0]}');--sehwa-f2:url('${frameUrls[1]}');--sehwa-f3:url('${frameUrls[2]}')" role="img" aria-label="${sehwaStoryBeats[beat]}"></span>`):'';
+  const frameUrls=[1,2,3].map(frame=>sehwaFrame('drawing',frame)),brushBase='../assets/events/holidays/sehwa-contest/seonhwa/drawing/age-13/painting-brush-10fps-v2',brushFrames=Array.from({length:10},(_,index)=>`${brushBase}/frame-${String(index+1).padStart(2,'0')}.png?v=${scheduleAssetRevision}`);
+  const hero=drawing?(beat===5?`<span class="sehwa-hero is-brush-frames" style="--sehwa-brush-final:url('${brushFrames[9]}')" role="img" aria-label="외땋기와 댕기를 한 선화가 정면의 고정된 책상에서 손과 붓끝만 움직여 5초 동안 세화를 그리는 모습">${brushFrames.map((src,index)=>`<img src="${src}" alt="" style="--sehwa-brush-frame:${index}">`).join('')}</span>`:`<span class="sehwa-hero is-drawing" style="--sehwa-f1:url('${frameUrls[0]}');--sehwa-f2:url('${frameUrls[1]}');--sehwa-f3:url('${frameUrls[2]}')" role="img" aria-label="${sehwaStoryBeats[beat]}"></span>`):'';
   const titleCard=title?festivalTitleCard('복을 그리는 왕실 세화 경연','새해의 복을 한 폭의 세화에 담는 설날 행사'):'';
   const guardian=guardianResult?festivalGuardianCut(session):'';
   const board=vote?festivalScoreboard(session,'8인 세화 심사'):result?`<section class="festival-result-card"><small>최종 결과</small><strong>${session.overallRank}</strong><p>${session.player.score}점 · ${session.reaction}</p></section>`:'';

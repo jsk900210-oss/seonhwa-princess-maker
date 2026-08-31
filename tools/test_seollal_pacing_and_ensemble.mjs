@@ -30,8 +30,9 @@ assert.match(app,/서로 다른 전통 땋은 머리를 한 참가자 8명/,'준
 assert.match(app,/eight-entrant-v1/,'8인 그림 그리기 전용 장면을 사용해야 합니다.');
 for(const frame of [1,2,3])assert.ok(existsSync(new URL(`../assets/events/holidays/sehwa-contest/preparation-scene/eight-entrant-v1/drawing-${frame}-v2.png`,import.meta.url)),`서로 다른 머리 모양을 유지한 8인 그림 ${frame} 프레임이 필요합니다.`);
 assert.match(css,/@keyframes sehwa-eight-local-painting/,'8명은 고정 배경 위의 국소 영역에서만 붓질과 고민 자세를 번갈아 보여야 합니다.');
-assert.ok(existsSync(new URL('../assets/events/holidays/sehwa-contest/seonhwa/drawing/age-13/painting-brush-10fps-sheet-v1.png',import.meta.url)),'선화의 10fps 붓질 시트가 필요합니다.');
-assert.match(css,/animation:sehwa-brush-10fps 1s steps\(1,end\) 5 both/,'선화의 붓질은 10fps 한 주기를 5초 동안 반복해야 합니다.');
+for(let frame=1;frame<=10;frame+=1)assert.ok(existsSync(new URL(`../assets/events/holidays/sehwa-contest/seonhwa/drawing/age-13/painting-brush-10fps-v2/frame-${String(frame).padStart(2,'0')}.png`,import.meta.url)),`외땋기 선화의 투명 붓질 ${frame} 프레임이 필요합니다.`);
+assert.match(css,/animation:sehwa-brush-frame-10fps 1s steps\(1,end\) 5/,'선화의 투명 10프레임 붓질은 10fps로 총 5초 재생해야 합니다.');
+assert.match(app,/외땋기와 댕기를 한 선화/,'미혼 선화는 성인 올림머리 대신 땋은 머리와 댕기를 유지해야 합니다.');
 assert.match(app,/\{id:'eunseo',name:'은서'/,'플레이어를 포함한 8인 참가 명단이 필요합니다.');
 assert.match(app,/8인 세화 심사/,'설날 심사표도 8인 기준이어야 합니다.');
 for(const frame of [1,2,3,4,5,6])assert.ok(existsSync(new URL(`../assets/events/holidays/sehwa-contest/preparation-scene/age-13/preparation-${frame}.png`,import.meta.url)),`13세 화구 준비 ${frame} 프레임이 필요합니다.`);

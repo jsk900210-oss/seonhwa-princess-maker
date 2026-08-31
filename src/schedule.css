@@ -2293,6 +2293,7 @@
 .moonlight-pageant .pageant-next{position:absolute;z-index:70;right:5%;bottom:8%;min-width:72px;min-height:34px;padding:7px 13px;border:1px solid #e2c27f;border-radius:999px;background:#fff6dfeb;color:#54351f;font-size:11px;font-weight:900;pointer-events:auto;box-shadow:0 4px 12px #0008;animation:pageant-next-pulse 1.2s ease-in-out infinite}
 .moonlight-pageant .pageant-next:disabled{opacity:.38;animation:none;pointer-events:none}
 .moonlight-pageant.festival-pm3.tap-ready{cursor:pointer;pointer-events:auto}
+.festival-tap-next{position:absolute;z-index:90;right:4%;bottom:3%;display:grid!important;place-items:center;width:108px;min-height:40px;padding:8px 12px;border:2px solid #8d6236;border-radius:999px;background:#fff4d8;color:#56351f;font-size:12px;font-weight:900;pointer-events:auto;box-shadow:0 5px 14px #0009;animation:sehwa-next-dock-pulse 1.2s ease-in-out infinite}
 .moonlight-pageant.festival-pm3.beat-4 .pageant-intro-lineup{display:grid!important;left:4%;right:4%;bottom:12%;grid-template-columns:repeat(4,1fr);grid-template-rows:88px 112px;column-gap:3px;row-gap:5px;align-items:end}
 .moonlight-pageant.festival-pm3.beat-4 .pageant-intro-lineup figure:nth-child(-n+4){align-self:end;z-index:1;transform:translateY(-2px)}
 .moonlight-pageant.festival-pm3.beat-4 .pageant-intro-lineup figure:nth-child(n+5){align-self:end;z-index:2}
@@ -2922,7 +2923,7 @@ body .phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage:
 .sehwa-ten-entrant-sequence img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;opacity:0;animation:sehwa-ten-painting 2.4s steps(1,end) infinite;animation-delay:calc(var(--sehwa-group-frame) * .8s)}
 @keyframes sehwa-ten-painting{0%,33.32%{opacity:1}33.33%,100%{opacity:0}}
 .sehwa-eight-entrant-scene{position:absolute;z-index:38;inset:0;overflow:hidden;pointer-events:none}
-.sehwa-eight-entrant-scene img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center}
+.sehwa-eight-entrant-scene img{position:absolute;inset:3% 4%;width:92%;height:94%;object-fit:contain;object-position:center}
 .sehwa-eight-entrant-scene .sehwa-ensemble-base{z-index:0;opacity:1}
 .sehwa-eight-entrant-scene .sehwa-ensemble-motion-patch{
   z-index:1;
@@ -2953,28 +2954,14 @@ body .phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage:
 }
 
 /* 설날 대화 제어는 대화창 오른쪽 위에 둔다. */
-.phone.playing:has(.activity-stage.action-holiday-seollal:not([hidden])) .activity-playback{top:11.5%!important;right:4%!important;z-index:64!important}
-.phone.playing:has(.activity-stage.action-holiday-seollal:not([hidden]))>.settings-gear{top:11.5%!important;right:calc(4% + 64px)!important;z-index:64!important}
+.phone.playing:has(.activity-stage.action-holiday-seollal:not([hidden])) .activity-playback{top:7%!important;right:4%!important;z-index:64!important}
+.phone.playing:has(.activity-stage.action-holiday-seollal:not([hidden]))>.settings-gear{top:7%!important;right:calc(4% + 64px)!important;z-index:64!important}
+.phone.playing:has(.activity-stage.action-holiday-seollal:not([hidden])) .sehwa-opening-dialogue>div p{padding-right:104px!important}
 
 /* 5×2, 10프레임 시트: 책상은 고정하고 손목·붓끝·시선만 10fps로 움직인다. */
-.sehwa-contest .sehwa-hero.is-brush-sheet{
-  background-image:var(--sehwa-brush-sheet)!important;
-  background-size:500% 200%!important;
-  background-repeat:no-repeat!important;
-  animation:sehwa-brush-10fps 1s steps(1,end) 5 both!important;
-}
-@keyframes sehwa-brush-10fps{
-  0%,9.99%{background-position:0 0}
-  10%,19.99%{background-position:25% 0}
-  20%,29.99%{background-position:50% 0}
-  30%,39.99%{background-position:75% 0}
-  40%,49.99%{background-position:100% 0}
-  50%,59.99%{background-position:0 100%}
-  60%,69.99%{background-position:25% 100%}
-  70%,79.99%{background-position:50% 100%}
-  80%,89.99%{background-position:75% 100%}
-  90%,100%{background-position:100% 100%}
-}
+.sehwa-contest .sehwa-hero.is-brush-frames{width:290px!important;height:290px!important;background:var(--sehwa-brush-final) center bottom/contain no-repeat!important;animation:none!important}
+.sehwa-contest .sehwa-hero.is-brush-frames img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;object-position:center bottom;opacity:0;animation:sehwa-brush-frame-10fps 1s steps(1,end) 5;animation-delay:calc(var(--sehwa-brush-frame) * .1s)}
+@keyframes sehwa-brush-frame-10fps{0%,9.99%{opacity:1}10%,100%{opacity:0}}
 
 /* 일정 모션 규칙: PNG 전체 흔들기/확대축소 금지, 자세 프레임과 실제 좌표 이동만 허용. */
 .phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage:not(.market-choice-stage) .stage-character.pixel-sprite{

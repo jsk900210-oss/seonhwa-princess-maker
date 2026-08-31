@@ -3,7 +3,9 @@
   "policy": {
     "approvedMayShip": true,
     "retiredMustNotBeReferenced": true,
-    "generatedAssetsRequirePurposeAndReplacementHistory": true
+    "generatedAssetsRequirePurposeAndReplacementHistory": true,
+    "unmarriedSeonhwaHair": "single-or-double-braid-with-daenggi",
+    "forbiddenBeforeMarriage": ["high-chignon", "jjokmeori", "gache", "adult-binyeo"]
   },
   "assets": [
     {
@@ -25,10 +27,17 @@
       "purpose": "Eight contestants maintaining identity and hairstyle continuity, thinking pose"
     },
     {
-      "id": "seollal-seonhwa-brush-sheet",
-      "path": "assets/events/holidays/sehwa-contest/seonhwa/drawing/age-13/painting-brush-10fps-sheet-v1.png",
+      "id": "seollal-seonhwa-brush-frames-v2",
+      "path": "assets/events/holidays/sehwa-contest/seonhwa/drawing/age-13/painting-brush-10fps-v2",
       "status": "approved",
-      "purpose": "Five-second 10fps brush-tip animation with static table"
+      "purpose": "Ten transparent braided-hair frames shown at 10fps for five seconds with static table"
+    },
+    {
+      "id": "seollal-seonhwa-brush-sheet-v1",
+      "path": "assets/events/holidays/sehwa-contest/seonhwa/drawing/age-13/painting-brush-10fps-sheet-v1.png",
+      "status": "retired",
+      "replacedBy": "seollal-seonhwa-brush-frames-v2",
+      "reason": "Baked checkerboard and adult high chignon"
     },
     {
       "id": "seollal-eight-painters-old-composite",

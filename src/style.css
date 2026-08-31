@@ -111,6 +111,8 @@ body{min-height:100dvh}.phone{width:min(100vw,calc(100dvh * 9 / 16),430px);max-h
 .phone:has(.relation-encounter-scene:not([hidden]))>.home-outside,
 .phone:has(.relation-encounter-scene:not([hidden]))>.home-weather,
 .phone:has(.relation-encounter-scene:not([hidden]))>.home-room-foreground{display:none!important}
+.activity-backdrop{position:absolute;z-index:0;inset:0;display:none;width:100%;height:100%;object-fit:cover;object-position:center;filter:saturate(.9) brightness(.78);pointer-events:none}
+.phone.playing:not(.market-playing):not(.vacation-playing)>.activity-backdrop{display:block}
 @media(max-width:350px){.home-sehwa-gallery{left:73%!important;width:13.5%!important}}
 
 /* 기존 오른쪽 벽의 빈 족자 안쪽에 우승작을 자연스럽게 끼운다. */
