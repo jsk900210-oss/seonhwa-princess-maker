@@ -19,7 +19,8 @@ assert.doesNotMatch(app,/moonlightPreparationDialogue/,'신수와 선화를 한 
 assert.match(app,/age-\$\{dialogueAge\}-\$\{canonical\}-lowbraid-dialogue-v1\.png/,'연령별 대화 선화는 상태별 낮은 한쪽 땋은머리 초상 사용');
 for(const expression of ['joyful','nervous','sad','determined','startled'])assert.ok(fs.existsSync(new URL(`../assets/characters/seonhwa/dialogue/age-09-${expression}-lowbraid-dialogue-v1.png`,import.meta.url)),`9세 ${expression} 낮은 땋은머리 대화 초상이 필요합니다.`);
 assert.ok(fs.existsSync(new URL('../assets/characters/seonhwa/dialogue/age-13-nervous-lowbraid-dialogue-v1.png',import.meta.url)),'현재 13세 한가위 대답은 상반신 낮은 땋은머리 초상을 사용해야 합니다.');
-assert.match(app,/'13':\['nervous'\]/,'13세의 긴장·부끄러움 대답은 전신 폴백으로 빠지면 안 됩니다.');
+assert.ok(fs.existsSync(new URL('../assets/characters/seonhwa/dialogue/age-13-determined-lowbraid-dialogue-v1.png',import.meta.url)),'현재 13세 분노 상태 대답은 상반신 낮은 땋은머리 초상을 사용해야 합니다.');
+assert.match(app,/'13':\['nervous','determined'\]/,'13세의 긴장·부끄러움·분노 대답은 전신 폴백으로 빠지면 안 됩니다.');
 for(const file of fs.readdirSync(path.join(root,'assets/characters/seonhwa/dialogue')).filter(name=>name.endsWith('.png'))){const {width,height}=pngSize(path.join(root,'assets/characters/seonhwa/dialogue',file));assert.ok(height<=width*1.12,`${file}: 대화용 상반신 원화가 전신 비율로 남아 있으면 안 됩니다.`);}
 assert.doesNotMatch(app,/dialogue-busts\/seonhwa/,'올림머리 대화 표정 세트를 더 이상 참조하지 않음');
 assert.match(app,/consistent-dance-v9\/seonhwa-dance-slow-v1\.png/,'잘리지 않은 동일 선화 전신 춤 자산만 사용');
