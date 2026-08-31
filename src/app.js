@@ -243,7 +243,7 @@ const vacationIllustrations=[
 function unifiedAgeFolder(){return '09';}
 function scheduleFramePath(file){return `../assets/characters/seonhwa/schedule-actions/${file}`;}
 function scheduleBasePath(file){return `../assets/characters/seonhwa/schedule-base/${file}`;}
-const scheduleAssetRevision='0.64.206-debug';
+const scheduleAssetRevision='0.64.207-debug';
 const scheduleQaParams=new URLSearchParams(location.search);
 const moonlightStandaloneQa=scheduleQaParams.get('qaHoliday')==='chuseok';
 const sehwaStandaloneQa=scheduleQaParams.get('qaHoliday')==='seollal';
@@ -1829,7 +1829,7 @@ function sehwaOpeningDialogue(session,beat){
 }
 function sehwaPreparationEnsemble(session){
   const base='../assets/events/holidays/sehwa-contest/preparation-scene/ten-entrant-v1';
-  return `<section class="sehwa-ten-entrant-sequence" aria-label="좌우 다섯 자리씩 열 개의 책상에서 그림을 그리는 쯔꾸르 참가자 10명">${[1,2,3].map((frame,index)=>`<img src="${base}/drawing-${frame}.png?v=${scheduleAssetRevision}" alt="${index?'':'왕실 세화 경연장에서 그림을 그리는 참가자 10명'}" style="--sehwa-group-frame:${index}">`).join('')}</section>`;
+  return `<section class="sehwa-ten-entrant-sequence" aria-label="좌우 다섯 자리씩 열 개의 책상에서 그림을 그리는 쯔꾸르 참가자 10명">${[1,2,3].flatMap((frame,index)=>['left','right'].map(side=>`<img class="side-${side}" src="${base}/drawing-${frame}.png?v=${scheduleAssetRevision}" alt="${index||side==='right'?'':'왕실 세화 경연장에서 그림을 그리는 참가자 10명'}" style="--sehwa-group-frame:${index}">`)).join('')}</section>`;
 }
 function renderSehwaContest(session,beatIndex){
   const overlay=document.querySelector('#moonlightPageant');if(!overlay)return;

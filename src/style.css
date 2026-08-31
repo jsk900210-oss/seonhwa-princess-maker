@@ -117,11 +117,11 @@ body{min-height:100dvh}.phone{width:min(100vw,calc(100dvh * 9 / 16),430px);max-h
 /* v0.64.202 — 홈 바로가기는 하단 2×3 메뉴, 저장은 설정 안에서만 연다. */
 .phone:not(.playing):not(.market-playing)>.home-bottom-nav{bottom:1.5%!important;display:grid!important;grid-template-columns:repeat(3,1fr)!important;gap:5px!important}
 .phone:not(.playing):not(.market-playing)>.home-bottom-nav button{min-height:34px!important;padding:7px 2px!important;font-size:11px!important}
-.phone:not(.playing):not(.market-playing)>.home-bottom-nav button:has(.home-nav-icon){display:grid!important;grid-template-columns:21px auto!important;place-content:center!important;align-items:center!important;gap:5px!important}
-.home-bottom-nav .home-nav-icon{display:grid;width:19px;height:19px;place-items:center;object-fit:contain;color:#704522;font-family:serif;font-size:15px;font-weight:900;line-height:1;filter:none}
+.phone:not(.playing):not(.market-playing)>.home-bottom-nav button:has(.home-nav-icon){display:grid!important;grid-template-columns:27px auto!important;place-content:center!important;align-items:center!important;gap:5px!important}
+.home-bottom-nav .home-nav-icon{display:grid;width:25px;height:25px;place-items:center;object-fit:contain;color:#704522;font-family:serif;font-size:20px;font-weight:900;line-height:1;filter:none}
 .home-bottom-nav img.home-nav-icon{padding:1px;filter:drop-shadow(0 1px 1px #5a371f55)}
 .home-bottom-nav button>b{font:inherit;white-space:nowrap}
 .phone:not(.playing):not(.market-playing)>.dialogue{bottom:13.5%!important}
-.phone:not(.playing):not(.market-playing)>.character-slot{bottom:25%!important}
+.phone:not(.playing):not(.market-playing)>.character-slot{bottom:25%!important;overflow:visible!important}
 .settings-record-button{width:100%;min-height:44px;background:#6d4c2d;color:#fff8e8}
 .phone:not(.market-playing)>.home-bottom-nav>[data-panel="collection"],.phone:not(.market-playing)>.home-bottom-nav>#marketFinish{display:none!important}
