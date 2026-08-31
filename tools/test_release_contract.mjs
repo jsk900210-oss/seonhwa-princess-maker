@@ -14,5 +14,6 @@ assert.ok(app.includes('stageMap.src=backgrounds.marketSelection'),'저잣거리
 assert.ok(app.includes("if(marketReturnToHome){stage.hidden=true;stage.className='activity-stage';stageMap.src=backgrounds.home"),'집으로 돌아가면 저잣거리 무대를 반드시 닫고 홈 배경을 복원해야 합니다.');
 assert.ok(existsSync(path.join(root,'assets/backgrounds/market/market-three-shops-v1.png')),'생성한 저잣거리 배경 파일이 있어야 합니다.');
 assert.match(css,/the generated three-store market backdrop is the visible selection scene/,'저잣거리 생성 배경의 최종 표시 규칙이 필요합니다.');
+assert.match(css,/market-choice-stage\{inset:0!important;padding:0!important;border:0!important/,'저잣거리 생성 배경은 카드 여백 없이 전체 무대를 채워야 합니다.');
 assert.match(css,/\.phone\.market-playing>\.home-bottom-nav>button:not\(#marketFinish\)\{display:none!important\}/,'저잣거리에서는 기존 하단 메뉴를 숨겨야 합니다.');
 console.log('PASS: release revision, market background asset, entry wiring, and deployed-menu contract');

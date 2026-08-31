@@ -3106,3 +3106,9 @@ body .phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage:
 .phone.market-playing .market-choice-stage .market-shop{background:transparent!important;border:0!important;border-radius:0!important;box-shadow:none!important;outline:0!important}
 .phone.market-playing .market-choice-stage .market-shop::before,.phone.market-playing .market-choice-stage .market-shop::after{display:none!important;background:none!important}
 .phone.market-playing .market-choice-stage .market-shop>img{z-index:3!important}
+
+
+/* v0.64.235 — market background is a full-screen scene, not a framed card. */
+.phone.market-playing .activity-stage.market-choice-stage{inset:0!important;padding:0!important;border:0!important;border-radius:0!important;background:none!important;box-shadow:none!important}
+.phone.market-playing .activity-stage.market-choice-stage::before,.phone.market-playing .activity-stage.market-choice-stage::after,.phone.market-playing .activity-stage.market-choice-stage .stage-roof{display:none!important}
+.phone.market-playing .activity-stage.market-choice-stage>.stage-inner{height:100%!important;border:0!important;box-shadow:none!important}
