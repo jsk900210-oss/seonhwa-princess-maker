@@ -248,7 +248,7 @@ const vacationIllustrations=[
 function unifiedAgeFolder(){return '09';}
 function scheduleFramePath(file){return `../assets/characters/seonhwa/schedule-actions/v2/${file}`;}
 function scheduleBasePath(file){return `../assets/characters/seonhwa/schedule-base/${file}`;}
-const scheduleAssetRevision='0.64.236-debug';
+const scheduleAssetRevision='0.64.237-debug';
 const scheduleQaParams=new URLSearchParams(location.search);
 const moonlightStandaloneQa=scheduleQaParams.get('qaHoliday')==='chuseok';
 const sehwaStandaloneQa=scheduleQaParams.get('qaHoliday')==='seollal';
@@ -628,7 +628,7 @@ function normalizeActivityFrame(src){
     const sourceHeight=Math.floor(source.naturalHeight/totalRows);
     const sourceX=sourceFrame===null?0:sourceFrame*sourceWidth,sourceY=sourceRow*sourceHeight;
     const scan=document.createElement('canvas');scan.width=sourceWidth;scan.height=sourceHeight;const scanContext=scan.getContext('2d',{willReadFrequently:true});scanContext.drawImage(source,sourceX,sourceY,sourceWidth,sourceHeight,0,0,sourceWidth,sourceHeight);
-    const shouldClean=sourceFrame!==null||src.includes('/schedule-actions/');
+    const shouldClean=sourceFrame!==null||src.includes('/schedule-actions/v2/');
     if(shouldClean){
       const pixels=scanContext.getImageData(0,0,scan.width,scan.height),data=pixels.data;
       // 배경색과 비슷한 얼굴·저고리 픽셀까지 전역 삭제하면 눈과 머리 주변이
@@ -811,7 +811,7 @@ async function animateStudyDeskCollapse(image,level='mistake'){
 async function animateStudySweatWipe(activity,image){
   if(!image)return;
   const study=activity==='arithmetic'?'arithmetic':'calligraphy';
-  const frames=[1,2,3].map(frame=>versionedScheduleAsset(`../assets/characters/seonhwa/schedule-actions/failures/sweat-wipe-v1/seonhwa-${study}-sweat-wipe-${frame}.png`));
+  const frames=[1,2,3].map(frame=>versionedScheduleAsset(scheduleFramePath(`${study}-pixel-v2-${frame}.png`)));
   image.style.transform='';
   image.style.transformOrigin='';
   for(const frame of frames){image.src=frame;await schedulePlaybackDelay(260);}

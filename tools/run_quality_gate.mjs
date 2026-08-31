@@ -8,6 +8,7 @@ const tests=[
   'test_asset_governance.mjs',
   'test_scene_layer_contracts.mjs',
   'test_release_contract.mjs',
+  'test_tukkur_actor_contract.mjs',
   'test_seollal_pacing_and_ensemble.mjs',
   'test_locked_schedule_layers.mjs',
   'test_activity_face_consistency.mjs',
