@@ -248,7 +248,7 @@ const vacationIllustrations=[
 function unifiedAgeFolder(){return '09';}
 function scheduleFramePath(file){return `../assets/characters/seonhwa/schedule-actions/v2/${file}`;}
 function scheduleBasePath(file){return `../assets/characters/seonhwa/schedule-base/${file}`;}
-const scheduleAssetRevision='0.64.251-debug';
+const scheduleAssetRevision='0.64.252-debug';
 const scheduleQaParams=new URLSearchParams(location.search);
 const moonlightStandaloneQa=scheduleQaParams.get('qaHoliday')==='chuseok';
 const sehwaStandaloneQa=scheduleQaParams.get('qaHoliday')==='seollal';
@@ -1807,9 +1807,15 @@ function sehwaOpeningAnswer(session){
 function sehwaDialogueExpression(session){
   return {'자신감 넘침':'determined','차분한 자신감':'smile','긴장하지만 씩씩함':'nervous','자신 없음':'sad','부끄러움':'shy'}[session.reaction]||'neutral';
 }
-// Dialogue uses the same low-side-braid base portrait as the game character.
-// Retired expression busts all contained prohibited updos.
-function sehwaExpressionAsset(expression){return `${baseSpriteForAge()}?v=${scheduleAssetRevision}`;}
+// 9세 대화는 표정·포즈까지 고정된 낮은 한쪽 땋은머리 원화를 사용한다.
+// 다른 연령은 해당 세트가 준비될 때까지 같은 연령의 기준 초상으로 안전하게 폴백한다.
+function sehwaExpressionAsset(expression){
+  const canonical={smile:'joyful',shy:'nervous',neutral:'nervous'}[expression]||expression;
+  if(sehwaAssetAge()==='09'&&['joyful','nervous','sad','determined','startled'].includes(canonical)){
+    return `../assets/characters/seonhwa/dialogue/age-09-${canonical}-lowbraid-dialogue-v1.png?v=${scheduleAssetRevision}`;
+  }
+  return `${baseSpriteForAge()}?v=${scheduleAssetRevision}`;
+}
 function sehwaOpeningDialogue(session,beat){
   if(!game.guardianType)return '';
   const name=game.guardianName||guardianDefs[game.guardianType]?.name||'신수';

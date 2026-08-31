@@ -3098,13 +3098,13 @@ body .phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage:
 .moonlight-pageant.festival-pm3 .sehwa-opening-dialogue.speaker-guardian>.sehwa-dialogue-bust,
 .moonlight-pageant.festival-pm3 .sehwa-opening-dialogue.speaker-seonhwa>.sehwa-expression{bottom:-4%!important;width:112%!important;height:126%!important;transform:none!important}
 .moonlight-pageant.festival-pm3 .sehwa-opening-dialogue.speaker-guardian>.sehwa-dialogue-bust{left:-21%!important;right:auto!important;object-position:center bottom!important}
-/* Seonhwa's source canvas has large transparent margins; compensate by visible subject size, not box size. */
-.moonlight-pageant.festival-pm3 .sehwa-opening-dialogue.speaker-seonhwa>.sehwa-expression{left:auto!important;right:-16%!important;bottom:-5%!important;width:142%!important;height:158%!important;background-position:center bottom!important}
-/* State remains visible even while the low-braid expression portraits are rebuilt. */
-.moonlight-pageant.festival-pm3 .sehwa-opening-dialogue.speaker-seonhwa.status-happy .sehwa-expression{transform:translateY(-5px) rotate(-2deg)!important}
-.moonlight-pageant.festival-pm3 .sehwa-opening-dialogue.speaker-seonhwa.status-sad .sehwa-expression{transform:translateY(8px) rotate(1deg)!important;filter:saturate(.82) brightness(.96)!important}
-.moonlight-pageant.festival-pm3 .sehwa-opening-dialogue.speaker-seonhwa.status-angry .sehwa-expression,.moonlight-pageant.festival-pm3 .sehwa-opening-dialogue.speaker-seonhwa.status-rebellious .sehwa-expression{transform:translateX(-7px) rotate(-1deg)!important;filter:saturate(1.1) contrast(1.04)!important}
-.moonlight-pageant.festival-pm3 .sehwa-opening-dialogue.speaker-seonhwa.status-shocked .sehwa-expression{transform:translateY(-10px) scale(1.03)!important}
+/* Seonhwa's dedicated dialogue art shares the guardian's upper-body box and floor line. */
+.moonlight-pageant.festival-pm3 .sehwa-opening-dialogue.speaker-seonhwa>.sehwa-expression{left:auto!important;right:-10%!important;bottom:-4%!important;width:112%!important;height:126%!important;background-position:center bottom!important;background-size:contain!important}
+/* Real expression portraits carry the emotion; motion stays deliberately subtle. */
+.moonlight-pageant.festival-pm3 .sehwa-opening-dialogue.speaker-seonhwa.status-happy .sehwa-expression{transform:translateY(-3px) rotate(-1deg)!important}
+.moonlight-pageant.festival-pm3 .sehwa-opening-dialogue.speaker-seonhwa.status-sad .sehwa-expression{transform:translateY(3px)!important;filter:saturate(.9) brightness(.98)!important}
+.moonlight-pageant.festival-pm3 .sehwa-opening-dialogue.speaker-seonhwa.status-angry .sehwa-expression,.moonlight-pageant.festival-pm3 .sehwa-opening-dialogue.speaker-seonhwa.status-rebellious .sehwa-expression{transform:translateX(-3px)!important;filter:saturate(1.04) contrast(1.02)!important}
+.moonlight-pageant.festival-pm3 .sehwa-opening-dialogue.speaker-seonhwa.status-shocked .sehwa-expression{transform:translateY(-4px)!important}
 
 
 /* v0.64.231 — market replaces the home bottom menu with one compact exit. */
