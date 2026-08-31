@@ -3087,10 +3087,22 @@ body .phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage:
 .sehwa-opening-dialogue.speaker-seonhwa.status-angry .sehwa-expression,.sehwa-opening-dialogue.speaker-seonhwa.status-rebellious .sehwa-expression{transform:scale(1.3) translateX(-5px)!important}
 .sehwa-opening-dialogue.speaker-seonhwa.status-shocked .sehwa-expression{transform:scale(1.28) translateY(-3px)!important}
 
-/* v0.64.243 — Chuseok keeps its complete dancer and unobscured royal judge. */
-.moonlight-pageant.festival-pm3.motion-dance .pageant-hero-frames.is-dance{left:50%!important;bottom:12%!important;width:206px!important;height:286px!important}
-.moonlight-pageant.festival-pm3.motion-dance .pageant-hero-frames.is-dance img{animation:moonlight-complete-dance 5.6s ease-in-out infinite!important;animation-delay:0s!important;opacity:1!important;transform-origin:center bottom!important}
-@keyframes moonlight-complete-dance{0%,100%{opacity:1;transform:translateY(0) rotate(-.45deg)}35%{opacity:1;transform:translateY(-3px) rotate(.35deg)}65%{opacity:1;transform:translateY(-1px) rotate(.7deg)}}
+/* v0.64.259 — 완성된 춤 프레임은 무대 바닥선 위에서 10fps·5초로 실제 교대한다. */
+.moonlight-pageant.festival-pm3.motion-dance .pageant-hero-frames.is-dance{left:50%!important;bottom:19%!important;width:224px!important;height:306px!important}
+.moonlight-pageant.festival-pm3.motion-dance .pageant-hero-frames.is-dance img{animation:moonlight-dance-50-frame 5s steps(1,end) infinite!important;animation-delay:calc(var(--pageant-frame) * .1s)!important;opacity:0!important;transform:none!important;transform-origin:center bottom!important}
+@keyframes moonlight-dance-50-frame{0%,1.99%{opacity:1}2%,100%{opacity:0}}
+/* 명절 대화 컷: 하단을 넓게 녹이고, 다음 장면으로 갈 때 급하게 끊기지 않는다. */
+.sehwa-opening-dialogue>.sehwa-dialogue-bust,
+.sehwa-opening-dialogue>.sehwa-expression{
+  -webkit-mask-image:linear-gradient(to bottom,#000 0 70%,#000e 79%,#0009 86%,#0005 94%,transparent 100%)!important;
+  mask-image:linear-gradient(to bottom,#000 0 70%,#000e 79%,#0009 86%,#0005 94%,transparent 100%)!important;
+  animation-duration:1.15s!important;
+  animation-timing-function:ease-in-out!important;
+}
+.sehwa-opening-dialogue>div{animation-duration:1.05s!important;animation-timing-function:ease-in-out!important}
+.moonlight-pageant.is-leaving .moonlight-opening-dialogue>.sehwa-dialogue-bust,
+.moonlight-pageant.is-leaving .moonlight-opening-dialogue>.sehwa-expression,
+.moonlight-pageant.is-leaving .moonlight-opening-dialogue>div{opacity:0!important;transition:opacity .62s ease-in-out!important}
 .moonlight-pageant.festival-pm3.motion-royal-judging .festival-character-cut.king-cut img{left:50%!important;bottom:-2%!important;width:108%!important;height:96%!important;transform:translateX(-50%)!important;object-position:center bottom!important}
 .moonlight-pageant.festival-pm3.motion-royal-judging .festival-character-cut.king-cut p{top:auto!important;bottom:4%!important;left:4%!important;right:4%!important;width:auto!important;min-height:0!important}
 /* Chuseok reply portrait: keep Seonhwa below the dialogue card at a stage-scale ratio. */

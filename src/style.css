@@ -45,10 +45,17 @@ body{min-height:100dvh}.phone{width:min(100vw,calc(100dvh * 9 / 16),430px);max-h
 @media(max-width:430px){.relation-encounter-scene{background-color:#1b120d}.relation-encounter-person{bottom:13%;width:146%;height:95%;background:transparent!important}.relation-encounter-male{left:-25%}.relation-encounter-female{right:-23%;bottom:-6%;width:124%;height:100%;clip-path:inset(0 0 26% 0)}.relation-encounter-dialogue{left:4%;right:4%;bottom:3%}}
 /* v0.64.158 — 공통 이벤트 대화 가독성과 인물 하단 페이드. */
 .relation-encounter-person{
-  -webkit-mask-image:linear-gradient(to bottom,#000 0 84%,#000e 91%,#0007 96%,transparent 100%)!important;
-  mask-image:linear-gradient(to bottom,#000 0 84%,#000e 91%,#0007 96%,transparent 100%)!important;
+  -webkit-mask-image:linear-gradient(to bottom,#000 0 72%,#000e 80%,#0009 87%,#0005 94%,transparent 100%)!important;
+  mask-image:linear-gradient(to bottom,#000 0 72%,#000e 80%,#0009 87%,#0005 94%,transparent 100%)!important;
   clip-path:none!important;
 }
+/* 인연 대화: 인물과 대화창이 천천히 등장하고 다음 장면 전에 함께 사라진다. */
+.relation-encounter-person{transition:transform 1.15s cubic-bezier(.18,.72,.25,1),opacity .95s ease-in-out!important}
+.relation-encounter-dialogue{opacity:0;transform:translateY(14px);transition:transform .9s ease-in-out,opacity .9s ease-in-out}
+.relation-encounter-scene.is-entered .relation-encounter-dialogue{opacity:1;transform:translateY(0)}
+.relation-encounter-scene.is-leaving .relation-encounter-person,.relation-encounter-scene.is-leaving .relation-encounter-dialogue{opacity:0!important}
+.relation-encounter-scene.is-leaving .relation-encounter-male{transform:translateX(-18px)!important}
+.relation-encounter-scene.is-leaving .relation-encounter-female{transform:translateX(18px)!important}
 .relation-encounter-dialogue{left:3%!important;right:3%!important;bottom:3%!important;border-radius:17px!important}
 .relation-encounter-dialogue>button{min-height:136px!important;gap:7px!important;padding:16px 18px 29px!important}
 .relation-encounter-dialogue b{font-size:19px!important}

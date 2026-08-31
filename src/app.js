@@ -248,7 +248,7 @@ const vacationIllustrations=[
 function unifiedAgeFolder(){return '09';}
 function scheduleFramePath(file){return `../assets/characters/seonhwa/schedule-actions/v2/${file}`;}
 function scheduleBasePath(file){return `../assets/characters/seonhwa/schedule-base/${file}`;}
-const scheduleAssetRevision='0.64.258-debug';
+const scheduleAssetRevision='0.64.259-debug';
 const scheduleQaParams=new URLSearchParams(location.search);
 const moonlightStandaloneQa=scheduleQaParams.get('qaHoliday')==='chuseok';
 const sehwaStandaloneQa=scheduleQaParams.get('qaHoliday')==='seollal';
@@ -1388,9 +1388,9 @@ function playRelationEncounterScene(candidate,opening,resultLine='',episode=null
   const scene=document.querySelector('#relationEncounterScene'),male=document.querySelector('#relationEncounterMale'),female=document.querySelector('#relationEncounterFemale'),speaker=document.querySelector('#relationEncounterSpeaker'),text=document.querySelector('#relationEncounterText'),next=document.querySelector('#relationEncounterNext'),choices=document.querySelector('#relationEncounterChoices');
   const presentation=relationScenePresentation(episode);scene.style.setProperty('--relation-scene-background',`url('${presentation.src}?v=${scheduleAssetRevision}')`);scene.style.setProperty('--relation-scene-size',presentation.size);scene.style.setProperty('--relation-scene-position',presentation.position);scene.dataset.location=episode?.scene||'집 안';
   applyRelationPortrait(male,candidate,episode);female.src=protagonistFullbodyForAge();female.alt=`${game.characterName||'선화'} ${game.age}세 상반신 인물화`;
-  scene.hidden=false;scene.classList.remove('is-entered');requestAnimationFrame(()=>scene.classList.add('is-entered'));scene.dataset.speaker='male';speaker.textContent=candidate.name;text.textContent=opening||candidate.dialogues[0];choices.hidden=true;next.hidden=false;
+  scene.hidden=false;scene.classList.remove('is-entered','is-leaving');requestAnimationFrame(()=>scene.classList.add('is-entered'));scene.dataset.speaker='male';speaker.textContent=candidate.name;text.textContent=opening||candidate.dialogues[0];choices.hidden=true;next.hidden=false;
   return new Promise(resolve=>{
-    const finish=()=>{scene.hidden=true;scene.classList.remove('is-entered');scene.removeAttribute('data-speaker');male.removeAttribute('src');female.removeAttribute('src');resolve();};
+    const finish=async()=>{scene.classList.add('is-leaving');await schedulePlaybackDelay(620);scene.hidden=true;scene.classList.remove('is-entered','is-leaving');scene.removeAttribute('data-speaker');male.removeAttribute('src');female.removeAttribute('src');resolve();};
     const showResult=()=>{scene.dataset.speaker='result';speaker.textContent='인연';text.textContent=resultLine||'서로의 마음에 작은 기억이 남았습니다.';next.hidden=false;next.onclick=finish;};
     const showChoices=()=>{next.hidden=true;choices.hidden=false;choices.replaceChildren(...relationReplyChoices(candidate,episode).map(choice=>{const button=document.createElement('button');button.type='button';button.textContent=choice.line;button.addEventListener('click',()=>{choices.hidden=true;next.hidden=false;scene.dataset.speaker='female';speaker.textContent=game.characterName||'선화';text.textContent=choice.line;next.onclick=()=>{male.src=relationDialoguePosePath(candidate,episode,choice.emotion);male.alt=`${candidate.name} ${choice.emotion} 상반신`;scene.dataset.speaker='male';speaker.textContent=candidate.name;text.textContent=choice.reply;next.onclick=showResult;};},{once:true});return button;}));};
     next.onclick=showChoices;
@@ -1617,7 +1617,12 @@ const moonlightPixelMotionMap={
 const moonlightAge13StageMotionMap={enter:[1,1,1],bow:[1,7,1],walk:[10,1,8],finish:[1,7,1]};
 function moonlightMotionFrames(motion){
   const frame=number=>`../assets/events/holidays/moonlight-pageant/seonhwa/consistent-dance-v8/seonhwa-dance-${number}-v8.png?v=${scheduleAssetRevision}`;
-  if(motion==='dance')return [`../assets/events/holidays/moonlight-pageant/seonhwa/consistent-dance-v9/seonhwa-dance-slow-v2.png?v=${scheduleAssetRevision}`];
+  // 6장의 동일 선화 춤 원화를 왕복시켜 10fps · 5초(50프레임)로 재생한다.
+  // 한 장을 흔드는 효과가 아니라 손·팔·시선 변화가 담긴 원화를 실제로 교대한다.
+  if(motion==='dance'){
+    const phrase=[1,2,3,4,5,6,5,4,3,2];
+    return Array.from({length:5},()=>phrase).flat().map(frame);
+  }
   const sequences={enter:[1,1,2],walk:[2,3,6],finish:[6,5,1],bow:[1,5,1]};
   return (sequences[motion]||sequences.enter).map(frame);
 }
@@ -1720,7 +1725,7 @@ function waitForFestivalTapAdvance(minimumStay){
   return new Promise(resolve=>window.setTimeout(()=>{
     overlay.classList.add('tap-ready');
     const next=document.createElement('button');next.type='button';next.className='festival-tap-next';next.textContent='다음 장면';next.setAttribute('aria-label','다음 장면으로 이동');overlay.append(next);
-    const advance=event=>{if(event.type==='keydown'&&!['Enter',' '].includes(event.key))return;overlay.removeEventListener('click',advance);overlay.removeEventListener('keydown',advance);next.remove();overlay.classList.remove('tap-ready');resolve();};
+    const advance=async event=>{if(event.type==='keydown'&&!['Enter',' '].includes(event.key))return;overlay.removeEventListener('click',advance);overlay.removeEventListener('keydown',advance);next.remove();overlay.classList.remove('tap-ready');overlay.classList.add('is-leaving');await schedulePlaybackDelay(620);resolve();};
     overlay.addEventListener('click',advance);overlay.addEventListener('keydown',advance);
   },minimumStay));
 }
