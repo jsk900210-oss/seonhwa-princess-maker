@@ -88,7 +88,12 @@ body{min-height:100dvh}.phone{width:min(100vw,calc(100dvh * 9 / 16),430px);max-h
 .phone[data-home-season="summer"] .home-outside{filter:saturate(1.2) brightness(.97) hue-rotate(4deg)}
 .phone[data-home-season="autumn"] .home-outside{filter:saturate(1.18) sepia(.22) hue-rotate(-12deg) brightness(.96)}
 .phone[data-home-season="winter"] .home-outside{filter:saturate(.48) brightness(1.08) contrast(.92)}
-.home-room-foreground{position:absolute;z-index:2;inset:0;pointer-events:none;background:url('../assets/backgrounds/home/home-room-morning.webp') center/cover no-repeat;-webkit-mask-image:linear-gradient(#000 0 0),linear-gradient(#000 0 0);-webkit-mask-position:0 0,24.5% 25.4%;-webkit-mask-size:100% 100%,31.7% 27.7%;-webkit-mask-repeat:no-repeat;-webkit-mask-composite:xor;mask-image:linear-gradient(#000 0 0),linear-gradient(#000 0 0);mask-position:0 0,24.5% 25.4%;mask-size:100% 100%,31.7% 27.7%;mask-repeat:no-repeat;mask-composite:exclude}
+.home-room-foreground{position:absolute;z-index:2;inset:0;pointer-events:none}
+.home-room-foreground i{position:absolute;inset:0;display:block;background:url('../assets/backgrounds/home/home-room-morning.webp') center/cover no-repeat}
+.home-room-foreground i:nth-child(1){clip-path:polygon(0 0,100% 0,100% 25.4%,0 25.4%)}
+.home-room-foreground i:nth-child(2){clip-path:polygon(0 25.4%,24.5% 25.4%,24.5% 53.1%,0 53.1%)}
+.home-room-foreground i:nth-child(3){clip-path:polygon(56.2% 25.4%,100% 25.4%,100% 53.1%,56.2% 53.1%)}
+.home-room-foreground i:nth-child(4){clip-path:polygon(0 53.1%,100% 53.1%,100% 100%,0 100%)}
 .home-weather{position:absolute;z-index:1;inset:25.4% 43.8% 46.9% 24.5%;overflow:hidden;pointer-events:none;clip-path:none}
 .home-weather::before{content:"";position:absolute;inset:0;mix-blend-mode:soft-light;transition:background .8s ease,opacity .8s ease}
 .phone[data-home-season="spring"] .home-weather::before{background:linear-gradient(#ffd7dd2d,#8bcf7942);opacity:.8}
@@ -104,7 +109,7 @@ body{min-height:100dvh}.phone{width:min(100vw,calc(100dvh * 9 / 16),430px);max-h
 @media(max-width:350px){.home-sehwa-gallery{left:73%!important;width:13.5%!important}}
 
 /* 기존 오른쪽 벽의 빈 족자 안쪽에 우승작을 자연스럽게 끼운다. */
-.home-sehwa-gallery{z-index:3!important;left:72.6%!important;top:29.1%!important;width:14.2%!important;padding:5px 4px 10px!important;transform:rotate(-.15deg)!important;box-shadow:0 3px 5px #160b0745!important}
+.home-sehwa-gallery{z-index:3!important;left:72.6%!important;top:29.1%!important;width:14.2%!important;padding:5px 4px 10px!important;transform:rotate(1.35deg)!important;transform-origin:50% 0!important;box-shadow:0 3px 5px #160b0745!important}
 .home-sehwa-gallery::before,.home-sehwa-gallery::after{left:-4px!important;right:-4px!important;height:3px!important}
 .home-sehwa-gallery img{padding:1px!important;background:#eadbb1!important}
 .home-sehwa-gallery figcaption{font-size:5px!important;line-height:8px!important}
