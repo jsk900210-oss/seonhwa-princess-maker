@@ -105,7 +105,12 @@ body{min-height:100dvh}.phone{width:min(100vw,calc(100dvh * 9 / 16),430px);max-h
 .home-weather[data-weather="heavy-snow"] i{width:calc(5px + (var(--particle-index) % 4) * 1px);height:calc(5px + (var(--particle-index) % 4) * 1px);border-radius:50%;background:#fff;box-shadow:0 0 5px #eaf5ff;animation:home-heavy-snow calc(3.2s + (var(--particle-index) % 5) * .38s) ease-in infinite;animation-delay:var(--particle-delay)}
 @keyframes home-rain{to{transform:translate(-12px,390px) rotate(9deg)}}
 @keyframes home-heavy-snow{0%{transform:translate(0,-8px) rotate(0);opacity:0}12%{opacity:.95}55%{transform:translate(13px,155px) rotate(145deg)}100%{transform:translate(-8px,335px) rotate(310deg);opacity:.25}}
-.phone.playing .home-weather,.phone.market-playing .home-weather,.phone:has(.vacation-scene:not([hidden])) .home-weather{display:none}
+.phone.playing>.home-outside,.phone.playing>.home-weather,.phone.playing>.home-room-foreground,
+.phone.market-playing>.home-outside,.phone.market-playing>.home-weather,.phone.market-playing>.home-room-foreground,
+.phone.vacation-playing>.home-outside,.phone.vacation-playing>.home-weather,.phone.vacation-playing>.home-room-foreground,
+.phone:has(.relation-encounter-scene:not([hidden]))>.home-outside,
+.phone:has(.relation-encounter-scene:not([hidden]))>.home-weather,
+.phone:has(.relation-encounter-scene:not([hidden]))>.home-room-foreground{display:none!important}
 @media(max-width:350px){.home-sehwa-gallery{left:73%!important;width:13.5%!important}}
 
 /* 기존 오른쪽 벽의 빈 족자 안쪽에 우승작을 자연스럽게 끼운다. */
