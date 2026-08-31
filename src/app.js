@@ -248,7 +248,7 @@ const vacationIllustrations=[
 function unifiedAgeFolder(){return '09';}
 function scheduleFramePath(file){return `../assets/characters/seonhwa/schedule-actions/v2/${file}`;}
 function scheduleBasePath(file){return `../assets/characters/seonhwa/schedule-base/${file}`;}
-const scheduleAssetRevision='0.64.255-debug';
+const scheduleAssetRevision='0.64.256-debug';
 const scheduleQaParams=new URLSearchParams(location.search);
 const moonlightStandaloneQa=scheduleQaParams.get('qaHoliday')==='chuseok';
 const sehwaStandaloneQa=scheduleQaParams.get('qaHoliday')==='seollal';
@@ -1814,7 +1814,7 @@ function sehwaExpressionAsset(expression){
   const dialogueAge=sehwaAssetAge();
   const portraitSets={
     '09':['joyful','nervous','sad','determined','startled'],
-    '13':['nervous','determined']
+    '13':['joyful','nervous','sad','determined','startled']
   };
   if(portraitSets[dialogueAge]?.includes(canonical)){
     return `../assets/characters/seonhwa/dialogue/age-${dialogueAge}-${canonical}-lowbraid-dialogue-v1.png?v=${scheduleAssetRevision}`;
@@ -3640,7 +3640,12 @@ function initMoonlightPageantQa(){
   const requestedQaScore=scheduleQaParams.get('qaScore');
   const qaScore=Math.min(999,Math.max(0,requestedQaScore===null?210:Number(requestedQaScore)));
   const qaDay=Math.min(moonlightStoryBeats.length,Math.max(1,Number(scheduleQaParams.get('qaBeat')||scheduleQaParams.get('qaDay'))||moonlightStoryBeats.length));
+  const qaCondition=scheduleQaParams.get('qaCondition');
   game.age=qaAge;game.sense=qaScore;game.manners=qaScore;game.dignity=qaScore;game.guardianType=game.guardianType||'cheongryong';
+  if(qaCondition==='angry')game.stress=55;
+  else if(qaCondition==='sad')game.mentality=30;
+  else if(qaCondition==='shocked')game.homeReaction='shocked';
+  else game.stress=0;
   const session=evaluateChuseokFestival(),phone=document.querySelector('.phone'),stage=document.querySelector('#activityStage');
   phone.classList.add('playing','schedule-qa-playing');stage.hidden=false;stage.className='activity-stage pm3-phase-scene daily-scene action-holiday-chuseok';
   document.querySelector('#activityPlayback').hidden=true;document.querySelector('#stagePm3Hud').hidden=true;
