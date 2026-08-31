@@ -3139,3 +3139,12 @@ body:has(.panel:not([hidden])) .phone>.home-bottom-nav{display:none!important}
 #activityStage.action-dance.schedule-layered .schedule-scene-layer.layer-pattern,#activityStage.action-dance.schedule-layered .schedule-scene-layer.layer-effect{display:none!important}
 #activityStage.action-dance.schedule-layered .stage-character.pixel-sprite{animation:dance-fan-pose 2.8s ease-in-out infinite!important}
 @keyframes dance-fan-pose{0%,100%{transform:translateY(0) rotate(-1deg)}50%{transform:translateY(-3px) rotate(1deg)}}
+
+
+/* v0.64.241 — renderer cannot rescale NPCs after the tukkur contract. */
+#activityStage.schedule-layered .schedule-scene-layer.layer-npc{transform:translateX(-50%)!important;transform-origin:center bottom!important}
+
+
+/* v0.64.242 — classic education scenes share the same 96px actor contract. */
+#activityStage:is(.action-reading,.action-arithmetic,.action-manners) .stage-character.pixel-sprite,#activityStage:is(.action-reading,.action-arithmetic,.action-manners) .stage-npc.npc-teacher{width:96px!important;height:96px!important;min-width:96px!important;min-height:96px!important;bottom:4%!important;box-sizing:border-box!important;object-fit:contain!important;object-position:center bottom!important;transform-origin:center bottom!important}
+#activityStage:is(.action-reading,.action-arithmetic,.action-manners) .stage-character.pixel-sprite>img{width:96px!important;height:96px!important;max-width:96px!important;max-height:96px!important;object-fit:contain!important;object-position:center bottom!important;transform:none!important}

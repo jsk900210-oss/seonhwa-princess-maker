@@ -248,7 +248,7 @@ const vacationIllustrations=[
 function unifiedAgeFolder(){return '09';}
 function scheduleFramePath(file){return `../assets/characters/seonhwa/schedule-actions/v2/${file}`;}
 function scheduleBasePath(file){return `../assets/characters/seonhwa/schedule-base/${file}`;}
-const scheduleAssetRevision='0.64.240-debug';
+const scheduleAssetRevision='0.64.242-debug';
 const scheduleQaParams=new URLSearchParams(location.search);
 const moonlightStandaloneQa=scheduleQaParams.get('qaHoliday')==='chuseok';
 const sehwaStandaloneQa=scheduleQaParams.get('qaHoliday')==='seollal';
@@ -963,7 +963,7 @@ async function playScheduleLayerScene(actionId,seonImage,rank,outcome,dayIndex){
   stage.style.setProperty('--layer-hero-left',`${heroPosition}%`,'important');
   stage.style.setProperty('--layer-floor',placement.floorBottom||placement.heroBottom||'5%');
   stage.style.setProperty('--layer-npc-left',`${npcPosition}%`,'important');
-  stage.style.setProperty('--layer-npc-scale',placement.npcScale||1);
+  stage.style.setProperty('--layer-npc-scale','1');
   stage.style.setProperty('--layer-prop-left',placement.propLeft||'52%');
   stage.style.setProperty('--layer-prop-bottom',placement.propBottom||'7%');
   stage.style.setProperty('--layer-effect-left',placement.effectLeft||placement.propLeft||'52%');
@@ -973,10 +973,6 @@ async function playScheduleLayerScene(actionId,seonImage,rank,outcome,dayIndex){
   try{
     if(spec.backgroundOverlay)layers.push(make('background',spec.backgroundOverlay));
     const npc=make('npc',npcFrames[actionId==='farmwork'?1:0]);
-    if(actionId==='farmwork'){
-      npc.style.setProperty('width','160px','important');
-      npc.style.setProperty('height','160px','important');
-    }
     const patternLayer=v2Spec&&patternSpec?.layer==='effects'?'effect':'pattern';
     const pattern=make(`${patternLayer} ${patternKey} ${patternKey.startsWith('fail-')?'dedicated-failure':''}`,patternFrames[0]);
     if(patternSpec?.heroIncludesProp||(actionId==='farmwork'&&patternKey!=='fail-b'))pattern.hidden=true;
