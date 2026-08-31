@@ -248,7 +248,7 @@ const vacationIllustrations=[
 function unifiedAgeFolder(){return '09';}
 function scheduleFramePath(file){return `../assets/characters/seonhwa/schedule-actions/v2/${file}`;}
 function scheduleBasePath(file){return `../assets/characters/seonhwa/schedule-base/${file}`;}
-const scheduleAssetRevision='0.64.247-debug';
+const scheduleAssetRevision='0.64.248-debug';
 const scheduleQaParams=new URLSearchParams(location.search);
 const moonlightStandaloneQa=scheduleQaParams.get('qaHoliday')==='chuseok';
 const sehwaStandaloneQa=scheduleQaParams.get('qaHoliday')==='seollal';
@@ -1807,7 +1807,9 @@ function sehwaOpeningAnswer(session){
 function sehwaDialogueExpression(session){
   return {'자신감 넘침':'determined','차분한 자신감':'smile','긴장하지만 씩씩함':'nervous','자신 없음':'sad','부끄러움':'shy'}[session.reaction]||'neutral';
 }
-function sehwaExpressionAsset(expression){return `../assets/characters/dialogue-busts/seonhwa/age-${sehwaAssetAge()}-${expression}-v2.png?v=${scheduleAssetRevision}`;}
+// Dialogue uses the same low-side-braid base portrait as the game character.
+// Retired expression busts all contained prohibited updos.
+function sehwaExpressionAsset(expression){return `${baseSpriteForAge()}?v=${scheduleAssetRevision}`;}
 function sehwaOpeningDialogue(session,beat){
   if(!game.guardianType)return '';
   const name=game.guardianName||guardianDefs[game.guardianType]?.name||'신수';

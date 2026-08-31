@@ -3096,7 +3096,7 @@ body .phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage:
 /* Chuseok reply portrait: keep Seonhwa below the dialogue card at a stage-scale ratio. */
 /* Both speakers use one visual box and floor line during the Chuseok exchange. */
 .moonlight-pageant.festival-pm3 .sehwa-opening-dialogue.speaker-guardian>.sehwa-dialogue-bust,
-.moonlight-pageant.festival-pm3 .sehwa-opening-dialogue.speaker-seonhwa>.sehwa-expression{bottom:-2%!important;width:76%!important;height:88%!important;transform:none!important}
+.moonlight-pageant.festival-pm3 .sehwa-opening-dialogue.speaker-seonhwa>.sehwa-expression{bottom:-2%!important;width:84%!important;height:96%!important;transform:none!important}
 .moonlight-pageant.festival-pm3 .sehwa-opening-dialogue.speaker-guardian>.sehwa-dialogue-bust{left:-13%!important;right:auto!important;object-position:center bottom!important}
 .moonlight-pageant.festival-pm3 .sehwa-opening-dialogue.speaker-seonhwa>.sehwa-expression{left:auto!important;right:12%!important;background-position:center bottom!important}
 

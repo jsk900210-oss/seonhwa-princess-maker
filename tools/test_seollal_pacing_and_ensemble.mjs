@@ -19,8 +19,8 @@ assert.match(css,/\.sehwa-opening-dialogue p\{[^}]*word-break:keep-all;[^}]*text
 assert.match(app,/protagonistFullbodyForAge\(\)/,'선화 대화는 연령별 상반신 원화를 사용해야 합니다.');
 assert.match(app,/drawing-\$\{frame\}-v2\.png/,'세화 붓질 장면의 선화는 연령별 반실사 v2 프레임을 사용해야 합니다.');
 assert.match(css,/\.sehwa-opening-dialogue>\.sehwa-dialogue-bust\{[^}]*transform:scale\(1\.28\)/,'대화 중 화자는 통일된 얼굴·상체 크기로 보여야 합니다.');
-assert.match(app,/function sehwaExpressionAsset\(expression\)/,'연령별 투명 표정 자산을 선택해야 합니다.');
-for(const age of ['09','13','16','18'])for(const expression of ['neutral','smile','joyful','nervous','startled','sad','determined','shy'])assert.ok(existsSync(new URL(`../assets/characters/dialogue-busts/seonhwa/age-${age}-${expression}-v2.png`,import.meta.url)),`${age}세 ${expression} 투명 대화 표정이 필요합니다.`);
+assert.match(app,/function sehwaExpressionAsset\(expression\)\{return `\$\{baseSpriteForAge\(\)\}\?v=\$\{scheduleAssetRevision\}`;\}/,'올림머리 표정 세트 대신 낮은 땋은머리 기준 초상을 선택해야 합니다.');
+for(const age of ['09','13','16','18'])assert.ok(existsSync(new URL(`../assets/characters/seonhwa/age-${age}/base/seonhwa-age${age}-base-v3-wonyoung-motif-transparent.png`,import.meta.url)),`${age}세 낮은 땋은머리 기준 초상이 필요합니다.`);
 assert.doesNotMatch(app,/function sehwaDrawingEnsemble\(session\)/,'공중에 뜬 8인 판자 합성 장면이 남아 있으면 안 됩니다.');
 assert.match(app,/preparing=beat===4,drawing=beat>=5&&beat<=10/,'화구 준비 다음에는 선화의 정상 붓질 동작으로 바로 이어져야 합니다.');
 assert.match(app,/function sehwaPreparationEnsemble\(session\)/,'빈 준비 장면 대신 참가자 8명의 화구 준비 장면이 필요합니다.');
