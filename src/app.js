@@ -248,7 +248,7 @@ const vacationIllustrations=[
 function unifiedAgeFolder(){return '09';}
 function scheduleFramePath(file){return `../assets/characters/seonhwa/schedule-actions/v2/${file}`;}
 function scheduleBasePath(file){return `../assets/characters/seonhwa/schedule-base/${file}`;}
-const scheduleAssetRevision='0.64.257-debug';
+const scheduleAssetRevision='0.64.258-debug';
 const scheduleQaParams=new URLSearchParams(location.search);
 const moonlightStandaloneQa=scheduleQaParams.get('qaHoliday')==='chuseok';
 const sehwaStandaloneQa=scheduleQaParams.get('qaHoliday')==='seollal';
@@ -1617,7 +1617,7 @@ const moonlightPixelMotionMap={
 const moonlightAge13StageMotionMap={enter:[1,1,1],bow:[1,7,1],walk:[10,1,8],finish:[1,7,1]};
 function moonlightMotionFrames(motion){
   const frame=number=>`../assets/events/holidays/moonlight-pageant/seonhwa/consistent-dance-v8/seonhwa-dance-${number}-v8.png?v=${scheduleAssetRevision}`;
-  if(motion==='dance')return [`../assets/events/holidays/moonlight-pageant/seonhwa/consistent-dance-v9/seonhwa-dance-slow-v1.png?v=${scheduleAssetRevision}`];
+  if(motion==='dance')return [`../assets/events/holidays/moonlight-pageant/seonhwa/consistent-dance-v9/seonhwa-dance-slow-v2.png?v=${scheduleAssetRevision}`];
   const sequences={enter:[1,1,2],walk:[2,3,6],finish:[6,5,1],bow:[1,5,1]};
   return (sequences[motion]||sequences.enter).map(frame);
 }

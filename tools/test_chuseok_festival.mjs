@@ -23,14 +23,14 @@ assert.match(app,/'13':\['joyful','nervous','sad','determined','startled'\]/,'13
 assert.match(app,/if\(qaCondition==='angry'\)game\.stress=55/,'분노 상태의 한가위 QA 화면을 직접 검수할 수 있어야 합니다.');
 for(const file of fs.readdirSync(path.join(root,'assets/characters/seonhwa/dialogue')).filter(name=>name.endsWith('.png'))){const {width,height}=pngSize(path.join(root,'assets/characters/seonhwa/dialogue',file));assert.ok(height<=width*1.12,`${file}: 대화용 상반신 원화가 전신 비율로 남아 있으면 안 됩니다.`);}
 assert.doesNotMatch(app,/dialogue-busts\/seonhwa/,'올림머리 대화 표정 세트를 더 이상 참조하지 않음');
-assert.match(app,/consistent-dance-v9\/seonhwa-dance-slow-v1\.png/,'잘리지 않은 동일 선화 전신 춤 자산만 사용');
+assert.match(app,/consistent-dance-v9\/seonhwa-dance-slow-v2\.png/,'투명 배경의 동일 선화 전신 춤 자산만 사용');
 assert.match(css,/moonlight-complete-dance 5\.6s/,'느린 손끝 춤');
 assert.match(css,/pageant-hero-frames\.is-dance\{[^}]*left:50%!important/,'중앙 춤');
 for(const age of ['09','13','16','19'])assert.ok(fs.existsSync(path.join(root,`assets/characters/seonhwa/identity-semi-real-v9/seonhwa-age${age}-identity-v9.png`)),`선화 ${age}세 반실사 기준 초상`);
 assert.ok(fs.existsSync(path.join(root,'assets/events/holidays/moonlight-pageant/seonhwa/consistent-dance-v9/seonhwa-dance-slow-v1.png')),'complete dance');
 assert.match(app,/const guardianType=game\.guardianType\|\|'hyeonmu';/,'신수 미선택 상태에도 도입 대화 유지');
 assert.match(css,/motion-royal-judging \.festival-character-cut\.king-cut p[\s\S]*bottom:4%!important/,'왕의 얼굴과 대화창 분리');
-assert.match(css,/speaker-seonhwa>\.sehwa-expression\{[^}]*width:100%!important[^}]*height:112%!important/,'선화 상반신은 신수보다 크게 확대되면 안 됩니다.');
+assert.match(css,/speaker-seonhwa>\.sehwa-expression\{[^}]*width:100%!important[^}]*height:112%!important[^}]*background-position:center 64%!important[^}]*background-size:70% auto!important/,'선화 얼굴은 신수보다 크게 확대되면 안 됩니다.');
 assert.match(app,/const portrait=playerWinner[\s\S]*baseSpriteForAge\(\)[\s\S]*moonlightEntrantImage\(winner\)/,'우승자별 나이 맞춤 반실사 수상 소감 분기');
 assert.match(app,/festivalScoreboard\(session,'참가자 8명 최종 순위와 수상 결과'\)/,'8명 순위 발표');
 assert.match(app,/festivalKingWinnerCongratulations\(session\)/,'왕 시상·축하');

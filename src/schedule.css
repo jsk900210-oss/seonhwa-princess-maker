@@ -3099,7 +3099,7 @@ body .phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage:
 .moonlight-pageant.festival-pm3 .sehwa-opening-dialogue.speaker-seonhwa>.sehwa-expression{bottom:-4%!important;width:112%!important;height:126%!important;transform:none!important}
 .moonlight-pageant.festival-pm3 .sehwa-opening-dialogue.speaker-guardian>.sehwa-dialogue-bust{left:-21%!important;right:auto!important;object-position:center bottom!important}
 /* Seonhwa's dedicated dialogue art shares the guardian's upper-body box and floor line. */
-.moonlight-pageant.festival-pm3 .sehwa-opening-dialogue.speaker-seonhwa>.sehwa-expression{left:auto!important;right:-4%!important;bottom:-3%!important;width:100%!important;height:112%!important;background-position:center bottom!important;background-size:contain!important}
+.moonlight-pageant.festival-pm3 .sehwa-opening-dialogue.speaker-seonhwa>.sehwa-expression{left:auto!important;right:-4%!important;bottom:-3%!important;width:100%!important;height:112%!important;background-position:center 64%!important;background-size:70% auto!important}
 /* Real expression portraits carry the emotion; motion stays deliberately subtle. */
 .moonlight-pageant.festival-pm3 .sehwa-opening-dialogue.speaker-seonhwa.status-happy .sehwa-expression{transform:translateY(-3px) rotate(-1deg)!important}
 .moonlight-pageant.festival-pm3 .sehwa-opening-dialogue.speaker-seonhwa.status-sad .sehwa-expression{transform:translateY(3px)!important;filter:saturate(.9) brightness(.98)!important}
