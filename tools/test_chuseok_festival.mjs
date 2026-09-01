@@ -28,7 +28,8 @@ assert.match(app,/seonhwa-pageant-raised-hands-pixel-v1\.png/,'손끝을 머리 
 assert.ok(fs.existsSync(path.join(root,'assets/events/holidays/moonlight-pageant/seonhwa/seonhwa-pageant-raised-hands-pixel-v1.png')),'손끝을 맞댄 쯔꾸르 자산');
 assert.match(app,/moonlight-pageant\/background\/moonlight-pageant-schedule-stage-v1\.png/,'일정 진행 창에는 전용 가로 무대 배경이 필요합니다.');
 assert.ok(fs.existsSync(path.join(root,'assets/events/holidays/moonlight-pageant/background/moonlight-pageant-schedule-stage-v1.png')),'가로형 한가위 일정 무대 배경');
-assert.match(app,/pageant-schedule-window/,'한가위 인사는 일정 진행 창 구조 안에서 보여야 합니다.');
+assert.match(app,/activity-stage pageant-schedule-window/,'한가위 인사는 일정 진행 때 쓰는 실제 창 구조 안에서 보여야 합니다.');
+assert.match(app,/stage-roof[\s\S]*stage-inner pageant-schedule-inner/,'한가위 인사는 일정 창의 지붕과 내부 구조를 재사용해야 합니다.');
 assert.match(app,/waitForFestivalTapAdvance\(beat===2\?8600/,'입장·인사·회전이 끝난 뒤 다음 장면으로 넘어가야 합니다.');
 assert.match(css,/pageant-tukkur-cross-stage 8\.4s/,'쯔꾸르 선화는 왼쪽에서 오른쪽으로 이동해야 합니다.');
 assert.match(css,/pageant-tukkur-raised-turn/,'두 손을 머리 위에 둥글게 올린 채 회전해야 합니다.');
