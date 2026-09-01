@@ -3279,8 +3279,10 @@ body:has(.panel:not([hidden])) .phone>.home-bottom-nav{display:none!important}
 .sehwa-contest.festival-pm3 .sehwa-eight-entrant-scene img{inset:0 2%!important;width:96%!important;height:100%!important;object-fit:contain!important;object-position:center!important}
 .sehwa-contest.festival-pm3 .sehwa-eight-entrant-scene .sehwa-ensemble-base{-webkit-mask-image:linear-gradient(to bottom,transparent 0,#000 7%,#000 78%,transparent 100%),linear-gradient(to right,transparent 0,#000 1%,#000 99%,transparent 100%)!important;-webkit-mask-composite:source-in!important;mask-image:linear-gradient(to bottom,transparent 0,#000 7%,#000 78%,transparent 100%),linear-gradient(to right,transparent 0,#000 1%,#000 99%,transparent 100%)!important;mask-composite:intersect!important}
 
-/* v0.64.279 — 명절 이벤트 대화는 조작 버튼 아래의 중앙 84% 폭으로 통일한다. */
+/* v0.64.280 — 중앙 대화창은 상단 버튼 줄 바로 아래에 놓고 왕의 얼굴도 가리지 않는다. */
 .sehwa-contest.festival-pm3 .sehwa-opening-dialogue>div,
 .moonlight-pageant.festival-pm3 .sehwa-opening-dialogue>div,
 .sehwa-contest.festival-pm3 .festival-character-cut p,
-.moonlight-pageant.festival-pm3 .festival-character-cut p{left:8%!important;right:8%!important;top:10%!important;width:auto!important}
+.moonlight-pageant.festival-pm3 .festival-character-cut p{left:8%!important;right:8%!important;top:12.5%!important;width:auto!important}
+.sehwa-contest.festival-pm3 .festival-character-cut.king-cut img,
+.moonlight-pageant.festival-pm3 .festival-character-cut.king-cut img{bottom:2.5%!important}
