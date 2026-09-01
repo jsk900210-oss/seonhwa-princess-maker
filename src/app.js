@@ -248,7 +248,7 @@ const vacationIllustrations=[
 function unifiedAgeFolder(){return '09';}
 function scheduleFramePath(file){return `../assets/characters/seonhwa/schedule-actions/v2/${file}`;}
 function scheduleBasePath(file){return `../assets/characters/seonhwa/schedule-base/${file}`;}
-const scheduleAssetRevision='0.64.265-debug';
+const scheduleAssetRevision='0.64.266-debug';
 const scheduleQaParams=new URLSearchParams(location.search);
 const moonlightStandaloneQa=scheduleQaParams.get('qaHoliday')==='chuseok';
 const sehwaStandaloneQa=scheduleQaParams.get('qaHoliday')==='seollal';
@@ -1615,19 +1615,12 @@ const moonlightPixelMotionMap={
   finish:['manners-pixel-1.png','manners-pixel-2.png','manners-pixel-1.png']
 };
 const moonlightAge13StageMotionMap={enter:[1,1,1],bow:[1,7,1],walk:[10,1,8],finish:[1,7,1]};
-function moonlightMotionFrames(motion){
-  const frame=number=>`../assets/events/holidays/moonlight-pageant/seonhwa/consistent-dance-v8/seonhwa-dance-${number}-v8.png?v=${scheduleAssetRevision}`;
-  // 낮은 한쪽 땋은머리 전신 원화를 왕복시켜 10fps · 5초(50프레임)로 재생한다.
-  // 한 장을 흔드는 효과가 아니라 손·팔·시선 변화가 담긴 원화를 실제로 교대한다.
-  if(motion==='dance'){
-    // 사용자가 선택한 첫 번째 손끝 춤 10프레임 뒤, 두 손을 모아 내리는 마무리 자세를 유지한다.
-    const danceBase='../assets/events/holidays/moonlight-pageant/seonhwa/consistent-dance-v11';
-    const movement=Array.from({length:10},(_,index)=>`${danceBase}/seonhwa-dance-frame-${String(index+1).padStart(2,'0')}-v11.png?v=${scheduleAssetRevision}`);
-    const finish=`${danceBase}/seonhwa-dance-finish-v1.png?v=${scheduleAssetRevision}`;
-    return [...movement,finish,finish,finish,finish,finish];
-  }
-  const sequences={enter:[1,1,2],walk:[2,3,6],finish:[6,5,1],bow:[1,5,1]};
-  return (sequences[motion]||sequences.enter).map(frame);
+function moonlightTukkurPerformance(){
+  const root='../assets';
+  return {
+    standing:`${root}/characters/seonhwa/schedule-base/stand-front-v3-pixel.png?v=${scheduleAssetRevision}`,
+    raisedHands:`${root}/events/holidays/moonlight-pageant/seonhwa/seonhwa-pageant-raised-hands-pixel-v1.png?v=${scheduleAssetRevision}`
+  };
 }
 function shuffled(items){return items.map(value=>({value,sort:Math.random()})).sort((a,b)=>a.sort-b.sort).map(item=>item.value);}
 function evaluateChuseokFestival(){
@@ -1708,9 +1701,9 @@ function renderMoonlightPageant(session,dayIndex){
   const beat=Math.min(7,dayIndex%8),opening=beat===0,entrance=beat===1,dance=beat===2,judging=beat===3,ranking=beat===4,award=beat===5,acceptance=beat===6,closing=beat===7;
   overlay.hidden=false;overlay.className=`moonlight-pageant festival-pm3 beat-${beat+1} motion-${moonlightMotionNames[beat]} reaction-${session.reaction.replaceAll(' ','-')}`;
   // 신수의 응원과 상태별 선화의 대답은 반드시 한 장면씩 교대한다.
-  // 이 대화가 끝난 뒤에만 중앙 춤 프레임을 노출한다.
-  const frameMotion=dance?'dance':null;
-  const hero=frameMotion?`<span class="pageant-hero-frames is-${frameMotion}" role="img" aria-label="${moonlightStoryBeats[beat]}">${moonlightMotionFrames(frameMotion).map((src,index)=>`<img class="${index===0?'is-active':''}" src="${src}" alt="" style="--pageant-frame:${index}">`).join('')}</span>`:'';
+  // 이 대화가 끝난 뒤에만 쯔꾸르 선화의 입장·인사·손끝 회전 무대를 노출한다.
+  const performance=dance?moonlightTukkurPerformance():null;
+  const hero=performance?`<span class="pageant-tukkur-performance" role="img" aria-label="왼쪽에서 입장한 선화가 인사한 뒤 두 손을 머리 위에 둥글게 올리고 회전하여 오른쪽에서 멈춘다."><img class="pageant-tukkur-standing" src="${performance.standing}" alt=""><img class="pageant-tukkur-raised-hands" src="${performance.raisedHands}" alt=""></span>`:'';
   const king=judging?festivalKingCut('센스와 예절, 기품에 담긴 마음을 차분히 살펴보겠다.','한가위 경연을 심사하는 왕'):'';
   const board=ranking?festivalScoreboard(session,'참가자 8명 최종 순위와 수상 결과'):'';
   const winner=award?`<figure class="pageant-winner is-solo ${session.winner.player?'is-seonhwa':''}"><img src="${moonlightAwardWinnerImage(session.winner)}" alt="대상 수상자 ${session.winner.name}"></figure>`:'';
@@ -1720,14 +1713,10 @@ function renderMoonlightPageant(session,dayIndex){
   const closingCard=closing?`<section class="festival-result-card festival-closing-card"><small>한가위 경연 완료</small><strong>${session.overallRank}</strong><p>센스 +2 · 예절 +2 · 기품 +2 · 스트레스 -4${session.prize?`<br>${session.prize} 획득`:''}</p></section>`:'';
   overlay.tabIndex=0;overlay.setAttribute('role','button');overlay.setAttribute('aria-label','화면을 터치해 다음 장면으로 이동');
   overlay.innerHTML=`${hero}${opening?moonlightOpeningDialogue(session,0):entrance?moonlightOpeningDialogue(session,1):''}${king}${board}${winner}${kingCongratulations}${winnerAcceptance}${guardian}${closingCard}`;
-  if(dance){
-    const frames=[...overlay.querySelectorAll('.pageant-hero-frames.is-dance img')];let frameIndex=0;
-    const showFrame=()=>frames.forEach((image,index)=>image.classList.toggle('is-active',index===frameIndex));
-    showFrame();overlay._danceFrameTimer=window.setInterval(()=>{frameIndex=(frameIndex+1)%frames.length;showFrame();},300);
-  }
 }
 function waitForMoonlightAdvance(beat){
-  return waitForFestivalTapAdvance(beat<=1?1600:700);
+  // 회전 무대가 끝난 뒤에만 다음 장면 버튼을 보여, 입장·인사·정지까지 모두 읽을 수 있게 한다.
+  return waitForFestivalTapAdvance(beat===2?8600:beat<=1?1600:700);
 }
 function waitForFestivalTapAdvance(minimumStay){
   const overlay=document.querySelector('#moonlightPageant');if(!overlay)return schedulePlaybackDelay(900);
