@@ -3257,8 +3257,19 @@ body:has(.panel:not([hidden])) .phone>.home-bottom-nav{display:none!important}
 .sehwa-opening-dialogue.speaker-guardian>.sehwa-dialogue-bust,
 .festival-character-cut.guardian-cut img,
 .festival-character-cut.king-cut img{width:112%!important;height:108%!important;bottom:4%!important;box-sizing:border-box!important;object-fit:contain!important;object-position:center bottom!important;-webkit-mask-image:linear-gradient(to bottom,#000 0 58%,#000e 69%,#0009 79%,#0005 89%,transparent 100%)!important;mask-image:linear-gradient(to bottom,#000 0 58%,#000e 69%,#0009 79%,#0005 89%,transparent 100%)!important}
-.sehwa-opening-dialogue.speaker-seonhwa>.sehwa-expression{background-color:transparent!important;background-size:112% auto!important;background-position:center bottom!important}
+.sehwa-opening-dialogue.speaker-seonhwa>.sehwa-expression{background-color:transparent!important;background-size:94% auto!important;background-position:center bottom!important}
 .sehwa-opening-dialogue.speaker-seonhwa>div,.sehwa-opening-dialogue.speaker-guardian>div,.festival-character-cut:not(.moonlight-award-congratulation) p{top:10%!important}
 .moonlight-pageant.festival-pm3.motion-royal-judging .festival-character-cut.king-cut img{width:112%!important;height:108%!important;bottom:4%!important}
 /* 한가위 전용 selector는 특이도가 높으므로 같은 selector로 마지막에 덮어쓴다. */
-.moonlight-pageant.festival-pm3 .sehwa-opening-dialogue.speaker-seonhwa>.sehwa-expression{width:112%!important;height:108%!important;bottom:4%!important;background-size:112% auto!important;background-position:center bottom!important;-webkit-mask-image:linear-gradient(to bottom,#000 0 58%,#000e 69%,#0009 79%,#0005 89%,transparent 100%)!important;mask-image:linear-gradient(to bottom,#000 0 58%,#000e 69%,#0009 79%,#0005 89%,transparent 100%)!important}
+.moonlight-pageant.festival-pm3 .sehwa-opening-dialogue.speaker-seonhwa>.sehwa-expression{width:112%!important;height:108%!important;bottom:4%!important;background-size:94% auto!important;background-position:center bottom!important;-webkit-mask-image:linear-gradient(to bottom,#000 0 58%,#000e 69%,#0009 79%,#0005 89%,transparent 100%)!important;mask-image:linear-gradient(to bottom,#000 0 58%,#000e 69%,#0009 79%,#0005 89%,transparent 100%)!important}
+
+/* v0.64.274 — 설날·추석 이벤트의 선화/신수/왕이 공유하는 최종 화면 계약. */
+.sehwa-contest.festival-pm3 .sehwa-opening-dialogue.speaker-seonhwa>.sehwa-expression,
+.moonlight-pageant.festival-pm3 .sehwa-opening-dialogue.speaker-seonhwa>.sehwa-expression{width:112%!important;height:108%!important;bottom:4%!important;background-size:94% auto!important;background-position:center bottom!important;-webkit-mask-image:linear-gradient(to bottom,#000 0 58%,#000e 69%,#0009 79%,#0005 89%,transparent 100%)!important;mask-image:linear-gradient(to bottom,#000 0 58%,#000e 69%,#0009 79%,#0005 89%,transparent 100%)!important}
+.sehwa-contest.festival-pm3 .sehwa-opening-dialogue.speaker-guardian>.sehwa-dialogue-bust,
+.moonlight-pageant.festival-pm3 .sehwa-opening-dialogue.speaker-guardian>.sehwa-dialogue-bust,
+.sehwa-contest.festival-pm3 .festival-character-cut.guardian-cut img,
+.moonlight-pageant.festival-pm3 .festival-character-cut.guardian-cut img,
+.sehwa-contest.festival-pm3 .festival-character-cut.king-cut img,
+.moonlight-pageant.festival-pm3 .festival-character-cut.king-cut img{width:112%!important;height:108%!important;bottom:4%!important;box-sizing:border-box!important;object-fit:contain!important;object-position:center bottom!important;-webkit-mask-image:linear-gradient(to bottom,#000 0 58%,#000e 69%,#0009 79%,#0005 89%,transparent 100%)!important;mask-image:linear-gradient(to bottom,#000 0 58%,#000e 69%,#0009 79%,#0005 89%,transparent 100%)!important}
+.sehwa-contest.festival-pm3 .sehwa-opening-dialogue>div,.moonlight-pageant.festival-pm3 .sehwa-opening-dialogue>div{top:10%!important}

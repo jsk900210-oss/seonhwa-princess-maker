@@ -67,6 +67,11 @@ body{min-height:100dvh}.phone{width:min(100vw,calc(100dvh * 9 / 16),430px);max-h
 .relation-encounter-female{bottom:17%!important;width:58%!important;height:66%!important;clip-path:none!important}
 .relation-encounter-dialogue{bottom:2%!important}
 .relation-encounter-choices{gap:8px!important;padding:13px!important}
+
+/* v0.64.274 — 인연 이벤트 5인은 원화·성별과 무관하게 동일한 인물 상자와 긴 하단 페이드를 쓴다. */
+.relation-encounter-scene .relation-encounter-person{width:58%!important;height:66%!important;bottom:17%!important;box-sizing:border-box!important;object-fit:contain!important;object-position:center bottom!important;clip-path:none!important;-webkit-mask-image:linear-gradient(to bottom,#000 0 58%,#000e 69%,#0009 79%,#0005 89%,transparent 100%)!important;mask-image:linear-gradient(to bottom,#000 0 58%,#000e 69%,#0009 79%,#0005 89%,transparent 100%)!important}
+.relation-encounter-scene .relation-encounter-female{width:58%!important;height:66%!important;bottom:17%!important;clip-path:none!important}
+.relation-encounter-scene .relation-encounter-dialogue{bottom:2%!important}
 .relation-encounter-choices button{min-height:52px!important;padding:11px 14px!important;font-size:13px!important;line-height:1.45!important}
 @media(max-width:380px){
   .relation-encounter-dialogue>button{min-height:126px!important;padding:14px 15px 27px!important}

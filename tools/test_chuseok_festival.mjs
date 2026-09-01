@@ -39,9 +39,11 @@ for(const age of ['09','13','16','19'])assert.ok(fs.existsSync(path.join(root,`a
 assert.ok(fs.existsSync(path.join(root,'assets/events/holidays/moonlight-pageant/seonhwa/consistent-dance-v9/seonhwa-dance-slow-v1.png')),'complete dance');
 assert.match(app,/const guardianType=game\.guardianType\|\|'hyeonmu';/,'신수 미선택 상태에도 도입 대화 유지');
 assert.match(css,/motion-royal-judging \.festival-character-cut\.king-cut p[\s\S]*bottom:4%!important/,'왕의 얼굴과 대화창 분리');
-assert.match(css,/최종 대화 초상 계약[\s\S]*?width:112%!important[\s\S]*?height:108%!important[\s\S]*?bottom:4%!important[\s\S]*?background-size:112% auto!important[\s\S]*?background-position:center bottom!important/,'이벤트 선화·신수·왕은 동일 상자와 끊기지 않는 하단 페이드를 사용');
+assert.match(css,/최종 대화 초상 계약[\s\S]*?width:112%!important[\s\S]*?height:108%!important[\s\S]*?bottom:4%!important[\s\S]*?background-size:94% auto!important[\s\S]*?background-position:center bottom!important/,'이벤트 선화·신수·왕은 동일 상자와 끊기지 않는 하단 페이드를 사용');
 const style=fs.readFileSync(path.join(root,'src/style.css'),'utf8');
 assert.match(style,/인연 5인은 성별·원화별 예외 없이 한 인물 상자와 바닥선을 공유한다[\s\S]*?width:58%!important[\s\S]*?height:66%!important[\s\S]*?bottom:17%!important/,'인연 5인은 공통 크기·바닥선 계약을 사용');
+assert.match(css,/설날·추석 이벤트의 선화\/신수\/왕이 공유하는 최종 화면 계약[\s\S]*?background-size:94% auto!important[\s\S]*?height:108%!important/,'설날·추석의 선화·신수·왕은 최종 공통 화면 계약을 사용');
+assert.match(style,/인연 이벤트 5인은 원화·성별과 무관하게 동일한 인물 상자와 긴 하단 페이드를 쓴다[\s\S]*?width:58%!important[\s\S]*?height:66%!important[\s\S]*?bottom:17%!important/,'인연 5인은 최종 공통 화면 계약을 사용');
 assert.match(css,/speaker-seonhwa>\.sehwa-expression\{[^}]*width:100%!important[^}]*height:112%!important[^}]*background-position:center 64%!important[^}]*background-size:70% auto!important/,'선화 얼굴은 신수보다 크게 확대되면 안 됩니다.');
 assert.match(app,/const portrait=playerWinner[\s\S]*baseSpriteForAge\(\)[\s\S]*moonlightEntrantImage\(winner\)/,'우승자별 나이 맞춤 반실사 수상 소감 분기');
 assert.match(app,/festivalScoreboard\(session,'참가자 8명 최종 순위와 수상 결과'\)/,'8명 순위 발표');
