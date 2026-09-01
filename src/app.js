@@ -248,7 +248,7 @@ const vacationIllustrations=[
 function unifiedAgeFolder(){return '09';}
 function scheduleFramePath(file){return `../assets/characters/seonhwa/schedule-actions/v2/${file}`;}
 function scheduleBasePath(file){return `../assets/characters/seonhwa/schedule-base/${file}`;}
-const scheduleAssetRevision='0.64.263-debug';
+const scheduleAssetRevision='0.64.264-debug';
 const scheduleQaParams=new URLSearchParams(location.search);
 const moonlightStandaloneQa=scheduleQaParams.get('qaHoliday')==='chuseok';
 const sehwaStandaloneQa=scheduleQaParams.get('qaHoliday')==='seollal';
@@ -1719,7 +1719,7 @@ function renderMoonlightPageant(session,dayIndex){
   if(dance){
     const frames=[...overlay.querySelectorAll('.pageant-hero-frames.is-dance img')];let frameIndex=0;
     const showFrame=()=>frames.forEach((image,index)=>image.classList.toggle('is-active',index===frameIndex));
-    showFrame();overlay._danceFrameTimer=window.setInterval(()=>{frameIndex=(frameIndex+1)%frames.length;showFrame();},150);
+    showFrame();overlay._danceFrameTimer=window.setInterval(()=>{frameIndex=(frameIndex+1)%frames.length;showFrame();},200);
   }
 }
 function waitForMoonlightAdvance(beat){
