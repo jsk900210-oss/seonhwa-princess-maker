@@ -26,7 +26,7 @@ assert.doesNotMatch(app,/dialogue-busts\/seonhwa/,'올림머리 대화 표정 �
 assert.match(app,/consistent-dance-v11\/seonhwa-dance-frame-\$\{String\(index\+1\)\.padStart\(2,'0'\)\}-v11\.png/,'낮은 땋은머리 전신 춤 프레임을 사용해야 합니다.');
 assert.match(app,/Array\.from\(\{length:50\}/,'춤은 10fps·5초의 50프레임 계약이어야 합니다.');
 for(let index=1;index<=50;index+=1)assert.ok(fs.existsSync(path.join(root,`assets/events/holidays/moonlight-pageant/seonhwa/consistent-dance-v11/seonhwa-dance-frame-${String(index).padStart(2,'0')}-v11.png`)),`춤 프레임 ${index}/50`);
-assert.match(app,/overlay\._danceFrameTimer=window\.setInterval[\s\S]*\},100\)/,'실제 프레임 춤은 0.1초마다 다음 프레임으로 넘어가야 합니다.');
+assert.match(app,/overlay\._danceFrameTimer=window\.setInterval[\s\S]*\},150\)/,'실제 프레임 춤은 0.15초마다 다음 프레임으로 천천히 넘어가야 합니다.');
 assert.match(app,/classList\.toggle\('is-active',index===frameIndex\)/,'춤에는 매 순간 활성 프레임이 정확히 하나여야 합니다.');
 assert.match(css,/is-dance img\.is-active\{opacity:1!important\}/,'활성 프레임은 빈 화면 없이 표시되어야 합니다.');
 assert.match(css,/motion-dance \.pageant-hero-frames\.is-dance\{[^}]*bottom:19%!important[^}]*width:224px!important/,'춤은 무대 바닥선 위에서 조금 더 큰 크기로 보여야 합니다.');
