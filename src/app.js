@@ -248,7 +248,7 @@ const vacationIllustrations=[
 function unifiedAgeFolder(){return '09';}
 function scheduleFramePath(file){return `../assets/characters/seonhwa/schedule-actions/v2/${file}`;}
 function scheduleBasePath(file){return `../assets/characters/seonhwa/schedule-base/${file}`;}
-const scheduleAssetRevision='0.64.264-debug';
+const scheduleAssetRevision='0.64.265-debug';
 const scheduleQaParams=new URLSearchParams(location.search);
 const moonlightStandaloneQa=scheduleQaParams.get('qaHoliday')==='chuseok';
 const sehwaStandaloneQa=scheduleQaParams.get('qaHoliday')==='seollal';
@@ -1620,7 +1620,11 @@ function moonlightMotionFrames(motion){
   // 낮은 한쪽 땋은머리 전신 원화를 왕복시켜 10fps · 5초(50프레임)로 재생한다.
   // 한 장을 흔드는 효과가 아니라 손·팔·시선 변화가 담긴 원화를 실제로 교대한다.
   if(motion==='dance'){
-    return Array.from({length:50},(_,index)=>`../assets/events/holidays/moonlight-pageant/seonhwa/consistent-dance-v11/seonhwa-dance-frame-${String(index+1).padStart(2,'0')}-v11.png?v=${scheduleAssetRevision}`);
+    // 사용자가 선택한 첫 번째 손끝 춤 10프레임 뒤, 두 손을 모아 내리는 마무리 자세를 유지한다.
+    const danceBase='../assets/events/holidays/moonlight-pageant/seonhwa/consistent-dance-v11';
+    const movement=Array.from({length:10},(_,index)=>`${danceBase}/seonhwa-dance-frame-${String(index+1).padStart(2,'0')}-v11.png?v=${scheduleAssetRevision}`);
+    const finish=`${danceBase}/seonhwa-dance-finish-v1.png?v=${scheduleAssetRevision}`;
+    return [...movement,finish,finish,finish,finish,finish];
   }
   const sequences={enter:[1,1,2],walk:[2,3,6],finish:[6,5,1],bow:[1,5,1]};
   return (sequences[motion]||sequences.enter).map(frame);
@@ -1719,7 +1723,7 @@ function renderMoonlightPageant(session,dayIndex){
   if(dance){
     const frames=[...overlay.querySelectorAll('.pageant-hero-frames.is-dance img')];let frameIndex=0;
     const showFrame=()=>frames.forEach((image,index)=>image.classList.toggle('is-active',index===frameIndex));
-    showFrame();overlay._danceFrameTimer=window.setInterval(()=>{frameIndex=(frameIndex+1)%frames.length;showFrame();},200);
+    showFrame();overlay._danceFrameTimer=window.setInterval(()=>{frameIndex=(frameIndex+1)%frames.length;showFrame();},300);
   }
 }
 function waitForMoonlightAdvance(beat){

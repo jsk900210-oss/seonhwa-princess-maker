@@ -3088,8 +3088,8 @@ body .phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage:
 .sehwa-opening-dialogue.speaker-seonhwa.status-shocked .sehwa-expression{transform:scale(1.28) translateY(-3px)!important}
 
 /* v0.64.259 — 완성된 춤 프레임은 무대 바닥선 위에서 10fps·5초로 실제 교대한다. */
-.moonlight-pageant.festival-pm3.motion-dance .pageant-hero-frames.is-dance{left:50%!important;bottom:19%!important;width:224px!important;height:306px!important}
-.moonlight-pageant.festival-pm3.motion-dance .pageant-hero-frames.is-dance img{animation:none!important;opacity:0!important;transform:none!important;transform-origin:center bottom!important}
+.moonlight-pageant.festival-pm3.motion-dance .pageant-hero-frames.is-dance{left:50%!important;bottom:22%!important;width:224px!important;height:306px!important}
+.moonlight-pageant.festival-pm3.motion-dance .pageant-hero-frames.is-dance img{animation:none!important;opacity:0!important;transform:none!important;transform-origin:center bottom!important;transition:opacity .14s ease-in-out!important}
 .moonlight-pageant.festival-pm3.motion-dance .pageant-hero-frames.is-dance img.is-active{opacity:1!important}
 .moonlight-pageant.festival-pm3.motion-dance .pageant-hero-frames.is-dance img{image-rendering:auto!important}
 /* 명절 대화 컷: 하단을 넓게 녹이고, 다음 장면으로 갈 때 급하게 끊기지 않는다. */
