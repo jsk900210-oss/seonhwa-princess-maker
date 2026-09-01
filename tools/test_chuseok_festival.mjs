@@ -23,9 +23,9 @@ assert.match(app,/'13':\['joyful','nervous','sad','determined','startled'\]/,'13
 assert.match(app,/if\(qaCondition==='angry'\)game\.stress=55/,'분노 상태의 한가위 QA 화면을 직접 검수할 수 있어야 합니다.');
 for(const file of fs.readdirSync(path.join(root,'assets/characters/seonhwa/dialogue')).filter(name=>name.endsWith('.png'))){const {width,height}=pngSize(path.join(root,'assets/characters/seonhwa/dialogue',file));assert.ok(height<=width*1.12,`${file}: 대화용 상반신 원화가 전신 비율로 남아 있으면 안 됩니다.`);}
 assert.doesNotMatch(app,/dialogue-busts\/seonhwa/,'올림머리 대화 표정 세트를 더 이상 참조하지 않음');
-assert.match(app,/consistent-dance-v10\/seonhwa-dance-frame-02-v10\.png/,'낮은 땋은머리 전신 춤 프레임을 사용해야 합니다.');
-assert.match(app,/consistent-dance-v10\/seonhwa-dance-frame-03-v10\.png/,'낮은 땋은머리 전신 춤 프레임을 사용해야 합니다.');
-assert.match(app,/Array\.from\(\{length:10\},\(\)=>phrase\)\.flat\(\)/,'춤은 10fps·5초의 50프레임 계약이어야 합니다.');
+assert.match(app,/consistent-dance-v11\/seonhwa-dance-frame-\$\{String\(index\+1\)\.padStart\(2,'0'\)\}-v11\.png/,'낮은 땋은머리 전신 춤 프레임을 사용해야 합니다.');
+assert.match(app,/Array\.from\(\{length:50\}/,'춤은 10fps·5초의 50프레임 계약이어야 합니다.');
+for(let index=1;index<=50;index+=1)assert.ok(fs.existsSync(path.join(root,`assets/events/holidays/moonlight-pageant/seonhwa/consistent-dance-v11/seonhwa-dance-frame-${String(index).padStart(2,'0')}-v11.png`)),`춤 프레임 ${index}/50`);
 assert.match(app,/overlay\._danceFrameTimer=window\.setInterval[\s\S]*\},100\)/,'실제 프레임 춤은 0.1초마다 다음 프레임으로 넘어가야 합니다.');
 assert.match(app,/classList\.toggle\('is-active',index===frameIndex\)/,'춤에는 매 순간 활성 프레임이 정확히 하나여야 합니다.');
 assert.match(css,/is-dance img\.is-active\{opacity:1!important\}/,'활성 프레임은 빈 화면 없이 표시되어야 합니다.');
