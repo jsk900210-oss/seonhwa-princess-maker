@@ -248,7 +248,7 @@ const vacationIllustrations=[
 function unifiedAgeFolder(){return '09';}
 function scheduleFramePath(file){return `../assets/characters/seonhwa/schedule-actions/v2/${file}`;}
 function scheduleBasePath(file){return `../assets/characters/seonhwa/schedule-base/${file}`;}
-const scheduleAssetRevision='0.64.261-debug';
+const scheduleAssetRevision='0.64.262-debug';
 const scheduleQaParams=new URLSearchParams(location.search);
 const moonlightStandaloneQa=scheduleQaParams.get('qaHoliday')==='chuseok';
 const sehwaStandaloneQa=scheduleQaParams.get('qaHoliday')==='seollal';
@@ -1620,14 +1620,7 @@ function moonlightMotionFrames(motion){
   // 낮은 한쪽 땋은머리 전신 원화를 왕복시켜 10fps · 5초(50프레임)로 재생한다.
   // 한 장을 흔드는 효과가 아니라 손·팔·시선 변화가 담긴 원화를 실제로 교대한다.
   if(motion==='dance'){
-    const phrase=[
-      '../assets/events/holidays/moonlight-pageant/seonhwa/consistent-dance-v9/seonhwa-dance-slow-v2.png',
-      '../assets/events/holidays/moonlight-pageant/seonhwa/consistent-dance-v10/seonhwa-dance-frame-03-v10.png',
-      '../assets/events/holidays/moonlight-pageant/seonhwa/consistent-dance-v10/seonhwa-dance-frame-02-v10.png',
-      '../assets/events/holidays/moonlight-pageant/seonhwa/consistent-dance-v10/seonhwa-dance-frame-03-v10.png',
-      '../assets/events/holidays/moonlight-pageant/seonhwa/consistent-dance-v9/seonhwa-dance-slow-v2.png'
-    ];
-    return Array.from({length:10},()=>phrase).flat().map(src=>`${src}?v=${scheduleAssetRevision}`);
+    return Array.from({length:50},(_,index)=>`../assets/events/holidays/moonlight-pageant/seonhwa/consistent-dance-v11/seonhwa-dance-frame-${String(index+1).padStart(2,'0')}-v11.png?v=${scheduleAssetRevision}`);
   }
   const sequences={enter:[1,1,2],walk:[2,3,6],finish:[6,5,1],bow:[1,5,1]};
   return (sequences[motion]||sequences.enter).map(frame);
