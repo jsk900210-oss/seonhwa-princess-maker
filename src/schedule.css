@@ -2965,9 +2965,10 @@ body .phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage:
 .phone.playing:has(.activity-stage.action-holiday-seollal:not([hidden]))>.settings-gear{top:7%!important;right:calc(4% + 64px)!important;z-index:64!important}
 .phone.playing:has(.activity-stage.action-holiday-seollal:not([hidden])) .sehwa-opening-dialogue>div p{padding-right:104px!important}
 
-/* 5×2, 10프레임 시트: 책상은 고정하고 손목·붓끝·시선만 10fps로 움직인다. */
+/* 5×2, 10프레임 시트: 책상·화선지·완성 그림은 고정하고 손목과 붓대만 10fps로 움직인다. */
 .sehwa-contest .sehwa-hero.is-brush-frames{width:290px!important;height:290px!important;background:var(--sehwa-brush-final) center bottom/contain no-repeat!important;animation:none!important}
-.sehwa-contest .sehwa-hero.is-brush-frames img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;object-position:center bottom;opacity:0;animation:sehwa-brush-frame-10fps 1s steps(1,end) 5;animation-delay:calc(var(--sehwa-brush-frame) * .1s)}
+/* The final frame locks the pose, desk and paper.  The animated reveal is limited to the brush hand and shaft, never the paper. */
+.sehwa-contest .sehwa-hero.is-brush-frames img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;object-position:center bottom;opacity:0;-webkit-mask-image:radial-gradient(ellipse 11% 14% at 36% 51%,#000 63%,transparent 100%);mask-image:radial-gradient(ellipse 11% 14% at 36% 51%,#000 63%,transparent 100%);animation:sehwa-brush-frame-10fps 1s steps(1,end) 5;animation-delay:calc(var(--sehwa-brush-frame) * .1s)}
 @keyframes sehwa-brush-frame-10fps{0%,9.99%{opacity:1}10%,100%{opacity:0}}
 
 /* 일정 모션 규칙: PNG 전체 흔들기/확대축소 금지, 자세 프레임과 실제 좌표 이동만 허용. */
@@ -3290,3 +3291,6 @@ body:has(.panel:not([hidden])) .phone>.home-bottom-nav{display:none!important}
 /* v0.64.281 — 대화형 명절 컷에서는 설정·배속 조작을 숨겨 대화창과 절대 겹치지 않게 한다. */
 .phone.playing:has(.moonlight-pageant:not([hidden]))>.settings-gear,
 .phone.playing:has(.moonlight-pageant:not([hidden]))>.activity-playback{display:none!important}
+
+/* v0.64.283 — 8인 원화는 무대에서도 contain으로 유지해 양끝 참가자를 자르지 않는다. */
+/* v0.64.286: preparation art is a single 3:5 scene; do not stack a second hall or letterbox it. */

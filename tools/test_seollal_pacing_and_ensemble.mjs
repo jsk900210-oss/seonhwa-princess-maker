@@ -26,12 +26,11 @@ assert.match(app,/preparing=beat===4,drawing=beat>=5&&beat<=10/,'화구 준비 �
 assert.match(app,/function sehwaPreparationEnsemble\(session\)/,'빈 준비 장면 대신 참가자 8명의 화구 준비 장면이 필요합니다.');
 assert.match(app,/\$\{preparing\?sehwaPreparationEnsemble\(session\):''\}/,'참가자와 책상은 준비 장면에서만 보여야 합니다.');
 assert.doesNotMatch(app,/title\|\|preparing\?sehwaPreparationEnsemble/,'제목 장면에는 참가자와 책상이 다시 나타나면 안 됩니다.');
-assert.match(app,/서로 다른 전통 땋은 머리를 한 참가자 8명/,'준비 장면에는 서로 다른 머리 모양의 참가자 여덟 명이 필요합니다.');
-assert.match(app,/eight-entrant-v1/,'8인 그림 그리기 전용 장면을 사용해야 합니다.');
-for(const frame of [1,2,3])assert.ok(existsSync(new URL(`../assets/events/holidays/sehwa-contest/preparation-scene/eight-entrant-v1/drawing-${frame}-v2.png`,import.meta.url)),`서로 다른 머리 모양을 유지한 8인 그림 ${frame} 프레임이 필요합니다.`);
-assert.match(css,/@keyframes sehwa-eight-local-painting/,'8명은 고정 배경 위의 국소 영역에서만 붓질과 고민 자세를 번갈아 보여야 합니다.');
+assert.match(app,/drawing-1-mobile-3x5-v1\.png/,'준비 장면에는 서로 다른 머리 모양의 참가자 여덟 명을 담은 전용 3:5 장면이 필요합니다.');
+assert.ok(existsSync(new URL('../assets/events/holidays/sehwa-contest/preparation-scene/eight-entrant-v1/drawing-1-mobile-3x5-v1.png',import.meta.url)),'8인 참가자가 한 장면으로 이어진 세로 배경이 필요합니다.');
 for(let frame=1;frame<=10;frame+=1)assert.ok(existsSync(new URL(`../assets/events/holidays/sehwa-contest/seonhwa/drawing/age-13/painting-brush-10fps-v2/frame-${String(frame).padStart(2,'0')}.png`,import.meta.url)),`외땋기 선화의 투명 붓질 ${frame} 프레임이 필요합니다.`);
 assert.match(css,/animation:sehwa-brush-frame-10fps 1s steps\(1,end\) 5/,'선화의 투명 10프레임 붓질은 10fps로 총 5초 재생해야 합니다.');
+assert.match(css,/\.sehwa-hero\.is-brush-frames img\{[^}]*mask-image:radial-gradient\(ellipse 11% 14% at 36% 51%/,'붓질 프레임은 고정된 몸·책상·화선지 위에서 손과 붓대만 바꿔야 합니다.');
 assert.match(app,/외땋기와 댕기를 한 선화/,'미혼 선화는 성인 올림머리 대신 땋은 머리와 댕기를 유지해야 합니다.');
 assert.match(app,/\{id:'eunseo',name:'은서'/,'플레이어를 포함한 8인 참가 명단이 필요합니다.');
 assert.match(app,/8인 세화 심사/,'설날 심사표도 8인 기준이어야 합니다.');
@@ -59,6 +58,9 @@ assert.doesNotMatch(css,/sehwa-(?:receive|slip)[^;}]*infinite/,'참가표 수령
 assert.match(css,/@keyframes sehwa-slip-handover/,'참가표가 접수 관리에게서 선화에게 이동해야 합니다.');
 assert.match(app,/선화가 자리에 앉아 세화를 그리기 시작했어요/,'구형 8인 판자 장면 대신 선화의 그림 시작 서술이 필요합니다.');
 assert.match(css,/\.sehwa-drawing-ensemble\{[^}]*grid-template-columns:repeat\(4,1fr\)/,'참가자 8명은 4×2 구도로 배치해야 합니다.');
-assert.match(css,/설날 8인 준비 장면은 가장자리 인물을 페이드로 자르지 않고 안전 여백 안에 전부 둔다[\s\S]*?inset:0 2%!important[\s\S]*?width:96%!important[\s\S]*?height:100%!important[\s\S]*?#000 78%[\s\S]*?#000 1%[\s\S]*?#000 99%/,'8인 참가자는 가장자리 절단 없이 안전 여백 안에 보여야 합니다.');
+assert.match(app,/preparing\?preparationSceneBackground:emptySceneBackground/,'8인 참가자 원화는 빈 궁 배경 위의 별도 카드가 아니라 준비 장면의 기본 무대 배경이어야 합니다.');
+assert.doesNotMatch(app,/class="sehwa-ensemble-base"/,'8인 준비 원화를 별도 전경 카드로 다시 쌓으면 경계선이 생기면 안 됩니다.');
+assert.match(app,/drawing-1-mobile-3x5-v1\.png/,'8인 준비 장면은 창 비율과 같은 단일 3:5 배경으로 그려 경계선과 잘림을 없애야 합니다.');
+assert.doesNotMatch(app,/sehwa-ensemble-motion-patch/,'8인 장면에는 다른 홀 배경이 비치는 전경 패치를 덧씌우지 않아야 합니다.');
 assert.match(css,/\.sehwa-contest\.festival-pm3 \.sehwa-hero\{[^}]*width:210px!important;[^}]*height:270px!important/,'설날 반실사 주인공은 중앙에서 충분히 크게 보여야 합니다.');
 console.log('PASS: 설날 수동 진행·5초 전원 그림·스테이터스 응답·캐릭터 축소·공손한 참가표 수령');

@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict';
-import {readFileSync} from 'node:fs';
+import {existsSync,readFileSync} from 'node:fs';
 
 const html=readFileSync(new URL('../src/index.html',import.meta.url),'utf8');
 const css=readFileSync(new URL('../src/style.css',import.meta.url),'utf8');
@@ -18,16 +18,15 @@ for(const mode of ['market-playing','vacation-playing'])for(const layer of ['hom
 assert.ok(html.includes('class="activity-backdrop"'),'schedules need a separate full-screen activity backdrop');
 assert.match(css,/\.phone\.playing:not\(\.market-playing\):not\(\.vacation-playing\)>\.activity-backdrop\{display:block\}/,'full activity backdrop must remain visible behind the RPG window');
 assert.match(schedule,/action-holiday-seollal\{inset:0!important;[^}]*overflow:hidden!important\}/,'Seollal stage must fill the phone without an extra border');
-assert.match(schedule,/\.sehwa-eight-entrant-scene \.sehwa-ensemble-base\{[^}]*opacity:1/,'the hall, floor and desks must remain a static base frame');
-assert.match(schedule,/\.sehwa-eight-entrant-scene \.sehwa-ensemble-motion-patch\{[\s\S]*mask-image:[^;]+[\s\S]*animation:sehwa-eight-local-painting/,'only feathered regions around the eight painters may change pose');
 assert.match(schedule,/animation:sehwa-brush-frame-10fps 1s steps\(1,end\) 5/,'ten transparent solo frames must run at 10fps for five seconds');
 assert.doesNotMatch(schedule,/\.sehwa-hero\.is-brush-frames\{[^}]*transform:/,'brush-frame motion must not shake the whole character/table layer');
 assert.match(app,/className='festival-tap-next'/,'a visible next-scene button must appear when the minimum scene time ends');
 assert.match(app,/fallStart=7,fallEnd=15/,'childcare falls must hold before recovering instead of snapping upright');
 assert.match(schedule,/action-holiday-seollal:not\(\[hidden\]\)\) \.activity-playback\{top:7%!important/,'Seollal speed control must align with the dialogue upper-right edge');
 assert.match(schedule,/action-holiday-seollal:not\(\[hidden\]\)\)>\.settings-gear\{top:7%!important/,'Seollal settings control must align with the dialogue upper-right edge');
-assert.match(app,/class="sehwa-ensemble-base"[^>]+drawing-1-v2/,'the approved stable base frame must be rendered');
-assert.match(app,/\[2,3\]\.map\(\(frame,index\)=>`<img class="sehwa-ensemble-motion-patch"/,'only two localized motion patches may be composited above the base');
-assert.match(schedule,/\.sehwa-eight-entrant-scene img\{[^}]*object-fit:contain/,'all eight contestants must fit inside the scene without edge cropping');
-assert.match(schedule,/\.sehwa-eight-entrant-scene \.sehwa-ensemble-base\{[\s\S]*mask-image:linear-gradient\(to bottom,transparent/,'the contained ensemble must feather into the hall without a rectangular seam');
+assert.match(app,/preparationSceneBackground=`\.\.\/assets\/events\/holidays\/sehwa-contest\/preparation-scene\/eight-entrant-v1\/drawing-1-mobile-3x5-v1\.png/, 'the complete 3:5 preparation scene must become the stage background');
+assert.ok(existsSync(new URL('../assets/events/holidays/sehwa-contest/preparation-scene/eight-entrant-v1/drawing-1-mobile-3x5-v1.png',import.meta.url)),'the seamless 3:5 preparation image must be committed with the game');
+assert.match(app,/preparing\?preparationSceneBackground:emptySceneBackground/, 'the 8-person base frame must replace the empty hall only in the preparation scene');
+assert.doesNotMatch(app,/class="sehwa-ensemble-base"/, 'the stable base frame must not be composited above a second hall background');
+assert.doesNotMatch(app,/sehwa-ensemble-motion-patch/,'the preparation scene must not overlay a second mismatched background or motion patch');
 console.log('PASS: home layer order, schedule isolation, Seollal border and motion contracts');
