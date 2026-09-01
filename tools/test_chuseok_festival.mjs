@@ -44,6 +44,7 @@ const style=fs.readFileSync(path.join(root,'src/style.css'),'utf8');
 assert.match(style,/인연 5인은 성별·원화별 예외 없이 한 인물 상자와 바닥선을 공유한다[\s\S]*?width:58%!important[\s\S]*?height:66%!important[\s\S]*?bottom:17%!important/,'인연 5인은 공통 크기·바닥선 계약을 사용');
 assert.match(css,/설날·추석 이벤트의 선화\/신수\/왕이 공유하는 최종 화면 계약[\s\S]*?background-size:94% auto!important[\s\S]*?height:108%!important/,'설날·추석의 선화·신수·왕은 최종 공통 화면 계약을 사용');
 assert.match(css,/중앙 대화창은 상단 버튼 줄 바로 아래에 놓고 왕의 얼굴도 가리지 않는다[\s\S]*?left:8%!important[\s\S]*?right:8%!important[\s\S]*?top:12\.5%!important[\s\S]*?bottom:2\.5%!important/,'이벤트 대화창은 중앙 비율을 유지하면서 설정·배속 버튼과 왕의 얼굴을 가리지 않아야 합니다.');
+assert.match(css,/대화형 명절 컷에서는 설정·배속 조작을 숨겨 대화창과 절대 겹치지 않게 한다[\s\S]*?\.settings-gear[\s\S]*?\.activity-playback\{display:none!important\}/,'명절 이벤트 대화 중에는 상단 조작 버튼이 보이면 안 됩니다.');
 assert.match(style,/인연 이벤트 5인은 원화·성별과 무관하게 동일한 인물 상자와 긴 하단 페이드를 쓴다[\s\S]*?width:58%!important[\s\S]*?height:66%!important[\s\S]*?bottom:17%!important/,'인연 5인은 최종 공통 화면 계약을 사용');
 assert.match(css,/speaker-seonhwa>\.sehwa-expression\{[^}]*width:100%!important[^}]*height:112%!important[^}]*background-position:center 64%!important[^}]*background-size:70% auto!important/,'선화 얼굴은 신수보다 크게 확대되면 안 됩니다.');
 assert.match(app,/const portrait=playerWinner[\s\S]*baseSpriteForAge\(\)[\s\S]*moonlightEntrantImage\(winner\)/,'우승자별 나이 맞춤 반실사 수상 소감 분기');
