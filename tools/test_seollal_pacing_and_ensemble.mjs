@@ -59,5 +59,6 @@ assert.doesNotMatch(css,/sehwa-(?:receive|slip)[^;}]*infinite/,'참가표 수령
 assert.match(css,/@keyframes sehwa-slip-handover/,'참가표가 접수 관리에게서 선화에게 이동해야 합니다.');
 assert.match(app,/선화가 자리에 앉아 세화를 그리기 시작했어요/,'구형 8인 판자 장면 대신 선화의 그림 시작 서술이 필요합니다.');
 assert.match(css,/\.sehwa-drawing-ensemble\{[^}]*grid-template-columns:repeat\(4,1fr\)/,'참가자 8명은 4×2 구도로 배치해야 합니다.');
+assert.match(css,/설날 8인 준비 장면은 가장자리 인물을 페이드로 자르지 않고 안전 여백 안에 전부 둔다[\s\S]*?inset:0 2%!important[\s\S]*?width:96%!important[\s\S]*?height:100%!important[\s\S]*?#000 78%[\s\S]*?#000 1%[\s\S]*?#000 99%/,'8인 참가자는 가장자리 절단 없이 안전 여백 안에 보여야 합니다.');
 assert.match(css,/\.sehwa-contest\.festival-pm3 \.sehwa-hero\{[^}]*width:210px!important;[^}]*height:270px!important/,'설날 반실사 주인공은 중앙에서 충분히 크게 보여야 합니다.');
 console.log('PASS: 설날 수동 진행·5초 전원 그림·스테이터스 응답·캐릭터 축소·공손한 참가표 수령');

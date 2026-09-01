@@ -3273,3 +3273,8 @@ body:has(.panel:not([hidden])) .phone>.home-bottom-nav{display:none!important}
 .sehwa-contest.festival-pm3 .festival-character-cut.king-cut img,
 .moonlight-pageant.festival-pm3 .festival-character-cut.king-cut img{width:112%!important;height:108%!important;bottom:4%!important;box-sizing:border-box!important;object-fit:contain!important;object-position:center bottom!important;-webkit-mask-image:linear-gradient(to bottom,#000 0 58%,#000e 69%,#0009 79%,#0005 89%,transparent 100%)!important;mask-image:linear-gradient(to bottom,#000 0 58%,#000e 69%,#0009 79%,#0005 89%,transparent 100%)!important}
 .sehwa-contest.festival-pm3 .sehwa-opening-dialogue>div,.moonlight-pageant.festival-pm3 .sehwa-opening-dialogue>div{top:10%!important}
+
+/* v0.64.275 — 설날 8인 준비 장면은 가장자리 인물을 페이드로 자르지 않고 안전 여백 안에 전부 둔다. */
+.sehwa-contest.festival-pm3 .sehwa-eight-entrant-scene{overflow:hidden!important}
+.sehwa-contest.festival-pm3 .sehwa-eight-entrant-scene img{inset:0 2%!important;width:96%!important;height:100%!important;object-fit:contain!important;object-position:center!important}
+.sehwa-contest.festival-pm3 .sehwa-eight-entrant-scene .sehwa-ensemble-base{-webkit-mask-image:linear-gradient(to bottom,transparent 0,#000 7%,#000 78%,transparent 100%),linear-gradient(to right,transparent 0,#000 1%,#000 99%,transparent 100%)!important;-webkit-mask-composite:source-in!important;mask-image:linear-gradient(to bottom,transparent 0,#000 7%,#000 78%,transparent 100%),linear-gradient(to right,transparent 0,#000 1%,#000 99%,transparent 100%)!important;mask-composite:intersect!important}
