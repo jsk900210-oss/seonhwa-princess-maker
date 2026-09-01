@@ -248,7 +248,7 @@ const vacationIllustrations=[
 function unifiedAgeFolder(){return '09';}
 function scheduleFramePath(file){return `../assets/characters/seonhwa/schedule-actions/v2/${file}`;}
 function scheduleBasePath(file){return `../assets/characters/seonhwa/schedule-base/${file}`;}
-const scheduleAssetRevision='0.64.267-debug';
+const scheduleAssetRevision='0.64.268-debug';
 const scheduleQaParams=new URLSearchParams(location.search);
 const moonlightStandaloneQa=scheduleQaParams.get('qaHoliday')==='chuseok';
 const sehwaStandaloneQa=scheduleQaParams.get('qaHoliday')==='seollal';
@@ -1618,8 +1618,8 @@ const moonlightAge13StageMotionMap={enter:[1,1,1],bow:[1,7,1],walk:[10,1,8],fini
 function moonlightTukkurPerformance(){
   const root='../assets';
   return {
-    standing:`${root}/characters/seonhwa/schedule-base/stand-front-v3-pixel.png?v=${scheduleAssetRevision}`,
-    raisedHands:`${root}/events/holidays/moonlight-pageant/seonhwa/seonhwa-pageant-raised-hands-pixel-v1.png?v=${scheduleAssetRevision}`
+    stage:`${root}/events/holidays/moonlight-pageant/background/moonlight-pageant-schedule-stage-v1.png?v=${scheduleAssetRevision}`,
+    performer:`${root}/events/holidays/moonlight-pageant/seonhwa/seonhwa-pageant-raised-hands-pixel-v1.png?v=${scheduleAssetRevision}`
   };
 }
 function shuffled(items){return items.map(value=>({value,sort:Math.random()})).sort((a,b)=>a.sort-b.sort).map(item=>item.value);}
@@ -1703,7 +1703,7 @@ function renderMoonlightPageant(session,dayIndex){
   // 신수의 응원과 상태별 선화의 대답은 반드시 한 장면씩 교대한다.
   // 이 대화가 끝난 뒤에만 쯔꾸르 선화의 입장·인사·손끝 회전 무대를 노출한다.
   const performance=dance?moonlightTukkurPerformance():null;
-  const hero=performance?`<span class="pageant-tukkur-performance" role="img" aria-label="왼쪽에서 입장한 선화가 인사한 뒤 두 손을 머리 위에 둥글게 올리고 회전하여 오른쪽에서 멈춘다."><img class="pageant-tukkur-standing" src="${performance.standing}" alt=""><img class="pageant-tukkur-raised-hands" src="${performance.raisedHands}" alt=""></span>`:'';
+  const hero=performance?`<section class="pageant-schedule-window" aria-label="일정 진행 창 안의 한가위 경연 무대"><div class="pageant-schedule-inner"><img class="pageant-schedule-map" src="${performance.stage}" alt="보름달 아래 가로로 펼쳐진 궁중 한가위 경연 무대"><div class="pageant-schedule-shade" aria-hidden="true"></div><span class="pageant-tukkur-performance" role="img" aria-label="선화가 같은 쯔꾸르 모습으로 왼쪽에서 입장해 인사하고 두 손을 머리 위에 둥글게 올린 채 반회전하여 오른쪽에서 멈춘다."><img class="pageant-tukkur-raised-hands" src="${performance.performer}" alt=""></span></div><p>한가위 경연 · 선화의 인사</p></section>`:'';
   const king=judging?festivalKingCut('센스와 예절, 기품에 담긴 마음을 차분히 살펴보겠다.','한가위 경연을 심사하는 왕'):'';
   const board=ranking?festivalScoreboard(session,'참가자 8명 최종 순위와 수상 결과'):'';
   const winner=award?`<figure class="pageant-winner is-solo ${session.winner.player?'is-seonhwa':''}"><img src="${moonlightAwardWinnerImage(session.winner)}" alt="대상 수상자 ${session.winner.name}"></figure>`:'';

@@ -3087,15 +3087,19 @@ body .phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage:
 .sehwa-opening-dialogue.speaker-seonhwa.status-angry .sehwa-expression,.sehwa-opening-dialogue.speaker-seonhwa.status-rebellious .sehwa-expression{transform:scale(1.3) translateX(-5px)!important}
 .sehwa-opening-dialogue.speaker-seonhwa.status-shocked .sehwa-expression{transform:scale(1.28) translateY(-3px)!important}
 
-/* v0.64.267 — 한가위 경연: 쯔꾸르 선화가 입장·공수 인사 뒤 손끝을 맞대고 반회전해 무대 오른쪽에 선다. */
-.moonlight-pageant.festival-pm3.motion-dance .pageant-tukkur-performance{position:absolute;z-index:7;left:0;bottom:25%!important;width:96px;height:128px;display:block;filter:drop-shadow(0 3px 3px #160b08aa);animation:pageant-tukkur-cross-stage 8.4s ease-in-out forwards}
-.moonlight-pageant.festival-pm3.motion-dance .pageant-tukkur-performance img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;object-position:center bottom;image-rendering:pixelated}
-.moonlight-pageant.festival-pm3.motion-dance .pageant-tukkur-standing{animation:pageant-tukkur-greeting 8.4s steps(1,end) forwards;transform-origin:center bottom}
-.moonlight-pageant.festival-pm3.motion-dance .pageant-tukkur-raised-hands{opacity:0;animation:pageant-tukkur-raised-turn 8.4s linear forwards;transform-origin:center bottom}
-@keyframes pageant-tukkur-cross-stage{0%{transform:translateX(-110%)}22%{transform:translateX(calc(50vw - 48px))}35%{transform:translateX(calc(50vw - 48px))}85%{transform:translateX(calc(100vw - 132px))}100%{transform:translateX(calc(100vw - 132px))}}
-@keyframes pageant-tukkur-greeting{0%,21%{opacity:1;transform:translateY(0) scaleY(1)}22%,34%{opacity:1;transform:translateY(8px) scaleY(.84)}35%,100%{opacity:0;transform:translateY(0) scaleY(1)}}
-@keyframes pageant-tukkur-raised-turn{0%,34%{opacity:0;transform:perspective(400px) rotateY(0deg)}35%{opacity:1;transform:perspective(400px) rotateY(0deg)}70%{opacity:1;transform:perspective(400px) rotateY(180deg)}71%,100%{opacity:1;transform:perspective(400px) rotateY(180deg)}}
-@media(prefers-reduced-motion:reduce){.moonlight-pageant.festival-pm3.motion-dance .pageant-tukkur-performance{animation-duration:1ms}.moonlight-pageant.festival-pm3.motion-dance .pageant-tukkur-standing{opacity:0;animation:none}.moonlight-pageant.festival-pm3.motion-dance .pageant-tukkur-raised-hands{opacity:1;animation:none}}
+/* v0.64.268 — 한가위 경연은 일정 진행 창 안의 가로형 무대에서 같은 쯔꾸르 선화 한 장으로 연기한다. */
+.moonlight-pageant.festival-pm3.motion-dance .pageant-schedule-window{position:absolute;z-index:7;left:7%;right:7%;top:28%;height:39%;margin:0;padding:8px;border:1px solid #c8a86b;border-radius:16px;background:linear-gradient(145deg,#503927,#241914 48%,#4a3223);box-shadow:0 16px 35px #120c09c4,0 2px 6px #0008,inset 0 0 0 1px #f0d59b55,inset 0 0 0 6px #211610}
+.moonlight-pageant.festival-pm3.motion-dance .pageant-schedule-window:before,.moonlight-pageant.festival-pm3.motion-dance .pageant-schedule-window:after{content:"";position:absolute;z-index:2;top:16px;bottom:29px;width:2px;border-radius:99px;background:linear-gradient(#d8bd7c00,#d8bd7c 16%,#8e6a34 50%,#d8bd7c 84%,#d8bd7c00)}
+.moonlight-pageant.festival-pm3.motion-dance .pageant-schedule-window:before{left:7px}.moonlight-pageant.festival-pm3.motion-dance .pageant-schedule-window:after{right:7px}
+.moonlight-pageant.festival-pm3.motion-dance .pageant-schedule-inner{position:relative;height:calc(100% - 23px);overflow:hidden;border:1px solid #a98b5d;border-radius:9px;background:#15100d;box-shadow:inset 0 0 0 4px #f7edda,0 0 0 1px #17100d}
+.moonlight-pageant.festival-pm3.motion-dance .pageant-schedule-map{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;filter:saturate(.88) contrast(1.06)}
+.moonlight-pageant.festival-pm3.motion-dance .pageant-schedule-shade{position:absolute;z-index:1;inset:0;background:linear-gradient(#fff4d80d 0 58%,#24170e54 100%),radial-gradient(ellipse at center,#0000 34%,#160c0960 100%);pointer-events:none}
+.moonlight-pageant.festival-pm3.motion-dance .pageant-tukkur-performance{position:absolute;z-index:2;left:-25%;bottom:7%;width:96px;height:128px;display:block;filter:drop-shadow(0 3px 3px #160b08aa);animation:pageant-tukkur-cross-stage 8.4s ease-in-out forwards}
+.moonlight-pageant.festival-pm3.motion-dance .pageant-tukkur-raised-hands{display:block;width:100%;height:100%;object-fit:contain;object-position:center bottom;image-rendering:pixelated;transform-origin:center bottom;animation:pageant-tukkur-raised-turn 8.4s linear forwards}
+.moonlight-pageant.festival-pm3.motion-dance .pageant-schedule-window>p{position:relative;z-index:3;margin:4px 0 0;color:#fff3d5;text-align:center;font-size:10px;font-weight:800;line-height:1.2}
+@keyframes pageant-tukkur-cross-stage{0%{left:-25%}22%{left:calc(50% - 48px)}35%{left:calc(50% - 48px)}85%{left:calc(100% - 104px)}100%{left:calc(100% - 104px)}}
+@keyframes pageant-tukkur-raised-turn{0%,21%{transform:translateY(0) scaleY(1)}22%,34%{transform:translateY(8px) scaleY(.84)}35%{transform:perspective(400px) rotateY(0deg)}70%{transform:perspective(400px) rotateY(180deg)}71%,100%{transform:perspective(400px) rotateY(180deg)}}
+@media(prefers-reduced-motion:reduce){.moonlight-pageant.festival-pm3.motion-dance .pageant-tukkur-performance,.moonlight-pageant.festival-pm3.motion-dance .pageant-tukkur-raised-hands{animation-duration:1ms}}
 /* 명절 대화 컷: 하단을 넓게 녹이고, 다음 장면으로 갈 때 급하게 끊기지 않는다. */
 .sehwa-opening-dialogue>.sehwa-dialogue-bust,
 .sehwa-opening-dialogue>.sehwa-expression{
