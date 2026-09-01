@@ -30,7 +30,7 @@ assert.match(app,/waitForFestivalTapAdvance\(beat===2\?8600/,'입장·인사·�
 assert.match(css,/pageant-tukkur-cross-stage 8\.4s/,'쯔꾸르 선화는 왼쪽에서 오른쪽으로 이동해야 합니다.');
 assert.match(css,/pageant-tukkur-greeting/,'중앙에서 공손히 인사해야 합니다.');
 assert.match(css,/pageant-tukkur-raised-turn/,'두 손을 머리 위에 둥글게 올린 채 회전해야 합니다.');
-assert.match(css,/rotate\(720deg\)/,'한가위 쯔꾸르 연출은 두 바퀴 회전해야 합니다.');
+assert.match(css,/rotateY\(180deg\)/,'한가위 쯔꾸르 연출은 손끝을 맞댄 채 반회전해야 합니다.');
 for(const age of ['09','13','16','19'])assert.ok(fs.existsSync(path.join(root,`assets/characters/seonhwa/identity-semi-real-v9/seonhwa-age${age}-identity-v9.png`)),`선화 ${age}세 반실사 기준 초상`);
 assert.ok(fs.existsSync(path.join(root,'assets/events/holidays/moonlight-pageant/seonhwa/consistent-dance-v9/seonhwa-dance-slow-v1.png')),'complete dance');
 assert.match(app,/const guardianType=game\.guardianType\|\|'hyeonmu';/,'신수 미선택 상태에도 도입 대화 유지');
