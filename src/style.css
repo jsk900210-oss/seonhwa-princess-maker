@@ -61,6 +61,11 @@ body{min-height:100dvh}.phone{width:min(100vw,calc(100dvh * 9 / 16),430px);max-h
 .relation-encounter-dialogue b{font-size:19px!important}
 .relation-encounter-dialogue span{font-size:15px!important;line-height:1.58!important}
 .relation-encounter-dialogue small{right:16px!important;bottom:9px!important;font-size:10px!important}
+
+/* v0.64.270 — 인연 5인은 성별·원화별 예외 없이 한 인물 상자와 바닥선을 공유한다. */
+.relation-encounter-person{bottom:17%!important;width:58%!important;height:66%!important;box-sizing:border-box!important;object-fit:contain!important;object-position:center bottom!important;clip-path:none!important;-webkit-mask-image:linear-gradient(to bottom,#000 0 68%,#000e 77%,#0009 86%,#0005 94%,transparent 100%)!important;mask-image:linear-gradient(to bottom,#000 0 68%,#000e 77%,#0009 86%,#0005 94%,transparent 100%)!important}
+.relation-encounter-female{bottom:17%!important;width:58%!important;height:66%!important;clip-path:none!important}
+.relation-encounter-dialogue{bottom:2%!important}
 .relation-encounter-choices{gap:8px!important;padding:13px!important}
 .relation-encounter-choices button{min-height:52px!important;padding:11px 14px!important;font-size:13px!important;line-height:1.45!important}
 @media(max-width:380px){

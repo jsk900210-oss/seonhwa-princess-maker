@@ -3134,6 +3134,62 @@ body .phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage:
 .sehwa-opening-dialogue.speaker-guardian>div{top:10%!important}
 .moonlight-pageant.festival-pm3 .sehwa-opening-dialogue.speaker-seonhwa.status-shocked .sehwa-expression{transform:translateY(-4px)!important}
 
+/* v0.64.270 — 이벤트 선화·신수·왕은 같은 상단 인물/하단 대화 규격과 긴 하단 페이드를 공유한다. */
+.sehwa-opening-dialogue.speaker-seonhwa>.sehwa-expression,
+.moonlight-pageant.festival-pm3 .sehwa-opening-dialogue.speaker-guardian>.sehwa-dialogue-bust{
+  bottom:4%!important;
+  height:108%!important;
+  -webkit-mask-image:linear-gradient(to bottom,#000 0 68%,#000e 77%,#0009 86%,#0005 94%,transparent 100%)!important;
+  mask-image:linear-gradient(to bottom,#000 0 68%,#000e 77%,#0009 86%,#0005 94%,transparent 100%)!important;
+}
+.sehwa-opening-dialogue.speaker-seonhwa>div{top:10%!important}
+.festival-character-cut img,
+.moonlight-pageant.festival-pm3 .festival-character-cut.guardian-cut img,
+.festival-character-cut.king-cut img{
+  bottom:4%!important;
+  -webkit-mask-image:linear-gradient(to bottom,#000 0 68%,#000e 77%,#0009 86%,#0005 94%,transparent 100%)!important;
+  mask-image:linear-gradient(to bottom,#000 0 68%,#000e 77%,#0009 86%,#0005 94%,transparent 100%)!important;
+}
+.festival-character-cut:not(.king-cut) p{top:10%!important}
+.festival-character-cut.king-cut:not(.moonlight-award-congratulation) p{top:10%!important}
+
+/* v0.64.270 — 대화 컷은 종류와 무관하게 같은 인물 상자·바닥선으로 검수한다.
+   원화의 여백은 object-fit으로 정리하고, 하단은 절단하지 않고 길게 페이드한다. */
+.sehwa-opening-dialogue.speaker-seonhwa>.sehwa-expression,
+.sehwa-opening-dialogue.speaker-guardian>.sehwa-dialogue-bust,
+.festival-character-cut.guardian-cut img,
+.festival-character-cut.king-cut img{
+  width:112%!important;
+  height:108%!important;
+  bottom:4%!important;
+  box-sizing:border-box!important;
+  object-fit:contain!important;
+  object-position:center bottom!important;
+  -webkit-mask-image:linear-gradient(to bottom,#000 0 68%,#000e 77%,#0009 86%,#0005 94%,transparent 100%)!important;
+  mask-image:linear-gradient(to bottom,#000 0 68%,#000e 77%,#0009 86%,#0005 94%,transparent 100%)!important;
+}
+.sehwa-opening-dialogue.speaker-seonhwa>div,
+.sehwa-opening-dialogue.speaker-guardian>div,
+.festival-character-cut:not(.moonlight-award-congratulation) p{top:10%!important}
+/* 한가위에 남아 있던 왕·신수·선화 개별 치수도 이 공통 상자가 최종 우선한다. */
+.moonlight-pageant.festival-pm3 .sehwa-opening-dialogue.speaker-seonhwa>.sehwa-expression,
+.moonlight-pageant.festival-pm3 .sehwa-opening-dialogue.speaker-guardian>.sehwa-dialogue-bust,
+.moonlight-pageant.festival-pm3.motion-royal-judging .festival-character-cut.king-cut img{
+  width:112%!important;
+  height:108%!important;
+  bottom:4%!important;
+}
+
+/* 세화 대화 원화는 contain 정렬 때문에 캔버스 중간에서 끝나지 않도록 세로 기준으로 채운다.
+   따라서 긴 마스크 구간이 실제 옷자락까지 작동하고, 사각형 하단이 남지 않는다. */
+.sehwa-opening-dialogue.speaker-seonhwa>.sehwa-expression{
+  background-color:transparent!important;
+  background-size:auto 108%!important;
+  background-position:center bottom!important;
+  -webkit-mask-image:linear-gradient(to bottom,#000 0 58%,#000e 69%,#0009 79%,#0005 89%,transparent 100%)!important;
+  mask-image:linear-gradient(to bottom,#000 0 58%,#000e 69%,#0009 79%,#0005 89%,transparent 100%)!important;
+}
+
 
 /* v0.64.231 — market replaces the home bottom menu with one compact exit. */
 .phone.market-playing>.home-bottom-nav>button:not(#marketFinish){display:none!important}
@@ -3195,3 +3251,14 @@ body:has(.panel:not([hidden])) .phone>.home-bottom-nav{display:none!important}
 /* v0.64.242 — classic education scenes share the same 96px actor contract. */
 #activityStage:is(.action-reading,.action-arithmetic,.action-manners) .stage-character.pixel-sprite,#activityStage:is(.action-reading,.action-arithmetic,.action-manners) .stage-npc.npc-teacher{width:96px!important;height:96px!important;min-width:96px!important;min-height:96px!important;bottom:4%!important;box-sizing:border-box!important;object-fit:contain!important;object-position:center bottom!important;transform-origin:center bottom!important}
 #activityStage:is(.action-reading,.action-arithmetic,.action-manners) .stage-character.pixel-sprite>img{width:96px!important;height:96px!important;max-width:96px!important;max-height:96px!important;object-fit:contain!important;object-position:center bottom!important;transform:none!important}
+
+/* v0.64.271 — 최종 대화 초상 계약. 파일 앞쪽의 명절별 예외보다 반드시 나중에 적용한다. */
+.sehwa-opening-dialogue.speaker-seonhwa>.sehwa-expression,
+.sehwa-opening-dialogue.speaker-guardian>.sehwa-dialogue-bust,
+.festival-character-cut.guardian-cut img,
+.festival-character-cut.king-cut img{width:112%!important;height:108%!important;bottom:4%!important;box-sizing:border-box!important;object-fit:contain!important;object-position:center bottom!important;-webkit-mask-image:linear-gradient(to bottom,#000 0 58%,#000e 69%,#0009 79%,#0005 89%,transparent 100%)!important;mask-image:linear-gradient(to bottom,#000 0 58%,#000e 69%,#0009 79%,#0005 89%,transparent 100%)!important}
+.sehwa-opening-dialogue.speaker-seonhwa>.sehwa-expression{background-color:transparent!important;background-size:112% auto!important;background-position:center bottom!important}
+.sehwa-opening-dialogue.speaker-seonhwa>div,.sehwa-opening-dialogue.speaker-guardian>div,.festival-character-cut:not(.moonlight-award-congratulation) p{top:10%!important}
+.moonlight-pageant.festival-pm3.motion-royal-judging .festival-character-cut.king-cut img{width:112%!important;height:108%!important;bottom:4%!important}
+/* 한가위 전용 selector는 특이도가 높으므로 같은 selector로 마지막에 덮어쓴다. */
+.moonlight-pageant.festival-pm3 .sehwa-opening-dialogue.speaker-seonhwa>.sehwa-expression{width:112%!important;height:108%!important;bottom:4%!important;background-size:112% auto!important;background-position:center bottom!important;-webkit-mask-image:linear-gradient(to bottom,#000 0 58%,#000e 69%,#0009 79%,#0005 89%,transparent 100%)!important;mask-image:linear-gradient(to bottom,#000 0 58%,#000e 69%,#0009 79%,#0005 89%,transparent 100%)!important}
