@@ -18,7 +18,7 @@ for(const mode of ['market-playing','vacation-playing'])for(const layer of ['hom
 assert.ok(html.includes('class="activity-backdrop"'),'schedules need a separate full-screen activity backdrop');
 assert.match(css,/\.phone\.playing:not\(\.market-playing\):not\(\.vacation-playing\)>\.activity-backdrop\{display:block\}/,'full activity backdrop must remain visible behind the RPG window');
 assert.match(schedule,/action-holiday-seollal\{inset:0!important;[^}]*overflow:hidden!important\}/,'Seollal stage must fill the phone without an extra border');
-assert.match(schedule,/animation:sehwa-brush-frame-10fps 1s steps\(1,end\) 5/,'ten transparent solo frames must run at 10fps for five seconds');
+assert.match(schedule,/animation:sehwa-brush-frame-10fps 1s steps\(1,end\) infinite/,'one complete solo frame must run at a time at 10fps without stacking a second brush');
 assert.doesNotMatch(schedule,/\.sehwa-hero\.is-brush-frames\{[^}]*transform:/,'brush-frame motion must not shake the whole character/table layer');
 assert.match(app,/className='festival-tap-next'/,'a visible next-scene button must appear when the minimum scene time ends');
 assert.match(app,/fallStart=7,fallEnd=15/,'childcare falls must hold before recovering instead of snapping upright');
@@ -30,6 +30,6 @@ assert.match(app,/preparing\?preparationSceneBackground:emptySceneBackground/, '
 assert.doesNotMatch(app,/class="sehwa-ensemble-base"/, 'the stable base frame must not be composited above a second hall background');
 assert.match(app,/drawing-1-mobile-3x5-hands-v1\.png/,'the preparation scene must use a same-ratio hand-motion frame above the single background');
 assert.match(app,/hands\.map\(\(\[x,y,dx,dy\],index\)=>`<img class="sehwa-ensemble-motion-patch"/,'the preparation scene must animate individual localized hand patches above the single background');
-assert.match(schedule,/\.sehwa-eight-entrant-scene \.sehwa-ensemble-motion-patch\{[\s\S]*mask-image:var\(--sehwa-hand-mask\)[\s\S]*sehwa-eight-hand-stroke 5\.6s ease-in-out/,'each entrant patch must be limited to a small, slowly fading brush-hand area');
+assert.match(schedule,/\.sehwa-eight-entrant-scene \.sehwa-ensemble-motion-patch\{[\s\S]*mask-image:var\(--sehwa-hand-mask\)[\s\S]*sehwa-eight-hand-stroke 3\.2s ease-in-out/,'each entrant patch must be limited to a small, readable brush-hand area');
 assert.match(schedule,/\.sehwa-eight-entrant-scene \.sehwa-ensemble-motion-patch\{inset:0!important;[^}]*object-fit:cover!important/,'the 3:5 hand-motion overlay must not be shrunk by the retired 2:3 contain rule');
 console.log('PASS: home layer order, schedule isolation, Seollal border and motion contracts');

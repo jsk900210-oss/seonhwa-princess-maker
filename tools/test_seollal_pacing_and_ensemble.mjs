@@ -29,8 +29,9 @@ assert.doesNotMatch(app,/title\|\|preparing\?sehwaPreparationEnsemble/,'제목 �
 assert.match(app,/drawing-1-mobile-3x5-v1\.png/,'준비 장면에는 서로 다른 머리 모양의 참가자 여덟 명을 담은 전용 3:5 장면이 필요합니다.');
 assert.ok(existsSync(new URL('../assets/events/holidays/sehwa-contest/preparation-scene/eight-entrant-v1/drawing-1-mobile-3x5-v1.png',import.meta.url)),'8인 참가자가 한 장면으로 이어진 세로 배경이 필요합니다.');
 for(let frame=1;frame<=10;frame+=1)assert.ok(existsSync(new URL(`../assets/events/holidays/sehwa-contest/seonhwa/drawing/age-13/painting-brush-10fps-v2/frame-${String(frame).padStart(2,'0')}.png`,import.meta.url)),`외땋기 선화의 투명 붓질 ${frame} 프레임이 필요합니다.`);
-assert.match(css,/animation:sehwa-brush-frame-10fps 1s steps\(1,end\) 5/,'선화의 투명 10프레임 붓질은 10fps로 총 5초 재생해야 합니다.');
-assert.match(css,/\.sehwa-hero\.is-brush-frames img\{[^}]*mask-image:radial-gradient\(ellipse 11% 14% at 36% 51%/,'붓질 프레임은 고정된 몸·책상·화선지 위에서 손과 붓대만 바꿔야 합니다.');
+assert.match(css,/animation:sehwa-brush-frame-10fps 1s steps\(1,end\) infinite/,'선화 붓질은 중복 붓 없이 완전한 10프레임을 10fps로 반복 재생해야 합니다.');
+assert.match(app,/stableBrushFrames=Array\.from\(\{length:10\},\(_,index\)=>brushFrames\[index<5\?0:9\]\)/,'치마 조각이 튀는 중간 프레임 대신 검증된 두 자세만 써야 합니다.');
+assert.match(css,/\.sehwa-hero\.is-brush-frames img\{[^}]*sehwa-brush-frame-10fps 1s steps\(1,end\) infinite/,'붓질은 검증된 원화 프레임을 한 장씩 10fps로 재생해야 합니다.');
 assert.match(app,/외땋기와 댕기를 한 선화/,'미혼 선화는 성인 올림머리 대신 땋은 머리와 댕기를 유지해야 합니다.');
 assert.match(app,/\{id:'eunseo',name:'은서'/,'플레이어를 포함한 8인 참가 명단이 필요합니다.');
 assert.match(app,/8인 세화 심사/,'설날 심사표도 8인 기준이어야 합니다.');
@@ -63,7 +64,7 @@ assert.doesNotMatch(app,/class="sehwa-ensemble-base"/,'8인 준비 원화를 별
 assert.match(app,/drawing-1-mobile-3x5-v1\.png/,'8인 준비 장면은 창 비율과 같은 단일 3:5 배경으로 그려 경계선과 잘림을 없애야 합니다.');
 assert.match(app,/drawing-1-mobile-3x5-hands-v1\.png/,'8인 장면에는 통합 배경 비율과 같은 손동작 프레임이 필요합니다.');
 assert.match(app,/sehwa-ensemble-motion-patch/,'8인 장면에서는 다른 홀을 드러내지 않는 손동작 패치만 재생해야 합니다.');
-assert.match(css,/\.sehwa-ensemble-motion-patch\{[\s\S]*?mask-image:var\(--sehwa-hand-mask\)[\s\S]*?sehwa-eight-hand-stroke 5\.6s ease-in-out/,'8명은 종이·책상 대신 손 영역만 천천히 움직여야 합니다.');
+assert.match(css,/\.sehwa-ensemble-motion-patch\{[\s\S]*?mask-image:var\(--sehwa-hand-mask\)[\s\S]*?sehwa-eight-hand-stroke 3\.2s ease-in-out/,'8명은 종이·책상 대신 손 영역만 자연스럽게 움직여야 합니다.');
 assert.match(css,/@keyframes sehwa-eight-hand-stroke\{[\s\S]*?transform:translate\(var\(--sehwa-hand-x\),var\(--sehwa-hand-y\)\)/,'붓 든 손은 정지 프레임 위에서 실제 붓질 방향으로만 미세하게 이동해야 합니다.');
 assert.match(css,/\.sehwa-contest\.festival-pm3 \.sehwa-hero\{[^}]*width:210px!important;[^}]*height:270px!important/,'설날 반실사 주인공은 중앙에서 충분히 크게 보여야 합니다.');
 console.log('PASS: 설날 수동 진행·5초 전원 그림·스테이터스 응답·캐릭터 축소·공손한 참가표 수령');

@@ -2937,7 +2937,7 @@ body .phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage:
   opacity:0;
   -webkit-mask-image:var(--sehwa-hand-mask);
   mask-image:var(--sehwa-hand-mask);
-  animation:sehwa-eight-hand-stroke 5.6s ease-in-out infinite;
+  animation:sehwa-eight-hand-stroke 3.2s ease-in-out infinite;
   animation-delay:calc(var(--sehwa-hand-delay) * -1);
 }
 @keyframes sehwa-eight-hand-stroke{0%,20%{opacity:0;transform:translate(0,0)}40%,60%{opacity:.82;transform:translate(var(--sehwa-hand-x),var(--sehwa-hand-y))}80%,100%{opacity:0;transform:translate(0,0)}}
@@ -2966,9 +2966,9 @@ body .phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage:
 .phone.playing:has(.activity-stage.action-holiday-seollal:not([hidden])) .sehwa-opening-dialogue>div p{padding-right:104px!important}
 
 /* 5×2, 10프레임 시트: 책상·화선지·완성 그림은 고정하고 손목과 붓대만 10fps로 움직인다. */
-.sehwa-contest .sehwa-hero.is-brush-frames{width:290px!important;height:290px!important;background:var(--sehwa-brush-final) center bottom/contain no-repeat!important;animation:none!important}
-/* The final frame locks the pose, desk and paper.  The animated reveal is limited to the brush hand and shaft, never the paper. */
-.sehwa-contest .sehwa-hero.is-brush-frames img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;object-position:center bottom;opacity:0;-webkit-mask-image:radial-gradient(ellipse 11% 14% at 36% 51%,#000 63%,transparent 100%);mask-image:radial-gradient(ellipse 11% 14% at 36% 51%,#000 63%,transparent 100%);animation:sehwa-brush-frame-10fps 1s steps(1,end) 5;animation-delay:calc(var(--sehwa-brush-frame) * .1s)}
+.sehwa-contest .sehwa-hero.is-brush-frames{width:290px!important;height:290px!important;background:none!important;animation:none!important}
+/* Only clean, matching full-pose frames are used.  Exactly one frame is visible, so neither a second brush nor detached skirt fragments can appear. */
+.sehwa-contest .sehwa-hero.is-brush-frames img{position:absolute;z-index:1;inset:0;width:100%;height:100%;object-fit:contain;object-position:center bottom;opacity:0;animation:sehwa-brush-frame-10fps 1s steps(1,end) infinite;animation-delay:calc(var(--sehwa-brush-frame) * .1s)}
 @keyframes sehwa-brush-frame-10fps{0%,9.99%{opacity:1}10%,100%{opacity:0}}
 
 /* 일정 모션 규칙: PNG 전체 흔들기/확대축소 금지, 자세 프레임과 실제 좌표 이동만 허용. */

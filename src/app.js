@@ -248,7 +248,7 @@ const vacationIllustrations=[
 function unifiedAgeFolder(){return '09';}
 function scheduleFramePath(file){return `../assets/characters/seonhwa/schedule-actions/v2/${file}`;}
 function scheduleBasePath(file){return `../assets/characters/seonhwa/schedule-base/${file}`;}
-const scheduleAssetRevision='0.64.297-debug';
+const scheduleAssetRevision='0.64.302-debug';
 const scheduleQaParams=new URLSearchParams(location.search);
 const moonlightStandaloneQa=scheduleQaParams.get('qaHoliday')==='chuseok';
 const sehwaStandaloneQa=scheduleQaParams.get('qaHoliday')==='seollal';
@@ -1835,16 +1835,16 @@ function sehwaOpeningDialogue(session,beat){
 }
 function sehwaPreparationEnsemble(session){
   const base='../assets/events/holidays/sehwa-contest/preparation-scene/eight-entrant-v1';
-  const hands=[[31,56,3,-2],[69,56,-3,2],[24,60,3,-2],[76,61,-3,2],[18,66,3,-2],[82,67,-3,2],[14,74,3,-2],[86,74,-3,2]];
+  const hands=[[31,56,4,-3],[69,56,-4,3],[24,60,4,-3],[76,61,-4,3],[18,66,4,-3],[82,67,-4,3],[14,74,4,-3],[86,74,-4,3]];
   const handFrame=`${base}/drawing-1-mobile-3x5-hands-v1.png?v=${scheduleAssetRevision}`;
-  return `<section class="sehwa-eight-entrant-scene" aria-label="참가자 여덟 명이 몸과 화선지를 고정한 채 붓 든 손만 섬세하게 움직이며 세화를 완성하는 장면">${hands.map(([x,y,dx,dy],index)=>`<img class="sehwa-ensemble-motion-patch" src="${handFrame}" alt="" style="--sehwa-hand-mask:radial-gradient(ellipse 3% 4% at ${x}% ${y}%,#000 38%,transparent 100%);--sehwa-hand-delay:${(index*.43).toFixed(2)}s;--sehwa-hand-x:${dx}px;--sehwa-hand-y:${dy}px">`).join('')}</section>`;
+  return `<section class="sehwa-eight-entrant-scene" aria-label="참가자 여덟 명이 몸과 화선지를 고정한 채 붓 든 손만 섬세하게 움직이며 세화를 완성하는 장면">${hands.map(([x,y,dx,dy],index)=>`<img class="sehwa-ensemble-motion-patch" src="${handFrame}" alt="" style="--sehwa-hand-mask:radial-gradient(ellipse 3% 4% at ${x}% ${y}%,#000 38%,transparent 100%);--sehwa-hand-delay:${(index*.25).toFixed(2)}s;--sehwa-hand-x:${dx}px;--sehwa-hand-y:${dy}px">`).join('')}</section>`;
 }
 function renderSehwaContest(session,beatIndex){
   const overlay=document.querySelector('#moonlightPageant');if(!overlay)return;
   const beat=Math.min(sehwaStoryBeats.length-1,Math.max(0,beatIndex)),opening=beat<=1,title=beat===2,intro=beat===3,preparing=beat===4,drawing=beat>=5&&beat<=10,vote=beat===11,result=beat===12,guardianResult=beat===13;
   const stageMap=document.querySelector('#stageMap'),emptySceneBackground=`../assets/events/holidays/sehwa-contest/background/royal-contest-hall-empty-v1.png?v=${scheduleAssetRevision}`,preparationSceneBackground=`../assets/events/holidays/sehwa-contest/preparation-scene/eight-entrant-v1/drawing-1-mobile-3x5-v1.png?v=${scheduleAssetRevision}`,sceneBackground=preparing?preparationSceneBackground:emptySceneBackground;if(stageMap)stageMap.src=sceneBackground;if(bg)bg.src=sceneBackground;
-  const frameUrls=[1,2,3].map(frame=>sehwaFrame('drawing',frame)),brushBase='../assets/events/holidays/sehwa-contest/seonhwa/drawing/age-13/painting-brush-10fps-v2',brushFrames=Array.from({length:10},(_,index)=>`${brushBase}/frame-${String(index+1).padStart(2,'0')}.png?v=${scheduleAssetRevision}`);
-  const hero=drawing?(beat===5?`<span class="sehwa-hero is-brush-frames" style="--sehwa-brush-final:url('${brushFrames[9]}')" role="img" aria-label="외땋기와 댕기를 한 선화가 정면의 고정된 책상에서 손과 붓끝만 움직여 5초 동안 세화를 그리는 모습">${brushFrames.map((src,index)=>`<img src="${src}" alt="" style="--sehwa-brush-frame:${index}">`).join('')}</span>`:`<span class="sehwa-hero is-drawing" style="--sehwa-f1:url('${frameUrls[0]}');--sehwa-f2:url('${frameUrls[1]}');--sehwa-f3:url('${frameUrls[2]}')" role="img" aria-label="${sehwaStoryBeats[beat]}"></span>`):'';
+  const frameUrls=[1,2,3].map(frame=>sehwaFrame('drawing',frame)),brushBase='../assets/events/holidays/sehwa-contest/seonhwa/drawing/age-13/painting-brush-10fps-v2',brushFrames=Array.from({length:10},(_,index)=>`${brushBase}/frame-${String(index+1).padStart(2,'0')}.png?v=${scheduleAssetRevision}`),stableBrushFrames=Array.from({length:10},(_,index)=>brushFrames[index<5?0:9]);
+  const hero=drawing?(beat===5?`<span class="sehwa-hero is-brush-frames" role="img" aria-label="외땋기와 댕기를 한 선화가 정면의 고정된 책상에서 손과 붓끝만 움직이며 세화를 그리는 모습">${stableBrushFrames.map((src,index)=>`<img src="${src}" alt="" style="--sehwa-brush-frame:${index}">`).join('')}</span>`:`<span class="sehwa-hero is-drawing" style="--sehwa-f1:url('${frameUrls[0]}');--sehwa-f2:url('${frameUrls[1]}');--sehwa-f3:url('${frameUrls[2]}')" role="img" aria-label="${sehwaStoryBeats[beat]}"></span>`):'';
   const titleCard=title?festivalTitleCard('복을 그리는 왕실 세화 경연','새해의 복을 한 폭의 세화에 담는 설날 행사'):'';
   const guardian=guardianResult?festivalGuardianCut(session):'';
   const board=vote?festivalScoreboard(session,'8인 세화 심사'):result?`<section class="festival-result-card"><small>최종 결과</small><strong>${session.overallRank}</strong><p>${session.player.score}점 · ${session.reaction}</p></section>`:'';
