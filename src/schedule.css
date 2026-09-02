@@ -2966,10 +2966,12 @@ body .phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage:
 .phone.playing:has(.activity-stage.action-holiday-seollal:not([hidden])) .sehwa-opening-dialogue>div p{padding-right:104px!important}
 
 /* 5×2, 10프레임 시트: 책상·화선지·완성 그림은 고정하고 손목과 붓대만 10fps로 움직인다. */
-.sehwa-contest .sehwa-hero.is-brush-frames{width:290px!important;height:290px!important;background:none!important;animation:none!important}
-/* Only clean, matching full-pose frames are used.  Exactly one frame is visible, so neither a second brush nor detached skirt fragments can appear. */
-.sehwa-contest .sehwa-hero.is-brush-frames img{position:absolute;z-index:1;inset:0;width:100%;height:100%;object-fit:contain;object-position:center bottom;opacity:0;animation:sehwa-brush-frame-10fps 1s steps(1,end) infinite;animation-delay:calc(var(--sehwa-brush-frame) * .1s)}
-@keyframes sehwa-brush-frame-10fps{0%,9.99%{opacity:1}10%,100%{opacity:0}}
+.sehwa-contest .sehwa-hero.is-brush-frames{width:min(300px,76vw)!important;height:min(300px,42vh)!important;bottom:11%!important;background:none!important;animation:none!important}
+/* The supplied full-body frames redraw the whole character.  Keep one uncropped master image until a hand-only frame set is available. */
+.sehwa-contest .sehwa-hero.is-brush-frames::before{content:"";position:absolute;inset:0;z-index:0;background:var(--sehwa-brush-base) center bottom/contain no-repeat}
+.sehwa-contest .sehwa-hero.is-brush-frames::after{content:"";position:absolute;z-index:2;left:39%;bottom:28%;width:27%;height:14%;border-radius:50%;background:radial-gradient(ellipse at center,#fff4bf72 0 12%,#f3a24b28 36%,transparent 72%);mix-blend-mode:screen;pointer-events:none;animation:sehwa-painting-emphasis 1.8s ease-in-out infinite}
+.sehwa-contest .sehwa-hero.is-brush-frames img{display:none!important}
+@keyframes sehwa-painting-emphasis{0%,100%{opacity:.32;transform:scale(.92)}50%{opacity:.8;transform:scale(1.08)}}
 
 /* 일정 모션 규칙: PNG 전체 흔들기/확대축소 금지, 자세 프레임과 실제 좌표 이동만 허용. */
 .phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage:not(.market-choice-stage) .stage-character.pixel-sprite{

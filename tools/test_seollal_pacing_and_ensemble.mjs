@@ -29,9 +29,10 @@ assert.doesNotMatch(app,/title\|\|preparing\?sehwaPreparationEnsemble/,'제목 �
 assert.match(app,/drawing-1-mobile-3x5-v1\.png/,'준비 장면에는 서로 다른 머리 모양의 참가자 여덟 명을 담은 전용 3:5 장면이 필요합니다.');
 assert.ok(existsSync(new URL('../assets/events/holidays/sehwa-contest/preparation-scene/eight-entrant-v1/drawing-1-mobile-3x5-v1.png',import.meta.url)),'8인 참가자가 한 장면으로 이어진 세로 배경이 필요합니다.');
 for(let frame=1;frame<=10;frame+=1)assert.ok(existsSync(new URL(`../assets/events/holidays/sehwa-contest/seonhwa/drawing/age-13/painting-brush-10fps-v2/frame-${String(frame).padStart(2,'0')}.png`,import.meta.url)),`외땋기 선화의 투명 붓질 ${frame} 프레임이 필요합니다.`);
-assert.match(css,/animation:sehwa-brush-frame-10fps 1s steps\(1,end\) infinite/,'선화 붓질은 중복 붓 없이 완전한 10프레임을 10fps로 반복 재생해야 합니다.');
-assert.match(app,/stableBrushFrames=Array\.from\(\{length:10\},\(_,index\)=>brushFrames\[index<5\?0:9\]\)/,'치마 조각이 튀는 중간 프레임 대신 검증된 두 자세만 써야 합니다.');
-assert.match(css,/\.sehwa-hero\.is-brush-frames img\{[^}]*sehwa-brush-frame-10fps 1s steps\(1,end\) infinite/,'붓질은 검증된 원화 프레임을 한 장씩 10fps로 재생해야 합니다.');
+assert.match(app,/stableBrushFrames=Array\.from\(\{length:10\},\(\)=>brushFrames\[0\]\)/,'원본 전체 프레임 교체 대신 기준 원화 하나만 써야 합니다.');
+assert.match(css,/\.sehwa-hero\.is-brush-frames img\{display:none!important\}/,'손만 따로 분리되지 않은 전체 원화 프레임은 재생하면 안 됩니다.');
+assert.match(css,/width:min\(300px,76vw\)!important;height:min\(300px,42vh\)!important/,'선화 그림 장면은 화면에서 잘리지 않는 안전 크기를 써야 합니다.');
+assert.match(css,/sehwa-painting-emphasis/,'손 변형 대신 화선지의 그림 완성 부분을 강조해야 합니다.');
 assert.match(app,/외땋기와 댕기를 한 선화/,'미혼 선화는 성인 올림머리 대신 땋은 머리와 댕기를 유지해야 합니다.');
 assert.match(app,/\{id:'eunseo',name:'은서'/,'플레이어를 포함한 8인 참가 명단이 필요합니다.');
 assert.match(app,/8인 세화 심사/,'설날 심사표도 8인 기준이어야 합니다.');

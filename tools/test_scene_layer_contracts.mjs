@@ -18,7 +18,8 @@ for(const mode of ['market-playing','vacation-playing'])for(const layer of ['hom
 assert.ok(html.includes('class="activity-backdrop"'),'schedules need a separate full-screen activity backdrop');
 assert.match(css,/\.phone\.playing:not\(\.market-playing\):not\(\.vacation-playing\)>\.activity-backdrop\{display:block\}/,'full activity backdrop must remain visible behind the RPG window');
 assert.match(schedule,/action-holiday-seollal\{inset:0!important;[^}]*overflow:hidden!important\}/,'Seollal stage must fill the phone without an extra border');
-assert.match(schedule,/animation:sehwa-brush-frame-10fps 1s steps\(1,end\) infinite/,'one complete solo frame must run at a time at 10fps without stacking a second brush');
+assert.match(schedule,/\.sehwa-hero\.is-brush-frames img\{display:none!important\}/,'a full-body source frame must never be animated as a fake hand-only brush stroke');
+assert.match(schedule,/width:min\(300px,76vw\)!important;height:min\(300px,42vh\)!important/,'the solo painting image must remain inside a safe, uncropped viewport');
 assert.doesNotMatch(schedule,/\.sehwa-hero\.is-brush-frames\{[^}]*transform:/,'brush-frame motion must not shake the whole character/table layer');
 assert.match(app,/className='festival-tap-next'/,'a visible next-scene button must appear when the minimum scene time ends');
 assert.match(app,/fallStart=7,fallEnd=15/,'childcare falls must hold before recovering instead of snapping upright');
