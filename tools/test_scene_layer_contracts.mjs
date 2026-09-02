@@ -28,5 +28,8 @@ assert.match(app,/preparationSceneBackground=`\.\.\/assets\/events\/holidays\/se
 assert.ok(existsSync(new URL('../assets/events/holidays/sehwa-contest/preparation-scene/eight-entrant-v1/drawing-1-mobile-3x5-v1.png',import.meta.url)),'the seamless 3:5 preparation image must be committed with the game');
 assert.match(app,/preparing\?preparationSceneBackground:emptySceneBackground/, 'the 8-person base frame must replace the empty hall only in the preparation scene');
 assert.doesNotMatch(app,/class="sehwa-ensemble-base"/, 'the stable base frame must not be composited above a second hall background');
-assert.doesNotMatch(app,/sehwa-ensemble-motion-patch/,'the preparation scene must not overlay a second mismatched background or motion patch');
+assert.match(app,/drawing-1-mobile-3x5-hands-v1\.png/,'the preparation scene must use a same-ratio hand-motion frame above the single background');
+assert.match(app,/hands\.map\(\(\[x,y,dx,dy\],index\)=>`<img class="sehwa-ensemble-motion-patch"/,'the preparation scene must animate individual localized hand patches above the single background');
+assert.match(schedule,/\.sehwa-eight-entrant-scene \.sehwa-ensemble-motion-patch\{[\s\S]*mask-image:var\(--sehwa-hand-mask\)[\s\S]*sehwa-eight-hand-stroke 5\.6s ease-in-out/,'each entrant patch must be limited to a small, slowly fading brush-hand area');
+assert.match(schedule,/\.sehwa-eight-entrant-scene \.sehwa-ensemble-motion-patch\{inset:0!important;[^}]*object-fit:cover!important/,'the 3:5 hand-motion overlay must not be shrunk by the retired 2:3 contain rule');
 console.log('PASS: home layer order, schedule isolation, Seollal border and motion contracts');

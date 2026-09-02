@@ -2923,7 +2923,7 @@ body .phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage:
 .sehwa-ten-entrant-sequence img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;opacity:0;animation:sehwa-ten-painting 2.4s steps(1,end) infinite;animation-delay:calc(var(--sehwa-group-frame) * .8s)}
 @keyframes sehwa-ten-painting{0%,33.32%{opacity:1}33.33%,100%{opacity:0}}
 .sehwa-eight-entrant-scene{position:absolute;z-index:38;inset:0;overflow:hidden;pointer-events:none}
-.sehwa-eight-entrant-scene img{position:absolute;inset:3% 4%;width:92%;height:94%;object-fit:contain;object-position:center}
+.sehwa-eight-entrant-scene img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center}
 .sehwa-eight-entrant-scene .sehwa-ensemble-base{
   z-index:0;
   opacity:1;
@@ -2935,12 +2935,12 @@ body .phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage:
 .sehwa-eight-entrant-scene .sehwa-ensemble-motion-patch{
   z-index:1;
   opacity:0;
-  -webkit-mask-image:radial-gradient(ellipse 11% 8% at 25% 43%,#000 30%,transparent 78%),radial-gradient(ellipse 11% 8% at 75% 43%,#000 30%,transparent 78%),radial-gradient(ellipse 12% 9% at 17% 51%,#000 30%,transparent 78%),radial-gradient(ellipse 12% 9% at 83% 51%,#000 30%,transparent 78%),radial-gradient(ellipse 13% 10% at 10% 60%,#000 30%,transparent 78%),radial-gradient(ellipse 13% 10% at 90% 60%,#000 30%,transparent 78%),radial-gradient(ellipse 14% 11% at 5% 70%,#000 30%,transparent 78%),radial-gradient(ellipse 14% 11% at 95% 70%,#000 30%,transparent 78%);
-  mask-image:radial-gradient(ellipse 11% 8% at 25% 43%,#000 30%,transparent 78%),radial-gradient(ellipse 11% 8% at 75% 43%,#000 30%,transparent 78%),radial-gradient(ellipse 12% 9% at 17% 51%,#000 30%,transparent 78%),radial-gradient(ellipse 12% 9% at 83% 51%,#000 30%,transparent 78%),radial-gradient(ellipse 13% 10% at 10% 60%,#000 30%,transparent 78%),radial-gradient(ellipse 13% 10% at 90% 60%,#000 30%,transparent 78%),radial-gradient(ellipse 14% 11% at 5% 70%,#000 30%,transparent 78%),radial-gradient(ellipse 14% 11% at 95% 70%,#000 30%,transparent 78%);
-  animation:sehwa-eight-local-painting 2.4s steps(1,end) infinite;
-  animation-delay:calc(var(--sehwa-group-frame) * -.8s);
+  -webkit-mask-image:var(--sehwa-hand-mask);
+  mask-image:var(--sehwa-hand-mask);
+  animation:sehwa-eight-hand-stroke 5.6s ease-in-out infinite;
+  animation-delay:calc(var(--sehwa-hand-delay) * -1);
 }
-@keyframes sehwa-eight-local-painting{0%,33.32%{opacity:1}33.33%,100%{opacity:0}}
+@keyframes sehwa-eight-hand-stroke{0%,20%{opacity:0;transform:translate(0,0)}40%,60%{opacity:.82;transform:translate(var(--sehwa-hand-x),var(--sehwa-hand-y))}80%,100%{opacity:0;transform:translate(0,0)}}
 
 /* 설날 주제 발표: 왕의 얼굴과 대화창이 겹치지 않도록 상·하 영역을 분리한다. */
 .sehwa-contest.festival-pm3.beat-4 .festival-character-cut.king-cut img{
@@ -3294,3 +3294,5 @@ body:has(.panel:not([hidden])) .phone>.home-bottom-nav{display:none!important}
 
 /* v0.64.283 — 8인 원화는 무대에서도 contain으로 유지해 양끝 참가자를 자르지 않는다. */
 /* v0.64.286: preparation art is a single 3:5 scene; do not stack a second hall or letterbox it. */
+/* v0.64.295: the hand-only 3:5 overlay must align pixel-for-pixel with its 3:5 base frame. */
+.sehwa-contest.festival-pm3 .sehwa-eight-entrant-scene .sehwa-ensemble-motion-patch{inset:0!important;width:100%!important;height:100%!important;object-fit:cover!important;object-position:center!important}

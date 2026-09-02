@@ -248,7 +248,7 @@ const vacationIllustrations=[
 function unifiedAgeFolder(){return '09';}
 function scheduleFramePath(file){return `../assets/characters/seonhwa/schedule-actions/v2/${file}`;}
 function scheduleBasePath(file){return `../assets/characters/seonhwa/schedule-base/${file}`;}
-const scheduleAssetRevision='0.64.290-debug';
+const scheduleAssetRevision='0.64.297-debug';
 const scheduleQaParams=new URLSearchParams(location.search);
 const moonlightStandaloneQa=scheduleQaParams.get('qaHoliday')==='chuseok';
 const sehwaStandaloneQa=scheduleQaParams.get('qaHoliday')==='seollal';
@@ -1834,7 +1834,10 @@ function sehwaOpeningDialogue(session,beat){
   return `<section class="sehwa-opening-dialogue speaker-${guardianTurn?'guardian':'seonhwa'}">${portrait}<div role="dialog" aria-label="${speaker}의 대화"><p><b>${speaker}</b>${line}</p></div></section>`;
 }
 function sehwaPreparationEnsemble(session){
-  return '';
+  const base='../assets/events/holidays/sehwa-contest/preparation-scene/eight-entrant-v1';
+  const hands=[[31,56,3,-2],[69,56,-3,2],[24,60,3,-2],[76,61,-3,2],[18,66,3,-2],[82,67,-3,2],[14,74,3,-2],[86,74,-3,2]];
+  const handFrame=`${base}/drawing-1-mobile-3x5-hands-v1.png?v=${scheduleAssetRevision}`;
+  return `<section class="sehwa-eight-entrant-scene" aria-label="참가자 여덟 명이 몸과 화선지를 고정한 채 붓 든 손만 섬세하게 움직이며 세화를 완성하는 장면">${hands.map(([x,y,dx,dy],index)=>`<img class="sehwa-ensemble-motion-patch" src="${handFrame}" alt="" style="--sehwa-hand-mask:radial-gradient(ellipse 3% 4% at ${x}% ${y}%,#000 38%,transparent 100%);--sehwa-hand-delay:${(index*.43).toFixed(2)}s;--sehwa-hand-x:${dx}px;--sehwa-hand-y:${dy}px">`).join('')}</section>`;
 }
 function renderSehwaContest(session,beatIndex){
   const overlay=document.querySelector('#moonlightPageant');if(!overlay)return;

@@ -61,6 +61,9 @@ assert.match(css,/\.sehwa-drawing-ensemble\{[^}]*grid-template-columns:repeat\(4
 assert.match(app,/preparing\?preparationSceneBackground:emptySceneBackground/,'8인 참가자 원화는 빈 궁 배경 위의 별도 카드가 아니라 준비 장면의 기본 무대 배경이어야 합니다.');
 assert.doesNotMatch(app,/class="sehwa-ensemble-base"/,'8인 준비 원화를 별도 전경 카드로 다시 쌓으면 경계선이 생기면 안 됩니다.');
 assert.match(app,/drawing-1-mobile-3x5-v1\.png/,'8인 준비 장면은 창 비율과 같은 단일 3:5 배경으로 그려 경계선과 잘림을 없애야 합니다.');
-assert.doesNotMatch(app,/sehwa-ensemble-motion-patch/,'8인 장면에는 다른 홀 배경이 비치는 전경 패치를 덧씌우지 않아야 합니다.');
+assert.match(app,/drawing-1-mobile-3x5-hands-v1\.png/,'8인 장면에는 통합 배경 비율과 같은 손동작 프레임이 필요합니다.');
+assert.match(app,/sehwa-ensemble-motion-patch/,'8인 장면에서는 다른 홀을 드러내지 않는 손동작 패치만 재생해야 합니다.');
+assert.match(css,/\.sehwa-ensemble-motion-patch\{[\s\S]*?mask-image:var\(--sehwa-hand-mask\)[\s\S]*?sehwa-eight-hand-stroke 5\.6s ease-in-out/,'8명은 종이·책상 대신 손 영역만 천천히 움직여야 합니다.');
+assert.match(css,/@keyframes sehwa-eight-hand-stroke\{[\s\S]*?transform:translate\(var\(--sehwa-hand-x\),var\(--sehwa-hand-y\)\)/,'붓 든 손은 정지 프레임 위에서 실제 붓질 방향으로만 미세하게 이동해야 합니다.');
 assert.match(css,/\.sehwa-contest\.festival-pm3 \.sehwa-hero\{[^}]*width:210px!important;[^}]*height:270px!important/,'설날 반실사 주인공은 중앙에서 충분히 크게 보여야 합니다.');
 console.log('PASS: 설날 수동 진행·5초 전원 그림·스테이터스 응답·캐릭터 축소·공손한 참가표 수령');
