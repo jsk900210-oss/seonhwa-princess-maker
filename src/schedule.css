@@ -2973,6 +2973,12 @@ body .phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage:
 .sehwa-contest .sehwa-hero.is-brush-frames img{display:none!important}
 @keyframes sehwa-painting-emphasis{0%,100%{opacity:.32;transform:scale(.92)}50%{opacity:.8;transform:scale(1.08)}}
 
+/* 설날 세화 장면: 쯔꾸르풍 선화는 책상·먹통을 고정하고 세 장의 실제 붓질 자세만 느리게 순환한다. */
+.sehwa-contest .sehwa-hero.is-tsukuru-painting{width:min(300px,76vw)!important;height:min(300px,42vh)!important;bottom:11%!important;background:none!important;animation:none!important}
+.sehwa-contest .sehwa-hero.is-tsukuru-painting img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;object-position:center bottom;opacity:0;filter:drop-shadow(0 5px 6px #160b08aa);animation:sehwa-tsukuru-paint 3.6s steps(1,end) infinite;animation-delay:calc(var(--sehwa-paint-frame) * 1.2s)}
+.sehwa-contest .sehwa-hero.is-tsukuru-painting::after{content:"";position:absolute;z-index:2;left:34%;bottom:30%;width:34%;height:15%;border-radius:50%;background:radial-gradient(ellipse at center,#fff7c47a 0 12%,#eaa14c2c 42%,transparent 74%);mix-blend-mode:screen;pointer-events:none;animation:sehwa-painting-emphasis 1.8s ease-in-out infinite}
+@keyframes sehwa-tsukuru-paint{0%,33.32%{opacity:1}33.33%,100%{opacity:0}}
+
 /* 일정 모션 규칙: PNG 전체 흔들기/확대축소 금지, 자세 프레임과 실제 좌표 이동만 허용. */
 .phone.playing:not(.market-playing):not(.vacation-playing) .activity-stage:not(.market-choice-stage) .stage-character.pixel-sprite{
   animation:none!important;
