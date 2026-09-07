@@ -52,4 +52,5 @@ assert.match(app,/festivalScoreboard\(session,'참가자 8명 최종 순위와 �
 assert.match(app,/festivalKingWinnerCongratulations\(session\)/,'왕 시상·축하');
 assert.match(app,/festivalGuardianCut\(session\)/,'신수 마지막 축하');
 assert.doesNotMatch(app,/festival-closing-card/,'신수 마지막 축하 장면 뒤에는 대회 결과 카드가 남아 있으면 안 됩니다.');
+assert.match(css,/마지막 신수 축하 대사는 얼굴을 덮지 않고 머리 위에 고정한다[\s\S]*?guardian-cut p\{[\s\S]*?top:2%!important/,'신수 축하 대화창은 신수 머리 위에 있어야 합니다.');
 console.log('PASS: 한가위 8단계, 쯔꾸르 선화 입장·인사·손끝 회전, 왕 시상, 우승자 반실사 소감, 신수 마무리');

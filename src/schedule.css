@@ -3317,3 +3317,13 @@ body:has(.panel:not([hidden])) .phone>.home-bottom-nav{display:none!important}
   -webkit-mask-image:linear-gradient(to bottom,#000 0 70%,#000f 76%,#000c 83%,#0008 90%,#0003 96%,transparent 100%)!important;
   mask-image:linear-gradient(to bottom,#000 0 70%,#000f 76%,#000c 83%,#0008 90%,#0003 96%,transparent 100%)!important;
 }
+
+/* v0.64.312 — 마지막 신수 축하 대사는 얼굴을 덮지 않고 머리 위에 고정한다. */
+.sehwa-contest.festival-pm3 .festival-character-cut.guardian-cut p,
+.moonlight-pageant.festival-pm3 .festival-character-cut.guardian-cut p{
+  left:6%!important;
+  right:6%!important;
+  top:2%!important;
+  width:auto!important;
+  min-height:0!important;
+}
