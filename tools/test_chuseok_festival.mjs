@@ -51,4 +51,5 @@ assert.match(app,/const portrait=playerWinner[\s\S]*baseSpriteForAge\(\)[\s\S]*m
 assert.match(app,/festivalScoreboard\(session,'참가자 8명 최종 순위와 수상 결과'\)/,'8명 순위 발표');
 assert.match(app,/festivalKingWinnerCongratulations\(session\)/,'왕 시상·축하');
 assert.match(app,/festivalGuardianCut\(session\)/,'신수 마지막 축하');
+assert.doesNotMatch(app,/festival-closing-card/,'신수 마지막 축하 장면 뒤에는 대회 결과 카드가 남아 있으면 안 됩니다.');
 console.log('PASS: 한가위 8단계, 쯔꾸르 선화 입장·인사·손끝 회전, 왕 시상, 우승자 반실사 소감, 신수 마무리');

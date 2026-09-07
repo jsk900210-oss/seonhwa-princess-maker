@@ -255,7 +255,7 @@ const vacationIllustrations=[
 function unifiedAgeFolder(){return '09';}
 function scheduleFramePath(file){return `../assets/characters/seonhwa/schedule-actions/v2/${file}`;}
 function scheduleBasePath(file){return `../assets/characters/seonhwa/schedule-base/${file}`;}
-const scheduleAssetRevision='0.64.310-debug';
+const scheduleAssetRevision='0.64.311-debug';
 const scheduleQaParams=new URLSearchParams(location.search);
 const moonlightStandaloneQa=scheduleQaParams.get('qaHoliday')==='chuseok';
 const sehwaStandaloneQa=scheduleQaParams.get('qaHoliday')==='seollal';
@@ -1717,9 +1717,8 @@ function renderMoonlightPageant(session,dayIndex){
   const kingCongratulations=award?festivalKingWinnerCongratulations(session):'';
   const winnerAcceptance=acceptance?festivalWinnerAcceptance(session):'';
   const guardian=closing?festivalGuardianCut(session):'';
-  const closingCard=closing?`<section class="festival-result-card festival-closing-card"><small>한가위 경연 완료</small><strong>${session.overallRank}</strong><p>센스 +2 · 예절 +2 · 기품 +2 · 스트레스 -4${session.prize?`<br>${session.prize} 획득`:''}</p></section>`:'';
   overlay.tabIndex=0;overlay.setAttribute('role','button');overlay.setAttribute('aria-label','화면을 터치해 다음 장면으로 이동');
-  overlay.innerHTML=`${hero}${opening?moonlightOpeningDialogue(session,0):entrance?moonlightOpeningDialogue(session,1):''}${king}${board}${winner}${kingCongratulations}${winnerAcceptance}${guardian}${closingCard}`;
+  overlay.innerHTML=`${hero}${opening?moonlightOpeningDialogue(session,0):entrance?moonlightOpeningDialogue(session,1):''}${king}${board}${winner}${kingCongratulations}${winnerAcceptance}${guardian}`;
 }
 function waitForMoonlightAdvance(beat){
   // 회전 무대가 끝난 뒤에만 다음 장면 버튼을 보여, 입장·인사·정지까지 모두 읽을 수 있게 한다.
