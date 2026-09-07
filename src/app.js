@@ -81,7 +81,10 @@ const statGroups = [
   { title: '신체', stats: [['health','체력'],['strength','힘'],['agility','민첩']] },
   { title: '지성·마음', stats: [['intelligence','지능'],['magic','마력'],['mentality','정신력']] },
   { title: '품격·소통', stats: [['dignity','기품'],['manners','예절'],['speech','화술']] },
-  { title: '감각·매력', stats: [['sensitivity','감수성'],['sense','센스'],['charm','매력']] }
+  { title: '감각·매력', stats: [['sensitivity','감수성'],['sense','센스'],['charm','매력']] },
+  { title: '성품·생활', stats: [['morality','도덕'],['sin','업보'],['faith','신앙'],['housework','가사']] },
+  { title: '평판', stats: [['combatReputation','무예 명성'],['magicReputation','술법 명성'],['socialReputation','사교 명성']] },
+  { title: '전투', stats: [['combatSkill','무예 기술'],['combatAttack','무예 공격'],['combatDefense','무예 방어'],['magicSkill','술법 기술'],['magicAttack','술법 공격'],['magicDefense','술법 방어']] }
 ];
 const statDisplayOrder=[...statGroups.flatMap(group=>group.stats.map(([key])=>key)),'stress','nannyAffinity','fatherAffinity','guardianTrust','memory','truth','exposure'];
 const statDisplayRank=new Map(statDisplayOrder.map((key,index)=>[key,index]));
@@ -125,7 +128,9 @@ const LEGACY_SAVE_KEYS = ['seonhwa-princess-mvp-save-v1'];
 let pendingRecoverySave=null;
 const statMaximum=key=>key==='stress'?100:999;
 const clampStat=(key,value)=>Math.max(0,Math.min(statMaximum(key),Number(value)||0));
-const boundedStats=[...new Set(statGroups.flatMap(group=>group.stats.map(([key])=>key)).concat(['stress','nannyAffinity','fatherAffinity','guardianTrust','memory','truth','exposure']))];
+const classicRules=globalThis.PM2ClassicRules||null;
+const classicRuleStatKeys=classicRules?[...classicRules.rules.reputations,...classicRules.rules.moralStats,...classicRules.rules.combatStats]:[];
+const boundedStats=[...new Set(statGroups.flatMap(group=>group.stats.map(([key])=>key)).concat(['stress','nannyAffinity','fatherAffinity','guardianTrust','memory','truth','exposure'],classicRuleStatKeys))];
 const legacyStatMap={healthiness:'mentality',study:'intelligence',arithmetic:'sense',arts:'sensitivity',martial:'strength',archery:'agility',riding:'agility',craft:'sense',cooking:'sense',embroidery:'sense',virtue:'dignity',medicine:'magic',commerce:'speech',reputation:'speech'};
 const canonicalStatKey=key=>legacyStatMap[key]||key;
 function canonicalizeChange(change={}){const result={};Object.entries(change).forEach(([key,value])=>{const mapped=canonicalStatKey(key);result[mapped]=(result[mapped]||0)+value;});return result;}
@@ -141,6 +146,8 @@ function migrateLegacyStats(){
   if(!Number.isFinite(Number(game.sense)))game.sense=average('craft','arts','arithmetic');
 }
 function normalizeStats(){migrateLegacyStats();boundedStats.forEach(key=>{if(Object.hasOwn(game,key))game[key]=clampStat(key,game[key]);});}
+function normalizeClassicRules(){if(classicRules)Object.assign(game,classicRules.normalizeState(game));}
+normalizeClassicRules();
 const growthProfile={9:[130,28.5],10:[135,31],11:[140,34],12:[145,38],13:[149,42],14:[153,45.5],15:[156,48.5],16:[158.5,51.5],17:[160.5,54],18:[162,56.5],19:[163,58]};
 function expectedBodyMetrics(age=game.age){return growthProfile[Math.max(9,Math.min(19,Math.floor(Number(age)||9)))]||growthProfile[9];}
 function normalizeBodyMetrics(){const [height,weight]=expectedBodyMetrics();if(!Number.isFinite(Number(game.height)))game.height=height;if(!Number.isFinite(Number(game.weight)))game.weight=weight;game.height=Math.max(100,Math.min(190,Math.round(Number(game.height)*10)/10));game.weight=Math.max(18,Math.min(100,Math.round(Number(game.weight)*10)/10));}
@@ -2158,7 +2165,7 @@ function speakGuardian(context='home'){
   return true;
 }
 
-const statLabels={health:'체력',strength:'힘',agility:'민첩',intelligence:'지능',magic:'마력',mentality:'정신력',dignity:'기품',manners:'예절',speech:'화술',sensitivity:'감수성',sense:'센스',charm:'매력',stress:'스트레스'};
+const statLabels={health:'체력',strength:'힘',agility:'민첩',intelligence:'지능',magic:'마력',mentality:'정신력',dignity:'기품',manners:'예절',speech:'화술',sensitivity:'감수성',sense:'센스',charm:'매력',morality:'도덕',sin:'업보',faith:'신앙',housework:'가사',combatReputation:'무예 명성',magicReputation:'술법 명성',socialReputation:'사교 명성',combatSkill:'무예 기술',combatAttack:'무예 공격',combatDefense:'무예 방어',magicSkill:'술법 기술',magicAttack:'술법 공격',magicDefense:'술법 방어',stress:'스트레스'};
 statLabels.nannyAffinity='신수 유대감';
 statLabels.fatherAffinity='아버지 친밀도';
 statLabels.guardianTrust='신수 신뢰';
@@ -2412,6 +2419,7 @@ function applySavePayload(saved) {
     saved.game.profileSlot=Number(saved.game.profileSlot);
   }
   Object.assign(game, saved.game);
+  normalizeClassicRules();
   if(!Number.isFinite(game.cash))game.cash=50000;
   if(!Number.isFinite(Number(game.fatherAffinity)))game.fatherAffinity=0;
   if(!Array.isArray(game.fatherBirthdayYears))game.fatherBirthdayYears=[];
@@ -2546,6 +2554,7 @@ function deleteCharacterRecord(slot){
 
 function resetGameState() {
   Object.assign(game, { characterName:'',nannyName:'',guardianType:null,guardianName:'',profileSlot:null,age:9,height:130,weight:28.5,month:1,week:1,season:'봄',money:50000,cash:50000,health:42,strength:18,agility:20,intelligence:35,magic:8,mentality:30,dignity:36,manners:28,speech:14,sensitivity:40,sense:24,charm:30,stress:0,items:[],purchasedGoods:[],relations:{},activityProgress:{},activityUnlocksSeen:[],startingGiftId:null,fatherBirthdayYears:[],sehwaWins:[],latestSehwaArtwork:null,equippedOutfit:null,autoOutfit:true,dailySchedule:[],scheduleFormat:'phase-v1',birthday:null,currentDate:null,endingDate:null,ended:false,endingResult:null,birthdayCount:0,element:null,birthSeason:null,memory:0,truth:0,exposure:0,fatherAffinity:0,guardianTrust:50,nannyAffinity:50,lastGreetingDate:null,lastGuardianTalkDate:null,lastGuardianTalkPhase:null,monthlyLedger:null});
+  normalizeClassicRules();
   document.querySelector('#liveChanges').innerHTML='';
   const greeting=document.querySelector('#homeGreeting');greeting.hidden=true;greeting.classList.remove('greeting-active');
   document.querySelector('#characterNameInput').value='';

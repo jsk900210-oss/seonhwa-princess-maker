@@ -1,0 +1,15 @@
+import fs from 'node:fs';
+import vm from 'node:vm';
+import assert from 'node:assert/strict';
+const source=fs.readFileSync(new URL('../src/pm2-classic-rules.js',import.meta.url),'utf8');
+const context={};vm.createContext(context);vm.runInContext(source,context);
+const api=context.PM2ClassicRules;
+assert.equal(api.rules.calendar.scheduleSlots,3);
+assert.deepEqual(Array.from(api.rules.calendar.slotNames),['초순','중순','하순']);
+assert.equal(api.rules.contests.length,4);assert.equal(api.rules.explorationRegions.length,4);
+assert.deepEqual(Array.from(api.rules.endingAxes),['career','socialStanding','marriage','guardianBond']);
+assert.deepEqual([39,40,60,80,95].map(api.conditionFor),['stable','tired','irritable','overworked','ill']);
+assert.equal(api.allowanceForTrust(0),2500);assert.equal(api.allowanceForTrust(100),7500);
+const migrated=api.normalizeState({stress:82,morality:1200,monthlySchedule:['a','b','c','d']});
+assert.equal(migrated.condition,'overworked');assert.equal(migrated.morality,999);assert.equal(migrated.monthlySchedule.length,3);
+console.log('PM2 classic rules tests passed');
