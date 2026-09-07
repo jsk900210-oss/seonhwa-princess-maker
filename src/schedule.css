@@ -3304,3 +3304,16 @@ body:has(.panel:not([hidden])) .phone>.home-bottom-nav{display:none!important}
 /* v0.64.286: preparation art is a single 3:5 scene; do not stack a second hall or letterbox it. */
 /* v0.64.295: the hand-only 3:5 overlay must align pixel-for-pixel with its 3:5 base frame. */
 .sehwa-contest.festival-pm3 .sehwa-eight-entrant-scene .sehwa-ensemble-motion-patch{inset:0!important;width:100%!important;height:100%!important;object-fit:cover!important;object-position:center!important}
+
+/* v0.64.308 — 대화 초상은 상체를 선명하게 유지하고 하단 30%만 배경으로 녹인다. */
+.sehwa-contest.festival-pm3 .sehwa-opening-dialogue.speaker-seonhwa>.sehwa-expression,
+.moonlight-pageant.festival-pm3 .sehwa-opening-dialogue.speaker-seonhwa>.sehwa-expression,
+.sehwa-contest.festival-pm3 .sehwa-opening-dialogue.speaker-guardian>.sehwa-dialogue-bust,
+.moonlight-pageant.festival-pm3 .sehwa-opening-dialogue.speaker-guardian>.sehwa-dialogue-bust,
+.sehwa-contest.festival-pm3 .festival-character-cut.guardian-cut img,
+.moonlight-pageant.festival-pm3 .festival-character-cut.guardian-cut img,
+.sehwa-contest.festival-pm3 .festival-character-cut.king-cut img,
+.moonlight-pageant.festival-pm3 .festival-character-cut.king-cut img{
+  -webkit-mask-image:linear-gradient(to bottom,#000 0 70%,#000f 76%,#000c 83%,#0008 90%,#0003 96%,transparent 100%)!important;
+  mask-image:linear-gradient(to bottom,#000 0 70%,#000f 76%,#000c 83%,#0008 90%,#0003 96%,transparent 100%)!important;
+}
