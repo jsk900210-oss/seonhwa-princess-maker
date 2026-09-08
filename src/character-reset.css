@@ -1,5 +1,5 @@
 /* No substitute protagonist while character artwork is reset. */
-#characterSlot,#stageCharacter,#dungeonPlayer,.loading-seonhwa,
+#stageCharacter,#dungeonPlayer,.loading-seonhwa,
 .market-meal-character,.sehwa-expression,.pageant-tukkur-performance,
 .pageant-winner.is-seonhwa,.pageant-interview.is-seonhwa-winner figure,
 .pageant-lineup .is-player,.sehwa-hero{visibility:hidden!important;background-image:none!important}
