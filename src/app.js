@@ -255,7 +255,7 @@ const vacationIllustrations=[
 function unifiedAgeFolder(){return '09';}
 function scheduleFramePath(file){return `../assets/characters/seonhwa/schedule-actions/v2/${file}`;}
 function scheduleBasePath(file){return `../assets/characters/seonhwa/schedule-base/${file}`;}
-const scheduleAssetRevision='0.64.315-debug';
+const scheduleAssetRevision='0.64.316-debug';
 const scheduleQaParams=new URLSearchParams(location.search);
 const moonlightStandaloneQa=scheduleQaParams.get('qaHoliday')==='chuseok';
 const sehwaStandaloneQa=scheduleQaParams.get('qaHoliday')==='seollal';
@@ -2572,7 +2572,7 @@ function deleteCharacterRecord(slot){
 }
 
 function resetGameState() {
-  game.dietPolicy='balanced';game.illnessDays=0;
+  game.dietPolicy='balanced';game.illnessDays=0;game.exploration={regions:{},visitedEvents:[]};
   Object.assign(game, { characterName:'',nannyName:'',guardianType:null,guardianName:'',profileSlot:null,age:9,height:130,weight:28.5,month:1,week:1,season:'봄',money:50000,cash:50000,health:42,strength:18,agility:20,intelligence:35,magic:8,mentality:30,dignity:36,manners:28,speech:14,sensitivity:40,sense:24,charm:30,stress:0,items:[],purchasedGoods:[],relations:{},activityProgress:{},activityUnlocksSeen:[],startingGiftId:null,fatherBirthdayYears:[],sehwaWins:[],latestSehwaArtwork:null,equippedOutfit:null,autoOutfit:true,dailySchedule:[],scheduleFormat:'phase-v1',birthday:null,currentDate:null,endingDate:null,ended:false,endingResult:null,birthdayCount:0,element:null,birthSeason:null,memory:0,truth:0,exposure:0,fatherAffinity:0,guardianTrust:50,nannyAffinity:50,lastGreetingDate:null,lastGuardianTalkDate:null,lastGuardianTalkPhase:null,monthlyLedger:null});
   normalizeClassicRules();
   document.querySelector('#liveChanges').innerHTML='';
@@ -2837,22 +2837,52 @@ function exploreMarket(){
 }
 function enterMarketShop(type){if(!type)return;const place=marketPlaces.find(item=>item.id===type);document.querySelector('#dialogueText').textContent=`${place?.label||'가게'} 주인이 “어서 오세요.” 하고 반겨요.`;document.querySelector('#marketExplore').hidden=true;document.querySelector('#activityStage').hidden=true;document.querySelector('.phone').classList.add('market-shop-open');panel.hidden=false;renderShopPanel(type,true);}
 
-function exploreDungeon(){
+function exploreDungeon(activityDate=game.currentDate){
   const explore=document.querySelector('#dungeonExplore'),player=document.querySelector('#dungeonPlayer'),message=document.querySelector('#dungeonMessage');
   const chest=document.querySelector('#dungeonChest'),monster=document.querySelector('#dungeonMonster'),finish=document.querySelector('#dungeonFinish');
-  const controls=[...document.querySelectorAll('[data-dungeon-move]')];
-  const position={x:0,y:4};let reward=0,gearReward=null,chestFound=false,monsterCleared=false,resolved=false;
+  const controls=[...document.querySelectorAll('[data-dungeon-move]')],map=explore.querySelector('.dungeon-board');
+  const picker=document.createElement('div');picker.className='exploration-picker';
+  picker.innerHTML='<strong>탐험할 지역을 고르세요</strong>'+SeonhwaExploration.regions.map(region=>{
+    const record=game.exploration?.regions?.[region.id];
+    return `<button type="button" data-explore-region="${region.id}">${region.name} · 난이도 ${region.difficulty}<small>보물 ${region.treasure}냥부터 · 방문 ${record?.visits||0}회 / 승리 ${record?.victories||0}회</small></button>`;
+  }).join('');
+  explore.prepend(picker);
+  const position={x:0,y:4};let region=null,reward=0,gearReward=null,chestFound=false,monsterCleared=false,resolved=false,battle=null;
   explore.hidden=false;explore.dataset.season=game.season;player.src=spriteFrames.down[1];chest.classList.remove('cleared');monster.classList.remove('cleared');
+  if(map)map.hidden=true;controls.forEach(button=>button.disabled=true);
+  message.textContent='지역을 선택한 뒤 방향키로 이동하세요. 탐사를 마치면 기록과 보상이 저장됩니다.';
   const render=()=>{player.style.setProperty('--x',position.x);player.style.setProperty('--y',position.y);};
+  picker.querySelectorAll('[data-explore-region]').forEach(button=>button.onclick=()=>{
+    region=SeonhwaExploration.regions.find(item=>item.id===button.dataset.exploreRegion);
+    picker.hidden=true;if(map)map.hidden=false;controls.forEach(control=>control.disabled=false);
+    explore.dataset.region=region.id;
+    for(const [element,point] of [[chest,region.chest],[monster,region.monster]]){element.style.setProperty('--x',point[0]);element.style.setProperty('--y',point[1]);}
+    monster.setAttribute('aria-label',region.enemy);
+    message.textContent=`${region.name} · ${region.enemy}을 경계하며 보물을 찾아보세요.`;
+  });
   const inspect=()=>{
-    if(position.x===4&&position.y===0&&!chestFound){chestFound=true;const found=100+Math.floor(Math.random()*101);reward+=found;if(Math.random()<.45)gearReward=awardDungeonGear();chest.classList.add('cleared');message.textContent=gearReward?`낡은 상자에서 은전 ${found}냥과 「${gearReward.name}」을 발견했어요.`:`낡은 상자에서 은전 ${found}냥을 발견했어요.`;}
-    if(position.x===3&&position.y===3&&!monsterCleared){monsterCleared=true;monster.classList.add('cleared');const mage=(game.magic+game.intelligence+dungeonGearPower('magic'))>(game.strength+game.health+dungeonGearPower('sword'));const combat=mage?'magic':'sword',score=mage?game.magic+game.intelligence+dungeonGearPower(combat):game.strength+game.health+dungeonGearPower(combat);const won=score>=90||Math.random()>.35;if(won){const found=40+Math.floor(Math.random()*61);reward+=found;message.textContent=`장착 장비의 도움을 받아 ${mage?'술법':'검술'}으로 산짐승을 물리치고 은전 ${found}냥을 얻었어요.`;}else message.textContent='산짐승을 피해 물러났어요. 소지품에서 비경 장비를 장착하고 다시 도전해 보세요.';}
+    if(position.x===region.chest[0]&&position.y===region.chest[1]&&!chestFound){
+      chestFound=true;const found=region.treasure+Math.floor(Math.random()*51);reward+=found;
+      if(Math.random()<.45)gearReward=awardDungeonGear();
+      chest.classList.add('cleared');message.textContent=`${region.name}에서 은전 ${found}냥${gearReward?`과 「${gearReward.name}」`:''}을 발견했어요.`;
+    }
+    if(position.x===region.monster[0]&&position.y===region.monster[1]&&!monsterCleared){
+      monsterCleared=true;monster.classList.add('cleared');
+      battle=SeonhwaExploration.combat(game,region,{sword:dungeonGearPower('sword'),magic:dungeonGearPower('magic')});
+      reward+=battle.money;
+      message.textContent=battle.won?`${battle.style==='magic'?'술법':'무예'}으로 ${region.enemy}을 물리쳤어요. 은전 +${battle.money}냥 · 명성 +3`:`${region.enemy}을 피해 물러났어요. 체력 -3 · 스트레스 +3`;
+    }
     if(position.x===0&&position.y===4&&(chestFound||monsterCleared))message.textContent='돌아가는 문에 도착했어요. 탐사를 마칠 수 있습니다.';
   };
-  const move=direction=>{if(resolved)return;const delta={up:[0,-1],down:[0,1],left:[-1,0],right:[1,0]}[direction];if(!delta)return;position.x=Math.max(0,Math.min(4,position.x+delta[0]));position.y=Math.max(0,Math.min(4,position.y+delta[1]));render();inspect();};
-  const keydown=event=>{const direction={ArrowUp:'up',ArrowDown:'down',ArrowLeft:'left',ArrowRight:'right'}[event.key];if(direction){event.preventDefault();move(direction);}};
+  const move=direction=>{if(resolved||!region)return;const delta={up:[0,-1],down:[0,1],left:[-1,0],right:[1,0]}[direction];if(!delta)return;position.x=Math.max(0,Math.min(4,position.x+delta[0]));position.y=Math.max(0,Math.min(4,position.y+delta[1]));render();inspect();};
+  const keydown=event=>{const direction={ArrowUp:'up',ArrowDown:'down',ArrowLeft:'left',ArrowRight:'right'}[event.key];if(direction&&region){event.preventDefault();move(direction);}};
   controls.forEach(button=>button.onclick=()=>move(button.dataset.dungeonMove));document.addEventListener('keydown',keydown);render();
-  return new Promise(resolve=>{finish.onclick=()=>{if(resolved)return;resolved=true;document.removeEventListener('keydown',keydown);controls.forEach(button=>button.onclick=null);finish.onclick=null;explore.hidden=true;resolve({money:reward,gear:gearReward});};});
+  return new Promise(resolve=>{finish.onclick=()=>{
+    if(resolved)return;resolved=true;document.removeEventListener('keydown',keydown);
+    controls.forEach(button=>{button.onclick=null;button.disabled=false;});finish.onclick=null;picker.remove();if(map)map.hidden=false;explore.hidden=true;
+    if(region)SeonhwaExploration.remember(game,region,{won:battle?.won,chest:chestFound,money:reward,date:activityDate});
+    resolve({money:reward,gear:gearReward,change:battle?.change||{}});
+  };});
 }
 
 function addDailyAction(id,sourceButton) {
@@ -3425,7 +3455,7 @@ async function playWeeklySchedule(selected) {
         holidayContestResult.homeArtwork=awardSehwaArtwork(holidayContestResult);
       }
     }else if(action.id==='dungeon'){
-      stageCharacter.hidden=true;stageNpc.hidden=true;stageProps.hidden=true;dungeonReward=await exploreDungeon();stageCharacter.hidden=false;stageProps.hidden=false;
+      stageCharacter.hidden=true;stageNpc.hidden=true;stageProps.hidden=true;dungeonReward=await exploreDungeon(isoDate(activityDate));stageCharacter.hidden=false;stageProps.hidden=false;
     }else if(action.special==='date'){
       const relation=endingRelationCandidates.find(candidate=>candidate.id===action.relationId),record=relationRecord(action.relationId);dateRelation={candidate:relation,record};
       stageMap.src=backgrounds.market;stageMap.alt=`${relation.name}과 만난 저잣거리`;
@@ -3455,6 +3485,7 @@ async function playWeeklySchedule(selected) {
     }
     const fullPhaseHoliday=action.id==='holiday-seollal'||action.id==='holiday-chuseok';
     const resolvedChange=fullPhaseHoliday?{...resolvedActivityChange(action,outcome)}:phaseDailyChange(resolvedActivityChange(action,outcome),periodDay);
+    if(action.id==='dungeon')Object.entries(dungeonReward.change||{}).forEach(([key,value])=>resolvedChange[key]=(resolvedChange[key]||0)+value);
     const classicGrowth=classicRules?.activityGrowth(action,outcome)||{};
     Object.entries(classicGrowth).forEach(([key,value])=>{resolvedChange[key]=(resolvedChange[key]||0)+value;});
     if(holidayContestResult){

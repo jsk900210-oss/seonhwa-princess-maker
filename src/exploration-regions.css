@@ -1,0 +1,8 @@
+.exploration-picker{display:grid;gap:7px;overflow:auto;min-height:0;grid-row:1}
+.exploration-picker[hidden],.dungeon-board[hidden]{display:none}
+.exploration-picker button{padding:10px;color:#fff3d7;background:#4b3928;border:1px solid #bba270;border-radius:8px;text-align:left;min-height:48px}
+.exploration-picker small{display:block;margin-top:5px;font-size:11px}
+.dungeon-explore[data-region="east-forest"][data-season] .dungeon-board{background-color:#456044}
+.dungeon-explore[data-region="west-desert"][data-season] .dungeon-board{background-color:#856644}
+.dungeon-explore[data-region="south-lake"][data-season] .dungeon-board{background-color:#356478}
+.dungeon-explore[data-region="north-glacier"][data-season] .dungeon-board{background-color:#7a939e}
