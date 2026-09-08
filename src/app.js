@@ -255,7 +255,7 @@ const vacationIllustrations=[
 function unifiedAgeFolder(){return '09';}
 function scheduleFramePath(file){return `../assets/characters/seonhwa/schedule-actions/v2/${file}`;}
 function scheduleBasePath(file){return `../assets/characters/seonhwa/schedule-base/${file}`;}
-const scheduleAssetRevision='0.64.314-debug';
+const scheduleAssetRevision='0.64.315-debug';
 const scheduleQaParams=new URLSearchParams(location.search);
 const moonlightStandaloneQa=scheduleQaParams.get('qaHoliday')==='chuseok';
 const sehwaStandaloneQa=scheduleQaParams.get('qaHoliday')==='seollal';
@@ -2222,6 +2222,19 @@ function renderStagePm3Hud(date,change={},action=null){
   document.querySelector('#stageHudStats').innerHTML=keys.map(key=>{const value=clampStat(key,game[key]),delta=change[key]||0,maximum=statMaximum(key),direction=delta>0?'▲':delta<0?'▼':'',beneficial=key==='stress'?delta<0:delta>0;return `<span class="stage-hud-stat ${delta?(beneficial?'up':'down'):''}"><b>${statLabels[key]}</b><i style="--value:${Math.round(value/maximum*100)}%"></i><em>${value}${delta?`<small>${direction}${Math.abs(delta)}</small>`:''}</em></span>`;}).join('');
 }
 
+function renderLifeCare(){
+  SeonhwaCare.normalize(game);
+  const section=document.createElement('section');section.className='stat-group life-care';
+  section.innerHTML=`<h3>생활 관리</h3><p>${game.illnessDays?`요양 필요 · 휴식 ${game.illnessDays}일 남음`:'건강한 상태'} · 스트레스 95 이상이면 요양이 필요해요.</p><label>식단 <select id="lifeDiet">${Object.entries(SeonhwaCare.diets).map(([id,diet])=>`<option value="${id}" ${game.dietPolicy===id?'selected':''}>${diet.name} — ${diet.description}</option>`).join('')}</select></label><p>생활비는 매일 차감됩니다. 비용이 부족하면 소박한 밥상으로 바뀌며, 8냥도 부족하면 체력 -1 · 스트레스 +1이 적용돼요.</p><button id="lifeTreatment" ${game.illnessDays?'':'disabled'}>의원 치료 · 150냥</button><small>치료: 요양 2일 단축 · 스트레스 -8. 집에서 하루 쉬면 요양 1일이 줄어요.</small><p id="lifeCareMessage" role="status"></p>`;
+  panelBody.prepend(section);
+  section.querySelector('#lifeDiet').onchange=event=>{game.dietPolicy=event.target.value;queueAutoSave();};
+  section.querySelector('#lifeTreatment').onclick=()=>{
+    const result=SeonhwaCare.treat(game);
+    if(!result.ok){section.querySelector('#lifeCareMessage').textContent=result.reason;return;}
+    if(game.currentDate){const date=new Date(game.currentDate+'T00:00:00');if(!game.monthlyLedger)game.monthlyLedger=createMonthlyLedger(date.getFullYear(),date.getMonth()+1);game.monthlyLedger.expense+=result.cost;game.monthlyLedger.treatment=(game.monthlyLedger.treatment||0)+result.cost;}
+    renderHud();queueAutoSave();openPanel('status');
+  };
+}
 function openPanel(type) {
   panel.hidden = false;
   if (type === 'schedule') {
@@ -2245,6 +2258,7 @@ function openPanel(type) {
     }).join('');
     const phase=phaseInfo();
     panelBody.innerHTML = `<div class="status-summary"><span>${game.age}세 · ${phase.label||'초순'}</span><b>${game.money.toLocaleString()}냥</b></div><section class="body-profile" aria-label="성장 정보"><div><small>키</small><b>${game.height.toFixed(1)} cm</b></div><div><small>몸무게</small><b>${game.weight.toFixed(1)} kg</b></div></section>${statGroups.map(group => `<section class="stat-group"><h3>${group.title}</h3>${group.stats.map(([key,label])=>statBar(key,label)).join('')}</section>`).join('')}<section class="stat-group condition-group"><h3>현재 상태</h3>${statBar('stress','스트레스')}</section><section class="stat-group"><h3>수호 인연</h3>${statBar('nannyAffinity','신수 유대감')}${statBar('fatherAffinity','아버지 친밀도')}</section><section class="relation-group"><h3>인연</h3><p>5회 만남으로 데이트가 열리고, 호감도 60 이상과 특별한 관계부터 엔딩 후보가 됩니다.</p><div class="relation-grid">${relationCards}</div></section>`;
+    renderLifeCare();
   } else if (type === 'inventory') {
     playHomeMusic();
     renderInventory();
@@ -2424,7 +2438,7 @@ function applySavePayload(saved) {
     saved.game.profileSlot=Number(saved.game.profileSlot);
   }
   Object.assign(game, saved.game);
-  normalizeClassicRules();
+  normalizeClassicRules();SeonhwaCare.normalize(game);
   if(!Number.isFinite(game.cash))game.cash=50000;
   if(!Number.isFinite(Number(game.fatherAffinity)))game.fatherAffinity=0;
   if(!Array.isArray(game.fatherBirthdayYears))game.fatherBirthdayYears=[];
@@ -2558,6 +2572,7 @@ function deleteCharacterRecord(slot){
 }
 
 function resetGameState() {
+  game.dietPolicy='balanced';game.illnessDays=0;
   Object.assign(game, { characterName:'',nannyName:'',guardianType:null,guardianName:'',profileSlot:null,age:9,height:130,weight:28.5,month:1,week:1,season:'봄',money:50000,cash:50000,health:42,strength:18,agility:20,intelligence:35,magic:8,mentality:30,dignity:36,manners:28,speech:14,sensitivity:40,sense:24,charm:30,stress:0,items:[],purchasedGoods:[],relations:{},activityProgress:{},activityUnlocksSeen:[],startingGiftId:null,fatherBirthdayYears:[],sehwaWins:[],latestSehwaArtwork:null,equippedOutfit:null,autoOutfit:true,dailySchedule:[],scheduleFormat:'phase-v1',birthday:null,currentDate:null,endingDate:null,ended:false,endingResult:null,birthdayCount:0,element:null,birthSeason:null,memory:0,truth:0,exposure:0,fatherAffinity:0,guardianTrust:50,nannyAffinity:50,lastGreetingDate:null,lastGuardianTalkDate:null,lastGuardianTalkPhase:null,monthlyLedger:null});
   normalizeClassicRules();
   document.querySelector('#liveChanges').innerHTML='';
@@ -2896,8 +2911,11 @@ function recordMonthlySchedule(dayRecords){
     if(!game.monthlyLedger)game.monthlyLedger=createMonthlyLedger(year,month);
     if(game.monthlyLedger.year!==year||game.monthlyLedger.month!==month){completed.push(game.monthlyLedger);game.monthlyLedger=createMonthlyLedger(year,month);}
     game.monthlyLedger.activities[record.action.name]=(game.monthlyLedger.activities[record.action.name]||0)+1;
-    if(record.action.cost>0)game.monthlyLedger.expense+=record.action.cost;
-    if(record.action.cost<0)game.monthlyLedger.income+=-record.action.cost;
+    const gross=-record.action.cost+(record.livingCost||0);
+    if(gross>0)game.monthlyLedger.income+=gross;
+    if(gross<0)game.monthlyLedger.expense-=gross;
+    game.monthlyLedger.expense+=record.livingCost||0;
+    game.monthlyLedger.livingCost=(game.monthlyLedger.livingCost||0)+(record.livingCost||0);
     Object.entries(record.actualChange).forEach(([key,value])=>game.monthlyLedger.change[key]=(game.monthlyLedger.change[key]||0)+value);
     if(date.getDate()===new Date(year,month,0).getDate()){completed.push(game.monthlyLedger);game.monthlyLedger=null;}
   });
@@ -2914,7 +2932,7 @@ function showMonthlyReport(ledger){
   const statRows=Object.entries(ledger.change).filter(([key,value])=>key!=='fatigue'&&value!==0).sort((a,b)=>Math.abs(b[1])-Math.abs(a[1])).map(([key,value])=>`<li><span>${statLabels[key]||key}</span><b class="${key==='stress'?value<0?'good':'bad':value>0?'good':'bad'}">${value>0?'+':''}${value}</b></li>`).join('');
   const net=ledger.income-ledger.expense;
   const condition=game.stress>=75?'스트레스가 높아요. 다음 달에는 휴식이 필요해요.':game.stress>=50?'마음이 조금 무겁지만 잘 버텼어요.':'좋은 컨디션으로 한 달을 마쳤어요.';
-  panelBody.innerHTML=`<section class="monthly-balance"><div><span>수입</span><b>+${ledger.income.toLocaleString()}냥</b></div><div><span>지출</span><b>-${ledger.expense.toLocaleString()}냥</b></div><div class="net"><span>합계</span><b class="${net>=0?'good':'bad'}">${net>=0?'+':''}${net.toLocaleString()}냥</b></div></section><section class="monthly-report-section"><h3>이번 달 활동</h3><ul>${activityRows||'<li>기록 없음</li>'}</ul></section><section class="monthly-report-section"><h3>능력치 변화</h3><ul>${statRows||'<li>변화 없음</li>'}</ul></section><p class="monthly-condition">${condition}</p><button id="closeMonthlyReport" class="monthly-continue">다음 달 시작</button>`;
+  panelBody.innerHTML=`<section class="monthly-balance"><div><span>수입</span><b>+${ledger.income.toLocaleString()}냥</b></div><div><span>지출</span><b>-${ledger.expense.toLocaleString()}냥</b></div><div class="net"><span>합계</span><b class="${net>=0?'good':'bad'}">${net>=0?'+':''}${net.toLocaleString()}냥</b></div></section><p class="monthly-condition">생활비 ${(ledger.livingCost||0).toLocaleString()}냥 · 치료비 ${(ledger.treatment||0).toLocaleString()}냥 (지출에 포함)</p><section class="monthly-report-section"><h3>이번 달 활동</h3><ul>${activityRows||'<li>기록 없음</li>'}</ul></section><section class="monthly-report-section"><h3>능력치 변화</h3><ul>${statRows||'<li>변화 없음</li>'}</ul></section><p class="monthly-condition">${condition}</p><button id="closeMonthlyReport" class="monthly-continue">다음 달 시작</button>`;
   document.querySelector('#closeMonthlyReport').addEventListener('click',()=>{panel.hidden=true;document.querySelector('#dialogueText').textContent=`${game.month}월도 함께 힘내 보아요.`;if(!presentHolidayRelation()&&!presentActivityUnlocks())openVisitingMerchant();});
 }
 
@@ -3297,8 +3315,9 @@ async function playWeeklySchedule(selected) {
     const periodDay=index-periodStart;
     const weekdayLabels=['일','월','화','수','목','금','토'];
     const plannedAction = selected[index];
+    const needsCare=SeonhwaCare.beginDay(game);
     if(simulated.stress>=statMaximum('stress'))stressRestUntilPhaseEnd=true;
-    const action = stressRestUntilPhaseEnd&&plannedAction.id!=='rest'?actions.find(item=>item.id==='rest'):plannedAction;
+    const action = (needsCare||stressRestUntilPhaseEnd)&&plannedAction.id!=='rest'?actions.find(item=>item.id==='rest'):plannedAction;
     playScheduleMusic(action);
     renderStagePm3Hud(activityDate,{},action);
     const forcedRest = action.id!==plannedAction.id;
@@ -3315,7 +3334,7 @@ async function playWeeklySchedule(selected) {
     delete stageCharacter.dataset.errandDirection;
     delete stageCharacter.dataset.errandStarting;
     setScheduleDialogue(action,'start',index);
-    if(forcedRest)document.querySelector('#dialogueText').textContent='스트레스가 100에 도달해 오늘 일정은 집에서 휴식으로 변경했어요.';
+    if(forcedRest)document.querySelector('#dialogueText').textContent=needsCare?'몸이 아파 오늘은 집에서 요양해요.':'스트레스가 100에 도달해 오늘 일정은 집에서 휴식으로 변경했어요.';
     const dailyOutfit=game.autoOutfit?updateAutoOutfit(action.id):game.equippedOutfit;
     const playbackDay=document.querySelector('#playbackDay');
     playbackDay.classList.remove('date-tick');void playbackDay.offsetWidth;playbackDay.classList.add('date-tick');
@@ -3449,6 +3468,10 @@ async function playWeeklySchedule(selected) {
     }
     const progressReward=recordActivityProgress(action,outcome);
     moneyChange+=progressReward.bonusPay;
+    const careState={...game,money:Math.max(0,game.money+moneyChange)};
+    const dailyCare=SeonhwaCare.settleDay(careState,['rest','vacation'].includes(action.id));
+    moneyChange-=dailyCare.cost;game.illnessDays=careState.illnessDays;
+    Object.entries(dailyCare.change).forEach(([key,value])=>resolvedChange[key]=(resolvedChange[key]||0)+value);
     if(condition){
       setScheduleDialogue(action,condition,index);
       await animateConditionEvent(stageCharacter,conditionCue,condition);
@@ -3484,10 +3507,16 @@ async function playWeeklySchedule(selected) {
       dayResult.hidden = true;
     }
     Object.entries(actualChange).forEach(([key,value])=>weeklyChange[key]=(weeklyChange[key]||0)+value);
-    dayRecords.push({date:isoDate(activityDate),action:{...action,cost:-moneyChange},actualChange,outcome,moneyChange});
+    dayRecords.push({date:isoDate(activityDate),action:{...action,cost:-moneyChange},actualChange,outcome,moneyChange,livingCost:dailyCare.cost});
     simulated.stress=clampStat('stress',simulated.stress+(resolvedChange.stress||0));
     if((action.id==='vacation'||action.id==='holiday-seollal'||action.id==='holiday-chuseok')&&periodDay===0){
-      for(let offset=1;offset<periodLength;offset++){const skipped=new Date(activityDate);skipped.setDate(skipped.getDate()+offset);dayRecords.push({date:isoDate(skipped),action:{...action,cost:0},actualChange:{},outcome:'normal',moneyChange:0});}
+      for(let offset=1;offset<periodLength;offset++){
+        const skipped=new Date(activityDate);skipped.setDate(skipped.getDate()+offset);
+        const care=SeonhwaCare.settleDay(game,action.id==='vacation');
+        Object.entries(care.change).forEach(([key,value])=>weeklyChange[key]=(weeklyChange[key]||0)+value);
+        dayRecords.push({date:isoDate(skipped),action:{...action,cost:care.cost},actualChange:care.change,outcome:'normal',moneyChange:-care.cost,livingCost:care.cost});
+      }
+      simulated.stress=game.stress;renderHud();
       index=periodStart+periodLength-1;
     }
     if(index===periodStart+periodLength-1||index===selected.length-1){

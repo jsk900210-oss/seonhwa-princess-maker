@@ -1,0 +1,6 @@
+.life-care{padding:12px;border:1px solid #b49361;border-radius:10px;background:#fff4dd;color:#49331f}
+.life-care p,.life-care small{font-size:12px;line-height:1.6;word-break:keep-all}
+.life-care label,.life-care small{display:block}
+.life-care select{display:block;width:100%;max-width:100%;margin:8px 0;padding:10px 5px;color:#49331f;background:#fffaf0;border:1px solid #b49361;border-radius:6px;font-size:12px}
+.life-care button{min-height:40px;margin:6px 0;padding:8px 12px}
+.life-care button:disabled{opacity:.5}
