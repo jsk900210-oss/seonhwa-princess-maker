@@ -55,7 +55,7 @@ function transitionPrologueToHomeMusic(){
 
 const game = { characterName:'', nannyName:'', guardianType:null, guardianName:'', profileSlot:null, age: 9, height:130, weight:28.5, month: 1, week: 1, season:'봄', money: 50000, cash:50000, health:42, strength:18, agility:20, intelligence:35, magic:8, mentality:30, dignity:36, manners:28, speech:14, sensitivity:40, sense:24, charm:30, stress:0, items: [], purchasedGoods:[], relations:{}, activityProgress:{}, activityUnlocksSeen:[], completedPhases:[], startingGiftId:null, fatherBirthdayYears:[], sehwaWins:[], latestSehwaArtwork:null, equippedOutfit:null, autoOutfit:true, dailySchedule: [], scheduleFormat:'phase-v1', birthday:null, currentDate:null, endingDate:null, ended:false, endingResult:null, birthdayCount:0, element:null, birthSeason:null, memory:0, truth:0, exposure:0, fatherAffinity:0, guardianTrust:50, nannyAffinity:50, lastGreetingDate:null, lastGuardianTalkDate:null, lastGuardianTalkPhase:null, monthlyLedger:null };
 const baseSpritePaths=Object.freeze({
-  9:'../assets/characters/seonhwa/identity-semi-real-v9/seonhwa-age09-identity-v9.png',
+  9:'../assets/characters/seonhwa/identity-semi-real-v10/seonhwa-age09-identity-black-hair-v10.png',
   13:'../assets/characters/seonhwa/identity-semi-real-v10/seonhwa-age13-identity-black-hair-v10.png',
   16:'../assets/characters/seonhwa/identity-semi-real-v9/seonhwa-age16-identity-v9.png',
   19:'../assets/characters/seonhwa/identity-semi-real-v9/seonhwa-age19-identity-v9.png'
