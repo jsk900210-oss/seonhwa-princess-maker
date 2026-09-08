@@ -255,7 +255,7 @@ const vacationIllustrations=[
 function unifiedAgeFolder(){return '09';}
 function scheduleFramePath(file){return `../assets/characters/seonhwa/schedule-actions/v2/${file}`;}
 function scheduleBasePath(file){return `../assets/characters/seonhwa/schedule-base/${file}`;}
-const scheduleAssetRevision='0.64.312-debug';
+const scheduleAssetRevision='0.64.314-debug';
 const scheduleQaParams=new URLSearchParams(location.search);
 const moonlightStandaloneQa=scheduleQaParams.get('qaHoliday')==='chuseok';
 const sehwaStandaloneQa=scheduleQaParams.get('qaHoliday')==='seollal';
@@ -1138,11 +1138,11 @@ function resolvedActivityChange(action,outcome){
   }
   return change;
 }
-const totalGrowthPhases=261;
-const phaseStatTickDays=new Set([0,5,10]);
+const totalGrowthPhases=360;
+const phaseStatTickDays=new Set([0,4,8]);
 function phaseDailyChange(change,phaseDay=0){
   const scaled={};
-  const applyGrowthStat=phaseStatTickDays.has(((Number(phaseDay)||0)%14+14)%14);
+  const applyGrowthStat=phaseStatTickDays.has(Math.max(0,Number(phaseDay)||0));
   Object.entries(change||{}).forEach(([key,value])=>{
     const numeric=Number(value)||0;
     scaled[key]=key==='stress'||numeric===0?numeric:applyGrowthStat?Math.sign(numeric)*Math.max(1,Math.round(Math.abs(numeric)*.5)):0;
@@ -1245,7 +1245,7 @@ const actions = [
   { id:'merchanthelp',category:'아르바이트',name:'상점 판매 보조',cost:-205,unlockAge:14,unlockStats:{speech:150,sense:150},mentor:'잡화상',icon:'errand',summary:'화술 +5 · 센스 +3 · 스트레스 +5 · 205냥 획득',change:{speech:4,sense:3,reputation:1,stress:5}},
   { id: 'accounting', category:'아르바이트', name:'상단 장부 정리', cost:-210, unlockAge:16, unlockStats:{sense:300,intelligence:250}, mentor:'상단 행수', icon:'arithmetic', intro:'숫자 하나가 상단의 신뢰를 좌우하니 꼼꼼히 살펴보거라.', summary:'센스 +4 · 지능 +2 · 화술 +2 · 스트레스 +4 · 210냥 획득', change:{sense:4,intelligence:2,speech:2,stress:4}, retiredJob:true },
   { id: 'tutoring', category:'아르바이트', name:'학동 가르치기', cost:-230, unlockAge:16, unlockStats:{intelligence:350,manners:220,speech:180}, mentor:'서당 훈장', icon:'reading', intro:'배운 바가 충분하니 이제 어린 학동에게 글과 셈, 예절을 일러 주거라.', summary:'지능 +2 · 화술 +4 · 기품 +2 · 스트레스 +5 · 230냥 획득', change:{intelligence:2,speech:4,dignity:2,stress:5} },
-  { id: 'rest', category: '휴식', name: '집에서 휴식', cost: 0, summary: '14일 동안 스트레스 최대 -70 · 체력·정신력 회복', change: { health:2, mentality:2, stress:-15 } },
+  { id: 'rest', category: '휴식', name: '집에서 휴식', cost: 0, summary: '해당 순 동안 스트레스 완화 · 체력·정신력 회복', change: { health:2, mentality:2, stress:-15 } },
   { id: 'shopping', category: '휴식', name: '저잣거리', cost: 0, summary: '', change: {}, special:'market' },
   { id: 'vacation', category: '휴식', name: '바캉스', cost: 180, summary: '감수성 +3 · 매력 +1 · 스트레스 -35 · 추억 일러스트 획득', change: {sensitivity:3,charm:1,stress:-105}, special:'vacation' },
   { id: 'dungeon', category: '휴식', name: '비경 탐사', cost: 50, unlockAge:13, unlockAnyStats:[{strength:120},{magic:120}], mentor:'수호신수', icon:'herbs', intro:'성 밖의 숨은 길에는 보물과 위험이 함께 있단다. 준비를 갖추고 나서자.', summary:'체력 +2 · 힘 +2 · 마력 +2 · 스트레스 +5 · 보물 은전 획득 가능', change:{health:2,strength:2,magic:2,stress:5}, special:'dungeon' },
@@ -1962,7 +1962,7 @@ async function playVacationScene(prize,index,companion=null,scheduleStart=null,h
   const companionName=document.querySelector('#encounterName');
   const companionText=document.querySelector('#encounterText');
   const sceneSeason=prize.season||game.season;
-  const phaseStart=scheduleStart?new Date(scheduleStart):new Date(`${game.currentDate}T00:00:00`);phaseStart.setDate(phaseStart.getDate()+Math.floor(index/14)*14);
+  const phaseStart=scheduleStart?new Date(scheduleStart):new Date(`${game.currentDate}T00:00:00`);phaseStart.setDate(phaseStart.getDate()+index);
   const dateFlow=document.querySelector('#vacationDateFlow');
   dateFlow.innerHTML='<b></b><span></span><i><em></em></i>';
   const seasonalEffects={봄:new Set(['petals','wind','calm']),여름:new Set(['splash','wave','wind','calm']),가을:new Set(['leaves','moon','steam','calm']),겨울:new Set(['snow','steam','calm'])};
@@ -1972,7 +1972,8 @@ async function playVacationScene(prize,index,companion=null,scheduleStart=null,h
   image.style.animation='none';void image.offsetWidth;image.style.animation='';
   scene.classList.remove('has-encounter');scene.classList.add('child-live');overlay.hidden=true;phone.classList.add('vacation-playing');scene.hidden=false;
   syncPlaybackSpeedToggle();
-  for(let day=0;day<14;day+=1){const date=new Date(phaseStart);date.setDate(phaseStart.getDate()+day);dateFlow.classList.remove('date-tick');void dateFlow.offsetWidth;dateFlow.classList.add('date-tick');dateFlow.querySelector('b').textContent=`${date.getFullYear()}년 ${date.getMonth()+1}월 ${date.getDate()}일`;dateFlow.querySelector('span').textContent=`제${day+1}일 / 14일`;dateFlow.querySelector('em').style.width=`${Math.round((day+1)/14*100)}%`;await schedulePlaybackDelay(340);}
+  const vacationDays=SeonhwaCalendar.period(phaseStart).days;
+  for(let day=0;day<vacationDays;day+=1){const date=new Date(phaseStart);date.setDate(phaseStart.getDate()+day);dateFlow.classList.remove('date-tick');void dateFlow.offsetWidth;dateFlow.classList.add('date-tick');dateFlow.querySelector('b').textContent=`${date.getFullYear()}년 ${date.getMonth()+1}월 ${date.getDate()}일`;dateFlow.querySelector('span').textContent=`제${day+1}일 / ${vacationDays}일`;dateFlow.querySelector('em').style.width=`${Math.round((day+1)/vacationDays*100)}%`;await schedulePlaybackDelay(340);}
   let relation=null;
   if(companion){
     relation=companion;scene.classList.add('has-encounter');overlay.hidden=false;
@@ -2032,7 +2033,7 @@ function renderHud() {
   const phase=phaseInfo();
   const phone=document.querySelector('.phone');
   phone.dataset.growthAge=String(growthVisualAge());
-  document.querySelector('#dateLabel').textContent = date ? `${game.age}세 · ${date.getFullYear()}년 ${date.getMonth()+1}월 ${date.getDate()}일 · 제${phase.index}페이즈 ${phase.week}주차` : '생일 설정 전';
+  document.querySelector('#dateLabel').textContent = date ? `${game.age}세 · ${date.getFullYear()}년 ${date.getMonth()+1}월 ${date.getDate()}일 · ${phase.label||'초순'}` : '생일 설정 전';
   document.querySelector('#moneyLabel').textContent = `${game.money.toLocaleString()}냥`;
   document.querySelector('#cashLabel').textContent = `캐시 ${game.cash.toLocaleString()}원`;
   renderHomeSehwaArtwork();
@@ -2161,7 +2162,7 @@ function speakGuardian(context='home'){
   let line='';
   if(game.stress>=80)line=`${game.characterName}, 마음이 많이 지쳐 있구나. 이번 주에는 반드시 휴식을 넣자.`;
   else if(game.money<500)line='은전이 넉넉하지 않구나. 비용이 드는 교육보다 아르바이트와 휴식을 먼저 살펴보자.';
-  else if(context==='schedule'&&filled===0)line='활동을 고르면 14일짜리 페이즈가 일정표에 차례로 추가된단다.';
+  else if(context==='schedule'&&filled===0)line='활동을 고르면 초순·중순·하순 순서로 이번 달 일정을 편성한단다.';
   else if(context==='schedule')line=`지금 ${filled}개 페이즈를 계획했구나. 순서를 확인하고 실행하거나 더 추가해 보렴.`;
   else if(context==='return')line=`다시 만났구나, ${game.characterName}. 지난 기록은 내가 잘 지켜 두었다. 이번 주 일정부터 살펴볼까?`;
   else {const lines=guardianVoice[game.guardianType]||guardianVoice.hyeonmu;line=lines[Math.floor(Math.random()*lines.length)];}
@@ -2243,7 +2244,7 @@ function openPanel(type) {
       return `<div class="relation-card ${relation.affinity>=60?'unlocked':''}"><b>${candidate.name}</b><small>${candidate.role}</small><span>${phase}</span><div class="relation-heart-meter" aria-label="${candidate.name} 호감도 ${percent}%">${heartBar}</div><em>${percent}%</em></div>`;
     }).join('');
     const phase=phaseInfo();
-    panelBody.innerHTML = `<div class="status-summary"><span>${game.age}세 · 제${phase.index}페이즈 ${phase.week}주차</span><b>${game.money.toLocaleString()}냥</b></div><section class="body-profile" aria-label="성장 정보"><div><small>키</small><b>${game.height.toFixed(1)} cm</b></div><div><small>몸무게</small><b>${game.weight.toFixed(1)} kg</b></div></section>${statGroups.map(group => `<section class="stat-group"><h3>${group.title}</h3>${group.stats.map(([key,label])=>statBar(key,label)).join('')}</section>`).join('')}<section class="stat-group condition-group"><h3>현재 상태</h3>${statBar('stress','스트레스')}</section><section class="stat-group"><h3>수호 인연</h3>${statBar('nannyAffinity','신수 유대감')}${statBar('fatherAffinity','아버지 친밀도')}</section><section class="relation-group"><h3>인연</h3><p>5회 만남으로 데이트가 열리고, 호감도 60 이상과 특별한 관계부터 엔딩 후보가 됩니다.</p><div class="relation-grid">${relationCards}</div></section>`;
+    panelBody.innerHTML = `<div class="status-summary"><span>${game.age}세 · ${phase.label||'초순'}</span><b>${game.money.toLocaleString()}냥</b></div><section class="body-profile" aria-label="성장 정보"><div><small>키</small><b>${game.height.toFixed(1)} cm</b></div><div><small>몸무게</small><b>${game.weight.toFixed(1)} kg</b></div></section>${statGroups.map(group => `<section class="stat-group"><h3>${group.title}</h3>${group.stats.map(([key,label])=>statBar(key,label)).join('')}</section>`).join('')}<section class="stat-group condition-group"><h3>현재 상태</h3>${statBar('stress','스트레스')}</section><section class="stat-group"><h3>수호 인연</h3>${statBar('nannyAffinity','신수 유대감')}${statBar('fatherAffinity','아버지 친밀도')}</section><section class="relation-group"><h3>인연</h3><p>5회 만남으로 데이트가 열리고, 호감도 60 이상과 특별한 관계부터 엔딩 후보가 됩니다.</p><div class="relation-grid">${relationCards}</div></section>`;
   } else if (type === 'inventory') {
     playHomeMusic();
     renderInventory();
@@ -2599,10 +2600,13 @@ function statBar(key, label) {
 let activeScheduleCategory='교육',scheduleCursor=-1,scheduleTimelineOffset=0,scheduleTimelineMotion='',selectedScheduleAction=null;
 function currentPhaseHoliday(dateValue=game.currentDate){
   if(!dateValue)return null;const start=new Date(`${dateValue}T00:00:00`),formatter=new Intl.DateTimeFormat('en-u-ca-chinese',{month:'numeric',day:'numeric'});
-  for(let offset=0;offset<14;offset++){const date=new Date(start);date.setDate(start.getDate()+offset);const parts=Object.fromEntries(formatter.formatToParts(date).filter(part=>part.type==='month'||part.type==='day').map(part=>[part.type,Number(part.value)]));if(parts.month===1&&parts.day===1)return {id:'holiday-seollal',name:'설날',date};if(parts.month===8&&parts.day===15)return {id:'holiday-chuseok',name:'추석',date};}return null;
+  for(let offset=0;offset<SeonhwaCalendar.period(start).days;offset++){const date=new Date(start);date.setDate(start.getDate()+offset);const parts=Object.fromEntries(formatter.formatToParts(date).filter(part=>part.type==='month'||part.type==='day').map(part=>[part.type,Number(part.value)]));if(parts.month===1&&parts.day===1)return {id:'holiday-seollal',name:'설날',date};if(parts.month===8&&parts.day===15)return {id:'holiday-chuseok',name:'추석',date};}return null;
 }
 function normalizePhaseSchedule(){
   if(!Array.isArray(game.dailySchedule))game.dailySchedule=[];
+  if(!game.calendarMigrationV1&&game.currentDate){
+    game.calendarMigrationV1={date:game.currentDate,schedule:[...game.dailySchedule],completedPhases:JSON.parse(JSON.stringify(game.completedPhases||[])),format:game.scheduleFormat};
+  }
   if(game.scheduleFormat!=='phase-v1'){
     const legacy=game.dailySchedule.filter(Boolean),compressed=[];
     legacy.forEach(id=>{if(compressed.at(-1)!==id)compressed.push(id);});
@@ -2610,12 +2614,11 @@ function normalizePhaseSchedule(){
   }
   game.dailySchedule=game.dailySchedule.map(id=>{if(id==='freeTime')return 'rest';const chain=jobChainFor(id),active=chain&&activeJobInChain(chain);return active?.id||id;}).filter(id=>{const action=actions.find(item=>item.id===id);return action&&actionUnlocked(action);});
   const holiday=currentPhaseHoliday();
-  if(holiday)game.dailySchedule=[holiday.id];
   if(!Array.isArray(game.completedPhases))game.completedPhases=[];
 }
 function scheduleProjection(){
   let money=game.money,stress=game.stress;
-  game.dailySchedule.forEach(id=>{const action=actions.find(item=>item.id===id);if(!action)return;const dailyStress=phaseDailyChange(action.change).stress||0;for(let day=0;day<14;day+=1){money=Math.max(0,money-action.cost);stress=clampStat('stress',stress+dailyStress);}});
+  SeonhwaCalendar.expand(game.dailySchedule,game.currentDate).forEach(({id,day})=>{const action=actions.find(item=>item.id===id);if(!action)return;const dailyStress=phaseDailyChange(action.change,day).stress||0;money=Math.max(0,money-action.cost);stress=clampStat('stress',stress+dailyStress);});
   return {money,stress};
 }
 function masteryMeter(points){
@@ -2633,7 +2636,7 @@ function scheduleActionMoneyLabel(action){
 }
 function renderSchedulePanel() {
   const phase=phaseInfo();
-  panelTitle.textContent = `페이즈 일정 편성`;
+  panelTitle.textContent = `월간 일정 · ${phase.label||'초순'}부터 편성`;
   normalizePhaseSchedule();
   const filled=game.dailySchedule.length;
   if(scheduleCursor<0)scheduleCursor=Math.max(0,filled-1);
@@ -2643,7 +2646,7 @@ function renderSchedulePanel() {
   const nextEntries=Array.from({length:3},(_,offset)=>({kind:'queue',index:filled+offset,action:null}));
   const timeline=[...openingPaperSlots,...game.completedPhases.map(record=>({kind:'completed',record})),...scheduledEntries,...nextEntries];
   const latestStart=Math.max(0,timeline.length-5);scheduleTimelineOffset=Math.max(0,Math.min(scheduleTimelineOffset,latestStart));const timelineStart=Math.max(0,latestStart-scheduleTimelineOffset);
-  const visibleTimeline=timeline.slice(timelineStart,timelineStart+5),phaseSlots=visibleTimeline.map(item=>{if(item.kind==='paper')return '<div class="phase-mini-slot opening-paper" aria-label="시작 불가"><b>시작 불가</b></div>';if(item.kind==='completed')return `<div class="phase-mini-slot completed"><small>제${item.record.index}페이즈</small><b>${item.record.name}</b></div>`;if(item.action)return `<button class="phase-mini-slot filled" data-phase-remove="${item.index}" aria-label="제${phase.index+item.index}페이즈 ${item.action.name} 일정 삭제"><small>제${phase.index+item.index}페이즈</small><b>${item.action.name}</b></button>`;const current=item.index===filled;return `<div class="phase-mini-slot ${current?'current':'empty'}" aria-hidden="true"><small>제${phase.index+item.index}페이즈</small>${current?'<b>편성 전</b>':''}</div>`;}).join(''),holiday=currentPhaseHoliday();
+  const visibleTimeline=timeline.slice(timelineStart,timelineStart+5),phaseSlots=visibleTimeline.map(item=>{if(item.kind==='paper')return '<div class="phase-mini-slot opening-paper" aria-label="시작 불가"><b>시작 불가</b></div>';if(item.kind==='completed')return `<div class="phase-mini-slot completed"><small>제${item.record.index}페이즈</small><b>${item.record.name}</b></div>`;if(item.action)return `<button class="phase-mini-slot filled" data-phase-remove="${item.index}" aria-label="${['초순','중순','하순'][(phase.slot+item.index)%3]} ${item.action.name} 일정 삭제"><small>${['초순','중순','하순'][(phase.slot+item.index)%3]}</small><b>${item.action.name}</b></button>`;const current=item.index===filled;return `<div class="phase-mini-slot ${current?'current':'empty'}" aria-hidden="true"><small>${['초순','중순','하순'][(phase.slot+item.index)%3]}</small>${current?'<b>편성 전</b>':''}</div>`;}).join(''),holiday=currentPhaseHoliday();
   const visibleJobIds=new Set(visibleJobActions().map(action=>action.id));
   const unseenUnlocked=actions.filter(action=>actionUnlocked(action)&&(!action.retiredJob||visibleJobIds.has(action.id))&&Number(action.unlockAge||9)>9&&!game.activityUnlocksSeen.includes(action.id));
   const scheduleCategories=['교육','아르바이트','휴식',...(actions.some(action=>action.category==='인연'&&actionUnlocked(action))?['인연']:[])];
@@ -2652,7 +2655,7 @@ function renderSchedulePanel() {
   const availableActions=holiday?[actions.find(action=>action.id===holiday.id),actions.find(action=>action.id==='rest')]:activeScheduleCategory==='아르바이트'?visibleJobActions():actions.filter(action=>action.category===activeScheduleCategory&&actionUnlocked(action)&&action.id!=='shopping');
   const actionCards=availableActions.map(action=>`<button class="action compact-action ${selectedScheduleAction===action.id?'selected':''}" data-action="${action.id}" ${holiday&&filled?'disabled':''}><img class="schedule-action-face" src="../assets/ui/activity-icons/activity-${scheduleActionIcon(action)}.png" alt=""><b>${action.name}</b><small class="schedule-action-money">${scheduleActionMoneyLabel(action)}</small></button>`).join('');
   const timelineMotion=scheduleTimelineMotion;scheduleTimelineMotion='';
-  panelBody.innerHTML = `<section class="phase-progress compact" aria-label="전체 성장 페이즈 진행률"><div><b>제${phase.index}페이즈</b><span>${phase.index} / ${phase.total}</span></div><div class="phase-progress-track"><i style="width:${phase.percent}%"></i></div></section><div class="phase-five-wrap"><button id="phasePrev" aria-label="이전 페이즈 기록" ${timelineStart>0?'':'disabled'}>◀</button><div class="phase-five-grid ${timelineMotion?`slide-${timelineMotion}`:''}">${phaseSlots}</div><button id="phaseNext" aria-label="다음 페이즈 기록" ${timelineStart<latestStart?'':'disabled'}>▶</button></div><small class="phase-slide-count">완료 이력은 회색으로 보존됩니다 · ${timelineStart+1}–${Math.min(timelineStart+5,timeline.length)} / ${timeline.length}</small>${holiday?`<p class="fixed-holiday-phase"><b>${holiday.name} 고정 페이즈</b><span>${holiday.date.getMonth()+1}월 ${holiday.date.getDate()}일 포함 · 참가하지 않으면 집에서 휴식</span></p>`:`<div class="schedule-tabs compact-tabs" role="tablist">${categoryTabs}</div>`}<section class="schedule-category compact-category ${activeScheduleCategory==='아르바이트'?'job-upgrade-category':''}"><div class="action-grid compact-schedule-grid">${actionCards}</div></section><div class="schedule-tools compact-tools"><button id="scheduleRunPhases" ${filled?'':'disabled'}>${filled}개 페이즈 실행</button><button id="scheduleClearAll" ${filled?'':'disabled'}>전체 비우기</button></div>`;
+  panelBody.innerHTML = `<section class="phase-progress compact" aria-label="전체 성장 페이즈 진행률"><div><b>제${phase.index}페이즈</b><span>${phase.index} / ${phase.total}</span></div><div class="phase-progress-track"><i style="width:${phase.percent}%"></i></div></section><div class="phase-five-wrap"><button id="phasePrev" aria-label="이전 페이즈 기록" ${timelineStart>0?'':'disabled'}>◀</button><div class="phase-five-grid ${timelineMotion?`slide-${timelineMotion}`:''}">${phaseSlots}</div><button id="phaseNext" aria-label="다음 페이즈 기록" ${timelineStart<latestStart?'':'disabled'}>▶</button></div><small class="phase-slide-count">완료 이력은 회색으로 보존됩니다 · ${timelineStart+1}–${Math.min(timelineStart+5,timeline.length)} / ${timeline.length}</small>${holiday?`<p class="fixed-holiday-phase"><b>${holiday.name} 고정 페이즈</b><span>${holiday.date.getMonth()+1}월 ${holiday.date.getDate()}일 포함 · 참가하지 않으면 집에서 휴식</span></p>`:`<div class="schedule-tabs compact-tabs" role="tablist">${categoryTabs}</div>`}<section class="schedule-category compact-category ${activeScheduleCategory==='아르바이트'?'job-upgrade-category':''}"><div class="action-grid compact-schedule-grid">${actionCards}</div></section><div class="schedule-tools compact-tools"><button id="scheduleRunPhases" ${filled?'':'disabled'}>${filled}개 일정 실행</button><button id="scheduleClearAll" ${filled?'':'disabled'}>전체 비우기</button></div>`;
   panelBody.querySelectorAll('[data-action]').forEach(button => button.addEventListener('click', () => addDailyAction(button.dataset.action,button)));
   panelBody.querySelectorAll('[data-phase-remove]').forEach(button=>button.addEventListener('click',()=>clearDailyAction(Number(button.dataset.phaseRemove))));
   document.querySelector('#phasePrev').addEventListener('click',()=>{scheduleTimelineOffset=Math.min(latestStart,scheduleTimelineOffset+1);scheduleTimelineMotion='older';renderSchedulePanel();});
@@ -2849,11 +2852,12 @@ function addDailyAction(id,sourceButton) {
     renderSchedulePanel();
     return;
   }
+  if(game.dailySchedule.length>=3-SeonhwaCalendar.period(game.currentDate).slot){document.querySelector('#dialogueText').textContent='이번 달 일정이 모두 채워졌어요. 실행하거나 편성을 변경해 주세요.';return;}
   game.dailySchedule.push(id);scheduleCursor=game.dailySchedule.length-1;scheduleTimelineOffset=0;selectedScheduleAction=id;
   const firstSelection=!game.activityUnlocksSeen.includes(id);
   if(firstSelection)game.activityUnlocksSeen.push(id);
   if(chosenAction.intro&&firstSelection){document.querySelector('#speakerName').textContent=chosenAction.mentor;document.querySelector('#dialogueText').textContent=chosenAction.intro;}
-  else document.querySelector('#dialogueText').textContent = `${chosenAction.name} 14일 페이즈를 일정 끝에 추가했어요.`;
+  else document.querySelector('#dialogueText').textContent = `${chosenAction.name}을 이번 달 일정에 추가했어요.`;
   scheduleConfirmDismissed = false;
   renderSchedulePanel();
   requestAnimationFrame(()=>animateScheduleAssignment(sourceRect,sourceMarkup,game.dailySchedule.length-1));
@@ -2895,6 +2899,7 @@ function recordMonthlySchedule(dayRecords){
     if(record.action.cost>0)game.monthlyLedger.expense+=record.action.cost;
     if(record.action.cost<0)game.monthlyLedger.income+=-record.action.cost;
     Object.entries(record.actualChange).forEach(([key,value])=>game.monthlyLedger.change[key]=(game.monthlyLedger.change[key]||0)+value);
+    if(date.getDate()===new Date(year,month,0).getDate()){completed.push(game.monthlyLedger);game.monthlyLedger=null;}
   });
   return completed;
 }
@@ -2938,7 +2943,8 @@ async function runWeek() {
   hideScheduleConfirmation();
   const unlockedBefore=new Set(actions.filter(actionUnlocked).map(action=>action.id));
   const scheduled = game.dailySchedule.map(id => actions.find(item => item.id === id));
-  const expanded=scheduled.flatMap(action=>Array.from({length:14},()=>action));
+  const calendarDays=SeonhwaCalendar.expand(scheduled.map(action=>action.id),game.currentDate);
+  const expanded=calendarDays.map(day=>actions.find(action=>action.id===(day.id==='rest'?'rest':currentPhaseHoliday(day.date)?.id||day.id)));
   const playableDays=Math.min(expanded.length,daysUntilEnding());
   const selected = expanded.slice(0,playableDays);
   if(selected.length===0){game.ended=true;showEnding();return;}
@@ -2954,7 +2960,9 @@ async function runWeek() {
   const playbackResult = await playWeeklySchedule(selected);
   const completedLedgers=recordMonthlySchedule(playbackResult.dayRecords);
   if(!Array.isArray(game.completedPhases))game.completedPhases=[];
-  for(let offset=0;offset<playbackResult.dayRecords.length;offset+=14){const records=playbackResult.dayRecords.slice(offset,offset+14),names=[...new Set(records.map(record=>record.action.name))];game.completedPhases.push({index:phaseBefore.index+Math.floor(offset/14),name:names.join('·'),completedAt:records.at(-1)?.date||game.currentDate});}
+  const completedGroups=new Map();
+  playbackResult.dayRecords.forEach(record=>{const key=SeonhwaCalendar.period(record.date).key;if(!completedGroups.has(key))completedGroups.set(key,[]);completedGroups.get(key).push(record);});
+  for(const records of completedGroups.values()){const names=[...new Set(records.map(record=>record.action.name))];game.completedPhases.push({index:phaseInfo(records[0].date).index,name:names.join('·'),completedAt:records.at(-1).date});}
   scheduleTimelineOffset=0;
   game.homeReaction=null;
   const birthdayEvents=advanceGameDate(selected.length);
@@ -2983,18 +2991,17 @@ async function runWeek() {
 
 function isoDate(date){ const y=date.getFullYear(); const m=String(date.getMonth()+1).padStart(2,'0'); const d=String(date.getDate()).padStart(2,'0'); return `${y}-${m}-${d}`; }
 function addYears(date, years){ const next=new Date(date); next.setFullYear(next.getFullYear()+years); return next; }
-// 프메3의 반월 페이즈를 현재 7일 일정에 맞춰 2주(14일) 단위로 적용한다.
-// 일정은 계속 일주일씩 진행하고, 두 번째 주가 끝날 때 대화와 방문 이벤트가 갱신된다.
+// 달력상의 초순·중순·하순 경계로 일정과 교류 주기를 계산한다.
 function phaseInfo(dateValue=game.currentDate){
   if(!game.birthday||!dateValue)return {index:1,week:1,key:'phase-1',total:1,remaining:0,percent:0};
-  const birth=new Date(`${game.birthday}T00:00:00`),current=new Date(`${dateValue}T00:00:00`);
+  const birth=new Date(`${game.birthday}T00:00:00`),current=dateValue instanceof Date?new Date(dateValue):new Date(`${dateValue}T00:00:00`);
   if(Number.isNaN(birth.getTime())||Number.isNaN(current.getTime()))return {index:1,week:1,key:'phase-1',total:1,remaining:0,percent:0};
   const start=addYears(birth,9),ending=game.endingDate?new Date(`${game.endingDate}T00:00:00`):addYears(birth,19);
   if(Number.isNaN(start.getTime())||Number.isNaN(ending.getTime()))return {index:1,week:1,key:'phase-1',total:1,remaining:0,percent:0};
-  const total=Math.max(1,Math.ceil((ending-start)/86400000/14));
-  const elapsed=Math.max(0,Math.floor((current-start)/86400000)),index=Math.min(total,Math.floor(elapsed/14)+1),week=Math.floor((elapsed%14)/7)+1;
-  const completed=Math.min(total,(index-1)+(week-1)/2),percent=Math.max(0,Math.min(100,Math.round(completed/total*100)));
-  return {index,week,key:`phase-${index}`,total,remaining:Math.max(0,total-index),percent};
+  const info=SeonhwaCalendar.period(current),first=SeonhwaCalendar.period(start),last=SeonhwaCalendar.period(ending);
+  const total=Math.max(1,last.ordinal-first.ordinal+1),index=Math.max(1,Math.min(total,info.ordinal-first.ordinal+1)),week=1;
+  const percent=Math.max(0,Math.min(100,Math.round((current-start)/(ending-start)*100)));
+  return {...info,index,week,total,remaining:Math.max(0,total-index),percent};
 }
 const startingBirthdayGifts=[
   {id:'birthday-calligraphy-set',name:'작은 붓과 벼루',change:{intelligence:6,sensitivity:3}},
@@ -3131,6 +3138,12 @@ function advanceGameDate(days){
   const birth=new Date(`${game.birthday}T00:00:00`); game.age=date.getFullYear()-birth.getFullYear()-((date.getMonth()<birth.getMonth()||(date.getMonth()===birth.getMonth()&&date.getDate()<birth.getDate()))?1:0);
   applyAgeGrowth(previousAge,game.age);
   const birthdayEvents=[];
+  const supportRecords=classicRules?.annualSupport(game,isoDate(previousDate),game.currentDate)||[];
+  for(const record of supportRecords){
+    game.money+=record.amount;
+    game.annualAllowanceYears.push(record.year);
+    birthdayEvents.push({change:{},message:`아버지가 ${record.year}년 양육비 ${record.amount.toLocaleString()}냥을 보내 주셨어요.`});
+  }
   for(let age=Math.max(9,previousAge);age<=game.age;age+=1){const birthdayDate=addYears(birth,age);if(birthdayDate>previousDate&&birthdayDate<=date){const gift=awardFatherBirthdayGift(age);if(gift)birthdayEvents.push(gift);}}
   if(game.autoOutfit)updateAutoOutfit();
   else applyEquippedOutfit();
@@ -3272,11 +3285,16 @@ async function playWeeklySchedule(selected) {
   stageCharacterImage.src = spriteFrames.down[1];
   const playbackWeek=document.querySelector('#playbackWeek');
   const playbackHolidayMark=document.querySelector('#playbackHolidayMark');
-  if(playbackWeek)playbackWeek.innerHTML=Array.from({length:14},(_,day)=>`<span>${day+1}</span>`).join('');
+  let periodStart=0,periodLength=0,periodRecordsStart=0,periodNumber=0;
   let stressRestUntilPhaseEnd=false;
   for (let index = 0; index < selected.length; index += 1) {
-    if(index%14===0)stressRestUntilPhaseEnd=false;
     const activityDate=new Date(scheduleStart);activityDate.setDate(scheduleStart.getDate()+index);
+    if(index===periodStart){
+      periodLength=Math.min(SeonhwaCalendar.period(activityDate).days,selected.length-index);
+      periodRecordsStart=dayRecords.length;stressRestUntilPhaseEnd=false;
+      if(playbackWeek)playbackWeek.innerHTML=Array.from({length:periodLength},(_,day)=>`<span>${activityDate.getDate()+day}</span>`).join('');
+    }
+    const periodDay=index-periodStart;
     const weekdayLabels=['일','월','화','수','목','금','토'];
     const plannedAction = selected[index];
     if(simulated.stress>=statMaximum('stress'))stressRestUntilPhaseEnd=true;
@@ -3306,7 +3324,7 @@ async function playWeeklySchedule(selected) {
       ? `${action.category} · ${action.name} · ${activityRankNames[currentMasteryRank]}`
       : action.name;
     document.querySelector('#playbackDailyStats').innerHTML='';
-    document.querySelectorAll('#playbackWeek span').forEach((day,dayIndex)=>{day.classList.toggle('done',dayIndex<=(index%14)-1);day.classList.toggle('current',dayIndex===(index%14));});
+    document.querySelectorAll('#playbackWeek span').forEach((day,dayIndex)=>{day.classList.toggle('done',dayIndex<=(periodDay)-1);day.classList.toggle('current',dayIndex===(periodDay));});
     if(playbackHolidayMark){
       const holidayIndex=activityDate.getDay()===0||activityDate.getDay()===6;
       playbackHolidayMark.hidden=!holidayIndex;
@@ -3314,7 +3332,7 @@ async function playWeeklySchedule(selected) {
     }
     const outfitName=outfits.find(item=>item.id===dailyOutfit)?.name;
     const showOutfitName=action.id!=='rest'&&Boolean(outfitName);
-    const restActivity=action.id==='rest'?(index%14<7?'tea':'sleep'):null;
+    const restActivity=action.id==='rest'?(periodDay<7?'tea':'sleep'):null;
     document.querySelector('#stageCaption').textContent = `${action.name}${['교육','아르바이트'].includes(action.category)?` · ${activityRankNames[currentMasteryRank]}`:''}${restActivity?` · ${restActivity==='tea'?'차 마시기':'잠자기'}`:''}`;
     document.querySelector('#playbackProgress').style.width = `${((index + 1) / selected.length) * 100}%`;
     bg.src = backgrounds[presentation.location];
@@ -3351,7 +3369,7 @@ async function playWeeklySchedule(selected) {
       }
     }else if(action.id==='vacation'){
       closeMarketUiForTransition();
-      if(index%14===0){
+      if(periodDay===0){
         const vacationCompanion=await chooseVacationCompanion();
         const prize=awardVacationIllustration();
         stage.hidden=true;stageNpc.hidden=true;stageProps.hidden=true;stageCharacter.hidden=true;
@@ -3400,7 +3418,7 @@ async function playWeeklySchedule(selected) {
     }else if(scheduleLayerIds.has(action.id)){
       stageNpc.hidden=true;stageProps.hidden=true;
       await playScheduleLayerScene(action.id,stageCharacterImage,currentMasteryRank,outcome,index);
-    }else if(action.id==='rest'&&![0,7].includes(index%14)){
+    }else if(action.id==='rest'&&![0,7].includes(periodDay)){
       const restFrames=activityFrameSet(restActivity)||activityFrameSet('sleep');
       stageCharacterImage.src=await outfitActivityFrame(restFrames[restActivity==='tea'?0:2],dailyOutfit);
       await schedulePlaybackDelay(180);
@@ -3417,9 +3435,11 @@ async function playWeeklySchedule(selected) {
       else await animateNaturalFailure(action.id,stageCharacterImage,outcome);
     }
     const fullPhaseHoliday=action.id==='holiday-seollal'||action.id==='holiday-chuseok';
-    const resolvedChange=fullPhaseHoliday?{...resolvedActivityChange(action,outcome)}:phaseDailyChange(resolvedActivityChange(action,outcome),index%14);
+    const resolvedChange=fullPhaseHoliday?{...resolvedActivityChange(action,outcome)}:phaseDailyChange(resolvedActivityChange(action,outcome),periodDay);
+    const classicGrowth=classicRules?.activityGrowth(action,outcome)||{};
+    Object.entries(classicGrowth).forEach(([key,value])=>{resolvedChange[key]=(resolvedChange[key]||0)+value;});
     if(holidayContestResult){
-      const contestChange=fullPhaseHoliday?holidayContestResult.change:phaseDailyChange(holidayContestResult.change,index%14);
+      const contestChange=fullPhaseHoliday?holidayContestResult.change:phaseDailyChange(holidayContestResult.change,periodDay);
       Object.entries(contestChange).forEach(([key,value])=>{resolvedChange[key]=(resolvedChange[key]||0)+value;});
     }
     const isWork=action.category==='아르바이트',basePay=isWork?activityPay(action):0;
@@ -3466,11 +3486,15 @@ async function playWeeklySchedule(selected) {
     Object.entries(actualChange).forEach(([key,value])=>weeklyChange[key]=(weeklyChange[key]||0)+value);
     dayRecords.push({date:isoDate(activityDate),action:{...action,cost:-moneyChange},actualChange,outcome,moneyChange});
     simulated.stress=clampStat('stress',simulated.stress+(resolvedChange.stress||0));
-    if((action.id==='vacation'||action.id==='holiday-seollal'||action.id==='holiday-chuseok')&&index%14===0)index=Math.min(index+13,selected.length-1);
-    if((index+1)%14===0||index===selected.length-1){
-      const start=index-index%14,phaseRecords=dayRecords.slice(start,index+1);
+    if((action.id==='vacation'||action.id==='holiday-seollal'||action.id==='holiday-chuseok')&&periodDay===0){
+      for(let offset=1;offset<periodLength;offset++){const skipped=new Date(activityDate);skipped.setDate(skipped.getDate()+offset);dayRecords.push({date:isoDate(skipped),action:{...action,cost:0},actualChange:{},outcome:'normal',moneyChange:0});}
+      index=periodStart+periodLength-1;
+    }
+    if(index===periodStart+periodLength-1||index===selected.length-1){
+      const phaseRecords=dayRecords.slice(periodRecordsStart);
       const vacationPhase=phaseRecords.length>0&&phaseRecords.every(record=>record.action?.id==='vacation');
-      if(!vacationPhase){stageCharacter.hidden=true;stageNpc.hidden=true;stageProps.hidden=true;await showPhaseReport(phaseRecords,{...playbackPhase,index:playbackPhase.index+Math.floor(index/14)});}
+      if(!vacationPhase){stageCharacter.hidden=true;stageNpc.hidden=true;stageProps.hidden=true;await showPhaseReport(phaseRecords,{...playbackPhase,index:playbackPhase.index+periodNumber});}
+      periodStart=index+1;periodNumber+=1;
     }
   }
   playback.hidden = true;

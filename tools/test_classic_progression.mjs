@@ -1,0 +1,17 @@
+import fs from 'node:fs';
+import vm from 'node:vm';
+import assert from 'node:assert/strict';
+const context={};vm.createContext(context);
+vm.runInContext(fs.readFileSync(new URL('../src/pm2-classic-rules.js',import.meta.url),'utf8'),context);
+const api=context.PM2ClassicRules;
+assert.equal(api.activityGrowth({id:'swordsmanship'},'success').combatReputation,1);
+assert.equal(api.activityGrowth({id:'spellcraft'},'perfect').magicSkill,2);
+assert.equal(Object.keys(api.activityGrowth({id:'painting'},'mistake')).length,0);
+assert.equal(api.activityGrowth({id:'childcare'},'normal').housework,1);
+const state={fatherAffinity:50,annualAllowanceYears:[]};
+assert.equal(api.annualSupport(state,'2000-12-31','2001-01-01')[0].amount,5000);
+assert.equal(api.annualSupport(state,'2000-02-28','2000-03-01').length,0);
+state.annualAllowanceYears=[2001];
+assert.equal(api.annualSupport(state,'2000-12-31','2001-01-10').length,0);
+assert.equal(api.annualSupport(state,'2001-01-10','2000-12-31').length,0);
+console.log('PASS: activity reputation progression and annual support boundaries');

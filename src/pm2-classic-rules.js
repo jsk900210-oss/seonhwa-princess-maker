@@ -49,5 +49,33 @@
     return state;
   }
   function allowanceForTrust(trust){return Math.round(2500+5000*(clamp(trust,0,100)/100));}
-  root.PM2ClassicRules=Object.freeze({rules,defaults,normalizeState,conditionFor,allowanceForTrust});
+  // 선화 전용 균형값: 성공한 활동이 해당 기술과 명성에 실제로 남는다.
+  function activityGrowth(action,outcome){
+    if(!action||!['perfect','success','normal'].includes(outcome))return {};
+    const amount=outcome==='perfect'?2:1;
+    const paths={
+      swordsmanship:['combatSkill','combatAttack','combatReputation'],
+      martial:['combatSkill','combatDefense','combatReputation'],
+      spellcraft:['magicSkill','magicAttack','magicReputation'],
+      manners:['socialReputation','morality'],
+      painting:['socialReputation'],music:['socialReputation'],dance:['socialReputation'],
+      cooking:['housework'],kitchenhelp:['housework'],childcare:['housework','morality'],
+      houseclean:['housework'],sewing:['housework'],classics:['morality','faith'],
+      'holiday-seollal':['socialReputation'],'holiday-chuseok':['socialReputation']
+    };
+    return Object.fromEntries((paths[action.id]||[]).map(key=>[key,amount]));
+  }
+  function annualSupport(source,previousDate,nextDate){
+    const paid=new Set(source.annualAllowanceYears||[]),records=[];
+    const start=new Date(previousDate+'T00:00:00'),end=new Date(nextDate+'T00:00:00');
+    if(!Number.isFinite(start.getTime())||!Number.isFinite(end.getTime())||end<=start)return records;
+    for(let year=start.getFullYear();year<=end.getFullYear();year++){
+      const due=new Date(year,0,1);
+      if(due>start&&due<=end&&!paid.has(year)){
+        records.push({year,amount:allowanceForTrust(source.fatherAffinity)});paid.add(year);
+      }
+    }
+    return records;
+  }
+  root.PM2ClassicRules=Object.freeze({rules,defaults,normalizeState,conditionFor,allowanceForTrust,activityGrowth,annualSupport});
 })(typeof window!=='undefined'?window:globalThis);
