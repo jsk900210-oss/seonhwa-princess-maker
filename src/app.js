@@ -1227,23 +1227,13 @@ const actions = [
   { id:'swordsmanship',category:'교육',name:'검술 수련',cost:165,unlockAge:13,unlockStats:{strength:120},mentor:'검술 사범',icon:'sweeping',intro:'칼을 휘두르기 전에 발과 호흡부터 바로 세워라.',summary:'힘 +4 · 민첩 +3 · 체력 +2 · 스트레스 +4',change:{strength:4,agility:3,health:2,stress:4}},
   { id:'spellcraft',category:'교육',name:'술법 수련',cost:175,unlockAge:13,unlockStats:{intelligence:150,mentality:100},mentor:'수호신수',icon:'herbs',intro:'기운을 억지로 잡지 말고 숨결을 따라 흐르게 하렴.',summary:'마력 +5 · 지능 +2 · 정신력 +3 · 스트레스 +4',change:{magic:5,intelligence:2,mentality:3,stress:4}},
   { id: 'classics', category: '교육', name: '경전 심화', cost: 190, unlockAge:16, mentor:'경학 스승', icon:'reading', intro:'이제 글자를 읽는 데서 그치지 말고 뜻을 논해 보자꾸나.', summary:'지능 +6 · 기품 +2 · 스트레스 +4', change:{intelligence:6,dignity:2,stress:4} },
-  { id: 'errand', category: '아르바이트', name: '장터 심부름', cost: -90, unlockAge:9, mentor:'장터 상인', icon:'errand', summary: '민첩 +3 · 화술 +2 · 스트레스 +4 · 90냥 획득', change: { agility:3, speech:2, stress:4 }, retiredJob:true },
-  { id: 'sweeping', category: '아르바이트', name: '마당 쓸기', cost: -70, unlockAge:9, mentor:'돌쇠', icon:'sweeping', summary: '힘 +3 · 체력 +2 · 스트레스 +3 · 70냥 획득', change: { strength:3, health:2, stress:3 }, retiredJob:true },
-  { id: 'herbs', category: '아르바이트', name: '약초 줍기', cost: -80, unlockAge:9, mentor:'약초꾼', icon:'herbs', summary: '센스 +2 · 지능 +1 · 체력 +1 · 스트레스 +4 · 80냥 획득', change: { sense:2, intelligence:1, health:1, stress:4 }, retiredJob:true },
-  { id: 'houseclean', category: '아르바이트', name: '집 청소', cost: -60, unlockAge:9, mentor:'신수', icon:'houseclean', summary: '힘 +2 · 센스 +2 · 체력 +1 · 스트레스 +3 · 60냥 획득', change: { strength:2, sense:2, health:1, stress:3 }, retiredJob:true },
   { id:'farmwork',category:'아르바이트',name:'농가 일손 돕기',cost:-110,unlockAge:9,mentor:'농가 어른',icon:'herbs',summary:'체력 +3 · 힘 +3 · 기품 -1 · 스트레스 +4 · 110냥 획득',change:{health:3,strength:3,dignity:-1,stress:4}},
   { id:'childcare',category:'아르바이트',name:'아이 돌보기',cost:-90,unlockAge:9,mentor:'마을 어른',icon:'houseclean',summary:'감수성 +3 · 기품 +2 · 스트레스 +4 · 90냥 획득',change:{sensitivity:3,virtue:2,stress:4}},
   { id:'kitchenhelp',category:'아르바이트',name:'주막 보조',cost:-120,unlockAge:10,unlockStats:{sense:80},mentor:'주모',icon:'arithmetic',intro:'재료 손질부터 손님상까지 주막일을 차근차근 익혀 보자.',summary:'센스 +3 · 체력 +2 · 화술 +1 · 스트레스 +4 · 120냥 획득',change:{sense:3,health:2,speech:1,stress:4}},
-  { id:'woodwork',category:'아르바이트',name:'목공소 심부름',cost:-135,unlockAge:11,unlockStats:{strength:120,sense:80},mentor:'목수',icon:'sweeping',summary:'힘 +4 · 센스 +2 · 스트레스 +5 · 135냥 획득',change:{strength:4,sense:2,stress:5},retiredJob:true},
-  { id:'loomwork',category:'아르바이트',name:'베틀방 돕기',cost:-140,unlockAge:11,unlockStats:{sense:120},mentor:'직조 장인',icon:'houseclean',summary:'센스 +4 · 감수성 +2 · 스트레스 +4 · 140냥 획득',change:{sense:4,sensitivity:2,stress:4},retiredJob:true},
-  { id:'masonry',category:'아르바이트',name:'기와·흙벽 보조',cost:-165,unlockAge:13,unlockStats:{health:180,strength:180},mentor:'와공',icon:'sweeping',summary:'체력 +4 · 힘 +4 · 기품 -2 · 스트레스 +5 · 165냥 획득',change:{health:4,strength:4,dignity:-2,stress:5},retiredJob:true},
   { id:'clinichelp',category:'아르바이트',name:'약방 견습',cost:-170,unlockAge:11,unlockStats:{intelligence:100,sense:80},mentor:'의원',icon:'herbs',summary:'지능 +3 · 센스 +3 · 기품 +1 · 스트레스 +4 · 170냥 획득',change:{intelligence:3,sense:3,virtue:1,stress:4}},
-  { id: 'innhelp', category:'아르바이트', name:'주막 운영 보조', cost:-155, unlockAge:12, unlockStats:{speech:100,health:90}, mentor:'주모', icon:'errand', intro:'이제 손님상과 계산까지 네가 살펴보렴.', summary:'화술 +3 · 체력 +2 · 센스 +1 · 스트레스 +4 · 155냥 획득', change:{speech:3,health:2,sense:1,stress:4}, retiredJob:true },
   { id: 'sewing', category:'아르바이트', name:'바느질', cost:-145, unlockAge:12, unlockStats:{sense:140,sensitivity:100}, mentor:'침선장', icon:'houseclean', intro:'베틀에서 고른 옷감을 작은 바늘땀으로 단정히 마무리하렴.', summary:'센스 +4 · 감수성 +2 · 스트레스 +3 · 145냥 획득', change:{sense:4,sensitivity:2,stress:3} },
   { id: 'copying', category:'아르바이트', name:'서책 필사', cost:-165, unlockAge:13, unlockStats:{intelligence:160}, mentor:'서책방 주인', icon:'reading', intro:'원문을 옮겨 적고 장부의 숫자까지 꼼꼼히 살펴보거라.', summary:'지능 +3 · 센스 +3 · 화술 +1 · 스트레스 +4 · 165냥 획득', change:{intelligence:3,sense:3,speech:1,stress:4} },
-  { id:'ferryhelp',category:'아르바이트',name:'나루터 운송 보조',cost:-190,unlockAge:14,unlockStats:{health:150,speech:100,agility:100},mentor:'나루지기',icon:'errand',summary:'체력 +3 · 화술 +3 · 민첩 +2 · 스트레스 +5 · 190냥 획득',change:{health:3,speech:3,agility:2,stress:5},retiredJob:true},
   { id:'merchanthelp',category:'아르바이트',name:'상점 판매 보조',cost:-205,unlockAge:14,unlockStats:{speech:150,sense:150},mentor:'잡화상',icon:'errand',summary:'화술 +5 · 센스 +3 · 스트레스 +5 · 205냥 획득',change:{speech:4,sense:3,reputation:1,stress:5}},
-  { id: 'accounting', category:'아르바이트', name:'상단 장부 정리', cost:-210, unlockAge:16, unlockStats:{sense:300,intelligence:250}, mentor:'상단 행수', icon:'arithmetic', intro:'숫자 하나가 상단의 신뢰를 좌우하니 꼼꼼히 살펴보거라.', summary:'센스 +4 · 지능 +2 · 화술 +2 · 스트레스 +4 · 210냥 획득', change:{sense:4,intelligence:2,speech:2,stress:4}, retiredJob:true },
   { id: 'tutoring', category:'아르바이트', name:'학동 가르치기', cost:-230, unlockAge:16, unlockStats:{intelligence:350,manners:220,speech:180}, mentor:'서당 훈장', icon:'reading', intro:'배운 바가 충분하니 이제 어린 학동에게 글과 셈, 예절을 일러 주거라.', summary:'지능 +2 · 화술 +4 · 기품 +2 · 스트레스 +5 · 230냥 획득', change:{intelligence:2,speech:4,dignity:2,stress:5} },
   { id: 'rest', category: '휴식', name: '집에서 휴식', cost: 0, summary: '해당 순 동안 스트레스 완화 · 체력·정신력 회복', change: { health:2, mentality:2, stress:-15 } },
   { id: 'shopping', category: '휴식', name: '저잣거리', cost: 0, summary: '', change: {}, special:'market' },
@@ -1259,13 +1249,13 @@ const actions = [
 ];
 actions.forEach(item=>{if(item.change)item.change=canonicalizeChange(item.change);});
 const jobUpgradeChains=[
-  ['sweeping','houseclean','farmwork','woodwork','masonry'],
+  ['farmwork'],
   ['childcare','tutoring'],
-  ['kitchenhelp','innhelp'],
-  ['herbs','clinichelp'],
-  ['loomwork','sewing'],
-  ['errand','ferryhelp','merchanthelp'],
-  ['copying','accounting']
+  ['kitchenhelp'],
+  ['clinichelp'],
+  ['sewing'],
+  ['merchanthelp'],
+  ['copying']
 ];
 const jobChainFor=id=>jobUpgradeChains.find(chain=>chain.includes(id));
 function activeJobInChain(chain){return [...chain].reverse().map(id=>actions.find(action=>action.id===id)).find(action=>action&&actionUnlocked(action))||null;}
@@ -1634,14 +1624,16 @@ function evaluateChuseokFestival(){
   const ageIndex=moonlightAgeIndex();
   const playerStats={sense:Number(game.sense)||0,manners:Number(game.manners)||0,dignity:Number(game.dignity)||0};
   const qaOverride=moonlightStandaloneQa&&scheduleQaParams.has('qaScore')?Math.max(0,Math.min(999,Number(scheduleQaParams.get('qaScore'))||0)):null;
-  const playerScore=qaOverride??Math.round((playerStats.sense+playerStats.manners+playerStats.dignity)/3)+(Math.floor(Math.random()*9)-4);
+  const technical=Math.round((Number(game.agility)||0)*.45+playerStats.sense*.35+playerStats.manners*.20);
+  const artistic=Math.round((Number(game.sensitivity)||0)*.40+(Number(game.charm)||0)*.35+playerStats.dignity*.25);
+  const playerScore=qaOverride??Math.max(0,Math.round((technical+artistic)/2));
   const entrants=[{id:'seonhwa',name:game.characterName||'선화',player:true,score:playerScore},...moonlightContestants.map((entry,index)=>({...entry,index,score:entry.scores[ageIndex]}))];
   const ranked=[...entrants].sort((a,b)=>b.score-a.score||a.name.localeCompare(b.name));
   ranked.forEach((entry,index)=>entry.rank=index===0?'대상':index===1?'우수상':index<=3?'장려상':'예선탈락');
   const player=ranked.find(entry=>entry.player),winner=ranked[0];
   const average=(playerStats.sense+playerStats.manners+playerStats.dignity)/3;
   const reaction=average>=moonlightContestants[4].scores[ageIndex]?'자신감 넘침':average>=moonlightContestants[3].scores[ageIndex]?'차분한 자신감':average>=moonlightContestants[1].scores[ageIndex]?'긴장하지만 씩씩함':average>=moonlightContestants[2].scores[ageIndex]?'자신 없음':'부끄러움';
-  return {entrants:shuffled(entrants),ranked,player,winner,overallRank:player.rank,reaction,change:canonicalizeChange({sense:2,manners:2,dignity:2,stress:-4}),opening:moonlightStoryBeats[0],summary:`한가위 달빛 아씨 경연 ${player.rank} · 종합 ${player.score}점`,prize:winner.player?'월백 옥패 노리개':null};
+  return {technical,artistic,entrants:shuffled(entrants),ranked,player,winner,overallRank:player.rank,reaction,change:canonicalizeChange({sense:2,manners:2,dignity:2,stress:-4}),opening:moonlightStoryBeats[0],summary:`한가위 달빛 아씨 경연 ${player.rank} · 종합 ${player.score}점`,prize:winner.player?'월백 옥패 노리개':null};
 }
 function moonlightEntrantImage(entry){
   if(entry.player)return moonlightSeonhwaImage();
@@ -1711,7 +1703,7 @@ function renderMoonlightPageant(session,dayIndex){
   // 이 대화가 끝난 뒤에만 쯔꾸르 선화의 입장·인사·손끝 회전 무대를 노출한다.
   const performance=dance?moonlightTukkurPerformance():null;
   const hero=performance?`<section class="activity-stage pageant-schedule-window" aria-label="일정 진행 창 안의 한가위 경연 무대"><div class="stage-roof" aria-hidden="true"></div><div class="stage-inner pageant-schedule-inner"><img class="stage-map pageant-schedule-map" src="${performance.stage}" alt="보름달 아래 가로로 펼쳐진 궁중 한가위 경연 무대"><div class="stage-map-shade pageant-schedule-shade" aria-hidden="true"></div><span class="pageant-tukkur-performance" role="img" aria-label="선화가 같은 쯔꾸르 모습으로 왼쪽에서 입장해 인사하고 두 손을 머리 위에 둥글게 올린 채 반회전하여 오른쪽에서 멈춘다."><img class="pageant-tukkur-raised-hands" src="${performance.performer}" alt=""></span></div><p class="stage-caption">한가위 경연 · 선화의 인사</p></section>`:'';
-  const king=judging?festivalKingCut('센스와 예절, 기품에 담긴 마음을 차분히 살펴보겠다.','한가위 경연을 심사하는 왕'):'';
+  const king=judging?`<section class="festival-result-card"><small>춤 심사</small><h3>기술점 ${session.technical} · 예술점 ${session.artistic}</h3><p>기술: 민첩·센스·예절<br>표현: 감수성·매력·기품</p><p>종합 ${session.player.score}점</p></section>`:'';
   const board=ranking?festivalScoreboard(session,'참가자 8명 최종 순위와 수상 결과'):'';
   const winner=award?`<figure class="pageant-winner is-solo ${session.winner.player?'is-seonhwa':''}"><img src="${moonlightAwardWinnerImage(session.winner)}" alt="대상 수상자 ${session.winner.name}"></figure>`:'';
   const kingCongratulations=award?festivalKingWinnerCongratulations(session):'';
@@ -1744,8 +1736,8 @@ const sehwaStoryBeats=[
   '왕실 화원의 초청장을 펼치자 신수가 가장 먼저 선화를 응원했어요.',
   '선화가 자신의 준비와 마음을 솔직하게 대답했어요.',
   '「복을 그리는 왕실 세화 경연」의 막이 올랐어요.',
-  '왕이 주제 「까치·매화·새해 첫 해」를 발표했어요.',
-  '여덟 참가자가 각자의 화구를 준비하고 함께 세화를 완성했어요.',
+  '왕이 작품의 표현과 붓끝의 완성도를 심사한다고 알렸어요.',
+  '준비한 세화를 출품하고 작품의 제목과 완성도를 확인했어요.',
   '여덟 참가자의 세화 점수가 차례로 집계됐어요.',
   '선화의 최종 등급과 점수가 발표됐어요.',
   '신수가 결과를 듣고 선화 곁으로 달려왔어요.'
@@ -1806,9 +1798,9 @@ function renderHomeSehwaArtwork(){
 function evaluateSeollalFestival(){
   const ageIndex=sehwaAgeIndex();
   const stats={charm:Number(game.charm)||0,sensitivity:Number(game.sensitivity)||0,sense:Number(game.sense)||0,dignity:Number(game.dignity)||0};
-  const weighted=Math.round(stats.charm*.35+stats.sensitivity*.50+stats.sense*.10+stats.dignity*.05);
+  const weighted=Math.round(stats.sensitivity*.60+stats.sense*.30+stats.dignity*.10);
   const qaOverride=sehwaStandaloneQa&&scheduleQaParams.has('qaScore')?Math.max(0,Math.min(999,Number(scheduleQaParams.get('qaScore'))||0)):null;
-  const playerScore=qaOverride??Math.max(0,weighted+(Math.floor(Math.random()*9)-4));
+  const playerScore=qaOverride??Math.max(0,weighted);
   const entrants=[{id:'seonhwa',name:game.characterName||'선화',player:true,score:playerScore},...sehwaContestants.map((entry,index)=>({...entry,index,score:entry.scores[ageIndex]}))];
   const ranked=[...entrants].sort((a,b)=>b.score-a.score||a.name.localeCompare(b.name));
   ranked.forEach((entry,index)=>entry.rank=index===0?'대상':index<=2?'우수상':index<=4?'장려상':'예선탈락');
@@ -1852,20 +1844,24 @@ function sehwaPreparationEnsemble(session){
   const handFrame=`${base}/drawing-1-mobile-3x5-hands-v1.png?v=${scheduleAssetRevision}`;
   return `<section class="sehwa-eight-entrant-scene" aria-label="참가자 여덟 명이 몸과 화선지를 고정한 채 붓 든 손만 섬세하게 움직이며 세화를 완성하는 장면">${hands.map(([x,y,dx,dy],index)=>`<img class="sehwa-ensemble-motion-patch" src="${handFrame}" alt="" style="--sehwa-hand-mask:radial-gradient(ellipse 3% 4% at ${x}% ${y}%,#000 38%,transparent 100%);--sehwa-hand-delay:${(index*.25).toFixed(2)}s;--sehwa-hand-x:${dx}px;--sehwa-hand-y:${dy}px">`).join('')}</section>`;
 }
+function sehwaSubmissionCard(session){
+  const artwork=selectSehwaArtwork(session.artworkStats||game,sehwaContestYear());
+  return `<section class="festival-result-card sehwa-submission"><small>왕실 세화 출품작</small><h3>${artwork.title}</h3><img src="${artwork.asset}" alt="${artwork.title} 출품작" style="display:block;max-width:100%;height:160px;object-fit:contain;margin:10px auto"><p>표현 · 감수성 / 붓끝 · 센스 / 구성 · 기품</p><p>작품 완성도 ${session.player.score}점</p></section>`;
+}
 function renderSehwaContest(session,beatIndex){
   const overlay=document.querySelector('#moonlightPageant');if(!overlay)return;
   const beat=Math.min(sehwaStoryBeats.length-1,Math.max(0,beatIndex)),opening=beat<=1,title=beat===2,intro=beat===3,preparing=beat===4,vote=beat===5,result=beat===6,guardianResult=beat===7;
-  const stageMap=document.querySelector('#stageMap'),emptySceneBackground=`../assets/events/holidays/sehwa-contest/background/royal-contest-hall-empty-v1.png?v=${scheduleAssetRevision}`,preparationSceneBackground=`../assets/events/holidays/sehwa-contest/preparation-scene/eight-entrant-v1/drawing-1-mobile-3x5-v1.png?v=${scheduleAssetRevision}`,sceneBackground=preparing?preparationSceneBackground:emptySceneBackground;if(stageMap)stageMap.src=sceneBackground;if(bg)bg.src=sceneBackground;
+  const stageMap=document.querySelector('#stageMap'),sceneBackground=`../assets/events/holidays/sehwa-contest/background/royal-contest-hall-empty-v1.png?v=${scheduleAssetRevision}`;if(stageMap)stageMap.src=sceneBackground;if(bg)bg.src=sceneBackground;
   const titleCard=title?festivalTitleCard('복을 그리는 왕실 세화 경연','새해의 복을 한 폭의 세화에 담는 설날 행사'):'';
   const guardian=guardianResult?festivalGuardianCut(session):'';
   const board=vote?festivalScoreboard(session,'8인 세화 심사'):result?`<section class="festival-result-card"><small>최종 결과</small><strong>${session.overallRank}</strong><p>${session.player.score}점 · ${session.reaction}</p></section>`:'';
-  const king=intro?festivalKingCut('새해의 복을 담아 까치와 매화, 첫 해를 한 폭에 그려 보이거라.','세화 경연의 주제를 알리는 왕'):'';
+  const king=intro?festivalKingCut('출품한 세화의 표현과 붓끝의 완성도를 살펴보겠다.','세화 경연의 심사 기준을 알리는 왕'):'';
   overlay.hidden=false;overlay.className=`moonlight-pageant sehwa-contest festival-pm3 beat-${beat+1} reaction-${session.reaction.replaceAll(' ','-')}`;
   overlay.tabIndex=0;overlay.setAttribute('role','button');overlay.setAttribute('aria-label','화면을 터치해 다음 장면으로 이동');
-  overlay.innerHTML=`${titleCard}${guardian}${opening?sehwaOpeningDialogue(session,beat):''}${preparing?sehwaPreparationEnsemble(session):''}${king}${board}`;
+  overlay.innerHTML=`${titleCard}${guardian}${opening?sehwaOpeningDialogue(session,beat):''}${preparing?sehwaSubmissionCard(session):''}${king}${board}`;
 }
 function waitForSehwaAdvance(beat){
-  const minimumStay=beat===4?5000:beat<=1?1600:700;
+  const minimumStay=beat===4?2500:beat<=1?1600:700;
   return waitForFestivalTapAdvance(minimumStay);
 }
 function presentHolidayRelation(){
@@ -2621,6 +2617,11 @@ function normalizePhaseSchedule(){
   if(!Array.isArray(game.dailySchedule))game.dailySchedule=[];
   if(!game.calendarMigrationV1&&game.currentDate){
     game.calendarMigrationV1={date:game.currentDate,schedule:[...game.dailySchedule],completedPhases:JSON.parse(JSON.stringify(game.completedPhases||[])),format:game.scheduleFormat};
+  }
+  const removedJobs=new Set(['errand','sweeping','herbs','houseclean','woodwork','loomwork','masonry','innhelp','ferryhelp','accounting']);
+  if(game.dailySchedule.some(id=>removedJobs.has(id))){
+    if(!game.removedJobsMigrationV1)game.removedJobsMigrationV1={date:game.currentDate,schedule:[...game.dailySchedule]};
+    game.dailySchedule=game.dailySchedule.map(id=>removedJobs.has(id)?'rest':id);
   }
   if(game.scheduleFormat!=='phase-v1'){
     const legacy=game.dailySchedule.filter(Boolean),compressed=[];
