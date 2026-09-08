@@ -1,12 +1,14 @@
 <!doctype html>
 <html lang="ko">
 <head>
+  <script src="character-reset.js?v=0.64.319-debug"></script>
+  <link rel="stylesheet" href="character-reset.css?v=0.64.319-debug">
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
   <title>선화공주 만들기 — 자산 로딩 테스트</title>
-  <link rel="stylesheet" href="style.css?v=0.64.318-debug">
-  <link rel="stylesheet" href="exploration-regions.css?v=0.64.318-debug"><link rel="stylesheet" href="life-care.css?v=0.64.318-debug">
-  <link rel="stylesheet" href="schedule.css?v=0.64.318-debug">
+  <link rel="stylesheet" href="style.css?v=0.64.319-debug">
+  <link rel="stylesheet" href="exploration-regions.css?v=0.64.319-debug"><link rel="stylesheet" href="life-care.css?v=0.64.319-debug">
+  <link rel="stylesheet" href="schedule.css?v=0.64.319-debug">
   <link rel="stylesheet" href="schedule-pm2.css?v=0.64.18-debug">
   <link rel="stylesheet" href="birthday.css?v=0.64.153-debug">
   <link rel="stylesheet" href="prologue.css?v=0.64.18-debug">
@@ -41,15 +43,15 @@
         <span class="footprint fp9">❮</span><span class="footprint fp10">❯</span>
         <span class="footprint fp11">❮</span><span class="footprint fp12">❯</span>
         <span class="loading-seonhwa" role="img" aria-label="오른쪽으로 걸어가는 선화">
-          <img class="loading-walk-frame loading-walk-frame-a" src="../assets/characters/seonhwa/age-09/intro/seonhwa-intro-walk-a.png?v=0.63.58" alt="">
-          <img class="loading-walk-frame loading-walk-frame-pass-a" src="../assets/characters/seonhwa/age-09/intro/seonhwa-intro-walk-pass.png?v=0.63.58" alt="">
-          <img class="loading-walk-frame loading-walk-frame-b" src="../assets/characters/seonhwa/age-09/intro/seonhwa-intro-walk-b.png?v=0.63.58" alt="">
-          <img class="loading-walk-frame loading-walk-frame-pass-b" src="../assets/characters/seonhwa/age-09/intro/seonhwa-intro-walk-pass.png?v=0.63.58" alt="">
+          <img class="loading-walk-frame loading-walk-frame-a" src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" alt="">
+          <img class="loading-walk-frame loading-walk-frame-pass-a" src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" alt="">
+          <img class="loading-walk-frame loading-walk-frame-b" src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" alt="">
+          <img class="loading-walk-frame loading-walk-frame-pass-b" src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" alt="">
         </span>
       </div>
       <span class="loading-caption">이야기를 열 준비가 되었어요</span>
       <button class="studio-start-sound" id="studioStartSound" type="button">인연의 문을 열기</button>
-      <small class="loading-version" aria-label="현재 게임 버전">v0.64.318-debug</small>
+      <small class="loading-version" aria-label="현재 게임 버전">v0.64.319-debug</small>
     </section>
     <section class="prologue" id="prologue" aria-label="이야기 시작 영상" hidden>
       <audio id="prologueMusic" src="../assets/audio/music/prologue-lantern-and-dawn.mp3" preload="auto" loop></audio>
@@ -126,7 +128,7 @@
     <header class="home-header"><span id="dateLabel">9세 · 3월</span><small id="cashLabel">캐시 50,000원</small><strong id="moneyLabel">50,000냥</strong></header>
     <section class="live-changes" id="liveChanges" aria-label="실시간 능력치 변화" aria-live="polite"></section>
     <section class="character-slot" id="characterSlot">
-      <img id="character" src="../assets/characters/seonhwa/age-09/base/seonhwa-age09-base-v3-wonyoung-motif-transparent.png" alt="9세 선화">
+      <img id="character" src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" alt="9세 선화">
       <div class="missing" id="missing">기준 캐릭터 원본 재첨부 대기</div>
     </section>
     <aside class="guardian-companion" id="guardianCompanion" hidden aria-hidden="true"><span id="guardianCompanionMark">龍</span><small id="guardianCompanionName"></small><em>말 걸기</em></aside>
@@ -193,8 +195,8 @@
         </div>
         <div class="stage-props" id="stageProps" aria-hidden="true"></div>
         <div class="stage-npc" id="stageNpc"><img id="stageNpcImage" alt="활동을 함께하는 마을 사람"></div>
-        <div class="market-meal-scene" id="marketMealScene" hidden aria-hidden="true"><img class="market-meal-character" src="../assets/characters/seonhwa/market-meal/seonhwa-low-table-eating-v1.png" alt=""><img class="market-meal-dish" id="marketMealDish" alt=""></div>
-        <div class="stage-character pixel-sprite" id="stageCharacter"><img id="stageCharacterImage" src="../assets/characters/seonhwa/age-09/base/seonhwa-age09-base.png" alt="일정을 수행하는 선화"></div>
+        <div class="market-meal-scene" id="marketMealScene" hidden aria-hidden="true"><img class="market-meal-character" src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" alt=""><img class="market-meal-dish" id="marketMealDish" alt=""></div>
+        <div class="stage-character pixel-sprite" id="stageCharacter"><img id="stageCharacterImage" src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" alt="일정을 수행하는 선화"></div>
         <div class="moonlight-pageant" id="moonlightPageant" hidden aria-live="polite"></div>
       </div>
       <div class="stage-caption" id="stageCaption"></div>
@@ -259,6 +261,6 @@
       </div>
     </section>
   </main>
-  <script src="exploration-rules.js?v=0.64.318-debug"></script><script src="life-care.js?v=0.64.318-debug"></script><script src="monthly-calendar.js?v=0.64.318-debug"></script><script src="pm2-classic-rules.js?v=0.64.318-debug"></script><script src="schedule-layer-manifests.js?v=0.64.318-debug"></script><script src="story-data.js?v=0.64.18-debug"></script><script src="app.js?v=0.64.318-debug"></script>
+  <script src="exploration-rules.js?v=0.64.319-debug"></script><script src="life-care.js?v=0.64.319-debug"></script><script src="monthly-calendar.js?v=0.64.319-debug"></script><script src="pm2-classic-rules.js?v=0.64.319-debug"></script><script src="schedule-layer-manifests.js?v=0.64.319-debug"></script><script src="story-data.js?v=0.64.18-debug"></script><script src="app.js?v=0.64.319-debug"></script>
 </body>
 </html>
