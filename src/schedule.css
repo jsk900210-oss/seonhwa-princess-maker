@@ -2347,7 +2347,7 @@
 .sehwa-contest.beat-14 .sehwa-lineup,.sehwa-contest.beat-15 .sehwa-lineup{left:7%;right:48%;bottom:17%;height:32%}
 .sehwa-contest.beat-14 .sehwa-lineup figure,.sehwa-contest.beat-15 .sehwa-lineup figure{transform:none!important;opacity:.9}
 .sehwa-contest.beat-14 .sehwa-lineup img,.sehwa-contest.beat-15 .sehwa-lineup img{width:var(--contestant-w);height:var(--contestant-h)}
-.sehwa-artist{position:absolute;z-index:3;left:7%;bottom:12%;width:145px;height:190px;background-image:url('../assets/events/holidays/sehwa-contest/artist/process-1.png?v=0.64.06-debug');background-repeat:no-repeat;background-position:center bottom;background-size:contain;filter:drop-shadow(0 4px 5px #160b08aa)}
+.sehwa-artist{position:absolute;z-index:3;left:7%;bottom:12%;width:145px;height:190px;background-image:none;background-repeat:no-repeat;background-position:center bottom;background-size:contain;filter:drop-shadow(0 4px 5px #160b08aa)}
 .sehwa-contest.beat-13 .pageant-king,.sehwa-contest.beat-14 .pageant-king,.sehwa-contest.beat-15 .pageant-king{right:5%;width:var(--adult-w);height:var(--adult-h)}
 .sehwa-contest.beat-16 .pageant-winner{left:5%;width:48%;height:66%}
 @keyframes sehwa-frame-loop{0%,32.99%{background-image:var(--sehwa-f1)}33%,65.99%{background-image:var(--sehwa-f2)}66%,100%{background-image:var(--sehwa-f3)}}
