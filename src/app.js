@@ -55,8 +55,8 @@ function transitionPrologueToHomeMusic(){
 
 const game = { characterName:'', nannyName:'', guardianType:null, guardianName:'', profileSlot:null, age: 9, height:130, weight:28.5, month: 1, week: 1, season:'봄', money: 50000, cash:50000, health:42, strength:18, agility:20, intelligence:35, magic:8, mentality:30, dignity:36, manners:28, speech:14, sensitivity:40, sense:24, charm:30, stress:0, items: [], purchasedGoods:[], relations:{}, activityProgress:{}, activityUnlocksSeen:[], completedPhases:[], startingGiftId:null, fatherBirthdayYears:[], sehwaWins:[], latestSehwaArtwork:null, equippedOutfit:null, autoOutfit:true, dailySchedule: [], scheduleFormat:'phase-v1', birthday:null, currentDate:null, endingDate:null, ended:false, endingResult:null, birthdayCount:0, element:null, birthSeason:null, memory:0, truth:0, exposure:0, fatherAffinity:0, guardianTrust:50, nannyAffinity:50, lastGreetingDate:null, lastGuardianTalkDate:null, lastGuardianTalkPhase:null, monthlyLedger:null };
 const baseSpritePaths=Object.freeze({
-  9:'../assets/characters/seonhwa/home/age-09-12/seonhwa-home-age09-12-transparent-v1.png',
-  13:'../assets/characters/seonhwa/home/age-13-15/seonhwa-home-age13-15-review-v4.png',
+  9:'../assets/characters/seonhwa/home/age-09-12/seonhwa-home-age09-12-skin-v3.png',
+  13:'../assets/characters/seonhwa/home/age-13-15/seonhwa-home-age13-15-skin-v3.png',
   16:'../assets/characters/seonhwa/home/age-16-17/seonhwa-home-age16-17-review-v4.png',
   19:'../assets/characters/seonhwa/home/age-18-plus/seonhwa-home-age18-plus-review-v4.png'
 });
