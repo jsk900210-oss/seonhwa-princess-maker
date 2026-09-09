@@ -57,8 +57,8 @@ const game = { characterName:'', nannyName:'', guardianType:null, guardianName:'
 const baseSpritePaths=Object.freeze({
   9:'../assets/characters/seonhwa/home/age-09-12/seonhwa-home-age09-12-skin-v3.png',
   13:'../assets/characters/seonhwa/home/age-13-15/seonhwa-home-age13-15-skin-v3.png',
-  16:'../assets/characters/seonhwa/home/age-16-17/seonhwa-home-age16-17-review-v4.png',
-  19:'../assets/characters/seonhwa/home/age-18-plus/seonhwa-home-age18-plus-review-v4.png'
+  16:'../assets/characters/seonhwa/home/age-16-17/seonhwa-home-age16-17-skin-v3.png',
+  19:'../assets/characters/seonhwa/home/age-18-plus/seonhwa-home-age18-plus-skin-v3.png'
 });
 const baseSpriteForAge=(age=game.age)=>baseSpritePaths[age>=18?19:age>=16?16:age>=13?13:9];
 const baseSpritePath=baseSpritePaths[9];
