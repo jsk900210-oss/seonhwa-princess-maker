@@ -1,0 +1,12 @@
+/* Tight transparent cutouts share a single floor baseline, including sundry. */
+#marketExplore .market-shop>img{
+  top:auto!important;bottom:19%!important;left:50%!important;
+  width:96%!important;height:40%!important;
+  object-fit:contain!important;object-position:center bottom!important;
+  transform:translateX(-50%)!important;
+}
+#marketExplore .market-shop.selected>img{transform:translateX(-50%) scale(1.04)!important}
+#marketExplore .market-shop-nameplate{
+  bottom:14%!important;display:block!important;background:#fff0d3ed!important;
+  border:1px solid #916438;border-radius:8px;padding:6px!important;
+}

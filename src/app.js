@@ -2756,7 +2756,7 @@ function renderShopPanel(tab='food',marketMode=marketShoppingActive,outfitCatego
   activeShopMarketMode=marketMode;
   activeOutfitShopCategory=outfitCategory;
   panelTitle.textContent=tab==='food'?'저잣거리 · 주막':tab==='outfit'?'저잣거리 · 포목전':'저잣거리 · 잡화전';
-  const keeper=tab==='food'?{name:'주모',image:'../assets/characters/npcs/shops/market-tavern-keeper-v2.png',greeting:'어서 오세요. 따뜻한 음식이 준비되어 있답니다.'}:tab==='outfit'?{name:'포목전 주인',image:'../assets/characters/npcs/shops/market-cloth-keeper-v2.png',greeting:'어서 오세요. 곱게 지은 한복을 천천히 살펴보세요.'}:{name:'잡화전 주인',image:'../assets/characters/npcs/shops/market-goods-keeper-v2.png',greeting:'비녀부터 단장품까지 두루 살펴보세요. 가져온 물건도 값을 쳐 드리지요.'};
+  const keeper=tab==='food'?{name:'주모',image:'../assets/characters/npcs/shops/market-tavern-keeper-v3.png',greeting:'어서 오세요. 따뜻한 음식이 준비되어 있답니다.'}:tab==='outfit'?{name:'포목전 주인',image:'../assets/characters/npcs/shops/market-cloth-keeper-v3.png',greeting:'어서 오세요. 곱게 지은 한복을 천천히 살펴보세요.'}:{name:'잡화전 주인',image:'../assets/characters/npcs/shops/market-goods-keeper-v3.png',greeting:'비녀부터 단장품까지 두루 살펴보세요. 가져온 물건도 값을 쳐 드리지요.'};
   const owned=new Set(game.items.filter(item=>typeof item==='object').map(item=>item.id));
   const foodCards=foods.map(food=>`<button class="shop-card visual-card" data-food="${food.id}" ${game.money<food.price?'disabled':''}><img src="../assets/items/food/${food.id}.png" alt="${food.name}"><b>${food.name}</b><span>${food.price}냥</span><small>${food.detail}<br>${formatChanges(food.change)}</small></button>`).join('');
   const visibleOutfits=outfits.filter(outfit=>outfitShopCategory(outfit)===outfitCategory);
